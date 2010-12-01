@@ -1,0 +1,24 @@
+fabric
+psycopg2
+PIL
+python-memcached
+django >=1.2
+gunicorn
+-e git://github.com/skoczen/django-cms.git#egg=django-cms
+pyparsing
+django-xmlrpc
+akismet
+django-tagging
+BeautifulSoup
+django-extensions
+-e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit  > 0.3.1
+-e git://github.com/clintecker/django-google-analytics.git#egg=google_
+-e git://github.com/skoczen/django-form-designer.git#egg=form_designer
+django-pagination
+django-mailer
+sorl-thumbnail
+tagging
+lorem-ipsum-generator
+nose
+django-nose
+nose-exclude
