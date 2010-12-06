@@ -24,12 +24,3 @@ def full_deploy():
     install_chef()
     sync_config()
     update()
-
-# def ssh_auth_me():
-#     my_key = local("cat ~/.ssh/id_dsa.pub")
-#     if my_key == "":
-#         my_key = local("cat ~/.ssh/id_rsa.pub")        
-# 
-#     sudo("mkdir ~/.ssh; chmod 700 ~/.ssh; touch ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys;")
-#     sudo("echo '%s' >> ~/.ssh/authorized_keys" % (my_key))
-# 
