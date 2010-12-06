@@ -107,7 +107,7 @@ INSTALLED_APPS = (
     'google_analytics',
 
     'hi',
-    
+    'email_list',    
 )
 
 

@@ -1,5 +1,53 @@
 {% extends "base.html" %}
+{% block head %}{{block.super}}
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.scrollTo-min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.toggleval.js"> </script>
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	{% if posted %}
+		$("#hi_content").scrollTo(".welcome_text");
+	{% else %}
+	$("#question a").click(function(){
+		$("#hi_content").scrollTo(".welcome_text", 1000);
+		$("#question").animate({opacity:0},200)
+		return false;
+	});
+	$("#question").animate({opacity:0},0).show();
+	setTimeout(fade_in_question, 4000)
+	setTimeout(function(){	$("#hi_content").mousemove(fade_in_question)}, 400)
+	$('#id_email').toggleVal({populateFrom:"custom", text:"interested@great-nonprofit.com"}).addClass("prefilled");
+	{% endif %}
+
+});
+var fade_started = false;
+function fade_in_question(){
+	if (!fade_started) {
+		$("#question").animate({opacity:1},1000);
+		fade_started = true;
+	}
+}
+</script>
+{% endblock %}
 {% block content %}
+<div id="hi_content">
 <div class="hi_text">Hi!</div>
 <div class="welcome_text">Welcome to Mycelium.</div>
+<div id="question" style="display: none"><a href="#answer">What's Mycelium?</a></div>
+<div id="answer">
+	<p class="and_a_half">We're a small company.</p>
+	<p>We make great software <br/>
+	exclusively for non-profits.</p>
+
+	<div class="more_info">We're in active development on our first product. You can find out more at <a href="#">Our Blog</a>, or by signing up to be notified below. Thanks for stopping by!</div>
+	{% if posted and save_success %}
+		<div class="thanks_message">Thanks! We'll let you know as soon as it's ready!</div>
+	{% else %}
+	<form action="" method="POST">{% csrf_token %}
+		{{form.email}}
+		<input id="id_submit" type="submit" value="Save Email" />
+	</form>
+	<div class="email_terms">We hate spam, too. We'll only use your email to notify you when a new product comes out.</div>
+	{% endif %}
+</div>
+</div>
 {% endblock %}
