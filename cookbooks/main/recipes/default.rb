@@ -30,6 +30,19 @@ if node.attribute?("all_servers")
   end
 end
 
+directory "/root/.ssh" do
+    owner "root"
+    group "root"
+    mode 0700
+end
+
+file "/root/.ssh/authorized_keys" do
+  owner "root"
+  group "root"
+    mode 0600
+    content node[:key]
+end
+
 node[:users].each_pair do |username, info|
     group username do
        gid info[:id]

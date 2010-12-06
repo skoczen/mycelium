@@ -19,7 +19,14 @@ directory "/home/mycelium/sites/digitalmycelium.com/run" do
 end
 
 git "/home/mycelium/sites/digitalmycelium.com/checkouts/digitalmycelium.com" do
-  repository "skoczen@skoczen.webfactional.com/home/skoczen/git-root/mycelium.git"
+  repository "http://mycelium.qistaging.com/mycelium.git"
+  reference "HEAD"
+  user "mycelium"
+  group "mycelium"
+  action :checkout
+end
+git "/home/mycelium/sites/digitalmycelium.com/checkouts/digitalmycelium.com" do
+  repository "http://mycelium.qistaging.com/mycelium.git"
   reference "HEAD"
   user "mycelium"
   group "mycelium"
