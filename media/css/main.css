@@ -165,15 +165,15 @@ html {-webkit-font-smoothing: antialiased;}
 
 
 .hi_text {
-	padding: 60px 0px 60px 0px;
+	padding: 30px 0px 60px 0px;
 	width: 100%;
 	text-align: center;
 	font-size: 300px;
 	font-family: 'ExpresswayRegular', Arial, sans-serif;
 	color: #222;
-	text-shadow:		 2px 2px 2px #888;
-	-moz-text-shadow:    2px 2px 2px #888;
-	-webkit-text-shadow: 2px 2px 2px #888;	
+	text-shadow:		 2px 2px 2px #CCC;
+	-moz-text-shadow:    2px 2px 2px #CCC;
+	-webkit-text-shadow: 2px 2px 2px #CCC;	
 }
 .welcome_text {
 	padding: 0px 0px;
