@@ -1,0 +1,22 @@
+{
+  "run_list": [ "main::default", "main::python", "main::mycelium", "main::memcached", "main::nginx", "main::munin", "main::security"],
+  "base_packages": ["git-core", "bash-completion", "nmap", "telnet"],
+  "ubuntu_python_packages": ["python-setuptools", "python-pip", "python-dev", "libpq-dev"],
+  "pip_python_packages": {"virtualenv": "1.5.1", "mercurial": "1.7"},
+
+  "users": {
+    "mycelium": {
+      "id": 1001,
+      "full_name": "Mycelium User",
+      "key": "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAz5qhFIVV1PV5RQGhEeLa3xWgHOGwEKDXF5qNInPS5l8GPwuQX/e8pL7UggRhsntRNnlgcS9fe9AX9OLmALalUcJewlnoMSzlhKt6KX+USHmrBxAAiKqaktX6VkMvoV9xYAFy0pKKnFX+UG5utae7ygi7ekoIj0kCTf9mktO7zz37r5Ubfn1QZqNCDBc5/bzh+K1HqqcS9/fF6IggRQL6efCHpFsodN0lcGOkKyjiy8PHSnzUnU/i4/wxVDR5SkgPpCf4bt7tsXujEYW4jXuVRZweqxzXpNFtppWHGuPyuy7GGbktllkMrraSExZ6R1FGCYGdXmZif+WUCID0rVLSww== skoczen@Kestrel"
+ssh-dss AAAAB3NzaC1kc3MAAACBALgaKMCVuJgxb+zUftmzpU04+0eixiWe3hu9rA6mvyj2LWuZBpNmb76yrUJ1Jc64IRI18oSNLFPPhL9ahlQyq+fWTO+z0GHKXB+bc6twBOvTF3SUoKOnJYwXIbMSR4LdjOoraZvK7mFVersdkbLUTCOiMEiSGpT5Fo+8c3sdtmd1AAAAFQD4FSGUPApwpno4wjxFvfg9lWwMLQAAAIEAl694ifTv47iyxcULSz0nRLHCj+H59OYEQ59X6YtvLPK8qdn3Lu6TW+mvPI5P5UE0DUp8DkM+2Ykr5KrvS72sf6Qpeq70o2HL+GPGjDU4Ru17vZXaxn9MpwwDvrwgBLLdDkNfsD2PMiXPztLmtD1s8H5LrTk+Y1qOPDIyn5FHTwcAAACAQql+UzfsDacXdOdS0/R3UZcuI+oD7bF/jF0nC5lwjF0ScawJpgs72AV2lEG8p/+w7HUWGEVZ8gpXqEQ2j17TnqI1clFrSemexv7GAA9sb3Bdwq+NuMYS46i1k6QLzBRmdEKxIy7a2hrHo0Lc8/0FXAN2Weu3c1OKS7XAjOaxJz0= skoczen@web58.webfaction.com
+    }
+  },
+
+  "groups": {
+    "mycelium": {
+      "gid": 201,
+      "members": ["mycelium"]
+    }
+  }
+}

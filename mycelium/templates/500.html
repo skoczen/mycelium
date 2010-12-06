@@ -1,0 +1,19 @@
+{% load i18n %}<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+	<title>{% trans "Oops, we've got a problem!"%}</title>
+</head>
+<body>
+	
+	<div id="temporary_message">
+	<h1>{% trans "Oops."%}</h1>
+	
+	<div class="detail_text">
+	{% trans "Looks like we've hit a problem loading that page."%}<br/><br/>
+	{% trans "Sorry about that - we've been emailed about your error, and will be working on it shortly!" %}</a>.
+	{% trans "Thanks!"%}
+	</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% load i18n cache analytics %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{% block title %}DigitalMycelium{% block extra_title %}{% endblock %}{% endblock %}</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="QuantumImagery.com">
+	{% if not user.is_authenticated %}
+		<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.js"> </script>
+		<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery-ui.js"> </script>
+	{% endif %}
+{% block head %}
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/main.css" type="text/css" media="screen" title="" charset="utf-8">
+{% endblock %}
+	
+</head>
+{% block body %}<body {% block extra_body %}{% endblock %} >
+	{# {% block nav %} #}
+	{# 	{% include "_top_nav.html" %} #}
+	{# {% endblock %} #}
+	{% block content %}
+
+	{% endblock %}
+{% if ENV == "LIVE" %}{% analytics %}{% endif %}
+</body>
+{% endblock %}
+</html>
