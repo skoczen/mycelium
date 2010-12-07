@@ -1,7 +1,5 @@
 {
-  "hostname":"digitalmycelium",
-
-  "run_list": ["main::default", "main::python", "mysql::server", "main::mycelium", "main::memcached", "main::nginx", "main::munin", "main::security"],
+  "run_list": ["main::default", "main::python", "main::mycelium", "main::memcached", "main::nginx", "main::munin", "main::security"],
   "base_packages": ["git-core", "bash-completion", "nmap", "telnet"],
   "ubuntu_python_packages": ["python-setuptools", "python-pip", "python-dev", "libpq-dev"],
   "pip_python_packages": {"virtualenv": "1.5.1", "mercurial": "1.7"},
