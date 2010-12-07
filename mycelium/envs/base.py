@@ -53,7 +53,7 @@ USE_L10N = True
 
 
 MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
-MEDIA_URL = 'http://digitalmycelium.com/media/'
+MEDIA_URL = 'http://mycelium.qistaging.com/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 
