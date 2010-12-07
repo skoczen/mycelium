@@ -1,5 +1,6 @@
 fabric
 psycopg2
+mysql-python
 pysqlite
 PIL
 python-memcached

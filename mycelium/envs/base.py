@@ -26,11 +26,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'skoczen_mycelium',       # Or path to database file if using sqlite3.
-        'USER': 'skoczen_mycelium',                      # Not used with sqlite3.
-        'PASSWORD': '86e95af5',                  # Not used with sqlite3.
-        'HOST': 'web58.webfaction.com',                      # Set to empty string for localhost. Not used with sqlite3.
+        'ENGINE': 'postgresql_psycopg2',               # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'skoczen_mycelium',      # Or path to database file if using sqlite3.
+        'USER': 'skoczen_mycelium',      # Not used with sqlite3.
+        'PASSWORD': '5bc651ec',          # Not used with sqlite3.
+        'HOST': 'web58.webfaction.com',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
