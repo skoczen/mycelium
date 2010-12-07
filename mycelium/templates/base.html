@@ -3,12 +3,10 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>{% block title %}DigitalMycelium{% block extra_title %}{% endblock %}{% endblock %}</title>
-	<meta name="generator" content="TextMate http://macromates.com/">
-	<meta name="author" content="QuantumImagery.com">
-	{% if not user.is_authenticated %}
-		<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.js"> </script>
-		<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery-ui.js"> </script>
-	{% endif %}
+
+	<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery-ui.js"> </script>
+
 {% block head %}
 	<link rel="stylesheet" href="{{ MEDIA_URL }}css/main.css" type="text/css" media="screen" title="" charset="utf-8">
 {% endblock %}

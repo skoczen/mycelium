@@ -1,5 +1,7 @@
 fabric
 psycopg2
+pysqlite
+mysql-python
 PIL
 python-memcached
 django >=1.2

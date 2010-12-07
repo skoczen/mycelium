@@ -24,3 +24,37 @@ def full_deploy():
     install_chef()
     sync_config()
     update()
+
+DRY_RUN = True
+
+def setup_env_rackspace(initial_settings={}, overrides={}):
+    global env
+    env.project_name = "mycelium"
+    env.webfaction_user = "mycelium"
+
+    # Custom Config Start
+    env.parent = "origin"
+    env.working_branch = "master"
+    env.live_branch = "live"
+    env.python = "python"
+    env.is_local = False
+    env.local_working_path = "~/workingCopy"
+    env.media_dir = "media"
+
+    env.update(initial_settings)
+
+    # semi-automated.  Override this for more complex, multi-server setups, or non-wf installs.
+    env.production_hosts = ["root@184.106.151.44"]
+    env.webfaction_home = "/home/mycelium/sites/digitalmycelium.com/checkouts/digitalmycelium.com/" % env
+    env.git_origin = "http://mycelium.qistaging.com/mycelium.git" % env
+
+    env.staging_hosts = env.production_hosts
+    env.virtualenv_name = env.project_name
+    env.staging_virtualenv_name = "staging_%(project_name)s" % env
+    env.live_app_dir = "%(webfaction_home)s/%(project_name)s_live" % env
+    env.live_static_dir = "%(webfaction_home)s/%(project_name)s_static" % env
+    env.staging_app_dir = "%(webfaction_home)s/%(project_name)s_staging" % env
+    env.staging_static_dir = "%(webfaction_home)s/%(project_name)s_staging_static" % env
+    env.virtualenv_path = "/home/mycelium/sites/digitalmycelium.com/lib/python2.6/site-packages/" % env
+    env.work_on = "workon %(virtualenv_name)s; " % env
+setup_env_rackspace()

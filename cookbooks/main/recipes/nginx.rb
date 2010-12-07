@@ -23,5 +23,4 @@ cookbook_file "/etc/nginx/nginx.conf" do
   owner "root"
   group "root"
   notifies :restart, resources(:service => "nginx")
-
 end
