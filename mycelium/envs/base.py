@@ -26,7 +26,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'skoczen_mycelium',       # Or path to database file if using sqlite3.
         'USER': 'skoczen_mycelium',                      # Not used with sqlite3.
         'PASSWORD': '86e95af5',                  # Not used with sqlite3.
