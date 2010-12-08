@@ -121,8 +121,4 @@ TEMPLATE_DIRS = (
 
 SEND_BROKEN_LINK_EMAILS = True
 
-try:
-    from local import *
-except:
-    pass
     

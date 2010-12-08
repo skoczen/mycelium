@@ -16,6 +16,19 @@ $(function(){
 	setTimeout(fade_in_question, 4000)
 	setTimeout(function(){	$("#hi_content").mousemove(fade_in_question)}, 400)
 	$('#id_email').toggleVal({populateFrom:"custom", text:"interested@great-nonprofit.org"}).addClass("prefilled");
+	// $("#id_email").mouseover(function(){
+	// 	$(this).addClass("hovered", 600)
+	// });
+	// $("#id_email").mouseleave(function(){
+	// 	$(this).removeClass("hovered", 600)
+	// });	
+	// $("#id_submit").mouseover(function(){
+	// 	$(this).addClass("hovered", 600)
+	// });
+	// $("#id_submit").mouseleave(function(){
+	// 	$(this).removeClass("hovered", 500)
+	// });	
+	// 
 	{% endif %}
 
 });
