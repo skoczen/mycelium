@@ -5,3 +5,4 @@
 .DS_Store
 db/core*
 pip-log.txt
+db/full_backup.json
