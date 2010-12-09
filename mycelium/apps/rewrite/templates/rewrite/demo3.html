@@ -3,68 +3,70 @@
 	<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js">	</script>
 	<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js">	</script>
 <script type="text/javascript" charset="utf-8">
+	var editing_nodes = [];
 $(function(){
-	var node = false;
-	var html = false;
-	var editor = false;
 	$(function(){
-		$("#editor .edit_link").show();
-		$("#editor .save_links").hide();
-	})
-	$(".editable").live("mouseover",function(){
-		node = $(this);
-		var offset = node.offset();
-		offset.top += node.height();
-		$("#editor").offset(offset).show();
+		// new nicEditor({fullPanel : true}).panelInstance("body_node",{hasPanel : true});		
+		// $("#editor .edit_link").show();
+		// $("#editor .save_links").hide();
+		$(".edit_on").click(function(){
+			$(this).addClass("active");
+			$(".edit_off").removeClass("active");			
+			$(".editable").each(function(){
+				id = $(this).attr("id")
+				ed = new nicEditor({fullPanel : true}).panelInstance(id,{hasPanel : true});
+				editing_nodes[id] = ed;
+			});
+			return false;
+		});
+		
+		$(".edit_off").click(function(){
+			$(this).addClass("active");
+			$(".edit_on").removeClass("active");
+			$(".editable").each(function(){
+				id = $(this).attr("id")
+				editor = editing_nodes[id]
+				var new_html = nicEditors.findEditor(id).getContent();
+				editor.removeInstance(id);
+				editor = null
+				$(this).html(new_html);
+			});
+			return false;
+		});
 	});
-	// $(".editable").live("mouseleave",function(){
-	// 	$("#editor").hide();
-	// });
-	$(".edit_link").live("click",function(){
-		html = node.html();
-		node.html("<textarea name='temp_editing' id='panel1'>"+html+"</textarea>");
-		editor = new nicEditor({fullPanel : true}).panelInstance('panel1',{hasPanel : true});
-		$("#editor .edit_link").hide();
-		$("#editor .save_links").show();
-		return false;
-	});
-	$(".save_link").live("click",function(){
-		var new_html = nicEditors.findEditor('panel1').getContent();
-		editor.removeInstance('panel1');
-		editor = null
-		// var new_html = $("textarea[name=temp_editing]",node).val();
-		node.html(new_html);
-		$("#editor .edit_link").show();
-		$("#editor .save_links").hide();
-		return false;
-	});
-	$(".cancel_link").live("click",function(){
-		node.html(html);
-		$("#editor .edit_link").show();
-		$("#editor .save_links").hide();		
-		return false;
-	});
-	
+
+
 });
+
+function editableNode(node) {
+	this.real = true;
+	this.node = $(node);
+	this.html = this.node.html();
+	$(node).html("<textarea name='temp_editing' id='"+edname(node)+"'>"+this.html+"</textarea>");
+	new nicEditor({fullPanel : true}).panelInstance(edname(node),{hasPanel : true});
+	this.editor = nicEditors.findEditor(edname(node));
+	return this;
+};
+function edname(node) {
+	return "editor_for_"+$(node).attr("id")
+};
 
 </script>
 <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+
 
 
 <style type="text/css" media="screen">
 	body {
 		padding: 20px;
 	}
-	.editable {
-		border: 1px solid #FFF;
-	}
 
-	.editable:hover {
-		border: 1px solid #DDD;
-	}
 	#editor {
 		display: none;
+	}
+	#controls {
+		font-family: arial, Sans-serif;
+		padding-bottom: 12px;
 	}
 	.editable textarea {
 		width: 100%;
@@ -75,15 +77,57 @@ $(function(){
 	i {
 		color: green;
 	}
+	.save_links {
+		margin-left: 100px;
+	}
+	.edit_on, .edit_off {
+		color: #AAA;
+		text-decoration: none;
+	}
+	.edit_on.active, .edit_off.active {
+		font-weight: bold;
+		background-color: blue;
+		color: #FFF;
+	}
+	.save_links {
+		display: none;
+	}
+	td {
+		width: 33%;
+		vertical-align: top;
+/*		padding: 10px 2%;*/
+	}
+	.toggle_edit_btn {
+		border-radius: 4px;
+		-moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+		border: 0px solid #999;
+		padding: 3px 5px;
+	}
 </style>
 </head>
 
-<body>
+<body id="body_node">
+	<div id="controls">
+		edit is:
+		<a href="#" class="toggle_edit_btn edit_on">ON</a> / 
+		<a href="#" class="toggle_edit_btn edit_off active">OFF</a>
+		<span class="save_links">
+			<a href="#" class="save_link">save</a>
+			<a href="#" class="cancel_link">cancel</a>
+		</span>
+	</div>
+	<table>
+		<tr>
+			<td>
+				
+				<h1 id="big_head" class="editable">Big Story</h1>
 	<div id="block_1" class="editable">
 	<p>Nam vestibulum, arcu sodales feugiat consectetur, nisl orci bibendum elit, eu euismod magna sapien ut nibh. Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula egestas tincidunt. Nullam risus magna, ornare vitae varius eget, scelerisque a libero. Morbi eu porttitor ipsum. Nullam lorem nisi, posuere quis volutpat eget, luctus nec massa. Pellentesque aliquam lacinia tellus sit amet bibendum. Ut posuere justo in enim pretium scelerisque. Etiam ornare vehicula euismod. Vestibulum at risus augue. Sed non semper dolor. Sed fringilla consequat velit a porta. Pellentesque sed lectus pharetra ipsum ultricies commodo non sit amet velit. Suspendisse volutpat lobortis ipsum, in scelerisque nisi iaculis a. Duis pulvinar lacinia commodo. Integer in lorem id.</p>
 	<p>Nam vestibulum, arcu sodales feugiat consectetur, nisl orci bibendum elit, eu euismod magna sapien ut nibh. Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula egestas tincidunt. Nullam risus magna, ornare vitae varius eget, scelerisque a libero. Morbi eu porttitor ipsum. Nullam lorem nisi, posuere quis volutpat eget, luctus nec massa. Pellentesque aliquam lacinia tellus sit amet bibendum. Ut posuere justo in enim pretium scelerisque. Etiam ornare vehicula euismod. Vestibulum at risus augue. Sed non semper dolor. Sed fringilla consequat velit a porta. Pellentesque sed lectus pharetra ipsum ultricies commodo non sit amet velit. Suspendisse volutpat lobortis ipsum, in scelerisque nisi iaculis a. Duis pulvinar lacinia commodo. Integer in lorem id.</p>
-	<p>Nam vestibulum, arcu sodales feugiat consectetur, nisl orci bibendum elit, eu euismod magna sapien ut nibh. Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula egestas tincidunt. Nullam risus magna, ornare vitae varius eget, scelerisque a libero. Morbi eu porttitor ipsum. Nullam lorem nisi, posuere quis volutpat eget, luctus nec massa. Pellentesque aliquam lacinia tellus sit amet bibendum. Ut posuere justo in enim pretium scelerisque. Etiam ornare vehicula euismod. Vestibulum at risus augue. Sed non semper dolor. Sed fringilla consequat velit a porta. Pellentesque sed lectus pharetra ipsum ultricies commodo non sit amet velit. Suspendisse volutpat lobortis ipsum, in scelerisque nisi iaculis a. Duis pulvinar lacinia commodo. Integer in lorem id.</p>
-	</div><br/>
+
+	</div>
+	</td><td>
 	
 	<div id="block_2" class="editable">
 		<ul>
@@ -101,12 +145,19 @@ $(function(){
 		</ul>
 
 	</div>
-	<div id="editor">
-		<a href="#" class="edit_link">edit</a>
-		<div class="save_links">
-			<a href="#" class="save_link">save</a>
-			<a href="#" class="cancel_link">cancel</a>
+	</td>
+	<td>
+		<div id="block_3" class="editable">
+<p>Nam vestibulum, arcu sodales feugiat consectetur, nisl orci bibendum elit, eu euismod magna sapien ut nibh. Donec semper quam scelerisque tortor dictum gravida. In hac habitasse platea dictumst. Nam pulvinar, odio sed rhoncus suscipit, sem diam ultrices mauris, eu consequat purus metus eu velit. Proin metus odio, aliquam eget molestie nec, gravida ut sapien. Phasellus quis est sed turpis sollicitudin venenatis sed eu odio. Praesent eget neque eu eros interdum malesuada non vel leo. Sed fringilla porta ligula egestas tincidunt. Nullam risus magna, ornare vitae varius eget, scelerisque a libero. Morbi eu porttitor ipsum. Nullam lorem nisi, posuere quis volutpat eget, luctus nec massa. Pellentesque aliquam lacinia tellus.</p>
+
+<p>Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla.</p>
+
+<p>Sed molestie augue sit amet leo consequat posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin.</p>
 		</div>
+	</td>
+	</tr></table>
+	<div id="editor">
+
 	</div>
 </body>
 </html>
