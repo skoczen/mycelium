@@ -16,8 +16,8 @@ EMAIL_HOST='mail.quantumimagery.com'
 EMAIL_PORT=25
 EMAIL_HOST_USER='robot@quantumimagery.com'
 EMAIL_HOST_PASSWORD='E3Kfgozz7iMyb38N7ohb'
-DEFAULT_FROM_EMAIL = 'DigitalMycelium'
-SERVER_EMAIL = 'robot@digitalmycelium.com'
+DEFAULT_FROM_EMAIL = 'GoodCloud'
+SERVER_EMAIL = 'robot@agoodcloud.com'
 
 ADMINS = (
      ('Steven Skoczen', 'steven@quantumimagery.com'),
@@ -53,7 +53,7 @@ USE_L10N = True
 
 
 MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
-MEDIA_URL = 'http://mycelium.qistaging.com/media/'
+MEDIA_URL = 'http://www.agoodcloud.com/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 
