@@ -119,7 +119,6 @@ TEMPLATE_DIRS = (
     "%stemplates" % (PROJECT_ROOT),
 )
 GOOGLE_ANALYTICS_MODEL = True
-
+ENV = "LIVE"
 SEND_BROKEN_LINK_EMAILS = True
 
-    
