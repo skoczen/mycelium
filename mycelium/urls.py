@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     (r'^', include('email_list.urls')),    
     (r'^', include('rewrite.urls')),        
 
+    (r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodrain.agoodcloud.com"}, 'blog_home'),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
 )
