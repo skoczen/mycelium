@@ -118,7 +118,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     "%stemplates" % (PROJECT_ROOT),
 )
-
+GOOGLE_ANALYTICS_MODEL = True
 
 SEND_BROKEN_LINK_EMAILS = True
 
