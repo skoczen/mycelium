@@ -6,5 +6,24 @@
 </script>
 {% endblock %}
 {% block content %}
-
+	{% block nav %}
+	<div id="logo">
+		GoodCloud
+	</div>
+	<div id="main_nav">{% spaceless %}
+		<a href="{% url people:search %}" class="current">People</a>
+		<a href="#">Multiply</a>
+		<a href="#">Yardstick</a>
+		<a href="#">Soapbox</a>
+		<a href="#">Shindig</a>
+	{% endspaceless %}</div>
+	{% endblock %}
+	
+	{% block page %}
+	<div id="page">
+	{% block page_content %}
+	
+	{% endblock %}
+	</div>
+	{% endblock %}
 {% endblock %}

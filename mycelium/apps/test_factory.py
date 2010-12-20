@@ -1,6 +1,7 @@
 import random
 import lipsum
 import base64
+from people.models import Person, EmailAddress, PhoneNumber, Address, ContactMethodType
 
 class Factory:
 
@@ -31,7 +32,40 @@ class Factory:
 
     @classmethod
     def rand_name(cls):
-        return RANDOM_NAME_SOURCE[randint(0,len(RANDOM_NAME_SOURCE)-1)]
+        return RANDOM_NAME_SOURCE[cls.rand_int(0,len(RANDOM_NAME_SOURCE)-1)]
+
+    def email(cls, person=None):
+        if not person:
+            person = cls.person()
+        email = EmailAddress.objects.create(person=person, email="%s@%s.com" % (cls.rand_str(), cls.rand_str()))
+        return email 
+        
+    def phone(cls, person=None):
+        if not person:
+            person = cls.person()        
+        phone = PhoneNumber.objects.create(person=person, phone_number="%s-%s-%s" % (cls.rand_int(100,999), cls.rand_int(100,999),cls.rand_int(1000,9999)))
+        return phone
+
+    def address(cls, person=None):
+        if not person:
+            person = cls.person()        
+        address = Address.objects.create(
+            person=person,
+            line_1=cls.rand_str(),
+            line_2="%s %s St." % (cls.rand_int(), cls.rand_str()), 
+            city=cls.rand_str(),
+            state=cls.rand_str(),
+            postal_code=cls.rand_int(10000,99999)
+            )
+        return address
+        
+    def person(cls):
+        person = Person.objects.create(first_name=cls.rand_name(), last_name=cls.rand_name())
+        cls.address(person)
+        cls.phone(person)
+        cls.email(person)
+        return person
+        
 
 
 

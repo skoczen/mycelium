@@ -1,0 +1,21 @@
+{% load pagination_tags %}
+{% if people %}
+{% autopaginate people 100 %}
+<table class="results_table">
+	<tr class="result_row person_row header">
+		<th class="name">Name</th>
+		<th class="phone_number">Phone Number</th>
+	</tr>
+{% for p in people %}
+	<tr class="result_row person_row">
+		<td class="name"><a href="{% url people:person p.pk %}">{{p.full_name}}</a></td>
+		<td class="phone_number">{{p.primary_phone_number}}</td>
+	</tr>
+{% endfor %}
+	<tr><td colspan="2">
+		{% paginate %}
+	</td></tr>
+</table>
+{% else %}
+No people found.
+{% endif %}

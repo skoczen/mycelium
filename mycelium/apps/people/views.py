@@ -8,12 +8,15 @@ from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
+from models import Person
 
 @render_to("people/search.html")
 def search(request):
+    people = Person.objects.all()
     return locals()
 
 
 @render_to("people/person.html")
-def person(request):
+def person(request, person_id):
+    person = get_object_or_404(Person,pk=person_id)
     return locals()

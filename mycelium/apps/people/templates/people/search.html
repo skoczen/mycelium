@@ -1,7 +1,18 @@
-{% extends "mycelium_base.html" %}
+{% extends "people/base.html" %}
 {% block head %}{{block.super}}
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	$(".result_row:even").addClass("even");
+	$(".result_row:odd").addClass("odd");
+	$('#id_search_query').toggleVal({populateFrom:"custom", text:"Search for a name, phone number, or email"}).addClass("prefilled");	
+});
+</script>
 {% endblock %}
-{% block content %}
-Search
-
+{% block page_content %}
+<div class="main_search_box">
+	<input name="search_query" id="id_search_query" />
+</div>
+<div class="search_results">
+	{% include "people/_search_results.html" %}
+</div>
 {% endblock %}

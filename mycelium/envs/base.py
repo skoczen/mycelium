@@ -74,6 +74,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 )
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 TEMPLATE_CONTEXT_PROCESSORS += (
@@ -104,6 +105,8 @@ INSTALLED_APPS = (
     
     'qi_toolkit',
     'google_analytics',
+    'django_extensions',
+    'pagination',
     'south',
     'django_nose',
 
