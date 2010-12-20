@@ -22,6 +22,7 @@ sorl-thumbnail
 tagging
 lorem-ipsum-generator
 nose
+ipython
 django-nose
 nose-exclude
 south

@@ -7,6 +7,7 @@ class Person(models.Model):
     
     class Meta(object):
         verbose_name_plural = "People"
+        ordering = ("first_name", "last_name")
 
     def __unicode__(self):
         return u"%s" % (self.full_name())
@@ -34,6 +35,15 @@ class Person(models.Model):
             else:
                 return None
 
+    def primary_address(self):
+        addresses = self.address_set.all()
+        if addresses.filter(primary=True).count() > 0:
+            return addresses.filter(primary=True)[0]
+        else:
+            if addresses.count() > 0:
+                return addresses[0]
+            else:
+                return None
 
 class ContactMethodType(models.Model):
     internal_name = models.CharField(max_length=255)
@@ -73,7 +83,7 @@ class Address(ContactMethod):
     postal_code = models.CharField(max_length=255)
 
     def __unicode__(self):
-        return "%(line_1)s, %(line_2)s, %(city)s, %(states)s %(postal_code)s" % (self)
+        return "%(line_1)s, %(line_2)s, %(city)s, %(state)s %(postal_code)s" % (self.__dict__)
 
     class Meta(object):
         verbose_name_plural = "Addresses"

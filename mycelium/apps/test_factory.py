@@ -52,7 +52,7 @@ class Factory:
         address = Address.objects.create(
             person=person,
             line_1=cls.rand_str(),
-            line_2="%s %s St." % (cls.rand_int(), cls.rand_str()), 
+            line_2="%s %s St." % (cls.rand_int(), cls.rand_str(cls.rand_int(6,12))), 
             city=cls.rand_str(),
             state=cls.rand_str(),
             postal_code=cls.rand_int(10000,99999)

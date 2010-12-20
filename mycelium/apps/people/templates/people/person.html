@@ -1,7 +1,102 @@
 {% extends "people/base.html" %}
 {% block head %}{{block.super}}
+<script type="text/javascript" charset="utf-8">
+	$(function(){
+		$(".striped tr:even").addClass("even");
+		$(".striped tr:odd").addClass("odd");
+	
+		$(".switch").click(function(){
+			var box = $(".switch_box",this);
+			if (box.hasClass("off")) {
+				box.removeClass("off").addClass("on");
+			} else {
+				box.removeClass("on").addClass("off");
+			}
+		})
+	})
+</script>
 {% endblock %}
 {% block page_content %}
-{{person}}
+<div id="detail_header">
+	<div class="switch">
+		<div class="left_label">Edit</div>
+		<div class="switch_box off">
+		<div class="left_switch">on</div>
+		<div class="right_switch">off</div>
+		</div>
+		<div class="right_label"></div>
+	</div>
+	<div class="small_search">
+		<input id="id_page_top_search" name="page_top_search" />
+	</div>
+</div>
 
+<div class="basic_info">
+	<div class="address">
+		{{person.primary_address.line_1}}<br/>
+		{{person.primary_address.line_2}}<br/>
+		{{person.primary_address.city}}, {{person.primary_address.state}} {{person.primary_address.postal_code}}<br/>
+		
+	</div>
+	<div class="name_phone_email">
+		<div class="name">
+			<span class="first_name">{{person.first_name}}</span>
+			<span class="last_name">{{person.last_name}}</span>
+		</div>
+		{% if person.primary_phone_number %}<div class="phone_number">{{person.primary_phone_number}}</div>{% endif %}
+		{% if person.primary_email %}<div class="email"><a href="mailto:{{person.primary_email}}">{{person.primary_email}}</a></div>{% endif %}
+	</div>
+</div>
+<div class="additional_information">
+	{# Extra emails, phone #s, Addresses #}
+</div>
+	
+	
+<div id="detail_tabs">
+	<a class="detail_tab" href="#">Conversations</a>
+	<a class="detail_tab" href="#">Participant</a>
+	<a class="detail_tab current" href="#">Volunteer</a>
+	<a class="detail_tab" href="#">Donor</a>
+</div>
+<div id="detail_tab_contents">
+	<div class="detail_header">Recent Volunteer Activity</div>
+	{# add btn #}
+	<table class="volunteer_shift_table striped">
+		<tr>
+			<td>3 hours</td>
+			<td>last wednesday</td>
+			<td>on Office Shift</td>
+		</tr>
+		<tr>
+			<td>2 hours</td>
+			<td>Nov 26</td>
+			<td>on Tabling</td>
+		</tr>
+		<tr>
+			<td>6 hours</td>
+			<td>Nov 14</td>
+			<td>on Training</td>
+		</tr>
+	</table>
+	<div class="detail_header">All Volunteer Activity</div>
+	{# add btn #}
+	<table class="volunteer_shift_table striped">
+		<tr>
+			<td>2010</td>
+			<td>83 hours</td>
+			<td><a href="#">See details</a></td>
+		</tr>
+		<tr>
+			<td>2009</td>
+			<td>136 hours</td>
+			<td><a href="#">See details</a></td>
+		</tr>
+		<tr>
+			<td>2008</td>
+			<td>42 hours</td>
+			<td><a href="#">See details</a></td>
+		</tr>
+		
+	</table>	
+</div>
 {% endblock %}
