@@ -1,6 +1,6 @@
 fabric
 psycopg2
-mysql-python
+# mysql-python
 pysqlite
 PIL
 python-memcached
@@ -24,3 +24,4 @@ lorem-ipsum-generator
 nose
 django-nose
 nose-exclude
+south

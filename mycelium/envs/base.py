@@ -103,14 +103,17 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     
     'qi_toolkit',
-    'django_nose',
     'google_analytics',
+    'south',
+    'django_nose',
 
     'hi',
     'email_list',
     'rewrite',
+    'people',
+    
 )
-
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
