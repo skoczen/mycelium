@@ -4,8 +4,25 @@
 $(function(){
 	$(".result_row:even").addClass("even");
 	$(".result_row:odd").addClass("odd");
-	$('#id_search_query').toggleVal({populateFrom:"custom", text:"Search for a name, phone number, or email"}).addClass("prefilled");	
+	$('#id_search_query').toggleVal({populateFrom:"custom", text:"Search for a name, phone number, or email"}).addClass("prefilled");
+	$("#id_search_query").live("keypress",update_search);
 });
+var q;
+function update_search() {
+	q = $("#id_search_query").val();
+	$.ajax({
+	  url: "{% url people:search_results %}",
+	  type: "GET",
+	  dataType: "json",
+	  data: {'q':q},
+	  success: function(json) {
+		$(".search_results").html(json.html);
+		$(".search_results .name a").each(function(){
+			$(this).html($(this).text().replace(new RegExp(q, "gi"),'<b>'+q+'</b>'));
+		});
+	 },
+	});
+}
 </script>
 {% endblock %}
 {% block page_content %}

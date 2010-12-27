@@ -13,3 +13,6 @@ def smoke_test_the_app2():
     p = f.person()
     smoke_test('people:person', reverse_args=(p.pk,))
 
+@istest
+def smoke_test_the_app3():
+    smoke_test('people:search_results')
