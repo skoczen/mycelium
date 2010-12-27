@@ -2,12 +2,16 @@
 {% block head %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 $(function(){
-	$(".result_row:even").addClass("even");
-	$(".result_row:odd").addClass("odd");
 	$('#id_search_query').toggleVal({populateFrom:"custom", text:"Search for a name, phone number, or email"}).addClass("prefilled");
-	$("#id_search_query").live("keypress",update_search);
+	$("#id_search_query").live("keydown",queue_searching);
+	update_stripes();
 });
 var q;
+var search_timeout;
+function queue_searching() {
+	clearTimeout(search_timeout);
+	search_timeout = setTimeout(update_search, 50);
+}
 function update_search() {
 	q = $("#id_search_query").val();
 	$.ajax({
@@ -15,19 +19,26 @@ function update_search() {
 	  type: "GET",
 	  dataType: "json",
 	  data: {'q':q},
+	  mode: 'abort',
 	  success: function(json) {
 		$(".search_results").html(json.html);
 		$(".search_results .name a").each(function(){
-			$(this).html($(this).text().replace(new RegExp(q, "gi"),'<b>'+q+'</b>'));
+			var rx = new RegExp(q, "gi")
+			$(this).html($(this).text().replace(rx,'<b>$&</b>'));
 		});
+		update_stripes();
 	 },
 	});
+}
+function update_stripes() {
+	$(".result_row:even").addClass("even");
+	$(".result_row:odd").addClass("odd");
 }
 </script>
 {% endblock %}
 {% block page_content %}
 <div class="main_search_box">
-	<input name="search_query" id="id_search_query" />
+	<label for="id_search_query">Search:</label> <input name="search_query" id="id_search_query" />
 </div>
 <div class="search_results">
 	{% include "people/_search_results.html" %}

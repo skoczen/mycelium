@@ -109,6 +109,7 @@ INSTALLED_APPS = (
     'pagination',
     'south',
     'django_nose',
+    'gunicorn',
 
     'hi',
     'email_list',

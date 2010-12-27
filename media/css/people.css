@@ -2,17 +2,17 @@ body {
 	background: url("../images/green_tweed_background.gif");
 }
 #id_search_query {
-	width: 94%;
+	width: 86%;
 	margin: 6px 0px;
 	padding: 4px;
 	border: 2px solid #DDD;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	padding-left: 4%;
-	font-size: 30px;
-	background-image: url("../images/search-32.png");
-	background-position: 6px 6px;
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	padding-left: 36px;
+	font-size: 24px;
+	background-image: url("../images/search-24.png");
+	background-position: 4px 6px;
 	background-repeat: no-repeat;
 }
 #id_search_query:focus {
@@ -21,6 +21,9 @@ body {
 }
 .main_search_box {
 	text-align: center;
+}
+.main_search_box label {
+	font-size: 24px;
 }
 .search_results {
 	width: 100%;
