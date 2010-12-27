@@ -2,7 +2,7 @@
 {% block head %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 $(function(){
-	$('#id_search_query').toggleVal({populateFrom:"custom", text:"Search for a name, phone number, or email"}).addClass("prefilled");
+	$('#id_search_query').toggleVal({populateFrom:"custom", text:"Type in a name, phone number, or email..."}).addClass("prefilled");
 	$("#id_search_query").live("keydown",queue_searching);
 	update_stripes();
 });

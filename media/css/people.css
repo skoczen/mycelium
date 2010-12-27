@@ -197,3 +197,10 @@ body {
 .volunteer_shift_table tr.even td {
 	background-color: #F2F2F2;
 }
+
+.no_people_found {
+	text-align: center;
+	color: #999;
+	padding: 10px;
+	font-size: 20px;
+}

@@ -34,7 +34,7 @@
 <div class="basic_info">
 	<div class="address">
 		{{person.primary_address.line_1}}<br/>
-		{{person.primary_address.line_2}}<br/>
+		{% if person.primary_address.line_2 %}{{person.primary_address.line_2}}<br/>{% endif %}
 		{{person.primary_address.city}}, {{person.primary_address.state}} {{person.primary_address.postal_code}}<br/>
 		
 	</div>
