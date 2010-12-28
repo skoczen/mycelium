@@ -17,9 +17,8 @@ def search(request):
 
 @json_view
 def search_results(request):
-    if 'q' in request.GET and request.GET['q'] != "":
-        q = request.GET['q']
-        people = Person.objects.filter(first_name__icontains=q) | Person.objects.filter(last_name__icontains=q)
+    if 'q' in request.GET:
+        people = Person.search(request.GET['q'])
     else:
         people = Person.objects.all()
     return {"html":render_to_string("people/_search_results.html", locals())}
