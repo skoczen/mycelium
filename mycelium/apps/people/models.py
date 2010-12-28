@@ -2,9 +2,14 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel
 
+import re
+DIGIT_REGEX = re.compile(r'[^\d]+')
+
 class Person(SimpleSearchableModel):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    
+    search_fields = ["first_name","last_name","primary_email", "searchable_primary_phone_number"]
     
     class Meta(object):
         verbose_name_plural = "People"
@@ -13,9 +18,18 @@ class Person(SimpleSearchableModel):
     def __unicode__(self):
         return u"%s" % (self.full_name())
 
+    @property
     def full_name(self):
         return "%s %s" % (self.first_name, self.last_name)
     
+    @property
+    def searchable_primary_phone_number(self):
+        if self.primary_phone_number:
+            return DIGIT_REGEX.sub('', "%s" % self.primary_phone_number.phone_number)
+        else:
+            return ''
+        
+    @property
     def primary_phone_number(self):
         phone_numbers = self.phonenumber_set.all()
         if phone_numbers.filter(primary=True).count() > 0:
@@ -26,6 +40,7 @@ class Person(SimpleSearchableModel):
             else:
                 return None
 
+    @property
     def primary_email(self):
         emails = self.emailaddress_set.all()
         if emails.filter(primary=True).count() > 0:
@@ -35,7 +50,7 @@ class Person(SimpleSearchableModel):
                 return emails[0]
             else:
                 return None
-
+    @property
     def primary_address(self):
         addresses = self.address_set.all()
         if addresses.filter(primary=True).count() > 0:
