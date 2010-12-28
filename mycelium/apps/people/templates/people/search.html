@@ -5,6 +5,7 @@ $(function(){
 	$('#id_search_query').toggleVal({populateFrom:"custom", text:"Type in a name, phone number, or email..."}).addClass("prefilled");
 	$("#id_search_query").live("keydown",queue_searching);
 	update_stripes();
+	$("#id_search_query").bind('keyup', 'return', open_if_only_result);
 });
 var q;
 var search_timeout;
@@ -33,6 +34,11 @@ function update_search() {
 function update_stripes() {
 	$(".result_row:even").addClass("even");
 	$(".result_row:odd").addClass("odd");
+}
+function open_if_only_result(e) {
+	if ($(".results_table").length == 1 && $(".results_table tr.result_row").length == 1) {
+		document.location = $(".results_table tr.result_row td.name a").attr("href");
+	}
 }
 </script>
 {% endblock %}

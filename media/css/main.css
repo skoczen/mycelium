@@ -306,9 +306,11 @@ input {
 	-webkit-text-shadow: 1px 1px 1px #06381C;
 	height: 70px;
 	
-	padding-left: 60px;
-/*	background: url("../images/goodcloud-logo-40.png");*/
-	background: url("../images/goodcloud-logo2-40.png");	
+	padding-left: 90px;
+	background: url("../images/goodcloud-logo-40.png");
+
+/*	padding-left: 60px;*/
+/*	background: url("../images/goodcloud-logo2-40.png");	*/
 	background-position: 5px 5px;
 	background-repeat: no-repeat;
 }
