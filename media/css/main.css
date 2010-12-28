@@ -236,6 +236,7 @@ input {
 	font-size: 20px;
 	padding: 6px;
 }
+/*input, textarea {outline-style:none;}*/
 #id_email {
 	width: 400px;
 	background: #FEFEFE;
