@@ -2,13 +2,13 @@ body {
 	background: url("../images/green_tweed_background.gif");
 }
 #id_search_query {
-	width: 86%;
+	width: 72%;
 	margin: 6px 0px;
 	padding: 4px;
 	border: 2px solid #DDD;
-	border-radius: 12px;
-	-moz-border-radius: 12px;
-	-webkit-border-radius: 12px;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
 	padding-left: 36px;
 	font-size: 24px;
 	background-image: url("../images/search-24.png");
@@ -21,8 +21,15 @@ body {
 	margin: 6px 0px;
 }
 .main_search_box {
-	text-align: center;
+	text-align: left;
+	margin-left: 6px;
 }
+.main_search_box .new_person_btn {
+	margin-top: 10px;
+	margin-right: 10px;
+	float: right;
+}
+
 .main_search_box label {
 	font-size: 24px;
 }

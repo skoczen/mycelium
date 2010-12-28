@@ -1,0 +1,18 @@
+.mycelium_btn {
+	background-color: #004486;
+	color: #FFF;
+	font-size: 18px;
+	padding: 6px 12px;
+	text-decoration: none;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+/*	box-shadow:		 	1px 1px 2px #454545;
+	-moz-box-shadow:    1px 1px 2px #454545;
+	-webkit-box-shadow: 1px 1px 2px #454545;
+*/
+}
+.mycelium_btn:hover {
+	background-color: #004390;
+	color: #FFF;	
+}

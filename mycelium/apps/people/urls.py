@@ -10,5 +10,5 @@ urlpatterns = parser.patterns('',
     url(r'search$',                           views.search,         name='search'),
     url(r'search-results$',                   views.search_results, name='search_results'),
     url(r'person/{person_id:digits}$',        views.person,         name='person'),
-    
+    url(r'person/new$',                       views.new_person,     name='new_person'),
 )

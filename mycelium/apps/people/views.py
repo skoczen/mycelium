@@ -28,3 +28,7 @@ def search_results(request):
 def person(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
     return locals()
+
+def new_person(request):
+    person = Person.objects.create()
+    return HttpResponseRedirect("%s?edit=ON" %reverse("people:person",args=(person.pk,)))

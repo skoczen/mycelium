@@ -16,3 +16,7 @@ def smoke_test_the_app2():
 @istest
 def smoke_test_the_app3():
     smoke_test('people:search_results')
+
+@istest
+def smoke_test_the_app4():
+    smoke_test('people:new_person', status_code=302)

@@ -68,6 +68,7 @@ function open_if_only_result(e) {
 {% endblock %}
 {% block page_content %}
 <div class="main_search_box">
+	<a href="{% url people:new_person %}" class="new_person_btn mycelium_btn">New Person</a>
 	<label for="id_search_query">Search:</label> <input name="search_query" id="id_search_query" />
 </div>
 <div class="search_results">
