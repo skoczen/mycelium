@@ -18,7 +18,8 @@ def search(request):
 @json_view
 def search_results(request):
     if 'q' in request.GET:
-        people = Person.search(request.GET['q'])
+        q = request.GET['q']
+        people = Person.search(q,ignorable_chars=["-","(",")"])
     else:
         people = Person.objects.all()
     return {"html":render_to_string("people/_search_results.html", locals())}

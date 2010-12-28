@@ -50,7 +50,12 @@ body {
 .results_table td {
 	padding: 5px;
 }
-
+.results_table .name {
+	width: 70%;
+}
+.results_table .phone {
+	width: 30%;
+}
 /*  switch  */
 .switch {
 	display: block;
