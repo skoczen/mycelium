@@ -4,27 +4,40 @@
 	$(function(){
 		$(".striped tr:even").addClass("even");
 		$(".striped tr:odd").addClass("odd");
-	
-		$(".switch").click(function(){
-			var box = $(".switch_box",this);
-			if (box.hasClass("off")) {
-				box.removeClass("off").addClass("on");
-				$(".basic_info.view").hide();
-				$(".basic_info.edit").show();
-			} else {
-				box.removeClass("on").addClass("off");
-				$(".basic_info.view").show();
-				$(".basic_info.edit").hide();
-			}
-		});
-		// $("input").autoGrowInput({comfortZone: 5,});
+		$(".save_info a").hide();
+
+		$(".switch").click(toggle_edit);
+		$("body").bind('keydown', 'ctrl+e', toggle_edit);
+		$("body").bind('keydown', 'alt+e', toggle_edit);
+		$("body").bind('keydown', 'meta+e', toggle_edit);
+		$("body").bind('keydown', 'ctrl+f', focus_search);
+
+		// $("input").autoGrowInput({comfortZone: 30,});
 		// $("input").check_width();
 		
 	})
+	function toggle_edit(){
+		var box = $(".switch_box",this);
+		if (box.hasClass("off")) {
+			box.removeClass("off").addClass("on");
+			$(".basic_info.view").hide();
+			$(".basic_info.edit").show();
+			$(".save_info a").show();
+		} else {
+			box.removeClass("on").addClass("off");
+			$(".basic_info.view").show();
+			$(".basic_info.edit").hide();
+			$(".save_info a").hide();
+		}
+	}
+	function focus_search(){
+		$("#id_page_top_search").focus();
+	}
 </script>
 {% endblock %}
 {% block page_content %}
 <div id="detail_header">
+	{# <a href="#" class="mycelium_btn">All People</a> #}
 	<div class="switch">
 		<div class="left_label">Edit</div>
 		<div class="switch_box off">
@@ -33,6 +46,10 @@
 		</div>
 		<div class="right_label"></div>
 	</div>
+	{# <div class="save_info"> #}
+	{# 	Last saved 4 days ago. #}
+	{# 	<a href="#" class="mycelium_btn myelium_gray">Saved</a> #}
+	{# </div> #}
 	<div class="small_search">
 		<input id="id_page_top_search" name="page_top_search" />
 	</div>

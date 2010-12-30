@@ -182,7 +182,7 @@ input {
 }
 .basic_info.edit .form_field {
 	margin: 0px;
-	border: 0px solid #FFF;
+	border: 0px solid #EEE;
 }
 .basic_info.view .form_field {
 /*	margin: 1px;*/
@@ -276,4 +276,15 @@ input {
 	color: #999;
 	padding: 10px;
 	font-size: 20px;
+}
+
+
+.save_info {
+	padding-top: 10px;
+	color: #AAA;
+	font-size: 13px;
+}
+.save_info a {
+	font-size: 14px;
+	padding: 4px 8px;
 }

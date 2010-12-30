@@ -16,3 +16,12 @@
 	background-color: #004390;
 	color: #FFF;	
 }
+
+.myelium_gray {
+	background-color: #EEE;
+	color: #999;
+}
+.myelium_gray:hover {
+	background-color: #DDD;
+	color: #454545;
+}
