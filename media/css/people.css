@@ -1,6 +1,11 @@
 body {
 	background: url("../images/green_tweed_background.gif");
 }
+input {
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+}
 #id_search_query {
 	width: 72%;
 	margin: 6px 0px;
@@ -77,9 +82,10 @@ body {
 .switch .switch_box {
 	float: left;
 	display: block;
+	margin-top: 4px;
 	width: 100px;
 	height: 30px;
-	border: 1px solid #AAA;
+	border: 0px solid #AAA;
 }
 .switch .switch_box .left_switch, .switch .switch_box .right_switch {
 	float: left;
@@ -90,7 +96,19 @@ body {
 	text-transform: uppercase;
 	font-size: 20px;
 	font-weight: bold;
+	display: none;
+
 }
+.switch .switch_box.off {
+	background-image: url("../images/switch-off.png");
+	background-repeat: no-repeat;
+}
+.switch .switch_box.on {
+	background-image: url("../images/switch-on.png");
+	background-repeat: no-repeat;
+}
+
+
 .switch .switch_box.off .left_switch {
 	background-color: #CCC;
 	color: #CCC;
@@ -98,6 +116,7 @@ body {
 	border-right: 1px solid #888;
 }
 .switch .switch_box.off .right_switch {
+
 	background-color: #AAA;
 	color: #0355aa;
 }
@@ -139,7 +158,8 @@ body {
 }
 .address {
 	display: block;
-	width: 50%;
+	width: 45%;
+	margin-right: 5%;
 	float: right;
 }
 
@@ -151,9 +171,49 @@ body {
 	padding: 20px 2%;
 	font-size: 20px;
 }
-.basic_info .name {
+.basic_info.edit {
+	display: none;
+}
+.basic_info .name, .basic_info .name input {
 	font-size: 30px;
 }
+.basic_info .name input {
+	width: 150px;
+}
+.basic_info.edit .form_field {
+	margin: 0px;
+	border: 0px solid #FFF;
+}
+.basic_info.view .form_field {
+/*	margin: 1px;*/
+	border: 1px solid #FFF;
+}
+.basic_info .line_1 input {
+	width: 200px;
+}
+.basic_info .line_2 input {
+	width: 200px;
+}
+.basic_info .city input{
+	width: 100px;
+}
+.basic_info .state input {
+	width: 30px;
+}
+.basic_info .postal_code input {
+	width: 60px;
+}
+.basic_info .phone_number input {
+	width: 300px;
+}
+.basic_info .email input {
+	width: 300px;
+}
+
+
+
+
+
 
 #detail_tabs {
 	width: 98%;

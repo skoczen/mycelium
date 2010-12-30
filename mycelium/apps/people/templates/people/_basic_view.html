@@ -1,0 +1,23 @@
+<div class="basic_info view">
+<div class="address">
+	<div class="line_1 form_field">{{person.primary_address.line_1}}</div>
+	{% if person.primary_address.line_2 %}<div class="line_2 form_field">{{person.primary_address.line_2}}</div>{% endif %}
+	<div class="city_state_zip">
+		<span class="city form_field">{{person.primary_address.city}}</span>{% if person.primary_address.city and person.primary_address.state %},{% endif %}
+		<span class="state form_field">{{person.primary_address.state}}</span>
+		<span class="postal_code form_field">{{person.primary_address.postal_code}}</span>
+	</div>
+</div>
+<div class="name_phone_email">
+	<div class="name">
+		<span class="first_name form_field">{{person.first_name}}</span>
+		<span class="last_name form_field">{{person.last_name}}</span>
+	</div>
+	{% if person.primary_phone_number %}
+		<div class="phone_number form_field">{{person.primary_phone_number}}</div>
+	{% endif %}
+	{% if person.primary_email %}
+		<div class="email form_field"><a href="mailto:{{person.primary_email}}">{{person.primary_email}}</a></div>
+	{% endif %}
+</div>
+</div>

@@ -9,10 +9,17 @@
 			var box = $(".switch_box",this);
 			if (box.hasClass("off")) {
 				box.removeClass("off").addClass("on");
+				$(".basic_info.view").hide();
+				$(".basic_info.edit").show();
 			} else {
 				box.removeClass("on").addClass("off");
+				$(".basic_info.view").show();
+				$(".basic_info.edit").hide();
 			}
-		})
+		});
+		// $("input").autoGrowInput({comfortZone: 5,});
+		// $("input").check_width();
+		
 	})
 </script>
 {% endblock %}
@@ -31,22 +38,9 @@
 	</div>
 </div>
 
-<div class="basic_info">
-	<div class="address">
-		{{person.primary_address.line_1}}<br/>
-		{% if person.primary_address.line_2 %}{{person.primary_address.line_2}}<br/>{% endif %}
-		{{person.primary_address.city}}, {{person.primary_address.state}} {{person.primary_address.postal_code}}<br/>
-		
-	</div>
-	<div class="name_phone_email">
-		<div class="name">
-			<span class="first_name">{{person.first_name}}</span>
-			<span class="last_name">{{person.last_name}}</span>
-		</div>
-		{% if person.primary_phone_number %}<div class="phone_number">{{person.primary_phone_number}}</div>{% endif %}
-		{% if person.primary_email %}<div class="email"><a href="mailto:{{person.primary_email}}">{{person.primary_email}}</a></div>{% endif %}
-	</div>
-</div>
+{% include "people/_basic_view.html" %}
+{% include "people/_basic_edit.html" %}
+
 <div class="additional_information">
 	{# Extra emails, phone #s, Addresses #}
 </div>
