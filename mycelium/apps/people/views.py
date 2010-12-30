@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
-from models import Person
+from people.models import Person
+from people.forms import PersonForm, EmailForm, AddressForm, PhoneForm
 
 @render_to("people/search.html")
 def search(request):
@@ -24,10 +25,52 @@ def search_results(request):
         people = Person.objects.all()
     return {"html":render_to_string("people/_search_results.html", locals())}
 
+def _basic_forms(person, request):
+    data = None
+    if request.method == "POST":
+        data = request.POST
+
+    form         = PersonForm(data, instance=person)
+    email_form   = EmailForm(data, instance=person.primary_email)
+    address_form = AddressForm(data, instance=person.primary_address)
+    phone_form   = PhoneForm(data, instance=person.primary_phone_number)
+
+    return (form, email_form, address_form, phone_form)
+
 @render_to("people/person.html")
 def person(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
+    form, email_form, address_form, phone_form = _basic_forms(person, request)
     return locals()
+
+@json_view
+def save_person_basic_info(request, person_id):
+    person = get_object_or_404(Person,pk=person_id)
+    form, email_form, address_form, phone_form = _basic_forms(person, request)
+    success = False
+    if form.is_valid() and email_form.is_valid() and address_form.is_valid() and phone_form.is_valid():
+        person = form.save()
+        
+        email_form.save(commit=False)
+        email_form.person = person
+        email_form.save()
+        
+        address_form.save(commit=False)
+        address_form.person = person
+        address_form.save()
+        
+        phone_form.save(commit=False)
+        phone_form.person = person
+        phone_form.save()
+        success = True
+    else:
+        print "invalid"
+        print form
+        print email_form
+        print address_form
+        print phone_form
+    return {"success":success}
+
 
 def new_person(request):
     person = Person.objects.create()

@@ -1,0 +1,16 @@
+.edit_field {
+	display: none;
+}
+
+.edit_mode_on .edit_field {
+	display: inherit;
+}
+.edit_mode_on .view_field {
+	display: none;
+}
+.edit_mode_off .edit_field {
+	display: none;
+}
+.edit_mode_off .view_field {
+	display: inherit;
+}

@@ -115,6 +115,7 @@ INSTALLED_APPS = (
     'email_list',
     'rewrite',
     'people',
+    'mycelium_core',
     
 )
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

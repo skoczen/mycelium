@@ -1,0 +1,6 @@
+{% load generic_fields %}{% spaceless %}
+<span class="generic_editable_field" id="container_id_{{field.html_name}}">
+	<span class="view_field">{{field|field_value}}</span>
+	<span class="edit_field">{{field}}</span>
+</span>
+{% endspaceless %}

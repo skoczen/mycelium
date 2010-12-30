@@ -1,4 +1,5 @@
 {% extends "people/base.html" %}
+{% load i18n generic_fields %}
 {% block head %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 	$(function(){
@@ -14,6 +15,7 @@
 
 		// $("input").autoGrowInput({comfortZone: 30,});
 		// $("input").check_width();
+		$("form input").live("change", save_basic_form)
 		
 	})
 	function toggle_edit(){
@@ -23,17 +25,35 @@
 			$(".basic_info.view").hide();
 			$(".basic_info.edit").show();
 			$(".save_info a").show();
+			$("#basic_info_form").removeClass("edit_mode_off").addClass("edit_mode_on");
 		} else {
 			box.removeClass("on").addClass("off");
 			$(".basic_info.view").show();
 			$(".basic_info.edit").hide();
 			$(".save_info a").hide();
+			$("#basic_info_form").addClass("edit_mode_off").removeClass("edit_mode_on");
 		}
 	}
 	function focus_search(){
 		$("#id_page_top_search").focus();
 	}
+	function save_basic_form() {
+		$.ajax({
+		  url: $("#basic_info_form").attr("action"),
+		  type: "POST",
+		  dataType: "json",
+		  data: $.param( $("#basic_info_form input") ),
+			  success: function(json) {
+				alert("success:" + json.success);
+			 },
+		
+			  error: function() {
+				alert("error");
+			  },
+		});
+	}
 </script>
+{% generic_field_head %}
 {% endblock %}
 {% block page_content %}
 <div id="detail_header">
@@ -55,8 +75,33 @@
 	</div>
 </div>
 
-{% include "people/_basic_view.html" %}
-{% include "people/_basic_edit.html" %}
+
+<form action="{% url people:person_save_basic person.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
+<div class="basic_info">
+	<div class="address">
+		{% generic_editable_field address_form.line_1 %}
+		{% generic_editable_field address_form.line_2 %}
+
+		<div class="city_state_zip">
+			{% generic_editable_field address_form.city %}
+			{% generic_editable_field address_form.state %},
+			{% generic_editable_field address_form.postal_code %}
+		</div>
+	
+	</div>
+	<div class="name_phone_email">
+		<div class="name">
+			{% generic_editable_field form.first_name %}
+			{% generic_editable_field form.last_name %}
+		</div>
+		{% generic_editable_field phone_form.phone_number %}
+		{% generic_editable_field email_form.email %}
+	</div>
+</div>
+</form>
+
+{# {% include "people/_basic_view.html" %} #}
+{# {% include "people/_basic_edit.html" %} #}
 
 <div class="additional_information">
 	{# Extra emails, phone #s, Addresses #}

@@ -20,3 +20,9 @@ def smoke_test_the_app3():
 @istest
 def smoke_test_the_app4():
     smoke_test('people:new_person', status_code=302)
+
+@istest
+def smoke_test_the_app5():
+    f = Factory()
+    p = f.person()
+    smoke_test('people:person_save_basic', reverse_args=(p.pk,))

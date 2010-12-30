@@ -92,11 +92,11 @@ class PhoneNumber(ContactMethod):
         return "%s" % self.phone_number
 
 class Address(ContactMethod):
-    line_1 = models.CharField(max_length=255)
-    line_2 = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    state = models.CharField(max_length=255)
-    postal_code = models.CharField(max_length=255)
+    line_1 = models.CharField(max_length=255, blank=True, null=True)
+    line_2 = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=255, blank=True, null=True)
+    state = models.CharField(max_length=255, blank=True, null=True)
+    postal_code = models.CharField(max_length=255, blank=True, null=True)
 
     def __unicode__(self):
         return "%(line_1)s, %(line_2)s, %(city)s, %(state)s %(postal_code)s" % (self.__dict__)

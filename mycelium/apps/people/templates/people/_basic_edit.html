@@ -1,3 +1,4 @@
+<form action="{% url people:person_save_basic person.pk %}" method="POST">
 <div class="basic_info edit">
 <div class="address">
 	<div class="line_1 form_field"><input type="text" value="{{person.primary_address.line_1}}" /></div>
@@ -26,3 +27,4 @@
 	{% endif %}
 </div>
 </div>
+</form>
