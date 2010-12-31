@@ -277,3 +277,12 @@ input.hovered.prefilled {
 input.prefilled.tv-focused {
 	border: 2px solid #0355aa;
 }
+#test_badge {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background: url("../images/test-badge-right.png");
+	width: 150px;
+	height: 150px;
+	z-index: 5000;
+}
