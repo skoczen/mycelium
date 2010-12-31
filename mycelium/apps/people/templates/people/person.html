@@ -76,26 +76,26 @@
 {% generic_field_head %}
 {% endblock %}
 {% block page_content %}
-<div id="detail_header">
+<div id="page_header">
 	<div class="small_search">
 		<input id="id_page_top_search" name="page_top_search" />
 		<div class="nyi"><img src="{{MEDIA_URL}}images/up-pointout-arrow-20.png"/> Sorry, this part isn't done yet!</div>
 		
 	</div>
 
-	{# <a href="#" class="mycelium_btn">All People</a> #}
-	<div class="switch">
+	{# <a href="{% url people:search %}" class="mycelium_btn mycelium_left_arrow_btn">All People</a> #}
+	<span class="switch">
 		<div class="left_label">Edit</div>
 		<div class="switch_box off">
 		<div class="left_switch">on</div>
 		<div class="right_switch">off</div>
 		</div>
 		<div class="right_label"></div>
-	</div>
-	<div class="save_info">
+	</span>
+	<span class="save_info">
 		<span class="last_save_time">Last saved {{person.modified_at|pretty_timesince}}.</span>
 		{# <a href="#" class="mycelium_btn myelium_gray">Saved</a> #}
-	</div>
+	</span>
 </div>
 
 

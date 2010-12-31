@@ -72,11 +72,23 @@ input:focus {
 .results_table .phone {
 	width: 30%;
 }
+#page_header {
+	padding: 10px 5px;
+}
+
+#page_header .mycelium_left_arrow_btn {
+	float: left;
+	margin: 1px 0px 0px 6px;
+
+}
+
 /*  switch  */
 .switch {
 	display: block;
+	clear: none;
 	margin-left: 10px;
 	cursor: pointer;
+	position: relative;
 }
 .switch .left_label {
 	float: left;
@@ -144,7 +156,7 @@ input:focus {
 }
 .small_search #id_page_top_search {
 	font-size: 18px;
-	margin: 6px 0px;
+	margin: 0px;
 	padding: 4px 4px;
 	border: 2px solid #DDD;
 	border-radius: 4px;
@@ -283,6 +295,7 @@ input:focus {
 	color: #45454;
 	border: 1px solid #BBB;
 	border-width: 0px 0px 1px 0px;
+	padding-top: 4px;
 }
 .volunteer_shift_table {
 	width: 100%;
@@ -301,6 +314,7 @@ input:focus {
 
 
 .save_info {
+	display: block;
 	padding-top: 10px;
 	color: #AAA;
 	font-size: 13px;

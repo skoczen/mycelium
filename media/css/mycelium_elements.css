@@ -25,3 +25,16 @@
 	background-color: #DDD;
 	color: #454545;
 }
+.mycelium_left_arrow_btn, .mycelium_left_arrow_btn:hover {
+	padding: 5px 12px 5px 25px ;
+	background-color: transparent;
+	background-image: url("../images/mycelium-left-button-grey-28.png");
+	background-position: 0px 50%;
+	background-repeat: no-repeat;
+	color: #284E72;
+	border: 1px solid #d8d8d8;
+	border-width: 0px 1px 0px 0px;
+}
+.mycelium_left_arrow_btn:hover {
+	color: #004390;
+}
