@@ -25,11 +25,13 @@
 					$(".small_search .nyi").fadeIn();
 				}
 			}, 100)
-
-		})
+		});
+		{% if request.GET.edit == "ON" %}
+		toggle_edit();
+		{% endif %}
 	});
 	function toggle_edit(){
-		var box = $(".switch_box",this);
+		var box = $(".switch_box");
 		if (box.hasClass("off")) {
 			box.removeClass("off").addClass("on");
 			$(".basic_info.view").hide();
@@ -44,6 +46,7 @@
 			$(".save_info a").hide();
 			$("#basic_info_form").addClass("edit_mode_off").removeClass("edit_mode_on");
 		}
+		return false;
 	}
 	function focus_search(){
 		$("#id_page_top_search").focus();
