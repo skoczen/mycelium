@@ -192,26 +192,21 @@ input:focus {
 /*	margin: 1px;*/
 	border: 1px solid #FFF;
 }
-.basic_info .line_1 input {
-	width: 200px;
+
+.basic_info .name {
+	display: block;
 }
-.basic_info .line_2 input {
-	width: 200px;
+.basic_info .name .generic_editable_field {
+	display: inline;
 }
-.basic_info .city input{
-	width: 100px;
+.basic_info .name .generic_editable_field input {
+	min-width: 20%;
 }
-.basic_info .state input {
-	width: 30px;
+.basic_info .generic_editable_field {
+	display: block;
 }
-.basic_info .postal_code input {
-	width: 60px;
-}
-.basic_info .phone_number input {
-	width: 300px;
-}
-.basic_info .email input {
-	width: 300px;
+.basic_info .generic_editable_field input {
+	min-width: 70%;
 }
 
 
@@ -287,6 +282,7 @@ input:focus {
 	padding-top: 10px;
 	color: #AAA;
 	font-size: 13px;
+
 }
 .save_info a {
 	font-size: 14px;

@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
+from django.template.loader import render_to_string
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/head.html')
 def generic_field_head(include_context=True):
@@ -15,6 +16,12 @@ def generic_field_head(include_context=True):
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
 def generic_editable_field(field, field_type="input",include_context=True):
     MEDIA_URL = settings.MEDIA_URL
+    return locals()
+
+@register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
+def generic_editable_field_email(field, field_type="input",include_context=True):
+    MEDIA_URL = settings.MEDIA_URL
+    generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_email_view.html",locals())
     return locals()
 
 # @register.inclusion_tag('mycelium_core/template_tags/generic_fields/edit.html')

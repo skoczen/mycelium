@@ -12,12 +12,10 @@
 		$("body").bind('keydown', 'alt+e', toggle_edit);
 		$("body").bind('keydown', 'meta+e', toggle_edit);
 		$("body").bind('keydown', 'ctrl+f', focus_search);
-
-		// $("input").autoGrowInput({comfortZone: 30,});
 		// $("input").check_width();
 		$("form input").live("change", save_basic_form)
-		
-	})
+		$("input").autoGrowInput({comfortZone: 30, resizeNow:true});
+	});
 	function toggle_edit(){
 		var box = $(".switch_box",this);
 		if (box.hasClass("off")) {
@@ -37,17 +35,25 @@
 	function focus_search(){
 		$("#id_page_top_search").focus();
 	}
+	var saving_timeout;
 	function save_basic_form() {
+		savingTimeout = setTimeout(function(){$(".last_save_time").html("Saving...");},200);
 		$.ajax({
 		  url: $("#basic_info_form").attr("action"),
 		  type: "POST",
 		  dataType: "json",
 		  data: $.param( $("#basic_info_form input") ),
 			  success: function(json) {
-				alert("success:" + json.success);
+				clearTimeout(savingTimeout);
+				$(".generic_editable_field").each(function(){
+					var field = $(this);
+					$(".view_field",field).html($(".edit_field input",field).val());
+				});
+				$(".last_save_time").html("Last saved a few seconds ago.")
 			 },
 		
 			  error: function() {
+				clearTimeout(savingTimeout);
 				alert("error");
 			  },
 		});
@@ -57,6 +63,10 @@
 {% endblock %}
 {% block page_content %}
 <div id="detail_header">
+	<div class="small_search">
+		<input id="id_page_top_search" name="page_top_search" />
+	</div>
+
 	{# <a href="#" class="mycelium_btn">All People</a> #}
 	<div class="switch">
 		<div class="left_label">Edit</div>
@@ -66,12 +76,9 @@
 		</div>
 		<div class="right_label"></div>
 	</div>
-	{# <div class="save_info"> #}
-	{# 	Last saved 4 days ago. #}
-	{# 	<a href="#" class="mycelium_btn myelium_gray">Saved</a> #}
-	{# </div> #}
-	<div class="small_search">
-		<input id="id_page_top_search" name="page_top_search" />
+	<div class="save_info">
+		<span class="last_save_time">Last saved 4 days ago.</span>
+		{# <a href="#" class="mycelium_btn myelium_gray">Saved</a> #}
 	</div>
 </div>
 
@@ -95,7 +102,7 @@
 			{% generic_editable_field form.last_name %}
 		</div>
 		{% generic_editable_field phone_form.phone_number %}
-		{% generic_editable_field email_form.email %}
+		{% generic_editable_field_email email_form.email %}
 	</div>
 </div>
 </form>

@@ -5,7 +5,8 @@ $.fn.autoGrowInput = function(o) {
     o = $.extend({
         maxWidth: 1000,
         minWidth: 0,
-        comfortZone: 70
+        comfortZone: 70,
+        resizeNow: false,
     }, o);
 
     this.filter('input:text').each(function(){
@@ -13,7 +14,7 @@ $.fn.autoGrowInput = function(o) {
         var minWidth = o.minWidth || $(this).width(),
             val = '',
             input = $(this),
-            testSubject = $('<tester/>').css({
+            testSubject = $('<span/>').css({
                 position: 'absolute',
                 top: -9999,
                 left: -9999,
@@ -24,12 +25,12 @@ $.fn.autoGrowInput = function(o) {
                 letterSpacing: input.css('letterSpacing'),
                 whiteSpace: 'nowrap'
             }),
-            check = function() {
+            check = function(override) {
+                if (override!=true && val === input.val()) {return;}
 
-                if (val === (val = input.val())) {return;}
-
+                val = input.val()
                 // Enter new content into testSubject
-                var escaped = val.replace(/&/g, '&amp;').replace(/\s/g,' ').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                var escaped = val.replace(/&/g, '&amp;').replace(/\s/g,' ').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(' ', '&nbsp;');
                 testSubject.html(escaped);
 
                 // Calculate new width + whether to change
@@ -47,10 +48,20 @@ $.fn.autoGrowInput = function(o) {
             };
 
         testSubject.insertAfter(input);
+        if (o.resizeNow) {
+            initial_check();
+        }
 
         $(this).bind('keyup keydown blur update', check);
         $(this).check_width = check;
-
+        
+        function initial_check() {
+            if (input.width() <= 0) {
+                setTimeout(initial_check, 200);
+            } else {
+                check(true);
+            }    
+        };
     });
 
     return this;
