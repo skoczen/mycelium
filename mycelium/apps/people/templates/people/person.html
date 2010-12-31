@@ -15,7 +15,18 @@
 		// $("input").check_width();
 		$(".last_save_time").hide();
 		$("form input").live("change", save_basic_form)
-		$("input").autoGrowInput({comfortZone: 30, resizeNow:true});
+		$("form input").autoGrowInput({comfortZone: 30, resizeNow:true});
+		
+		$("#id_page_top_search").bind("keydown", function(){
+			setTimeout(function(){
+				if ($("#id_page_top_search").val() == "") {
+					$(".small_search .nyi").fadeOut();
+				} else {
+					$(".small_search .nyi").fadeIn();
+				}
+			}, 100)
+
+		})
 	});
 	function toggle_edit(){
 		var box = $(".switch_box",this);
@@ -68,6 +79,8 @@
 <div id="detail_header">
 	<div class="small_search">
 		<input id="id_page_top_search" name="page_top_search" />
+		<div class="nyi"><img src="{{MEDIA_URL}}images/up-pointout-arrow-20.png"/> Sorry, this part isn't done yet!</div>
+		
 	</div>
 
 	{# <a href="#" class="mycelium_btn">All People</a> #}

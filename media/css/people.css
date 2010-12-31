@@ -310,3 +310,11 @@ input:focus {
 	font-size: 14px;
 	padding: 4px 8px;
 }
+.nyi {
+	display: none;
+	color: #777;
+	text-align: center;
+}
+.nyi img {
+	vertical-align: middle;
+}
