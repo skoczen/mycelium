@@ -48,20 +48,23 @@ def save_person_basic_info(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
     form, email_form, address_form, phone_form = _basic_forms(person, request)
     success = False
-    if form.is_valid() and email_form.is_valid() and address_form.is_valid() and phone_form.is_valid():
+    if form.is_valid():
         person = form.save()
         
-        email_form.save(commit=False)
-        email_form.person = person
-        email_form.save()
-        
-        address_form.save(commit=False)
-        address_form.person = person
-        address_form.save()
-        
-        phone_form.save(commit=False)
-        phone_form.person = person
-        phone_form.save()
+        if email_form.is_valid():
+            email = email_form.save(commit=False)
+            email.person = person
+            email.save()
+
+        if address_form.is_valid():
+            address = address_form.save(commit=False)
+            address.person = person
+            address.save()
+
+        if phone_form.is_valid():
+            phone = phone_form.save(commit=False)
+            phone.person = person
+            phone.save()
         success = True
     else:
         print "invalid"

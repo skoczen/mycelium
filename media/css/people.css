@@ -82,6 +82,7 @@ input:focus {
 	float: left;
 	font-size: 26px;
 	margin-right: 8px;
+	margin-top: 1px;
 }
 .switch .switch_box {
 	float: left;
@@ -196,17 +197,38 @@ input:focus {
 .basic_info .name {
 	display: block;
 }
+.basic_info  .generic_editable_field {
+	display: block;
+}
 .basic_info .name .generic_editable_field {
 	display: inline;
 }
-.basic_info .name .generic_editable_field input {
+.basic_info .name_phone_email .name .generic_editable_field input {
 	min-width: 20%;
 }
-.basic_info .generic_editable_field {
-	display: block;
+
+.basic_info .name_phone_email .generic_editable_field input {
+	min-width: 30%;
 }
-.basic_info .generic_editable_field input {
+#container_id_line_1 input, #container_id_line_2 input{
 	min-width: 70%;
+}
+.view_field {
+	border: 1px solid #FFF;
+}
+
+#container_id_city, #container_id_state, #container_id_postal_code {
+	display: inline;
+	width: auto;
+}
+#container_id_city {
+	min-width: 100px;
+}
+#container_id_state {
+	min-width: 20px;
+}
+#container_id_postal_code {
+	min-width: 50px;
 }
 
 

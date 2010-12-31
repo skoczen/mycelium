@@ -13,6 +13,7 @@
 		$("body").bind('keydown', 'meta+e', toggle_edit);
 		$("body").bind('keydown', 'ctrl+f', focus_search);
 		// $("input").check_width();
+		$(".last_save_time").hide();
 		$("form input").live("change", save_basic_form)
 		$("input").autoGrowInput({comfortZone: 30, resizeNow:true});
 	});
@@ -24,6 +25,7 @@
 			$(".basic_info.edit").show();
 			$(".save_info a").show();
 			$("#basic_info_form").removeClass("edit_mode_off").addClass("edit_mode_on");
+			$(".last_save_time").fadeIn();
 		} else {
 			box.removeClass("on").addClass("off");
 			$(".basic_info.view").show();
@@ -49,7 +51,8 @@
 					var field = $(this);
 					$(".view_field",field).html($(".edit_field input",field).val());
 				});
-				$(".last_save_time").html("Last saved a few seconds ago.")
+				$(".last_save_time").hide();
+				$(".last_save_time").html("Last saved 2 seconds ago.").fadeIn();
 			 },
 		
 			  error: function() {
