@@ -1,11 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext as _
-from qi_toolkit.models import SimpleSearchableModel
+from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 
-class Person(SimpleSearchableModel):
+class Person(SimpleSearchableModel, TimestampModelMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     
@@ -76,7 +76,7 @@ class ContactMethod(models.Model):
     class Meta(object):
         abstract = True
 
-class EmailAddress(ContactMethod):
+class EmailAddress(ContactMethod, TimestampModelMixin):
     email = models.EmailField(max_length=255)
 
     def __unicode__(self):
@@ -85,13 +85,13 @@ class EmailAddress(ContactMethod):
     class Meta(object):
         verbose_name_plural = "Email Addresses"
 
-class PhoneNumber(ContactMethod):
+class PhoneNumber(ContactMethod, TimestampModelMixin):
     phone_number = models.CharField(max_length=255)
 
     def __unicode__(self):
         return "%s" % self.phone_number
 
-class Address(ContactMethod):
+class Address(ContactMethod, TimestampModelMixin):
     line_1 = models.CharField(max_length=255, blank=True, null=True)
     line_2 = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255, blank=True, null=True)

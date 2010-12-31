@@ -1,5 +1,5 @@
 {% extends "people/base.html" %}
-{% load i18n generic_fields %}
+{% load i18n generic_fields friendly_data_formatting %}
 {% block head %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 	$(function(){
@@ -52,7 +52,7 @@
 					$(".view_field",field).html($(".edit_field input",field).val());
 				});
 				$(".last_save_time").hide();
-				$(".last_save_time").html("Last saved 2 seconds ago.").fadeIn();
+				$(".last_save_time").html("Last saved a few seconds ago.").fadeIn();
 			 },
 		
 			  error: function() {
@@ -80,7 +80,7 @@
 		<div class="right_label"></div>
 	</div>
 	<div class="save_info">
-		<span class="last_save_time">Last saved 4 days ago.</span>
+		<span class="last_save_time">Last saved {{person.modified_at|pretty_timesince}}.</span>
 		{# <a href="#" class="mycelium_btn myelium_gray">Saved</a> #}
 	</div>
 </div>
