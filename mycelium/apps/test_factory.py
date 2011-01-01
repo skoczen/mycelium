@@ -36,3 +36,7 @@ class Factory(QiFactory):
         cls.phone(person)
         cls.email(person)
         return person
+
+
+    def report(cls):
+        return None

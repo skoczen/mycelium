@@ -1,0 +1,12 @@
+body {
+	background: url("../images/green_tweed_background.gif");
+}
+input {
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+}
+input:focus {
+	outline-style:none;
+	border: 1px solid #3E9CFD;
+}

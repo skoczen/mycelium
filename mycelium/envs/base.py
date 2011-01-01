@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'rewrite',
     'people',
     'mycelium_core',
+    'reports',
     
 )
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

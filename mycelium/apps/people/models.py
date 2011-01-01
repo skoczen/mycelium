@@ -16,7 +16,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin):
         ordering = ("first_name", "last_name")
 
     def __unicode__(self):
-        return u"%s" % (self.full_name())
+        return u"%s" % (self.full_name)
 
     @property
     def full_name(self):
