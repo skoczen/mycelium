@@ -1,0 +1,9 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n cache cms_tags menu_tags %}
+{% block head %}{{block.super}}
+{% endblock %}
+{% block page_content %}
+<div id="page_content">
+{% placeholder page_content %}
+</div>
+{% endblock %}

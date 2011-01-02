@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block head %}{{block.super}}
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/marketing_site.css" type="text/css" media="screen" title="" charset="utf-8">
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.scrollTo-min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.toggleval.js"> </script>
+
+{% endblock %}
+{% block content %}
+	{% include "marketing_site/_top_nav.html" %}
+	{% block page_content %}
+	{% endblock %}
+{% endblock %}

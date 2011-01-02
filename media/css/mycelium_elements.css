@@ -22,6 +22,7 @@
 	font-size: 36px;
 }
 
+
 #main_nav {
 	display: block;
 	position: absolute;	
@@ -54,6 +55,7 @@
 #main_nav a.current {
 	border-bottom: 4px solid #3E9CFD;
 }
+
 
 #page {
 	display: block;

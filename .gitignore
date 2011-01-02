@@ -6,3 +6,5 @@
 db/core*
 pip-log.txt
 db/full_backup.json
+
+media/cms

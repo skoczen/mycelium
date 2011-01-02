@@ -1,0 +1,9 @@
+{% load i18n %}{% load cache cms_tags menu_tags %}
+{% block nav %}
+<div id="logo">
+	GoodCloud
+</div>
+<div id="main_nav">{% spaceless %}
+	{% show_menu %}	
+{% endspaceless %}</div>
+{% endblock %}

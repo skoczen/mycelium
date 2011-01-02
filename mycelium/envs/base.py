@@ -1,10 +1,11 @@
 # Django settings for mycelium project.
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 import os, sys
 from os.path import abspath, dirname, join
+gettext = lambda s: s
+
 PROJECT_ROOT = join(abspath(dirname(__file__)), "../")
 LIB_DIR = join(PROJECT_ROOT, 'lib')
 APPS_DIR = join(PROJECT_ROOT, 'apps')
@@ -45,7 +46,12 @@ DATABASES = {
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
 TIME_ZONE = None
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+LANGUAGES = (
+        # ('fr', gettext('French')),
+        # ('de', gettext('German')),
+        ('en', gettext('English')),
+)
 SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
@@ -75,6 +81,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
+    
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    # 'cms.middleware.multilingual.MultilingualURLMiddleware',
+    'cms.middleware.media.PlaceholderMediaMiddleware',
 )
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 TEMPLATE_CONTEXT_PROCESSORS += (
@@ -83,6 +94,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     "django.core.context_processors.request",
     'django.core.context_processors.auth',
     
+    "cms.context_processors.media",
     "qi_toolkit.context_processors.add_env_to_request",
 )
 
@@ -111,6 +123,18 @@ INSTALLED_APPS = (
     'south',
     'django_nose',
     'gunicorn',
+    
+    #django-cms
+    'cms',
+    'mptt',
+    'menus',
+    'cms.plugins.text',
+    'cms.plugins.picture',
+    'cms.plugins.link',
+    'cms.plugins.file',
+    'cms.plugins.snippet',
+    'cms.plugins.googlemap',
+    'form_designer',
 
     'marketing_site',
     'email_list',
@@ -132,3 +156,9 @@ GOOGLE_ANALYTICS_MODEL = True
 ENV = "LIVE"
 SEND_BROKEN_LINK_EMAILS = True
 
+
+CMS_TEMPLATES = (
+    ('marketing_site/home.html', 'Home Page'),
+    ('marketing_site/normal_page.html', 'Normal Page'),
+)
+CMS_MENU_TITLE_OVERWRITE = True
