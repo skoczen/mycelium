@@ -113,6 +113,9 @@ table.report_results {
 table.report_results td {
 	padding: 2px;
 }
+table.report_results .view_results, table.report_results .download_csv {
+	width: 10%;
+}
 
 .total_results {
 	padding: 4px 10px;
