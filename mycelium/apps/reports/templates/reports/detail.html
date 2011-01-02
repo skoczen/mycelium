@@ -6,21 +6,16 @@
 </script>
 {% endblock %}
 {% block page_content %}
-<div class="title">New Report</div>
+<div class="right_actions">
+	<a href="#" class="mycelium_btn">Save Report</a>
+	<a href="#" class="mycelium_btn">Download CSV</a>
+</div>
+<div class="title"><img src="{{MEDIA_URL}}images/report-32.png"/>Unsaved Report</div>
 
-<div class="setup_phrase">For all of the people who...</div>
+<div class="setup_phrase">Find all of the people who:</div>
 <div class="criteria_list">
 	<div class="criterium">
-		<span class="tense">are</span>
-		<span class="negator"></span>
-		<span class="left_side">aged</span>
-		<span class="operator">more than</span>
-		<span class="right_side">
-			<span class="value">30</span>
-			<span class="units">years</span>
-		</span>
-	</div>
-	<div class="criterium">
+		<span class="additive"></span>
 		<span class="tense">have</span>
 		<span class="negator"></span>
 		<span class="left_side">donated</span>
@@ -28,6 +23,16 @@
 		<span class="right_side">
 			<span class="value">6</span>
 			<span class="units">months</span>
+		</span>
+	</div>
+	<div class="criterium">
+		<span class="tense">are</span>
+		<span class="negator"></span>
+		<span class="left_side"></span>
+		<span class="operator">more than</span>
+		<span class="right_side">
+			<span class="value">30</span>
+			<span class="units">years old</span>
 		</span>
 	</div>
 	<div class="criterium">
@@ -45,7 +50,7 @@
 	</div>
 </div>
 
-<div class="setup_phrase">make a report that includes these columns:</div>
+<div class="setup_phrase">Make a report that includes these columns:</div>
 <div class="column_list">
 	<div class="column"><input type="checkbox" checked id="id_first_name"><label for="id_first_name">First Name</label></div>
 	<div class="column"><input type="checkbox" checked id="id_last_name"><label for="id_last_name">Last Name </label></div>
@@ -90,8 +95,5 @@
 </table>
 </div>
 
-<div class="actions">
-	<a href="#" class="mycelium_btn">Save Report</a>
-	<a href="#" class="mycelium_btn">Download CSV</a>
-</div>
+
 {% endblock %}

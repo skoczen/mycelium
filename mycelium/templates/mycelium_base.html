@@ -17,9 +17,9 @@
 		GoodCloud
 	</div>
 	<div id="main_nav">{% spaceless %}
-		<a href="{% url people:search %}" class="current">People</a>
+		<a href="{% url people:search %}" {% if not section %}class="current"{% endif %}>People</a>
 		<a href="#">Fund{# Multiply #}</a>
-		<a href="#">Reports{# Yardstick #}</a>
+		<a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports{# Yardstick #}</a>
 		<a href="#">Communicate{# Soapbox #}</a>
 		<a href="#">Events{# Shindig #}</a>
 	{% endspaceless %}</div>

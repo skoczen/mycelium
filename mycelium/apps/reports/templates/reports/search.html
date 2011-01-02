@@ -1,9 +1,39 @@
 {% extends "reports/base.html" %}
+{% load humanize %}
 {% block head %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 
 </script>
 {% endblock %}
 {% block page_content %}
-Search Reports
+<div class="small_search">
+	<input id="id_page_top_search" name="page_top_search" />
+</div>
+<div class="title"><img src="{{MEDIA_URL}}images/report-32.png"/>Reports</div>
+
+<div class="report_list">
+	<a href="{% url reports:new_report %}" class="mycelium_btn">New Report</a>
+	<table class="report_results">
+		{% for r in all_reports %}
+		<tr>
+		</tr>
+		{% endfor %}
+		<tr>
+			<td><a href="{% url reports:report_detail 1 %}" >Thursday Volunteer List</a></td>
+			<td>53 people</td>
+			<td><a href="#" class="mycelium_btn myelium_small_btn">Download CSV</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url reports:report_detail 1 %}" >2010 Monthly Donors</a></td>
+			<td>162 people</td>
+			<td><a href="#" class="mycelium_btn myelium_small_btn">Download CSV</a></td>
+		</tr>
+		<tr>
+			<td><a href="{% url reports:report_detail 1 %}" >Active Email Subscriptions</a></td>
+			<td>1,354 people</td>
+			<td><a href="#" class="mycelium_btn myelium_small_btn">Download CSV</a></td>
+		</tr>		
+	</table>
+</div>
+
 {% endblock %}

@@ -16,6 +16,10 @@ input:focus {
 .title {
 	font-size: 30px;
 }
+.title img {
+	vertical-align: text-top;
+	margin-right: 8px;
+}
 .setup_phrase {
 	font-size: 20px;
 	color: #004486;
@@ -27,6 +31,14 @@ input:focus {
 .criterium {
 	margin: 2px 0px;
 }
+.criterium .tense {
+	padding-left: 6px;
+/*	padding-left: 18px;*/
+/*	background: url("../images/bullet-grey-8.png");*/
+/*	background-position: 5px 6px;*/
+/*	background-repeat: no-repeat;*/
+}
+
 .new_criterium {
 	margin-top: 6px;
 }
@@ -50,8 +62,9 @@ input:focus {
 	padding-top: 20px;
 }
 .sample_results table.sample_table {
-	width: 96%;
-	margin-left: 2%;
+	width: 98%;
+	margin-left: 1%;
+	margin-top: 2px;
 	border: 1px solid #DDD;
 }
 .sample_results table.sample_table th {
@@ -66,3 +79,39 @@ input:focus {
 	padding: 20px 0px;
 	clear: both;
 }
+.right_actions {
+	clear: none;
+	float: right;
+}
+
+.small_search {
+	float: right;
+}
+.small_search #id_page_top_search {
+	font-size: 18px;
+	margin: 0px;
+	padding: 4px 4px;
+	border: 2px solid #DDD;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	width: 300px;
+	padding-left: 40px;
+
+	background-image: url("../images/search-24.png");
+	background-position: 4px 4px;
+	background-repeat: no-repeat;
+}
+
+.report_list {
+	padding: 20px 10px;
+}
+table.report_results {
+	width: 100%;
+	margin-top: 10px;
+}
+table.report_results td {
+	padding: 2px;
+}
+
+
