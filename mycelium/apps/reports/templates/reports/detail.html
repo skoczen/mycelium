@@ -62,7 +62,7 @@
 </div>
 
 <div class="sample_results">
-<div class="setup_phrase">Sample Results:</div>
+<div class="setup_phrase">First 5 Results:</div>
 <table class="sample_table">
 	<tr>
 		<th>Row</th>
@@ -85,8 +85,8 @@
 	{% with people.count|add:-5 as remainder %}
 	{% if remainder > 0 %}
 	<tr>
-		<td colspan="9999">
-			And {{remainder|intcomma}} more
+		<td colspan="9999" class="remainder_count">
+			and {{remainder|intcomma}} more people.
 		</td>
 	</tr>
 	{% endif %}

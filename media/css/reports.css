@@ -114,4 +114,11 @@ table.report_results td {
 	padding: 2px;
 }
 
+.total_results {
+	padding: 4px 10px;
+
+}
+td.remainder_count {
+	padding-left: 8px;
+}
 
