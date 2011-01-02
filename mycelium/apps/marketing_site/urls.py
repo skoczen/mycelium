@@ -7,5 +7,5 @@ parser = dselector.Parser()
 url = parser.url
 
 urlpatterns = parser.patterns('',                      
-    url(r'^',                   views.hi,       name='hi'),
+    url(r'^',                   views.home,       name='home'),
 )

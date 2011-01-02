@@ -11,11 +11,11 @@ from django.core.validators import validate_email
 
 # import mailchimp
 from email_list.models import EmailSubscription
-from hi.forms import EmailForm
+from marketing_site.forms import EmailForm
 
 
-@render_to("hi/hi.html")
-def hi(request):
+@render_to("marketing_site/home.html")
+def home(request):
     form = EmailForm()
     save_success=False
     

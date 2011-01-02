@@ -112,7 +112,7 @@ INSTALLED_APPS = (
     'django_nose',
     'gunicorn',
 
-    'hi',
+    'marketing_site',
     'email_list',
     'rewrite',
     'people',
