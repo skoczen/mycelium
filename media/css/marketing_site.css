@@ -135,9 +135,9 @@ input {
 /*	background: url("../images/submitback-hover.gif");*/
 }
 .thanks_message {
-	padding: 20px;
 	color: #004486;	
-	font-size: 30px;
+/*	font-size: 30px;*/
+	
 }
 
 #home_right_content {

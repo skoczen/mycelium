@@ -80,7 +80,7 @@ function rotate_verbs() {
 	
 	<p>
 	{% if posted and save_success %}
-		<div class="thanks_message">Thanks! We'll let you know as soon as it's ready!</div>
+		<div class="thanks_message">Thanks! We'll keep you posted!</div>
 	{% else %}
 	<form action="" method="POST">{% csrf_token %}
 		{{form.email}}
