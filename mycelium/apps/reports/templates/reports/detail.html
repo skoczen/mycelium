@@ -7,8 +7,9 @@
 {% endblock %}
 {% block page_content %}
 <div class="right_actions">
-	<a href="#" class="mycelium_btn">Save Report</a>
+	<a href="#" class="mycelium_btn">View All Results</a>
 	<a href="#" class="mycelium_btn">Download CSV</a>
+
 </div>
 <div class="title"><img src="{{MEDIA_URL}}images/report-32.png"/>Unsaved Report</div>
 
@@ -94,6 +95,8 @@
 	{% endwith %}
 </table>
 </div>
-
+<div class="actions">
+	<a href="#" class="mycelium_btn">Save Report</a>
+</div>
 
 {% endblock %}
