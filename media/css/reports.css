@@ -10,3 +10,59 @@ input:focus {
 	outline-style:none;
 	border: 1px solid #3E9CFD;
 }
+#page {
+	padding: 20px;
+}
+.title {
+	font-size: 30px;
+}
+.setup_phrase {
+	font-size: 20px;
+	color: #004486;
+	margin-top: 10px;
+}
+.criteria_list {
+	padding-left: 20px;
+}
+.criterium {
+	margin: 2px 0px;
+}
+.new_criterium {
+	margin-top: 6px;
+}
+.column_list {
+	display: block;
+	position: relative;
+	padding: 0px 0px 20px 20px;
+}
+.column {
+	display: block;
+	width: 30%;
+	float: left;
+	padding: 2px;
+}
+.column label {
+	padding-left: 6px;
+}
+.sample_results {
+	clear: both;
+	width: 100%;
+	padding-top: 20px;
+}
+.sample_results table.sample_table {
+	width: 96%;
+	margin-left: 2%;
+	border: 1px solid #DDD;
+}
+.sample_results table.sample_table th {
+	text-align: left;
+	background-color: #DDD;
+	border: 1px solid #BBB;
+}
+.sample_results table.sample_table td {
+	border: 1px solid #DDD;
+}
+.actions {
+	padding: 20px 0px;
+	clear: both;
+}

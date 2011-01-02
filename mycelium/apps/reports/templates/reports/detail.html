@@ -1,4 +1,5 @@
 {% extends "reports/base.html" %}
+{% load humanize %}
 {% block head %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 
@@ -39,12 +40,15 @@
 			<span class="units">year</span>
 		</span>
 	</div>
+	<div class="new_criterium">
+		<a href="#" class="mycelium_btn mycelium_grey myelium_small_btn">Add new criteria</a>
+	</div>
 </div>
 
 <div class="setup_phrase">make a report that includes these columns:</div>
 <div class="column_list">
 	<div class="column"><input type="checkbox" checked id="id_first_name"><label for="id_first_name">First Name</label></div>
-	<div class="column"><input type="checkbox" checked id="id_last_name"> <label for="id_last_name">Last Name </label></div>
+	<div class="column"><input type="checkbox" checked id="id_last_name"><label for="id_last_name">Last Name </label></div>
 	<div class="column"><input type="checkbox" checked id="id_email"><label for="id_email_name">Email</label></div>
 	<div class="column"><input type="checkbox" id="id_primary_address"><label for="id_primary_address">Main Address</label></div>
 	<div class="column"><input type="checkbox" id="id_phone"><label for="id_phone">Phone</label></div>
@@ -53,7 +57,9 @@
 	<div class="column"><input type="checkbox" checked id="id_no_volunteer_hrs_year"><label for="id_no_volunteer_hrs_year">Number of volunteer hours this year</label></div>	
 </div>
 
-<table>
+<div class="sample_results">
+<div class="setup_phrase">Sample Results:</div>
+<table class="sample_table">
 	<tr>
 		<th>Row</th>
 		<th>First Name</th>
@@ -61,6 +67,7 @@
 		<th>Email</th>
 		<th>Number of volunteer hours this year</th>
 	</tr>
+	{% with people|slice:"5" as five_people %}
 	{% for p in five_people %}
 	<tr>
 		<td>{{forloop.counter}}</td>
@@ -70,7 +77,18 @@
 		<td>{{hours|random}}</td>
 	</tr>
 	{% endfor %}
+	{% endwith %}
+	{% with people.count|add:-5 as remainder %}
+	{% if remainder > 0 %}
+	<tr>
+		<td colspan="9999">
+			And {{remainder|intcomma}} more
+		</td>
+	</tr>
+	{% endif %}
+	{% endwith %}
 </table>
+</div>
 
 <div class="actions">
 	<a href="#" class="mycelium_btn">Save Report</a>

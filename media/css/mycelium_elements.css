@@ -16,12 +16,16 @@
 	background-color: #004390;
 	color: #FFF;	
 }
+.myelium_small_btn {
+	font-size: 12px;
+	padding: 3px 6px;
+}
 
-.myelium_gray {
+.myelium_gray, .mycelium_grey {
 	background-color: #EEE;
 	color: #999;
 }
-.myelium_gray:hover {
+.myelium_gray:hover, .mycelium_grey:hover {
 	background-color: #DDD;
 	color: #454545;
 }

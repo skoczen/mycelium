@@ -19,6 +19,6 @@ def search(request):
 @render_to("reports/detail.html")
 def detail(request, report_id):
     # report = get_object_or_404(Report, report_id)
-    five_people = Person.objects.order_by("?").all()[:5]
+    people = Person.objects.order_by("?").all()
     hours = [random.randint(2,280) for i in range(0,5)]
     return locals()
