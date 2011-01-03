@@ -11,11 +11,11 @@ from django.core.validators import validate_email
 
 # import mailchimp
 from email_list.models import EmailSubscription
-from hi.forms import EmailForm
+from marketing_site.forms import EmailForm
+from marketing_site.models import GoodCloudEmployee
 
-
-@render_to("hi/hi.html")
-def hi(request):
+@render_to("marketing_site/home.html")
+def home(request):
     form = EmailForm()
     save_success=False
     
@@ -27,4 +27,10 @@ def hi(request):
             form.save()
             save_success=True
 
+    return locals()
+
+
+@render_to("marketing_site/about_us.html")
+def about_us(request):
+    all_employees = GoodCloudEmployee.objects.all()
     return locals()

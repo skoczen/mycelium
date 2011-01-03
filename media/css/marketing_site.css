@@ -1,0 +1,280 @@
+body {
+	background: url("../images/marketing-background.png");	
+	background-repeat: repeat-x;
+}
+
+#main_nav {
+	display: block;
+	position: absolute;	
+	top: 0px;
+	right: 4%;
+	width: auto;
+	height: 40px;
+	background: #FFF;
+	padding: 0px 4px;
+	border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-webkit-border-bottom-left-radius: 4px;	
+	border-bottom-right-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-right-radius: 4px;	
+
+    overflow: hidden;
+}
+#main_nav a {
+	text-decoration: none;
+	border-right: 1px solid #EEE;
+	border-bottom: 4px solid #BBB;
+	border-top-width: 0px;
+	font-size: 23px;
+	padding: 6px 20px 4px 20px;
+	margin: 0px;
+	display: block;
+	float: left;
+
+}
+#main_nav a.first {
+/*	border-left: 1px solid #EEE;	*/
+/*	border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-webkit-border-bottom-left-radius: 4px;	
+*/}
+#main_nav a.last {
+	border-right: 0px solid #EEE;		
+/*	border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-webkit-border-bottom-left-radius: 4px;	*/
+}
+#main_nav a.current {
+	border-bottom: 4px solid #3E9CFD;
+}
+
+
+#logo {
+	display: block;
+	position: absolute;	
+	top: 0px;
+	left: 10px;
+	font-size: 50px;
+	color: #FFF;
+	text-shadow:		 1px 1px 1px #0054A4;
+	-moz-text-shadow:    1px 1px 1px #0054A4;
+
+	height: 70px;
+	
+	padding-left: 110px;
+	padding-top: 3px;
+	background: url("../images/goodcloud-logo-55.png");
+
+
+/*	padding-left: 60px;*/
+/*	background: url("../images/goodcloud-logo2-40.png");	*/
+	background-position: 5px 3px;
+	background-repeat: no-repeat;
+	text-decoration: none;
+}
+
+#goodcloud_hearts_nonprofits {
+	font-size: 100px;
+	color: #000;
+	width: 40%;
+	text-align: left;
+	float: left;
+	margin: 190px 10px 0px 5%;
+
+}
+#goodcloud_hearts_nonprofits .goodcloud {
+}
+#goodcloud_hearts_nonprofits .verbs {
+	position: relative;
+	width: 300px;
+	top: 0px;
+}
+#goodcloud_hearts_nonprofits .verbs .verb {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#goodcloud_hearts_nonprofits .heart {
+	color: #E10001;
+	font-size: 1.4em;
+	line-height: 0.9em;
+	font-family: Helvetica;
+}
+#goodcloud_hearts_nonprofits .verb_2, #goodcloud_hearts_nonprofits .verb_3, #goodcloud_hearts_nonprofits .verb_4 {
+	display: none;
+}
+#goodcloud_hearts_nonprofits .serve {
+	display: none;
+}
+#goodcloud_hearts_nonprofits .hearts .heart_s {
+	display: none;
+	font-size: 80px;
+	color: #000;
+}
+.welcome_text {
+	padding: 20px 0px 0px 0px;
+	width: 100%;
+	text-align: center;
+	font-size: 100px;
+	color: #999;
+}
+
+.email_terms {
+	margin-top: 6px;
+	color: #454545;
+	font-size: 16px;
+}
+
+input {
+	font-size: 20px;
+	padding: 6px;
+}
+/*input, textarea {outline-style:none;}*/
+#id_email {
+	width: 400px;
+	background: #FEFEFE;
+	border: #6D8CAD 1px solid;
+}
+#id_email.hovered {
+	border: #00489C 1px solid;
+	background: #FFF;
+}
+#id_email.prefilled.tv-focused, #id_email.prefilled.tv-changed {
+	color: #222;
+}
+#id_email.prefilled {
+	color: #AAA;
+}
+#id_email.hovered.prefilled {
+	color: #666;
+}
+
+#id_submit {
+	border: 0px solid #EEE;
+	background-color: #EEE;
+	padding: 6px 20px;
+
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	
+    -moz-box-sizing: border-box;
+    -opera-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+	white-space:nowrap;
+
+	
+/*	background: url("../images/submitback.gif");*/
+	background-color: #004486;
+	background-repeat: repeat-x;
+	
+	color: #EEE;
+	text-shadow:		 1px 1px -1px #0355aa;
+	-moz-text-shadow:    1px 1px -1px #0355aa;
+	-webkit-text-shadow: 1px 1px -1px #0355aa;
+	cursor: pointer;
+}
+#id_submit.hovered {
+	background-color: #0040C2;
+	color: #FFF;
+/*	background: url("../images/submitback-hover.gif");*/
+}
+.thanks_message {
+	color: #004486;	
+/*	font-size: 30px;*/
+	
+}
+
+#home_right_content {
+	color: #222;
+	font-size: 30px;
+	padding-top: 120px;
+	font-family: 'ExpresswayRegular', Arial, sans-serif;
+	width: 50%;
+	margin-right: 3%;
+	float: right;
+}
+
+.more_info {
+/*	padding: 30px 0px 20px 0px;*/
+	margin-top: 0px;
+	color: #454545;
+	font-size: 25px;
+}
+
+#page_content {
+	padding: 100px 10%;
+	font-size: 20px;
+	color: #333;
+}
+#page_content h1, #page_content h2 {
+	font-weight: normal;
+}
+#page_content h1 {
+	margin-bottom: 30px;
+	text-align: center;
+	color: #000;	
+}
+#page_content h2 {
+	margin-bottom: 0px;
+	color: #004486;
+}
+#page_content p {
+	margin-top: 0px;
+}
+
+
+.employee {
+	display: block;
+	padding: 40px 10%;
+	padding-top: 0px;
+	position: relative;
+	width: 80%;
+	z-index: 999;
+}
+
+.picture_frame {
+	display: block;
+	width: 30%;
+	height: 200px;
+	left: 0%;
+	top: 20px;
+	position: absolute;
+	background: url("../images/bio-picture-bubble.png");
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	z-index: 1001;
+	clear: none;
+}
+.picture_frame .picture img {
+	margin: 6px;
+	border-radius: 120px;
+	-moz-border-radius: 120px;
+	overflow:hidden;
+}
+
+.bio {
+	font-size: 18px;
+	clear: none;
+	position: relative;
+	display: block;
+	top: 0px;
+	left: 25%;
+	margin-left: -4px;
+	width: 80%;
+	padding: 20px;
+	background-color: #FFF;
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	border: 4px solid #60C6FD;
+	z-index: 1000;	
+}
+.bio .name {
+	margin: 0px;
+	font-size: 24px;
+	color: #004486;
+}

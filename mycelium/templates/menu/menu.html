@@ -1,0 +1,3 @@
+{% for child in children %}
+<a class="{% if forloop.first %}first {% endif %}{% if forloop.last %}last {% endif %}{% if child.selected %}current{% endif %}" href="{{ child.get_absolute_url }}">{{ child.get_menu_title }}</a>
+{% endfor %}

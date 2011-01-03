@@ -1,0 +1,68 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n cache cms_tags menu_tags %}
+{% block head %}{{block.super}}
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	{% if posted %}
+		$("#hi_content").scrollTo(".welcome_text");
+	{% else %}
+	$("#question a").click(function(){
+		$("#hi_content").scrollTo(".welcome_text", 1000);
+		$("#question").animate({opacity:0},200)
+		return false;
+	});
+	$("#question").animate({opacity:0},0).show();
+	setTimeout(fade_in_question, 4000)
+	setTimeout(function(){	$("#hi_content").mousemove(fade_in_question)}, 400)
+	$('#id_email').toggleVal({populateFrom:"custom", text:"interested@great-nonprofit.org"}).addClass("prefilled");
+	{% endif %}
+	setTimeout(rotate_verbs, rotate_interval);
+});
+var fade_started = false;
+function fade_in_question(){
+	if (!fade_started) {
+		$("#question").animate({opacity:1},1000);
+		fade_started = true;
+	}
+}
+var num_verbs = 4;
+var current_verb = 1;
+var rotate_interval = 9000;
+var rotate_length = 500;
+function rotate_verbs() {
+	$(".verb_"+current_verb).fadeOut(rotate_length);
+	current_verb = (current_verb == num_verbs) ? 1 : current_verb+1;
+	$(".verb_"+current_verb).fadeIn(rotate_length);
+	setTimeout(rotate_verbs, rotate_interval);
+}
+
+</script>
+{% endblock %}
+{% block page_content %}
+<div id="goodcloud_hearts_nonprofits">
+	<div class="goodcloud">We 
+		<span class="verbs">
+		<span class="verb verb_1 heart">&hearts;</span>
+		<span class="verb verb_2 get">get</span>
+		<span class="verb verb_3 serve">serve</span>
+		<span class="verb verb_4 heart">&hearts;</span>
+		</span>
+	</div>
+
+	<div class="nonprofits">non-profits.</div>
+</div>
+
+<div id="home_right_content">
+	{% placeholder home_content %}
+
+	{% if posted and save_success %}
+		<div class="thanks_message">Thanks! We'll keep you posted!</div>
+	{% else %}
+	<form action="" method="POST">{% csrf_token %}
+		{{form.email}}
+		<input id="id_submit" type="submit" value="Save Email" />
+	</form>
+	<div class="email_terms">We hate spam, too. We'll only use your email to notify you of updates.</div>
+	{% endif %}
+</div>
+{% endblock %}
