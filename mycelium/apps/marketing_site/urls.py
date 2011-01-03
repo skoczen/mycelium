@@ -8,4 +8,5 @@ url = parser.url
 
 urlpatterns = parser.patterns('',                      
     url(r'^',                   views.home,       name='home'),
+    url(r'^about-us[/]?',       views.about_us,   name='about_us'),    
 )

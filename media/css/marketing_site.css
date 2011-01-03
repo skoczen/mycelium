@@ -71,6 +71,7 @@ body {
 /*	background: url("../images/goodcloud-logo2-40.png");	*/
 	background-position: 5px 3px;
 	background-repeat: no-repeat;
+	text-decoration: none;
 }
 
 #goodcloud_hearts_nonprofits {
@@ -79,7 +80,7 @@ body {
 	width: 40%;
 	text-align: left;
 	float: left;
-	margin: 190px 10px 0px 4%;
+	margin: 190px 10px 0px 5%;
 
 }
 #goodcloud_hearts_nonprofits .goodcloud {
@@ -194,7 +195,7 @@ input {
 	padding-top: 120px;
 	font-family: 'ExpresswayRegular', Arial, sans-serif;
 	width: 50%;
-	margin-right: 5%;
+	margin-right: 3%;
 	float: right;
 }
 

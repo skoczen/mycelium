@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     'south',
     'django_nose',
     'gunicorn',
+    'sorl.thumbnail',
     
     #django-cms
     'cms',
@@ -160,5 +161,10 @@ SEND_BROKEN_LINK_EMAILS = True
 CMS_TEMPLATES = (
     ('marketing_site/home.html', 'Home Page'),
     ('marketing_site/normal_page.html', 'Normal Page'),
+    ('marketing_site/about_us.html', 'About Us'),    
 )
 CMS_MENU_TITLE_OVERWRITE = True
+CMS_SEO_FIELDS = True
+CMS_APPLICATIONS_URLS = (
+    ('marketing_site.urls', 'Marketing Site'),
+)

@@ -1,8 +1,8 @@
 {% load i18n %}{% load cache cms_tags menu_tags %}
 {% block nav %}
-<div id="logo">
+<a id="logo" href="{% page_url "marketing_site_home" %}">
 	GoodCloud
-</div>
+</a>
 <div id="main_nav">{% spaceless %}
 	{% show_menu %}	
 {% endspaceless %}</div>
