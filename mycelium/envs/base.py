@@ -1,5 +1,5 @@
 # Django settings for mycelium project.
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 import os, sys
@@ -7,6 +7,7 @@ from os.path import abspath, dirname, join
 gettext = lambda s: s
 
 PROJECT_ROOT = join(abspath(dirname(__file__)), "../")
+STATIC_ROOT = join(abspath(dirname(__file__)), "../../../mycelium_static")
 LIB_DIR = join(PROJECT_ROOT, 'lib')
 APPS_DIR = join(PROJECT_ROOT, 'apps')
 sys.path.insert(0, abspath(PROJECT_ROOT + '/../'))
@@ -58,7 +59,7 @@ USE_L10N = True
 
 
 
-MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
+MEDIA_ROOT = abspath(STATIC_ROOT)
 MEDIA_URL = 'http://www.agoodcloud.com/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
