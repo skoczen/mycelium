@@ -1,6 +1,7 @@
 # Django settings for mycelium project.
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
 
 import os, sys
 from os.path import abspath, dirname, join
@@ -57,6 +58,12 @@ SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#     }
+# }
 
 
 MEDIA_ROOT = abspath(STATIC_ROOT)
