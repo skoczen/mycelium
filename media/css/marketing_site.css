@@ -84,6 +84,10 @@ body {
 
 }
 #goodcloud_hearts_nonprofits .goodcloud {
+
+}
+#goodcloud_hearts_nonprofits .we {
+	padding-right: 0.2em;
 }
 #goodcloud_hearts_nonprofits .verbs {
 	position: relative;
@@ -250,11 +254,19 @@ input {
 	z-index: 1001;
 	clear: none;
 }
-.picture_frame .picture img {
+.picture_frame .picture {
+	width: 149px;
+	height: 149px;	
 	margin: 6px;
-	border-radius: 120px;
-	-moz-border-radius: 120px;
-	overflow:hidden;
+	border-radius: 75px;
+	-moz-border-radius: 75px;
+	overflow: hidden;
+	background-clip: border-box;
+  	-moz-box-sizing: border-box;
+    -opera-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .bio {

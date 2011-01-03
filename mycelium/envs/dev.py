@@ -3,7 +3,7 @@ from base import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 SEND_BROKEN_LINK_EMAILS = False
-from os.path import join
+from os.path import join, abspath
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -11,6 +11,7 @@ from os.path import join
 MEDIA_URL = '/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
+MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
