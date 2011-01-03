@@ -7,7 +7,7 @@ from os.path import abspath, dirname, join
 gettext = lambda s: s
 
 PROJECT_ROOT = join(abspath(dirname(__file__)), "../")
-STATIC_ROOT = join(abspath(dirname(__file__)), "../../../mycelium_static")
+STATIC_ROOT = join(abspath(dirname(__file__)), "../../../../mycelium_static")
 LIB_DIR = join(PROJECT_ROOT, 'lib')
 APPS_DIR = join(PROJECT_ROOT, 'apps')
 sys.path.insert(0, abspath(PROJECT_ROOT + '/../'))
