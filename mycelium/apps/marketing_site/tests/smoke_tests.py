@@ -6,5 +6,5 @@ def smoke_test_the_app():
     smoke_test('marketing_site:home')
 
 @istest
-def smoke_test_the_app():
+def smoke_test_the_app2():
     smoke_test('marketing_site:about_us')

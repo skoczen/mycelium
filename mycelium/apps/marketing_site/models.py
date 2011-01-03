@@ -9,6 +9,9 @@ class GoodCloudEmployee(TimestampModelMixin):
     phone = models.CharField(blank=True, null=True, max_length=255)
     picture = models.ImageField(blank=True, null=True, upload_to="goodcloud_people")
 
+    @property
+    def full_name(self):
+        return "%s %s" % (self.user.first_name, self.user.last_name,)
 
     def __unicode__(self):
-        return "%s %s" % (self.user.first_name, self.user.last_name,)
+        return self.full_name

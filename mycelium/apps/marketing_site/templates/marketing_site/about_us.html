@@ -10,7 +10,9 @@
 <div class="employees">
 {% for e in all_employees %}
 <div class="employee">
-	<div class="picture"><img src="{% thumbnail e.picture 60x60 as t %}{{t.url}}{% endthumbnail %}"></div>
+	<div class="picture_frame"
+		<div class="picture"><img src="{% thumbnail e.picture 60x60 as t %}{{t.url}}{% endthumbnail %}"/></div>
+	</div>
 	<div class="bio">
 		<div class="name">{{e.full_name}}</div>
 		<div class="bio_text">{{e.bio}}</div>

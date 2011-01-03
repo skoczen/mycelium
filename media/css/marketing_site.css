@@ -226,3 +226,46 @@ input {
 #page_content p {
 	margin-top: 0px;
 }
+
+
+.employee {
+	display: block;
+	padding: 40px 10%;
+	position: relative;
+	width: 80%;
+	z-index: 999;
+}
+
+.picture_frame {
+	display: block;
+	width: 30%;
+	height: 200px;
+	left: 10%;
+	top: 20px;
+	position: absolute;
+	background: url("../images/bio-picture-bubble.png");
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	z-index: 1001;
+	clear: none;
+}
+
+.bio {
+	clear: none;
+	position: relative;
+	display: block;
+	top: 0px;
+	left: 37%;
+	width: 60%;
+	padding: 20px;
+	background-color: #FFF;
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	border: 4px solid #DDD;
+	z-index: 1000;	
+}
+.bio .name {
+	margin: 0px;
+	font-size: 24px;
+	color: #004486;
+}
