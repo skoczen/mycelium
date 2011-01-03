@@ -231,6 +231,7 @@ input {
 .employee {
 	display: block;
 	padding: 40px 10%;
+	padding-top: 0px;
 	position: relative;
 	width: 80%;
 	z-index: 999;
@@ -240,7 +241,7 @@ input {
 	display: block;
 	width: 30%;
 	height: 200px;
-	left: 10%;
+	left: 0%;
 	top: 20px;
 	position: absolute;
 	background: url("../images/bio-picture-bubble.png");
@@ -249,19 +250,27 @@ input {
 	z-index: 1001;
 	clear: none;
 }
+.picture_frame .picture img {
+	margin: 6px;
+	border-radius: 120px;
+	-moz-border-radius: 120px;
+	overflow:hidden;
+}
 
 .bio {
+	font-size: 18px;
 	clear: none;
 	position: relative;
 	display: block;
 	top: 0px;
-	left: 37%;
-	width: 60%;
+	left: 25%;
+	margin-left: -4px;
+	width: 80%;
 	padding: 20px;
 	background-color: #FFF;
 	border-radius: 12px;
 	-moz-border-radius: 12px;
-	border: 4px solid #DDD;
+	border: 4px solid #60C6FD;
 	z-index: 1000;	
 }
 .bio .name {

@@ -11,11 +11,11 @@
 {% for e in all_employees %}
 <div class="employee">
 	<div class="picture_frame"
-		<div class="picture"><img src="{% thumbnail e.picture 60x60 as t %}{{t.url}}{% endthumbnail %}"/></div>
+		<div class="picture">{% thumbnail e.picture "149x149" as t %}<img src="{{t.url}}"/>{% empty %}{% endthumbnail %}</div>
 	</div>
 	<div class="bio">
 		<div class="name">{{e.full_name}}</div>
-		<div class="bio_text">{{e.bio}}</div>
+		<div class="bio_text">{{e.bio|safe}}</div>
 	</div>
 </div>
 {% endfor %}

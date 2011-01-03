@@ -15,3 +15,6 @@ class GoodCloudEmployee(TimestampModelMixin):
 
     def __unicode__(self):
         return self.full_name
+        
+    class Meta(object):
+        ordering = ("user__first_name","user__last_name")
