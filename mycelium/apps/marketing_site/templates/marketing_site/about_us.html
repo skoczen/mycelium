@@ -1,0 +1,24 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n cache cms_tags menu_tags thumbnail %}
+{% block head %}{{block.super}}
+{% endblock %}
+{% block page_content %}
+<div id="page_content">
+
+{% placeholder about_us_header_text %}
+
+<div class="employees">
+{% for e in all_employees %}
+<div class="employee">
+	<div class="picture_frame"
+		<div class="picture">{% thumbnail e.picture "149x149" as t %}<img src="{{t.url}}"/>{% empty %}{% endthumbnail %}</div>
+	</div>
+	<div class="bio">
+		<div class="name">{{e.full_name}}</div>
+		<div class="bio_text">{{e.bio|safe}}</div>
+	</div>
+</div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}
