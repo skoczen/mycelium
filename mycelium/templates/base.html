@@ -20,6 +20,7 @@
 
 	{% endblock %}
 {% if ENV == "LIVE" %}{% analytics %}{% endif %}
+{% include "owa/_analytics.html" %}
 </body>
 {% endblock %}
 </html>
