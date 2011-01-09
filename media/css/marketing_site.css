@@ -1,6 +1,7 @@
 body {
 	background: url("../images/marketing-background.png");	
 	background-repeat: repeat-x;
+	position: relative;
 }
 
 #main_nav {
@@ -289,4 +290,19 @@ input {
 	margin: 0px;
 	font-size: 24px;
 	color: #004486;
+}
+#footer {
+	width: 100%;
+	display: block;
+	padding: 10px 0px;
+	text-align: center;
+	clear: both;
+	font-size: 14px;
+	color: #888;
+}
+#footer a {
+	color: #626A72;
+}
+#footer a:hover {
+	color: #3B5672;
 }
