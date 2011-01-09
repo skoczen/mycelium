@@ -176,3 +176,5 @@ CMS_SEO_FIELDS = True
 CMS_APPLICATIONS_URLS = (
     ('marketing_site.urls', 'Marketing Site'),
 )
+
+GOOGLE_MAPS_KEY = "ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRHA9ICmOpg9-1g76S5BMdlTE0SKRRfIwbO5xyH_2XiYLy9Wt8qQ9Ymz"
