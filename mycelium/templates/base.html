@@ -13,14 +13,12 @@
 	
 </head>
 {% block body %}<body {% block extra_body %}{% endblock %} >
-	{# {% block nav %} #}
-	{# 	{% include "_top_nav.html" %} #}
-	{# {% endblock %} #}
 	{% block content %}
 
 	{% endblock %}
-{% if ENV == "LIVE" %}{% analytics %}{% endif %}
+{% if ENV != "DEV" %}{% analytics %}
 {% include "owa/_analytics.html" %}
+{% endif %}
 </body>
 {% endblock %}
 </html>

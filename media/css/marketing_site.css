@@ -74,16 +74,34 @@ body {
 	background-repeat: no-repeat;
 	text-decoration: none;
 }
+/* Thanks, IE7. */
+#home_layout_columns {
+	position: absolute;
+	width: 100%;
+	clear: both;
+	top: 100px;
+}
 
 #goodcloud_hearts_nonprofits {
 	font-size: 100px;
 	color: #000;
-	width: 40%;
+	width: 47%;
 	text-align: left;
-	float: left;
-	margin: 190px 10px 0px 5%;
+	padding: 80px 0px 0px 5%;
+	vertical-align: top;
+	position: relative;
 
 }
+#home_right_content {
+	color: #222;
+	font-size: 30px;
+	font-family: 'ExpresswayRegular', Arial, sans-serif;
+	width: 53%;
+	padding-right: 3%;
+	vertical-align: top;
+}
+
+
 #goodcloud_hearts_nonprofits .goodcloud {
 
 }
@@ -194,15 +212,6 @@ input {
 	
 }
 
-#home_right_content {
-	color: #222;
-	font-size: 30px;
-	padding-top: 120px;
-	font-family: 'ExpresswayRegular', Arial, sans-serif;
-	width: 50%;
-	margin-right: 3%;
-	float: right;
-}
 
 .more_info {
 /*	padding: 30px 0px 20px 0px;*/
@@ -254,6 +263,7 @@ input {
 	background-position: 0px 0px;
 	z-index: 1001;
 	clear: none;
+	
 }
 .picture_frame .picture {
 	width: 149px;
