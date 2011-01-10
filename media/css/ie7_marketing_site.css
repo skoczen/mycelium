@@ -1,0 +1,11 @@
+
+.picture_frame {
+	background: none;
+}
+.picture_frame .picture {
+	border: 6px solid #60C6FD;
+}
+
+#goodcloud_hearts_nonprofits {
+	padding-top: 40px;
+}

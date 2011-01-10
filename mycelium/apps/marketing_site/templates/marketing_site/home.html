@@ -1,6 +1,13 @@
 {% extends "marketing_site/base.html" %}
 {% load i18n cache cms_tags menu_tags %}
 {% block head %}{{block.super}}
+<!--[if lt IE 8]>
+<style type="text/css" media="screen">
+	#footer {
+		display: none
+	}
+</style>
+<![endif]-->
 <script type="text/javascript" charset="utf-8">
 $(function(){
 	{% if posted %}
@@ -39,29 +46,32 @@ function rotate_verbs() {
 </script>
 {% endblock %}
 {% block page_content %}
-<div id="goodcloud_hearts_nonprofits">
-	<div class="goodcloud"><span class="we">We</span><span class="verbs">
-		<span class="verb verb_1 heart">&hearts;</span>
-		<span class="verb verb_2 get">get</span>
-		<span class="verb verb_3 serve">serve</span>
-		<span class="verb verb_4 heart">&hearts;</span>
-		</span>
-	</div>
+<table id="home_layout_columns">
+	<tr>
+		<td id="goodcloud_hearts_nonprofits">
+			<div class="goodcloud"><span class="we">We</span><span class="verbs">
+				<span class="verb verb_1 heart">&hearts;</span>
+				<span class="verb verb_2 get">get</span>
+				<span class="verb verb_3 serve">serve</span>
+				<span class="verb verb_4 heart">&hearts;</span>
+				</span>
+			</div>
 
-	<div class="nonprofits">non-profits.</div>
-</div>
+			<div class="nonprofits">non-profits.</div>
+		</td>
+		<td id="home_right_content">
+			{% placeholder home_content %}
 
-<div id="home_right_content">
-	{% placeholder home_content %}
-
-	{% if posted and save_success %}
-		<div class="thanks_message">Thanks! We'll keep you posted!</div>
-	{% else %}
-	<form action="" method="POST">{% csrf_token %}
-		{{form.email}}
-		<input id="id_submit" type="submit" value="Save Email" />
-	</form>
-	<div class="email_terms">We hate spam, too. We'll only use your email to notify you of updates.</div>
-	{% endif %}
-</div>
+			{% if posted and save_success %}
+				<div class="thanks_message">Thanks! We'll keep you posted!</div>
+			{% else %}
+			<form action="" method="POST">{% csrf_token %}
+				{{form.email}}
+				<input id="id_submit" type="submit" value="Save Email" />
+			</form>
+			<div class="email_terms">We hate spam, too. We'll only use your email to notify you of updates.</div>
+			{% endif %}
+		</td>
+	</tr>
+</table>
 {% endblock %}
