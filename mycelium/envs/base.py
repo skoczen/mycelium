@@ -9,6 +9,7 @@ gettext = lambda s: s
 
 PROJECT_ROOT = join(abspath(dirname(__file__)), "../")
 STATIC_ROOT = join(abspath(dirname(__file__)), "../../../../mycelium_static")
+MEDIA_ROOT = abspath(STATIC_ROOT)
 LIB_DIR = join(PROJECT_ROOT, 'lib')
 APPS_DIR = join(PROJECT_ROOT, 'apps')
 sys.path.insert(0, abspath(PROJECT_ROOT + '/../'))
@@ -86,6 +87,7 @@ ROOT_URLCONF = 'mycelium.urls'
 TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
