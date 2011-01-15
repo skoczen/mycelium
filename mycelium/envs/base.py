@@ -80,6 +80,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     
     "cms.context_processors.media",
     "qi_toolkit.context_processors.add_env_to_request",
+    "qi_toolkit.context_processors.add_favicon_to_request",    
 )
 
 ROOT_URLCONF = 'mycelium.urls'
