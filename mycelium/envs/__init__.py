@@ -5,7 +5,7 @@ try:
     if "/Users/skoczen/" == cwd[:15]:
         from dev import *
     else:
-        if cwd.find("staging") != -1
+        if cwd.find("staging") != -1:
             from staging import *
         else:
             from base import *
