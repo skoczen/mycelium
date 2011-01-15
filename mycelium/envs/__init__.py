@@ -7,6 +7,6 @@ try:
         if cwd.find("staging") != -1:
             from staging import *
         else:
-            from base import *
+            from live import *
 except:
-    from base import *
+    from live import *
