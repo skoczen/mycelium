@@ -27,26 +27,7 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'postgresql_psycopg2',               # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'skoczen_mycelium',      # Or path to database file if using sqlite3.
-        'USER': 'skoczen_mycelium',      # Not used with sqlite3.
-        'PASSWORD': '5bc651ec',          # Not used with sqlite3.
-        'HOST': 'web58.webfaction.com',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
-
-
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# On Unix systems, a value of None will cause Django to use the same
-# timezone as the operating system.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
 TIME_ZONE = None
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
@@ -66,16 +47,10 @@ USE_L10N = True
 # }
 
 
-MEDIA_ROOT = abspath(STATIC_ROOT)
-MEDIA_URL = 'http://www.agoodcloud.com/media/'
-STATIC_URL = MEDIA_URL
-ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
-
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'd^bkm43rw#gmxbs4bvf)8)2)n=l9obc9-*022=hcm_s0w2bikt'
 
-# List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
@@ -109,8 +84,6 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 ROOT_URLCONF = 'mycelium.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 
@@ -123,7 +96,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.humanize',
-    
+
     'qi_toolkit',
     'google_analytics',
     'django_extensions',
@@ -132,8 +105,7 @@ INSTALLED_APPS = (
     'django_nose',
     'gunicorn',
     'sorl.thumbnail',
-    
-    #django-cms
+
     'cms',
     'mptt',
     'menus',
@@ -163,7 +135,7 @@ TEMPLATE_DIRS = (
     "%stemplates" % (PROJECT_ROOT),
 )
 GOOGLE_ANALYTICS_MODEL = True
-ENV = "LIVE"
+
 SEND_BROKEN_LINK_EMAILS = True
 
 
@@ -177,6 +149,9 @@ CMS_SEO_FIELDS = True
 CMS_APPLICATIONS_URLS = (
     ('marketing_site.urls', 'Marketing Site'),
 )
-FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
-
 GOOGLE_MAPS_KEY = "ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRHA9ICmOpg9-1g76S5BMdlTE0SKRRfIwbO5xyH_2XiYLy9Wt8qQ9Ymz"
+
+SESSION_COOKIE_AGE = 1209600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+ENV = None
