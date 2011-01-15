@@ -28,7 +28,6 @@ from qi_toolkit.fabbase import *
 setup_env_webfaction("mycelium","skoczen",
                 initial_settings={
                     'webfaction_host':'web166.webfaction.com',
-                    'dry_run':True,
                 }, 
                 overrides={
                     'git_origin':"http://mycelium.skoczen.webfactional.com/mycelium.git",
