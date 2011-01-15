@@ -1,9 +1,13 @@
 
 try:
     import os
-    if "/Users/skoczen/" == os.getcwd()[:15]:
+    cwd = "%s" % (os.getcwd(),)
+    if "/Users/skoczen/" == cwd[:15]:
         from dev import *
     else:
-        from base import *
+        if cwd.find("staging") != -1
+            from staging import *
+        else:
+            from base import *
 except:
     from base import *

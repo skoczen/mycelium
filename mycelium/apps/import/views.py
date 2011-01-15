@@ -8,7 +8,23 @@ from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
-@render_to("mycelium_core/more_menu.html")
-def more_menu(request):
+from people.models import Person
+import random
+
+@render_to("import/list.html")
+def list(request):
+    # TODO: this is obnoxious.  Fix it.
+    section = "more"
+    return locals()
+
+@render_to("import/start.html")
+def start(request):
+    # TODO: this is obnoxious.  Fix it.
+    section = "more"
+    return locals()
+
+@render_to("import/review.html")
+def review(request, import_id):
+    # TODO: this is obnoxious.  Fix it.
     section = "more"
     return locals()

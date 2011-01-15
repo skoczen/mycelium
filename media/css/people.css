@@ -10,6 +10,9 @@ input:focus {
 	outline-style:none;
 	border: 1px solid #3E9CFD;
 }
+#page {
+	padding: 4px;
+}
 #id_search_query {
 	width: 72%;
 	margin: 6px 0px;

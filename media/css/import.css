@@ -1,0 +1,12 @@
+body {
+	background: url("../images/green_tweed_background.gif");
+}
+.import_date .right_now {
+}
+.import_date .right_now img {
+	vertical-align: text-top;
+	margin: 2px 3px 0px 3px;
+}
+.data_import_history_table .action {
+	text-align: center;
+}

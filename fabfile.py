@@ -25,4 +25,12 @@ from qi_toolkit.fabbase import *
 #     sync_config()
 #     update()
 
-setup_env_webfaction("mycelium","skoczen",initial_settings={'webfaction_host':'web166.webfaction.com'}, overrides={'git_origin':"http://mycelium.skoczen.webfactional.com/mycelium.git"})
+setup_env_webfaction("mycelium","skoczen",
+                initial_settings={
+                    'webfaction_host':'web166.webfaction.com',
+                    'dry_run':True,
+                }, 
+                overrides={
+                    'git_origin':"http://mycelium.skoczen.webfactional.com/mycelium.git",
+                },
+                )
