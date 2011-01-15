@@ -1,5 +1,5 @@
+import os
 try:
-    import os
     cwd = "%s" % (os.getcwd(),)
     if "/Users/skoczen/" == cwd[:15]:
         from dev import *
@@ -9,4 +9,7 @@ try:
         else:
             from live import *
 except:
-    from live import *
+    from qi_toolkit.helpers import print_exception
+    print "Excepted"
+    print_exception()
+    from dev import *
