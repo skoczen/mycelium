@@ -19,5 +19,6 @@ urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^', include('sorl.thumbnail.urls')),
+    url(r'^', include('qi_toolkit.urls')),
     url(r'^', include('cms.urls')),
 )

@@ -40,3 +40,4 @@ DATABASES = {
     },
 }
 ENV = "DEV"
+FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
