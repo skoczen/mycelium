@@ -1,0 +1,8 @@
+{% extends "mycelium_base.html" %}
+{% load i18n generic_fields friendly_data_formatting %}
+{% block head %}{{block.super}}
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/more.css" type="text/css" media="screen" title="" charset="utf-8">
+{% endblock %}
+{% block page_content %}
+	<a href="{% url import:list %}">Data Import</a>
+{% endblock %}

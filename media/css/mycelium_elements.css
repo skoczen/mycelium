@@ -1,4 +1,4 @@
-#logo {
+logo {
 	display: block;
 	position: absolute;	
 	top: 0px;
@@ -18,12 +18,12 @@
 	background-position: 5px 5px;
 	background-repeat: no-repeat;
 }
-#logo small {
+logo small {
 	font-size: 36px;
 }
 
 
-#main_nav {
+main_nav {
 	display: block;
 	position: absolute;	
 	top: 0px;
@@ -40,7 +40,7 @@
 
     overflow: hidden;
 }
-#main_nav a {
+main_nav a {
 	text-decoration: none;
 	border-right: 1px solid #DDD;
 	border-bottom: 4px solid #BBB;
@@ -52,11 +52,26 @@
 	float: left;
 
 }
-#main_nav a.current {
+main_nav a.current {
 	border-bottom: 4px solid #3E9CFD;
 }
 
-
+footer {
+	text-align: center;
+	color: #FFF;
+}
+footer img {
+	vertical-align: text-bottom;
+	margin: 0px 3px;
+}
+footer a {
+	color: #EEE;
+	text-decoration: none;
+}
+footer a:hover {
+	color: #FFF;
+	text-decoration: none;
+}
 #page {
 	display: block;
 	margin: 80px auto;
@@ -121,3 +136,4 @@
 .mycelium_left_arrow_btn:hover {
 	color: #004390;
 }
+

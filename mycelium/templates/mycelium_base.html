@@ -11,18 +11,19 @@
 </script>
 {% endblock %}
 {% block content %}
-	<span id="test_badge"></span>
+	{# <span id="test_badge"></span> #}
 	{% block nav %}
-	<div id="logo">
+	<logo>
 		GoodCloud
-	</div>
-	<div id="main_nav">{% spaceless %}
+	</logo>
+	<main_nav>{% spaceless %}
 		<a href="{% url people:search %}" {% if not section %}class="current"{% endif %}>People</a>
 		<a href="#">Fund{# Multiply #}</a>
 		<a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports{# Yardstick #}</a>
 		<a href="#">Communicate{# Soapbox #}</a>
 		<a href="#">Events{# Shindig #}</a>
-	{% endspaceless %}</div>
+		<a href="{% url core:more_menu %}" class="{% if section == "more" %}current{% endif %}">More</a>
+	{% endspaceless %}</main_nav>
 	{% endblock %}
 	
 	{% block page %}
@@ -31,5 +32,11 @@
 	
 	{% endblock %}
 	</div>
+	
+	<footer>
+	{% block footer %}
+	<a href="http://www.agoodcloud.com">Powered by <img src="{{MEDIA_URL}}images/goodcloud-logo-24.png">GoodCloud</a>
+	{% endblock %}
+	</footer>
 	{% endblock %}
 {% endblock %}
