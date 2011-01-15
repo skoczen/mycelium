@@ -1,4 +1,4 @@
-{% extends "reports/base.html" %}
+{% extends "import/base.html" %}
 {% load humanize %}
 {% block head %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
@@ -6,5 +6,19 @@
 </script>
 {% endblock %}
 {% block page_content %}
-Review
+Data Import on Dec 29, 2010 at 3:55pm
+
+<div class="report_summary">
+	<div class="total">We found 2,937 people.</div>
+	<div class="success">
+		<div class="success_header">We added:</div>
+		<div class="match">2,741 matched people who were already in GoodCloud, and were updated.</div>
+		<div class="added">195 people were new, and were added <a href="#">See who</a></div>
+	</div>
+	<div class="error">
+		<div class="error_header">We did not add:</div>
+		<div class="not_people">13 rows did not appear to be people, or had errors. <a href="#">See rows</a></div>
+	</div>
+</div>
+			
 {% endblock %}

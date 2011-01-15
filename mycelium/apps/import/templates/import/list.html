@@ -1,4 +1,4 @@
-{% extends "reports/base.html" %}
+{% extends "import/base.html" %}
 {% load humanize %}
 {% block head %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
@@ -6,8 +6,37 @@
 </script>
 {% endblock %}
 {% block page_content %}
-List<br/><br/>
-<a href="{% url import:review 1 %}">Review 1</a><br/>
-<a href="{% url import:start %}">Start</a>
+<page_title>Data Import History</page_title>
+<a href="{% url import:start %}" class="mycelium_btn">Start New Report</a>
+<table class="striped data_import_history_table">
+	{% for i in all_imports %}
+	<tr>
+		<td class="action">{% if i.complete %}<a href="{% url import:review i.pk %}">View Report</a>{% else %}<img src="{{MEDIA_URL}}images/spinner-grey-16.gif">{% endif %}</td>
+		<td class="import_date">{% if i.complete %}{{i.start_date|date}}{% else %}<span class="right_now"><img src="{{MEDIA_URL}}images/spinner-grey-16.gif">Right now</span>{% endif %}</td>
+		<td class="people_count">{% if i.complete %}importing{% else %}imported{% endif %} {{i.people|intcomma}} people</td>
+		<td class="other_fields">and 6 other fields.</td>
+	</tr>
+	{% endfor %}
+	<tr>
+		<td class="action"><img src="{{MEDIA_URL}}images/spinner-grey-16.gif"></td>
+		<td class="import_date"><span class="right_now">Right now</span></td>
+		<td class="people_count">importing 1,738 people </td>
+		<td class="other_fields">and 6 other fields.</td>
+	</tr>
+	<tr>
+		<td class="action"><a href="{% url import:review 1 %}">View Report</a></td>
+		<td class="import_date">Dec 29, 2010</td>
+		<td class="people_count">imported 428 people </td>
+		<td class="other_fields">and 28 other fields</td>
+
+	</tr>	
+	<tr>
+		<td class="action"><a href="{% url import:review 2 %}">View Report</a></td>
+		<td class="import_date">Nov 15, 2010</td>
+		<td class="people_count">imported 1,627 people </td>
+		<td class="other_fields">and 6 other fields.</td>
+
+	</tr>	
+</table>
 
 {% endblock %}

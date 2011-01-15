@@ -1,4 +1,4 @@
-{% extends "reports/base.html" %}
+{% extends "import/base.html" %}
 {% load humanize %}
 {% block head %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
@@ -6,5 +6,42 @@
 </script>
 {% endblock %}
 {% block page_content %}
-Start
+<page_header>Import Data</page_header>
+<div class="easy_header">Importing data is three easy steps:</div>
+
+<step>
+	<step_number>1</step_number>
+	<instruction>Choose a CSV Spreadsheet</instruction>
+	<form class="upload_form">
+		<input type="file" name="import_csv">
+		<input type="button" value="Use this spreadsheet">
+	</form>
+</step>
+
+<step>
+	<step_number>2</step_number>
+	<instruction>Confirm the fields you want to import</instruction>
+	<table class="import_fields_confirmation">
+		<tr>
+			<th>GoodCloud ID</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Email</th>
+			<th>? ___ </th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>Joe</td>
+			<td>Williams</td>
+			<td>joe_w1239@gmail.com</td>
+			<td>31</td>
+		</tr>
+	</table>
+</step>
+
+<step>
+	<step_number>3</step_number>
+	<instruction>Click Import, and give the GoodCloud robots a minute!</instruction>
+	<a href="#" class="mycelium_btn">Start Import</a>
+</step>
 {% endblock %}
