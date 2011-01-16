@@ -12,7 +12,3 @@ from nose.tools import istest
 #     assert "%s" % block == "Content Block - %s" % (name)
 # 
 # 
-# 
-# @istest
-# def verify_each_import_page_has_a_meaningful_title():
-#     pass

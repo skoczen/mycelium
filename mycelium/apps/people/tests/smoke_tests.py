@@ -5,13 +5,13 @@ from test_factory import Factory
 # TODO: Abstract this.
 @istest
 def smoke_test_the_app():
-    smoke_test('people:search')
+    smoke_test('people:search', check_title=True)
 
 @istest
 def smoke_test_the_app2():
     f = Factory()
     p = f.person()
-    smoke_test('people:person', reverse_args=(p.pk,))
+    smoke_test('people:person', reverse_args=(p.pk,), check_title=True)
 
 @istest
 def smoke_test_the_app3():

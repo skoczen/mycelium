@@ -1,6 +1,9 @@
 from qi_toolkit.factory import QiFactory
 from people.models import Person, EmailAddress, PhoneNumber, Address, ContactMethodType
 
+class DummyObj(object):
+    pass
+
 class Factory(QiFactory):
     def email(cls, person=None):
         if not person:
@@ -39,4 +42,11 @@ class Factory(QiFactory):
 
 
     def report(cls):
-        return None
+        o = DummyObj()
+        o.pk = 1
+        return o
+
+    def data_import(cls):
+        o = DummyObj()
+        o.pk = 1
+        return o

@@ -1,5 +1,6 @@
 {% extends "people/base.html" %}
 {% load i18n generic_fields friendly_data_formatting %}
+{% block title %}People - {{person.full_name}}{% endblock %}
 {% block head %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 	$(function(){

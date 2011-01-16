@@ -2,17 +2,17 @@ from nose.tools import istest
 from qi_toolkit.smoke_tests import *
 from test_factory import Factory
 
-# TODO: Abstract this.
-@istest
-def smoke_test_the_app():
-    smoke_test('reports:list')
+f = Factory()
+i = f.data_import()
 
 @istest
-def smoke_test_the_app2():
-    f = Factory()
-    r = f.report()
-    smoke_test('reports:report_detail', reverse_args=(r.pk,))
+def smoke_test_the_list():
+    smoke_test('import:list', check_title=True)
 
 @istest
-def smoke_test_the_app3():
-    smoke_test('reports:new_report')
+def smoke_test_start_a_transfer():
+    smoke_test('import:start', check_title=True)
+
+@istest
+def smoke_test_review():
+    smoke_test('import:review', reverse_args=(i.pk,), check_title=True)
