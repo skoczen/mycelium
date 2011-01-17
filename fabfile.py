@@ -31,5 +31,6 @@ setup_env_webfaction("mycelium","skoczen",
                 }, 
                 overrides={
                     'git_origin':"http://mycelium.skoczen.webfactional.com/mycelium.git",
+                    # 'dry_run':True,
                 },
                 )
