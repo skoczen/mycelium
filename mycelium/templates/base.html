@@ -16,7 +16,7 @@
 	{% block content %}
 
 	{% endblock %}
-{% if ENV != "DEV" %}{% analytics %}
+{% if ENV != "DEV" and not user.is_staff %}{% analytics %}
 {% include "owa/_analytics.html" %}
 {% endif %}
 </body>
