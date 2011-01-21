@@ -6,8 +6,8 @@ import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 
 class Person(SimpleSearchableModel, TimestampModelMixin):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    last_name = models.CharField(max_length=255, blank=True, null=True)
     
     search_fields = ["first_name","last_name","primary_email", "searchable_primary_phone_number"]
     
@@ -92,8 +92,8 @@ class PhoneNumber(ContactMethod, TimestampModelMixin):
         return "%s" % self.phone_number
 
 class Address(ContactMethod, TimestampModelMixin):
-    line_1 = models.CharField(max_length=255, blank=True, null=True)
-    line_2 = models.CharField(max_length=255, blank=True, null=True)
+    line_1 = models.CharField(max_length=255, blank=True, null=True, verbose_name="Address Line 1")
+    line_2 = models.CharField(max_length=255, blank=True, null=True, verbose_name="Address Line 2")
     city = models.CharField(max_length=255, blank=True, null=True)
     state = models.CharField(max_length=255, blank=True, null=True)
     postal_code = models.CharField(max_length=255, blank=True, null=True)

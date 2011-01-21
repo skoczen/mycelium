@@ -175,6 +175,8 @@ input:focus {
 .name_phone_email {
 	display: block;
 	width: 50%;
+	float: left;
+	clear: none;
 }
 .address {
 	display: block;
@@ -185,6 +187,7 @@ input:focus {
 
 .basic_info {
 	display: block;
+	position: relative;
 	clear: both;
 	margin-top: 10px;
 	width: 100%;
@@ -228,22 +231,36 @@ input:focus {
 #container_id_line_1 input, #container_id_line_2 input{
 	min-width: 70%;
 }
+.additional_information {
+	padding-top: 15px;
+	clear: both;
+}
 .view_field {
 	border: 1px solid #FFF;
 }
 
-#container_id_city, #container_id_state, #container_id_postal_code {
-	display: inline;
+#container_id_city, .city_state_zip .city_state_comma, #container_id_state, #container_id_postal_code {
+	display: block;
+	float: left;
 	width: auto;
 }
-#container_id_city {
+.edit_mode_on #container_id_city .edit_field, .edit_mode_on #container_id_state .edit_field, .edit_mode_on #container_id_postal_code .edit_field {
+	margin-bottom: 0px;
+}
+.edit_mode_on .city_state_zip .city_state_comma {
+	margin-top: 15px;
+}
+#container_id_state, #container_id_postal_code {
+	margin-left: 5px;
+}
+#container_id_city input {
 	min-width: 100px;
 }
 #container_id_state {
-	min-width: 20px;
+/*	min-width: 20px;*/
 }
 #container_id_postal_code {
-	min-width: 50px;
+/*	min-width: 50px;*/
 }
 
 
@@ -256,6 +273,7 @@ input:focus {
 	margin: 0px auto;
 	text-align: center;
 	height: 49px;
+	clear: both;
 }
 #detail_tabs a.detail_tab {
 	display: block;
@@ -321,11 +339,13 @@ input:focus {
 	padding-top: 10px;
 	color: #AAA;
 	font-size: 13px;
-
 }
 .save_info a {
 	font-size: 14px;
 	padding: 4px 8px;
+}
+.last_save_time {
+	width: 30em;
 }
 .nyi {
 	display: none;

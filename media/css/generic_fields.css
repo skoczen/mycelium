@@ -14,3 +14,20 @@
 .edit_mode_off .view_field {
 	display: inherit;
 }
+.generic_editable_field {
+	position: relative;
+}
+.edit_mode_on .edit_field {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.generic_field_label {
+	position: absolute;
+	top: 100%;
+	font-size: 14px;
+	text-align: center;
+	color: #AAA;
+	clear: none;
+	left: 0px;
+	float: left;
+}

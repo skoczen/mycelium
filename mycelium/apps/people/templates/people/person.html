@@ -17,6 +17,8 @@
 		$(".last_save_time").hide();
 		$("form input").live("change", save_basic_form)
 		$("form input").autoGrowInput({comfortZone: 30, resizeNow:true});
+
+		$(".save_now_btn").live("click", save_basic_form)
 		
 		$("#id_page_top_search").bind("keydown", function(){
 			setTimeout(function(){
@@ -97,24 +99,13 @@
 	</span>
 	<span class="save_info">
 		<span class="last_save_time">Last saved {{person.modified_at|pretty_timesince}}.</span>
-		{# <a href="#" class="mycelium_btn myelium_gray">Saved</a> #}
+		{# <a href="#" class="mycelium_btn myelium_gray save_now_btn">Save Now</a> #}
 	</span>
 </div>
 
 
 <form action="{% url people:person_save_basic person.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
 <div class="basic_info">
-	<div class="address">
-		{% generic_editable_field address_form.line_1 %}
-		{% generic_editable_field address_form.line_2 %}
-
-		<div class="city_state_zip">
-			{% generic_editable_field address_form.city %}
-			{% generic_editable_field address_form.state %},
-			{% generic_editable_field address_form.postal_code %}
-		</div>
-	
-	</div>
 	<div class="name_phone_email">
 		<div class="name">
 			{% generic_editable_field form.first_name %}
@@ -123,6 +114,18 @@
 		{% generic_editable_field phone_form.phone_number %}
 		{% generic_editable_field_email email_form.email %}
 	</div>
+	<div class="address">
+		{% generic_editable_field address_form.line_1 %}
+		{% generic_editable_field address_form.line_2 %}
+
+		<div class="city_state_zip">
+			{% generic_editable_field address_form.city %}<span class="city_state_comma">,</span>
+			{% generic_editable_field address_form.state %}
+			{% generic_editable_field address_form.postal_code %}
+		</div>
+	
+	</div>
+
 </div>
 </form>
 
