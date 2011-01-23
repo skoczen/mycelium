@@ -160,7 +160,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 ENV = None
 
 TEST_RUNNER = 'djangosanetesting.testrunner.run_tests'
-FORCE_SELENIUM_TESTS = True
+FORCE_SELENIUM_TESTS = False
 SELENIUM_BROWSER_COMMAND = "*safari"
 # CHERRYPY_TEST_SERVER = True
 
