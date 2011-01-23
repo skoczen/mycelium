@@ -32,6 +32,7 @@
 		{% if request.GET.edit == "ON" %}
 		toggle_edit();
 		{% endif %}
+		intelligently_show_hide_comma();
 	});
 	function toggle_edit(){
 		var box = $(".switch_box");
@@ -42,17 +43,26 @@
 			$(".save_info a").show();
 			$("#basic_info_form").removeClass("edit_mode_off").addClass("edit_mode_on");
 			$(".last_save_time").fadeIn();
+			$(".city_state_comma").show();
 		} else {
 			box.removeClass("on").addClass("off");
 			$(".basic_info.view").show();
 			$(".basic_info.edit").hide();
 			$(".save_info a").hide();
 			$("#basic_info_form").addClass("edit_mode_off").removeClass("edit_mode_on");
+			intelligently_show_hide_comma();
 		}
 		return false;
 	}
 	function focus_search(){
 		$("#id_page_top_search").focus();
+	}
+	function intelligently_show_hide_comma() {
+		if ($("#container_id_city .view_field").html() != "" && $("#container_id_state .view_field").html() != "") {
+			$(".city_state_comma").show();	
+		} else {
+			$(".city_state_comma").hide();
+		}
 	}
 	var saving_timeout;
 	function save_basic_form() {

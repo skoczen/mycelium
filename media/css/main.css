@@ -186,6 +186,9 @@ input {
 	font-family: 'ExpresswayRegular', Arial, sans-serif;
 	font-size: 20px;	
 }
+img, a img {
+	border: 0px;
+}
 /*input, textarea {outline-style:none;}*/
 
 
@@ -207,6 +210,8 @@ input {
 	border: 1px solid #AAA;
 	padding: 4px;
 	color: #333;
+	position: relative;
+	z-index: 10;
 }
 
 
@@ -229,5 +234,5 @@ input.prefilled.tv-focused {
 	background: url("../images/test-badge-right.png");
 	width: 150px;
 	height: 150px;
-	z-index: 5000;
+	z-index: 5;
 }

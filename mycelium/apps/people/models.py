@@ -77,7 +77,7 @@ class ContactMethod(models.Model):
         abstract = True
 
 class EmailAddress(ContactMethod, TimestampModelMixin):
-    email = models.EmailField(max_length=255)
+    email = models.CharField(max_length=255)
 
     def __unicode__(self):
         return "%s" % self.email

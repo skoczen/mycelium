@@ -17,6 +17,7 @@ django-extensions
 python-crontab
 -e git://github.com/clintecker/django-google-analytics.git#egg=google_
 -e git://github.com/skoczen/django-form-designer.git#egg=form_designer
+django-nose-selenium
 django-pagination
 django-mailer
 sorl-thumbnail
@@ -27,3 +28,5 @@ ipython
 django-nose
 nose-exclude
 south
+-e git://github.com/Almad/django-sane-testing.git#egg=djangosanetesting
+cherrypy

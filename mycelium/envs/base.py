@@ -105,9 +105,9 @@ INSTALLED_APPS = (
     'django_extensions',
     'pagination',
     'south',
-    'django_nose',
     'gunicorn',
     'sorl.thumbnail',
+    'djangosanetesting',
 
     'cms',
     'mptt',
@@ -129,7 +129,7 @@ INSTALLED_APPS = (
     'import',
     
 )
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -158,3 +158,11 @@ SESSION_COOKIE_AGE = 1209600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 ENV = None
+
+TEST_RUNNER = 'djangosanetesting.testrunner.run_tests'
+FORCE_SELENIUM_TESTS = True
+SELENIUM_BROWSER_COMMAND = "*safari"
+# CHERRYPY_TEST_SERVER = True
+
+SOUTH_LOGGING_ON = True
+SOUTH_LOGGING_FILE = "/dev/null"
