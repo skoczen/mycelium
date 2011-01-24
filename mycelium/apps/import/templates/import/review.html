@@ -7,18 +7,23 @@
 </script>
 {% endblock %}
 {% block page_content %}
-Data Import #5 on Dec 29, 2010 at 3:55pm
+<breadcrumb><a class="mycelium_btn" href="{% url import:list %}">Back to All Data Imports</a></breadcrumb>
+<page_title>Data Import #5 on Dec 29, 2010 at 3:55pm</page_title>
 
 <div class="report_summary">
 	<div class="total">We found 2,937 people.</div>
 	<div class="success">
-		<div class="success_header">We added:</div>
-		<div class="match">2,741 matched people who were already in GoodCloud, and were updated.</div>
-		<div class="added">195 people were new, and were added <a href="#">See who</a></div>
+		<div class="result_header success_header">We added:</div>
+		<div class="result_data">
+		<div class="result_data_line match">2,741 matched people who were already in GoodCloud, and were updated.</div>
+		<div class="result_data_line added">195 people were new, and were added <a href="#">See who</a></div>
+		</div>
 	</div>
 	<div class="error">
-		<div class="error_header">We did not add:</div>
-		<div class="not_people">13 rows did not appear to be people, or had errors. <a href="#">See rows</a></div>
+		<div class="result_header error_header">We did not add:</div>
+		<div class="result_data">
+		<div class="result_data_line not_people">13 rows did not appear to be people, or had errors. <a href="#">See rows</a></div>
+		</div>
 	</div>
 </div>
 			

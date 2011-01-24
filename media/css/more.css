@@ -1,3 +1,31 @@
 body {
 	background: url("../images/green_tweed_background.gif");
 }
+
+.more_button {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;	
+	display: block;
+	width: 30%;
+	padding: 10px 20px 20px 130px;
+	min-height: 70px;
+}
+.more_button .button_title {
+	font-size: 30px;
+/*	text-align: center;*/
+	padding-top: 10px;
+}
+.more_button .button_description {
+	font-size: 14px;
+	color: #92C2FC;
+/*	text-align: center;	*/
+}
+.more_button:hover .button_description {
+	color: #BCD8FB;
+}
+.data_import_btn {
+	background-image: url("../images/icon-data-import-100.png");
+	background-repeat: no-repeat;
+	background-position: 10px 10px;
+}

@@ -8,5 +8,88 @@ body {
 	margin: 2px 3px 0px 3px;
 }
 .data_import_history_table .action {
+	text-align: left;
+	padding-left: 15px;
+}
+.data_import_history_table .in_progress td {
+	color: #999;
+}
+
+page_title {
+	background-image: url("../images/icon-data-import-black-40h.png");
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	padding-left: 60px;
+	padding-top: 5px;
+	margin-bottom: 20px;
+}
+.new_import_btns {
+	display: block;
+	clear: none;
+	margin-bottom: 10px;
+}
+
+.report_summary {
+	
+}
+
+.total {
+	font-size: 24px;
+}
+.result_header {
+	margin-top: 6px;
+	font-size: 24px;
+	text-decoration: underline;
+}
+.result_data {
+	padding: 0px 0px 4px 10px;
+}
+.result_data .result_data_line {
+	padding: 2px;
+}
+.report_summary {
+	padding: 0px 10px;
+}
+.start_data_import step {
+	display: block;
+	margin: 10px 0px 20px 0px;
+}
+.start_data_import step step_number {
+	font-size: 40px;
+	font-weight: bold;
+	float: left;
+	display: block;
+	margin-right: 8px;
+	height: 48px;
+	width: 48px;
+	background-color: #004486;
+	color: #FFF;
 	text-align: center;
+	border-radius: 30px;
+	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;
+	margin-top: -6px;
+}
+
+.start_data_import step instruction {
+	display: block;
+	width: 100%;
+	font-size: 20px;
+	padding: 7px 0px 6px 0px;
+	margin: 0px 0px 10px 15px;
+	background-color: #DDD;
+	border-top-right-radius: 30px;
+	-moz-border-radius-topright: 30px;
+	-webkit-border-top-right-radius: 30px;	
+	border-bottom-right-radius: 30px;
+	-moz-border-radius-bottomright: 30px;
+	-webkit-border-bottom-right-radius: 30px;
+}
+.start_data_import step step_content {
+	display: block;
+	padding: 7px 15px 5px 25px;
+}
+.easy_header {
+	font-size: 18px;
+	padding: 5px;
 }

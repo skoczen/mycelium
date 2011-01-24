@@ -7,22 +7,26 @@
 </script>
 {% endblock %}
 {% block page_content %}
-<page_header>Import Data</page_header>
+<breadcrumb><a class="mycelium_btn" href="{% url import:list %}">Back to All Data Imports</a></breadcrumb>
+<page_title>Start Data Import</page_title>
 <div class="easy_header">Importing data is three easy steps:</div>
-
+<div class="start_data_import">
 <step>
 	<step_number>1</step_number>
 	<instruction>Choose a CSV Spreadsheet</instruction>
+	<step_content>	
 	<form class="upload_form">
 		<input type="file" name="import_csv">
-		<input type="button" value="Use this spreadsheet">
+		<input type="button" class="mycelium_btn" value="Use this spreadsheet">
 	</form>
+	</step_content>
 </step>
 
 <step>
 	<step_number>2</step_number>
 	<instruction>Confirm the fields you want to import</instruction>
-	<table class="import_fields_confirmation">
+	<step_content>
+	<table class="striped record_table import_fields_confirmation">
 		<tr>
 			<th>GoodCloud ID</th>
 			<th>First Name</th>
@@ -38,11 +42,15 @@
 			<td>31</td>
 		</tr>
 	</table>
+	</step_content>
 </step>
 
 <step>
 	<step_number>3</step_number>
 	<instruction>Click Import, and give the GoodCloud robots a minute!</instruction>
+	<step_content>	
 	<a href="#" class="mycelium_btn">Start Import</a>
+	</step_content>
 </step>
+</div>
 {% endblock %}

@@ -72,6 +72,24 @@ footer a:hover {
 	color: #FFF;
 	text-decoration: none;
 }
+page_title {
+	display: block;
+	font-size: 30px;
+	margin-bottom: 8px;
+}
+page_title img {
+	vertical-align: text-top;
+	margin-right: 8px;
+}
+record_list {
+	padding: 20px 10px;
+}
+
+breadcrumb {
+	display: block;
+	padding-bottom: 15px;
+}
+
 #page {
 	display: block;
 	margin: 80px auto;
@@ -92,11 +110,12 @@ footer a:hover {
 	color: #333;
 }
 
-.mycelium_btn {
+.mycelium_btn, input.mycelium_btn {
+	border: 1px solid #004486;
 	background-color: #004486;
 	color: #FFF;
 	font-size: 18px;
-	padding: 6px 12px;
+	padding: 5px 11px;
 	text-decoration: none;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -107,7 +126,7 @@ footer a:hover {
 	-webkit-box-shadow: 1px 1px 2px #454545;
 */
 }
-.mycelium_btn:hover {
+.mycelium_btn:hover, input.mycelium_btn:hover {
 	background-color: #004390;
 	color: #FFF;	
 }
@@ -138,3 +157,14 @@ footer a:hover {
 	color: #004390;
 }
 
+table.record_table {
+	width: 100%;
+	margin-top: 10px;
+}
+table.record_table th {
+	text-align: left;
+	background-color: #EEE;
+}
+table.record_table td {
+	padding: 2px;
+}
