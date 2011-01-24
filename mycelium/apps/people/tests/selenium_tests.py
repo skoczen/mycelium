@@ -137,7 +137,7 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         sel.type("id_state", "MI")
         sel.type("id_postal_code", "12346")
         sel.click("//div[@id='page_header']/span[1]/div[2]")
-        time.sleep(2)
+        time.sleep(4)
         try: self.assertEqual("Last saved a few seconds ago.", sel.get_text("//div[@id='page_header']/span[2]/span"))
         except AssertionError, e: sel.verificationErrors.append(str(e))
         sel.click("link=People")
