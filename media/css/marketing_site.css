@@ -74,12 +74,17 @@ body {
 	background-repeat: no-repeat;
 	text-decoration: none;
 }
-/* Thanks, IE7. */
+
+#home_layout_block {
+	padding-top: 100px;
+	width: 100%;
+	clear: both;
+}
 #home_layout_columns {
 /*	position: absolute;*/
 	width: 100%;
 	clear: both;
-	top: 100px;
+
 }
 
 #goodcloud_hearts_nonprofits {
