@@ -76,7 +76,7 @@ body {
 }
 /* Thanks, IE7. */
 #home_layout_columns {
-	position: absolute;
+/*	position: absolute;*/
 	width: 100%;
 	clear: both;
 	top: 100px;
