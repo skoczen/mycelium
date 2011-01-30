@@ -89,7 +89,21 @@ breadcrumb {
 	display: block;
 	padding-bottom: 15px;
 }
-
+form_actions {
+	display: block;
+	clear: both;
+	width: 100%;
+	padding: 20px 10px 0px 10px;	
+}
+add_another {
+	display: block;
+	clear: both;
+	width: 100%;
+	padding-top: 20px;
+}
+.hidden {
+	display: none;
+}
 #page {
 	display: block;
 	margin: 80px auto;
@@ -130,16 +144,18 @@ breadcrumb {
 	background-color: #004390;
 	color: #FFF;	
 }
-.myelium_small_btn {
+.mycelium_small_btn {
 	font-size: 12px;
 	padding: 3px 6px;
 }
 
-.myelium_gray, .mycelium_grey {
+.mycelium_gray, .mycelium_grey, input.mycelium_gray, input.mycelium_grey {
+	border-color: #EEE;
 	background-color: #EEE;
 	color: #999;
 }
-.myelium_gray:hover, .mycelium_grey:hover {
+.mycelium_gray:hover, .mycelium_grey:hover {
+	border-color: #DDD;
 	background-color: #DDD;
 	color: #454545;
 }

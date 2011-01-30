@@ -1,7 +1,10 @@
 body {
 	background: url("../images/green_tweed_background.gif");
 }
-
+.more_buttons {
+	width: 100%;
+	overflow: auto;
+}
 .more_button {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -9,7 +12,12 @@ body {
 	display: block;
 	width: 30%;
 	padding: 10px 20px 20px 130px;
+/*	margin: 0px 10px 20px 10px;*/
+	margin: 10px;
 	min-height: 70px;
+	background-repeat: no-repeat;
+	background-position: 10px 10px;
+	float: left;
 }
 .more_button .button_title {
 	font-size: 30px;
@@ -28,4 +36,15 @@ body {
 	background-image: url("../images/icon-data-import-100.png");
 	background-repeat: no-repeat;
 	background-position: 10px 10px;
+}
+.users_button {
+	background-image: url("../images/icon-users-100.png");
+	background-position: 10px 15px;	
+}
+.logo_button {
+	background-image: url("../images/icon-logo-100.png");
+	background-position: 10px 6px;
+}
+.account_button {
+	background-image: url("../images/icon-account-100.png");
 }

@@ -1,0 +1,53 @@
+{% extends "logo_maker/base.html" %}
+{% load humanize thumbnail %}
+{% block title %}Logo Maker - All Logos{% endblock %}
+{% block head %}{{block.super}}
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	$(".add_another_logo_btn").live("click",add_another_logo_btn_clicked);
+	$(".cancel_another_logo_btn").live("click",cancel_another_logo_btn_clicked);
+});
+function add_another_logo_btn_clicked() {
+	$(".add_another_form").slideDown();
+	$(".add_another_logo_btn").hide();
+}
+function cancel_another_logo_btn_clicked() {
+	$(".add_another_form").slideUp();
+	$(".add_another_logo_btn").show();
+}
+</script>
+{% endblock %}
+{% block page_content %}
+<page_title>Logos</page_title>
+
+{% for l in logos %}
+<logo_info>
+{% thumbnail l.image "300x150" as t %}
+
+<form class="download_form" action="{% url logo_maker:download_resized l.pk %}" method="GET">{% csrf_token %}
+<section_title>Download a different size</section_title>
+<fields>
+<label>Width:</label> <input type="text" name="width" class="width_field" value="100"/>
+<label>Height:</label> <input type="text" name="height" class="height_field" value="100"/>
+<label for="id_crop">Crop to size: </label><input type="checkbox" name="crop" id="id_crop">
+</fields>
+<form_actions>
+<input type="submit" class="mycelium_btn" value="Download this size">
+</form_actions>
+</form>
+
+<section_title>{{l.name}}</section_title>
+<img src="{{MEDIA_URL}}{{t}}" class="logo_thumb"/>
+{% endthumbnail %}
+</logo_info>
+
+{% endfor %}
+<add_another>
+<form class="hidden add_another_form" action="{% url logo_maker:list_logos %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+	{{form.as_p}}
+	<input type="submit" class="mycelium_btn" value="Add this logo"/>
+	<input type="reset" class="mycelium_btn mycelium_grey cancel_another_logo_btn" value="Cancel"/>
+</form>
+<a href="#" class="mycelium_btn add_another_logo_btn">Add another logo</a>
+</add_another>
+{% endblock %}

@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'mycelium_core',
     'reports',
     'import',
+    'logo_maker',
     
 )
 
@@ -166,3 +167,6 @@ SELENIUM_BROWSER_COMMAND = "*safari"
 
 SOUTH_LOGGING_ON = True
 SOUTH_LOGGING_FILE = "/dev/null"
+
+THUMBNAIL_FORMAT = "PNG"
+THUMBNAIL_COLORSPACE = None

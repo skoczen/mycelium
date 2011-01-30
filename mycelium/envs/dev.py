@@ -29,3 +29,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 CACHE_BACKEND = 'dummy:///'
 GOOGLE_KEY = 'ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRi_j0U6kJrkFvY4-OX2XYmEAa76BQkakI7eN4BbYehPxnhnOMnaAhOPw'
 
+THUMBNAIL_DEBUG = True
