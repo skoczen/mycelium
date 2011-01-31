@@ -12,8 +12,10 @@ DATABASES = {
     },
 }
 
-MEDIA_URL = 'http://staging.agoodcloud.com/media/'
 STATIC_ROOT = join(abspath(dirname(__file__)), "../../../../mycelium_staging_static")
+MEDIA_ROOT = abspath(STATIC_ROOT)
+
+MEDIA_URL = 'http://staging.agoodcloud.com/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
