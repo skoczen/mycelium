@@ -68,10 +68,10 @@ def save_person_basic_info(request, person_id):
         success = True
     else:
         print "invalid"
-        print form
-        print email_form
-        print address_form
-        print phone_form
+        # print form
+        # print email_form
+        # print address_form
+        # print phone_form
     return {"success":success}
 
 
