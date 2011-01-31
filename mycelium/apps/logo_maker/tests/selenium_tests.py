@@ -12,3 +12,4 @@ class TestAgainstNoData(SeleniumTestCase):
 
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium
+        

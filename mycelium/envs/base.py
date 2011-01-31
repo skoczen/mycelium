@@ -22,6 +22,7 @@ EMAIL_HOST_USER='robot@quantumimagery.com'
 EMAIL_HOST_PASSWORD='E3Kfgozz7iMyb38N7ohb'
 DEFAULT_FROM_EMAIL = 'GoodCloud'
 SERVER_EMAIL = 'robot@agoodcloud.com'
+SEND_BROKEN_LINK_EMAILS = True
 
 ADMINS = (
      ('Steven Skoczen', 'steven@quantumimagery.com'),
@@ -107,7 +108,8 @@ INSTALLED_APPS = (
     'south',
     'gunicorn',
     'sorl.thumbnail',
-    'djangosanetesting',
+    'django_nose',
+
 
     'cms',
     'mptt',
@@ -128,7 +130,8 @@ INSTALLED_APPS = (
     'reports',
     'import',
     'logo_maker',
-    
+
+    'djangosanetesting',    
 )
 
 
@@ -139,8 +142,6 @@ TEMPLATE_DIRS = (
     "%stemplates" % (PROJECT_ROOT),
 )
 GOOGLE_ANALYTICS_MODEL = True
-
-SEND_BROKEN_LINK_EMAILS = True
 
 
 CMS_TEMPLATES = (
@@ -160,10 +161,14 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 ENV = None
 
-TEST_RUNNER = 'djangosanetesting.testrunner.run_tests'
-FORCE_SELENIUM_TESTS = False
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = ['--where=apps', '-s']
+
+FORCE_SELENIUM_TESTS = True
 SELENIUM_BROWSER_COMMAND = "*safari"
-# CHERRYPY_TEST_SERVER = True
+LIVE_SERVER_PORT = 8009
+# URL_ROOT_SERVER_ADDRESS = "127.0.0.1"
+
 
 SOUTH_LOGGING_ON = True
 SOUTH_LOGGING_FILE = "/dev/null"
