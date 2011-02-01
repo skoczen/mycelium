@@ -23,8 +23,7 @@ def smoke_test_the_app():
 
 @istest
 def smoke_test_the_app2():
-    f = Factory()
-    p = f.person()
+    p = Factory.person()
     smoke_test('people:person', reverse_args=(p.pk,), check_title=True)
 
 @istest
@@ -37,6 +36,5 @@ def smoke_test_the_app4():
 
 @istest
 def smoke_test_the_app5():
-    f = Factory()
-    p = f.person()
+    p = Factory.person()
     smoke_test('people:person_save_basic', reverse_args=(p.pk,))

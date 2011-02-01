@@ -2,9 +2,15 @@ from djangosanetesting.cases import SeleniumTestCase
 import time 
 from test_factory import Factory
 
-class TestUsingSelenium(SeleniumTestCase):
-    fixtures = []
+class TestMockupPages(SeleniumTestCase):
+    selenium_fixtures = []
+    
+    def setUp(self):
+        pass
 
+    def tearDown(self):
+        pass
+        
 
     def test_mockup_pages_load_and_links_work(self):
         sel = self.selenium        

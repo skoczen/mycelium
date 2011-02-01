@@ -1,11 +1,18 @@
 from djangosanetesting.cases import SeleniumTestCase
 from email_list.models import EmailSubscription
 
-class TestSelenium(SeleniumTestCase):
-    fixtures = ["marketing_site.json"]
+class TestMarketingSite(SeleniumTestCase):
+    selenium_fixtures = ["marketing_site.json"]
+
+    def setUp(self):
+        pass
+    
+    def tearDown(self):
+        pass
 
     def test_home_page_loads(self):
-        self.selenium.open("/")
+        sel = self.selenium
+        sel.open("/")
 
 
     def test_each_page_loads(self):

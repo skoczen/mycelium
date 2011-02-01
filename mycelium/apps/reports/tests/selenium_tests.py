@@ -1,6 +1,13 @@
 from djangosanetesting.cases import SeleniumTestCase
 
 class TestSelenium(SeleniumTestCase):
+    selenium_fixtures = []
+    
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
 
     def test_all_pages_load(self):
         sel = self.selenium
