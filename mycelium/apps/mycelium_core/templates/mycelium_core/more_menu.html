@@ -1,11 +1,12 @@
 {% extends "mycelium_base.html" %}
 {% load i18n generic_fields friendly_data_formatting %}
 {% block title %}More Tools - Data Import, Account Settings, and more{% endblock %}
-{% block head %}{{block.super}}
+{% block css %}{{block.super}}
 	<link rel="stylesheet" href="{{ MEDIA_URL }}css/more.css" type="text/css" media="screen" title="" charset="utf-8">
 {% endblock %}
 {% block page_content %}
 <div class="more_buttons">
+	<div class="more_row">
 	<a href="{% url import:list %}" class="mycelium_btn more_button data_import_btn">
 		<div class="button_title">Data Import</div>
 		<div class="button_description">Import records from other systems into GoodCloud</div>
@@ -14,6 +15,8 @@
 		<div class="button_title">Account</div>
 		<div class="button_description">Update billing and account information</div>
 	</a>
+	</div>
+	<div class="more_row">
 	<a href="#" class="mycelium_btn more_button users_button">
 		<div class="button_title">Users</div>
 		<div class="button_description">Create, edit, and set access for user accounts</div>
@@ -22,5 +25,6 @@
 		<div class="button_title">Logos</div>
 		<div class="button_description">Download resized versions of your logo for other sites</div>
 	</a>
+	</div>
 </div>
 {% endblock %}

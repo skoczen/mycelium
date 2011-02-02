@@ -7,8 +7,13 @@ from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 
-@register.inclusion_tag('mycelium_core/template_tags/generic_fields/head.html')
-def generic_field_head(include_context=True):
+@register.inclusion_tag('mycelium_core/template_tags/generic_fields/css.html')
+def generic_field_css(include_context=True):
+    MEDIA_URL = settings.MEDIA_URL
+    return locals()
+
+@register.inclusion_tag('mycelium_core/template_tags/generic_fields/javascript.html')
+def generic_field_javascript(include_context=True):
     MEDIA_URL = settings.MEDIA_URL
     return locals()
 

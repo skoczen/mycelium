@@ -3,13 +3,15 @@ import time
 from test_factory import Factory
 
 class TestAgainstNoData(SeleniumTestCase):
-    fixtures = []
+    selenium_fixtures = []
+    
     def setUp(self):
-        pass
-        
+        self.verificationErrors = []
+    
     def tearDown(self):
-        pass
+        self.assertEqual([], self.verificationErrors)
 
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium
+        assert 1==1
         

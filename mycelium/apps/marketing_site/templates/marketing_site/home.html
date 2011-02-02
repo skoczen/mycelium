@@ -1,7 +1,7 @@
 {% extends "marketing_site/base.html" %}
 {% load i18n cache cms_tags menu_tags %}
 {% block title %}GoodCloud: {% page_attribute page_title %}{% endblock %}
-{% block head %}{{block.super}}
+{% block css %}{{block.super}}
 <!--[if lt IE 8]>
 <style type="text/css" media="screen">
 	#footer {
@@ -9,6 +9,8 @@
 	}
 </style>
 <![endif]-->
+{% endblock %}
+{% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 $(function(){
 	{% if posted %}
@@ -59,7 +61,7 @@ function rotate_verbs() {
 				</span>
 			</div>
 
-			<div class="nonprofits">non-profits.</div>
+			<div class="nonprofits">nonprofits.</div>
 		</td>
 		<td id="home_right_content">
 			{% placeholder home_content %}

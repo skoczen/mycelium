@@ -1,0 +1,101 @@
+{% extends "reports/base.html" %}
+{% block title %}Reports - Unsaved Report{% endblock %}
+{% load humanize %}
+{% block page_content %}
+<breadcrumb><a class="mycelium_btn" href="{% url reports:search %}">Back to All Reports</a></breadcrumb>
+<div class="right_actions">
+	<a href="#" class="mycelium_btn">Save Report</a>
+</div>
+<div class="title"><img src="{{MEDIA_URL}}images/report-32.png"/>Unsaved Report</div>
+
+<div class="setup_phrase">Find all of the people who:</div>
+<div class="criteria_list">
+	<div class="criterium">
+		<span class="additive"></span>
+		<span class="tense">have</span>
+		<span class="negator"></span>
+		<span class="left_side">donated</span>
+		<span class="operator">in the last</span>
+		<span class="right_side">
+			<span class="value">6</span>
+			<span class="units">months</span>
+		</span>
+	</div>
+	<div class="criterium">
+		<span class="additive"></span>
+		<span class="tense">are</span>
+		<span class="negator"></span>
+		<span class="left_side"></span>
+		<span class="operator">more than</span>
+		<span class="right_side">
+			<span class="value">30</span>
+			<span class="units">years old</span>
+		</span>
+	</div>
+	<div class="criterium">
+		<span class="additive"></span>
+		<span class="tense">have</span>
+		<span class="negator">not</span>
+		<span class="left_side">had a volunteer shift</span>
+		<span class="operator">in the last</span>
+		<span class="right_side">
+			<span class="value"></span>
+			<span class="units">year</span>
+		</span>
+	</div>
+	<div class="new_criterium">
+		<a href="#" class="mycelium_btn mycelium_grey mycelium_small_btn">Add new criteria</a>
+	</div>
+</div>
+
+<div class="setup_phrase">Make a report that includes these columns:</div>
+<div class="column_list">
+	<div class="column"><input type="checkbox" checked id="id_first_name"><label for="id_first_name">First Name</label></div>
+	<div class="column"><input type="checkbox" checked id="id_last_name"><label for="id_last_name">Last Name </label></div>
+	<div class="column"><input type="checkbox" checked id="id_email"><label for="id_email_name">Email</label></div>
+	<div class="column"><input type="checkbox" id="id_primary_address"><label for="id_primary_address">Main Address</label></div>
+	<div class="column"><input type="checkbox" id="id_phone"><label for="id_phone">Phone</label></div>
+	<div class="column"><input type="checkbox" id="id_last_volunteer"><label for="id_last_volunteer">Last Volunteer Shift</label></div>
+	<div class="column"><input type="checkbox" id="id_no_volunteer_hrs_month"><label for="id_no_volunteer_hrs_month">Number of volunteer hours this month</label></div>
+	<div class="column"><input type="checkbox" checked id="id_no_volunteer_hrs_year"><label for="id_no_volunteer_hrs_year">Number of volunteer hours this year</label></div>	
+</div>
+
+<div class="sample_results">
+<div class="setup_phrase">First 5 Results:</div>
+<table class="sample_table">
+	<tr>
+		<th>Row</th>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<th>Email</th>
+		<th>Number of volunteer hours this year</th>
+	</tr>
+	{% with people|slice:"5" as five_people %}
+	{% for p in five_people %}
+	<tr>
+		<td>{{forloop.counter}}</td>
+		<td>{{p.first_name}}</td>
+		<td>{{p.last_name}}</td>
+		<td>{{p.primary_email}}</td>
+		<td>{{hours|random}}</td>
+	</tr>
+	{% endfor %}
+	{% endwith %}
+	{% with people.count|add:-5 as remainder %}
+	{% if remainder > 0 %}
+	<tr>
+		<td colspan="9999" class="remainder_count">
+			and {{remainder|intcomma}} more people.
+		</td>
+	</tr>
+	{% endif %}
+	{% endwith %}
+</table>
+</div>
+<div class="actions">
+	<a href="#" class="mycelium_btn">View Results</a>
+	<a href="#" class="mycelium_btn">Download CSV</a>
+
+</div>
+
+{% endblock %}

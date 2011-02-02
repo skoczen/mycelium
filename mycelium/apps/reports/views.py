@@ -18,9 +18,40 @@ def search(request):
     section = "reports"
     return locals()
 
-@render_to("reports/detail.html")
+@render_to("reports/detail_volunteer.html")
 def detail(request, report_id):
     # report = get_object_or_404(Report, report_id)
+    if report_id == "new":
+        new_report == True
+    section = "reports"
+    people = Person.objects.order_by("?").all()
+    hours = [random.randint(2,280) for i in range(0,50)]
+    return locals()
+
+# TODO: clear this out
+def report_demo_page(request):
+    section = "reports"
+    people = Person.objects.order_by("?").all()
+    hours = [random.randint(2,280) for i in range(0,50)]
+    return locals()
+    
+
+@render_to("reports/detail_volunteer.html")
+def detail_volunteer(request):
+    return report_demo_page(request)
+
+@render_to("reports/detail_donors.html")
+def detail_donors(request):
+    return report_demo_page(request)
+    
+@render_to("reports/detail_email.html")
+def detail_email(request):
+    return report_demo_page(request)
+
+    
+@render_to("reports/new.html")
+def new(request, report_id):
+    # Eventually, this should go away. It's just for test.
     section = "reports"
     people = Person.objects.order_by("?").all()
     hours = [random.randint(2,280) for i in range(0,50)]

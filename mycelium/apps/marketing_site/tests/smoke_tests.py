@@ -10,6 +10,12 @@ from djangosanetesting.cases import DatabaseTestCase
 
 class TestSmoke(DatabaseTestCase):
     fixtures = ["marketing_site.json",]
+    
+    def setUp(self):
+        pass
+    
+    def tearDown(self):
+        pass
 
     def smoke_test_the_app(*args, **kwargs):
         smoke_test('marketing_site:home', check_title=True)

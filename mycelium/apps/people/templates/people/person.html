@@ -1,7 +1,10 @@
 {% extends "people/base.html" %}
 {% load i18n generic_fields friendly_data_formatting %}
 {% block title %}People - {{person.full_name}}{% endblock %}
-{% block head %}{{block.super}}
+{% block css %}{{block.super}}
+{% generic_field_css %}
+{% endblock %}
+{% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 	$(function(){
 		$(".striped tr:even").addClass("even");
@@ -89,7 +92,6 @@
 		});
 	}
 </script>
-{% generic_field_head %}
 {% endblock %}
 {% block page_content %}
 <div id="page_header">

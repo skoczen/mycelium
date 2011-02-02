@@ -1,7 +1,7 @@
 {% extends "logo_maker/base.html" %}
 {% load humanize thumbnail %}
 {% block title %}Logo Maker - All Logos{% endblock %}
-{% block head %}{{block.super}}
+{% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 $(function(){
 	$(".add_another_logo_btn").live("click",add_another_logo_btn_clicked);
