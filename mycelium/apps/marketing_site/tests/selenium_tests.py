@@ -5,10 +5,10 @@ class TestMarketingSite(SeleniumTestCase):
     selenium_fixtures = ["marketing_site.json"]
 
     def setUp(self):
-        pass
+        self.verificationErrors = []
     
     def tearDown(self):
-        pass
+        self.assertEqual([], self.verificationErrors)
 
     def test_home_page_loads(self):
         sel = self.selenium
@@ -22,9 +22,9 @@ class TestMarketingSite(SeleniumTestCase):
         sel.wait_for_page_to_load("30000")
         sel.click("link=Mission")
         sel.wait_for_page_to_load("30000")
-        try: self.assertEqual("We get non-profits.", sel.get_text("//div[@id='page_content']/h2[2]"))
+        try: self.assertEqual("We get nonprofits.", sel.get_text("//div[@id='page_content']/h2[2]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Non-profits deserve the best software in the world.", sel.get_text("//div[@id='page_content']/h1"))
+        try: self.assertEqual("Nonprofits deserve the best software in the world.", sel.get_text("//div[@id='page_content']/h1"))
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.assertEqual("All content copyright GoodCloud, LLC, 2010-2011", sel.get_text("//div[@id='footer']/div[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))

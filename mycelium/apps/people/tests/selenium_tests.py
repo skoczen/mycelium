@@ -16,6 +16,8 @@ def common_creating_and_editing_a_new_person(self):
     sel.type("id_city", "Wilsonville")
     sel.type("id_state", "KY")
     sel.type("id_postal_code", "12345")
+    sel.click("id_first_name")
+    time.sleep(2)
     sel.click("//div[@id='page_header']/span[1]/div[2]")
     try: self.assertEqual("John", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
     except AssertionError, e: self.verificationErrors.append(str(e))
@@ -40,10 +42,10 @@ def common_creating_and_editing_a_new_person(self):
     except AssertionError, e: self.verificationErrors.append(str(e))
     sel.click("link=People")
     sel.wait_for_page_to_load("30000")
-    sel.focus("id_search_query")
-    sel.type("id_search_query", "john smith 555")
-    sel.key_down("id_search_query","5")
-    sel.key_up("id_search_query","5")
+    sel.focus("css=#id_search_query")
+    sel.type("css=#id_search_query", "john smith 555")
+    sel.key_down("css=#id_search_query","5")
+    sel.key_up("css=#id_search_query","5")
     time.sleep(2)
     self.assertEqual("John Smith", sel.get_text("css=.search_results .result_row .name a"))
     sel.click("//div[@id='page']/div[2]/table/tbody/tr[2]/td[1]/a/b[2]")
@@ -76,14 +78,15 @@ def common_creating_and_editing_a_new_person(self):
     sel.type("id_city", "Williamsburg")
     sel.type("id_state", "TN")
     sel.type("id_postal_code", "54321")
-    sel.click("//div[@id='page_header']/span[1]/div[2]")
+    sel.type("id_first_name")
     time.sleep(2)
+    sel.click("//div[@id='page_header']/span[1]/div[2]")
     sel.click("link=People")
     sel.wait_for_page_to_load("30000")
-    sel.focus("id_search_query")
-    sel.type("id_search_query", "jon smithe 555")
-    sel.key_down("id_search_query","5")
-    sel.key_up("id_search_query","5")
+    sel.focus("css=#id_search_query")
+    sel.type("css=#id_search_query", "jon smithe 555")
+    sel.key_down("css=#id_search_query","5")
+    sel.key_up("css=#id_search_query","5")
     time.sleep(2)
     sel.click("//div[@id='page']/div[2]/table/tbody/tr[2]/td[1]/a/b[2]")
     sel.wait_for_page_to_load("30000")
@@ -106,11 +109,11 @@ def common_creating_and_editing_a_new_person(self):
 
 class TestAgainstNoData(SeleniumTestCase):
     def setUp(self):
-        pass
-
+        self.verificationErrors = []
+    
     def tearDown(self):
-        pass
-            
+        self.assertEqual([], self.verificationErrors)
+
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium
         sel.open("/people/search")
@@ -125,7 +128,7 @@ class TestAgainstNoData(SeleniumTestCase):
         sel.type("id_city", "Wilsonville")
         sel.type("id_state", "KY")
         sel.type("id_postal_code", "12345")
-        time.sleep(10)        
+        time.sleep(2)        
         sel.click("//div[@id='page_header']/span[1]/div[2]")
         try: self.assertEqual("John", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
@@ -143,17 +146,17 @@ class TestAgainstNoData(SeleniumTestCase):
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.assertEqual("KY", sel.get_text("//span[@id='container_id_state']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("12345", sel.get_text("css=#container_id_postal_code .view_field"))
+        try: self.assertEqual("12345", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
-        time.sleep(10)
+        time.sleep(2)
         try: self.assertEqual("Last saved a few seconds ago.", sel.get_text("//div[@id='page_header']/span[2]/span"))
         except AssertionError, e: self.verificationErrors.append(str(e))
         sel.click("link=People")
         sel.wait_for_page_to_load("30000")
-        sel.focus("id_search_query")
-        sel.type("id_search_query", "john smith 555")
-        sel.key_down("id_search_query","5")
-        sel.key_up("id_search_query","5")
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "john smith 555")
+        sel.key_down("css=#id_search_query","5")
+        sel.key_up("css=#id_search_query","5")
         time.sleep(3)
         self.assertEqual("John Smith", sel.get_text("css=.search_results .result_row .name a"))
         sel.click("//div[@id='page']/div[2]/table/tbody/tr[2]/td[1]/a/b[2]")
@@ -174,7 +177,7 @@ class TestAgainstNoData(SeleniumTestCase):
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.assertEqual("KY", sel.get_text("//span[@id='container_id_state']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("12345", sel.get_text("css=#container_id_postal_code .view_field"))
+        try: self.assertEqual("12345", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
         sel.click("//div[@id='page_header']/span[1]/div[2]")
         sel.type("id_first_name", "Jon")
@@ -186,15 +189,16 @@ class TestAgainstNoData(SeleniumTestCase):
         sel.type("id_city", "Williamsburg")
         sel.type("id_state", "TN")
         sel.type("id_postal_code", "54321")
+        sel.click("id_first_name",)
         time.sleep(4)
         sel.click("//div[@id='page_header']/span[1]/div[2]")
-        time.sleep(1)
+        time.sleep(3)
         sel.click("link=People")
         sel.wait_for_page_to_load("30000")
-        sel.focus("id_search_query")
-        sel.type("id_search_query", "jon smithe 555")
-        sel.key_down("id_search_query","5")
-        sel.key_up("id_search_query","5")
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "jon smithe 555")
+        sel.key_down("css=#id_search_query","5")
+        sel.key_up("css=#id_search_query","5")
         time.sleep(2)
         sel.click("//div[@id='page']/div[2]/table/tbody/tr[2]/td[1]/a/b[2]")
         sel.wait_for_page_to_load("30000")
@@ -211,7 +215,7 @@ class TestAgainstNoData(SeleniumTestCase):
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.assertEqual("TN", sel.get_text("//span[@id='container_id_state']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("54321", sel.get_text("css=#container_id_postal_code .view_field"))
+        try: self.assertEqual("54321", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
 
     def test_search_page_loads(self):
@@ -221,12 +225,16 @@ class TestAgainstNoData(SeleniumTestCase):
 
 class TestAgainstGeneratedData(SeleniumTestCase):
     # selenium_fixtures = ["200_test_people.json"]
-    def setUp(self):
-        self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
     
-    def tearDown(self):
+    def setUp(self, *args, **kwargs):
+        self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
+        self.verificationErrors = []
+    
+    def tearDown(self,*args, **kwargs):
         for p in self.people:
             p.delete()
+        self.assertEqual([], self.verificationErrors)
+
 
     def test_creating_and_editing_a_new_person_with_generated(self):
         sel = self.selenium
@@ -242,7 +250,8 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         sel.type("id_city", "Wilsonville")
         sel.type("id_state", "KY")
         sel.type("id_postal_code", "12345")
-        time.sleep(1)        
+        sel.click("id_first_name")
+        time.sleep(2)
         sel.click("//div[@id='page_header']/span[1]/div[2]")
         try: self.assertEqual("John", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
@@ -260,17 +269,17 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.assertEqual("KY", sel.get_text("//span[@id='container_id_state']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("12345", sel.get_text("css=#container_id_postal_code .view_field"))
+        try: self.assertEqual("12345", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
         time.sleep(4)
         try: self.assertEqual("Last saved a few seconds ago.", sel.get_text("//div[@id='page_header']/span[2]/span"))
         except AssertionError, e: self.verificationErrors.append(str(e))
         sel.click("link=People")
         sel.wait_for_page_to_load("30000")
-        sel.focus("id_search_query")
-        sel.type("id_search_query", "john smith 555")
-        sel.key_down("id_search_query","5")
-        sel.key_up("id_search_query","5")
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "john smith 555")
+        sel.key_down("css=#id_search_query","5")
+        sel.key_up("css=#id_search_query","5")
         time.sleep(3)
         self.assertEqual("John Smith", sel.get_text("css=.search_results .result_row .name a"))
         sel.click("//div[@id='page']/div[2]/table/tbody/tr[2]/td[1]/a/b[2]")
@@ -291,7 +300,7 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.assertEqual("KY", sel.get_text("//span[@id='container_id_state']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("12345", sel.get_text("css=#container_id_postal_code .view_field"))
+        try: self.assertEqual("12345", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
         sel.click("//div[@id='page_header']/span[1]/div[2]")
         sel.type("id_first_name", "Jon")
@@ -303,15 +312,16 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         sel.type("id_city", "Williamsburg")
         sel.type("id_state", "TN")
         sel.type("id_postal_code", "54321")
-        time.sleep(10)
+        sel.click("id_first_name",)
+        time.sleep(2)
         sel.click("//div[@id='page_header']/span[1]/div[2]")
-        time.sleep(1)
+        time.sleep(3)
         sel.click("link=People")
         sel.wait_for_page_to_load("30000")
-        sel.focus("id_search_query")
-        sel.type("id_search_query", "jon smithe 555")
-        sel.key_down("id_search_query","5")
-        sel.key_up("id_search_query","5")
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "jon smithe 555")
+        sel.key_down("css=#id_search_query","5")
+        sel.key_up("css=#id_search_query","5")
         time.sleep(2)
         sel.click("//div[@id='page']/div[2]/table/tbody/tr[2]/td[1]/a/b[2]")
         sel.wait_for_page_to_load("30000")
@@ -341,13 +351,13 @@ class TestAgainstGeneratedData(SeleniumTestCase):
     #     sel = self.selenium
     #     sel.open("/people/search")
     #     sel.wait_for_page_to_load("30000")
-    #     sel.key_press("id_search_query","a")
+    #     sel.key_press("css=#id_search_query","a")
     #     time.sleep(1)
 
     def test_editing_and_searching_a_record(self):
         sel = self.selenium
         sel.open("/people/search")
-        sel.type("id_search_query", "a")
+        sel.type("css=#id_search_query", "a")
         sel.click("//div[@id='page']/div[2]/table/tbody/tr[2]/td[1]/a")
         sel.wait_for_page_to_load("30000")
         sel.click("//div[@id='page_header']/span[1]/div[2]")
@@ -361,15 +371,15 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         sel.type("id_state", "MI")
         sel.type("id_postal_code", "12346")
         sel.click("//div[@id='page_header']/span[1]/div[2]")
-        time.sleep(10)
+        time.sleep(2)
         try: self.assertEqual("Last saved a few seconds ago.", sel.get_text("//div[@id='page_header']/span[2]/span"))
         except AssertionError, e: self.verificationErrors.append(str(e))
-        sel.click("link=People")
+        sel.click("css=main_nav a:contains('People')")
         sel.wait_for_page_to_load("30000")
-        sel.focus("id_search_query")
-        sel.type("id_search_query", "jennifer williamsburg 520")
-        sel.key_down("id_search_query","0")
-        sel.key_up("id_search_query","0")
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "jennifer williamsburg 520")
+        sel.key_down("css=#id_search_query","0")
+        sel.key_up("css=#id_search_query","0")
         try: self.assertEqual("Jennifer", sel.get_text("//div[@id='page']/div[2]/table/tbody/tr[2]/td[1]/a/b[1]"))
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.assertEqual("520", sel.get_text("//div[@id='page']/div[2]/table/tbody/tr[2]/td[2]/b"))

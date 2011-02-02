@@ -4,10 +4,10 @@ class TestSelenium(SeleniumTestCase):
     selenium_fixtures = []
     
     def setUp(self):
-        pass
-
+        self.verificationErrors = []
+    
     def tearDown(self):
-        pass
+        self.assertEqual([], self.verificationErrors)
 
     def test_all_pages_load(self):
         sel = self.selenium

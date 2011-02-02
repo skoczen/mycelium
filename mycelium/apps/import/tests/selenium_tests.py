@@ -6,11 +6,11 @@ class TestMockupPages(SeleniumTestCase):
     selenium_fixtures = []
     
     def setUp(self):
-        pass
-
+        self.verificationErrors = []
+    
     def tearDown(self):
-        pass
-        
+        self.assertEqual([], self.verificationErrors)
+
 
     def test_mockup_pages_load_and_links_work(self):
         sel = self.selenium        
