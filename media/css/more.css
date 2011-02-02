@@ -48,3 +48,7 @@ body {
 .account_button {
 	background-image: url("../images/icon-account-100.png");
 }
+.more_row {
+	clear: left;
+	width: 100%;
+}

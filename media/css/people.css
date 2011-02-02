@@ -294,6 +294,7 @@ input:focus {
 	-moz-border-radius-topright: 4px;
 	-webkit-border-top-right-radius: 4px;
 	margin: 4px 5px 0px 5px;
+	margin: 3px 5px;
 	padding: 10px;
 	text-decoration: none;
 	font-size: 20px;
