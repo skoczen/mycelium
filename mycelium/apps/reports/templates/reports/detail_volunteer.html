@@ -1,11 +1,6 @@
 {% extends "reports/base.html" %}
 {% block title %}Reports - Unsaved Report{% endblock %}
 {% load humanize %}
-{% block head %}{{block.super}}
-<script type="text/javascript" charset="utf-8">
-
-</script>
-{% endblock %}
 {% block page_content %}
 <breadcrumb><a class="mycelium_btn" href="{% url reports:search %}">Back to All Reports</a></breadcrumb>
 <div class="right_actions">

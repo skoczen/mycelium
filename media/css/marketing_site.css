@@ -234,13 +234,16 @@ input {
 	font-weight: normal;
 }
 #page_content h1 {
-	margin-bottom: 30px;
+	margin: 20px 0px 30px 0px;
 	text-align: center;
-	color: #000;	
+	color: #000;
+	font-size: 40px;
 }
 #page_content h2 {
+	margin-top: 10px;
 	margin-bottom: 0px;
 	color: #004486;
+	font-size: 30px;
 }
 #page_content p {
 	margin-top: 0px;

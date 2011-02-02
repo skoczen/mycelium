@@ -169,6 +169,7 @@ body {
 	padding: 0px;
 	margin: 0px;
 	font-family: 'ExpresswayRegular', Arial, sans-serif;
+	font-size: 16px;	
 }
 table {
 	border-collapse: collapse;
@@ -176,7 +177,7 @@ table {
 	margin: 0px;
 }
 
-a {
+a, a:active, a:visited {
 	color: #004486;
 }
 a:hover {
@@ -190,7 +191,9 @@ img, a img {
 	border: 0px;
 }
 /*input, textarea {outline-style:none;}*/
-
+p {
+	margin: 1em 0px;
+}
 
 #page {
 	display: block;
@@ -213,7 +216,10 @@ img, a img {
 	position: relative;
 	z-index: 10;
 }
+::-moz-selection{ background: #3AA5FF; color:#fff; text-shadow: none; }
+::selection { background:#3AA5FF; color:#fff; text-shadow: none; } 
 
+html { overflow-y: auto; }
 
 input.prefilled.tv-focused, input.prefilled.tv-changed {
 	color: #222;

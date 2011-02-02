@@ -17,6 +17,7 @@ logo {
 /*	background: url("../images/goodcloud-logo2-40.png");	*/
 	background-position: 5px 5px;
 	background-repeat: no-repeat;
+	line-height: 50px;
 }
 logo small {
 	font-size: 36px;
@@ -46,7 +47,7 @@ main_nav a {
 	border-bottom: 4px solid #BBB;
 	border-top-width: 0px;
 	font-size: 23px;
-	padding: 6px 20px 4px 20px;
+	padding: 5px 20px 4px 20px;
 	margin: 0px;
 	display: block;
 	float: left;
@@ -64,9 +65,10 @@ footer img {
 	vertical-align: text-bottom;
 	margin: 0px 3px;
 }
-footer a {
+footer a, footer a:active, footer a:visited {
 	color: #EEE;
 	text-decoration: none;
+	font-size: 16px;
 }
 footer a:hover {
 	color: #FFF;
@@ -124,10 +126,12 @@ add_another {
 	color: #333;
 }
 
-.mycelium_btn, input.mycelium_btn {
+.mycelium_btn, input.mycelium_btn, a.mycelium_btn {
 	border: 1px solid #004486;
 	background-color: #004486;
 	color: #FFF;
+}
+.mycelium_btn, input.mycelium_btn {
 	font-size: 18px;
 	padding: 5px 11px;
 	text-decoration: none;
@@ -149,7 +153,7 @@ add_another {
 	padding: 3px 6px;
 }
 
-.mycelium_gray, .mycelium_grey, input.mycelium_gray, input.mycelium_grey {
+.mycelium_gray, .mycelium_grey, input.mycelium_gray, input.mycelium_grey, a.mycelium_gray, a.mycelium_grey {
 	border-color: #EEE;
 	background-color: #EEE;
 	color: #999;
