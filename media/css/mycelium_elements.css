@@ -188,3 +188,6 @@ table.record_table th {
 table.record_table td {
 	padding: 2px;
 }
+table.striped tr.even td {
+	background-color: #F2F2F2;
+}

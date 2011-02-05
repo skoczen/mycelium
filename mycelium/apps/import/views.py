@@ -9,7 +9,7 @@ from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
 from people.models import Person
-import random
+from test_factory import Factory
 
 @render_to("import/list.html")
 def list(request):
@@ -21,6 +21,9 @@ def list(request):
 def start(request):
     # TODO: this is obnoxious.  Fix it.
     section = "more"
+    people = Person.objects.order_by("?").all()
+    birthdates = [Factory.rand_date(start_year=1910, end_year=1992) for i in range(0,50)]
+    ages = [Factory.rand_int(18,102) for i in range(0,50)]
     return locals()
 
 @render_to("import/review.html")

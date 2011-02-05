@@ -28,19 +28,25 @@
 	<step_content>
 	<table class="striped record_table import_fields_confirmation">
 		<tr>
-			<th>GoodCloud ID</th>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>Email</th>
-			<th>? ___ </th>
+			<th>{% with "id" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
+			<th>{% with "first_name" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
+			<th>{% with "last_name" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
+			<th>{% with "email" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
+			<th>{% with "birthday" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
+			<th>{% include "import/_dropdown_options.html" %}</th>
 		</tr>
+		{% with people|slice:"5" as five_people %}
+		{% for p in five_people %}
 		<tr>
-			<td>1</td>
-			<td>Joe</td>
-			<td>Williams</td>
-			<td>joe_w1239@gmail.com</td>
-			<td>31</td>
+			<td class="col_1">{{p.pk}}</td>
+			<td class="col_2">{{p.first_name}}</td>
+			<td class="col_3">{{p.last_name}}</td>
+			<td class="col_4">{{p.primary_email}}</td>
+			<td class="col_5">{{birthdates|random|date}}</td>
+			<td class="col_6">{{ages|random}}</td>
 		</tr>
+		{% endfor %}
+		{% endwith %}
 	</table>
 	</step_content>
 </step>
