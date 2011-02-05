@@ -49,7 +49,7 @@ class TestMockupPages(SeleniumTestCase):
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.assertEqual("Start Data Import", sel.get_text("//div[@id='page']/page_title"))
         except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Choose a CSV Spreadsheet.", sel.get_text("//div[@id='page']/div[2]/step[1]/instruction"))
+        try: self.assertEqual("Choose a CSV Spreadsheet.", sel.get_text("css=step[number=1] instruction"))
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.assertEqual("Start Import", sel.get_text("link=Start Import"))
         except AssertionError, e: self.verificationErrors.append(str(e))

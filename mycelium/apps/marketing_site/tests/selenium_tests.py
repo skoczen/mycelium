@@ -2,7 +2,7 @@ from djangosanetesting.cases import SeleniumTestCase
 from email_list.models import EmailSubscription
 
 class TestMarketingSite(SeleniumTestCase):
-    selenium_fixtures = ["marketing_site.json"]
+    fixtures = ["marketing_site.json"]
 
     def setUp(self):
         self.verificationErrors = []
