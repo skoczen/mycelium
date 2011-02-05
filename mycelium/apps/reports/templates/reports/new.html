@@ -1,8 +1,9 @@
 {% extends "reports/base.html" %}
 {% block title %}Reports - Unsaved Report{% endblock %}
 {% load humanize %}
+{% block breadcrumb_links %}<a href="{% url reports:search %}">Back to All Reports</a>{% endblock %}
 {% block page_content %}
-<breadcrumb><a class="mycelium_btn" href="{% url reports:search %}">Back to All Reports</a></breadcrumb>
+
 <div class="right_actions">
 	<a href="#" class="mycelium_btn">Save Report</a>
 </div>

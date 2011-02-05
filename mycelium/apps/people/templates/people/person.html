@@ -91,6 +91,7 @@
 	}
 </script>
 {% endblock %}
+{% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
 {% block page_content %}
 <div id="page_header">
 	<div class="small_search">
@@ -98,7 +99,6 @@
 		<div class="nyi"><img src="{{MEDIA_URL}}images/up-pointout-arrow-20.png"/> Sorry, this part isn't done yet!</div>
 	</div>
 
-	{# <a href="{% url people:search %}" class="mycelium_btn mycelium_left_arrow_btn">All People</a> #}
 	<span class="switch">
 		<div class="left_label">Edit</div>
 		<div class="switch_box off">

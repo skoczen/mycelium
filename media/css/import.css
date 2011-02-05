@@ -32,14 +32,7 @@ page_title {
 .report_summary {
 	
 }
-.fields_report {
-	float: right;
-	margin-right: 4%;
-}
-.fields_report ul {
-	margin: 0px 0px 0px 10px;
-	
-}
+
 
 .total {
 	font-size: 24px;
