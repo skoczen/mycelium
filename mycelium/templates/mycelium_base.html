@@ -28,6 +28,7 @@
 	
 	{% block page %}
 	<div id="page">
+	{% block breadcrumb %}<div class="breadcrumb_container"><breadcrumb>{% block breadcrumb_links %}{% endblock %}</breadcrumb><div class="triangle-l"></div></div>{% endblock %}
 	{% block page_content %}
 	
 	{% endblock %}
