@@ -32,6 +32,14 @@ page_title {
 .report_summary {
 	
 }
+.fields_report {
+	float: right;
+	margin-right: 4%;
+}
+.fields_report ul {
+	margin: 0px 0px 0px 10px;
+	
+}
 
 .total {
 	font-size: 24px;
@@ -62,16 +70,20 @@ page_title {
 	margin-right: 8px;
 	height: 48px;
 	width: 48px;
-	background-color: #004486;
-	color: #FFF;
 	text-align: center;
 	border-radius: 30px;
 	-moz-border-radius: 30px;
 	-webkit-border-radius: 30px;
 	line-height: 44px;
 	margin-top: -6px;
+	background-color: #D4D4D4;
+	color: #999;
 }
+.start_data_import step.active step_number {
+	background-color: #004486;
+	color: #FFF;
 
+}
 .start_data_import step instruction {
 	display: block;
 	width: 100%;
@@ -79,16 +91,22 @@ page_title {
 	padding: 7px 0px 6px 0px;
 	margin: 0px 0px 10px 15px;
 	background-color: #DDD;
-	border-top-right-radius: 30px;
-	-moz-border-radius-topright: 30px;
-	-webkit-border-top-right-radius: 30px;	
-	border-bottom-right-radius: 30px;
-	-moz-border-radius-bottomright: 30px;
-	-webkit-border-bottom-right-radius: 30px;
+	color: #999;
+	border--radius: 30px;
+	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;	
 }
-.start_data_import step step_content {
+.start_data_import step.active instruction {
+	background-color: #EEE;
+	color: #004486;
+}
+.start_data_import step step_content, .start_data_import step pre_step_content  {
 	display: block;
 	padding: 7px 15px 5px 25px;
+}
+.start_data_import step pre_step_content {
+	font-size: 18px;
+	color: #999;
 }
 .easy_header {
 	font-size: 18px;

@@ -124,6 +124,7 @@ add_another {
 	border: 1px solid #AAA;
 	padding: 20px;
 	color: #333;
+	overflow: auto;
 }
 
 .mycelium_btn, input.mycelium_btn, a.mycelium_btn {
