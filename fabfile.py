@@ -32,5 +32,11 @@ setup_env_webfaction("mycelium","skoczen",
                 overrides={
                     'git_origin':"http://mycelium.skoczen.webfactional.com/mycelium.git",
                     # 'dry_run':True,
+                    'local_working_path':"~/workingCopy/goodcloud"
                 },
                 )
+
+
+
+def dump_marketing_fixture():
+    magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdata --natural --exclude=contenttypes auth.User marketing_site cms mptt menus text  > %(git_path)s/%(project_name)s/apps/marketing_site/fixtures/marketing_site.json")
