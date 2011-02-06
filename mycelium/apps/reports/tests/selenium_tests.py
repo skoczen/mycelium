@@ -16,7 +16,7 @@ class TestSelenium(SeleniumTestCase):
         sel.wait_for_page_to_load("30000")
         sel.click("link=Thursday Volunteer List")
         sel.wait_for_page_to_load("30000")
-        try: self.assertEqual("Thursday Volunteer List", sel.get_text("css=.report_results tr:nth(0) .name a"))
+        try: self.assertEqual("Thursday Volunteer List", sel.get_text("css=.title"))
         except AssertionError, e: self.verificationErrors.append(str(e))
         try: self.assertEqual("Add new criteria", sel.get_text("link=Add new criteria"))
         except AssertionError, e: self.verificationErrors.append(str(e))
