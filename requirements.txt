@@ -1,6 +1,6 @@
 fabric
 psycopg2
-# mysql-python
+mysql-python
 pysqlite
 PIL
 python-memcached

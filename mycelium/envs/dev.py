@@ -3,9 +3,9 @@ ENV = "DEV"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mycelium',
-        'USER': 'skoczen',
+        'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '',
