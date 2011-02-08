@@ -12,7 +12,7 @@ DATABASES = {
     },
 }
 
-MEDIA_URL = 'http://www.digitalmycelium.com/media/'
+MEDIA_URL = 'http://digitalmycelium.com/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
