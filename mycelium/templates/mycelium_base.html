@@ -8,6 +8,7 @@
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.hotkeys-0.7.9.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.ajax.queue.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.autogrow.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/mycelium_elements.js"> </script>
 {% endblock %}
 {% block content %}
 	<span id="test_badge"></span>
@@ -27,6 +28,7 @@
 	
 	{% block page %}
 	<div id="page">
+	{% block breadcrumb %}<div class="breadcrumb_container"><breadcrumb>{% block breadcrumb_links %}{% endblock %}</breadcrumb><div class="triangle-l"></div></div>{% endblock %}
 	{% block page_content %}
 	
 	{% endblock %}

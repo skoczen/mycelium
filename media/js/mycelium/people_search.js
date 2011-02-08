@@ -13,7 +13,7 @@ function queue_searching() {
 function update_search() {
 	q = $("#id_search_query").val();
 	$.ajax({
-	  url: "{% url people:search_results %}",
+	  url: SEARCH_URL,
 	  type: "GET",
 	  dataType: "json",
 	  data: {'q':q},

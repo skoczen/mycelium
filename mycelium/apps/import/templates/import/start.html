@@ -3,54 +3,75 @@
 {% block title %}Data Import - Start a New Data Import{% endblock %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
-
+	var current_step = 1;
+	$(function(){
+		$("step[number=2] step_content").hide();
+		$(".next_step_btn").live("click",next_step);
+		$("th.col_6 select").live("change",next_step)
+	});
+	function next_step() {
+		current_step++;
+		$("step[number="+current_step+"]").addClass("active");
+		$("step[number="+current_step+"] step_content").show();
+		$("step[number="+current_step+"] pre_step_content").hide();
+		$("step[number="+current_step+"] .mycelium_btn").removeClass("mycelium_grey").removeClass("mycelium_gray");
+	}
 </script>
 {% endblock %}
+{% block breadcrumb_links %}<a href="{% url import:list %}">Back to All Data Imports</a>{% endblock %}
 {% block page_content %}
-<breadcrumb><a class="mycelium_btn" href="{% url import:list %}">Back to All Data Imports</a></breadcrumb>
 <page_title>Start Data Import</page_title>
-<div class="easy_header">Importing data is three easy steps:</div>
+<div class="easy_header">Data import is a way for you to bring in data from your old system into GoodCloud.  You can import data as many times as you want - GoodCloud will match up with data you already have, and give you a clear report of what happened.</div>
 <div class="start_data_import">
-<step>
+<step number="1" class="active">
 	<step_number>1</step_number>
-	<instruction>Choose a CSV Spreadsheet</instruction>
+	<instruction>Choose a CSV Spreadsheet.</instruction>
 	<step_content>	
 	<form class="upload_form">
 		<input type="file" name="import_csv">
-		<input type="button" class="mycelium_btn" value="Next Step">
+		<input type="button" class="mycelium_btn next_step_btn" value="Next Step">
 	</form>
 	</step_content>
 </step>
 
-<step>
+<step number="2">
 	<step_number>2</step_number>
-	<instruction>Confirm the fields you want to import</instruction>
-	<step_content>
+	<instruction>Confirm the fields you want to import.</instruction>
+	<pre_step_content>Click "Next Step" above to see the import fields.</pre_step_content>
+	<step_content style="display: none;">
 	<table class="striped record_table import_fields_confirmation">
 		<tr>
-			<th>GoodCloud ID</th>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>Email</th>
-			<th>? ___ </th>
+			<th class="col_1">{% with "id" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
+			<th class="col_2">{% with "first_name" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
+			<th class="col_3">{% with "last_name" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
+			<th class="col_4">{% with "email" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
+			<th class="col_5">{% with "birthday" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
+			<th class="col_6">{% include "import/_dropdown_options.html" %}</th>
 		</tr>
+		{% with people|slice:"5" as five_people %}
+		{% for p in five_people %}
 		<tr>
-			<td>1</td>
-			<td>Joe</td>
-			<td>Williams</td>
-			<td>joe_w1239@gmail.com</td>
-			<td>31</td>
+			<td class="col_1">{{p.pk}}</td>
+			<td class="col_2">{{p.first_name}}</td>
+			<td class="col_3">{{p.last_name}}</td>
+			<td class="col_4">{{p.primary_email}}</td>
+			<td class="col_5">{{birthdates|random|date}}</td>
+			<td class="col_6">{{ages|random}}</td>
 		</tr>
+		{% endfor %}
+		{% endwith %}
 	</table>
 	</step_content>
+	</active_step_content>
 </step>
 
-<step>
+<step number="3">
 	<step_number>3</step_number>
 	<instruction>Click Import, and give the GoodCloud robots a minute!</instruction>
 	<step_content>	
-	<a href="#" class="mycelium_btn">Start Import</a>
+	<a href="{% url import:list %}" class="mycelium_btn mycelium_grey">Start Import</a>
 	</step_content>
+	</active_step_content>
 </step>
 </div>
 {% endblock %}

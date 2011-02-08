@@ -2,6 +2,9 @@
 {% block title %}People - Search{% endblock %}
 {% block breadcrumb %}{% endblock %}
 {% block javascript %}{{block.super}}
+<script type="text/javascript" charset="utf-8">
+	var SEARCH_URL = "{% url people:search_results %}";
+</script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_search.js"> </script>
 {% endblock %}
 {% block page_content %}
@@ -11,5 +14,5 @@
 </div>
 <search_results>
 	{% include "people/_search_results.html" %}
-</ search_results>
+</search_results>
 {% endblock %}

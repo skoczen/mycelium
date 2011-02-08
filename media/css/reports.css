@@ -68,9 +68,11 @@ input:focus {
 	text-align: left;
 	background-color: #DDD;
 	border: 1px solid #BBB;
+	padding: 2px;
 }
 .sample_results table.sample_table td {
 	border: 1px solid #DDD;
+	padding: 2px;
 }
 .actions {
 	padding: 20px 0px;
