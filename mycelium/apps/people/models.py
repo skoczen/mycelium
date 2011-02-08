@@ -10,6 +10,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin):
     last_name = models.CharField(max_length=255, blank=True, null=True)
     
     search_fields = ["first_name","last_name","primary_email", "searchable_primary_phone_number"]
+    contact_type = "person"
     
     class Meta(object):
         verbose_name_plural = "People"
@@ -61,6 +62,22 @@ class Person(SimpleSearchableModel, TimestampModelMixin):
             else:
                 return None
 
+    @property
+    def best_contact_method(self):
+        # TODO: properly implement this.
+        if self.primary_phone_number.primary:
+            return self.primary_phone_number
+        elif self.primary_email.primary:
+            return self.primary_email
+        elif self.primary_address.primary:
+            return self.primary_address
+        elif self.primary_phone_number:
+            return self.primary_phone_number
+        elif self.primary_email:
+            return self.primary_email
+        else:
+            return self.primary_address
+
 class ContactMethodType(models.Model):
     internal_name = models.CharField(max_length=255)
     friendly_name = models.CharField(max_length=255)
@@ -72,6 +89,16 @@ class ContactMethod(models.Model):
 
     def save(self, *args, **kwargs):
         super(ContactMethod, self).save(*args, **kwargs)
+
+    # TODO: unit tests
+    @property
+    def is_primary_contact_method(self):
+        return self.primary == True
+    
+    # TODO: unit tests
+    @property
+    def is_best_contact_method(self):
+        return self.pk == self.person.best_contact_method.pk
 
     class Meta(object):
         abstract = True

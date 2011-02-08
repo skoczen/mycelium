@@ -10,14 +10,14 @@ class Factory(QiFactory):
     def email(cls, person=None):
         if not person:
             person = cls.person()
-        email = EmailAddress.objects.create(person=person, email="%s@%s.com" % (cls.rand_str(), cls.rand_str()))
+        email = EmailAddress.objects.create(person=person, email="%s@%s.com" % (cls.rand_str(), cls.rand_str()), primary=cls.rand_bool())
         return email
 
     @classmethod
     def phone(cls, person=None):
         if not person:
             person = cls.person()
-        phone = PhoneNumber.objects.create(person=person, phone_number="%s-%s-%s" % (cls.rand_int(100,999), cls.rand_int(100,999),cls.rand_int(1000,9999)))
+        phone = PhoneNumber.objects.create(person=person, phone_number="%s-%s-%s" % (cls.rand_int(100,999), cls.rand_int(100,999),cls.rand_int(1000,9999)), primary=cls.rand_bool())
         return phone
 
     @classmethod
@@ -33,7 +33,8 @@ class Factory(QiFactory):
             line_2=apt_str,
             city=cls.rand_plant_name(),
             state=cls.rand_str(2).upper(),
-            postal_code=cls.rand_int(10000,99999)
+            postal_code=cls.rand_int(10000,99999),
+            primary=cls.rand_bool(),
             )
         return address
 

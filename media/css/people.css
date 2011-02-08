@@ -59,9 +59,10 @@ breadcrumb {
 	float: left;
 	margin-right: 6px;
 }
-.search_results {
+search_results {
 	width: 100%;
 }
+
 .result_row {
 	padding: 10px;
 }
@@ -83,11 +84,26 @@ breadcrumb {
 .results_table td {
 	padding: 5px;
 }
-.results_table .name {
-	width: 70%;
+search_results .results_table .name {
+	font-size: 22px;
+	width: 50%;
+	white-space: nowrap;
 }
-.results_table .phone {
+search_results .results_table .email {
 	width: 30%;
+	white-space: nowrap;
+}
+search_results .results_table .phone_number {
+	width: 20%;
+	white-space: nowrap;	
+}
+search_results .results_table .best_contact {
+/*	color: #004486;*/
+	padding-left: 24px;
+	background-image: url("../images/icon-primary-contact-20.png");
+	background-position: 0px 7px;
+	background-repeat: no-repeat;
+
 }
 #page_header {
 	padding: 10px 5px;
@@ -375,4 +391,23 @@ breadcrumb {
 }
 .nyi img {
 	vertical-align: middle;
+}
+.person_row icon {
+	display: block;
+	float: left;
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 22px;
+	margin-right: 5px;
+}
+.person_row icon.person {
+/*	background-image: url("../images/icon-person-blue-22h.png");*/
+	background-image: url("../images/icon-person-grey-22h.png");
+}
+.person_row icon.business {
+/*	background-image: url("../images/icon-business-blue-22h.png");*/
+	background-image: url("../images/icon-business-grey-22h.png");	
+	
+	background-position: 3px 0px;
 }
