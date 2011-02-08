@@ -15,7 +15,7 @@
 				<span class="highlightable">{{p.full_name}}</span>
 			</a>
 		</td>
-		<td class="email highlightable {% if p.primary_email.is_best_contact_method %}best_contact{% endif %}">{{p.primary_email}}</td>
+		<td class="email {% if p.primary_email.is_best_contact_method %}best_contact{% endif %}"><a href="mailto:{{p.primary_email}}" class="highlightable">{{p.primary_email}}</a></td>
 		<td class="phone_number highlightable {% if p.primary_phone_number.is_best_contact_method %}best_contact{% endif %}">{{p.primary_phone_number}}</td>
 	</tr>
 {% endfor %}

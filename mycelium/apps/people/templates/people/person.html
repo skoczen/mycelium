@@ -6,6 +6,14 @@
 {% endblock %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
+{% if request.GET.edit == "ON" %}
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	toggle_edit();
+});
+</script>
+{% endif %}
+
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
 {% block page_content %}

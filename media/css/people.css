@@ -85,6 +85,7 @@ search_results {
 	padding: 5px;
 }
 search_results .results_table .name {
+	font-size: 22px;
 	width: 50%;
 	white-space: nowrap;
 }
@@ -92,11 +93,12 @@ search_results .results_table .email {
 	width: 30%;
 	white-space: nowrap;
 }
-search_results .results_table .phone {
+search_results .results_table .phone_number {
 	width: 20%;
 	white-space: nowrap;	
 }
 search_results .results_table .best_contact {
+/*	color: #004486;*/
 	padding-left: 24px;
 	background-image: url("../images/icon-primary-contact-20.png");
 	background-position: 0px 7px;
@@ -400,9 +402,12 @@ search_results .results_table .best_contact {
 	margin-right: 5px;
 }
 .person_row icon.person {
-	background-image: url("../images/icon-person-blue-22h.png");
+/*	background-image: url("../images/icon-person-blue-22h.png");*/
+	background-image: url("../images/icon-person-grey-22h.png");
 }
 .person_row icon.business {
-	background-image: url("../images/icon-business-blue-22h.png");
+/*	background-image: url("../images/icon-business-blue-22h.png");*/
+	background-image: url("../images/icon-business-grey-22h.png");	
+	
 	background-position: 3px 0px;
 }

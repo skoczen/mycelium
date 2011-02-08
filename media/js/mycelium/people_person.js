@@ -10,10 +10,10 @@ $(function(){
 	$("body").bind('keydown', 'ctrl+f', focus_search);
 	// $("input").check_width();
 	$(".last_save_time").hide();
-	$("form input").live("change", save_basic_form)
+	$("form input").live("change", save_basic_form);
 	$("form input").autoGrowInput({comfortZone: 30, resizeNow:true});
 
-	$(".save_now_btn").live("click", save_basic_form)
+	$(".save_now_btn").live("click", save_basic_form);
 	
 	$("#id_page_top_search").bind("keydown", function(){
 		setTimeout(function(){
@@ -22,11 +22,8 @@ $(function(){
 			} else {
 				$(".small_search .nyi").fadeIn();
 			}
-		}, 100)
+		}, 100);
 	});
-	{% if request.GET.edit == "ON" %}
-	toggle_edit();
-	{% endif %}
 	intelligently_show_hide_comma();
 });
 function toggle_edit(){
@@ -80,6 +77,6 @@ function save_basic_form() {
 		  error: function() {
 			clearTimeout(savingTimeout);
 			alert("error");
-		  },
+		  }
 	});
 }
