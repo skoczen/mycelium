@@ -35,7 +35,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin):
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     
-    search_fields = ["first_name","last_name","primary_email", "searchable_primary_phone_number"]
+    search_fields = ["first_name","last_name","searchable_primary_email", "searchable_primary_phone_number"]
     contact_type = "person"
     
     class Meta(object):
@@ -55,6 +55,10 @@ class Person(SimpleSearchableModel, TimestampModelMixin):
             return DIGIT_REGEX.sub('', "%s" % self.primary_phone_number.phone_number)
         else:
             return ''
+
+    @property
+    def searchable_primary_email(self):
+        return self.primary_email or ""
         
     @property
     def primary_phone_number(self):

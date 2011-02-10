@@ -1,6 +1,6 @@
 rpm -ivh http://repo.webtatic.com/yum/centos/5/`uname -i`/webtatic-release-5-1.noarch.rpm
-yum install --enablerepo=webtatic git
-yum install python26 python26-setuptools python26-devel python26-devel.x86_64 mysql-devel.x86_64 sqlite3 gmp rabbitmq-server memcached
+yum install -y --enablerepo=webtatic git
+yum install -y python26 python26-setuptools python26-devel python26-devel.x86_64 mysql-devel.x86_64 sqlite3 gmp rabbitmq-server memcached htop
 cd /etc/init.d; chkconfig --add memcached
 cd /etc/init.d; service memcached start
 cd /etc/init.d; wget https://github.com/ask/celery/raw/master/contrib/generic-init.d/celeryd --no-check-certificate
