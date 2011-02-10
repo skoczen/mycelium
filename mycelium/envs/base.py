@@ -41,13 +41,6 @@ SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#         'LOCATION': '127.0.0.1:11211',
-#     }
-# }
-
 
 
 # Make this unique, and don't share it with anybody.
@@ -109,6 +102,7 @@ INSTALLED_APPS = (
     'gunicorn',
     'sorl.thumbnail',
     'django_nose',
+    'djcelery',
 
 
     'cms',
@@ -176,3 +170,14 @@ SOUTH_LOGGING_FILE = "/dev/null"
 
 THUMBNAIL_FORMAT = "PNG"
 THUMBNAIL_COLORSPACE = None
+
+# celery / rabbitmq
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = "mycelium"
+BROKER_PASSWORD = "68WXmV6K49r8veczVaUK"
+BROKER_VHOST = "digitalmycelium"
+
+CELERY_RESULT_BACKEND = "amqp"
+import djcelery
+djcelery.setup_loader()

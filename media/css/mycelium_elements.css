@@ -157,6 +157,10 @@ breadcrumb:hover {
 	border-color: transparent #003A8D transparent transparent;	
     z-index: -1;
 }
+new_object_buttons {
+	display: block;
+	padding: 10px;
+}
 #page {
 	display: block;
 	margin: 80px auto;

@@ -8,21 +8,21 @@ from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
-from people.models import Person
-from people.forms import PersonForm, EmailForm, AddressForm, PhoneForm
+from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy
+from people.forms import PersonForm, EmailForm, AddressForm, PhoneForm, OrganizationForm
 
 @render_to("people/search.html")
 def search(request):
-    people = Person.objects.all()
+    people_proxies = PeopleAndOrganizationsSearchProxy.objects.all()
     return locals()
 
 @json_view
 def search_results(request):
     if 'q' in request.GET:
         q = request.GET['q']
-        people = Person.search(q,ignorable_chars=["-","(",")"])
+        people_proxies = PeopleAndOrganizationsSearchProxy.search(q,ignorable_chars=["-","(",")"])
     else:
-        people = Person.objects.all()
+        people_proxies = PeopleAndOrganizationsSearchProxy.objects.all()
     return {"html":render_to_string("people/_search_results.html", locals())}
 
 def _basic_forms(person, request):
@@ -78,3 +78,23 @@ def save_person_basic_info(request, person_id):
 def new_person(request):
     person = Person.objects.create()
     return HttpResponseRedirect("%s?edit=ON" %reverse("people:person",args=(person.pk,)))
+
+
+def _org_forms(org, request):
+    data = None
+    if request.method == "POST":
+        data = request.POST
+    
+    form = OrganizationForm(data, instance=org)
+    return form
+
+def new_organization(request):
+    org = Organization.objects.create()
+    return HttpResponseRedirect("%s?edit=ON" %reverse("people:organization",args=(org.pk,)))
+
+@render_to("people/organization.html")
+def organization(request, org_id):
+    org = get_object_or_404(Organization,pk=org_id)
+    form = _org_forms(org, request)
+    # form, email_form, address_form, phone_form = _basic_forms(person, request)
+    return locals()

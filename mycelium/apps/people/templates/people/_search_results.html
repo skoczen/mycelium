@@ -1,24 +1,13 @@
 {% load pagination_tags %}
-{% if people %}
-{% autopaginate people 20 %}
+{% if people_proxies %}
+{% autopaginate people_proxies 20 %}
 <table class="results_table">
 	<tr class="person_row header">
 		<th class="name">Name</th>
 		<th class="email">Email</th>
 		<th class="phone_number">Phone Number</th>
 	</tr>
-{% for p in people %}
-	<tr class="result_row person_row">
-		<td class="name">
-			<a href="{% url people:person p.pk %}">
-				<icon class="{{p.contact_type}}" ></icon>
-				<span class="highlightable">{{p.full_name}}</span>
-			</a>
-		</td>
-		<td class="email {% if p.primary_email.is_best_contact_method %}best_contact{% endif %}"><a href="mailto:{{p.primary_email}}" class="highlightable">{{p.primary_email}}</a></td>
-		<td class="phone_number highlightable {% if p.primary_phone_number.is_best_contact_method %}best_contact{% endif %}">{{p.primary_phone_number}}</td>
-	</tr>
-{% endfor %}
+{% for p in people_proxies %}{{p.search_result_row|safe}}{% endfor %}
 	<tr><td colspan="2">
 		{% paginate %}
 	</td></tr>

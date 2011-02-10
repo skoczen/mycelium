@@ -30,3 +30,5 @@ nose-exclude
 south
 -e git://github.com/Almad/django-sane-testing.git#egg=djangosanetesting
 cherrypy
+celery
+django-celery

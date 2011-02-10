@@ -1,0 +1,122 @@
+{% extends "people/base.html" %}
+{% load i18n generic_fields friendly_data_formatting %}
+{% block title %}Organizations - {% if org.name %}{{org.name}}{% else %}New Organization{% endif %}{% endblock %}
+{% block css %}{{block.super}}
+{% generic_field_css %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
+{% if request.GET.edit == "ON" %}
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	toggle_edit();
+});
+</script>
+{% endif %}
+
+{% endblock %}
+{% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People and Organizations</a>{% endblock %}
+{% block page_content %}
+<div id="page_header">
+	<div class="small_search">
+		<input id="id_page_top_search" name="page_top_search" />
+		<div class="nyi"><img src="{{MEDIA_URL}}images/up-pointout-arrow-20.png"/> Sorry, this part isn't done yet!</div>
+	</div>
+
+	<span class="switch">
+		<div class="left_label">Edit</div>
+		<div class="switch_box off">
+		<div class="left_switch">on</div>
+		<div class="right_switch">off</div>
+		</div>
+		<div class="right_label"></div>
+	</span>
+	<span class="save_info">
+		<span class="last_save_time">Last saved {{person.modified_at|pretty_timesince}}.</span>
+		{# <a href="#" class="mycelium_btn myelium_gray save_now_btn">Save Now</a> #}
+	</span>
+</div>
+
+
+<form action="#" class="edit_mode_off" id="basic_info_form" method="POST">
+<div class="basic_info">
+	<div class="name_phone_email">
+		<div class="name">
+			{% generic_editable_field form.name %}
+		</div>
+		{% generic_editable_field form.primary_phone_number %}
+		{% generic_editable_field form.organization_type %}
+		{% generic_editable_field form.organization_type_other_name %}
+		{% generic_editable_field_email form.website %}
+		{% generic_editable_field_email form.twitter_username %}		
+	</div>
+	<div class="address">
+		{% generic_editable_field form.line_1 %}
+		{% generic_editable_field form.line_2 %}
+
+		<div class="city_state_zip">
+			{% generic_editable_field form.city %}<span class="city_state_comma">,</span>
+			{% generic_editable_field form.state %}
+			{% generic_editable_field form.postal_code %}
+		</div>
+	
+	</div>
+
+</div>
+</form>
+
+
+<div class="additional_information">
+	{# Extra emails, phone #s, Addresses #}
+</div>
+	
+	
+<div id="detail_tabs">
+	<a class="detail_tab" href="#">Conversations</a>
+	<a class="detail_tab current" href="#">People</a>
+	{# <a class="detail_tab" href="#">Participant</a> #}
+	{# <a class="detail_tab current" href="#">Volunteer</a> #}
+	{# <a class="detail_tab" href="#">Donor</a> #}
+</div>
+<div id="detail_tab_contents">
+	<div class="detail_header">Recent Volunteer Activity</div>
+	{# add btn #}
+	<table class="volunteer_shift_table striped">
+		<tr>
+			<td>3 hours</td>
+			<td>last wednesday</td>
+			<td>on Office Shift</td>
+		</tr>
+		<tr>
+			<td>2 hours</td>
+			<td>Nov 26</td>
+			<td>on Tabling</td>
+		</tr>
+		<tr>
+			<td>6 hours</td>
+			<td>Nov 14</td>
+			<td>on Training</td>
+		</tr>
+	</table>
+	<div class="detail_header">All Volunteer Activity</div>
+	{# add btn #}
+	<table class="volunteer_shift_table striped">
+		<tr>
+			<td>2010</td>
+			<td>83 hours</td>
+			<td><a href="#">See details</a></td>
+		</tr>
+		<tr>
+			<td>2009</td>
+			<td>136 hours</td>
+			<td><a href="#">See details</a></td>
+		</tr>
+		<tr>
+			<td>2008</td>
+			<td>42 hours</td>
+			<td><a href="#">See details</a></td>
+		</tr>
+		
+	</table>	
+</div>
+{% endblock %}
