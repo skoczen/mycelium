@@ -225,6 +225,7 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         if cache.get(self.cache_name):
             return cache.get(self.cache_name)
         elif self.cached_search_result:
+            cache.set(self.cache_name,self.cached_search_result, 9000000)
             return self.cached_search_result
         else:
             ss = self.render_result_row()
@@ -263,9 +264,13 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         proxy.save()
 
     @classmethod
-    def populate_cache(cls):
+    def regenerate_cached_data(cls):
         [cls.people_record_changed(Person,p) for p in Person.objects.all()]
         [cls.organization_record_changed(Organization,o) for o in Organization.objects.all()]
+    
+    @classmethod
+    def repopulate_cache(cls):
+        [p.search_result_row for p in cls.objects.all()]
         
 post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender=Person)
 post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
