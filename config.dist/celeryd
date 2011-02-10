@@ -1,0 +1,7 @@
+# for /etc/default/celeryd
+# via http://tumblr.whatupderek.com/post/1072002968/celery-django-and-virtualenv-playing-nice
+CELERYD_CHDIR="/var/www/mycelium.git/mycelium"
+DJANGO_SETTINGS_MODULE="envs.live"
+CELERYD="/root/.virtualenvs/mycelium/bin/python2.6  /root/.virtualenvs/mycelium/lib/python2.6/site-packages/django/bin/django-admin.py celeryd"
+CELERYD_OPTS="-v 2 -B -s celery -E"
+CELERYD_LOG_FILE="/root/.virtualenvs/mycelium/logs/celery.log"

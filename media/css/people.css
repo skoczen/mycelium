@@ -23,7 +23,7 @@ breadcrumb {
     top: 23px;
 }
 #id_search_query {
-	width: 72%;
+	width: 82%;
 	margin: 6px 0px;
 	padding: 4px;
 	border: 2px solid #DDD;
@@ -398,16 +398,17 @@ search_results .results_table .best_contact {
 	background-position: 0px 0px;
 	background-repeat: no-repeat;
 	width: 25px;
-	height: 22px;
+	height: 28px;
 	margin-right: 5px;
 }
 .person_row icon.person {
 /*	background-image: url("../images/icon-person-blue-22h.png");*/
 	background-image: url("../images/icon-person-grey-22h.png");
+	background-position: 0px 2px;
 }
-.person_row icon.business {
+.person_row icon.organization {
 /*	background-image: url("../images/icon-business-blue-22h.png");*/
 	background-image: url("../images/icon-business-grey-22h.png");	
 	
-	background-position: 3px 0px;
+	background-position: 3px 2px;
 }
