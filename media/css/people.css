@@ -93,18 +93,22 @@ search_results .results_table .email {
 	width: 30%;
 	white-space: nowrap;
 }
+search_results .results_table .email a, search_results .results_table .email a:visited, search_results .results_table .email a:active {
+	color: #333;
+}
 search_results .results_table .phone_number {
 	width: 20%;
 	white-space: nowrap;	
 }
 search_results .results_table .best_contact {
 /*	color: #004486;*/
-	padding-left: 24px;
+/*	padding-left: 24px;
 	background-image: url("../images/icon-primary-contact-20.png");
 	background-position: 0px 7px;
 	background-repeat: no-repeat;
-
+*/
 }
+
 #page_header {
 	padding: 10px 5px;
 }
@@ -211,17 +215,19 @@ search_results .results_table .best_contact {
 .address {
 	display: block;
 	width: 45%;
-	margin-right: 5%;
-	float: right;
+/*	margin-left: 5%;*/
+	clear: none;
+	float: left;
+	margin-top: 10px;
 }
 
 .basic_info {
 	display: block;
 	position: relative;
 	clear: both;
-	margin-top: 10px;
+/*	margin-top: 10px;*/
 	width: 100%;
-	padding: 20px 2%;
+	padding: 0px 2% 20px 2%;
 	font-size: 20px;
 }
 .basic_info.edit {
@@ -244,6 +250,9 @@ search_results .results_table .best_contact {
 
 .basic_info .name {
 	display: block;
+}
+.edit_mode_on .basic_info .name {
+	margin-bottom: 20px;
 }
 .basic_info  .generic_editable_field {
 	display: block;
@@ -372,6 +381,7 @@ search_results .results_table .best_contact {
 
 
 .save_info {
+	
 	display: block;
 	padding-top: 10px;
 	color: #AAA;
@@ -405,6 +415,7 @@ search_results .results_table .best_contact {
 /*	background-image: url("../images/icon-person-blue-22h.png");*/
 	background-image: url("../images/icon-person-grey-22h.png");
 	background-position: 0px 2px;
+	display: none;
 }
 .person_row icon.organization {
 /*	background-image: url("../images/icon-business-blue-22h.png");*/

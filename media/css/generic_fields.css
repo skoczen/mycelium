@@ -18,8 +18,8 @@
 	position: relative;
 }
 .edit_mode_on .edit_field {
-	margin-top: 20px;
-	margin-bottom: 10px;
+	margin-top: 0px;
+	margin-bottom: 20px;
 }
 .generic_field_label {
 	position: absolute;
