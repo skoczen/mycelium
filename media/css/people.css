@@ -225,7 +225,7 @@ search_results .results_table .best_contact {
 	display: block;
 	position: relative;
 	clear: both;
-/*	margin-top: 10px;*/
+	margin-top: 10px;
 	width: 100%;
 	padding: 0px 2% 20px 2%;
 	font-size: 20px;
