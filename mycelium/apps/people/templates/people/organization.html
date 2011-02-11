@@ -17,25 +17,21 @@ $(function(){
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People and Organizations</a>{% endblock %}
 {% block page_content %}
-<div id="page_header">
-	<div class="small_search">
-		<input id="id_page_top_search" name="page_top_search" />
-		<div class="nyi"><img src="{{MEDIA_URL}}images/up-pointout-arrow-20.png"/> Sorry, this part isn't done yet!</div>
+<save_status_and_button>
+<span class="switch">
+	<div class="left_label">Edit</div>
+	<div class="switch_box off">
+	<div class="left_switch">on</div>
+	<div class="right_switch">off</div>
 	</div>
+	<div class="right_label"></div>
+</span>
+<span class="save_info">
+	<span class="last_save_time">Last saved {{person.modified_at|pretty_timesince}}.</span>
+	{# <a href="#" class="mycelium_btn myelium_gray save_now_btn">Save Now</a> #}
+</span>
 
-	<span class="switch">
-		<div class="left_label">Edit</div>
-		<div class="switch_box off">
-		<div class="left_switch">on</div>
-		<div class="right_switch">off</div>
-		</div>
-		<div class="right_label"></div>
-	</span>
-	<span class="save_info">
-		<span class="last_save_time">Last saved {{person.modified_at|pretty_timesince}}.</span>
-		{# <a href="#" class="mycelium_btn myelium_gray save_now_btn">Save Now</a> #}
-	</span>
-</div>
+</save_status_and_button>
 
 
 <form action="#" class="edit_mode_off" id="basic_info_form" method="POST">

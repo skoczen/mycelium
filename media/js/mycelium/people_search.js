@@ -3,6 +3,7 @@ $(function(){
 	$("#id_search_query").live("keydown",queue_searching);
 	update_stripes();
 	$("#id_search_query").bind('keyup', 'return', open_if_only_result);
+    $("#id_search_query").focus();
 });
 var q;
 var search_timeout;
