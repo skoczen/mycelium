@@ -266,6 +266,10 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     def populate_cache(cls):
         [cls.people_record_changed(Person,p) for p in Person.objects.all()]
         [cls.organization_record_changed(Organization,o) for o in Organization.objects.all()]
+    
+    class Meta(object):
+        verbose_name_plural = "PeopleAndOrganizationsSearchProxies"
+        ordering = ("person", "organization")
         
 post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender=Person)
 post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
