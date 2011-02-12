@@ -19,7 +19,7 @@ $(function(){
 {% block page_content %}
 <save_status_and_button>
 <span class="save_info">
-	<span class="last_save_time">Last saved {{person.modified_at|pretty_timesince}}.</span>
+	<span class="last_save_time">Saved by {{person.modified_at|pretty_timesince}}.</span>
 	{# <a href="#" class="mycelium_btn myelium_gray save_now_btn">Save Now</a> #}
 </span>
 <a href="#" class="mycelium_btn start_edit_btn" >Edit Person</a>

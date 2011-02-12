@@ -12,11 +12,14 @@ $(function(){
 	$("body").bind('keydown', 'ctrl+f', focus_search);
 	// $("input").check_width();
 	$(".last_save_time").hide();
-	$("form input").live("change", save_basic_form);
+	$("form input").live("change", queue_form_save);
+	$("form input").live("keyup", queue_form_save);	
 	$("form input").autoGrowInput({comfortZone: 30, resizeNow:true});
 
-	$(".save_and_status_btn").live("click", save_basic_form);
+    // $(".save_and_status_btn").live("click", save_basic_form);
 	
+    console.log("register generic fields")
+    
 	$("#id_page_top_search").bind("keydown", function(){
 		setTimeout(function(){
 			if ($("#id_page_top_search").val() == "") {
@@ -67,38 +70,53 @@ function intelligently_show_hide_comma() {
 		$(".city_state_comma").hide();
 	}
 }
-var saving_timeout;
-function save_basic_form() {
 
-	$(".save_and_status_btn").html("Save Now")
-	savingTimeout = setTimeout(function(){
+var form_save_timeout;
+var MIN_SAVE_MESSAGE_DISPLAY_TIME = 1600;
+function queue_form_save() {
+    
+    // if any fields have changed
+    console.log("if any fields have changed")
+
+    $(".save_and_status_btn").html("Save Now").addClass("mycelium_active_grey");
+    clearTimeout(form_save_timeout)
+    form_save_timeout = setTimeout(save_basic_form, 1500);
+}
+
+function save_basic_form() {
 	$(".last_save_time").hide();	    
     $(".last_save_time").html("Saving changes...").fadeIn(50);
-    console.log("Fix this - hack for demo purposes");
-    setTimeout(function(){
+    var save_start_time = new Date();
 	$.ajax({
 	  url: $("#basic_info_form").attr("action"),
 	  type: "POST",
 	  dataType: "json",
 	  data: $.param( $("#basic_info_form input") ),
 		  success: function(json) {
-			clearTimeout(savingTimeout);
 			$(".generic_editable_field").each(function(){
 				var field = $(this);
 				$(".view_field",field).html($(".edit_field input",field).val());
 			});
-			$(".last_save_time").hide();
-			$(".last_save_time").html("Saved a few seconds ago.").fadeIn();
-			setTimeout(function(){
-	            $(".save_and_status_btn").html("Saved");
-			}, 200)
+			var savetime = new Date();
+			total_saving_time = savetime - save_start_time;
+			console.log(total_saving_time)
+			console.log(MIN_SAVE_MESSAGE_DISPLAY_TIME)
+			if (total_saving_time < MIN_SAVE_MESSAGE_DISPLAY_TIME) {
+			    setTimeout(show_saved_message,MIN_SAVE_MESSAGE_DISPLAY_TIME-total_saving_time);
+			} else {
+			    show_saved_message();
+			}
 		 },
 	
 		  error: function() {
-			clearTimeout(savingTimeout);
 			alert("error");
 		  }
-	});
-    },400)	
-	},1500);
+	});	
+}
+function show_saved_message(){
+    $(".last_save_time").hide();
+	$(".last_save_time").html("Saved a few seconds ago.").fadeIn();
+	setTimeout(function(){
+        $(".save_and_status_btn").html("Saved").removeClass("mycelium_active_grey");
+	}, 200)
 }
