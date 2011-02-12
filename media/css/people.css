@@ -379,14 +379,22 @@ search_results .results_table .best_contact {
 	font-size: 20px;
 }
 
-
 .save_info {
-	
 	display: block;
-	padding-top: 10px;
+	position: absolute;
+	clear: none;
+	top: 10px;
+	right: 120px;
+	width: 200px;
+	text-align: right;
 	color: #AAA;
 	font-size: 13px;
 }
+.edit_mode_on .save_info {
+	right: 200px;
+}
+
+
 .save_info a {
 	font-size: 14px;
 	padding: 4px 8px;
@@ -422,4 +430,13 @@ search_results .results_table .best_contact {
 	background-image: url("../images/icon-business-grey-22h.png");	
 	
 	background-position: 3px 2px;
+}
+save_status_and_button {
+	padding-top: 8px;
+}
+save_status_and_button .save_and_status_btn {
+	display: none;
+}
+save_status_and_button .edit_done_btn {
+	display: none;	
 }

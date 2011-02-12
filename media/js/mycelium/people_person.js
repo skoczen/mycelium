@@ -4,6 +4,8 @@ $(function(){
 	$(".save_info a").hide();
 
 	$(".switch").click(toggle_edit);
+	$(".start_edit_btn").click(toggle_edit);
+	$(".edit_done_btn").click(toggle_edit);
 	$("body").bind('keydown', 'ctrl+e', toggle_edit);
 	$("body").bind('keydown', 'alt+e', toggle_edit);
 	$("body").bind('keydown', 'meta+e', toggle_edit);
@@ -13,7 +15,7 @@ $(function(){
 	$("form input").live("change", save_basic_form);
 	$("form input").autoGrowInput({comfortZone: 30, resizeNow:true});
 
-	$(".save_now_btn").live("click", save_basic_form);
+	$(".save_and_status_btn").live("click", save_basic_form);
 	
 	$("#id_page_top_search").bind("keydown", function(){
 		setTimeout(function(){
@@ -27,21 +29,30 @@ $(function(){
 	intelligently_show_hide_comma();
 });
 function toggle_edit(){
-	var box = $(".switch_box");
-	if (box.hasClass("off")) {
-		box.removeClass("off").addClass("on");
+
+	if ($("#basic_info_form").hasClass("edit_mode_off")) {
+        // box.removeClass("off").addClass("on");
+		$("save_status_and_button .save_and_status_btn").show();
+		$("save_status_and_button .start_edit_btn").hide();
+		$("save_status_and_button .edit_done_btn").show();
 		$(".basic_info.view").hide();
 		$(".basic_info.edit").show();
 		$(".save_info a").show();
 		$("#basic_info_form").removeClass("edit_mode_off").addClass("edit_mode_on");
+		$("#page").removeClass("edit_mode_off").addClass("edit_mode_on");
 		$(".last_save_time").fadeIn();
 		$(".city_state_comma").show();
 	} else {
-		box.removeClass("on").addClass("off");
+		$("save_status_and_button .save_and_status_btn").hide();
+		$("save_status_and_button .start_edit_btn").show();
+		$("save_status_and_button .edit_done_btn").hide();
+        // box.removeClass("on").addClass("off");
 		$(".basic_info.view").show();
 		$(".basic_info.edit").hide();
 		$(".save_info a").hide();
 		$("#basic_info_form").addClass("edit_mode_off").removeClass("edit_mode_on");
+		$("#page").addClass("edit_mode_off").removeClass("edit_mode_on");
+		$(".last_save_time").fadeOut();		
 		intelligently_show_hide_comma();
 	}
 	return false;
@@ -58,7 +69,13 @@ function intelligently_show_hide_comma() {
 }
 var saving_timeout;
 function save_basic_form() {
-	savingTimeout = setTimeout(function(){$(".last_save_time").html("Saving...");},200);
+
+	$(".save_and_status_btn").html("Save Now")
+	savingTimeout = setTimeout(function(){
+	$(".last_save_time").hide();	    
+    $(".last_save_time").html("Saving changes...").fadeIn(50);
+    console.log("Fix this - hack for demo purposes");
+    setTimeout(function(){
 	$.ajax({
 	  url: $("#basic_info_form").attr("action"),
 	  type: "POST",
@@ -71,7 +88,10 @@ function save_basic_form() {
 				$(".view_field",field).html($(".edit_field input",field).val());
 			});
 			$(".last_save_time").hide();
-			$(".last_save_time").html("Last saved a few seconds ago.").fadeIn();
+			$(".last_save_time").html("Saved a few seconds ago.").fadeIn();
+			setTimeout(function(){
+	            $(".save_and_status_btn").html("Saved");
+			}, 200)
 		 },
 	
 		  error: function() {
@@ -79,4 +99,6 @@ function save_basic_form() {
 			alert("error");
 		  }
 	});
+    },400)	
+	},1500);
 }
