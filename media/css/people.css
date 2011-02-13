@@ -6,6 +6,7 @@ input {
 	padding: 0px;
 	margin: 0px;
 	border-width: 0px 0px 1px 0px;
+	padding-bottom: 0px;
 }
 input:focus {
 	outline-style:none;
@@ -383,8 +384,6 @@ search_results .results_table .best_contact {
 
 .save_info {
 	display: block;
-	position: absolute;
-	clear: none;
 	top: 10px;
 	right: 120px;
 	width: 200px;
@@ -436,9 +435,24 @@ search_results .results_table .best_contact {
 save_status_and_button {
 	padding-top: 8px;
 }
+save_status_and_button a, save_status_and_button .save_info {
+	display: block;
+	float: right;
+	margin-left: 10px;
+}
 save_status_and_button .save_and_status_btn {
 	display: none;
+	width: 70px;
+	text-align: center;
 }
 save_status_and_button .edit_done_btn {
 	display: none;	
+}
+save_status_and_button .save_info {
+	padding-top: 10px;
+	margin-right: 10px;
+}
+save_status_and_button a.mycelium_active_grey {
+	font-size: 17px;
+	padding: 7px 11px 5px 11px;
 }
