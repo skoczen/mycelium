@@ -56,3 +56,17 @@
 .edit_mode_on .http_prefix {
 	color: #777;
 }
+
+/* Radio buttons */
+.edit_field ul {
+	display: block;
+	list-style:none;
+	overflow: auto;
+	padding: 0px 0px 6px 0px;
+	margin: 0px;
+}
+.edit_field li {
+	display: block;
+	float: left;
+	padding-left: 15px;
+}

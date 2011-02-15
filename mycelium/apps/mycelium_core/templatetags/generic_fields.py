@@ -29,6 +29,14 @@ def generic_editable_field_email(field, field_type="input",include_context=True)
     generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_email_view.html",locals())
     return locals()
 
+
+@register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
+def generic_editable_field_twitter(field, field_type="input",include_context=True):
+    MEDIA_URL = settings.MEDIA_URL
+    generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_twitter_view.html",locals())
+    return locals()
+
+
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
 def generic_editable_field_url(field, field_type="input",include_context=True):
     MEDIA_URL = settings.MEDIA_URL
@@ -45,6 +53,24 @@ def generic_editable_field_url(field, field_type="input",include_context=True):
 
 @register.filter
 def field_value(field):
+    """ 
+    Returns the value for this BoundField, as rendered in widgets. 
+    """ 
+    if not field.form.is_bound: 
+        val = field.form.initial.get(field.name, field.field.initial) 
+        if callable(val): 
+            val = val() 
+    else: 
+        from django.forms.fields import FileField
+        if isinstance(field.field, FileField) and field.data is None: 
+            val = field.form.initial.get(field.name, field.field.initial) 
+        else: 
+            val = field.data 
+    if val is None: 
+        val = '' 
+    return val
+
+def display_field_value(field):
     """ 
     Returns the value for this BoundField, as rendered in widgets. 
     """ 

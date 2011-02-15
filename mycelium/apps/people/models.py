@@ -12,9 +12,18 @@ class ContactMethodType(models.Model):
     internal_name = models.CharField(max_length=255)
     friendly_name = models.CharField(max_length=255)
 
+    def __unicode__(self):
+        return "%s" % self.friendly_name
+
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
     friendly_name = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return "%s" % self.friendly_name
+
+    class Meta(object):
+        ordering = ("id",)
 
 class AddressBase(models.Model):
     line_1 = models.CharField(max_length=255, blank=True, null=True, verbose_name="Address Line 1")
