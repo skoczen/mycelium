@@ -29,6 +29,14 @@ def generic_editable_field_email(field, field_type="input",include_context=True)
     generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_email_view.html",locals())
     return locals()
 
+@register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
+def generic_editable_field_url(field, field_type="input",include_context=True):
+    MEDIA_URL = settings.MEDIA_URL
+    generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_url_view.html",locals())
+    generic_editable_edit_override = render_to_string("mycelium_core/template_tags/generic_fields/_url_edit.html",locals())    
+    return locals()
+
+
 # @register.inclusion_tag('mycelium_core/template_tags/generic_fields/edit.html')
 # def generic_field_edit(include_context=True):
 #     MEDIA_URL = settings.MEDIA_URL

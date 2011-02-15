@@ -31,3 +31,28 @@
 	left: 0px;
 	float: left;
 }
+.http_prefix {
+	display: block;
+	float: left;
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+	border-width: 0px 0px 1px 0px;
+	padding-top: 3px;
+}
+.edit_mode_on input {
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+	border-width: 0px 0px 1px 0px;
+	padding-bottom: 0px;
+}
+.edit_mode_on input:focus {
+	outline-style:none;
+	border: 1px solid #3E9CFD;
+	border-width: 0px 0px 1px 0px;	
+}
+
+.edit_mode_on .http_prefix {
+	color: #777;
+}

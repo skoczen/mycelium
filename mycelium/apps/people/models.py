@@ -111,9 +111,9 @@ class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     contact_type = "organization"
     organization_type = models.ForeignKey(OrganizationType, blank=True, null=True)
     organization_type_other_name = models.CharField(max_length=255, blank=True, null=True)
-    primary_phone_number = models.CharField(max_length=255)
-    website = models.CharField(max_length=255)
-    twitter_username = models.CharField(max_length=255)
+    primary_phone_number = models.CharField(max_length=255, blank=True, null=True)
+    website = models.CharField(max_length=255, blank=True, null=True)
+    twitter_username = models.CharField(max_length=255, blank=True, null=True)
 
     @property
     def searchable_primary_phone_number(self):

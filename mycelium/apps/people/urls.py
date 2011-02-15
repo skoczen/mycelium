@@ -14,5 +14,6 @@ urlpatterns = parser.patterns('',
     url(r'person/{person_id:digits}/save-basic$',   views.save_person_basic_info,       name='person_save_basic'),    
     url(r'person/new$',                             views.new_person,                   name='new_person'),
     url(r'organization/new$',                       views.new_organization,             name='new_organization'),    
-    url(r'organization/{org_id:digits}$',           views.organization,                 name='organization'),    
+    url(r'organization/{org_id:digits}$',           views.organization,                 name='organization'),
+    url(r'organization/{org_id:digits}/save-basic$',views.save_organization_basic_info, name='organization_save_basic'),
 )

@@ -17,24 +17,12 @@ $(function(){
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People and Organizations</a>{% endblock %}
 {% block page_content %}
-<save_status_and_button>
-<span class="switch">
-	<div class="left_label">Edit</div>
-	<div class="switch_box off">
-	<div class="left_switch">on</div>
-	<div class="right_switch">off</div>
-	</div>
-	<div class="right_label"></div>
-</span>
-<span class="save_info">
-	<span class="last_save_time">Last saved {{person.modified_at|pretty_timesince}}.</span>
-	{# <a href="#" class="mycelium_btn myelium_gray save_now_btn">Save Now</a> #}
-</span>
 
-</save_status_and_button>
+{% with "Edit Organization" as edit_label %}
+{% include "people/_save_status_and_button.html" %}
+{% endwith %}
 
-
-<form action="#" class="edit_mode_off" id="basic_info_form" method="POST">
+<form action="{% url people:organization_save_basic org.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
 <div class="basic_info">
 	<div class="name_phone_email">
 		<div class="name">
@@ -43,8 +31,8 @@ $(function(){
 		{% generic_editable_field form.primary_phone_number %}
 		{% generic_editable_field form.organization_type %}
 		{% generic_editable_field form.organization_type_other_name %}
-		{% generic_editable_field_email form.website %}
-		{% generic_editable_field_email form.twitter_username %}		
+		{% generic_editable_field_url form.website %}
+		{% generic_editable_field form.twitter_username %}		
 	</div>
 	<div class="address">
 		{% generic_editable_field form.line_1 %}
