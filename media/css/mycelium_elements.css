@@ -225,11 +225,24 @@ new_object_buttons {
 	color: #999;
 	text-shadow: 1px 1px 2px rgba(240,240,240,0.2);
 }
-.mycelium_gray:hover, .mycelium_grey:hover {
-	border-color: #DDD;
+.mycelium_gray:hover, .mycelium_grey:hover, input.mycelium_gray:hover, input.mycelium_grey:hover, a.mycelium_gray:hover, a.mycelium_grey:hover {
+	border-color: #EEE;
+	background-color: #EEE;
+	color: #999;
+}
+
+.mycelium_active_gray, .mycelium_active_grey, input.mycelium_active_gray, input.mycelium_active_grey, a.mycelium_active_gray, a.mycelium_active_grey {
+	border-color: #EEE;
 	background-color: #DDD;
 	color: #454545;
+	text-shadow: 1px 1px 2px rgba(240,240,240,0.2);
 }
+.mycelium_active_gray:hover, .mycelium_active_grey:hover, input.mycelium_active_gray:hover, input.mycelium_active_grey:hover, a.mycelium_active_gray:hover, a.mycelium_active_grey:hover {
+	border-color: #DDD;
+	background-color: #CCC;
+	color: #454545;
+}
+
 .mycelium_left_arrow_btn, .mycelium_left_arrow_btn:hover {
 	padding: 5px 12px 5px 25px ;
 	background-color: transparent;

@@ -18,18 +18,21 @@ $(function(){
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
 {% block page_content %}
 <save_status_and_button>
-<span class="switch">
-	<div class="left_label">Edit</div>
-	<div class="switch_box off">
-	<div class="left_switch">on</div>
-	<div class="right_switch">off</div>
-	</div>
-	<div class="right_label"></div>
-</span>
+<a href="#" class="mycelium_btn start_edit_btn" >Edit Person</a>
+<a href="#" class="mycelium_btn edit_done_btn " >Done</a>
+<a href="#" class="mycelium_btn save_and_status_btn mycelium_grey" >Saved</a>
 <span class="save_info">
-	<span class="last_save_time">Last saved {{person.modified_at|pretty_timesince}}.</span>
+	<span class="last_save_time">Saved by {{person.modified_at|pretty_timesince}}.</span>
 	{# <a href="#" class="mycelium_btn myelium_gray save_now_btn">Save Now</a> #}
 </span>
+{# <span class="switch"> #}
+{# 	<div class="left_label">Edit</div> #}
+{# 	<div class="switch_box off"> #}
+{# 	<div class="left_switch">on</div> #}
+{# 	<div class="right_switch">off</div> #}
+{# 	</div> #}
+{# 	<div class="right_label"></div> #}
+{# </span> #}
 
 </save_status_and_button>
 

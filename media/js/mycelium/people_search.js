@@ -7,24 +7,31 @@ $(function(){
 });
 var q;
 var search_timeout;
+var previous_query = "%*(#:LKCL:DSF@()#SDF)";
 function queue_searching() {
 	clearTimeout(search_timeout);
 	search_timeout = setTimeout(update_search, 50);
 }
 function update_search() {
-	q = $("#id_search_query").val();
-	$.ajax({
-	  url: SEARCH_URL,
-	  type: "GET",
-	  dataType: "json",
-	  data: {'q':q},
-	  mode: 'abort',
-	  success: function(json) {
-		$("search_results").html(json.html);
-		highlight_search_terms(q);
-		update_stripes();
-	 },
-	});
+    if (previous_query != $.trim($("#id_search_query").val())) {
+    	previous_query = q;
+        q = $.trim($("#id_search_query").val());
+    	$.ajax({
+    	  url: SEARCH_URL,
+    	  type: "GET",
+    	  dataType: "json",
+    	  data: {'q':q},
+    	  mode: 'abort',
+    	  success: function(json) {
+            if (typeof(json.html) != "undefined") {
+        		$("search_results").html(json.html);
+        		highlight_search_terms(q);
+        		update_stripes();
+            }
+    	 },
+    	});
+    	
+    }
 }
 function highlight_search_terms(q) {
 	var space_queries = q.split(" ");
