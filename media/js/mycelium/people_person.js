@@ -80,7 +80,7 @@ function queue_form_save() {
 
     $(".save_and_status_btn").html("Save Now").addClass("mycelium_active_grey");
     clearTimeout(form_save_timeout)
-    form_save_timeout = setTimeout(save_basic_form, 1000);
+    form_save_timeout = setTimeout(save_basic_form, 500);
 }
 
 function save_basic_form() {
