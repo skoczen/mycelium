@@ -1,3 +1,6 @@
+#
+# chkconfig: - 2345 20 80
+#
 # for /etc/default/celeryd
 # via http://tumblr.whatupderek.com/post/1072002968/celery-django-and-virtualenv-playing-nice
 # and http://ask.github.com/celery/cookbook/daemonizing.html
