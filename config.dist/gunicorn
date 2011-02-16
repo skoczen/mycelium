@@ -23,8 +23,7 @@ RETVAL=0
 start()
 {
     echo "Starting $NAME."
-    export PYTHONPATH=$CONFDIR;
-    cd $CONFDIR/$NAME;
+    export PYTHONPATH=$CONFDIR:/root/.virtualenvs/python2.6/site-packages;
     "workon mycelium; python manage.py $GUNICORN_RUN -b localhost:$PORT -n $NAME -w $WORKERS -p $PID -D envs.live --daemon" && echo "OK" || echo "failed";
 }
 

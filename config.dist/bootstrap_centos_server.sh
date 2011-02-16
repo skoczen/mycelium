@@ -31,6 +31,7 @@ pip install -r requirements.txt
 # need python manage.py celeryd
 mkdir /var/log/celery
 cp /var/www/mycelium.git/config.dist/celeryd /etc/default/celeryd
+cp /var/www/mycelium.git/config.dist/gunicorn /etc/init.d/mycelium
 service celeryd start
 
 cp /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf
