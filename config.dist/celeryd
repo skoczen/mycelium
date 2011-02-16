@@ -1,6 +1,6 @@
 #!/bin/sh
-#
-# chkconfig: - 80 05
+# chkconfig: - 2345 80 05
+# description: The Celery start-stop-script
 #
 # for /etc/default/celeryd
 # via http://tumblr.whatupderek.com/post/1072002968/celery-django-and-virtualenv-playing-nice

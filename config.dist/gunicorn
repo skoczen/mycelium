@@ -1,9 +1,7 @@
 #!/bin/sh
-#
+# chkconfig: - 2345 80 05
+# description: Gunicorn processes for mycelium
 ### BEGIN INIT INFO
-#
-# chkconfig: - 80 05
-#
 # Provides:       mycelium
 # Required-Start: $local_fs $syslog
 # Required-Stop:  $local_fs $syslog
