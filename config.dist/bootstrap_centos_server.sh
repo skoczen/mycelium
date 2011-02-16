@@ -22,6 +22,7 @@ echo 'source /usr/bin/virtualenvwrapper.sh' >> .bashrc
 source ~/.bashrc
 cd /var/www
 git clone http://mycelium.skoczen.webfactional.com/mycelium.git mycelium.git
+cd mycelium.git;git checkout live
 mkvirtualenv mycelium
 echo 'cd /var/www/mycelium.git' >> /root/.virtualenvs/mycelium/bin/postactivate
 workon mycelium
@@ -42,8 +43,4 @@ service memcached start
 service rabbitmq-server start
 service celeryd start
 service mycelium start
-
 killall -HUP nginx
-
-# and run_gunicorn to be running.
-workon mycelium; python /var/www/mycelium.git/mycelium/manage.py run_gunicorn --settings=envs.live --workers=2 --daemon
