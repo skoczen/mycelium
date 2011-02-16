@@ -3,15 +3,12 @@ rpm -ivh http://repo.webtatic.com/yum/centos/5/`uname -i`/webtatic-release-5-1.n
 yum install --enablerepo=webtatic git
 yum install python26 python26-setuptools python26-devel python26-devel.x86_64 mysql-devel.x86_64 sqlite3 gmp rabbitmq-server memcached
 # eventually memcached will get its own server, but not right now.
-
-
 cd /etc/init.d; wget https://github.com/ask/celery/raw/master/contrib/generic-init.d/celeryd --no-check-certificate; chmod +x celeryd
 sed '1d' celeryd > celeryd.tmp
 echo "# chkconfig: 2345 20 80" > celeryd
 echo "# description: The Celery start-stop-script" >> celeryd
 cat celeryd.tmp >> celeryd
 rm celeryd.tmp
-
 rabbitmqctl add_user mycelium 68WXmV6K49r8veczVaUK
 rabbitmqctl add_vhost digitalmycelium
 rabbitmqctl set_permissions -p digitalmycelium mycelium ".*" ".*" ".*"
