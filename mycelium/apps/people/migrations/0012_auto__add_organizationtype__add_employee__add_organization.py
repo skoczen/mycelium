@@ -48,13 +48,13 @@ class Migration(SchemaMigration):
         db.send_create_signal('people', ['Organization'])
 
         # Removing index on 'Person', fields ['qi_simple_searchable_search_field']
-        db.delete_index('people_person', ['qi_simple_searchable_search_field'])
+        # db.delete_index('people_person', ['qi_simple_searchable_search_field'])
 
 
     def backwards(self, orm):
         
         # Adding index on 'Person', fields ['qi_simple_searchable_search_field']
-        db.create_index('people_person', ['qi_simple_searchable_search_field'])
+        # db.create_index('people_person', ['qi_simple_searchable_search_field'])
 
         # Deleting model 'OrganizationType'
         db.delete_table('people_organizationtype')
