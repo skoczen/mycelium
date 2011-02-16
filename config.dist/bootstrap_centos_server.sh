@@ -29,10 +29,10 @@ echo 'mysql_config = /usr/bin/mysql_config' >> ~/.virtualenvs/mycelium/build/mys
 pip install -r requirements.txt 
 
 # need python manage.py celeryd
-cp /var/www/mycelium.git/mycelium/config.dist/celeryd /etc/default/celeryd
+cp /var/www/mycelium.git/config.dist/celeryd /etc/default/celeryd
 service celeryd start
 
-cp /var/www/mycelium.git/mycelium/config.dist/nginx.conf /etc/nginx/nginx.conf
+cp /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf
 killall -HUP nginx
 
 # and run_gunicorn to be running.
