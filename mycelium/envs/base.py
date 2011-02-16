@@ -28,6 +28,9 @@ ADMINS = (
      ('Steven Skoczen', 'steven@quantumimagery.com'),
 )
 MANAGERS = ADMINS
+MANAGERS += (
+    ('Tom Noble', 'tom@agoodcloud.com'),
+)
 
 
 TIME_ZONE = None

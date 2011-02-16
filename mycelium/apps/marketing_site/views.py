@@ -25,6 +25,13 @@ def home(request):
         form = EmailForm(request.POST)
         if form.is_valid():
             form.save()
+            try:
+                from django.core.mail import send_mail
+                send_mail("New Email Signup!", "%s" % render_to_string("marketing_site/new_signup_email.txt", form.cleaned_data), settings.SERVER_EMAIL, [i[1] for i in settings.MANAGERS])
+            except:
+                from qi_toolkit.helpers import print_exception
+                print_exception()
+                pass
             save_success=True
 
     return locals()

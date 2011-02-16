@@ -1,0 +1,8 @@
+Hey Guys,
+
+New email signup from the website from {{email}}.
+They signed up at {% now  "F j Y h:i a" %}
+
+Hooray!
+
+-The Happy GoodCloud Robot
