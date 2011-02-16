@@ -5,6 +5,6 @@
 			<span class="highlightable">{{obj.name}}</span>
 		</a>
 	</td>
-	<td class="email {% if email.is_best_contact_method %}best_contact{% endif %}"><a href="mailto:{{email}}" class="highlightable">{{email}}</a></td>
-	<td class="phone_number highlightable {% if phone.is_best_contact_method %}best_contact{% endif %}">{{phone}}</td>
+	<td class="email"></td>
+	<td class="phone_number highlightable ">{{obj.primary_phone_number}}</td>
 </tr>

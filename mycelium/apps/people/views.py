@@ -65,6 +65,7 @@ def save_person_basic_info(request, person_id):
             phone = phone_form.save(commit=False)
             phone.person = person
             phone.save()
+            
         success = True
     else:
         print "invalid"
@@ -96,5 +97,19 @@ def new_organization(request):
 def organization(request, org_id):
     org = get_object_or_404(Organization,pk=org_id)
     form = _org_forms(org, request)
-    # form, email_form, address_form, phone_form = _basic_forms(person, request)
+    if form.is_valid():
+        form.save()
+
     return locals()
+
+@json_view
+def save_organization_basic_info(request,  org_id):
+    org = get_object_or_404(Organization,pk=org_id)
+    form = _org_forms(org, request)
+    success = False
+    if form.is_valid():
+        form.save()
+        success = True
+
+    return {"success":success}
+    

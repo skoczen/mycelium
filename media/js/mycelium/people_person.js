@@ -3,7 +3,7 @@ $(function(){
 	$(".striped tr:odd").addClass("odd");
 	$(".save_info a").hide();
 
-	$(".switch").click(toggle_edit);
+    // $(".switch").click(toggle_edit);
 	$(".start_edit_btn").click(toggle_edit);
 	$(".edit_done_btn").click(toggle_edit);
 	$("body").bind('keydown', 'ctrl+e', toggle_edit);
@@ -16,19 +16,10 @@ $(function(){
 	$("form input").live("keyup", queue_form_save);	
 	$("form input").autoGrowInput({comfortZone: 30, resizeNow:true});
 
-    // $(".save_and_status_btn").live("click", save_basic_form);
+    $(".save_and_status_btn").live("click", save_and_status_btn_clicked);
 	
-    console.log("register generic fields")
-    
-	$("#id_page_top_search").bind("keydown", function(){
-		setTimeout(function(){
-			if ($("#id_page_top_search").val() == "") {
-				$(".small_search .nyi").fadeOut();
-			} else {
-				$(".small_search .nyi").fadeIn();
-			}
-		}, 100);
-	});
+    // console.log("register generic fields")
+    previous_serialized_str = $("#basic_info_form").serialize();
 	intelligently_show_hide_comma();
 });
 function toggle_edit(){
@@ -70,17 +61,25 @@ function intelligently_show_hide_comma() {
 		$(".city_state_comma").hide();
 	}
 }
+function save_and_status_btn_clicked() {
+    return false;
+}
 
 var form_save_timeout;
 var MIN_SAVE_MESSAGE_DISPLAY_TIME = 1600;
+var previous_serialized_str = "";
 function queue_form_save() {
     
     // if any fields have changed
-    console.log("if any fields have changed")
+    var ser = $("#basic_info_form").serialize();
 
-    $(".save_and_status_btn").html("Save Now").addClass("mycelium_active_grey");
-    clearTimeout(form_save_timeout)
-    form_save_timeout = setTimeout(save_basic_form, 500);
+    if (previous_serialized_str != ser) {
+        previous_serialized_str = ser;
+        $(".save_and_status_btn").html("Save Now").addClass("mycelium_active_grey");
+        clearTimeout(form_save_timeout)
+        form_save_timeout = setTimeout(save_basic_form, 1500);
+    }
+
 }
 
 function save_basic_form() {
@@ -99,8 +98,6 @@ function save_basic_form() {
 			});
 			var savetime = new Date();
 			total_saving_time = savetime - save_start_time;
-			console.log(total_saving_time)
-			console.log(MIN_SAVE_MESSAGE_DISPLAY_TIME)
 			if (total_saving_time < MIN_SAVE_MESSAGE_DISPLAY_TIME) {
 			    setTimeout(show_saved_message,MIN_SAVE_MESSAGE_DISPLAY_TIME-total_saving_time);
 			} else {

@@ -12,9 +12,18 @@ class ContactMethodType(models.Model):
     internal_name = models.CharField(max_length=255)
     friendly_name = models.CharField(max_length=255)
 
+    def __unicode__(self):
+        return "%s" % self.friendly_name
+
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
     friendly_name = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return "%s" % self.friendly_name
+
+    class Meta(object):
+        ordering = ("id",)
 
 class AddressBase(models.Model):
     line_1 = models.CharField(max_length=255, blank=True, null=True, verbose_name="Address Line 1")
@@ -115,9 +124,9 @@ class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     contact_type = "organization"
     organization_type = models.ForeignKey(OrganizationType, blank=True, null=True)
     organization_type_other_name = models.CharField(max_length=255, blank=True, null=True)
-    primary_phone_number = models.CharField(max_length=255)
-    website = models.CharField(max_length=255)
-    twitter_username = models.CharField(max_length=255)
+    primary_phone_number = models.CharField(max_length=255, blank=True, null=True)
+    website = models.CharField(max_length=255, blank=True, null=True)
+    twitter_username = models.CharField(max_length=255, blank=True, null=True)
 
     @property
     def searchable_primary_phone_number(self):
