@@ -272,13 +272,25 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         proxy.save()
 
     @classmethod
+    def related_people_record_changed(cls, sender, instance, created=None, *args, **kwargs):
+        cls.people_record_changed(sender, instance.person, *args, **kwargs)
+
+    @classmethod
+    def related_organization_record_changed(cls, sender, instance, created=None, *args, **kwargs):
+        cls.organization_record_changed(sender, instance.organization, *args, **kwargs)
+
+    @classmethod
     def populate_cache(cls):
         [cls.people_record_changed(Person,p) for p in Person.objects.all()]
         [cls.organization_record_changed(Organization,o) for o in Organization.objects.all()]
-    
+
     class Meta(object):
         verbose_name_plural = "PeopleAndOrganizationsSearchProxies"
         ordering = ("person", "organization")
         
 post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender=Person)
+post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=EmailAddress)
+post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=PhoneNumber)
+post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=Address)
 post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
+# post_save.connect(PeopleAndOrganizationsSearchProxy.related_organization_record_changed,sender=Employee)
