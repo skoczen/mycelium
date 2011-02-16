@@ -1,5 +1,5 @@
 #!/bin/sh
-# chkconfig: - 2345 80 05
+# chkconfig: 2345 20 80
 # description: The Celery start-stop-script
 #
 # for /etc/default/celeryd

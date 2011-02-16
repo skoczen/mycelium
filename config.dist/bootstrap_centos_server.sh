@@ -34,8 +34,8 @@ ln -s  /var/www/mycelium.git/config.dist/gunicorn /etc/init.d/mycelium; chmod +x
 ln -s /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf
 chkconfig --add memcached
 chkconfig --add rabbitmq-server
-chkconfig celeryd on
-chkconfig mycelium on
+chkconfig --add celeryd
+chkconfig --add mycelium
 service memcached start
 service rabbitmq-server start
 service celeryd start

@@ -1,5 +1,5 @@
 #!/bin/sh
-# chkconfig: - 2345 80 05
+# chkconfig: 2345 20 80
 # description: Gunicorn processes for mycelium
 ### BEGIN INIT INFO
 # Provides:       mycelium
