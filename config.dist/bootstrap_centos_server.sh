@@ -32,7 +32,7 @@ pip install -r requirements.txt
 mkdir /var/log/celery
 ln -s /var/www/mycelium.git/config.dist/celeryd /etc/default/celeryd;chmod +x /etc/default/celeryd
 ln -s  /var/www/mycelium.git/config.dist/gunicorn /etc/init.d/mycelium; chmod +x /etc/init.d/mycelium
-ln -s /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf; chmod +x /etc/nginx/nginx.conf
+ln -s /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf
 
 service celeryd start
 service mycelium start
