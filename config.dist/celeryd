@@ -1,5 +1,6 @@
+#!/bin/sh
 #
-# chkconfig: - 2345 20 80
+# chkconfig: - 80 05
 #
 # for /etc/default/celeryd
 # via http://tumblr.whatupderek.com/post/1072002968/celery-django-and-virtualenv-playing-nice

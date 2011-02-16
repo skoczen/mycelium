@@ -1,6 +1,8 @@
+#!/bin/sh
+#
 ### BEGIN INIT INFO
 #
-# chkconfig: - 2345 20 80
+# chkconfig: - 80 05
 #
 # Provides:       mycelium
 # Required-Start: $local_fs $syslog
