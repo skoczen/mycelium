@@ -24,7 +24,7 @@ start()
 {
     echo "Starting $NAME."
     export PYTHONPATH=$CONFDIR:/root/.virtualenvs/python2.6/site-packages;
-    "workon mycelium; python manage.py $GUNICORN_RUN  -workers=$WORKERS -p $PID --settings=envs.live --daemon" && echo "OK" || echo "failed";
+    "workon mycelium; /root/.virtualenvs/mycelium/bin/python2.6 manage.py $GUNICORN_RUN  -workers=$WORKERS -p $PID --settings=envs.live --daemon" && echo "OK" || echo "failed";
 }
 
 stop()

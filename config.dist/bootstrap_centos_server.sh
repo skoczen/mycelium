@@ -30,11 +30,13 @@ pip install -r requirements.txt
 
 # need python manage.py celeryd
 mkdir /var/log/celery
-cp /var/www/mycelium.git/config.dist/celeryd /etc/default/celeryd
-cp /var/www/mycelium.git/config.dist/gunicorn /etc/init.d/mycelium
-service celeryd start
+ln -s /var/www/mycelium.git/config.dist/celeryd /etc/default/celeryd;chmod +x /etc/default/celeryd
+ln -s  /var/www/mycelium.git/config.dist/gunicorn /etc/init.d/mycelium; chmod +x /etc/init.d/mycelium
+ln -s /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf; chmod +x /etc/nginx/nginx.conf
 
-cp /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf
+service celeryd start
+service mycelium start
+
 killall -HUP nginx
 
 # and run_gunicorn to be running.
