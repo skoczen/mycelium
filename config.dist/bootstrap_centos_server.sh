@@ -29,6 +29,7 @@ echo 'mysql_config = /usr/bin/mysql_config' >> ~/.virtualenvs/mycelium/build/mys
 pip install -r requirements.txt 
 
 # need python manage.py celeryd
+mkdir /var/log/celery
 cp /var/www/mycelium.git/config.dist/celeryd /etc/default/celeryd
 service celeryd start
 
