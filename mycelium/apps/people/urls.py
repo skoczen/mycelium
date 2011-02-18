@@ -7,17 +7,19 @@ parser = dselector.Parser()
 url = parser.url
 
 urlpatterns = parser.patterns('',                      
-    url(r'$',                                         views.search,                                         name='search'),
-    url(r'search$',                                   views.search,                                         name='search_page'),
-    url(r'search-results$',                           views.search_results,                                 name='search_results'),
-    url(r'person/{person_id:digits}$',                views.person,                                         name='person'),
-    url(r'person/{person_id:digits}/save-basic$',     views.save_person_basic_info,                         name='person_save_basic'),    
-    url(r'person/new$',                               views.new_person,                                     name='new_person'),
-    url(r'organization/new$',                         views.new_organization,                               name='new_organization'),    
-    url(r'organization/{org_id:digits}$',             views.organization,                                   name='organization'),
-    url(r'organization/{org_id:digits}/save-basic$',  views.save_organization_basic_info,                   name='organization_save_basic'),
-    url(r'organization/{org_id:digits}/new-person$',  views.new_person_via_organization,                    name='new_person_via_organization'),
-    url(r'organization/new-person/search-results$',   views.add_person_via_organization_search_results,     name='add_person_via_organization_search_results'), 
+    url(r'$',                                               views.search,                                         name='search'),
+    url(r'search$',                                         views.search,                                         name='search_page'),
+    url(r'search-results$',                                 views.search_results,                                 name='search_results'),
+    url(r'person/{person_id:digits}$',                      views.person,                                         name='person'),
+    url(r'person/{person_id:digits}/save-basic$',           views.save_person_basic_info,                         name='person_save_basic'),    
+    url(r'person/new$',                                     views.new_person,                                     name='new_person'),
+    url(r'organization/new$',                               views.new_organization,                               name='new_organization'),    
+    url(r'organization/{org_id:digits}$',                   views.organization,                                   name='organization'),
+    url(r'organization/{org_id:digits}/save-basic$',        views.save_organization_basic_info,                   name='organization_save_basic'),
+    url(r'organization/{org_id:digits}/new-person$',        views.new_person_via_organization,                    name='new_person_via_organization'),
+    url(r'organization/{org_id:digits}/existing-person$',   views.existing_person_via_organization,               name='existing_person_via_organization'),    
+    url(r'organization/new-person/search-results$',         views.add_person_via_organization_search_results,     name='add_person_via_organization_search_results'), 
+
     
 
 )

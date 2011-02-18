@@ -9,7 +9,7 @@
 {% endblock %}
 {% block page_content %}
 <div class="main_search_box">
-	<label for="id_search_query">Search:</label> <input type="search" name="search_query" id="id_search_query" />
+	<label for="id_search_query">Search:</label> <input type="search" name="search_query" id="id_search_query" placeholder="Type in a name, phone number, or email..." autofocus />
 </div>
 <new_object_buttons>
 	<a href="{% url people:new_person %}" class="new_person_btn mycelium_btn">New Person</a>

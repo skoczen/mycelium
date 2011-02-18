@@ -8,7 +8,7 @@
 		<th class="phone_number">Phone Number</th>
 	</tr>
 {% for p in people_proxies %}{{p.search_result_row|safe}}{% endfor %}
-	<tr><td colspan="2">
+	<tr><td colspan="5" class="pagination_row">
 		{% paginate %}
 	</td></tr>
 </table>

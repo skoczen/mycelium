@@ -1,5 +1,7 @@
 $(function(){
-	$('#id_search_query').toggleVal({populateFrom:"custom", text:"Type in a name, phone number, or email..."}).addClass("prefilled");
+    if (!("placeholder" in document.createElement("input"))) {
+        $('#id_search_query').toggleVal({populateFrom:"custom", text:"Type in a name, phone number, or email..."}).addClass("prefilled");
+    }
 
     $.Mycelium.search.setUp({
 	    search_url: SEARCH_URL,        

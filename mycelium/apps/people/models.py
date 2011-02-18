@@ -136,9 +136,9 @@ class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
 
 class Employee(TimestampModelMixin):
     person = models.ForeignKey(Person, related_name="employers")
-    role = models.CharField(max_length=255, blank=True, null=True)
-    email = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=255)
+    role = models.CharField(max_length=255, blank=True, null=True, verbose_name="Role")
+    email = models.CharField(max_length=255, blank=True, null=True,verbose_name="Role email")
+    phone_number = models.CharField(max_length=255, blank=True, null=True, verbose_name="Role phone number")
     organization = models.ForeignKey(Organization, related_name="employees")
     
     def __unicode__(self):

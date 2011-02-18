@@ -72,10 +72,12 @@ $(function(){
 		$.extend(true, sh.options, options);
         var t = $(sh.options.search_element);
         t.live("keydown",sh.queue_searching);
+        t.live("change",sh.queue_searching);
         t.bind('keyup', 'return', function(){
             t.trigger("mycelium.search.return_pressed");
         });
-        if (sh.options.focus_on_setup) {
+
+        if (sh.options.focus_on_setup && !("autofocus" in document.createElement("input"))) {
             t.focus();
         }
 	}

@@ -118,6 +118,22 @@ def save_organization_basic_info(request,  org_id):
 
     return {"success":success}
 
+def existing_person_via_organization(request, org_id):
+    org = get_object_or_404(Organization,pk=org_id)
+    try: 
+        person_id = int(request.POST['person_pk'])
+        person = Person.objects.get(pk=person_id)
+        (form, form_new_person, form_employee) = _org_forms(org, request)
+        if form_employee.is_valid():
+            employee = form_employee.save(commit=False)
+            employee.person = person
+            employee.organization = org
+            employee.save()
+    except:
+        pass
+    return HttpResponseRedirect("%s" %reverse("people:organization",args=(org.pk,)))
+
+
 def new_person_via_organization(request, org_id):
     org = get_object_or_404(Organization,pk=org_id)
     (form, form_new_person, form_employee) = _org_forms(org, request)

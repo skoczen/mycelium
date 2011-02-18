@@ -1,0 +1,141 @@
+
+fragment[name=new_person_search_results] {
+	display: block;
+}
+#search_for_person {
+/*	display: block;
+	width: 100%;
+	overflow: auto;
+	padding: 0px;
+	margin: 0px;*/
+}
+#search_for_person #id_search_new_person {
+	width: 90%;
+}
+.tab_contents.organizations_people .add_person_container, .tab_contents.organizations_people #add_existing_person, .tab_contents.organizations_people #new_person, .tab_contents.organizations_people #search_for_person {
+	display: none;
+}
+
+#add_existing_person, #new_person {
+	display: block;
+	padding: 40px 0px 10px 0px;
+	width: 100%;
+	position: relative;
+	
+}
+#add_existing_person input, #new_person input {
+	min-width: 100px;
+}
+.add_person_container .no_people_found {
+	text-align: left;
+}
+employees {
+	display: block;
+	padding: 10px 0px;
+	width: 100%;
+	overflow: auto;
+}
+employees employee {
+	display: block;
+	width: 29%;
+	padding: 10px 1%;
+	margin: 1%;
+	float: left;
+	height: 100px;
+	border: 1px solid #DDD;
+}
+employees employee span {
+	display: block;
+}
+.add_person_container {
+	border: 2px solid #DDD;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	background-color: #EEE;
+	padding: 20px;
+	padding-top: 35px;
+	position: relative;
+}
+.add_person_container .edit_mode_on input {
+	background-color: #EEE;
+	border-color: #454545;
+	color: #222;
+}
+section_title {
+	display: block;
+	font-size: 20px;
+	color: #004486;
+}
+.add_person_container section_title {
+	position: absolute;
+	top: 5px;
+	left: 10px;
+	clear: both;
+}
+.add_person_container fragment table {
+	margin: 4px 0px;
+}
+.add_person_container fragment td.action {
+	padding: 5px 0px 0px 0px;
+	white-space: nowrap;
+	width: 15%;
+	text-align: left;
+}
+.add_person_container fragment td.name {
+	width: 35%;
+}
+.add_person_container fragment td.email {
+	width: 25%;
+}
+.add_person_container fragment td.phone {
+	width: 25%;
+}
+.add_person_container fragment .pagination_row {
+	padding-left: 20px;
+}
+.add_person_container fragment .cancel_add_btn {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	background-color: #CCC;
+	color: #454545;
+	z-index: 200;
+}
+instructions {
+	display: block;
+	font-size: 16px;
+	color: #454545;
+	padding: 0px 0px 2px 0px;
+}
+.add_person_container #add_existing_person .full_name {
+	font-size: 20px;
+	color: #222;
+	float: left;
+	display: block;
+	padding-right: 10px;
+}
+.add_person_container #new_person section_title, .add_person_container #add_existing_person section_title {
+	left: -10px;
+	top: 15px;
+}
+.add_person_container .generic_editable_field {
+	display: inline;
+	padding-right: 5px;
+}
+/*.add_person_container #id_EMPLOYEE-first_name, .add_person_container#id_EMPLOYEE-last_name, .add_person_container #id_EMPLOYEE-role, .add_person_container #id_EMPLOYEE-email , .add_person_container#id_EMPLOYEE-phone_number {
+	display: block;
+	float: left;
+	width: auto;
+}*/
+
+/*.edit_mode_on .add_person_container #id_EMPLOYEE-first_name.edit_field, .edit_mode_on .add_person_container#id_EMPLOYEE-last_name.edit_field, .edit_mode_on .add_person_container #id_EMPLOYEE-role.edit_field, .edit_mode_on .add_person_container #id_EMPLOYEE-email .edit_field, .edit_mode_on .add_person_container#id_EMPLOYEE-phone_number {
+	margin-bottom: 0px;
+}*/
+.add_person_container .edit_mode_on .generic_field_label {
+	top: 140%;
+	color: #777;
+}
+.add_person_container form_actions {
+	padding-left: 0px;
+}

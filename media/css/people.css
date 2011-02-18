@@ -246,7 +246,7 @@ search_results .results_table .best_contact {
 .edit_mode_on .basic_info .name {
 	margin-bottom: 20px;
 }
-.basic_info  .generic_editable_field {
+.generic_editable_field {
 	display: block;
 }
 .basic_info .name .generic_editable_field {
@@ -444,7 +444,4 @@ save_status_and_button .save_info {
 save_status_and_button a.mycelium_active_grey {
 	font-size: 17px;
 	padding: 7px 11px 5px 11px;
-}
-fragment[name=new_person_search_results] {
-	display: block;
 }

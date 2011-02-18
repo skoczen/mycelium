@@ -3,9 +3,11 @@
 {% block title %}Organizations - {% if org.name %}{{org.name}}{% else %}New Organization{% endif %}{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
+ <link rel="stylesheet" href="{{ MEDIA_URL }}css/people_organizations.css" type="text/css" media="screen" title="" charset="utf-8">
 {% endblock %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_organization.js"> </script>
 {% if request.GET.edit == "ON" %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
@@ -64,38 +66,51 @@ $(function(){
 	<a class="detail_tab" href="#">Donor</a>
 </div>
 <div id="detail_tab_contents">
+<div class="tab_contents organizations_people">
 	<a href="#" class="add_new_person_btn mycelium_btn">Add a Person</a>
+	<div class="add_person_container">
 	<div id="search_for_person">
-		<input type="search" results=5 name="new_person_name" id="id_search_new_person" results_url="{% url people:add_person_via_organization_search_results %}">
-		<fragment name="new_person_search_results" action="replace"></fragment>
+		<section_title>Add a Person</section_title>
+		<instructions>Search for someone in GoodCloud, or add someone new.</instructions>
+		<input type="search" results=5 name="new_person_name" id="id_search_new_person" placeholder="Search by name, email, or phone number" results_url="{% url people:add_person_via_organization_search_results %}">
+		<fragment name="new_person_search_results" action="replace">
+			{% include "people/_add_person_to_org_results.html" %}
+		</fragment>
 	</div>
 
 	<div id="add_existing_person">
-		<form action="{% url people:new_person_via_organization org.pk %}" method="POST">{% csrf_token %}
+		<section_title>Role Details</section_title>		
+		<form action="{% url people:existing_person_via_organization org.pk %}" method="POST">{% csrf_token %}
 			<span class="edit_mode_on">
-			{% generic_editable_field form_new_person.first_name %}
-			{% generic_editable_field form_new_person.last_name %}
-			
+			<input type="hidden" name="person_pk" value=""/>
+			<span class="full_name"></span>
 			{% generic_editable_field form_employee.role %}
 			{% generic_editable_field form_employee.email %}
 			{% generic_editable_field form_employee.phone_number %}
 			</span>
-		<input type="submit" class="mycelium_btn" value="Add Person"/>
+		<form_actions>
+			<input type="submit" class="mycelium_btn" value="Add Person"/>
+		</form_actions>
 		</form>
 	</div>
 	<div id="new_person">
+		<section_title>Role Details</section_title>
 		<form action="{% url people:new_person_via_organization org.pk %}" method="POST">{% csrf_token %}
 			<span class="edit_mode_on">
 			{% generic_editable_field form_new_person.first_name %}
 			{% generic_editable_field form_new_person.last_name %}
-			
+
 			{% generic_editable_field form_employee.role %}
 			{% generic_editable_field form_employee.email %}
 			{% generic_editable_field form_employee.phone_number %}
 			</span>
-		<input type="submit" class="mycelium_btn" value="Add Person"/>
+		<form_actions>
+			<input type="submit" class="mycelium_btn" value="Add Person"/>
+		</form_actions>
 		</form>
 	</div>
+	</div>
+	<employees>
 	{% for e in org.employees.all %}
 	<employee>
 	
@@ -105,6 +120,7 @@ $(function(){
 		<span class="email">{{e.email}}</span>
 	</employee>
 	{% endfor %}
-
+	</employees>
+</div>
 </div>
 {% endblock %}
