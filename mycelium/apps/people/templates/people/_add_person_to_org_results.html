@@ -1,0 +1,28 @@
+{% load pagination_tags %}
+{% if people %}
+{% autopaginate people 5 %}
+<table class="results_table striped">
+	<tr class="person_row header">
+		<th class="action"></th>
+		<th class="name">Name</th>
+		<th class="email">Email</th>
+		<th class="phone_number">Phone Number</th>
+	</tr>
+{% for p in people %}
+<tr class="person_row header striped_row">
+	<td class="action"><a href="#" class="mycelium_btn select_person_to_add_btn">Add this Person</a></td>
+	<td class="name highlightable">{{p.full_name}}</td>
+	<td class="email highlightable">{{p.primary_email}}</td>
+	<td class="phone_number highlightable">{{p.primary_phone_number}}</td>
+</tr>
+{% endfor %}
+	<tr><td colspan="2">
+		{% paginate %}
+	</td></tr>
+</table>
+{% else %}
+<div class="no_people_found">
+	No people found for search "{{q}}".
+</div>
+{% endif %}
+<a href="#" class="mycelium_btn select_person_to_add_btn">Add a Person who's not in GoodCloud</a>

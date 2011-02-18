@@ -135,9 +135,17 @@ class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
         return "%s" % (self.name,)
 
 class Employee(TimestampModelMixin):
-    person = models.ForeignKey(Person)
+    person = models.ForeignKey(Person, related_name="employers")
     role = models.CharField(max_length=255, blank=True, null=True)
-    organization = models.ForeignKey(Organization)
+    email = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=255)
+    organization = models.ForeignKey(Organization, related_name="employees")
+    
+    def __unicode__(self):
+        return "%s - %s at %s" % (self.person, self.role, self.organization)
+    
+    class Meta:
+        ordering = ("organization","person",)
 
 class ContactMethod(models.Model):
     person = models.ForeignKey(Person)

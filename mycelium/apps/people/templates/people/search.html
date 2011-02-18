@@ -9,13 +9,14 @@
 {% endblock %}
 {% block page_content %}
 <div class="main_search_box">
-	<label for="id_search_query">Search:</label> <input name="search_query" id="id_search_query" />
+	<label for="id_search_query">Search:</label> <input type="search" name="search_query" id="id_search_query" />
 </div>
 <new_object_buttons>
 	<a href="{% url people:new_person %}" class="new_person_btn mycelium_btn">New Person</a>
 	<a href="{% url people:new_organization %}" class="new_organization_btn mycelium_btn">New Organization</a>	
 </new_object_buttons>
-<search_results>
+<search_results><fragment name="main_search_results" action="replace">
 	{% include "people/_search_results.html" %}
+</fragment>
 </search_results>
 {% endblock %}

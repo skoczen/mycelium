@@ -17,12 +17,12 @@ breadcrumb {
 #id_search_query {
 	width: 82%;
 	margin: 6px 0px;
-	padding: 4px;
+	padding: 4px 0px;
 	border: 2px solid #DDD;
 	border-radius: 6px;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
-	padding-left: 36px;
+	padding-left: 28px;
 	font-size: 24px;
 	background-image: url("../images/search-24.png");
 	background-position: 4px 6px;
@@ -444,4 +444,7 @@ save_status_and_button .save_info {
 save_status_and_button a.mycelium_active_grey {
 	font-size: 17px;
 	padding: 7px 11px 5px 11px;
+}
+fragment[name=new_person_search_results] {
+	display: block;
 }
