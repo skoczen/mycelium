@@ -1,1 +1,1 @@
-{% load generic_fields %}{% if twitter_username %}{% with field|field_value as twitter_username %}<a href="http://www.twitter.com/{{twitter_username}}">@{{twitter_username}}</a>{% endwith %}{% endif %}
+{% load generic_fields %}{% with field|field_value as twitter_username %}{% if twitter_username %}<a href="http://www.twitter.com/{{twitter_username}}">@{{twitter_username}}</a>{% endif %}{% endwith %}

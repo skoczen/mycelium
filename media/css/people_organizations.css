@@ -102,6 +102,10 @@ section_title {
 	color: #454545;
 	z-index: 200;
 }
+.add_person_container fragment .cancel_add_btn:hover {
+	background-color: #D2D2D2;
+	color: #222;
+}
 instructions {
 	display: block;
 	font-size: 16px;

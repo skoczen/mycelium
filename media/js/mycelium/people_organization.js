@@ -34,5 +34,6 @@ function cancel_add_person(){
     $("#search_for_person").hide();
     $("#add_existing_person").hide();
     $("#new_person").hide();
-
+    $("#id_search_new_person").val("");
+    $("fragment[name=new_person_search_results]").html("");
 }
