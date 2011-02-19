@@ -154,5 +154,16 @@ $(function(){
         $(".striped .striped_row:odd",context_ele).addClass("odd");
     }
 
+//  Mycelium Elements
+    $("tabbed_box.with_button tab_title").live("click",function(){
+        var box = $(this).parents("tabbed_box.with_button");
+        if (box.hasClass("open")) {
+            box.removeClass("open").addClass("closed");
+            box.trigger("mycelium.tabbed_box.closed");
+        } else {
+            box.addClass("open").removeClass("closed");
+            box.trigger("mycelium.tabbed_box.opened");
+        }
+    })
 
 });

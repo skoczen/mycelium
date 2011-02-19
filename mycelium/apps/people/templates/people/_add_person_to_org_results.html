@@ -1,33 +1,36 @@
 {% load pagination_tags %}
+{% if people or q != "" %}
 {% if people %}
-{% autopaginate people 5 %}
-<table class="results_table striped">
-	{# <tr class="person_row header"> #}
-	{# 	<th class="action"></th> #}
-	{# 	<th class="name">Name</th> #}
-	{# 	<th class="email">Email</th> #}
-	{# 	<th class="phone_number">Phone Number</th> #}
-	{# </tr> #}
-{% for p in people %}
-<tr class="person_row header striped_row" person_pk="{{p.pk}}">
-	<td class="action"><a href="#" class="mycelium_btn select_person_to_add_btn">Add this Person</a></td>
-	<td class="name highlightable">{{p.full_name}}</td>
-	<td class="email highlightable">{{p.primary_email}}</td>
-	<td class="phone_number highlightable">{{p.primary_phone_number}}</td>
-</tr>
-{% endfor %}
-	<tr><td colspan="5" class="pagination_row">
-		{% paginate %}
-	</td></tr>
-</table>
+	{% autopaginate people 5 %}
+	<section_title>Choose from someone in GoodCloud:</section_title>
+	<table class="results_table striped">
+		{# <tr class="person_row header"> #}
+		{# 	<th class="action"></th> #}
+		{# 	<th class="name">Name</th> #}
+		{# 	<th class="email">Email</th> #}
+		{# 	<th class="phone_number">Phone Number</th> #}
+		{# </tr> #}
+	{% for p in people %}
+	<tr class="person_row header striped_row" person_pk="{{p.pk}}">
+		<td class="action"><a href="#" class="mycelium_btn select_person_to_add_btn">Add this Person</a></td>
+		<td class="name highlightable">{{p.full_name}}</td>
+		<td class="email highlightable">{{p.primary_email}}</td>
+		<td class="phone_number highlightable">{{p.primary_phone_number}}</td>
+	</tr>
+	{% endfor %}
+		<tr><td colspan="5" class="pagination_row">
+			{% paginate %}
+		</td></tr>
+	</table>
 {% else %}
-<div class="no_people_found">
-{% if q %}
-No people found for search "{{q}}".
-{% else %}
-{# Search for a person, or add a new person to GoodCloud. #}
+	<div class="no_people_found">
+	{% if q %}
+	No people found for search "{{q}}".
+	{% else %}
+	{# Search for a person, or add a new person to GoodCloud. #}
+	{% endif %}
+	</div>
 {% endif %}
-</div>
+{% if people.count > 0 %}<section_title class="or">Or, add someone new:</section_title>{% endif %}
+<div class="new_person_btn_container"><a href="#" class="mycelium_btn not_in_goodcloud_btn">Add a New Person</a></div>
 {% endif %}
-<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
-<a href="#" class="mycelium_btn not_in_goodcloud_btn">Add a Person who's not in GoodCloud</a>
