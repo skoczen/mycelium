@@ -470,6 +470,7 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         sel.type("css=#id_search_query", "Test Organ")
         sel.key_down("css=#id_search_query","n")
         sel.key_up("css=#id_search_query","n")
+        time.sleep(2)
         
         self.assertEqual("555 123-4567", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
         self.assertEqual("Test", sel.get_text("//div[@id='page']/search_results/fragment/table/tbody/tr[2]/td[1]/a/span/b[1]"))
