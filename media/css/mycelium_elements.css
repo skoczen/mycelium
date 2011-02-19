@@ -116,6 +116,7 @@ breadcrumb {
 	left: -34px;
 	top: -13px;
 	float: left;
+	box-shadow: 0px 1px 2px rgba(0,0,0,0.55);
 	-moz-box-shadow: 0px 1px 2px rgba(0,0,0,0.55);
 	-khtml-box-shadow: 0px 1px 2px rgba(0,0,0,0.55);
 	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.55);
@@ -195,7 +196,7 @@ new_object_buttons {
 	border: 1px solid #004486;
 	background-color: #004486;
 	color: #FFF;
-	text-shadow: 1px 1px 2px rgba(0,0,0,0.2);	
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 .mycelium_btn, input.mycelium_btn {
 	font-size: 18px;
@@ -276,3 +277,82 @@ save_status_and_button {
 	right: 10px;
 	top: 4px;
 }
+fragment {
+	position: relative;
+}
+
+tabbed_box {
+	display: block;
+	position: relative;	
+}
+tabbed_box tab_title {
+	display: block;
+	float: left;
+	clear: both;
+	top: 0px;
+	left: 0px;
+}
+tabbed_box.with_button tab_title {
+	display: block;
+	border: 1px solid #004486;
+	background-color: #004486;
+	color: #FFF;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+	font-size: 18px;
+	padding: 5px 11px;
+	text-decoration: none;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	cursor: pointer;	
+}
+tabbed_box.with_button.open tab_title {
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;	
+	border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	background-color: #3E9CFD;
+	border-color: #3E9CFD;
+	color: #FFF;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);	
+}
+tabbed_box tab_title icon {
+	
+}
+tabbed_box tab_title text {
+	
+}
+tabbed_box box_content {
+	display: block;
+	clear: both;
+	width: 96%;
+	border: 1px solid #DDD;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-top-left-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	-webkit-border-top-left-radius: 0px;	
+	
+	background-color: #EEE;
+	padding: 10px 2%;
+	position: relative;
+	min-height: 60px;
+	overflow: hidden;
+}
+tabbed_box.with_button.closed box_content {
+	display: none;
+}
+tabbed_box.with_button.open box_content {
+	display: block;
+	border-color: #3E9CFD;	
+}
+tabbed_box box_close {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	z-index: 200;
+}
+

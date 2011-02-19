@@ -3,9 +3,11 @@
 {% block title %}Organizations - {% if org.name %}{{org.name}}{% else %}New Organization{% endif %}{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
+ <link rel="stylesheet" href="{{ MEDIA_URL }}css/people_organizations.css" type="text/css" media="screen" title="" charset="utf-8">
 {% endblock %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_organization.js"> </script>
 {% if request.GET.edit == "ON" %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
@@ -32,7 +34,7 @@ $(function(){
 		{# {% generic_editable_field form.organization_type %} #}
 		{# {% generic_editable_field form.organization_type_other_name %} #}
 		{% generic_editable_field_url form.website %}
-		{% generic_editable_field_twitter form.twitter_username %}		
+		{% generic_editable_field_twitter form.twitter_username %}
 	</div>
 	<div class="address">
 		{% generic_editable_field form.line_1 %}
@@ -57,50 +59,94 @@ $(function(){
 	
 <div id="detail_tabs">
 	<a class="detail_tab" href="#">Conversations</a>
+	<a class="detail_tab" href="#">Activity</a>
 	<a class="detail_tab current" href="#">People</a>
 	{# <a class="detail_tab" href="#">Participant</a> #}
 	{# <a class="detail_tab current" href="#">Volunteer</a> #}
-	{# <a class="detail_tab" href="#">Donor</a> #}
+	<a class="detail_tab" href="#">Donor</a>
 </div>
 <div id="detail_tab_contents">
-	<div class="detail_header">Recent Volunteer Activity</div>
-	{# add btn #}
-	<table class="volunteer_shift_table striped">
-		<tr>
-			<td>3 hours</td>
-			<td>last wednesday</td>
-			<td>on Office Shift</td>
-		</tr>
-		<tr>
-			<td>2 hours</td>
-			<td>Nov 26</td>
-			<td>on Tabling</td>
-		</tr>
-		<tr>
-			<td>6 hours</td>
-			<td>Nov 14</td>
-			<td>on Training</td>
-		</tr>
-	</table>
-	<div class="detail_header">All Volunteer Activity</div>
-	{# add btn #}
-	<table class="volunteer_shift_table striped">
-		<tr>
-			<td>2010</td>
-			<td>83 hours</td>
-			<td><a href="#">See details</a></td>
-		</tr>
-		<tr>
-			<td>2009</td>
-			<td>136 hours</td>
-			<td><a href="#">See details</a></td>
-		</tr>
-		<tr>
-			<td>2008</td>
-			<td>42 hours</td>
-			<td><a href="#">See details</a></td>
-		</tr>
+<div class="tab_contents organizations_people">
+	<tabbed_box class="with_button closed" name="add_a_person">
+		<tab_title>
+			<icon></icon>
+			<text>Add a Person</text>
+		</tab_title>
+		<box_content>
+			
 		
-	</table>	
+			{# <a href="#" class="add_new_person_btn mycelium_btn">Add a Person</a> #}
+	
+			<pane name="1" class="pane_1">
+			<div id="search_for_person">
+				{# <section_title>Add a Person</section_title> #}
+				<instructions>Who do you want to add?</instructions>
+				<input type="search" {# results=5 #} name="new_person_name" id="id_search_new_person" placeholder="Type the name of the person you want to add..." results_url="{% url people:add_person_via_organization_search_results %}">
+				<fragment name="new_person_search_results" action="replace">
+					{# {% include "people/_add_person_to_org_results.html" %} #}
+				</fragment>
+			</div>
+			</pane>
+			
+			<pane name="2" class="pane_2">
+			<div id="add_existing_person">
+				<a href="#" id="up_to_search">Back to Search</a>
+				<section_title>Role Details</section_title>		
+				<form action="{% url people:existing_person_via_organization org.pk %}" method="POST">{% csrf_token %}
+					<span class="edit_mode_on">
+					<input type="hidden" name="person_pk" value=""/>
+					<span class="full_name"></span>
+					{% generic_editable_field form_employee.role %}
+					{% generic_editable_field form_employee.email %}
+					{% generic_editable_field form_employee.phone_number %}
+					</span>
+				<form_actions>
+					<input type="submit" class="mycelium_btn" value="Add this Person"/>
+				</form_actions>
+				</form>
+				<box_close>
+					<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
+				</box_close>
+				
+			</div>
+			<div id="new_person">
+				<a href="#" id="up_to_search">Back to Search</a>
+				<section_title>New Person Details</section_title>
+				<form action="{% url people:new_person_via_organization org.pk %}" method="POST">{% csrf_token %}
+					<span class="edit_mode_on">
+					{% generic_editable_field form_new_person.first_name %}
+					{% generic_editable_field form_new_person.last_name %}
+
+					{% generic_editable_field form_employee.role %}
+					{% generic_editable_field form_employee.email %}
+					{% generic_editable_field form_employee.phone_number %}
+					</span>
+				<form_actions>
+					<input type="submit" class="mycelium_btn" value="Add this Person"/>
+				</form_actions>
+				</form>
+				<box_close>
+					<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
+				</box_close>
+
+			</div>
+			</pane>
+			<box_close>
+				<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
+			</box_close>
+		</box_content>
+	</tabbed_box>
+	<employees>
+	{% for e in org.employees.all %}
+	<employee>
+	
+		<span class="name"><a href="{% url people:person e.person.pk %}" class="mycelium_crosslink_btn">{{e.person.full_name}}</a></span>
+		<span class="title">{{e.role}}</span>
+		<span class="phone">{{e.phone_number}}</span>
+		<span class="email">{{e.email}}</span>
+	</employee>
+	{% endfor %}
+	</employees>
+</div>
 </div>
 {% endblock %}

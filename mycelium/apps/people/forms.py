@@ -1,5 +1,5 @@
 from django.forms import ModelForm, RadioSelect
-from people.models import Person, EmailAddress, PhoneNumber, Address, Organization
+from people.models import Person, EmailAddress, PhoneNumber, Address, Organization, Employee
 
 class PersonForm(ModelForm):
     class Meta:
@@ -32,3 +32,13 @@ class OrganizationForm(ModelForm):
         fields = ("name", "primary_phone_number", "website", "twitter_username", "line_1", "line_2", "city", "state", "postal_code",)
         # fields += ("organization_type", "organization_type_other_name",)
         # widgets = { 'organization_type': RadioSelect(), }
+        
+class PersonViaOrganizationForm(ModelForm):
+    class Meta:
+        model = Person
+        fields = ("first_name", "last_name")
+
+class EmployeeForm(ModelForm):
+    class Meta:
+        model = Employee
+        fields = ("role", "email", "phone_number")

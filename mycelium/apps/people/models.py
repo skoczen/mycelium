@@ -139,9 +139,17 @@ class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
         return "%s" % (self.name,)
 
 class Employee(TimestampModelMixin):
-    person = models.ForeignKey(Person)
-    role = models.CharField(max_length=255, blank=True, null=True)
-    organization = models.ForeignKey(Organization)
+    person = models.ForeignKey(Person, related_name="employers")
+    role = models.CharField(max_length=255, blank=True, null=True, verbose_name="Role")
+    email = models.CharField(max_length=255, blank=True, null=True,verbose_name="Role email")
+    phone_number = models.CharField(max_length=255, blank=True, null=True, verbose_name="Role phone number")
+    organization = models.ForeignKey(Organization, related_name="employees")
+    
+    def __unicode__(self):
+        return "%s - %s at %s" % (self.person, self.role, self.organization)
+    
+    class Meta:
+        ordering = ("organization","person",)
 
 class ContactMethod(models.Model):
     person = models.ForeignKey(Person)
@@ -277,18 +285,25 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         proxy.save()
 
     @classmethod
-    def regenerate_cached_data(cls):
-        [cls.people_record_changed(Person,p) for p in Person.objects.all()]
-        [cls.organization_record_changed(Organization,o) for o in Organization.objects.all()]
-    
+    def related_people_record_changed(cls, sender, instance, created=None, *args, **kwargs):
+        cls.people_record_changed(sender, instance.person, *args, **kwargs)
 
     @classmethod
-    def repopulate_cache(cls):
-        [p.search_result_row for p in cls.objects.all()]
+    def related_organization_record_changed(cls, sender, instance, created=None, *args, **kwargs):
+        cls.organization_record_changed(sender, instance.organization, *args, **kwargs)
+
+    @classmethod
+    def populate_cache(cls):
+        [cls.people_record_changed(Person,p) for p in Person.objects.all()]
+        [cls.organization_record_changed(Organization,o) for o in Organization.objects.all()]
 
     class Meta(object):
         verbose_name_plural = "PeopleAndOrganizationsSearchProxies"
         ordering = ("person", "organization")
         
 post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender=Person)
+post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=EmailAddress)
+post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=PhoneNumber)
+post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=Address)
 post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
+# post_save.connect(PeopleAndOrganizationsSearchProxy.related_organization_record_changed,sender=Employee)

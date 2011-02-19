@@ -21,6 +21,13 @@ $(function(){
     // console.log("register generic fields")
     previous_serialized_str = $("#basic_info_form").serialize();
 	intelligently_show_hide_comma();
+
+    $.Mycelium.search.setUp({
+        search_element: $("#id_search_new_person"),
+	    search_url: $("#id_search_new_person").attr("results_url"),
+	    results_element: $("fragment[name=new_person_search_results]"),	    
+    });
+
 });
 function toggle_edit(){
 

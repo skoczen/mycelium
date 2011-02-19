@@ -1,14 +1,14 @@
 {% load pagination_tags %}
 {% if people_proxies %}
 {% autopaginate people_proxies 11 %}
-<table class="results_table">
+<table class="results_table striped">
 	<tr class="person_row header">
 		<th class="name">Name</th>
 		<th class="email">Email</th>
 		<th class="phone_number">Phone Number</th>
 	</tr>
 {% for p in people_proxies %}{{p.search_result_row|safe}}{% endfor %}
-	<tr><td colspan="2">
+	<tr><td colspan="5" class="pagination_row">
 		{% paginate %}
 	</td></tr>
 </table>

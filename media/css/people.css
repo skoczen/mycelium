@@ -17,21 +17,28 @@ breadcrumb {
 #id_search_query {
 	width: 82%;
 	margin: 6px 0px;
-	padding: 4px;
-	border: 2px solid #DDD;
-	border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	padding-left: 36px;
+	padding: 4px 0px;
+	border: 0px solid #BBB;
+	padding-left: 28px;
 	font-size: 24px;
 	background-image: url("../images/search-24.png");
-	background-position: 4px 6px;
+	background-position: 8px 8px;
 	background-repeat: no-repeat;
 	outline-style:none;
+	background-color: #FFF;
+	
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	outline: none;
+	box-shadow: 		inset 0px 1px 2px rgba(0,0,0,0.55);
+	-moz-box-shadow: 	inset 0px 1px 2px rgba(0,0,0,0.55);
+	-khtml-box-shadow: 	inset 0px 1px 2px rgba(0,0,0,0.55);
+	-webkit-box-shadow: inset 0px 1px 2px rgba(0,0,0,0.55);	
 }
 #id_search_query:focus {
-	border: 2px solid #3E9CFD;
-	margin: 6px 0px;
+/*	border: 2px solid #3E9CFD;*/
+/*	margin: 6px 0px;*/
 }
 .main_search_box {
 	text-align: left;
@@ -246,7 +253,7 @@ search_results .results_table .best_contact {
 .edit_mode_on .basic_info .name {
 	margin-bottom: 20px;
 }
-.basic_info  .generic_editable_field {
+.generic_editable_field {
 	display: block;
 }
 .basic_info .name .generic_editable_field {
