@@ -60,7 +60,6 @@ function up_to_search_clicked(){
     return false;
 }
 function scroll_to_pane_1() {
-    // $("pane[name=2]").hide();
     var my_options = {
         onAfter: function(){
             $("pane[name=2]").hide();
