@@ -9,27 +9,31 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
         for p in orm.Person.objects.all():
-            print p.id, p.first_name, p.last_name
-            print p.phonenumber_set.all()
-            print p.phonenumber_set.all().count() > 0
-            print p.emailaddress_set.all()
-            print p.emailaddress_set.all().count() > 0
-            print p.address_set.all()
-            if p.phonenumber_set.all().count() > 0:
-                p.phone_number = p.phonenumber_set.all()[0].phone_number
-            if p.emailaddress_set.all().count() > 0:
-                p.email = p.emailaddress_set.all()[0].email
-            if p.address_set.all().count() > 0:
-                p.line_1 = p.address_set.all()[0].line_1
-                p.line_2 = p.address_set.all()[0].line_2
-                p.city = p.address_set.all()[0].city
-                p.state = p.address_set.all()[0].state
-                p.postal_code = p.address_set.all()[0].postal_code
-            p.save()
-            p = Person.objects.get(pk=p.id)
-            print p.phone_number
-            print p.email
-            print "------"
+            try:
+                print p.id, p.first_name, p.last_name
+                print p.phonenumber_set.all()
+                print p.phonenumber_set.all().count() > 0
+                print p.emailaddress_set.all()
+                print p.emailaddress_set.all().count() > 0
+                print p.address_set.all()
+                if p.phonenumber_set.all().count() > 0:
+                    p.phone_number = p.phonenumber_set.all()[0].phone_number
+                if p.emailaddress_set.all().count() > 0:
+                    p.email = p.emailaddress_set.all()[0].email
+                if p.address_set.all().count() > 0:
+                    p.line_1 = p.address_set.all()[0].line_1
+                    p.line_2 = p.address_set.all()[0].line_2
+                    p.city = p.address_set.all()[0].city
+                    p.state = p.address_set.all()[0].state
+                    p.postal_code = p.address_set.all()[0].postal_code
+                p.save()
+                p = Person.objects.get(pk=p.id)
+                print p.phone_number
+                print p.email
+                print "------"
+            except:
+                from qi_toolkit.helpers import print_exception
+                print_exception()
 
     def backwards(self, orm):
         "Write your backwards methods here."
