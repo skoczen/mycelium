@@ -27,7 +27,7 @@ class Migration(DataMigration):
                     p.state = p.address_set.all()[0].state
                     p.postal_code = p.address_set.all()[0].postal_code
                 p.save()
-                p = Person.objects.get(pk=p.id)
+                p = orm.Person.objects.get(pk=p.id)
                 print p.phone_number
                 print p.email
                 print "------"
