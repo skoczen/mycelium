@@ -21,7 +21,6 @@ def search_results(request):
     people_proxies = PeopleAndOrganizationsSearchProxy.objects.all()
     if 'q' in request.GET:
         q = request.GET['q']
-        print q
         if q != "":
             people_proxies = PeopleAndOrganizationsSearchProxy.search(q,ignorable_chars=["-","(",")"])
 
@@ -33,9 +32,6 @@ def _basic_forms(person, request):
         data = request.POST
 
     form         = PersonForm(data, instance=person)
-    # email_form   = EmailForm(data, instance=person.primary_email)
-    # address_form = AddressForm(data, instance=person.primary_address)
-    # phone_form   = PhoneForm(data, instance=person.primary_phone_number)
 
     return form
 

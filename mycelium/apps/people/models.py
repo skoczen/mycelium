@@ -5,16 +5,6 @@ from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 
-# 
-# 
-# 
-# class ContactMethodType(models.Model):
-#     internal_name = models.CharField(max_length=255)
-#     friendly_name = models.CharField(max_length=255)
-# 
-#     def __unicode__(self):
-#         return "%s" % self.friendly_name
-
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
     friendly_name = models.CharField(max_length=255)
@@ -79,8 +69,8 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     
     @property
     def searchable_primary_phone_number(self):
-        if self.primary_phone_number:
-            return DIGIT_REGEX.sub('', "%s" % self.primary_phone_number.phone_number)
+        if self.phone_number:
+            return DIGIT_REGEX.sub('', "%s" % self.phone_number)
         else:
             return ''
         
@@ -92,22 +82,6 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     def primary_email(self):
         return self.email
 
-
-    @property
-    def best_contact_method(self):
-        # TODO: properly implement this.
-        if self.primary_phone_number.primary:
-            return self.primary_phone_number
-        elif self.primary_email.primary:
-            return self.primary_email
-        elif self.primary_address.primary:
-            return self.primary_address
-        elif self.primary_phone_number:
-            return self.primary_phone_number
-        elif self.primary_email:
-            return self.primary_email
-        else:
-            return self.primary_address
 
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
@@ -143,30 +117,6 @@ class Employee(TimestampModelMixin):
     class Meta:
         ordering = ("organization","person",)
 
-# class ContactMethod(models.Model):
-#     person = models.ForeignKey(Person)
-#     contact_type = models.ForeignKey(ContactMethodType, blank=True, null=True)
-#     primary = models.BooleanField(default=False)
-# 
-#     def save(self, *args, **kwargs):
-#         super(ContactMethod, self).save(*args, **kwargs)
-# 
-#     # TODO: unit tests
-#     @property
-#     def is_primary_contact_method(self):
-#         return self.primary == True
-#     
-#     # TODO: unit tests
-#     @property
-#     def is_best_contact_method(self):
-#         return self.pk == self.person.best_contact_method.pk
-# 
-#     class Meta(object):
-#         abstract = True
-
-
-# class Address(ContactMethod, AddressBase, TimestampModelMixin):
-#     pass
 
 from django.core.cache import cache
 from django.db.models.signals import post_save
@@ -242,7 +192,6 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         # return "%s" % (self.pk)    
 
     def render_result_row(self):
-        # TODO render and stuff
         if self.person:
             return render_to_string("people/_search_result_row_person.html",{'obj':self.obj})
         elif self.organization:
@@ -264,10 +213,7 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
 
     @classmethod
     def related_people_record_changed(cls, sender, instance, created=None, *args, **kwargs):
-        print "related record changed for ", sender, instance
-        print instance.person.qi_simple_searchable_search_field
         cls.people_record_changed(sender, instance.person, *args, **kwargs)
-        print instance.person.qi_simple_searchable_search_field
 
     @classmethod
     def related_organization_record_changed(cls, sender, instance, created=None, *args, **kwargs):
@@ -283,8 +229,5 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         ordering = ("person", "organization")
         
 post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender=Person)
-# post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=EmailAddress)
-# post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=PhoneNumber)
-# post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=Address)
 post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
 post_save.connect(PeopleAndOrganizationsSearchProxy.related_organization_record_changed,sender=Employee)
