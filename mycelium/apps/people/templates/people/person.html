@@ -27,26 +27,47 @@ $(function(){
 			{% generic_editable_field form.first_name %}
 			{% generic_editable_field form.last_name %}
 		</div>
-		{% generic_editable_field form.phone_number %}
-		{% generic_editable_field_email form.email %}
 	</div>
-	<div class="address">
-		{% generic_editable_field form.line_1 %}
-		{% generic_editable_field form.line_2 %}
+		<tabbed_box class="open" name="home">
+			<tab_title>
+				<icon class="home"></icon>
+				<text>Home</text>
+			</tab_title>
+			<box_content>
+				{% generic_editable_field form.phone_number %}
+				{% generic_editable_field_email form.email %}
 
-		<div class="city_state_zip">
-			{% generic_editable_field form.city %}<span class="city_state_comma">,</span>
-			{% generic_editable_field form.state %}
-			{% generic_editable_field form.postal_code %}
-		</div>
-	
-	</div>
+			<div class="address">
+				{% generic_editable_field form.line_1 %}
+				{% generic_editable_field form.line_2 %}
+
+				<div class="city_state_zip">
+					{% generic_editable_field form.city %}<span class="city_state_comma">,</span>
+					{% generic_editable_field form.state %}
+					{% generic_editable_field form.postal_code %}
+				</div>
+
+			</div>
+			</box_content>
+		</tabbed_box>
+		{% for e in person.jobs.all %}
+		<tabbed_box class="open" name="job">
+			<tab_title>
+				<icon class="company"></icon>
+				<text>{{e.organization}}</text>
+			</tab_title>
+			<box_content>
+				{{e.role}}<br/>
+				{{e.phone_number}}<br/>
+				{{e.email}}
+			</box_content>
+		</tabbed_box>
+		{% endfor %}
 
 </div>
-</form>
 
-{# {% include "people/_basic_view.html" %} #}
-{# {% include "people/_basic_edit.html" %} #}
+
+</form>
 
 <div class="additional_information">
 	{# Extra emails, phone #s, Addresses #}

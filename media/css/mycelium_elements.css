@@ -291,13 +291,6 @@ tabbed_box tab_title {
 	clear: both;
 	top: 0px;
 	left: 0px;
-}
-tabbed_box.with_button tab_title {
-	display: block;
-	border: 1px solid #004486;
-	background-color: #004486;
-	color: #FFF;
-	text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 	font-size: 18px;
 	padding: 5px 11px;
 	text-decoration: none;
@@ -305,21 +298,43 @@ tabbed_box.with_button tab_title {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	cursor: pointer;	
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
-tabbed_box.with_button.open tab_title {
+tabbed_box.open tab_title {
 	border-bottom-left-radius: 0px;
 	-moz-border-radius-bottomleft: 0px;
 	-webkit-border-bottom-left-radius: 0px;	
 	border-bottom-right-radius: 0px;
 	-moz-border-radius-bottomright: 0px;
 	-webkit-border-bottom-right-radius: 0px;
+}
+tabbed_box.with_button tab_title {
+	border: 1px solid #004486;
+	background-color: #004486;
+	color: #FFF;
+}
+tabbed_box.with_button.open tab_title {
 	background-color: #3E9CFD;
 	border-color: #3E9CFD;
 	color: #FFF;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);	
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
 }
 tabbed_box tab_title icon {
-	
+	display: block;
+	float: left;
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	width: 25px;
+	height: 22px;
+	margin-right: 5px;
+}
+tabbed_box tab_title icon.home {
+	background-image: url("../images/icon-home-22h.png");	
+	background-position: 1px 0px;
+}
+tabbed_box tab_title icon.company {
+	background-image: url("../images/icon-business-grey-22h.png");	
+	background-position: 3px 2px;
 }
 tabbed_box tab_title text {
 	

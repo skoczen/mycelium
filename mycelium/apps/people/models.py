@@ -105,7 +105,7 @@ class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
         return "%s" % (self.name,)
 
 class Employee(TimestampModelMixin):
-    person = models.ForeignKey(Person, related_name="employers")
+    person = models.ForeignKey(Person, related_name="jobs")
     role = models.CharField(max_length=255, blank=True, null=True, verbose_name="Role")
     email = models.CharField(max_length=255, blank=True, null=True,verbose_name="Role email")
     phone_number = models.CharField(max_length=255, blank=True, null=True, verbose_name="Role phone number")

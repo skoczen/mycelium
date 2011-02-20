@@ -207,13 +207,13 @@ search_results .results_table .best_contact {
 }
 .name_phone_email {
 	display: block;
-	width: 50%;
+	width: 100%;
 	float: left;
-	clear: none;
+	clear: both;
 }
 .address {
 	display: block;
-	width: 45%;
+	width: 100%;
 /*	margin-left: 5%;*/
 	clear: none;
 	float: left;
@@ -277,7 +277,7 @@ search_results .results_table .best_contact {
 	clear: both;
 }
 .view_field {
-	border: 1px solid #FFF;
+	border: 1px solid transparent;
 }
 
 #container_id_city, .city_state_zip .city_state_comma, #container_id_state, #container_id_postal_code {
@@ -425,7 +425,6 @@ search_results .results_table .best_contact {
 .person_row icon.organization {
 /*	background-image: url("../images/icon-business-blue-22h.png");*/
 	background-image: url("../images/icon-business-grey-22h.png");	
-	
 	background-position: 3px 2px;
 }
 save_status_and_button {
@@ -451,4 +450,29 @@ save_status_and_button .save_info {
 save_status_and_button a.mycelium_active_grey {
 	font-size: 17px;
 	padding: 7px 11px 5px 11px;
+}
+tabbed_box tab_title icon.home {
+	background-image: url("../images/icon-home-blue-20h.png");	
+}
+tabbed_box tab_title icon.company {
+	background-image: url("../images/icon-business-blue-20h.png");	
+}
+
+tabbed_box tab_title {
+	color: #004486;
+	text-shadow: 1px 1px 0px rgba(0,0,0,0);
+	background-color: #DDD;
+	border: 1px solid #DDD;
+	border-width: 1px 1px 0px 1px;
+	margin-top: 10px;
+}
+tabbed_box box_content {
+	border: 1px solid #DDD;
+	background-color: #FAFAFA;
+	width: 100%;
+}
+.basic_info tabbed_box {
+	float: left;
+	width: 40%;
+	margin-right: 5%;
 }
