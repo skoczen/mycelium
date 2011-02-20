@@ -1,26 +1,27 @@
 from django.forms import ModelForm, RadioSelect
-from people.models import Person, EmailAddress, PhoneNumber, Address, Organization, Employee
+from people.models import Person, Organization, Employee
+# EmailAddress, PhoneNumber, Address
 
 class PersonForm(ModelForm):
     class Meta:
         model = Person
-        fields = ("first_name", "last_name")
+        fields = ("first_name", "last_name", "email", "phone_number", "line_1", "line_2", "city", "state", "postal_code",)
 
 
-class EmailForm(ModelForm):
-    class Meta:
-        model = EmailAddress
-        fields = ("email",)
-
-class PhoneForm(ModelForm):
-    class Meta:
-        model = PhoneNumber
-        fields = ("phone_number",)
-
-class AddressForm(ModelForm):
-    class Meta:
-        model = Address
-        fields = ("line_1", "line_2", "city", "state", "postal_code",)
+# class EmailForm(ModelForm):
+#     class Meta:
+#         model = EmailAddress
+#         fields = ("email",)
+# 
+# class PhoneForm(ModelForm):
+#     class Meta:
+#         model = PhoneNumber
+#         fields = ("phone_number",)
+# 
+# class AddressForm(ModelForm):
+#     class Meta:
+#         model = Address
+#         fields = ("line_1", "line_2", "city", "state", "postal_code",)
         
 class OrganizationForm(ModelForm):
     # def __init__(self, *args,**kwargs):

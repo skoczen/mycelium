@@ -27,17 +27,17 @@ $(function(){
 			{% generic_editable_field form.first_name %}
 			{% generic_editable_field form.last_name %}
 		</div>
-		{% generic_editable_field phone_form.phone_number %}
-		{% generic_editable_field_email email_form.email %}
+		{% generic_editable_field form.phone_number %}
+		{% generic_editable_field_email form.email %}
 	</div>
 	<div class="address">
-		{% generic_editable_field address_form.line_1 %}
-		{% generic_editable_field address_form.line_2 %}
+		{% generic_editable_field form.line_1 %}
+		{% generic_editable_field form.line_2 %}
 
 		<div class="city_state_zip">
-			{% generic_editable_field address_form.city %}<span class="city_state_comma">,</span>
-			{% generic_editable_field address_form.state %}
-			{% generic_editable_field address_form.postal_code %}
+			{% generic_editable_field form.city %}<span class="city_state_comma">,</span>
+			{% generic_editable_field form.state %}
+			{% generic_editable_field form.postal_code %}
 		</div>
 	
 	</div>

@@ -9,7 +9,7 @@ from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
 from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy
-from people.forms import PersonForm, EmailForm, AddressForm, PhoneForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm
+from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm
 
 @render_to("people/search.html")
 def search(request):
@@ -33,48 +33,28 @@ def _basic_forms(person, request):
         data = request.POST
 
     form         = PersonForm(data, instance=person)
-    email_form   = EmailForm(data, instance=person.primary_email)
-    address_form = AddressForm(data, instance=person.primary_address)
-    phone_form   = PhoneForm(data, instance=person.primary_phone_number)
+    # email_form   = EmailForm(data, instance=person.primary_email)
+    # address_form = AddressForm(data, instance=person.primary_address)
+    # phone_form   = PhoneForm(data, instance=person.primary_phone_number)
 
-    return (form, email_form, address_form, phone_form)
+    return form
 
 @render_to("people/person.html")
 def person(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
-    form, email_form, address_form, phone_form = _basic_forms(person, request)
+    form = _basic_forms(person, request)
     return locals()
 
 @json_view
 def save_person_basic_info(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
-    form, email_form, address_form, phone_form = _basic_forms(person, request)
+    form = _basic_forms(person, request)
     success = False
     if form.is_valid():
         person = form.save()
-        
-        if email_form.is_valid():
-            email = email_form.save(commit=False)
-            email.person = person
-            email.save()
-
-        if address_form.is_valid():
-            address = address_form.save(commit=False)
-            address.person = person
-            address.save()
-
-        if phone_form.is_valid():
-            phone = phone_form.save(commit=False)
-            phone.person = person
-            phone.save()
-            
         success = True
     else:
         print "invalid"
-        # print form
-        # print email_form
-        # print address_form
-        # print phone_form
     return {"success":success}
 
 
