@@ -19,7 +19,8 @@ class Migration(SchemaMigration):
         # Deleting model 'ContactMethodType'
         db.delete_table('people_contactmethodtype')
 
-        orm.["people.PeopleAndOrganizationsSearchProxy"].populate_cache()
+        from people.models import PeopleAndOrganizationsSearchProxy
+        PeopleAndOrganizationsSearchProxy.populate_cache()
 
     def backwards(self, orm):
         # Adding model 'EmailAddress'
