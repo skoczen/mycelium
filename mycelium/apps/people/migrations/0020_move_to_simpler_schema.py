@@ -9,16 +9,20 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
         for p in orm.Person.objects.all():
+            print p
+            print p.phonenumber_set.all()
+            print p.emailaddress_set.all()
+            print p.address_set.all()
             if p.phonenumber_set.all().count() > 0:
                 p.phone_number = p.phonenumber_set.all()[0].phone_number
             if p.emailaddress_set.all().count() > 0:
-                p.email = p.emailaddress_set.all()[0].email or None
+                p.email = p.emailaddress_set.all()[0].email
             if p.address_set.all().count() > 0:
-                p.line_1 = p.address_set.all()[0].line_1 or ""
-                p.line_2 = p.address_set.all()[0].line_2 or ""
-                p.city = p.address_set.all()[0].city or ""            
-                p.state = p.address_set.all()[0].state or ""
-                p.postal_code = p.address_set.all()[0].postal_code or ""            
+                p.line_1 = p.address_set.all()[0].line_1
+                p.line_2 = p.address_set.all()[0].line_2
+                p.city = p.address_set.all()[0].city
+                p.state = p.address_set.all()[0].state
+                p.postal_code = p.address_set.all()[0].postal_code
             p.save()
 
     def backwards(self, orm):
