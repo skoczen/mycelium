@@ -457,11 +457,13 @@ tabbed_box tab_title icon.home {
 tabbed_box tab_title icon.company {
 	background-image: url("../images/icon-business-blue-20h.png");	
 }
+tabbed_box tab_title_container {
 
+}
 tabbed_box tab_title {
 	color: #004486;
 	text-shadow: 1px 1px 0px rgba(0,0,0,0);
-	background-color: #DDD;
+	background-color: #FAFAFA;
 	border: 1px solid #DDD;
 	border-width: 1px 1px 0px 1px;
 	margin-top: 10px;
@@ -475,4 +477,8 @@ tabbed_box box_content {
 	float: left;
 	width: 40%;
 	margin-right: 5%;
+}
+#basic_info_form.edit_mode_on input { 
+	background-color: #FAFAFA;
+	border-color: #DDD;
 }

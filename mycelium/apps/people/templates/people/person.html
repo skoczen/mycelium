@@ -50,20 +50,25 @@ $(function(){
 			</div>
 			</box_content>
 		</tabbed_box>
-		{% for e in person.jobs.all %}
+		{% for e_form in employee_formset.forms %}
 		<tabbed_box class="open" name="job">
+			<tab_title_container>
+			{# <a href="{% url people:organization e_form.instance.organization.pk %}"> #}
 			<tab_title>
 				<icon class="company"></icon>
-				<text>{{e.organization}}</text>
+				<text>{{e_form.instance.organization}}</text>
 			</tab_title>
+			</a>
+			</tab_title_container>
 			<box_content>
-				{{e.role}}<br/>
-				{{e.phone_number}}<br/>
-				{{e.email}}
+				{% generic_editable_field e_form.role %}
+				{% generic_editable_field e_form.phone_number %}
+				{% generic_editable_field_email e_form.email %}
+				{% for f in e_form.hidden_fields %}{{f}}{% endfor %}
 			</box_content>
 		</tabbed_box>
 		{% endfor %}
-
+		{{employee_formset.management_form}}
 </div>
 
 

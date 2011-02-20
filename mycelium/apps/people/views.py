@@ -8,8 +8,9 @@ from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
-from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy
-from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm
+
+from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy, Employee
+from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset
 
 @render_to("people/search.html")
 def search(request):
@@ -31,25 +32,28 @@ def _basic_forms(person, request):
     if request.method == "POST":
         data = request.POST
 
-    form         = PersonForm(data, instance=person)
 
+    form             = PersonForm(data, instance=person)
+    employee_formset = EmployeeFormset(data, instance=person, prefix="ROLE")
 
-    return form
+    return (form, employee_formset)
 
 @render_to("people/person.html")
 def person(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
-    form = _basic_forms(person, request)
+    (form, employee_formset) = _basic_forms(person, request)
     return locals()
 
 @json_view
 def save_person_basic_info(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
-    form = _basic_forms(person, request)
+    (form, employee_formset) = _basic_forms(person, request)
     success = False
-    if form.is_valid():
+    if form.is_valid() and employee_formset.is_valid():
         person = form.save()
+        employee_formset.save()
         success = True
+
     else:
         print "invalid"
     return {"success":success}

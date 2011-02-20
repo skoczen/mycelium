@@ -1,5 +1,6 @@
 from django.forms import ModelForm, RadioSelect
 from people.models import Person, Organization, Employee
+from django.forms.models import inlineformset_factory
 # EmailAddress, PhoneNumber, Address
 
 class PersonForm(ModelForm):
@@ -43,3 +44,5 @@ class EmployeeForm(ModelForm):
     class Meta:
         model = Employee
         fields = ("role", "email", "phone_number")
+
+EmployeeFormset = inlineformset_factory(Person, Employee, fields=("role", "email", "phone_number"), can_delete=False, extra=0)
