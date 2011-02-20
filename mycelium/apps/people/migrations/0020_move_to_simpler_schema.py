@@ -9,7 +9,7 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
         for p in orm.Person.objects.all():
-            print p
+            print p.id, p.first_name, p.last_name
             print p.phonenumber_set.all()
             print p.emailaddress_set.all()
             print p.address_set.all()
@@ -24,6 +24,10 @@ class Migration(DataMigration):
                 p.state = p.address_set.all()[0].state
                 p.postal_code = p.address_set.all()[0].postal_code
             p.save()
+            p = Person.objects.get(pk=p.id)
+            print p.phone_number
+            print p.email
+            
 
     def backwards(self, orm):
         "Write your backwards methods here."
