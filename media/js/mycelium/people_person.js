@@ -40,7 +40,6 @@ function toggle_edit(){
 		$(".basic_info.edit").show();
 		$(".save_info a").show();
 		$("#basic_info_form").removeClass("edit_mode_off").addClass("edit_mode_on");
-		$("#page").removeClass("edit_mode_off").addClass("edit_mode_on");
 		$(".last_save_time").fadeIn();
 		$(".city_state_comma").show();
 	} else {
@@ -52,7 +51,6 @@ function toggle_edit(){
 		$(".basic_info.edit").hide();
 		$(".save_info a").hide();
 		$("#basic_info_form").addClass("edit_mode_off").removeClass("edit_mode_on");
-		$("#page").addClass("edit_mode_off").removeClass("edit_mode_on");
 		$(".last_save_time").fadeOut();		
 		intelligently_show_hide_comma();
 	}
