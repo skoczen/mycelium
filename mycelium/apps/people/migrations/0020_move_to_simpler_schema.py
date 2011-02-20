@@ -11,7 +11,9 @@ class Migration(DataMigration):
         for p in orm.Person.objects.all():
             print p.id, p.first_name, p.last_name
             print p.phonenumber_set.all()
+            print p.phonenumber_set.all().count() > 0
             print p.emailaddress_set.all()
+            print p.emailaddress_set.all().count() > 0
             print p.address_set.all()
             if p.phonenumber_set.all().count() > 0:
                 p.phone_number = p.phonenumber_set.all()[0].phone_number
@@ -27,7 +29,7 @@ class Migration(DataMigration):
             p = Person.objects.get(pk=p.id)
             print p.phone_number
             print p.email
-            
+            print "------"
 
     def backwards(self, orm):
         "Write your backwards methods here."
