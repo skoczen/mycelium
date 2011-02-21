@@ -79,10 +79,6 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 
 ROOT_URLCONF = 'mycelium.urls'
 
-TEMPLATE_DIRS = (
-    # Don't forget to use absolute paths, not relative paths.
-)
-
 
 INSTALLED_APPS = (
     'django.contrib.auth',

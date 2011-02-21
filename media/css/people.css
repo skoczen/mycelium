@@ -235,6 +235,9 @@ search_results .results_table .best_contact {
 .basic_info .name, .basic_info .name input {
 	font-size: 30px;
 }
+#basic_info_form.edit_mode_on .name input { 
+	background-color: #FFF;
+}
 .basic_info .name input {
 	width: 150px;
 }
@@ -458,15 +461,15 @@ tabbed_box tab_title icon.company {
 	background-image: url("../images/icon-business-blue-20h.png");	
 }
 tabbed_box tab_title_container {
-
+	margin-top: 10px;
 }
 tabbed_box tab_title {
 	color: #004486;
 	text-shadow: 1px 1px 0px rgba(0,0,0,0);
 	background-color: #FAFAFA;
 	border: 1px solid #DDD;
-	border-width: 1px 1px 0px 1px;
-	margin-top: 10px;
+	border-bottom-color: #FAFAFA;
+	cursor: default;	
 }
 tabbed_box box_content {
 	border: 1px solid #DDD;

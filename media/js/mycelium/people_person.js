@@ -10,6 +10,11 @@ $(function(){
 	$("body").bind('keydown', 'alt+e', toggle_edit);
 	$("body").bind('keydown', 'meta+e', toggle_edit);
 	$("body").bind('keydown', 'ctrl+f', focus_search);
+	$("body").bind('keydown', 'meta+s', save_and_status_btn_clicked);
+	$("body").bind('keydown', 'ctrl+s', save_and_status_btn_clicked);
+	$("input").bind('keydown', 'meta+s', save_and_status_btn_clicked);
+	$("input").bind('keydown', 'ctrl+s', save_and_status_btn_clicked);
+
 	// $("input").check_width();
 	$(".last_save_time").hide();
 	$("form input").live("change", queue_form_save);
@@ -17,6 +22,7 @@ $(function(){
 	$("form input").autoGrowInput({comfortZone: 30, resizeNow:true});
 
     $(".save_and_status_btn").live("click", save_and_status_btn_clicked);
+
 	
     // console.log("register generic fields")
     previous_serialized_str = $("#basic_info_form").serialize();
@@ -67,6 +73,8 @@ function intelligently_show_hide_comma() {
 	}
 }
 function save_and_status_btn_clicked() {
+    clearTimeout(form_save_timeout)
+    save_basic_form();
     return false;
 }
 
@@ -90,6 +98,7 @@ function queue_form_save() {
 function save_basic_form() {
 	$(".last_save_time").hide();	    
     $(".last_save_time").html("Saving changes...").fadeIn(50);
+    $(".save_and_status_btn").html("Saving").removeClass("mycelium_active_grey");
     var save_start_time = new Date();
 	$.ajax({
 	  url: $("#basic_info_form").attr("action"),
