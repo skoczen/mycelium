@@ -72,6 +72,11 @@ employees employee span {
 	min-height: 60px;
 }
 */
+tabbed_box box_content {
+	width: 96%;
+	background-color: #EEE;
+	overflow: hidden;	
+}
 tabbed_box box_content .edit_mode_on input {
 	background-color: #EEE;
 	border-color: #454545;

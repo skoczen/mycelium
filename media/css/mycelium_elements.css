@@ -284,50 +284,80 @@ fragment {
 tabbed_box {
 	display: block;
 	position: relative;	
+	overflow: visible;
+}
+tabbed_box tab_title_container {
+	display: block;
+	width: 100%;
+	margin: 0px;
+	height: 34px;
+	position: relative;
 }
 tabbed_box tab_title {
 	display: block;
 	float: left;
-	clear: both;
-	top: 0px;
-	left: 0px;
-}
-tabbed_box.with_button tab_title {
-	display: block;
-	border: 1px solid #004486;
-	background-color: #004486;
-	color: #FFF;
-	text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-	font-size: 18px;
-	padding: 5px 11px;
-	text-decoration: none;
+	border: 1px solid #999;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	cursor: pointer;	
+
+	text-decoration: none;
+	background-color: #F8F8F8;
+	color: #0355aa;
+	border-bottom: 1px solid #FFF;
+	font-size: 18px;
+	margin: 0px;
+	padding: 5px 11px 3px 11px;
+	cursor: pointer;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+	position: absolute;
+	bottom: -1px;
 }
-tabbed_box.with_button.open tab_title {
+tabbed_box.open tab_title {
 	border-bottom-left-radius: 0px;
 	-moz-border-radius-bottomleft: 0px;
 	-webkit-border-bottom-left-radius: 0px;	
 	border-bottom-right-radius: 0px;
 	-moz-border-radius-bottomright: 0px;
 	-webkit-border-bottom-right-radius: 0px;
+}
+tabbed_box.with_button tab_title {
+	border: 1px solid #004486;
+	background-color: #004486;
+	color: #FFF;
+	padding: 5px 11px;
+	cursor: pointer;
+}
+tabbed_box.with_button.open tab_title {
 	background-color: #3E9CFD;
 	border-color: #3E9CFD;
 	color: #FFF;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);	
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
 }
 tabbed_box tab_title icon {
-	
+	display: block;
+	float: left;
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	width: 24px;
+	height: 22px;
+	margin-right: 3px;
+}
+tabbed_box tab_title icon.home {
+	background-image: url("../images/icon-home-22h.png");	
+	background-position: 0px 2px;
+}
+tabbed_box tab_title icon.company {
+	background-image: url("../images/icon-business-grey-22h.png");	
+	background-position: 3px 2px;
 }
 tabbed_box tab_title text {
-	
+	float:right;
+	padding-top: 2px;
 }
 tabbed_box box_content {
 	display: block;
-	clear: both;
 	width: 96%;
+	margin: 0px;
 	border: 1px solid #DDD;
 	border-radius: 6px;
 	-moz-border-radius: 6px;
@@ -338,9 +368,10 @@ tabbed_box box_content {
 	
 	background-color: #EEE;
 	padding: 10px 2%;
-	position: relative;
+
 	min-height: 60px;
-	overflow: hidden;
+	overflow: auto;
+	
 }
 tabbed_box.with_button.closed box_content {
 	display: none;
@@ -355,4 +386,3 @@ tabbed_box box_close {
 	right: 20px;
 	z-index: 200;
 }
-

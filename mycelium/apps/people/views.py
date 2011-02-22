@@ -8,8 +8,9 @@ from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
-from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy
-from people.forms import PersonForm, EmailForm, AddressForm, PhoneForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm
+
+from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy, Employee
+from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset
 
 @render_to("people/search.html")
 def search(request):
@@ -21,7 +22,6 @@ def search_results(request):
     people_proxies = PeopleAndOrganizationsSearchProxy.objects.all()
     if 'q' in request.GET:
         q = request.GET['q']
-        print q
         if q != "":
             people_proxies = PeopleAndOrganizationsSearchProxy.search(q,ignorable_chars=["-","(",")"])
 
@@ -32,49 +32,30 @@ def _basic_forms(person, request):
     if request.method == "POST":
         data = request.POST
 
-    form         = PersonForm(data, instance=person)
-    email_form   = EmailForm(data, instance=person.primary_email)
-    address_form = AddressForm(data, instance=person.primary_address)
-    phone_form   = PhoneForm(data, instance=person.primary_phone_number)
 
-    return (form, email_form, address_form, phone_form)
+    form             = PersonForm(data, instance=person)
+    employee_formset = EmployeeFormset(data, instance=person, prefix="ROLE")
+
+    return (form, employee_formset)
 
 @render_to("people/person.html")
 def person(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
-    form, email_form, address_form, phone_form = _basic_forms(person, request)
+    (form, employee_formset) = _basic_forms(person, request)
     return locals()
 
 @json_view
 def save_person_basic_info(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
-    form, email_form, address_form, phone_form = _basic_forms(person, request)
+    (form, employee_formset) = _basic_forms(person, request)
     success = False
-    if form.is_valid():
+    if form.is_valid() and employee_formset.is_valid():
         person = form.save()
-        
-        if email_form.is_valid():
-            email = email_form.save(commit=False)
-            email.person = person
-            email.save()
-
-        if address_form.is_valid():
-            address = address_form.save(commit=False)
-            address.person = person
-            address.save()
-
-        if phone_form.is_valid():
-            phone = phone_form.save(commit=False)
-            phone.person = person
-            phone.save()
-            
+        employee_formset.save()
         success = True
+
     else:
         print "invalid"
-        # print form
-        # print email_form
-        # print address_form
-        # print phone_form
     return {"success":success}
 
 
