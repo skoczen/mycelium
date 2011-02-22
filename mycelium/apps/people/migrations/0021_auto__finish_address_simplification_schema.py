@@ -6,8 +6,7 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
-    def backwards(self, orm):
-
+    def forwards(self, orm):
         # Deleting model 'EmailAddress'
         db.delete_table('people_emailaddress')
 
@@ -23,7 +22,7 @@ class Migration(SchemaMigration):
         from people.models import PeopleAndOrganizationsSearchProxy
         PeopleAndOrganizationsSearchProxy.populate_cache()
 
-    def forwards(self, orm):
+    def backwards(self, orm):
         # Adding model 'EmailAddress'
         db.create_table('people_emailaddress', (
           ('person', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['people.Person'])),
