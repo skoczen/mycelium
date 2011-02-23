@@ -62,18 +62,13 @@ employees employee {
 employees employee span {
 	display: block;
 }
-/*.add_person_container {
-	border: 2px solid #DDD;
-	border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	background-color: #EEE;
-	padding: 20px;
-	padding-top: 35px;
-	position: relative;
-	min-height: 60px;
+employees employee.warning {
+/*	border-color:red;*/
+	opacity: 0.4;
 }
-*/
+employees employee.warning * {
+/*	opacity: 0.4;*/
+}
 tabbed_box box_content {
 	width: 96%;
 	background-color: #EEE;

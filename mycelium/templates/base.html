@@ -23,13 +23,6 @@
   {# <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2"> #}
   {% block css %}{% endblock %}
   <script src="{{MEDIA_URL}}js/libs/modernizr-1.6.min.js"></script>
-{% endblock %}
-</head>
-{% block body %}<body {% block extra_body %}{% endblock %} env="{{ENV}}">
-	{% block content %}
-
-	{% endblock %}
-	
 {% block javascript %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
   <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery-ui.js"> </script>
@@ -42,6 +35,14 @@
   <![endif]-->
 
 {% endblock %}
+{% endblock %}
+</head>
+{% block body %}<body {% block extra_body %}{% endblock %} env="{{ENV}}">
+	{% block content %}
+
+	{% endblock %}
+	
+
 {% if ENV != "DEV" and not user.is_staff %}{% analytics %}
 {% include "owa/_analytics.html" %}
 {% endif %}

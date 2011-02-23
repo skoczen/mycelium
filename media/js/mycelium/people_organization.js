@@ -98,5 +98,10 @@ function confirm_employee_removal(e) {
     var emp = t.parents("employee");
     var name = $(".name",emp).text();
     var org_name = $(".basic_info .name_phone_email .name .view_field").text()
-    return confirm("Are you sure you want to remove "+name+" from "+org_name+"?\n\nThis will not remove "+name+" from the database, only from this role at "+org_name+".");
+    emp.addClass("warning");
+    var do_it = confirm("Are you sure you want to remove "+name+" from "+org_name+"?\n\nThis will not remove "+name+" from the database, only from this role at "+org_name+".");
+    if (!do_it) {
+        emp.removeClass("warning")
+    }
+    return do_it;
 }
