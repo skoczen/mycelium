@@ -34,7 +34,8 @@ def home(request):
                 print_exception()
                 pass
             save_success=True
-
+            return HttpResponseRedirect("%s?save_success=True" %reverse("marketing_site:home"))
+            
     return locals()
 
 

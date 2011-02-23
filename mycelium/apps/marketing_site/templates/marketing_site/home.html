@@ -65,8 +65,7 @@ function rotate_verbs() {
 		</td>
 		<td id="home_right_content">
 			{% placeholder home_content %}
-
-			{% if posted and save_success %}
+			{% if request.GET.save_success == "True" %}
 				<div class="thanks_message">Thanks! We'll keep you posted!</div>
 			{% else %}
 			<form action="" method="POST">{% csrf_token %}
