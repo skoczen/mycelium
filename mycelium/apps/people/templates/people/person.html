@@ -17,10 +17,11 @@ $(function(){
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
 {% block page_content %}
+<form action="{% url people:person_save_basic person.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
 {% include "people/_save_status_and_button.html" %}
 
 
-<form action="{% url people:person_save_basic person.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
+
 <div class="basic_info">
 	<div class="name_phone_email">
 		<div class="name">

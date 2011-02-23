@@ -20,11 +20,12 @@ $(function(){
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People and Organizations</a>{% endblock %}
 {% block page_content %}
 
+<form action="{% url people:organization_save_basic org.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
 {% with "Edit Organization" as edit_label %}
 {% include "people/_save_status_and_button.html" %}
 {% endwith %}
 
-<form action="{% url people:organization_save_basic org.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
+
 <div class="basic_info">
 	<div class="name_phone_email">
 		<div class="name">
@@ -139,15 +140,23 @@ $(function(){
 		</box_content>
 	</tabbed_box>
 	<employees>
-	{% for e in org.employees.all %}
-	<employee>
-	
-		<span class="name"><a href="{% url people:person e.person.pk %}" class="mycelium_crosslink_btn">{{e.person.full_name}}</a></span>
-		<span class="title">{{e.role}}</span>
-		<span class="phone">{{e.phone_number}}</span>
-		<span class="email">{{e.email}}</span>
-	</employee>
-	{% endfor %}
+		<form action="{% url people:organization_save_employees org.pk %}" id="employee_forms" method="POST">
+		{% for e_form in employee_formset.forms %}
+		<employee class="edit_mode_off">
+			<save_status_and_button>
+			<a href="#" class="mycelium_btn mycelium_small_btn start_edit_btn">Edit</a>
+			<a href="#" class="mycelium_btn mycelium_small_btn edit_done_btn " >Done</a>
+			<a href="#" class="mycelium_btn mycelium_small_btn mycelium_grey delete_contact_btn">Remove</a>
+			</save_status_and_button>
+			<span class="name"><a href="{% url people:person e_form.instance.person.pk %}" class="mycelium_crosslink_btn">{{e_form.instance.person.full_name}}</a></span>
+			{% generic_editable_field e_form.role %}
+			{% generic_editable_field e_form.phone_number %}
+			{% generic_editable_field_email e_form.email %}
+			{% for f in e_form.hidden_fields %}{{f}}{% endfor %}
+		</employee>
+		{% endfor %}
+		{{employee_formset.management_form}}
+		</form>
 	</employees>
 </div>
 </div>

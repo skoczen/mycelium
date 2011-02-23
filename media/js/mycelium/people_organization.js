@@ -15,6 +15,8 @@ $(function(){
     $(".select_person_to_add_btn").live("click",show_existing_person_add_form);
     $(".cancel_add_btn").live("click",cancel_add_person);
     $("#up_to_search").live("click",up_to_search_clicked)
+    
+    $("employee").genericFieldForm();
 });
 
 function start_add_new_person_to_org() {

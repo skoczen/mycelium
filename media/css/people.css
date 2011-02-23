@@ -292,7 +292,7 @@ search_results .results_table .best_contact {
 	margin-bottom: 0px;
 }
 .edit_mode_on .city_state_zip .city_state_comma {
-	margin-top: 20px;
+	margin-top: 5px;
 }
 #container_id_state, #container_id_postal_code {
 	margin-left: 5px;
@@ -444,6 +444,9 @@ save_status_and_button .save_and_status_btn {
 	text-align: center;
 }
 save_status_and_button .edit_done_btn {
+	display: none;	
+}
+save_status_and_button .edit_contact_done_btn {
 	display: none;	
 }
 save_status_and_button .save_info {

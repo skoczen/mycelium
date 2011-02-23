@@ -10,7 +10,7 @@ from django.views.decorators.cache import cache_page
 
 
 from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy, Employee
-from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset
+from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
 
 @render_to("people/search.html")
 def search(request):
@@ -72,8 +72,13 @@ def _org_forms(org, request):
     form = OrganizationForm(data, instance=org)
     form_new_person = PersonViaOrganizationForm(data, prefix="NEWPERSON")
     form_employee = EmployeeForm(data, prefix="EMPLOYEE")
+
+    try:
+        employee_formset = EmployeeFormsetFromOrg(data, instance=org, prefix="ROLE")
+    except:
+        employee_formset = None
     
-    return (form, form_new_person, form_employee)
+    return (form, form_new_person, form_employee, employee_formset)
 
 def new_organization(request):
     org = Organization.objects.create()
@@ -82,7 +87,7 @@ def new_organization(request):
 @render_to("people/organization.html")
 def organization(request, org_id):
     org = get_object_or_404(Organization,pk=org_id)
-    (form, form_new_person, form_employee) = _org_forms(org, request)
+    (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     if form.is_valid():
         form.save()
 
@@ -91,7 +96,7 @@ def organization(request, org_id):
 @json_view
 def save_organization_basic_info(request,  org_id):
     org = get_object_or_404(Organization,pk=org_id)
-    (form, form_new_person, form_employee) = _org_forms(org, request)
+    (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     success = False
     if form.is_valid():
         form.save()
@@ -99,12 +104,35 @@ def save_organization_basic_info(request,  org_id):
 
     return {"success":success}
 
+@json_view
+def remove_employee(request, org_id, employee_id):
+    org = get_object_or_404(Organization,pk=org_id)
+    emp = get_object_or_404(Employee, pk=employee_id)
+    success = False
+    assert emp.org == org
+    emp.delete()
+    success = True
+
+    return {"success":success}
+
+@json_view
+def save_organization_employees(request,  org_id):
+    org = get_object_or_404(Organization,pk=org_id)
+    (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
+    success = False
+    if employee_formset.is_valid():
+        employee_formset.save()
+        success = True
+
+    return {"success":success}
+
+
 def existing_person_via_organization(request, org_id):
     org = get_object_or_404(Organization,pk=org_id)
     try: 
         person_id = int(request.POST['person_pk'])
         person = Person.objects.get(pk=person_id)
-        (form, form_new_person, form_employee) = _org_forms(org, request)
+        (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
         if form_employee.is_valid():
             employee = form_employee.save(commit=False)
             employee.person = person
@@ -117,7 +145,7 @@ def existing_person_via_organization(request, org_id):
 
 def new_person_via_organization(request, org_id):
     org = get_object_or_404(Organization,pk=org_id)
-    (form, form_new_person, form_employee) = _org_forms(org, request)
+    (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     if form_new_person.is_valid():
         person = form_new_person.save()
         success = True
