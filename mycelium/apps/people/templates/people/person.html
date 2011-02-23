@@ -56,12 +56,12 @@ $(function(){
 		{% for e_form in employee_formset.forms %}
 		<tabbed_box class="open" name="job">
 			<tab_title_container>
-			{# <a href="{% url people:organization e_form.instance.organization.pk %}"> #}
+			<a href="{% url people:organization e_form.instance.organization.pk %}">
 			<tab_title>
 				<icon class="company"></icon>
 				<text>{{e_form.instance.organization}}</text>
 			</tab_title>
-			{# </a> #}
+			</a>
 			</tab_title_container>
 			<box_content>
 				{% generic_editable_field e_form.role %}

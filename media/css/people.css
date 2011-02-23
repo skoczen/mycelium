@@ -294,6 +294,10 @@ search_results .results_table .best_contact {
 .edit_mode_on .city_state_zip .city_state_comma {
 	margin-top: 5px;
 }
+.edit_mode_on .city_state_zip {
+	margin-bottom: 70px;
+}
+
 #container_id_state, #container_id_postal_code {
 	margin-left: 5px;
 }
@@ -479,6 +483,7 @@ tabbed_box box_content {
 	background-color: #FAFAFA;
 	width: 100%;
 }
+
 .basic_info tabbed_box {
 	float: left;
 	width: 40%;
@@ -487,4 +492,11 @@ tabbed_box box_content {
 #basic_info_form.edit_mode_on input { 
 	background-color: #FAFAFA;
 	border-color: #DDD;
+}
+.basic_info tabbed_box[name=job] a {
+	text-decoration: none;
+}
+.basic_info tabbed_box[name=job] a:hover,  .basic_info tabbed_box[name=job] a:hover tab_title {
+	text-decoration: underline;
+	cursor: pointer;
 }
