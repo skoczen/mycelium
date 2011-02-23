@@ -164,7 +164,6 @@ $(function(){
                             }
                         }
                     }
-                    console.log(data.form)
                     data.save_url = (options.hasOwnProperty("save_url"))? options.save_url: data.form.attr("action");
                     data.save_method = (options.hasOwnProperty("save_method"))? options.save_method: data.form.attr("method");
                     $this.data('genericFieldForm',data)
@@ -234,7 +233,6 @@ $(function(){
             });
         },
         queue_form_save: function(){
-            console.log("queue_form_save")
             return $(this).each(function(){
                 var $this = $(this),
                     data = $this.data('genericFieldForm');

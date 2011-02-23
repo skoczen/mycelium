@@ -104,16 +104,20 @@ def save_organization_basic_info(request,  org_id):
 
     return {"success":success}
 
-@json_view
-def remove_employee(request, org_id, employee_id):
+def remove_employee(request, org_id, emp_id):
     org = get_object_or_404(Organization,pk=org_id)
-    emp = get_object_or_404(Employee, pk=employee_id)
-    success = False
-    assert emp.org == org
-    emp.delete()
-    success = True
+    emp = get_object_or_404(Employee, pk=emp_id)
+    try:
+        assert emp.organization == org
+        emp.delete()
+        success = True
+    except:
+        success = False
 
-    return {"success":success}
+    if request.is_ajax():
+        return json_view({"success":success})
+    else:
+        return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))        
 
 @json_view
 def save_organization_employees(request,  org_id):
@@ -140,7 +144,7 @@ def existing_person_via_organization(request, org_id):
             employee.save()
     except:
         pass
-    return HttpResponseRedirect("%s" %reverse("people:organization",args=(org.pk,)))
+    return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))
 
 
 def new_person_via_organization(request, org_id):
@@ -156,7 +160,7 @@ def new_person_via_organization(request, org_id):
         employee.organization = org
         employee.save()
 
-    return HttpResponseRedirect("%s" %reverse("people:organization",args=(org.pk,)))
+    return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))
 
 @json_view
 def add_person_via_organization_search_results(request):
