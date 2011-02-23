@@ -740,3 +740,9 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         self.assertEqual("Joyellen Smith", sel.get_text("css=search_results .result_row:nth(0) .name a"))
         self.assertEqual("503-247.8451", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=search_results .result_row:nth(0) .email"))                
+    
+    def test_that_closing_a_person_page_makes_sure_the_changes_are_saved(self):
+        assert True == "Test written"
+
+    def test_that_closing_an_organization_page_makes_sure_the_changes_are_saved(self):
+        assert True == "Test written"
