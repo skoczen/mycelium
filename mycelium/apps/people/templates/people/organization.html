@@ -11,7 +11,7 @@
 {% if request.GET.edit == "ON" %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
-	toggle_edit();
+    $("#basic_info_form").genericFieldForm('toggle_edit');
 });
 </script>
 {% endif %}

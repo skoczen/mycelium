@@ -76,7 +76,7 @@ tabbed_box box_content {
 }
 tabbed_box box_content .edit_mode_on input {
 	background-color: #EEE;
-	border-color: #454545;
+/*	border-color: #454545;*/
 	color: #222;
 }
 section_title {
@@ -187,4 +187,7 @@ pane.pane_2 section_title {
 	padding-top: 0px;
 	width: auto;
 	font-size: 20px;
+}
+#basic_info_form.edit_mode_on input { 
+	background-color: #FFF;
 }
