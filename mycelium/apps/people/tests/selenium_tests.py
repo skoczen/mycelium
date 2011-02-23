@@ -580,8 +580,9 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         sel.type("css=#id_ROLE-0-role","Chief Tester ++")
         sel.type("css=#id_ROLE-0-phone_number","555 123-4567x123")
         sel.type("css=#id_ROLE-0-email","joy55@example.com")
-        sel.click("css=employee:nth(0) .edit_done_btn")        
-        time.sleep(2)
+        time.sleep(1)
+        sel.click("css=employee:nth(0) .edit_done_btn")
+        time.sleep(1)
         
         sel.click("link=Back to All People and Organizations")
         sel.wait_for_page_to_load("30000")
@@ -600,9 +601,6 @@ class TestAgainstGeneratedData(SeleniumTestCase):
 
 
 
-        
-        
-        
     def test_users_should_be_able_to_dissassociate_a_person_from_an_organization_via_the_organization_page(self):
         sel = self.selenium
         sel.open("/people/")
@@ -707,3 +705,56 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         
         self.assertEqual("Last changed 1 minute ago.", sel.get_text("css=.last_save_time"))
         self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
+        
+
+    def test_people_with_no_home_contact_info_should_have_a_nice_message_saying_so(self):
+        sel = self.selenium
+        sel.open("/people/")
+        sel.click("link=New Organization")
+        sel.wait_for_page_to_load("30000")
+        sel.click("id_name")
+        sel.type("id_name", "My New Org")
+        sel.type("id_primary_phone_number", "555-123-4567")
+        time.sleep(2)
+        sel.click("css=tabbed_box tab_title")
+        time.sleep(0.5)
+        sel.click("id_search_new_person")
+        sel.type("id_search_new_person", "Joyellen Smith")
+        sel.click("link=Add a New Person")
+        sel.click("document.forms[2].elements[3]")
+        sel.type("document.forms[2].elements[3]", "Chief Tester")
+        sel.type("document.forms[2].elements[4]", "joesmith@myneworg.org")
+        sel.type("document.forms[2].elements[5]", "503-247.8451")
+        sel.click("//div[@id='new_person']/form/form_actions/input")
+        time.sleep(2)
+        sel.wait_for_page_to_load("30000")
+        self.assertEqual("Joyellen Smith", sel.get_text("link=Joyellen Smith"))
+        self.assertEqual("Chief Tester", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=role] .view_field"))
+        self.assertEqual("503-247.8451", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=phone_number] .view_field"))
+        self.assertEqual("joesmith@myneworg.org", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=email] .view_field"))        
+        sel.click("css=tabbed_box tab_title")
+        sel.click("//div[@id='detail_tab_contents']/div/tabbed_box/box_content/box_close/a")
+        sel.click("link=Back to All People and Organizations")
+        sel.wait_for_page_to_load("30000")
+
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "joyellen smith")
+        sel.key_down("css=#id_search_query","h")
+        sel.key_up("css=#id_search_query","h")
+        time.sleep(2)
+        sel.click("css=search_results .result_row .name a")
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual("No home contact information.",sel.get_text("css=#no_home_contact_info_message"))
+
+        sel.click("css=.start_edit_btn")
+        time.sleep(1)
+        sel.type("id_phone_number", "520 784-1234")
+        sel.click("link=Save Now")
+        time.sleep(4)
+        self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
+        self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
+        sel.click("link=Done")
+        self.assertEqual("520 784-1234", sel.get_text("css=tabbed_box[name=home] box_content .generic_editable_field[id$=phone_number] .view_field"))
+        time.sleep(10)
+        assert not sel.is_text_present("No home contact information.")

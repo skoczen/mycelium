@@ -37,9 +37,11 @@ $(function(){
 			</tab_title>
 			</tab_title_container>
 			<box_content>
+				<div id="no_home_contact_info_message"></div>
+				<div class="phone_email">
 				{% generic_editable_field form.phone_number %}
 				{% generic_editable_field_email form.email %}
-
+				</div>
 			<div class="address">
 				{% generic_editable_field form.line_1 %}
 				{% generic_editable_field form.line_2 %}

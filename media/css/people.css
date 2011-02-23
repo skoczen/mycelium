@@ -262,7 +262,7 @@ search_results .results_table .best_contact {
 .basic_info .name .generic_editable_field {
 	display: inline;
 }
-.basic_info .name_phone_email .name .generic_editable_field input {
+.basic_info .name_phone_email .name .generic_editable_field input{
 	min-width: 20%;
 }
 .basic_info .name_phone_email .name .generic_field_label {
@@ -272,8 +272,8 @@ search_results .results_table .best_contact {
 	white-space: nowrap;
 }
 
-.basic_info .name_phone_email .generic_editable_field input {
-	min-width: 30%;
+.basic_info .phone_email .generic_editable_field input {
+	min-width: 40%;
 }
 #container_id_line_1 input, #container_id_line_2 input{
 	min-width: 70%;
@@ -501,4 +501,14 @@ tabbed_box box_content {
 .basic_info tabbed_box[name=job] a:hover,  .basic_info tabbed_box[name=job] a:hover tab_title {
 	text-decoration: underline;
 	cursor: pointer;
+}
+.edit_mode_on #no_home_contact_info_message {
+	display: none;
+}
+#no_home_contact_info_message {
+	display: block;
+/*	width: 100%;*/
+	text-align: center;
+	padding: 20px 0px 0px 0px;
+	color: #999;
 }
