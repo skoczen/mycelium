@@ -11,7 +11,7 @@
 {% if request.GET.edit == "ON" %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
-	toggle_edit();
+    $("#basic_info_form").genericFieldForm('toggle_edit');
 });
 </script>
 {% endif %}
@@ -146,7 +146,7 @@ $(function(){
 			<save_status_and_button>
 			<a href="#" class="mycelium_btn mycelium_small_btn start_edit_btn">Edit</a>
 			<a href="#" class="mycelium_btn mycelium_small_btn edit_done_btn " >Done</a>
-			<a href="{% url people:organization_remove_employee org.pk e_form.instance.pk %}" class="mycelium_btn mycelium_small_btn mycelium_grey delete_contact_btn">Remove</a>
+			<a href="{% url people:organization_remove_employee org.pk e_form.instance.pk %}" class="mycelium_btn  mycelium_active_grey mycelium_small_btn delete_contact_btn">Remove</a>
 			</save_status_and_button>
 			<span class="name"><a href="{% url people:person e_form.instance.person.pk %}" class="mycelium_crosslink_btn">{{e_form.instance.person.full_name}}</a></span>
 			{% generic_editable_field e_form.role %}

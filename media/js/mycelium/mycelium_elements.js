@@ -166,6 +166,7 @@ $(function(){
                     }
                     data.save_url = (options.hasOwnProperty("save_url"))? options.save_url: data.form.attr("action");
                     data.save_method = (options.hasOwnProperty("save_method"))? options.save_method: data.form.attr("method");
+                    data.async = true;
                     $this.data('genericFieldForm',data)
                     data = $this.data('genericFieldForm');
                 }
@@ -193,6 +194,12 @@ $(function(){
 
                 data.previous_serialized_str = data.form.serialize();
                 $this.data('genericFieldForm',data)
+                
+                // bind to window close, confirm if there's anything in the ajax queue
+                $(window).unload(function(){
+                    data.async = false;
+                    data.target.genericFieldForm('save_form');
+                });
             });
         },
         
@@ -215,7 +222,7 @@ $(function(){
             		$(data.options.done_edit_btn_class,data.target).hide();
 
                     data.target.addClass("edit_mode_off").removeClass("edit_mode_on");
-            		$(data.options.last_save_time_class,data.target).fadeOut();
+                    $(data.options.last_save_time_class,data.target).fadeOut();
             		data.target.trigger("genericFieldForm.toggle_off");
             	}
             	return false;
@@ -261,6 +268,7 @@ $(function(){
                   url: data.save_url,
                   type: data.save_method,
                   dataType: "json",
+                  async: data.async,
                   data: $.param( $("input",data.form) ),
                 	  success: function(json) {
                 		$(".generic_editable_field",data.target).each(function(){

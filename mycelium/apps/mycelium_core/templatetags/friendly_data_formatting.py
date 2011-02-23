@@ -81,7 +81,7 @@ def reasonabletime(time,time_units=False):
 @register.filter
 def pretty_timesince(this_date):
     try:
-        if this_date - datetime.datetime.now() < datetime.timedelta(minutes=1):
+        if datetime.datetime.now() - this_date < datetime.timedelta(minutes=1):
             return _("a few seconds ago")
         if this_date > datetime.datetime.now() - datetime.timedelta(days=14):
             return shorttime(timesince(this_date)) + _(" ago")
