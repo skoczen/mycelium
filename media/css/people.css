@@ -457,7 +457,7 @@ save_status_and_button .save_info {
 	padding-top: 10px;
 	margin-right: 10px;
 }
-save_status_and_button a.mycelium_active_grey {
+#basic_info_form save_status_and_button a.mycelium_active_grey {
 	font-size: 17px;
 	padding: 7px 11px 5px 11px;
 }
