@@ -29,7 +29,7 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 MANAGERS += (
-    ('Tom Noble', 'tom@agoodcloud.com'),
+    ('Tom Noble', 'tomnoble6@gmail.com'),
 )
 
 
