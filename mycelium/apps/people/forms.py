@@ -46,3 +46,4 @@ class EmployeeForm(ModelForm):
         fields = ("role", "email", "phone_number")
 
 EmployeeFormset = inlineformset_factory(Person, Employee, fields=("role", "email", "phone_number"), can_delete=False, extra=0)
+EmployeeFormsetFromOrg = inlineformset_factory(Organization, Employee, fields=("role", "email", "phone_number"), can_delete=False, extra=0)

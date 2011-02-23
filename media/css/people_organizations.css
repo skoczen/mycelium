@@ -47,6 +47,7 @@ employees {
 	padding: 10px 0px;
 	width: 100%;
 	overflow: auto;
+	position: relative;
 }
 employees employee {
 	display: block;
@@ -54,24 +55,20 @@ employees employee {
 	padding: 10px 1%;
 	margin: 1%;
 	float: left;
-	height: 100px;
+	min-height: 100px;
 	border: 1px solid #DDD;
+	position: relative;
 }
 employees employee span {
 	display: block;
 }
-/*.add_person_container {
-	border: 2px solid #DDD;
-	border-radius: 6px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	background-color: #EEE;
-	padding: 20px;
-	padding-top: 35px;
-	position: relative;
-	min-height: 60px;
+employees employee.warning {
+/*	border-color:red;*/
+	opacity: 0.4;
 }
-*/
+employees employee.warning * {
+/*	opacity: 0.4;*/
+}
 tabbed_box box_content {
 	width: 96%;
 	background-color: #EEE;

@@ -15,6 +15,9 @@ $(function(){
     $(".select_person_to_add_btn").live("click",show_existing_person_add_form);
     $(".cancel_add_btn").live("click",cancel_add_person);
     $("#up_to_search").live("click",up_to_search_clicked)
+    
+    $("employee").genericFieldForm();
+    $(".delete_contact_btn").live("click", confirm_employee_removal);
 });
 
 function start_add_new_person_to_org() {
@@ -89,4 +92,16 @@ function close_tabbed_box(){
     $("#id_search_new_person").val("");
     $("fragment[name=new_person_search_results]").html("");
     $("pane[name=2]").hide();
+}
+function confirm_employee_removal(e) {
+    var t = $(e.target);
+    var emp = t.parents("employee");
+    var name = $(".name",emp).text();
+    var org_name = $(".basic_info .name_phone_email .name .view_field").text()
+    emp.addClass("warning");
+    var do_it = confirm("Are you sure you want to remove "+name+" from "+org_name+"?\n\nThis will not remove "+name+" from the database, only from this role at "+org_name+".");
+    if (!do_it) {
+        emp.removeClass("warning")
+    }
+    return do_it;
 }
