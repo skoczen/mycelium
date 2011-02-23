@@ -69,18 +69,30 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     
     @property
     def searchable_primary_phone_number(self):
-        if self.phone_number:
-            return DIGIT_REGEX.sub('', "%s" % self.phone_number)
+        if self.primary_phone_number:
+            return DIGIT_REGEX.sub('', "%s" % self.primary_phone_number)
         else:
             return ''
         
     @property
     def primary_phone_number(self):
-        return self.phone_number
+        if self.phone_number:
+            return self.phone_number
+        else:
+            for e in self.jobs.all():
+                if e.phone_number:
+                    return e.phone_number
+        return None
 
     @property
     def primary_email(self):
-        return self.email
+        if self.email:
+            return self.email
+        else:
+            for e in self.jobs.all():
+                if e.email:
+                    return e.email
+        return None
 
 
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
@@ -231,3 +243,4 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
 post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender=Person)
 post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
 post_save.connect(PeopleAndOrganizationsSearchProxy.related_organization_record_changed,sender=Employee)
+post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=Employee)

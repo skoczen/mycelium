@@ -707,7 +707,7 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
         
 
-    def test_people_with_no_home_contact_info_should_have_a_nice_message_saying_so(self):
+    def test_people_with_no_home_contact_but_business_info_should_have_their_biz_contact_info_listed_in_search(self):
         sel = self.selenium
         sel.open("/people/")
         sel.click("link=New Organization")
@@ -741,20 +741,7 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         sel.type("css=#id_search_query", "joyellen smith")
         sel.key_down("css=#id_search_query","h")
         sel.key_up("css=#id_search_query","h")
-        time.sleep(2)
-        sel.click("css=search_results .result_row .name a")
-        sel.wait_for_page_to_load("30000")
-
-        self.assertEqual("No home contact information.",sel.get_text("css=#no_home_contact_info_message"))
-
-        sel.click("css=.start_edit_btn")
         time.sleep(1)
-        sel.type("id_phone_number", "520 784-1234")
-        sel.click("link=Save Now")
-        time.sleep(4)
-        self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
-        self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
-        sel.click("link=Done")
-        self.assertEqual("520 784-1234", sel.get_text("css=tabbed_box[name=home] box_content .generic_editable_field[id$=phone_number] .view_field"))
-        time.sleep(10)
-        assert not sel.is_text_present("No home contact information.")
+        self.assertEqual("Joyellen Smith", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        self.assertEqual("503-247.8451", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
+        self.assertEqual("joesmith@myneworg.org", sel.get_text("css=search_results .result_row:nth(0) .email"))                
