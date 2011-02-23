@@ -215,7 +215,7 @@ $(function(){
             		$(data.options.done_edit_btn_class,data.target).hide();
 
                     data.target.addClass("edit_mode_off").removeClass("edit_mode_on");
-            		$(data.options.last_save_time_class,data.target).fadeOut();
+                    $(data.options.last_save_time_class,data.target).fadeOut();
             		data.target.trigger("genericFieldForm.toggle_off");
             	}
             	return false;
