@@ -223,7 +223,6 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
 
     def generate_search_string(self):
         return self.obj.qi_simple_searchable_search_field
-        # return "%s" % (self.pk)    
 
     def render_result_row(self):
         if self.person:
@@ -237,7 +236,6 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     def people_record_changed(cls, sender, instance, created=None, *args, **kwargs):
         proxy, nil = cls.objects.get_or_create(person=instance, search_group_name=cls.SEARCH_GROUP_NAME)
         cache.delete(proxy.cache_name)
-        print proxy.pk
         proxy.save()
 
     @classmethod
