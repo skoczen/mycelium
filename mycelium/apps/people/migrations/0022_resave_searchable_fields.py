@@ -7,7 +7,9 @@ from django.db import models
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        from people.models import PeopleAndOrganizationsSearchProxy
+        from people.models import PeopleAndOrganizationsSearchProxy, Person, Organization
+        [p.save() for p in Person.objects.all()]
+        [o.save() for o in Organization.objects.all()]
         PeopleAndOrganizationsSearchProxy.populate_cache()
 
 
