@@ -65,7 +65,10 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
 
     @property
     def full_name(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        if self.first_name or self.last_name:
+            return "%s %s" % (self.first_name, self.last_name)
+        else:
+            return "No Name"
     
     @property
     def searchable_full_name(self):
@@ -256,6 +259,12 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     def populate_cache(cls):
         [cls.people_record_changed(Person,p) for p in Person.objects.all()]
         [cls.organization_record_changed(Organization,o) for o in Organization.objects.all()]
+
+    @classmethod
+    def resave_all_people_and_organizations(cls):
+        [p.save() for p in Person.objects.all()]
+        [o.save() for o in Organization.objects.all()]
+        cls.populate_cache()
 
     class Meta(object):
         verbose_name_plural = "PeopleAndOrganizationsSearchProxies"

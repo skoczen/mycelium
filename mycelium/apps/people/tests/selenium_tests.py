@@ -1,7 +1,7 @@
 from djangosanetesting.cases import SeleniumTestCase
 import time 
 from test_factory import Factory
-
+from django.core.management import call_command
 
 class TestAgainstNoData(SeleniumTestCase):
     def setUp(self):
@@ -9,6 +9,7 @@ class TestAgainstNoData(SeleniumTestCase):
     
     def tearDown(self):
         self.assertEqual([], self.verificationErrors)
+        call_command('flush', interactive=False)
 
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium

@@ -6,10 +6,11 @@
 {% endblock %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
-{% if request.GET.edit == "ON" %}
+{% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
     $("#basic_info_form").genericFieldForm('toggle_edit');
+	$("#id_first_name").focus();
 });
 </script>
 {% endif %}
