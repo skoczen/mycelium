@@ -53,7 +53,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     
-    search_fields = ["first_name","last_name","primary_email", "searchable_primary_phone_number"]
+    search_fields = ["searchable_full_name","searchable_primary_email", "searchable_primary_phone_number"]
     contact_type = "person"
     
     class Meta(object):
@@ -68,12 +68,26 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
         return "%s %s" % (self.first_name, self.last_name)
     
     @property
+    def searchable_full_name(self):
+        if self.full_name:
+            return self.full_name
+        else:
+            return ""
+    
+    @property
     def searchable_primary_phone_number(self):
         if self.primary_phone_number:
             return DIGIT_REGEX.sub('', "%s" % self.primary_phone_number)
         else:
             return ''
-        
+
+    @property
+    def searchable_primary_email(self):
+        if self.primary_email:
+            return self.primary_email
+        else:
+            return ''
+
     @property
     def primary_phone_number(self):
         if self.phone_number:
@@ -105,6 +119,14 @@ class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     primary_phone_number = models.CharField(max_length=255, blank=True, null=True)
     website = models.CharField(max_length=255, blank=True, null=True)
     twitter_username = models.CharField(max_length=255, blank=True, null=True)
+
+    @property
+    def searchable_name(self):
+        if self.name:
+            return self.name
+        else:
+            return ""
+
 
     @property
     def searchable_primary_phone_number(self):
@@ -215,6 +237,7 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     def people_record_changed(cls, sender, instance, created=None, *args, **kwargs):
         proxy, nil = cls.objects.get_or_create(person=instance, search_group_name=cls.SEARCH_GROUP_NAME)
         cache.delete(proxy.cache_name)
+        print proxy.pk
         proxy.save()
 
     @classmethod
