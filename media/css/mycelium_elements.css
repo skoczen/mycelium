@@ -215,7 +215,7 @@ new_object_buttons {
 	background-color: #0044A8;
 	color: #FFF;	
 }
-.mycelium_small_btn {
+.mycelium_small_btn, input.mycelium_small_btn {
 	font-size: 12px;
 	padding: 3px 6px;
 }
@@ -402,4 +402,84 @@ tabbed_box box_close {
 delete_object_block {
 	display: block;
 	padding: 10px;
+}
+
+tags {
+	display: block;
+	width: 100%;
+	overflow: auto;
+	padding: 20px;
+}
+
+tag {
+	display: block;
+	float: left;
+	background-image: url("../images/tag-24h.png");	
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	color: #FFF;
+	padding: 2px 0px 5px 15px;
+	margin: 0px 4px;
+}
+tag .remove_tag_link {
+	display: block;
+	float: right;
+	width: 18px;
+	height: 18px;
+	color: #95ADC0;
+	margin: 2px 3px 2px 0px;
+	text-decoration: none;
+	background-image: url("../images/icon-delete-lightblue-15.png");
+	background-repeat: no-repeat;
+}
+tag .remove_tag_link:hover {
+	background-image: url("../images/icon-delete-lightblue-hover-15.png");
+}
+tags label {
+	display: block;
+	float: left;
+	font-size: 18px;
+}
+tag name {
+	margin-right: 5px;
+	white-space: nowrap;
+}
+tag.new_tag {
+	background-image: url("../images/tag-new-24.png");
+	text-decoration: none;
+	padding-top: 0px;
+}
+tag.new_tag name {
+	margin: 0px 10px 0px 5px;
+}
+tag.new_tag input[type=text] {
+	margin: 0px 4px 0px 0px ;
+	padding: 0px 2px;
+	font-size: 14px;
+	color: #FFF;
+	background-color: #535FB0;
+	background-color: rgba(255,255,255,0.3);
+	border: 1px solid #000486;
+	border-width: 0px 0px 1px 0px;
+/*	min-width: 30px;*/
+	
+}
+tag.new_tag input::-webkit-input-placeholder { color: #DDD; }
+tag.new_tag input:-moz-placeholder { color: #DDD; }
+tag.new_tag input:focus { 
+	color: #FFF; 
+	outline-style:none;
+	background-color: #535FB0;
+	background-color: rgba(255,255,255,0.2);
+	
+}
+tag.new_tag .tag_add_btn {
+	display: none;
+	padding: 1px 5px;
+	margin: 0px 5px 0px 0px;
+	background-color: #035DCD;
+	border: 0px;
+}
+tag.new_tag .tag_add_btn:hover {
+	background-color: #2669FE;	
 }

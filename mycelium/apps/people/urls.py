@@ -24,6 +24,8 @@ urlpatterns = parser.patterns('',
     url(r'organization/{org_id:digits}/existing-person$',                   views.existing_person_via_organization,               name='existing_person_via_organization'),    
     url(r'organization/new-person/search-results$',                         views.add_person_via_organization_search_results,     name='add_person_via_organization_search_results'), 
 
-    
-
+    url(r'person/add-tag$',                                                 views.add_person_tag,                                 name='add_person_tag'),
+    url(r'person/{person_id:digits}/remove-tag$',                           views.remove_person_tag,                              name='remove_person_tag'),
+    url(r'organization/add-tag$',                                           views.add_organization_tag,                           name='add_organization_tag'),
+    url(r'organization/{org_id:digits}/remove-tag$',                     views.remove_organization_tag,                        name='remove_organization_tag'),
 )

@@ -59,6 +59,8 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     contact_type = "person"
     
     tags = TaggableManager()
+    def alphabetical_tags(self):
+        return self.tags.all().order_by("name")
     
     class Meta(object):
         verbose_name_plural = "People"
