@@ -27,5 +27,8 @@ workon mycelinum
 pip install -r requirements.txt 
 echo 'mysql_config = /usr/bin/mysql_config' >> ~/.virtualenvs/mycelium/build/mysql-python/site.cfg
 pip install -r requirements.txt 
+
+cat /var/www/mycelium.git/config.dist/authorized_keys >> ~/.ssh/authorized_keys
+
 # need python manage.py celeryd
 # and run_gunicorn to be running.
