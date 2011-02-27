@@ -94,15 +94,12 @@ $(function(){
 	</tag>
 	{% endfor %}
 	<form action="{% url people:add_person_tag %}" method="POST">{% csrf_token %}
-	{# <a href="#" class="new_tag_link"> #}
 	<tag class="new_tag">
 		<input type="hidden" name="person_pk" value="{{form.instance.pk}}">
 		<input type="text" name="new_tag" value="" placeholder="Type a new tag" maxlength="100">
-		{# <name>Add New Tag</name> #}
 		<input type="submit" class="mycelium_btn mycelium_small_btn tag_add_btn" value="Add">
 	</tag>
 	</form>
-	{# </a> #}
 
 
 </tags>
