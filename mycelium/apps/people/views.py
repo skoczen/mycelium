@@ -194,3 +194,68 @@ def add_person_via_organization_search_results(request):
             people = Person.search(q,ignorable_chars=["-","(",")"])
 
     return {"fragments":{"new_person_search_results":render_to_string("people/_add_person_to_org_results.html", locals())}}
+
+
+
+
+def add_person_tag(request):
+    success = False
+    if request.method == "POST":
+        pk = int(request.POST['person_pk'])
+        new_tag = request.POST['new_tag'].strip().lower()
+        if new_tag != "":
+            person = Person.objects.get(pk=pk)
+            person.tags.add(new_tag)
+            success = True
+            
+    if request.is_ajax():
+        return json_view({"success":success})
+    else:
+        return HttpResponseRedirect(reverse("people:person",args=(person.pk,)))
+
+
+def add_organization_tag(request):
+    success = False    
+    if request.method == "POST":
+        pk = int(request.POST['org_pk'])
+        new_tag = request.POST['new_tag'].strip().lower()
+        if new_tag != "":
+            org = Organization.objects.get(pk=pk)
+            org.tags.add(new_tag)
+            success = True
+            
+    if request.is_ajax():
+        return json_view({"success":success})
+    else:
+        return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))
+
+
+
+def remove_person_tag(request, person_id):
+    success = False
+    if request.method == "GET":
+        tag = request.GET['tag'].strip().lower()
+        if tag != "":
+            person = Person.objects.get(pk=person_id)
+            person.tags.remove(tag)
+            success = True
+
+    if request.is_ajax():
+        return json_view({"success":success})
+    else:
+        return HttpResponseRedirect(reverse("people:person",args=(person.pk,)))
+
+
+def remove_organization_tag(request, org_id):
+    success = False
+    if request.method == "POST":
+        tag = request.POST['tag'].strip().lower()
+        if tag != "":
+            org = Organization.objects.get(pk=org_id)
+            org.tags.remove(tag)
+            success = True
+
+    if request.is_ajax():
+        return json_view({"success":success})
+    else:
+        return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))

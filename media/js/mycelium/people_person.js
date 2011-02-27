@@ -5,6 +5,16 @@ $(function(){
     $(".person_delete_btn").click(delete_person);
     intelligently_show_hide_comma();
     intelligently_show_no_home_contact_info();
+    
+    // TODO: abstract this
+	$(".new_tag input[name=new_tag]").autoGrowInput({comfortZone: 20, resizeNow:true});
+    $(".new_tag input[name=new_tag]").live("keyup",function(e){
+        if ($(e.target).val() != "") {
+            $(".tag_add_btn",$(e.target).parents(".new_tag")).show();
+        } else {
+            $(".tag_add_btn",$(e.target).parents(".new_tag")).hide();
+        }
+    });
 });
 
 function do_some_intelligent_data_formatting() {
@@ -43,3 +53,4 @@ function delete_person(e) {
         $("#delete_person_form").submit();
     }
 }
+
