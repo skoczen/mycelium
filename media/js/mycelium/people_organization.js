@@ -18,6 +18,7 @@ $(function(){
     
     $("employee").genericFieldForm();
     $(".delete_contact_btn").live("click", confirm_employee_removal);
+    $(".org_delete_btn").click(delete_organization);
 });
 
 function start_add_new_person_to_org() {
@@ -104,4 +105,13 @@ function confirm_employee_removal(e) {
         emp.removeClass("warning")
     }
     return do_it;
+}
+function delete_organization(e) {
+    var name = $("#container_id_name .view_field").text();
+    if (name == " ") {
+        name = "Unnamed Organization";
+    }
+    if (confirm("Are you sure you want to completely delete " + name + " from the database? \n\nDeleting will remove this organization and all their data (contact info, employees, etc).  The people associated with this organization will not be removed.\n\nThis action cannot be undone.\n\nPress OK to delete "+ name +".\nPress Cancel to leave things unchanged.")) {
+        $("#delete_org_form").submit();
+    }
 }
