@@ -99,6 +99,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'django_nose',
     'djcelery',
+    'taggit',
 
 
     'cms',

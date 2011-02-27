@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
+from taggit.managers import TaggableManager
 
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
@@ -56,6 +57,8 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     
     search_fields = ["searchable_full_name","searchable_primary_email", "searchable_primary_phone_number"]
     contact_type = "person"
+    
+    tags = TaggableManager()
     
     class Meta(object):
         verbose_name_plural = "People"
@@ -123,6 +126,8 @@ class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     primary_phone_number = models.CharField(max_length=255, blank=True, null=True)
     website = models.CharField(max_length=255, blank=True, null=True)
     twitter_username = models.CharField(max_length=255, blank=True, null=True)
+
+    tags = TaggableManager()
 
     @property
     def full_name(self):
