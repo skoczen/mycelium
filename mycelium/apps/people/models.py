@@ -176,6 +176,7 @@ from django.db.models.signals import post_save
 class SearchableItemProxy(SimpleSearchableModel):
     # models = []
     search_group_name = models.CharField(max_length=255)
+    sorting_name = models.CharField(max_length=255, blank=True, null=True)
     search_string = models.TextField(blank=True, null=True)
     cached_search_result = models.TextField(blank=True, null=True)
 
@@ -188,14 +189,20 @@ class SearchableItemProxy(SimpleSearchableModel):
         # Define this on subclassing.
         return "%s" % (self.pk)
 
+    def get_sorting_name(self):
+        # Define this on subclassing.
+        return "%s" % (self.pk)
+        
     def __unicode__(self):
         return self.generate_search_string()
 
     class Meta(object):
         abstract = True
+        ordering = ("sorting_name", )
 
     def save(self,*args,**kwargs):
         self.search_string = self.generate_search_string()
+        self.sorting_name = self.get_sorting_name()
         ss = self.render_result_row()
         self.cached_search_result = ss
         cache.set(self.cache_name, ss, 9000000)
@@ -220,6 +227,13 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
             return "organization"
         return None
 
+    def get_sorting_name(self):
+        if self.person:
+            return self.person.full_name
+        elif self.organization:
+            return self.organization.name
+        else:
+            return ""
 
     @property
     def search_result_row(self):
@@ -282,7 +296,6 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
 
     class Meta(object):
         verbose_name_plural = "PeopleAndOrganizationsSearchProxies"
-        ordering = ("person", "organization")
         
 post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender=Person)
 post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
