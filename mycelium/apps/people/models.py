@@ -1,9 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
+from taggit.managers import TaggableManager
 
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
+NO_NAME_STRING = _("No Name")
 
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
@@ -53,8 +55,10 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     
-    search_fields = ["first_name","last_name","searchable_primary_email", "searchable_primary_phone_number"]
+    search_fields = ["searchable_full_name","searchable_primary_email", "searchable_primary_phone_number"]
     contact_type = "person"
+    
+    tags = TaggableManager()
     
     class Meta(object):
         verbose_name_plural = "People"
@@ -65,7 +69,17 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
 
     @property
     def full_name(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        if self.first_name or self.last_name:
+            return "%s %s" % (self.first_name, self.last_name)
+        else:
+            return NO_NAME_STRING
+    
+    @property
+    def searchable_full_name(self):
+        if self.full_name:
+            return self.full_name
+        else:
+            return ""
     
     @property
     def searchable_primary_phone_number(self):
@@ -76,8 +90,11 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
 
     @property
     def searchable_primary_email(self):
-        return self.primary_email or ""
-        
+        if self.primary_email:
+            return self.primary_email
+        else:
+            return ''
+
     @property
     def primary_phone_number(self):
         if self.phone_number:
@@ -102,13 +119,30 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
 
-    search_fields = ["name","searchable_primary_phone_number"]
+    search_fields = ["full_name","searchable_primary_phone_number"]
     contact_type = "organization"
     organization_type = models.ForeignKey(OrganizationType, blank=True, null=True)
     organization_type_other_name = models.CharField(max_length=255, blank=True, null=True)
     primary_phone_number = models.CharField(max_length=255, blank=True, null=True)
     website = models.CharField(max_length=255, blank=True, null=True)
     twitter_username = models.CharField(max_length=255, blank=True, null=True)
+
+    tags = TaggableManager()
+
+    @property
+    def full_name(self):
+        if self.name:
+            return self.name
+        else:
+            return NO_NAME_STRING
+
+    @property
+    def searchable_name(self):
+        if self.name:
+            return self.name
+        else:
+            return ""
+
 
     @property
     def searchable_primary_phone_number(self):
@@ -205,7 +239,6 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
 
     def generate_search_string(self):
         return self.obj.qi_simple_searchable_search_field
-        # return "%s" % (self.pk)    
 
     def render_result_row(self):
         if self.person:
@@ -239,6 +272,11 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     def populate_cache(cls):
         [cls.people_record_changed(Person,p) for p in Person.objects.all()]
         [cls.organization_record_changed(Organization,o) for o in Organization.objects.all()]
+
+    @classmethod
+    def resave_all_people_and_organizations(cls):
+        [p.save() for p in Person.objects.all()]
+        [o.save() for o in Organization.objects.all()]
 
     class Meta(object):
         verbose_name_plural = "PeopleAndOrganizationsSearchProxies"

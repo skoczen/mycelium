@@ -8,10 +8,11 @@
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_organization.js"> </script>
-{% if request.GET.edit == "ON" %}
+{% if request.GET.edit == "ON" or form.instance.full_name == "No Name" %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
     $("#basic_info_form").genericFieldForm('toggle_edit');
+	$("#id_name").focus();
 });
 </script>
 {% endif %}
@@ -160,4 +161,11 @@ $(function(){
 	</employees>
 </div>
 </div>
+<delete_object_block>
+	<form action="{% url people:delete_organization %}" method="POST" id="delete_org_form">{% csrf_token %}
+	<input type="hidden" name="org_pk" value="{{form.instance.pk}}">
+	<a href="#" class="mycelium_btn mycelium_active_grey mycelium_delete_btn org_delete_btn" >Delete this Organization</a>
+	</form>
+</delete_object_block>
+
 {% endblock %}

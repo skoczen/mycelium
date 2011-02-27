@@ -63,6 +63,17 @@ def new_person(request):
     person = Person.objects.create()
     return HttpResponseRedirect("%s?edit=ON" %reverse("people:person",args=(person.pk,)))
 
+def delete_person(request):
+    try:
+        if request.method == "POST":
+            pk = request.POST['person_pk']
+            person = Person.objects.get(pk=pk)
+            person.delete()
+    except:
+        pass
+
+    return HttpResponseRedirect(reverse("people:search"))
+
 
 def _org_forms(org, request):
     data = None
@@ -83,6 +94,18 @@ def _org_forms(org, request):
 def new_organization(request):
     org = Organization.objects.create()
     return HttpResponseRedirect("%s?edit=ON" %reverse("people:organization",args=(org.pk,)))
+
+def delete_organization(request):
+    try:
+        if request.method == "POST":
+            pk = request.POST['org_pk']
+            org = Organization.objects.get(pk=pk)
+            org.delete()
+    except:
+        pass
+
+    return HttpResponseRedirect(reverse("people:search"))
+
 
 @render_to("people/organization.html")
 def organization(request, org_id):

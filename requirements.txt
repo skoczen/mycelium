@@ -10,7 +10,7 @@ gunicorn
 pyparsing
 django-xmlrpc
 akismet
-django-tagging
+django-taggit
 BeautifulSoup
 django-extensions
 -e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit  > 0.3.1

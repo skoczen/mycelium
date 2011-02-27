@@ -23,14 +23,13 @@ source ~/.bashrc
 cd /var/www
 git clone http://mycelium.skoczen.webfactional.com/mycelium.git mycelium.git
 cd mycelium.git;git checkout live
+cat /var/www/mycelium.git/config.dist/authorized_keys >> ~/.ssh/authorized_keys
 mkvirtualenv mycelium
 echo 'cd /var/www/mycelium.git' >> /root/.virtualenvs/mycelium/bin/postactivate
 workon mycelium
 pip install -r requirements.txt 
 echo 'mysql_config = /usr/bin/mysql_config' >> ~/.virtualenvs/mycelium/build/mysql-python/site.cfg
 pip install -r requirements.txt 
-
-# need python manage.py celeryd
 mkdir /var/log/celery
 ln -s /var/www/mycelium.git/config.dist/celeryd /etc/default/celeryd;chmod +x /etc/default/celeryd
 ln -s  /var/www/mycelium.git/config.dist/gunicorn /etc/init.d/mycelium; chmod +x /etc/init.d/mycelium
@@ -43,4 +42,5 @@ service memcached start
 service rabbitmq-server start
 service celeryd start
 service mycelium start
-killall -HUP nginx
+
+

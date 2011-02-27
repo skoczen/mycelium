@@ -6,10 +6,11 @@
 {% endblock %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
-{% if request.GET.edit == "ON" %}
+{% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
     $("#basic_info_form").genericFieldForm('toggle_edit');
+	$("#id_first_name").focus();
 });
 </script>
 {% endif %}
@@ -17,7 +18,7 @@ $(function(){
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
 {% block page_content %}
-<form action="{% url people:person_save_basic person.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
+<form action="{% url people:person_save_basic person.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
 {% include "people/_save_status_and_button.html" %}
 
 
@@ -130,6 +131,12 @@ $(function(){
 			<td><a href="#">See details</a></td>
 		</tr>
 		
-	</table>	
+	</table>
 </div>
+<delete_object_block>
+	<form action="{% url people:delete_person %}" method="POST" id="delete_person_form">{% csrf_token %}
+	<input type="hidden" name="person_pk" value="{{form.instance.pk}}">
+	<a href="#" class="mycelium_btn mycelium_active_grey mycelium_delete_btn person_delete_btn" >Delete this Person</a>
+	</form>
+</delete_object_block>
 {% endblock %}

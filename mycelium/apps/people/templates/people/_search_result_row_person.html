@@ -1,5 +1,4 @@
-{% with obj.primary_email as email %}
-{% with obj.primary_phone_number as phone %}
+{% load friendly_data_formatting %}{% with obj.primary_email as email %}{% with obj.primary_phone_number as phone %}
 <tr class="result_row person_row striped_row">
 	<td class="name">
 		<a href="{% url people:person obj.pk %}">
@@ -7,8 +6,6 @@
 			<span class="highlightable">{{obj.full_name}}</span>
 		</a>
 	</td>
-	<td class="email {% if email.is_best_contact_method %}best_contact{% endif %}"><a href="mailto:{{email}}" class="highlightable">{{email}}</a></td>
-	<td class="phone_number highlightable {% if phone.is_best_contact_method %}best_contact{% endif %}">{{phone}}</td>
-</tr>
-{% endwith %}
-{% endwith %}
+	<td class="email"><a href="mailto:{{email}}" class="highlightable">{{email|clean_none}}</a></td>
+	<td class="phone_number highlightable">{{phone|clean_none}}</td>
+</tr>{% endwith %}{% endwith %}
