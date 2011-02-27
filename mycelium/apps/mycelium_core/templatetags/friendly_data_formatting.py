@@ -9,6 +9,12 @@ from django.template.loader import render_to_string
 from django.template.defaultfilters import date, timesince
 import datetime
 
+@register.filter
+def clean_none(str):
+    if str:
+        return str
+    else:
+        return ""
 
 
 @register.filter

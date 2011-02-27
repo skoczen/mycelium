@@ -4,6 +4,7 @@ from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
+NO_NAME_STRING = _("No Name")
 
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
@@ -68,7 +69,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
         if self.first_name or self.last_name:
             return "%s %s" % (self.first_name, self.last_name)
         else:
-            return "No Name"
+            return NO_NAME_STRING
     
     @property
     def searchable_full_name(self):
@@ -115,13 +116,20 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
 
-    search_fields = ["name","searchable_primary_phone_number"]
+    search_fields = ["full_name","searchable_primary_phone_number"]
     contact_type = "organization"
     organization_type = models.ForeignKey(OrganizationType, blank=True, null=True)
     organization_type_other_name = models.CharField(max_length=255, blank=True, null=True)
     primary_phone_number = models.CharField(max_length=255, blank=True, null=True)
     website = models.CharField(max_length=255, blank=True, null=True)
     twitter_username = models.CharField(max_length=255, blank=True, null=True)
+
+    @property
+    def full_name(self):
+        if self.name:
+            return self.name
+        else:
+            return NO_NAME_STRING
 
     @property
     def searchable_name(self):
@@ -264,7 +272,6 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     def resave_all_people_and_organizations(cls):
         [p.save() for p in Person.objects.all()]
         [o.save() for o in Organization.objects.all()]
-        cls.populate_cache()
 
     class Meta(object):
         verbose_name_plural = "PeopleAndOrganizationsSearchProxies"
