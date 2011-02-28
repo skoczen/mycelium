@@ -15,6 +15,26 @@ $(function(){
             $(".tag_add_btn",$(e.target).parents(".new_tag")).hide();
         }
     });
+    $("#new_tag_form").ajaxForm({
+        success: function(json){
+            $.Mycelium.fragments.process_fragments_from_json(json);
+            $(".new_tag input[name=new_tag]").val("");
+        },
+        dataType: 'json'
+    });
+    $("tag .remove_tag_link").live("click", function(){
+       $.ajax({
+         url: $(this).attr("href"),
+         type: "GET",
+         dataType: "json",
+         success: function(json) {
+            $.Mycelium.fragments.process_fragments_from_json(json);
+         },
+       });
+       return false;
+    });
+
+    // End abstract this
 });
 
 function do_some_intelligent_data_formatting() {

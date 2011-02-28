@@ -84,26 +84,20 @@ $(function(){
 	{# Extra emails, phone #s, Addresses #}
 </div>
 
-<fragment name="person_tags" action="replace">
 <tags>
 	<label>Tags:</label>
-	{% for t in person.alphabetical_tags %}
-	<tag>
-		<a href="{% url people:remove_person_tag person.pk %}?tag={{t.name|urlencode}}" class="remove_tag_link"> </a>
-		<name>{{t.name}}</name>
-	</tag>
-	{% endfor %}
-	<form action="{% url people:add_person_tag %}" method="POST">{% csrf_token %}
+	<fragment name="person_tags" action="replace">
+		{% include "people/_person_tags.html" %}
+	</fragment>
+	<form action="{% url people:add_person_tag %}" method="POST" id="new_tag_form">{% csrf_token %}
 	<tag class="new_tag">
-		<input type="hidden" name="person_pk" value="{{form.instance.pk}}">
-		<input type="text" name="new_tag" value="" placeholder="Type a new tag" maxlength="100">
+		<input type="hidden" name="person_pk" value="{{person.pk}}">
+		<input type="text" name="new_tag" value="" placeholder="Type a new tag" maxlength="100" autocomplete="off">
 		<input type="submit" class="mycelium_btn mycelium_small_btn tag_add_btn" value="Add">
 	</tag>
 	</form>
-
-
 </tags>
-</fragment>
+
 
 <div id="detail_tabs">
 	<a class="detail_tab" href="#">Conversations</a>

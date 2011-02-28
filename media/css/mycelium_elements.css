@@ -406,7 +406,7 @@ delete_object_block {
 
 tags {
 	display: block;
-	width: 100%;
+	width: 96%;
 	overflow: auto;
 	padding: 20px;
 }

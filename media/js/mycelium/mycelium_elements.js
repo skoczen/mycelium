@@ -14,12 +14,8 @@ $(function(){
 	    json_dict_name: "fragments"
 	};
 	
-    // Default fragment actions:
-    // replace
-    // append
-    // clear
     fragments.process_fragments_from_json = function(json) {
-        if (json.hasOwnProperty(fragments.options.json_dict_name)) {
+        if (json[fragments.options.json_dict_name] != undefined) {
             return fragments.process_fragments(json[fragments.options.json_dict_name]);
         } else {
             return fragments.process_fragments(json);
@@ -33,6 +29,7 @@ $(function(){
 	           frag.trigger("fragments."+frag.attr("action"), fragment_dict[frag.attr("name")]);
 	        }
 	    });
+	    return true;
 	};
 	
 	fragments.replace_content = function(e, new_content) {
@@ -44,6 +41,10 @@ $(function(){
 	fragments.clear_content = function(e, new_content) {
         $(e.target).html("");
 	};
+    // Default fragment actions:
+    // replace
+    // append
+    // clear
 	$("fragment").bind("fragments.replace",fragments.replace_content);
 	$("fragment").bind("fragments.append",fragments.append_content);
 	$("fragment").bind("fragments.clear",fragments.clear_content);
