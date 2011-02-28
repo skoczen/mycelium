@@ -821,7 +821,7 @@ class TestAgainstNoData(SeleniumTestCase):
         sel.choose_cancel_on_next_confirmation()
         sel.click("css=.org_delete_btn")
         # self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Organization from the database? \n\nDeleting will remove this organization and all their data (contact info, employees, etc).  The people associated with this organization will not be removed.\n\nThis action cannot be undone.\n\nPress OK to delete Unnamed Organization.\nPress Cancel to leave things unchanged.")
-        print sel.get_confirmation()
+        sel.get_confirmation()
         sel.click("css=.org_delete_btn")
         # self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Organization from the database? \n\nDeleting will remove this organization and all their data (contact info, employees, etc).  The people associated with this organization will not be removed.\n\nThis action cannot be undone.\n\nPress OK to delete Unnamed Organization.\nPress Cancel to leave things unchanged.")
 
