@@ -1,0 +1,8 @@
+{% if q %}
+Similar tags
+{% for t in all_tags %}
+<a href="#" class="tag_suggestion_link">{{t}}</a>
+{% endfor %}
+{% else %}
+Common tags?
+{% endif %}

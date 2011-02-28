@@ -33,9 +33,38 @@ $(function(){
        });
        return false;
     });
+    $.Mycelium.search.setUp({
+        search_element: $(".new_tag input[name=new_tag]"),
+	    search_url: $(".new_tag input[name=new_tag]").attr("results_url"),
+	    results_element: $("fragment[name=new_tag_search_results]"),
+	    striped_results: false,
+	    results_processed_callback: new_tag_results,
+    });
+    $("tags a.tag_suggestion_link").live("click",function(){
+        $(".new_tag input[name=new_tag]",$(this).parents("tags")).val($(this).text());
+        $("search_results",$(this).parents("tags")).hide()
+        return false;
+    });
+	$(".new_tag input[name=new_tag]").live("focus",function(){
+	    var res = $("search_results",$(this).parents("tags"));
+	    var new_offset = $(this).offset();
+	    if ($(this).val() != "") {
+	        res.show().offset({"top":new_offset.top+30, "left":new_offset.left-80});
+	    }
+
+	    
+	});
+	$(".new_tag input[name=new_tag]").live("blur",function(){
+	    $("search_results",$(this).parents("tags")).hide();
+	});	
 
     // End abstract this
 });
+function new_tag_results(ele){
+    var res = $("search_results",$(ele).parents("tags"));    
+    var new_offset = $(ele).offset();
+    res.show().offset({"top":new_offset.top+30, "left":new_offset.left-80});
+}
 
 function do_some_intelligent_data_formatting() {
     intelligently_show_hide_comma();

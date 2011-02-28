@@ -65,6 +65,7 @@ $(function(){
 	    search_url: SEARCH_URL,
 	    process_results_as_fragments: true,
 	    process_results_as_replace_html: false,
+	    results_processed_callback: function(){},
 	}
 	sh.previous_query = "%*(#:LKCL:DSF@()#SDF)";
     sh.search_timeout = false;
@@ -112,6 +113,7 @@ $(function(){
                     if (sh.options.striped_results) {
                         $.Mycelium.update_stripes(sh.options.results_element);
                     }
+                    sh.options.results_processed_callback(sh.options.search_element);
                 }
         	 },
         	});
