@@ -934,7 +934,7 @@ class TestAgainstNoData(SeleniumTestCase):
         sel.type("id_city", "Wilsonville")
         sel.type("id_state", "KY")
         sel.type("id_postal_code", "12345")
-        time.sleep(2)        
+        time.sleep(5)        
         self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
         self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
         sel.click("link=Done")
