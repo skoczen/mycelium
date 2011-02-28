@@ -673,7 +673,7 @@ class TestAgainstNoData(SeleniumTestCase):
         self.assertEqual("Test", sel.get_text("//div[@id='page']/search_results/fragment/table/tbody/tr[2]/td[1]/a/span/b[1]"))
         sel.click("//div[@id='page']/search_results/fragment/table/tbody/tr[2]/td[1]/a/span")
 
-        sel.open_window("/people/search", "two")
+        sel.open_window("/people/", "two")
         sel.select_window("two")
 
         sel.focus("css=#id_search_query")
@@ -921,6 +921,57 @@ class TestAgainstNoData(SeleniumTestCase):
         self.assertEqual("John Smith", sel.get_text("css=search_results .result_row:nth(1) .name a"))
         self.assertEqual("Test Organization", sel.get_text("css=search_results .result_row:nth(2) .name a"))
 
+    def test_people_can_have_tags_added_and_removed_and_the_results_stick(self):
+        sel = self.selenium
+        sel.open("/people/search")
+        sel.click("link=New Person")
+        sel.wait_for_page_to_load("30000")
+        sel.type("id_first_name", "John")
+        sel.type("id_last_name", "Smith")
+        sel.type("id_phone_number", "555-123-4567")
+        sel.type("id_email", "john@smithfamily.com")
+        sel.type("id_line_1", "123 Main St")
+        sel.type("id_line_2", "Apt 27")
+        sel.type("id_city", "Wilsonville")
+        sel.type("id_state", "KY")
+        sel.type("id_postal_code", "12345")
+        time.sleep(5)        
+        self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
+        self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
+        sel.click("link=Done")
+        time.sleep(1)        
+        
+        sel.click("css=tag.new_tag input[name=new_tag]")
+        sel.type("css=tag.new_tag input[name=new_tag]","Volunteer")
+        sel.click("css=tag.new_tag .tag_add_btn")
+        time.sleep(5)
+        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(0) name"))
+
+        sel.click("css=tag.new_tag input[name=new_tag]")
+        sel.type("css=tag.new_tag input[name=new_tag]","Major Donor")
+        sel.click("css=tag.new_tag .tag_add_btn")
+        time.sleep(5)
+        # Alphabetical order checked
+        self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
+        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(1) name"))
+
+        sel.click("css=tag.new_tag input[name=new_tag]")
+        sel.type("css=tag.new_tag input[name=new_tag]","mistake tag")
+        sel.click("css=tag.new_tag .tag_add_btn")
+        time.sleep(5)
+        self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
+        self.assertEqual("mistake tag",sel.get_text("css=tags tag:nth(1) name"))
+        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(2) name"))
+
+        sel.click("css=tags tag:nth(1) .remove_tag_link")
+        time.sleep(5)
+        self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
+        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(1) name"))
+
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
+        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(1) name"))
 
 
 class TestAgainstGeneratedData(SeleniumTestCase):
@@ -1033,13 +1084,6 @@ class TestAgainstGeneratedData(SeleniumTestCase):
         sel = self.selenium
         sel.open("/people/search")
         sel.wait_for_page_to_load("30000")
-
-    # def test_search_page_updates(self):
-    #     sel = self.selenium
-    #     sel.open("/people/search")
-    #     sel.wait_for_page_to_load("30000")
-    #     sel.key_press("css=#id_search_query","a")
-    #     time.sleep(1)
 
     def test_editing_and_searching_a_record(self):
         sel = self.selenium
