@@ -878,6 +878,51 @@ class TestAgainstNoData(SeleniumTestCase):
         assert not sel.is_text_present("Test Organization")
 
 
+    def test_that_search_ordering_for_people_and_orgs_is_mixed(self):
+        sel = self.selenium
+        sel.open("/people/")
+        sel.click("link=New Organization")
+        sel.wait_for_page_to_load("30000")
+        sel.type("id_name", "Foo Test Organization")
+        sel.click("link=Back to All People and Organizations")
+        sel.wait_for_page_to_load("30000")
+
+
+        sel.click("link=New Person")
+        sel.wait_for_page_to_load("30000")
+        sel.type("id_first_name", "John")
+        sel.type("id_last_name", "Smith")
+        sel.click("link=People")
+        sel.wait_for_page_to_load("30000")
+
+        sel.click("link=New Person")
+        sel.wait_for_page_to_load("30000")
+        sel.type("id_first_name", "Alfred")
+        sel.type("id_last_name", "Williams")
+        # wait for celery to catch up.
+        time.sleep(5)
+        sel.click("link=People")
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual("Alfred Williams", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        self.assertEqual("Foo Test Organization", sel.get_text("css=search_results .result_row:nth(1) .name a"))
+        self.assertEqual("John Smith", sel.get_text("css=search_results .result_row:nth(2) .name a"))
+        sel.click("css=search_results .result_row:nth(1) .name a")
+        sel.wait_for_page_to_load("30000")
+
+        sel.click("link=Edit Organization")
+        sel.click("id_name")
+        sel.type("id_name", "Test Organization")
+        # wait for celery to catch up.
+        time.sleep(5)
+        sel.click("link=People")
+        sel.wait_for_page_to_load("30000")
+        self.assertEqual("Alfred Williams", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        self.assertEqual("John Smith", sel.get_text("css=search_results .result_row:nth(1) .name a"))
+        self.assertEqual("Test Organization", sel.get_text("css=search_results .result_row:nth(2) .name a"))
+
+
+
 class TestAgainstGeneratedData(SeleniumTestCase):
     # selenium_fixtures = ["200_test_people.json"]
     
@@ -1079,3 +1124,31 @@ class TestAgainstGeneratedData(SeleniumTestCase):
 
         try: self.assertEqual("555 123-4567", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
         except AssertionError, e: self.verificationErrors.append(str(e))        
+
+
+    def test_that_blank_people_show_at_the_top_of_the_search(self):
+        sel = self.selenium
+        sel.open("/people/")
+        assert not sel.is_text_present("No Name")
+        sel.click("link=New Person")
+        sel.wait_for_page_to_load("30000")
+        # celery catch-up
+        time.sleep(5)
+        sel.click("link=People")
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+
+
+    def test_that_blank_organizations_show_at_the_top_of_the_search(self):
+        sel = self.selenium
+        sel.open("/people/")
+        assert not sel.is_text_present("No Name")
+        sel.click("link=New Organization")
+        sel.wait_for_page_to_load("30000")
+        # celery catch-up
+        time.sleep(5)
+        sel.click("link=Back to All People and Organizations")
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
