@@ -2,7 +2,8 @@ from django.template import RequestContext
 from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.loader import render_to_string
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
@@ -197,6 +198,12 @@ def add_person_via_organization_search_results(request):
 
 
 
+def _update_with_tag_fragments(context):
+    d = {
+        "fragments":{'person_tags': render_to_string("people/_person_tags.html", RequestContext(context["request"],context)),},
+        "success": context["success"],
+    }
+    return d
 
 def add_person_tag(request):
     success = False
@@ -207,9 +214,9 @@ def add_person_tag(request):
             person = Person.objects.get(pk=pk)
             person.tags.add(new_tag)
             success = True
-            
+
     if request.is_ajax():
-        return json_view({"success":success})
+        return HttpResponse(simplejson.dumps(_update_with_tag_fragments(locals())))
     else:
         return HttpResponseRedirect(reverse("people:person",args=(person.pk,)))
 
@@ -225,10 +232,9 @@ def add_organization_tag(request):
             success = True
             
     if request.is_ajax():
-        return json_view({"success":success})
+        return json_view(_update_with_tag_fragments(locals()))
     else:
         return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))
-
 
 
 def remove_person_tag(request, person_id):
@@ -241,7 +247,7 @@ def remove_person_tag(request, person_id):
             success = True
 
     if request.is_ajax():
-        return json_view({"success":success})
+        return HttpResponse(simplejson.dumps(_update_with_tag_fragments(locals())))
     else:
         return HttpResponseRedirect(reverse("people:person",args=(person.pk,)))
 
@@ -256,6 +262,6 @@ def remove_organization_tag(request, org_id):
             success = True
 
     if request.is_ajax():
-        return json_view({"success":success})
+        return json_view(_update_with_tag_fragments(locals()))
     else:
         return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))
