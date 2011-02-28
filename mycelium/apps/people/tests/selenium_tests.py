@@ -661,8 +661,6 @@ class TestAgainstNoData(SeleniumTestCase):
         sel.click("link=Back to All People and Organizations")
         sel.wait_for_page_to_load("30000")
 
-
-
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Organ")
         sel.key_down("css=#id_search_query","n")
@@ -675,6 +673,7 @@ class TestAgainstNoData(SeleniumTestCase):
 
         sel.open_window("/people/", "two")
         sel.select_window("two")
+        time.sleep(2)
 
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Organ")
