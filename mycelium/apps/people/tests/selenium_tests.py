@@ -715,6 +715,168 @@ class TestAgainstNoData(SeleniumTestCase):
         self.assertEqual("IN", sel.get_text("//span[@id='container_id_state']/span[1]"))
         self.assertEqual("45321", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
 
+    def test_creating_and_deleting_a_new_person(self):
+        sel = self.selenium
+        sel.open("/people/search")
+        sel.click("link=New Person")
+        sel.wait_for_page_to_load("30000")
+        sel.type("id_first_name", "John")
+        sel.type("id_last_name", "Smith")
+        sel.type("id_phone_number", "555-123-4567")
+        sel.type("id_email", "john@smithfamily.com")
+        sel.type("id_line_1", "123 Main St")
+        sel.type("id_line_2", "Apt 27")
+        sel.type("id_city", "Wilsonville")
+        sel.type("id_state", "KY")
+        sel.type("id_postal_code", "12345")
+        time.sleep(5)        
+        self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
+        self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
+        sel.click("link=Done")
+        time.sleep(1)        
+        self.assertEqual("John", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
+        self.assertEqual("Smith", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
+        self.assertEqual("555-123-4567", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
+        self.assertEqual("john@smithfamily.com", sel.get_text("//span[@id='container_id_email']/span[1]"))
+        self.assertEqual("123 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
+        self.assertEqual("Apt 27", sel.get_text("//span[@id='container_id_line_2']/span[1]"))
+        self.assertEqual("Wilsonville", sel.get_text("//span[@id='container_id_city']/span[1]"))
+        self.assertEqual("KY", sel.get_text("//span[@id='container_id_state']/span[1]"))
+        self.assertEqual("12345", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
+
+        sel.click("link=People")
+        sel.wait_for_page_to_load("30000")
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "john smith 555")
+        sel.key_down("css=#id_search_query","5")
+        sel.key_up("css=#id_search_query","5")
+
+        time.sleep(3)
+        self.assertEqual("John Smith", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+
+        sel.click("css=search_results .result_row:nth(0) .name a")
+        sel.wait_for_page_to_load("30000")
+        sel.choose_cancel_on_next_confirmation()
+        sel.click("css=.person_delete_btn")
+        self.assertEqual(sel.get_confirmation(),"""Are you sure you want to completely delete John Smith from the database? \n\nDeleting will remove this person, and all their data (contact info, job info, etc).  It cannot be undone.\n\nPress OK to delete John Smith.\nPress Cancel to leave things unchanged.""")
+        sel.click("css=.person_delete_btn")
+        self.assertEqual(sel.get_confirmation(),"""Are you sure you want to completely delete John Smith from the database? \n\nDeleting will remove this person, and all their data (contact info, job info, etc).  It cannot be undone.\n\nPress OK to delete John Smith.\nPress Cancel to leave things unchanged.""")
+        sel.wait_for_page_to_load("30000")
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "john smith 555")
+        sel.key_down("css=#id_search_query","5")
+        sel.key_up("css=#id_search_query","5")
+
+        time.sleep(3)
+        assert not sel.is_text_present("John Smith")
+        
+        
+
+    def test_creating_and_deleting_a_blank_person(self):
+        sel = self.selenium
+        sel.open("/people/search")
+        sel.click("link=New Person")
+        sel.wait_for_page_to_load("30000")
+        sel.click("link=People")
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "No Name")
+        sel.key_down("css=#id_search_query","5")
+        sel.key_up("css=#id_search_query","5")
+        time.sleep(3)
+        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        sel.click("css=search_results .result_row:nth(0) .name a")
+        sel.wait_for_page_to_load("30000")
+        
+        sel.choose_cancel_on_next_confirmation()
+        sel.click("css=.person_delete_btn")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Person from the database? \n\nDeleting will remove this person, and all their data (contact info, job info, etc).  It cannot be undone.\n\nPress OK to delete Unnamed Person.\nPress Cancel to leave things unchanged.")
+        sel.click("css=.person_delete_btn")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Person from the database? \n\nDeleting will remove this person, and all their data (contact info, job info, etc).  It cannot be undone.\n\nPress OK to delete Unnamed Person.\nPress Cancel to leave things unchanged.")
+        sel.wait_for_page_to_load("30000")
+        
+        assert not sel.is_text_present("No Name")
+    
+    
+    def test_creating_and_deleting_a_blank_organization(self):
+        sel = self.selenium
+        sel.open("/people/")
+        sel.click("link=New Organization")
+        sel.wait_for_page_to_load("30000")
+        sel.click("link=People")
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "No Name")
+        sel.key_down("css=#id_search_query","5")
+        sel.key_up("css=#id_search_query","5")
+        time.sleep(2)
+        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+
+        sel.click("css=search_results .result_row:nth(0) .name a")
+        sel.wait_for_page_to_load("30000")
+        sel.choose_cancel_on_next_confirmation()
+        sel.click("css=.org_delete_btn")
+        # self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Organization from the database? \n\nDeleting will remove this organization and all their data (contact info, employees, etc).  The people associated with this organization will not be removed.\n\nThis action cannot be undone.\n\nPress OK to delete Unnamed Organization.\nPress Cancel to leave things unchanged.")
+        print sel.get_confirmation()
+        sel.click("css=.org_delete_btn")
+        # self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Organization from the database? \n\nDeleting will remove this organization and all their data (contact info, employees, etc).  The people associated with this organization will not be removed.\n\nThis action cannot be undone.\n\nPress OK to delete Unnamed Organization.\nPress Cancel to leave things unchanged.")
+
+        sel.wait_for_page_to_load("30000")
+        assert not sel.is_text_present("No Name")
+
+    
+    def test_creating_and_deleting_a_new_organization(self):
+        sel = self.selenium
+        sel.open("/people/")
+        sel.click("link=New Organization")
+        sel.wait_for_page_to_load("30000")
+        sel.type("id_name", "Test Organization")
+        sel.type("id_primary_phone_number", "555 123-4567")
+        sel.type("id_website", "example.com")
+        sel.type("id_twitter_username", "testorg")
+        sel.type("id_line_1", "123 1st St")
+        sel.type("id_line_2", "#125")
+        sel.type("id_city", "Williamsburg")
+        sel.type("id_state", "OH")
+        sel.type("id_postal_code", "54321")
+        time.sleep(3)
+        sel.click("link=Done")
+        self.assertEqual("Test Organization", sel.get_text("//span[@id='container_id_name']/span[1]"))
+        self.assertEqual("555 123-4567", sel.get_text("//span[@id='container_id_primary_phone_number']/span[1]"))
+        self.assertEqual("example.com", sel.get_text("//span[@id='container_id_website']/span[1]"))
+        self.assertEqual("testorg", sel.get_text("//span[@id='container_id_twitter_username']/span[1]"))
+        self.assertEqual("123 1st St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
+        self.assertEqual("#125", sel.get_text("//span[@id='container_id_line_2']/span[1]"))
+        self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_city']/span[1]"))
+        self.assertEqual("OH", sel.get_text("//span[@id='container_id_state']/span[1]"))
+        self.assertEqual("54321", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
+        time.sleep(3)
+        sel.click("link=Back to All People and Organizations")
+        sel.wait_for_page_to_load("30000")
+
+        sel.click("link=People")
+        sel.wait_for_page_to_load("30000")
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "Test Organ")
+
+        time.sleep(3)
+        self.assertEqual("Test Organization", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+
+        sel.click("css=search_results .result_row:nth(0) .name a")
+        sel.wait_for_page_to_load("30000")
+        sel.choose_cancel_on_next_confirmation()
+        sel.click("css=.org_delete_btn")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Test Organization from the database? \n\nDeleting will remove this organization and all their data (contact info, employees, etc).  The people associated with this organization will not be removed.\n\nThis action cannot be undone.\n\nPress OK to delete Test Organization.\nPress Cancel to leave things unchanged.")
+        sel.click("css=.org_delete_btn")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Test Organization from the database? \n\nDeleting will remove this organization and all their data (contact info, employees, etc).  The people associated with this organization will not be removed.\n\nThis action cannot be undone.\n\nPress OK to delete Test Organization.\nPress Cancel to leave things unchanged.")
+        
+        sel.wait_for_page_to_load("30000")
+        assert not sel.is_text_present("Test Organization")
+
 
 class TestAgainstGeneratedData(SeleniumTestCase):
     # selenium_fixtures = ["200_test_people.json"]
