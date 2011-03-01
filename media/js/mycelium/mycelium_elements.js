@@ -13,6 +13,18 @@ $(function(){
 	fragments.options = {
 	    json_dict_name: "fragments"
 	};
+	fragments.get_and_update_fragments = function(url, override_options) {
+	    default_options = {
+          url: url,
+          type: "POST",
+          dataType: "json",
+          success: function(json) {
+             $.Mycelium.fragments.process_fragments_from_json(json);
+          },
+        }
+        var options =  $.extend(default_options, override_options);
+        $.ajax(options);
+	}
 	
     fragments.process_fragments_from_json = function(json) {
         if (json[fragments.options.json_dict_name] != undefined) {

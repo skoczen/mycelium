@@ -1,10 +1,7 @@
 $(function(){
-    $("#basic_info_form").bind("genericFieldForm.toggle_off", do_some_intelligent_data_formatting);
-    $("#basic_info_form").bind("genericFieldForm.toggle_on", function(e){$(".city_state_comma",e.target).show();});
-    $("#basic_info_form").genericFieldForm();
     $(".person_delete_btn").click(delete_person);
-    intelligently_show_hide_comma();
-    intelligently_show_no_home_contact_info();
+    $("detail_tabs a.detail_tab").live("click",detail_tab_clicked);
+    
     
     // TODO: abstract this
 	$(".new_tag input[name=new_tag]").autoGrowInput({comfortZone: 20, resizeNow:true});
@@ -61,6 +58,24 @@ $(function(){
     // End abstract this
 });
 var tag_fadeout_timeout = false;
+
+function detail_tab_clicked(e) {
+    tab_link = $(e.target);
+    tab_container = tab_link.parents("detail_tabs")
+    // Switch the current tab
+    $("fragment[name=detail_tab]").html("Loading...");
+    $(".detail_tab", tab_container).removeClass("current");
+    tab_link.addClass("current");
+    
+    // Go get the tab content from the server.
+    $.Mycelium.fragments.get_and_update_fragments(tab_container.attr("update_url"), {
+        "data": {'tab_name': tab_link.attr("href")}
+    });
+
+
+    return false;
+}
+
 function set_tag_results_fadeout(t, timeout) {
     if (timeout === undefined) {
         timeout = 500;
@@ -91,19 +106,6 @@ function move_tag_results() {
     }
 }
 
-function do_some_intelligent_data_formatting() {
-    intelligently_show_hide_comma();
-    intelligently_show_no_home_contact_info();
-}
-
-function intelligently_show_hide_comma() {
-    var target = $("#basic_info_form");
-    if ($("#container_id_city .view_field",target).html() != "" && $("#container_id_state .view_field").html() != "") {
-        $(".city_state_comma",target).show();   
-    } else {
-        $(".city_state_comma",target).hide();
-    }
-}
 
 function intelligently_show_no_home_contact_info() {
     var some_contact_info = false;
@@ -118,6 +120,7 @@ function intelligently_show_no_home_contact_info() {
         $("#no_home_contact_info_message").html("");
     }
 }
+
 function delete_person(e) {
     var name = $("#container_id_first_name .view_field").text() + " " + $("#container_id_last_name .view_field").text();
     if (name == " ") {

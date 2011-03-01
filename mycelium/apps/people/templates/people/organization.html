@@ -6,7 +6,7 @@
  <link rel="stylesheet" href="{{ MEDIA_URL }}css/people_organizations.css" type="text/css" media="screen" title="" charset="utf-8">
 {% endblock %}
 {% block javascript %}{{block.super}}
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_common.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_organization.js"> </script>
 {% if request.GET.edit == "ON" or form.instance.full_name == "No Name" %}
 <script type="text/javascript" charset="utf-8">

@@ -13,6 +13,8 @@ from django.views.decorators.cache import cache_page
 from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy, Employee
 from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
 
+from volunteers.views import _render_people_volunteer_tab 
+
 @render_to("people/search.html")
 def search(request):
     people_proxies = PeopleAndOrganizationsSearchProxy.objects.all()
@@ -36,6 +38,7 @@ def _basic_forms(person, request):
 
     form             = PersonForm(data, instance=person)
     employee_formset = EmployeeFormset(data, instance=person, prefix="ROLE")
+
 
     return (form, employee_formset)
 
@@ -276,4 +279,24 @@ def new_tag_search_results(request):
             all_tags = Person.tags.filter(name__icontains=q).order_by("name")[:5]
     return {"fragments":{"new_tag_search_results":render_to_string("people/_new_tag_search_results.html", locals())}}
 
-            
+@json_view
+def tab_contents(request, person_id):
+    success = False
+    person = Person.objects.get(pk=person_id)
+    html = None
+    if request.method == "POST" and 'tab_name' in request.POST:
+        tab_name = request.POST['tab_name'].strip()[1:]
+        if tab_name == "conversations":
+            html = ""
+        elif tab_name == "activity":
+            html = ""
+        elif tab_name == "participant":
+            html = ""
+        elif tab_name == "volunteer":
+            html = _render_people_volunteer_tab(request)
+        elif tab_name == "donor":
+            html = ""
+    if html:
+        return {"fragments":{"detail_tab":html}}  
+    else:
+        return {}

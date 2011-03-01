@@ -30,4 +30,6 @@ urlpatterns = parser.patterns('',
     
     url(r'organization/add-tag$',                                           views.add_organization_tag,                           name='add_organization_tag'),
     url(r'organization/{org_id:digits}/remove-tag$',                        views.remove_organization_tag,                        name='remove_organization_tag'),
+    
+    url(r'person/{person_id:digits}/tab-contents$',                         views.tab_contents,                                   name='tab_contents'),
 )
