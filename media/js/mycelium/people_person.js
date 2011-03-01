@@ -58,19 +58,24 @@ $(function(){
     // End abstract this
 });
 var tag_fadeout_timeout = false;
+var prev_tab_name = false;
 
 function detail_tab_clicked(e) {
-    tab_link = $(e.target);
-    tab_container = tab_link.parents("detail_tabs")
-    // Switch the current tab
-    $("fragment[name=detail_tab]").html("Loading...");
-    $(".detail_tab", tab_container).removeClass("current");
-    tab_link.addClass("current");
-    
-    // Go get the tab content from the server.
-    $.Mycelium.fragments.get_and_update_fragments(tab_container.attr("update_url"), {
-        "data": {'tab_name': tab_link.attr("href")}
-    });
+    var tab_link = $(e.target);
+    var tab_container = tab_link.parents("detail_tabs");
+    var tab_name = tab_link.attr("href");
+    if (tab_name != prev_tab_name) {
+        // Switch the current tab
+        $("fragment[name=detail_tab]").html("Loading...");
+        $(".detail_tab", tab_container).removeClass("current");
+        tab_link.addClass("current");
+
+        // Go get the tab content from the server.
+        $.Mycelium.fragments.get_and_update_fragments(tab_container.attr("update_url"), {
+            "data": {'tab_name': tab_name}
+        });
+        prev_tab_name = tab_name;
+    }
 
 
     return false;

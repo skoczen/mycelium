@@ -13,5 +13,5 @@ from django.views.decorators.cache import cache_page
 from people.models import Person
 from volunteers.forms import NewShiftForm
 
-def _render_people_volunteer_tab(request):
+def _render_people_volunteer_tab(*args, **kwargs):
     return render_to_string("volunteers/_people_volunteer_tab.html", locals())

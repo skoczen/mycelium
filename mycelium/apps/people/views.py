@@ -293,7 +293,7 @@ def tab_contents(request, person_id):
         elif tab_name == "participant":
             html = ""
         elif tab_name == "volunteer":
-            html = _render_people_volunteer_tab(request)
+            html = _render_people_volunteer_tab(locals())
         elif tab_name == "donor":
             html = ""
     if html:
