@@ -2,18 +2,29 @@
    "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-	<title>{% trans "That page doesn't exist!"%}</title>
+	<title>{% trans "404 Error - That page doesn't exist!"%}</title>
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/main.css" type="text/css" media="screen" title="" charset="utf-8">
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/error_pages.css" type="text/css" media="screen" title="" charset="utf-8">
 </head>
 <body>
 	
-	<div id="temporary_message">
-	<h1>{% trans "I checked, it's not here."%}</h1>
+	<div id="error_message">
+	<div class="adorable_image">
+	<img src="{{MEDIA_URL}}images/icon-raincloud-400.png" />
+	</div>
+	<h1>Oh Dear.  Looks like we don't have that page.</h1>
 
 	<div class="detail_text">
-	{% trans "Looks like we've don't have that page."%}<br/><br/>
-	{% trans "Sorry about that - we've been emailed about your error, and will be working on it shortly!"%}</a>.
-	<br/><br/>
-	{% trans "Thanks!"%}
+	Somehow, you've ended up at a page that we don't have.  If you clicked a link in GoodCloud to get here, we've been emailed about it, and will be taking a look shortly! <br/><br/>
+	
+	It's also possible you mistyped the address of the page you wanted to visit.<br/><br/>
+	
+	Some useful places to go from here?
+	<ul>
+	<li><a href="javascript:window.back();">Back to the last page you were on</a></li>
+	<li><a href="{% url marketing_site:home %}">GoodCloud Home</a></li>
+	</ul>
+
 	</div>
 	</div>
 	<br/><br/>	
