@@ -15,7 +15,8 @@ $(function(){
     $(".select_person_to_add_btn").live("click",show_existing_person_add_form);
     $(".cancel_add_btn").live("click",cancel_add_person);
     $("#up_to_search").live("click",up_to_search_clicked)
-    
+
+	$("pane.pane_2 input").autoGrowInput({comfortZone: 30, resizeNow:true});    
     $("employee").genericFieldForm();
     $(".delete_contact_btn").live("click", confirm_employee_removal);
     $(".org_delete_btn").live("click",delete_organization);
