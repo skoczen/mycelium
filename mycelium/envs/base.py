@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     'reports',
     'import',
     'logo_maker',
+    'volunteers',
 
     'djangosanetesting',
 )
