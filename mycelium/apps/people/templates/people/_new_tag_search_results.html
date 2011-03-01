@@ -1,0 +1,14 @@
+{% if q %}
+<div class="new_tag_list">
+{% if all_tags %}
+<list_title>Similar tags:</list_title>
+<div class="similar_tags">
+{% for t in all_tags %}
+<a href="#" class="tag_suggestion_link highlightable">{{t}}</a>
+{% endfor %}
+</div>
+{% else %}
+<list_title>No similar tags found.</list_title>
+{% endif %}
+</div>
+{% endif %}

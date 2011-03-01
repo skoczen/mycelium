@@ -265,3 +265,15 @@ def remove_organization_tag(request, org_id):
         return json_view(_update_with_tag_fragments(locals()))
     else:
         return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))
+
+@json_view
+def new_tag_search_results(request):
+    # all_tags = Person.tags.all()
+    all_tags = False
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if q != "":
+            all_tags = Person.tags.filter(name__icontains=q).order_by("name")[:5]
+    return {"fragments":{"new_tag_search_results":render_to_string("people/_new_tag_search_results.html", locals())}}
+
+            

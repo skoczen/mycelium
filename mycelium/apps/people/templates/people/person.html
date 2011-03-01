@@ -92,9 +92,14 @@ $(function(){
 	<form action="{% url people:add_person_tag %}" method="POST" id="new_tag_form">{% csrf_token %}
 	<tag class="new_tag">
 		<input type="hidden" name="person_pk" value="{{person.pk}}">
-		<input type="text" name="new_tag" value="" placeholder="Type a new tag" maxlength="100" autocomplete="off">
+		<input type="text" name="new_tag" value="" placeholder="Type a new tag" maxlength="100" autocomplete="off" results_url="{% url people:new_tag_search_results %}">
 		<input type="submit" class="mycelium_btn mycelium_small_btn tag_add_btn" value="Add">
 	</tag>
+	<search_results>
+	<fragment name="new_tag_search_results" action="replace">
+
+	</fragment>
+	</search_results>
 	</form>
 </tags>
 
