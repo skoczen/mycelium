@@ -497,7 +497,7 @@ tags search_results .new_tag_list {
 	display: block;
 	z-index: 60;
 	background-color: #EEE;
-	background-color: rgba(255,255,255,0.9);
+	background-color: rgba(255,255,255,0.85);
 	border: 1px solid #535FB0;
 	border-width: 0px 1px 1px 1px;
 	padding: 5px;

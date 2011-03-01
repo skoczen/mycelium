@@ -44,7 +44,6 @@ $(function(){
     });
     $("tags a.tag_suggestion_link").live("click",function(){
         clear_tag_results_fadeout();
-        new_tag_link_clicked = true;
         $(".new_tag input[name=new_tag]",$(this).parents("tags")).val($(this).text());
         set_tag_results_fadeout($(".new_tag_list",$(this).parents("tags")), 10);
         return false;
@@ -62,7 +61,6 @@ $(function(){
     // End abstract this
 });
 var tag_fadeout_timeout = false;
-var new_tag_link_clicked = false;
 function set_tag_results_fadeout(t, timeout) {
     if (timeout === undefined) {
         timeout = 500;
@@ -77,17 +75,13 @@ function clear_tag_results_fadeout() {
     clearTimeout(tag_fadeout_timeout);
 }
 function new_tag_results(ele){
-    if (new_tag_link_clicked) {
-        new_tag_link_clicked = false;
+    move_tag_results();
+    var list = $("tags search_results");
+    if (!list.hasClass("visible")) {
+        list.addClass("visible");
+        $(".new_tag_list",list).fadeIn();
     } else {
-        move_tag_results();
-        var list = $("tags search_results");
-        if (!list.hasClass("visible")) {
-            list.addClass("visible");
-            $(".new_tag_list",list).fadeIn();
-        } else {
-            $(".new_tag_list",list).show();
-        }
+        $(".new_tag_list",list).show();
     }
 }
 function move_tag_results() {
