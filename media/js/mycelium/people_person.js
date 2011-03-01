@@ -19,6 +19,7 @@ $(function(){
         success: function(json){
             $.Mycelium.fragments.process_fragments_from_json(json);
             $(".new_tag input[name=new_tag]").val("");
+            set_tag_results_fadeout($(".new_tag_list"),0)
         },
         dataType: 'json'
     });
@@ -39,31 +40,59 @@ $(function(){
 	    results_element: $("fragment[name=new_tag_search_results]"),
 	    striped_results: false,
 	    results_processed_callback: new_tag_results,
+        // bind_to_change: false,
     });
     $("tags a.tag_suggestion_link").live("click",function(){
+        clear_tag_results_fadeout();
+        new_tag_link_clicked = true;
         $(".new_tag input[name=new_tag]",$(this).parents("tags")).val($(this).text());
-        $("search_results",$(this).parents("tags")).hide()
+        set_tag_results_fadeout($(".new_tag_list",$(this).parents("tags")), 10);
         return false;
     });
 	$(".new_tag input[name=new_tag]").live("focus",function(){
-	    var res = $("search_results",$(this).parents("tags"));
-	    var new_offset = $(this).offset();
+        clear_tag_results_fadeout();
 	    if ($(this).val() != "") {
-	        res.show().offset({"top":new_offset.top+30, "left":new_offset.left-80});
+            new_tag_results();
 	    }
-
-	    
 	});
 	$(".new_tag input[name=new_tag]").live("blur",function(){
-	    $("search_results",$(this).parents("tags")).hide();
-	});	
-
+        set_tag_results_fadeout($(".new_tag_list",$(this).parents("tags")))
+	});
+    move_tag_results();
     // End abstract this
 });
+var tag_fadeout_timeout = false;
+var new_tag_link_clicked = false;
+function set_tag_results_fadeout(t, timeout) {
+    if (timeout === undefined) {
+        timeout = 500;
+    }
+    tag_fadeout_timeout = setTimeout(function(){
+        t.hide();
+        t.parents("search_results").removeClass("visible");
+    }, timeout);
+    
+}
+function clear_tag_results_fadeout() {
+    clearTimeout(tag_fadeout_timeout);
+}
 function new_tag_results(ele){
-    var res = $("search_results",$(ele).parents("tags"));    
-    var new_offset = $(ele).offset();
-    res.show().offset({"top":new_offset.top+30, "left":new_offset.left-80});
+    if (new_tag_link_clicked) {
+        new_tag_link_clicked = false;
+    } else {
+        move_tag_results();
+        var list = $("tags search_results");
+        if (!list.hasClass("visible")) {
+            list.addClass("visible");
+            $(".new_tag_list",list).fadeIn();
+        } else {
+            $(".new_tag_list",list).show();
+        }
+    }
+}
+function move_tag_results() {
+    var o = $("tags input[name=new_tag]").offset();
+    $("tags search_results").offset({"top":o.top+10, "left":o.left});
 }
 
 function do_some_intelligent_data_formatting() {

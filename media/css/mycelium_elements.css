@@ -488,17 +488,38 @@ tags form#new_tag_form {
 }
 tags search_results {
 	position: fixed;
-	margin-top: 60px;
 	display: block;
-	width: 30%;
+	width: auto;
+}
+tags search_results .new_tag_list {
+	margin-top: 10px;
+	width: auto;
+	display: block;
 	z-index: 60;
 	background-color: #EEE;
-	background-color: rgba(255,255,255,0.8);
+	background-color: rgba(255,255,255,0.9);
 	border: 1px solid #535FB0;
-	padding: 10px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	border-width: 0px 1px 1px 1px;
+	padding: 5px;
 	display: none;	
-	
+	box-shadow: 		0px 1px 2px rgba(0,0,0,0.35);
+	-moz-box-shadow:	0px 1px 2px rgba(0,0,0,0.35);
+	-khtml-box-shadow: 	0px 1px 2px rgba(0,0,0,0.35);
+	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.35);
+
+}
+tags search_results .tag_suggestion_link {
+	display: block;
+}
+tags search_results .new_tag_list list_title {
+	color: #888;
+	font-size: 15px;
+
+}
+tags search_results .new_tag_list .similar_tags {
+	padding: 0px 5px 5px 5px;
+}
+tags search_results .new_tag_list .similar_tags a {
+	font-size: 15px;
+	padding: 2px 0px;
 }

@@ -65,6 +65,8 @@ $(function(){
 	    search_url: SEARCH_URL,
 	    process_results_as_fragments: true,
 	    process_results_as_replace_html: false,
+	    bind_to_keydown: true,
+	    bind_to_change: true,
 	    results_processed_callback: function(){},
 	}
 	sh.previous_query = "%*(#:LKCL:DSF@()#SDF)";
@@ -73,8 +75,12 @@ $(function(){
 	sh.setUp = function (options) {
 		$.extend(true, sh.options, options);
         var t = $(sh.options.search_element);
-        t.live("keydown",sh.queue_searching);
-        t.live("change",sh.queue_searching);
+        if (sh.options.bind_to_keydown) {
+            t.live("keydown",sh.queue_searching);            
+        }
+        if (sh.options.bind_to_change) {
+            t.live("change",sh.queue_searching);
+        }
         t.bind('keyup', 'return', function(){
             t.trigger("mycelium.search.return_pressed");
         });
@@ -91,8 +97,9 @@ $(function(){
 
     sh.update_search = function() {
         if (sh.previous_query != $.trim(sh.options.search_element.val())) {
-            sh.previous_query = sh.q;
             sh.q = $.trim(sh.options.search_element.val());
+            sh.previous_query = sh.q;
+
             $.ajax({
               url: sh.options.search_url,
               type: "GET",
