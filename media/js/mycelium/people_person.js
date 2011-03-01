@@ -85,8 +85,10 @@ function new_tag_results(ele){
     }
 }
 function move_tag_results() {
-    var o = $("tags input[name=new_tag]").offset();
-    $("tags search_results").offset({"top":o.top+10, "left":o.left});
+    if ($("tags input[name=new_tag]").length) {
+        var o = $("tags input[name=new_tag]").offset();
+        $("tags search_results").offset({"top":o.top+10, "left":o.left});
+    }
 }
 
 function do_some_intelligent_data_formatting() {
