@@ -43,3 +43,7 @@ def home(request):
 def about_us(request):
     all_employees = GoodCloudEmployee.objects.all()
     return locals()
+    
+@render_to("marketing_site/ssl_page.html")
+def ssl_page(request):
+    return locals()
