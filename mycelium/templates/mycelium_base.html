@@ -19,7 +19,9 @@
 	</logo>
 	<main_nav>{% spaceless %}
 		<a href="{% url people:search %}" {% if not section %}class="current"{% endif %}>People</a>
-		<a href="#">Fund</a>
+		<a href="#">Volunteers</a>
+		<a href="#">Donors</a>
+		{# <a href="#">Fund</a> #}
 		<a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports</a>
 		<a href="#">Communicate</a>
 		{# <a href="#">Events</a> #}
