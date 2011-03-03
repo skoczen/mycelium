@@ -1,15 +1,26 @@
-{% load friendly_data_formatting %}{% load humanize %}<tabbed_box class="with_button closed" name="add_a_person">
+{% load i18n generic_fields friendly_data_formatting humanize %}
+<tabbed_box class="with_button closed" name="add_a_volunteer_shift">
 	<tab_title_container>	
 	<tab_title>
 		<text>Add a Volunteer Shift</text>
 	</tab_title>
 	</tab_title_container>
 	<box_content>
+	<span class="edit_mode_on">
 	<form id="new_completed_volunteer_shift" action="{% url volunteers:save_completed_volunteer_shift person.volunteer.pk %}" method="POST">{% csrf_token %}
-		{{form.as_p}}
-		<input type="submit" class="mycelium_btn" value="Add Shift">
+		{% generic_editable_field form.duration %}
+		{% generic_editable_field form.date %}
+		{% generic_editable_field form.shift %}		
+		<form_actions>
+			<input type="submit" class="mycelium_btn" value="Add Shift">
+		</form_actions>
+		<box_close>
+			{# <a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a> #}
+		</box_close>
+
 	</form>
 	</box_content>
+	</tabbed_box>
 </tabbed_box>
 
 <div class="detail_header">Recent Volunteer Activity for {{person.full_name}}</div>

@@ -6,9 +6,17 @@ from people.models import Person
 from django.db.models.signals import post_save
 import datetime
 
+VOLUNTEER_STATII = [
+    ("active", "Active"),
+    ("inactive", "Active"),
+    ("temp_inactive", "Temporarily Inactive"),
+]
+
 class Volunteer(TimestampModelMixin):
     """A volunteer!"""
     person = models.OneToOneField(Person)
+    status = models.CharField(max_length=50,default=VOLUNTEER_STATII[0])
+    reactivation_date = models.DateField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s" % self.person

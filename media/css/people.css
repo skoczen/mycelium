@@ -513,3 +513,7 @@ tabbed_box box_content {
 	padding: 20px 0px 0px 0px;
 	color: #999;
 }
+detail_tab_contents tabbed_box {
+	width: 90%;
+	padding: 0px;
+}
