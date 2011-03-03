@@ -1,24 +1,28 @@
-<div class="detail_header">Recent Volunteer Activity for {{person}}</div>
-{# add btn #}
+{% load friendly_data_formatting %}{% load humanize %}<tabbed_box class="with_button closed" name="add_a_person">
+	<tab_title_container>	
+	<tab_title>
+		<text>Add a Volunteer Shift</text>
+	</tab_title>
+	</tab_title_container>
+	<box_content>
+	<form id="new_completed_volunteer_shift" action="{% url volunteers:save_completed_volunteer_shift person.volunteer.pk %}" method="POST">{% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" class="mycelium_btn" value="Add Shift">
+	</form>
+	</box_content>
+</tabbed_box>
+
+<div class="detail_header">Recent Volunteer Activity for {{person.full_name}}</div>
 <table class="volunteer_shift_table striped">
+	{% for cs in person.volunteer.completed_shifts %}
 	<tr>
-		<td>3 hours</td>
-		<td>last wednesday</td>
-		<td>on Office Shift</td>
+		<td>{{cs.duration|html_fraction|safe}} hours</td>
+		<td>{{cs.date|naturalday}}</td>
+		<td>{% if cs.shift %} on {{cs.shift}}{% endif %}</td>
 	</tr>
-	<tr>
-		<td>2 hours</td>
-		<td>Nov 26</td>
-		<td>on Tabling</td>
-	</tr>
-	<tr>
-		<td>6 hours</td>
-		<td>Nov 14</td>
-		<td>on Training</td>
-	</tr>
+	{% endfor %}
 </table>
 <div class="detail_header">All Volunteer Activity</div>
-{# add btn #}
 <table class="volunteer_shift_table striped">
 	<tr>
 		<td>2010</td>

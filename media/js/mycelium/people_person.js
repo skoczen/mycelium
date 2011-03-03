@@ -72,13 +72,22 @@ function detail_tab_clicked(e) {
 
         // Go get the tab content from the server.
         $.Mycelium.fragments.get_and_update_fragments(tab_container.attr("update_url"), {
-            "data": {'tab_name': tab_name}
+            "data": {'tab_name': tab_name},
+            "async": false,
         });
+        $("#new_completed_volunteer_shift").ajaxForm(process_fragments_and_rebind_volunteer_shift_form_options());
         prev_tab_name = tab_name;
     }
-
-
     return false;
+}
+function process_fragments_and_rebind_volunteer_shift_form() {
+    return {
+        success: function(json){
+            $.Mycelium.fragments.process_fragments_from_json(json);
+            $("new_completed_volunteer_shift").ajaxForm(process_fragments_and_rebind_volunteer_shift_form_options());
+        },
+        dataType: 'json'
+    }
 }
 
 function set_tag_results_fadeout(t, timeout) {

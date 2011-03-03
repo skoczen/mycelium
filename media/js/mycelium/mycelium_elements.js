@@ -307,7 +307,8 @@ $(function(){
                 	 },
 
                 	  error: function() {
-                		alert("error");
+                	    console.log("error")
+                        // alert("Error Saving.");
                 	  }
                 });
             });
