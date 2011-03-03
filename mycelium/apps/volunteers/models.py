@@ -36,20 +36,21 @@ class Shift(TimestampModelMixin):
     volunteers_needed = models.IntegerField(blank=True, null=True)
     # coordinator = models.ForeignKey(Staff, blank=True, null=True)
 
-# class ScheduledShift(TimestampModelMixin):
-#     """A volunteer, scheduled to work a shift"""
-#     volunteer = models.ForeignKey(Volunteer, related_name="volunteer_shifts")
-#     shift = models.ForeignKey(Shift, blank=True, null=True,)
-#     duration = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2, help_text="Length of shift, in hours")
-#     date = models.DateField(default=datetime.date.today,verbose_name="Shift date")
-# 
-#     categories = TaggableManager()
+class ScheduledShift(TimestampModelMixin):
+    """A volunteer, scheduled to work a shift"""
+    volunteer = models.ForeignKey(Volunteer, related_name="volunteer_shifts")
+    shift = models.ForeignKey(Shift, blank=True, null=True,)
+    duration = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2, help_text="Length of shift, in hours")
+    date = models.DateField(default=datetime.date.today,verbose_name="Shift date")
+
+    # categories = TaggableManager()
     
 
 class CompletedShift(TimestampModelMixin):
     """A work shift (possibly informal) completed by a volunteer"""
     volunteer = models.ForeignKey(Volunteer)
     shift = models.ForeignKey(Shift, blank=True, null=True,)
+    scheduled_shift = models.ForeignKey(ScheduledShift, blank=True, null=True,)
     duration = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2, help_text="Length of shift, in hours")
     date = models.DateField(default=datetime.date.today,verbose_name="Shift date")
     
