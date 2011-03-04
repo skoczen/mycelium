@@ -76,15 +76,30 @@ function detail_tab_clicked(e) {
             "async": false,
         });
         $("#new_completed_volunteer_shift").ajaxForm(process_fragments_and_rebind_volunteer_shift_form_options());
+        $("#new_completed_volunteer_shift .sentence input").autoGrowInput({comfortZone: 20, resizeNow:true});
+        $("#new_completed_volunteer_shift input[name=date]").datepicker({
+            numberOfMonths: 3,
+            showButtonPanel: true,
+            // gotoCurrent: true
+ showCurrentAtPos: 1            
+        });
+
         prev_tab_name = tab_name;
     }
     return false;
 }
-function process_fragments_and_rebind_volunteer_shift_form() {
+function process_fragments_and_rebind_volunteer_shift_form_options() {
     return {
         success: function(json){
             $.Mycelium.fragments.process_fragments_from_json(json);
             $("new_completed_volunteer_shift").ajaxForm(process_fragments_and_rebind_volunteer_shift_form_options());
+            $("#new_completed_volunteer_shift .sentence input").autoGrowInput({comfortZone: 20, resizeNow:true});
+            $("#new_completed_volunteer_shift input[name$=date]").datepicker({
+                numberOfMonths: 3,
+                showButtonPanel: true,
+                // gotoCurrent: true
+                showCurrentAtPos: 1                
+            });
         },
         dataType: 'json'
     }

@@ -515,5 +515,17 @@ tabbed_box box_content {
 }
 detail_tab_contents tabbed_box {
 	width: 90%;
-	padding: 0px;
+}
+
+#new_completed_volunteer_shift .sentence input {
+	background: transparent;
+	text-align: center;
+}
+#new_completed_volunteer_shift .duration input {
+	min-width: 50px;
+}
+#new_completed_volunteer_shift .sentence_fragment {
+	font-size: 18px;
+	margin-top: 8px;
+	position: relative;
 }
