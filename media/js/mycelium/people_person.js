@@ -56,6 +56,7 @@ $(function(){
 	});
     move_tag_results();
     // End abstract this
+    
 });
 var tag_fadeout_timeout = false;
 var prev_tab_name = false;
@@ -83,6 +84,10 @@ function detail_tab_clicked(e) {
             // gotoCurrent: true
  showCurrentAtPos: 1            
         });
+        $("tabbed_box[name=add_a_volunteer_shift]").bind("mycelium.tabbed_box.opened",function(){
+            $("#new_completed_volunteer_shift input[name$=duration]").focus()
+        });
+        
 
         prev_tab_name = tab_name;
     }
@@ -99,6 +104,9 @@ function process_fragments_and_rebind_volunteer_shift_form_options() {
                 showButtonPanel: true,
                 // gotoCurrent: true
                 showCurrentAtPos: 1                
+            });
+            $("tabbed_box[name=add_a_volunteer_shift]").bind("mycelium.tabbed_box.opened",function(){
+                $("#new_completed_volunteer_shift input[name$=duration]").focus()
             });
         },
         dataType: 'json'
