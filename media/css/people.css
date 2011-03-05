@@ -522,7 +522,7 @@ detail_tab_contents tabbed_box {
 	text-align: center;
 }
 #new_completed_volunteer_shift .sentence select {
-	margin-left: 1em;
+	margin-left: 0.5em;
 }
 #new_completed_volunteer_shift .duration input {
 /*	min-width: 50px;*/

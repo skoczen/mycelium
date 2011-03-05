@@ -33,7 +33,7 @@
 
 <div class="detail_header">Recent Volunteer Activity for {{person.full_name}}</div>
 <table class="volunteer_shift_table striped">
-	{% for cs in person.volunteer.completed_shifts|slice:":4" %}
+	{% for cs in person.volunteer.completed_shifts|slice:":3" %}
 	<tr>
 		<td>{{cs.duration|html_fraction|safe}} hours</td>
 		<td>{{cs.date|naturalday}}</td>
