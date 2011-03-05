@@ -536,10 +536,26 @@ detail_tab_contents tabbed_box {
 	position: relative;
 	display: inline-block;	
 }
+.volunteer_shift_table {
+	width: 100%;
+}
+.volunteer_shift_table .year {
+	text-align: left;
+	width: 3em;
+	padding-left: 10px;
+}
 .volunteer_shift_table .year_of_shifts {
 	display: none;
 }
+.volunteer_shift_table tr.completed_volunteer_shift_row td {
+	padding-left: 10px;
+}
 .year_of_volunteer_shifts_table {
-	margin-left: 1%;
-	width: 94%;
+	margin: 6px 1%;
+	width: 98%;
+	border: 1px solid #DDD;
+	border-width: 0px 1px 1px 1px;
+}
+.year_overview td {
+	text-align: right;
 }

@@ -1,4 +1,4 @@
-{% load i18n generic_fields friendly_data_formatting humanize %}<tr>
+{% load i18n generic_fields friendly_data_formatting humanize %}<tr class="striped_row completed_volunteer_shift_row">
 	<td>{{cs.duration|html_fraction|safe}} hour{{cs.duration|pluralize}}</td>
 	<td>{{cs.date|naturalday}}</td>
 	<td>{% if cs.shift %} on {{cs.shift}}{% else %}on an informal shift.{% endif %}</td>

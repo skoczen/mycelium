@@ -23,7 +23,7 @@
 			<input type="submit" class="mycelium_btn" value="Add Shift">
 		</form_actions>
 		<box_close>
-			{# <a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a> #}
+			<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
 		</box_close>
 
 	</form>
@@ -41,10 +41,10 @@
 <table class="volunteer_shift_table striped">
 	{% for year_of_shifts in person.volunteer.completed_shifts_by_year %}
 	<tr class="year_overview">
-		<td>{{year_of_shifts.year}}</td>
-		<td>{{year_of_shifts.total_shifts|floatformat:"0"}} shift{{year_of_shifts.total_shifts|pluralize}}</td>
-		<td>{{year_of_shifts.total_hours|floatformat:"0"}} hour{{year_of_shifts.total_hours|pluralize}}</td>
-		<td><a href="#" class="year_details_link">See details</a></td>
+		<td class="year">{{year_of_shifts.year}}</td>
+		<td class="total_shifts">{{year_of_shifts.total_shifts|floatformat:"0"}} shift{{year_of_shifts.total_shifts|pluralize}}</td>
+		<td class="total_hours">{{year_of_shifts.total_hours|floatformat:"0"}} hour{{year_of_shifts.total_hours|pluralize}}</td>
+		<td class="details_link"><a href="#" class="year_details_link">See details</a></td>
 	</tr>
 	<tr class="year_of_shifts">
 		<td colspan="4" >
