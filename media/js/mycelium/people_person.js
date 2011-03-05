@@ -76,10 +76,13 @@ function detail_tab_clicked(e) {
             "data": {'tab_name': tab_name},
             "async": false,
         });
-        $("#new_completed_volunteer_shift").ajaxForm(process_fragments_and_rebind_volunteer_shift_form_options());
+        $("#new_completed_volunteer_shift").ajaxForm({
+            "success":process_fragments_and_rebind_volunteer_shift_form,
+            "dataType": 'json'
+        });
         $("#new_completed_volunteer_shift .sentence input").autoGrowInput({comfortZone: 20, resizeNow:true});
         $("#new_completed_volunteer_shift input[name=date]").datepicker({
-            numberOfMonths: 3,
+            numberOfMonths: 2,
             showButtonPanel: true,
             // gotoCurrent: true
  showCurrentAtPos: 1            
@@ -93,24 +96,22 @@ function detail_tab_clicked(e) {
     }
     return false;
 }
-function process_fragments_and_rebind_volunteer_shift_form_options() {
-    return {
-        success: function(json){
-            $.Mycelium.fragments.process_fragments_from_json(json);
-            $("new_completed_volunteer_shift").ajaxForm(process_fragments_and_rebind_volunteer_shift_form_options());
-            $("#new_completed_volunteer_shift .sentence input").autoGrowInput({comfortZone: 20, resizeNow:true});
-            $("#new_completed_volunteer_shift input[name$=date]").datepicker({
-                numberOfMonths: 3,
-                showButtonPanel: true,
-                // gotoCurrent: true
-                showCurrentAtPos: 1                
-            });
-            $("tabbed_box[name=add_a_volunteer_shift]").bind("mycelium.tabbed_box.opened",function(){
-                $("#new_completed_volunteer_shift input[name$=duration]").focus()
-            });
-        },
-        dataType: 'json'
-    }
+function process_fragments_and_rebind_volunteer_shift_form(json) {
+        $.Mycelium.fragments.process_fragments_from_json(json);
+        $("#new_completed_volunteer_shift").ajaxForm({
+            "success":process_fragments_and_rebind_volunteer_shift_form,
+            "dataType": 'json'
+        });
+        $("#new_completed_volunteer_shift .sentence input").autoGrowInput({comfortZone: 20, resizeNow:true});
+        $("#new_completed_volunteer_shift input[name$=date]").datepicker({
+            numberOfMonths: 2,
+            showButtonPanel: true,
+            // gotoCurrent: true
+            showCurrentAtPos: 1                
+        });
+        $("tabbed_box[name=add_a_volunteer_shift]").bind("mycelium.tabbed_box.opened",function(){
+            $("#new_completed_volunteer_shift input[name$=duration]").focus()
+        });
 }
 
 function set_tag_results_fadeout(t, timeout) {

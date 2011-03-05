@@ -59,7 +59,7 @@ class CompletedShift(TimestampModelMixin):
     volunteer = models.ForeignKey(Volunteer)
     shift = models.ForeignKey(Shift, blank=True, null=True,)
     scheduled_shift = models.ForeignKey(ScheduledShift, blank=True, null=True,)
-    duration = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2, help_text="Length of shift, in hours")
+    duration = models.DecimalField(default=2, max_digits=6, decimal_places=2, help_text="Length of shift, in hours")
     date = models.DateField(default=datetime.date.today,verbose_name="Shift date")
     
     categories = TaggableManager()

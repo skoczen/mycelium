@@ -521,11 +521,15 @@ detail_tab_contents tabbed_box {
 	background: transparent;
 	text-align: center;
 }
+#new_completed_volunteer_shift .sentence select {
+	margin-left: 1em;
+}
 #new_completed_volunteer_shift .duration input {
-	min-width: 50px;
+/*	min-width: 50px;*/
 }
 #new_completed_volunteer_shift .sentence_fragment {
 	font-size: 18px;
-	margin-top: 8px;
+	bottom: -3px;
 	position: relative;
+	display: inline-block;	
 }

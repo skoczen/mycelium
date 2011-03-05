@@ -153,30 +153,32 @@ def html_fraction (number, maxdenom=10, useUnicode=True):
      
     If useUnicode is true, unicode entities will be used where available. 
     """ 
+    try:
+        number = float(number) 
+        frac = _to_frac(abs(number), maxdenom) 
      
-    number = float(number) 
-    frac = _to_frac(abs(number), maxdenom) 
-     
-    if type(frac) == int: 
-        string = str(frac) 
-    else: 
-        intpart, numerator, denominator = frac 
-        if useUnicode and (numerator, denominator) in _frac_entities: 
-            fracpart = _frac_entities[(numerator, denominator)] 
+        if type(frac) == int: 
+            string = str(frac) 
         else: 
-            fracpart = (('<span class="fraction">' + 
-                         '<span class="numerator">%i</span>&#x2044;' +  
-                         '<span class="denominator">%i</span></span>') % 
-                        (numerator,denominator)) 
-        if intpart == 0: 
-            string = fracpart 
-        else: 
-            string = str(intpart) + fracpart 
+            intpart, numerator, denominator = frac 
+            if useUnicode and (numerator, denominator) in _frac_entities: 
+                fracpart = _frac_entities[(numerator, denominator)] 
+            else: 
+                fracpart = (('<span class="fraction">' + 
+                             '<span class="numerator">%i</span>&#x2044;' +  
+                             '<span class="denominator">%i</span></span>') % 
+                            (numerator,denominator)) 
+            if intpart == 0: 
+                string = fracpart 
+            else: 
+                string = str(intpart) + fracpart 
      
-    if number < 0: 
-        return '-'+string 
-    else: 
-        return string 
+        if number < 0: 
+            return '-'+string 
+        else: 
+            return string
+    except:
+        return ""
 register.filter(html_fraction) 
  
 def text_fraction (number, maxdenom=10): 
