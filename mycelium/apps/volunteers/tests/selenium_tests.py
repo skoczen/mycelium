@@ -23,3 +23,6 @@ class TestAgainstGeneratedData(SeleniumTestCase):
     def tearDown(self,*args, **kwargs):
         call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)
+
+
+

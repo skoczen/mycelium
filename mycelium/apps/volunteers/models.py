@@ -108,7 +108,7 @@ class CompletedShift(TimestampModelMixin):
         if self.shift:
             return "%s" % self.shift
         else:
-            return "an informal shift"
+            return "an unscheduled shift"
 
 
     class Meta:
