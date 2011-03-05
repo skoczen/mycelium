@@ -57,6 +57,7 @@ $(function(){
     move_tag_results();
     // End abstract this
     
+    $("#new_completed_volunteer_shift input[name=duration]").live("change",round_volunteer_shift);
 });
 var tag_fadeout_timeout = false;
 var prev_tab_name = false;
@@ -95,6 +96,12 @@ function detail_tab_clicked(e) {
         prev_tab_name = tab_name;
     }
     return false;
+}
+function round_volunteer_shift() {
+    input = $(this);
+    dur = input.val();
+    dur = Math.round(dur*4)/4
+    input.val(dur);
 }
 function process_fragments_and_rebind_volunteer_shift_form(json) {
         $.Mycelium.fragments.process_fragments_from_json(json);

@@ -68,6 +68,6 @@ class CompletedShift(TimestampModelMixin):
         "%s worked on %s %s for %s hours" % (self.volunteer, self.shift, self.date, self.duration)
 
     class Meta:
-        ordering = ["-date"]
+        ordering = ["-date","-id"]
 
 post_save.connect(Volunteer.make_each_person_a_volunteer,sender=Person)
