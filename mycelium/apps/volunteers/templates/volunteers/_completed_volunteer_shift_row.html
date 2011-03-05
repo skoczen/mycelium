@@ -1,5 +1,5 @@
 {% load i18n generic_fields friendly_data_formatting humanize %}<tr class="striped_row completed_volunteer_shift_row">
-	<td>{{cs.duration|html_fraction|safe}} hour{{cs.duration|pluralize}}</td>
-	<td>{{cs.date|naturalday}}</td>
-	<td>{% if cs.shift %} on {{cs.shift}}{% else %}on an unscheduled shift.{% endif %}</td>
+	<td class="duration">{{cs.duration|html_fraction|safe}} hour{{cs.duration|pluralize}}</td>
+	<td class="date">{{cs.date|naturalday}}</td>
+	<td class="shift">{% if cs.shift %} on {{cs.shift}}{% else %}on an unscheduled shift.{% endif %}</td>
 </tr>

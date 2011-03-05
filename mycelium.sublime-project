@@ -3,60 +3,79 @@
 	{
 		"selected_items":
 		[
+			[
+				"pos",
+				"post_save"
+			],
+			[
+				"pre",
+				"prev_tab_name"
+			],
+			[
+				"con",
+				"conversations"
+			],
+			[
+				"do",
+				"donor"
+			],
+			[
+				"_re",
+				"_render_people_recent_activity_tab"
+			],
+			[
+				"_ren",
+				"_render_donor_volunteer_tab"
+			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/media/css/people.css",
-			"settings":
-			{
-				"buffer_size": 10904,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/people/views.py",
-			"settings":
-			{
-				"buffer_size": 9820,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/people/templates/people/person.html",
-			"settings":
-			{
-				"buffer_size": 4353,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/media/js/mycelium/people_person.js",
-			"settings":
-			{
-				"buffer_size": 7116,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"file_history":
 	[
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/volunteers/tests/selenium_tests.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/volunteers/models.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/volunteers/templates/volunteers/_completed_volunteer_shift_row.html",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/conversations/templates/conversations/_people_conversations_tab.html",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/media/js/contrib/jquery.ba-hashchange.min.js",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/media/css/people.css",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/donors/templates/donors/_people_donor_tab.html",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/recent_activity/templates/recent_activity/_people_recent_activity_tab.html",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/media/js/mycelium/people_person.js",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/recent_activity/views.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/donors/views.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/people/templates/people/person.html",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/volunteers/views.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium.sublime-project",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/people/views.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/media/cms/wymeditor/skins/compact/skin.js",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/donors/urls.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/conversations/views.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/envs/base.py",
+		"/Volumes/Aerie/Users/skoczen/Library/Application Support/Sublime Text 2/Packages/User/close_tag.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/volunteers/migrations/0004_auto__del_volunteershiftevent__del_volunteershift__add_shiftvolunteer_.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/settings.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/donors/tests/unit_tests.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/volunteers/tests/unit_tests.py",
+		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/donors/__init__.py",
+		"/Volumes/Aerie/Users/skoczen/Library/Application Support/Sublime Text 2/Packages/Color Scheme - Default/Espresso Libre.tmTheme",
 		"/Volumes/Aerie/Users/skoczen/Library/Application Support/Sublime Text 2/Packages/Default/Global.sublime-settings",
 		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/manage.py",
 		"/Volumes/Aerie/Users/skoczen/Library/Application Support/Sublime Text 2/Pristine Packages/Default.sublime-package",
 		"/Users/skoczen/.bash_profile",
-		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/people/views.py",
 		"/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/media/css/people_organizations.css"
 	],
 	"find_in_files":
 	{
 		"include_history":
 		[
+			""
 		],
 		"location_history":
 		[
+			"<open folders>"
 		]
 	},
 	"find_state":
@@ -64,6 +83,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"informal",
+			"converations",
+			"donor",
+			"					{% ",
+			"		<div class=\"city_state_zip\">\n		",
 			"invisi",
 			"alia",
 			"EDITOR"
@@ -74,6 +98,9 @@
 		"regex": false,
 		"replace_history":
 		[
+			"conversations",
+			"recent_activity",
+			"converations"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -91,122 +118,6 @@
 	"groups":
 	[
 		{
-			"selected": 2,
-			"sheets":
-			[
-				{
-					"buffer": 0,
-					"file": "/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/media/css/people.css",
-					"settings":
-					{
-						"buffer_size": 10904,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								918,
-								918
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0,
-						"translation.y": 0,
-						"zoom_level": 1
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/people/views.py",
-					"settings":
-					{
-						"buffer_size": 9820,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1202,
-								1202
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0,
-						"translation.y": 0,
-						"zoom_level": 1
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/apps/people/templates/people/person.html",
-					"settings":
-					{
-						"buffer_size": 4353,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1885,
-								1885
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML (Django)/HTML (Django).tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0,
-						"translation.y": 362,
-						"zoom_level": 1
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/media/js/mycelium/people_person.js",
-					"settings":
-					{
-						"buffer_size": 7116,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0,
-						"translation.y": 0,
-						"zoom_level": 1
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
 			"sheets":
 			[
 			]
@@ -221,18 +132,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0,
-			0.5,
 			1
 		],
 		"rows":
@@ -248,6 +152,98 @@
 		"height": 0,
 		"selected_items":
 		[
+			[
+				"conver",
+				"mycelium/apps/conversations/templates/conversations/_people_conversations_tab.html"
+			],
+			[
+				"voluntsele",
+				"mycelium/apps/volunteers/tests/selenium_tests.py"
+			],
+			[
+				"peopcs",
+				"media/css/people.css"
+			],
+			[
+				"donoht",
+				"mycelium/apps/donors/templates/donors/_people_donor_tab.html"
+			],
+			[
+				"conversaht",
+				"mycelium/apps/conversations/templates/conversations/_people_conversations_tab.html"
+			],
+			[
+				"recen",
+				"mycelium/apps/recent_activity/templates/recent_activity/_people_recent_activity_tab.html"
+			],
+			[
+				"peopperjs",
+				"media/js/mycelium/people_person.js"
+			],
+			[
+				"css",
+				"media/cms/wymeditor/skins/compact/skin.js"
+			],
+			[
+				"person",
+				"mycelium/apps/people/templates/people/person.html"
+			],
+			[
+				"recentaview",
+				"mycelium/apps/recent_activity/views.py"
+			],
+			[
+				"donorview",
+				"mycelium/apps/donors/views.py"
+			],
+			[
+				"volunview",
+				"mycelium/apps/volunteers/views.py"
+			],
+			[
+				"donorvi",
+				"mycelium/apps/donors/views.py"
+			],
+			[
+				"peopvie",
+				"mycelium/apps/people/views.py"
+			],
+			[
+				"peophtm",
+				"mycelium/apps/people/templates/people/person.html"
+			],
+			[
+				"recentacta",
+				"mycelium/apps/recent_activity/templates/recent_activity/_people_recent_activity_tab.html"
+			],
+			[
+				"recenactview",
+				"mycelium/apps/recent_activity/views.py"
+			],
+			[
+				"converta",
+				"mycelium/apps/conversations/templates/conversations/_people_conversations_tab.html"
+			],
+			[
+				"conversavie",
+				"mycelium/apps/conversations/views.py"
+			],
+			[
+				"sett",
+				"mycelium/settings.py"
+			],
+			[
+				"base",
+				"mycelium/envs/base.py"
+			],
+			[
+				"setting",
+				"mycelium/settings.py"
+			],
+			[
+				"vonteun",
+				"mycelium/apps/volunteers/tests/unit_tests.py"
+			],
 			[
 				"manage",
 				"mycelium/manage.py"
@@ -269,10 +265,6 @@
 				"media/css/people_organizations.css"
 			],
 			[
-				"peophtm",
-				"mycelium/apps/people/templates/people/person.html"
-			],
-			[
 				"peopc",
 				"media/css/people.css"
 			]
@@ -290,6 +282,6 @@
 	"show_minimap": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150,
+	"side_bar_width": 262,
 	"status_bar_visible": true
 }
