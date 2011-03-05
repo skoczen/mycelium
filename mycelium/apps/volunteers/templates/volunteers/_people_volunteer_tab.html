@@ -31,32 +31,30 @@
 	</tabbed_box>
 </tabbed_box>
 
-<div class="detail_header">Recent Volunteer Activity for {{person.full_name}}</div>
+<div class="detail_header">Recent Volunteer Activity</div>
 <table class="volunteer_shift_table striped">
 	{% for cs in person.volunteer.completed_shifts|slice:":3" %}
-	<tr>
-		<td>{{cs.duration|html_fraction|safe}} hours</td>
-		<td>{{cs.date|naturalday}}</td>
-		<td>{% if cs.shift %} on {{cs.shift}}{% endif %}</td>
-	</tr>
+		{% include "volunteers/_completed_volunteer_shift_row.html" %}
 	{% endfor %}
 </table>
 <div class="detail_header">All Volunteer Activity</div>
 <table class="volunteer_shift_table striped">
-	<tr>
-		<td>2010</td>
-		<td>83 hours</td>
-		<td><a href="#">See details</a></td>
+	{% for year_of_shifts in person.volunteer.completed_shifts_by_year %}
+	<tr class="year_overview">
+		<td>{{year_of_shifts.year}}</td>
+		<td>{{year_of_shifts.total_shifts|floatformat:"0"}} shift{{year_of_shifts.total_shifts|pluralize}}</td>
+		<td>{{year_of_shifts.total_hours|floatformat:"0"}} hour{{year_of_shifts.total_hours|pluralize}}</td>
+		<td><a href="#" class="year_details_link">See details</a></td>
 	</tr>
-	<tr>
-		<td>2009</td>
-		<td>136 hours</td>
-		<td><a href="#">See details</a></td>
+	<tr class="year_of_shifts">
+		<td colspan="4" >
+			<table class="year_of_volunteer_shifts_table striped">
+				{% for cs in year_of_shifts.shifts %}
+					{% include "volunteers/_completed_volunteer_shift_row.html" %}
+				{% endfor %}
+			</table>
+		</td>
 	</tr>
-	<tr>
-		<td>2008</td>
-		<td>42 hours</td>
-		<td><a href="#">See details</a></td>
-	</tr>
+	{% endfor %}
 	
 </table>

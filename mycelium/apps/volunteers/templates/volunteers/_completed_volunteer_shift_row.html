@@ -1,0 +1,5 @@
+{% load i18n generic_fields friendly_data_formatting humanize %}<tr>
+	<td>{{cs.duration|html_fraction|safe}} hour{{cs.duration|pluralize}}</td>
+	<td>{{cs.date|naturalday}}</td>
+	<td>{% if cs.shift %} on {{cs.shift}}{% else %}on an informal shift.{% endif %}</td>
+</tr>

@@ -35,6 +35,38 @@ class Volunteer(TimestampModelMixin):
     def make_volunteers_for_each_person(cls):
         [cls.make_each_person_a_volunteer(Person,p,True) for p in Person.objects.all()]
 
+    @property
+    def completed_shifts_by_year(self):
+        shifts_by_year = []
+        current_year = 0
+        cur_year_dict = {}
+        shifts_this_year = 0
+        hours_this_year = 0
+        for cs in self.completed_shifts:
+            if cs.date.year != current_year:
+                if cur_year_dict != {}:
+                    cur_year_dict['total_shifts'] = shifts_this_year
+                    cur_year_dict['total_hours'] = hours_this_year
+
+                    shifts_by_year.append(cur_year_dict)
+
+                current_year = cs.date.year
+                shifts_this_year = 0
+                hours_this_year = 0
+                    
+                cur_year_dict = {
+                    'year':cs.date.year,
+                    'shifts':[],
+                }
+
+            cur_year_dict["shifts"].append(cs)
+            shifts_this_year += 1
+            hours_this_year += cs.duration
+
+        cur_year_dict['total_shifts'] = shifts_this_year
+        cur_year_dict['total_hours'] = hours_this_year
+        shifts_by_year.append(cur_year_dict)
+        return shifts_by_year
 
 class Shift(TimestampModelMixin):
     """A future need for volunteers"""
@@ -43,6 +75,9 @@ class Shift(TimestampModelMixin):
     duration = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
     volunteers_needed = models.IntegerField(blank=True, null=True)
     # coordinator = models.ForeignKey(Staff, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
 
 class ScheduledShift(TimestampModelMixin):
     """A volunteer, scheduled to work a shift"""
@@ -65,7 +100,15 @@ class CompletedShift(TimestampModelMixin):
     categories = TaggableManager()
 
     def __unicode__(self):
-        "%s worked on %s %s for %s hours" % (self.volunteer, self.shift, self.date, self.duration)
+        return "%s worked on %s %s for %s hours" % (self.volunteer, self.shift_name, self.date, self.duration)
+
+    @property
+    def shift_name(self):
+        if self.shift:
+            return "%s" % self.shift
+        else:
+            return "an informal shift"
+
 
     class Meta:
         ordering = ["-date","-id"]

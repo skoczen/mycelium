@@ -517,6 +517,9 @@ detail_tab_contents tabbed_box {
 	width: 90%;
 }
 
+#new_completed_volunteer_shift .sentence {
+	margin-top: 5px;
+}
 #new_completed_volunteer_shift .sentence input {
 	background: transparent;
 	text-align: center;
@@ -532,4 +535,7 @@ detail_tab_contents tabbed_box {
 	bottom: -3px;
 	position: relative;
 	display: inline-block;	
+}
+.volunteer_shift_table .year_of_shifts {
+	display: none;
 }
