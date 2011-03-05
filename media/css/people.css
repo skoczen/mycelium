@@ -559,3 +559,17 @@ detail_tab_contents tabbed_box {
 .year_overview td {
 	text-align: right;
 }
+.no_records_message {
+	padding: 10px 10px;
+	font-size: 22px;
+	color: #AAA;
+
+}
+tabbed_box[name=add_a_volunteer_shift] {
+	margin-bottom: 10px;
+}
+.tab_content_coming_soon {
+	padding: 10px 10px;
+	font-size: 22px;
+	color: #AAA;
+}

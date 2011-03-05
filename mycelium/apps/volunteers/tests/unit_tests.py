@@ -2,8 +2,6 @@ from test_factory import Factory
 from nose.tools import istest
 from volunteers.models import Volunteer, CompletedShift
 import datetime
-from decimal import *
-getcontext().prec = 2
 
 @istest
 def test_completed_shifts_by_year_returns_sanely():
@@ -20,4 +18,13 @@ def test_completed_shifts_by_year_returns_sanely():
           'year': today.year
     }]
     
+    assert person.volunteer.completed_shifts_by_year == target
+
+@istest
+def test_completed_shifts_by_year_for_non_volunteer_returns_properly():
+    person = Factory.person()
+    target = []
+    print target
+    print person.volunteer.completed_shifts_by_year
+
     assert person.volunteer.completed_shifts_by_year == target

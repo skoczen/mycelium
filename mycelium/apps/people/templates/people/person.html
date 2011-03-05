@@ -78,7 +78,6 @@ $(function(){
 		{{employee_formset.management_form}}
 </div>
 
-
 </form>
 
 <div class="additional_information">
@@ -106,15 +105,15 @@ $(function(){
 
 
 <detail_tabs update_url="{% url people:tab_contents person.pk %}">
-	<a class="detail_tab current" href="#activity">Recent Activity</a>
+	<a class="detail_tab current" href="#recent_activity">Recent Activity</a>
 	<a class="detail_tab" href="#conversations">Conversations</a>
-	<a class="detail_tab" href="#participant">Participant</a>
+	{# <a class="detail_tab" href="#participant">Participant</a> #}
 	<a class="detail_tab" href="#volunteer">Volunteer</a>
 	<a class="detail_tab" href="#donor">Donor</a>
 </detail_tabs>
 <detail_tab_contents>
 	<fragment name="detail_tab" action="replace">
-		<div class="detail_header">No Recent Activity</div>
+		{% include "recent_activity/_people_recent_activity_tab.html" %}
 	</fragment>
 </detail_tab_contents>
 <delete_object_block>

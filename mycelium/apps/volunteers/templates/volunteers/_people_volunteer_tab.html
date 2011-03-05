@@ -31,12 +31,14 @@
 	</tabbed_box>
 </tabbed_box>
 
-<div class="detail_header">Recent Volunteer Activity</div>
+{% if person.volunteer.completed_shifts_by_year|length > 0 %}
+<div class="detail_header recent_volunteer_header">Recent Volunteer Activity</div>
 <table class="volunteer_shift_table striped">
 	{% for cs in person.volunteer.completed_shifts|slice:":3" %}
 		{% include "volunteers/_completed_volunteer_shift_row.html" %}
 	{% endfor %}
 </table>
+{% endif %}
 <div class="detail_header">All Volunteer Activity</div>
 <table class="volunteer_shift_table striped">
 	{% for year_of_shifts in person.volunteer.completed_shifts_by_year %}
@@ -55,6 +57,7 @@
 			</table>
 		</td>
 	</tr>
+	{% empty %}
+		<div class="no_records_message">No volunteer shifts yet!</div>
 	{% endfor %}
-	
 </table>

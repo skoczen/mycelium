@@ -62,12 +62,13 @@ $(function(){
     $("#new_completed_volunteer_shift .cancel_add_btn").live("click", cancel_add_shift);
 });
 var tag_fadeout_timeout = false;
-var prev_tab_name = false;
+var prev_tab_name = "#recent_activity";
 
 function detail_tab_clicked(e) {
     var tab_link = $(e.target);
     var tab_container = tab_link.parents("detail_tabs");
     var tab_name = tab_link.attr("href");
+
     if (tab_name != prev_tab_name) {
         // Switch the current tab
         $("fragment[name=detail_tab]").html("Loading...");

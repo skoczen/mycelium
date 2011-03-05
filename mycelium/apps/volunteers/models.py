@@ -62,10 +62,11 @@ class Volunteer(TimestampModelMixin):
             cur_year_dict["shifts"].append(cs)
             shifts_this_year += 1
             hours_this_year += cs.duration
-
-        cur_year_dict['total_shifts'] = shifts_this_year
-        cur_year_dict['total_hours'] = hours_this_year
-        shifts_by_year.append(cur_year_dict)
+        
+        if cur_year_dict != {}:
+            cur_year_dict['total_shifts'] = shifts_this_year
+            cur_year_dict['total_hours'] = hours_this_year
+            shifts_by_year.append(cur_year_dict)
         return shifts_by_year
 
 class Shift(TimestampModelMixin):

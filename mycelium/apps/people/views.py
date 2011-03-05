@@ -1,5 +1,4 @@
 from django.template import RequestContext
-from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
@@ -14,6 +13,9 @@ from people.models import Person, Organization, PeopleAndOrganizationsSearchProx
 from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
 
 from volunteers.views import _render_people_volunteer_tab 
+from conversations.views import _render_people_conversations_tab
+from donors.views import _render_people_donor_tab
+from recent_activity.views import _render_people_recent_activity_tab 
 
 @render_to("people/search.html")
 def search(request):
@@ -287,15 +289,13 @@ def tab_contents(request, person_id):
     if request.method == "POST" and 'tab_name' in request.POST:
         tab_name = request.POST['tab_name'].strip()[1:]
         if tab_name == "conversations":
-            html = ""
-        elif tab_name == "activity":
-            html = ""
-        elif tab_name == "participant":
-            html = ""
+            html = _render_people_conversations_tab(locals())
+        elif tab_name == "recent_activity":
+            html = _render_people_recent_activity_tab(locals())
         elif tab_name == "volunteer":
             html = _render_people_volunteer_tab(locals())
         elif tab_name == "donor":
-            html = ""
+            html = _render_people_donor_tab(locals())
     if html:
         return {"fragments":{"detail_tab":html}}  
     else:
