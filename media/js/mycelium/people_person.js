@@ -107,7 +107,7 @@ function round_volunteer_shift() {
 function toggle_year_details() {
     year_details = $(this).parents(".year_overview").next(".year_of_shifts");
     year_details.toggle();
-    
+    return false;
 }
 function process_fragments_and_rebind_volunteer_shift_form(json) {
         $.Mycelium.fragments.process_fragments_from_json(json);
@@ -125,6 +125,7 @@ function process_fragments_and_rebind_volunteer_shift_form(json) {
         $("tabbed_box[name=add_a_volunteer_shift]").bind("mycelium.tabbed_box.opened",function(){
             $("#new_completed_volunteer_shift input[name$=duration]").focus()
         });
+        $.Mycelium.update_stripes();
 }
 
 function set_tag_results_fadeout(t, timeout) {

@@ -76,7 +76,7 @@ class Factory(QiFactory):
         for i in range(0,cls.rand_int(end=300)):
             cur_date = cur_date - datetime.timedelta(days=cls.rand_int(0,30))
             cs = CompletedShift.objects.create(volunteer=person.volunteer,
-                                    duration=cls.rand_int(0,16),
+                                    duration=cls.rand_int(1,16),
                                     date=cur_date
             )
         return person

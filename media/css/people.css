@@ -539,3 +539,7 @@ detail_tab_contents tabbed_box {
 .volunteer_shift_table .year_of_shifts {
 	display: none;
 }
+.year_of_volunteer_shifts_table {
+	margin-left: 1%;
+	width: 94%;
+}
