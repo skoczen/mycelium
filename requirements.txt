@@ -1,7 +1,7 @@
 fabric
 psycopg2
 # mysql-python
-pysqlite
+# pysqlite
 PIL
 python-memcached
 django >=1.2
