@@ -32,3 +32,4 @@ south
 cherrypy
 celery
 django-celery
+-e git://github.com/kmmbvnr/django-jenkins.git#egg=django-jenkins
