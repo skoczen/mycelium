@@ -196,7 +196,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
 
     def test_creating_and_editing_an_organization(self):
         sel = self.selenium
-        self.create_new_organization()
+        self.create_new_organization_and_return_to_search()
         
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Organ")
@@ -282,7 +282,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         sel.wait_for_page_to_load("30000")
         sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
-        sel.type("css=#id_search_query", "My New Org 555123")
+        sel.type("css=#id_search_query", "Test Organization 555123")
         sel.key_down("css=#id_search_query","g")
         sel.key_up("css=#id_search_query","g")
         time.sleep(1)
@@ -403,7 +403,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         sel.click("link=Back to All People")
         sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
-        sel.type("css=#id_search_query", "My New Org 555123")
+        sel.type("css=#id_search_query", "Test Org 555123")
         sel.key_down("css=#id_search_query","g")
         sel.key_up("css=#id_search_query","g")
         time.sleep(1)
@@ -489,7 +489,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         sel = self.selenium
         sel.choose_cancel_on_next_confirmation()
         sel.click("css=employee:nth(1) .delete_contact_btn")
-        self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove William Blinkerton from Test Organization?\n\nThis will not remove William Blinkerton from the database, only from this role at My New Org.")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove William Blinkerton from Test Organization?\n\nThis will not remove William Blinkerton from the database, only from this role at Test Organization.")
         self.assertEqual("William Blinkerton", sel.get_text("link=William Blinkerton"))
         self.assertEqual("Head Honcho", sel.get_text("css=employee:nth(1) .generic_editable_field[id$=role] .view_field"))
         self.assertEqual("444-123-7890", sel.get_text("css=employee:nth(1) .generic_editable_field[id$=phone_number] .view_field"))
@@ -501,7 +501,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         self.assertEqual("will_blinkerton@myneworg.org", sel.get_text("css=employee:nth(1) .generic_editable_field[id$=email] .view_field"))        
 
         sel.click("css=employee:nth(1) .delete_contact_btn")
-        self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove William Blinkerton from Test Organization?\n\nThis will not remove William Blinkerton from the database, only from this role at My New Org.")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove William Blinkerton from Test Organization?\n\nThis will not remove William Blinkerton from the database, only from this role at Test Organization.")
         sel.wait_for_page_to_load("30000")
         self.assertEqual("Joyellen Smith", sel.get_text("link=Joyellen Smith"))
         self.assertEqual("Chief Tester", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=role] .view_field"))
