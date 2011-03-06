@@ -26,6 +26,7 @@ STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
+SELENIUM_BROWSER_COMMAND = "*safari"
 
 from os.path import join, abspath
 MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
