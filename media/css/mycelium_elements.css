@@ -269,6 +269,11 @@ new_object_buttons {
 	color: #FE1E00 !important;
 	background-image: url("../images/icon-delete-red-18.png");	
 }
+.mycelium_delete_btn.mycelium_small_btn {
+	padding: 2px 5px 2px 19px;
+	background-position: 4px 3px;
+	background-image: url("../images/icon-delete-grey-12.png");		
+}
 
 table.record_table {
 	width: 100%;
@@ -522,4 +527,12 @@ tags search_results .new_tag_list .similar_tags {
 tags search_results .new_tag_list .similar_tags a {
 	font-size: 15px;
 	padding: 2px 0px;
+}
+.pre_delete {
+	opacity: 0.6;
+	text-decoration: line-through;
+}
+.pre_delete .mycelium_delete_btn {
+	opacity: 1;
+	text-decoration: none;
 }
