@@ -104,6 +104,7 @@ INSTALLED_APPS = (
     'django_nose',
     'djcelery',
     'taggit',
+    'django_jenkins',
 
 
     'cms',
