@@ -74,6 +74,7 @@ function delete_completed_volunteer_from_people_tab() {
 			dataType: "json",
 			success: function(json) {
 			$.Mycelium.fragments.process_fragments_from_json(json);
+            process_fragments_and_rebind_volunteer_shift_form(json);
 			},
 		});		
 	} else {
