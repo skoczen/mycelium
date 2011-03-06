@@ -178,6 +178,83 @@ class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbs
         self.assertEqual(u"6 hours", sel.get_text("css=.year_overview:nth(0) .total_hours"))
 
 
+    def test_that_deleting_shifts_works(self):
+        sel = self.selenium        
+        self.create_new_volunteer_with_one_shift()
+
+        sel.click("css=tabbed_box[name=add_a_volunteer_shift] tab_title")
+        sel.type("css=#id_duration", 8)
+        sel.type("css=#id_date", "1/14/2011")
+        sel.click("css=tabbed_box[name=add_a_volunteer_shift] .add_shift_btn")
+        time.sleep(2)        
+        sel.click("css=tabbed_box[name=add_a_volunteer_shift] tab_title")
+        sel.type("css=#id_duration", 3.75)
+        sel.type("css=#id_date", "12/28/2010")
+        sel.click("css=tabbed_box[name=add_a_volunteer_shift] .add_shift_btn")
+        time.sleep(2)        
+
+        # make sure recent shifts display cleanly
+        self.assertEqual("4 hours", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row .duration"))
+        self.assertEqual("Feb. 11, 2011", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row .shift"))
+
+        self.assertEqual("8 hours", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .duration"))
+        self.assertEqual("Jan. 14, 2011", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .shift"))
+        
+        self.assertEqual(u"3¾ hours", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(2) .duration"))
+        self.assertEqual("Dec. 28, 2010", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(2) .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(2) .shift"))
+                        
+
+        self.assertEqual("2011", sel.get_text("css=.year_overview:nth(0) .year"))
+        self.assertEqual("2 shifts", sel.get_text("css=.year_overview:nth(0) .total_shifts"))
+        self.assertEqual("12 hours", sel.get_text("css=.year_overview:nth(0) .total_hours"))
+
+        self.assertEqual("2010", sel.get_text("css=.year_overview:nth(1) .year"))
+        self.assertEqual("1 shift", sel.get_text("css=.year_overview:nth(1) .total_shifts"))
+        self.assertEqual(u"4 hours", sel.get_text("css=.year_overview:nth(1) .total_hours"))
+
+        sel.click("link=See details")
+        self.assertEqual("4 hours", sel.get_text("css=.year_of_shifts:nth(0) .year_of_volunteer_shifts_table .completed_volunteer_shift_row:nth(0) .duration"))
+        self.assertEqual("Feb. 11, 2011", sel.get_text("css=.year_of_shifts:nth(0) .year_of_volunteer_shifts_table .completed_volunteer_shift_row:nth(0) .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.year_of_shifts:nth(0) .year_of_volunteer_shifts_table .completed_volunteer_shift_row:nth(0) .shift"))
+
+        self.assertEqual("8 hours", sel.get_text("css=.year_of_shifts:nth(0) .year_of_volunteer_shifts_table .completed_volunteer_shift_row:nth(1) .duration"))
+        self.assertEqual("Jan. 14, 2011", sel.get_text("css=.year_of_shifts:nth(0) .year_of_volunteer_shifts_table .completed_volunteer_shift_row:nth(1) .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.year_of_shifts:nth(0) .year_of_volunteer_shifts_table .completed_volunteer_shift_row:nth(1) .shift"))
+        
+        self.assertEqual(u"3¾ hours", sel.get_text("css=.year_of_shifts:nth(1) .year_of_volunteer_shifts_table .completed_volunteer_shift_row .duration"))
+        self.assertEqual("Dec. 28, 2010", sel.get_text("css=.year_of_shifts:nth(1) .year_of_volunteer_shifts_table .completed_volunteer_shift_row .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.year_of_shifts:nth(1) .year_of_volunteer_shifts_table .completed_volunteer_shift_row .shift"))
+
+        sel.choose_cancel_on_next_confirmation()
+        sel.click("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .delete_shift_btn")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove this shift?\n\nPress OK to remove the shift.\nPress Cancel to leave things as-is.")
+        self.assertEqual("4 hours", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row .duration"))
+        self.assertEqual("Feb. 11, 2011", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row .shift"))
+
+        self.assertEqual("8 hours", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .duration"))
+        self.assertEqual("Jan. 14, 2011", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .shift"))
+        
+        self.assertEqual(u"3¾ hours", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(2) .duration"))
+        self.assertEqual("Dec. 28, 2010", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(2) .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(2) .shift"))
+
+        sel.click("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .delete_shift_btn")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove this shift?\n\nPress OK to remove the shift.\nPress Cancel to leave things as-is.")
+        time.sleep(5)
+        self.assertEqual("4 hours", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row .duration"))
+        self.assertEqual("Feb. 11, 2011", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row .shift"))
+
+        self.assertEqual(u"3¾ hours", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .duration"))
+        self.assertEqual("Dec. 28, 2010", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .date"))
+        self.assertEqual("on an unscheduled shift.", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .shift"))
+
+
 
 class TestAgainstGeneratedData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions):
 
