@@ -579,7 +579,6 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
 
         sel.open_window("/people/search", "two")
         sel.select_window("two")
-        sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "john smith 555")
         sel.key_down("css=#id_search_query","5")
