@@ -24,7 +24,7 @@ class PeopleTestAbstractions(object):
     def create_john_smith_and_verify(self):
         sel = self.selenium
         self.create_john_smith()
-        time.sleep(5)
+        time.sleep(6)
         self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
         self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
         sel.click("link=Done")

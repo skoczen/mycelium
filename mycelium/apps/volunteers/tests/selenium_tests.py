@@ -122,6 +122,7 @@ class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbs
         
         sel.click("css=tabbed_box[name=add_a_volunteer_shift] tab_title")
         sel.click("css=#id_date")
+        time.sleep(1)
         assert sel.is_element_present("css=#ui-datepicker-div")
         assert sel.is_visible("css=#ui-datepicker-div")
 
