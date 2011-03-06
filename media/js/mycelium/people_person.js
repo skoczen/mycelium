@@ -170,19 +170,6 @@ function move_tag_results() {
 }
 
 
-function intelligently_show_no_home_contact_info() {
-    var some_contact_info = false;
-    $("#basic_info_form tabbed_box[name=home] input").each(function(){
-        if ($(this).val() != "") {
-            some_contact_info = true;
-        }
-    });
-    if (!some_contact_info) {
-        $("#no_home_contact_info_message").html("No home contact information.");
-    } else {
-        $("#no_home_contact_info_message").html("");
-    }
-}
 
 function delete_person(e) {
     var name = $("#container_id_first_name .view_field").text() + " " + $("#container_id_last_name .view_field").text();

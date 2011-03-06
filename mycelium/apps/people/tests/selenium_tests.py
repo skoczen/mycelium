@@ -19,7 +19,12 @@ class PeopleTestAbstractions(object):
         sel.type("id_city", "Wilsonville")
         sel.type("id_state", "KY")
         sel.type("id_postal_code", "12345")
-        time.sleep(5)        
+        
+
+    def create_john_smith_and_verify(self):
+        sel = self.selenium
+        self.create_john_smith()
+        time.sleep(5)
         self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
         self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
         sel.click("link=Done")
@@ -87,17 +92,17 @@ class PeopleTestAbstractions(object):
         self.assertEqual("503-247.8451", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=phone_number] .view_field"))
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=email] .view_field"))        
         sel.click("css=tabbed_box tab_title")
-        sel.click("//div[@id='detail_tab_contents']/div/tabbed_box/box_content/box_close/a")
+        sel.click("css=tabbed_box box_close a")
 
     def create_new_organization_and_return_to_search(self):
-        sel = self.selenium()
+        sel = self.selenium
         self.create_new_organization()
         sel.click("link=Back to All People and Organizations")
         sel.wait_for_page_to_load("30000")        
 
 
     def create_my_new_organization_with_employee_and_return_to_search(self):
-        sel = self.selenium()
+        sel = self.selenium
         self.create_new_organization_with_employee()
         sel.click("link=Back to All People and Organizations")
         sel.wait_for_page_to_load("30000")        
@@ -320,7 +325,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         self.assertEqual("503-247.8451", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=phone_number] .view_field"))
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=email] .view_field"))        
         sel.click("css=tabbed_box tab_title")
-        sel.click("//div[@id='detail_tab_contents']/div/tabbed_box/box_content/box_close/a")
+        sel.click("css=tabbed_box box_close a")
         sel.click("link=Back to All People and Organizations")
         sel.wait_for_page_to_load("30000")
 
@@ -379,7 +384,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         self.assertEqual("503-247.8451", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=phone_number] .view_field"))
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=email] .view_field"))        
         sel.click("css=tabbed_box tab_title")
-        sel.click("//div[@id='detail_tab_contents']/div/tabbed_box/box_content/box_close/a")
+        sel.click("css=tabbed_box box_close a")
         sel.click("link=Back to All People and Organizations")
         sel.wait_for_page_to_load("30000")
 
@@ -541,7 +546,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         self.assertEqual("503-247.8451", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=phone_number] .view_field"))
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=email] .view_field"))        
         sel.click("css=tabbed_box tab_title")
-        sel.click("//div[@id='detail_tab_contents']/div/tabbed_box/box_content/box_close/a")
+        sel.click("css=tabbed_box box_close a")
         sel.click("link=Back to All People and Organizations")
         sel.wait_for_page_to_load("30000")
 
@@ -560,7 +565,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         sel.open_window("/people/search", "one")
         sel.select_window("one")        
 
-        sel.create_john_smith_and_return_to_search()
+        self.create_john_smith_and_return_to_search()
 
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "john smith 555")

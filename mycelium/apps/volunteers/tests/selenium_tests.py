@@ -9,7 +9,7 @@ class VolunteerTestAbstractions(object):
 
     def create_new_volunteer(self):
         sel = self.selenium
-        self.create_john_smith()
+        self.create_john_smith_and_verify()
         sel.click("css=.detail_tab[href=#volunteer]")
         time.sleep(1)
         assert sel.is_text_present("No volunteer shifts yet")
