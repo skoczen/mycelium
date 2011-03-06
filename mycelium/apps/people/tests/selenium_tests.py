@@ -337,7 +337,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         sel.click("css=search_results .result_row .name a")
         sel.wait_for_page_to_load("30000")
 
-        self.assertEqual("My New Org", sel.get_text("css=tabbed_box[name=job]:nth(0) tab_title text"))
+        self.assertEqual("Test Organization", sel.get_text("css=tabbed_box[name=job]:nth(0) tab_title text"))
         self.assertEqual("Chief Tester", sel.get_text("css=tabbed_box[name=job]:nth(0) box_content .generic_editable_field[id$=role] .view_field"))
         self.assertEqual("503-247.8451", sel.get_text("css=tabbed_box[name=job]:nth(0) box_content .generic_editable_field[id$=phone_number] .view_field"))
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=tabbed_box[name=job]:nth(0) box_content .generic_editable_field[id$=email] .view_field"))
@@ -489,7 +489,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         sel = self.selenium
         sel.choose_cancel_on_next_confirmation()
         sel.click("css=employee:nth(1) .delete_contact_btn")
-        self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove William Blinkerton from My New Org?\n\nThis will not remove William Blinkerton from the database, only from this role at My New Org.")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove William Blinkerton from Test Organization?\n\nThis will not remove William Blinkerton from the database, only from this role at My New Org.")
         self.assertEqual("William Blinkerton", sel.get_text("link=William Blinkerton"))
         self.assertEqual("Head Honcho", sel.get_text("css=employee:nth(1) .generic_editable_field[id$=role] .view_field"))
         self.assertEqual("444-123-7890", sel.get_text("css=employee:nth(1) .generic_editable_field[id$=phone_number] .view_field"))
@@ -501,7 +501,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         self.assertEqual("will_blinkerton@myneworg.org", sel.get_text("css=employee:nth(1) .generic_editable_field[id$=email] .view_field"))        
 
         sel.click("css=employee:nth(1) .delete_contact_btn")
-        self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove William Blinkerton from My New Org?\n\nThis will not remove William Blinkerton from the database, only from this role at My New Org.")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove William Blinkerton from Test Organization?\n\nThis will not remove William Blinkerton from the database, only from this role at My New Org.")
         sel.wait_for_page_to_load("30000")
         self.assertEqual("Joyellen Smith", sel.get_text("link=Joyellen Smith"))
         self.assertEqual("Chief Tester", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=role] .view_field"))
