@@ -13,6 +13,18 @@ $(function(){
 	fragments.options = {
 	    json_dict_name: "fragments"
 	};
+	fragments.get_and_update_fragments = function(url, override_options) {
+	    var default_options = {
+          url: url,
+          type: "POST",
+          dataType: "json",
+          success: function(json) {
+             $.Mycelium.fragments.process_fragments_from_json(json);
+          },
+        }
+        var options =  $.extend(default_options, override_options);
+        $.ajax(options);
+	}
 	
     fragments.process_fragments_from_json = function(json) {
         if (json[fragments.options.json_dict_name] != undefined) {
@@ -25,29 +37,29 @@ $(function(){
 	fragments.process_fragments = function(fragment_dict) {
 	    $("fragment").each(function(){
 	        frag = $(this);
-	        if (fragment_dict.hasOwnProperty(frag.attr("name"))) {
-	           frag.trigger("fragments."+frag.attr("action"), fragment_dict[frag.attr("name")]);
+            if (fragment_dict[frag.attr("name")] != undefined) {
+               frag.trigger("fragments."+frag.attr("action"), {'new_content':fragment_dict[frag.attr("name")], 'target':frag});
 	        }
 	    });
 	    return true;
 	};
 	
-	fragments.replace_content = function(e, new_content) {
-        $(e.target).html(new_content);
+	fragments.replace_content = function(e, d) {
+        $(d.target).html(d.new_content);
 	};
-	fragments.append_content = function(e, new_content) {
-	    $(e.target).append(new_content);
+	fragments.append_content = function(e, new_content, target) {
+	    $(target).append(new_content);
 	};
-	fragments.clear_content = function(e, new_content) {
-        $(e.target).html("");
+	fragments.clear_content = function(e, new_content, target) {
+        $(target).html("");
 	};
     // Default fragment actions:
     // replace
     // append
     // clear
-	$("fragment").bind("fragments.replace",fragments.replace_content);
-	$("fragment").bind("fragments.append",fragments.append_content);
-	$("fragment").bind("fragments.clear",fragments.clear_content);
+	$(document).bind("fragments.replace",fragments.replace_content);
+	$(document).bind("fragments.append",fragments.append_content);
+	$(document).bind("fragments.clear",fragments.clear_content);
 
 	$.Mycelium.fragments = fragments;
 
@@ -295,7 +307,8 @@ $(function(){
                 	 },
 
                 	  error: function() {
-                		alert("error");
+                	    console.log("error")
+                        // alert("Error Saving.");
                 	  }
                 });
             });

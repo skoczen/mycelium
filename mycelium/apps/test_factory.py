@@ -1,5 +1,7 @@
 from qi_toolkit.factory import QiFactory
 from people.models import Person, Organization, Employee
+from volunteers.models import CompletedShift
+import datetime
 
 class DummyObj(object):
     pass
@@ -64,7 +66,21 @@ class Factory(QiFactory):
                 )
         return employee
 
+    @classmethod
+    def volunteer_history(cls, person=None):
+        if not person:
+            person = cls.person()
 
+        days_ago = 0
+        cur_date = datetime.datetime.now()
+        for i in range(0,cls.rand_int(end=300)):
+            cur_date = cur_date - datetime.timedelta(days=cls.rand_int(0,30))
+            cs = CompletedShift.objects.create(volunteer=person.volunteer,
+                                    duration=cls.rand_int(1,16),
+                                    date=cur_date
+            )
+        return person
+        
     @classmethod
     def report(cls):
         o = DummyObj()

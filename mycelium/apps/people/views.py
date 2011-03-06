@@ -1,5 +1,4 @@
 from django.template import RequestContext
-from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
@@ -12,6 +11,11 @@ from django.views.decorators.cache import cache_page
 
 from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy, Employee
 from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
+
+from volunteers.views import _render_people_volunteer_tab 
+from conversations.views import _render_people_conversations_tab
+from donors.views import _render_people_donor_tab
+from recent_activity.views import _render_people_recent_activity_tab 
 
 @render_to("people/search.html")
 def search(request):
@@ -36,6 +40,7 @@ def _basic_forms(person, request):
 
     form             = PersonForm(data, instance=person)
     employee_formset = EmployeeFormset(data, instance=person, prefix="ROLE")
+
 
     return (form, employee_formset)
 
@@ -276,4 +281,22 @@ def new_tag_search_results(request):
             all_tags = Person.tags.filter(name__icontains=q).order_by("name")[:5]
     return {"fragments":{"new_tag_search_results":render_to_string("people/_new_tag_search_results.html", locals())}}
 
-            
+@json_view
+def tab_contents(request, person_id):
+    success = False
+    person = Person.objects.get(pk=person_id)
+    html = None
+    if request.method == "POST" and 'tab_name' in request.POST:
+        tab_name = request.POST['tab_name'].strip()[1:]
+        if tab_name == "conversations":
+            html = _render_people_conversations_tab(locals())
+        elif tab_name == "recent_activity":
+            html = _render_people_recent_activity_tab(locals())
+        elif tab_name == "volunteer":
+            html = _render_people_volunteer_tab(locals())
+        elif tab_name == "donor":
+            html = _render_people_donor_tab(locals())
+    if html:
+        return {"fragments":{"detail_tab":html}}  
+    else:
+        return {}

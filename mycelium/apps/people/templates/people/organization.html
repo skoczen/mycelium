@@ -6,7 +6,7 @@
  <link rel="stylesheet" href="{{ MEDIA_URL }}css/people_organizations.css" type="text/css" media="screen" title="" charset="utf-8">
 {% endblock %}
 {% block javascript %}{{block.super}}
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_common.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_organization.js"> </script>
 {% if request.GET.edit == "ON" or form.instance.full_name == "No Name" %}
 <script type="text/javascript" charset="utf-8">
@@ -59,16 +59,14 @@ $(function(){
 </div>
 	
 	
-<div id="detail_tabs">
+<detail_tabs update_url="">
 	<a class="detail_tab" href="#">Conversations</a>
 	<a class="detail_tab" href="#">Activity</a>
 	<a class="detail_tab current" href="#">People</a>
-	{# <a class="detail_tab" href="#">Participant</a> #}
-	{# <a class="detail_tab current" href="#">Volunteer</a> #}
 	<a class="detail_tab" href="#">Donor</a>
-</div>
-<div id="detail_tab_contents">
-<div class="tab_contents organizations_people">
+</detail_tabs>
+<detail_tab_contents class="organizations_people">
+	<fragment name="detail_tab" action="replace">
 	<tabbed_box class="with_button closed" name="add_a_person">
 		<tab_title_container>	
 		<tab_title>
@@ -85,7 +83,7 @@ $(function(){
 			<div id="search_for_person">
 				{# <section_title>Add a Person</section_title> #}
 				<instructions>Who do you want to add?</instructions>
-				<input type="search" {# results=5 #} name="new_person_name" id="id_search_new_person" placeholder="Type the name of the person you want to add..." results_url="{% url people:add_person_via_organization_search_results %}">
+				<input type="search" {# results=5 #} name="new_person_name" id="id_search_new_person" placeholder="Type the name of the person you want to add..." results_url="{% url people:add_person_via_organization_search_results %}" />
 				<fragment name="new_person_search_results" action="replace">
 					{# {% include "people/_add_person_to_org_results.html" %} #}
 				</fragment>
@@ -159,8 +157,8 @@ $(function(){
 		{{employee_formset.management_form}}
 		</form>
 	</employees>
-</div>
-</div>
+	</fragment>
+</detail_tab_contents>
 <delete_object_block>
 	<form action="{% url people:delete_organization %}" method="POST" id="delete_org_form">{% csrf_token %}
 	<input type="hidden" name="org_pk" value="{{form.instance.pk}}">

@@ -5,6 +5,7 @@
 {% generic_field_css %}
 {% endblock %}
 {% block javascript %}{{block.super}}
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_common.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
 {% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
@@ -77,7 +78,6 @@ $(function(){
 		{{employee_formset.management_form}}
 </div>
 
-
 </form>
 
 <div class="additional_information">
@@ -104,54 +104,18 @@ $(function(){
 </tags>
 
 
-<div id="detail_tabs">
-	<a class="detail_tab" href="#">Conversations</a>
-	<a class="detail_tab" href="#">Activity</a>
-	<a class="detail_tab" href="#">Participant</a>
-	<a class="detail_tab current" href="#">Volunteer</a>
-	<a class="detail_tab" href="#">Donor</a>
-</div>
-<div id="detail_tab_contents">
-	<div class="detail_header">Recent Volunteer Activity</div>
-	{# add btn #}
-	<table class="volunteer_shift_table striped">
-		<tr>
-			<td>3 hours</td>
-			<td>last wednesday</td>
-			<td>on Office Shift</td>
-		</tr>
-		<tr>
-			<td>2 hours</td>
-			<td>Nov 26</td>
-			<td>on Tabling</td>
-		</tr>
-		<tr>
-			<td>6 hours</td>
-			<td>Nov 14</td>
-			<td>on Training</td>
-		</tr>
-	</table>
-	<div class="detail_header">All Volunteer Activity</div>
-	{# add btn #}
-	<table class="volunteer_shift_table striped">
-		<tr>
-			<td>2010</td>
-			<td>83 hours</td>
-			<td><a href="#">See details</a></td>
-		</tr>
-		<tr>
-			<td>2009</td>
-			<td>136 hours</td>
-			<td><a href="#">See details</a></td>
-		</tr>
-		<tr>
-			<td>2008</td>
-			<td>42 hours</td>
-			<td><a href="#">See details</a></td>
-		</tr>
-		
-	</table>
-</div>
+<detail_tabs update_url="{% url people:tab_contents person.pk %}">
+	<a class="detail_tab current" href="#recent_activity">Recent Activity</a>
+	<a class="detail_tab" href="#conversations">Conversations</a>
+	{# <a class="detail_tab" href="#participant">Participant</a> #}
+	<a class="detail_tab" href="#volunteer">Volunteer</a>
+	<a class="detail_tab" href="#donor">Donor</a>
+</detail_tabs>
+<detail_tab_contents>
+	<fragment name="detail_tab" action="replace">
+		{% include "recent_activity/_people_recent_activity_tab.html" %}
+	</fragment>
+</detail_tab_contents>
 <delete_object_block>
 	<form action="{% url people:delete_person %}" method="POST" id="delete_person_form">{% csrf_token %}
 	<input type="hidden" name="person_pk" value="{{form.instance.pk}}">

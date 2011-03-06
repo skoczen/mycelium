@@ -319,14 +319,15 @@ search_results .results_table .best_contact {
 
 
 
-#detail_tabs {
+detail_tabs {
 	width: 98%;
 	margin: 0px auto;
 	text-align: center;
 	height: 49px;
 	clear: both;
+	display: block;
 }
-#detail_tabs a.detail_tab {
+detail_tabs a.detail_tab {
 	display: block;
 	float: left;
 	border: 1px solid #DDD;
@@ -345,7 +346,7 @@ search_results .results_table .best_contact {
 	color: #BBB;
 	border-bottom-width: 0px;
 }
-#detail_tabs a.detail_tab.current {
+detail_tabs a.detail_tab.current {
 	background-color: #FFF;
 	color: #0355aa;
 	padding: 14px 12px 10px 12px;
@@ -353,10 +354,10 @@ search_results .results_table .best_contact {
 	border-color: #999;
 	border-bottom: 1px solid #FFF;	
 }
-#detail_tab_contents {
+detail_tab_contents {
 	width: 94%;
 	margin: 0px auto;
-		
+
 	display: block;
 	border: 1px solid #999;
 	min-height: 100px;
@@ -511,4 +512,64 @@ tabbed_box box_content {
 	text-align: center;
 	padding: 20px 0px 0px 0px;
 	color: #999;
+}
+detail_tab_contents tabbed_box {
+	width: 90%;
+}
+
+#new_completed_volunteer_shift .sentence {
+	margin-top: 5px;
+}
+#new_completed_volunteer_shift .sentence input {
+	background: transparent;
+	text-align: center;
+}
+#new_completed_volunteer_shift .sentence select {
+	margin-left: 0.5em;
+}
+#new_completed_volunteer_shift .duration input {
+/*	min-width: 50px;*/
+}
+#new_completed_volunteer_shift .sentence_fragment {
+	font-size: 18px;
+	bottom: -3px;
+	position: relative;
+	display: inline-block;	
+}
+.volunteer_shift_table {
+	width: 100%;
+}
+.volunteer_shift_table .year {
+	text-align: left;
+	width: 3em;
+	padding-left: 10px;
+}
+.volunteer_shift_table .year_of_shifts {
+	display: none;
+}
+.volunteer_shift_table tr.completed_volunteer_shift_row td {
+	padding-left: 10px;
+}
+.year_of_volunteer_shifts_table {
+	margin: 6px 1%;
+	width: 98%;
+	border: 1px solid #DDD;
+	border-width: 0px 1px 1px 1px;
+}
+.year_overview td {
+	text-align: right;
+}
+.no_records_message {
+	padding: 10px 10px;
+	font-size: 22px;
+	color: #AAA;
+
+}
+tabbed_box[name=add_a_volunteer_shift] {
+	margin-bottom: 10px;
+}
+.tab_content_coming_soon {
+	padding: 10px 10px;
+	font-size: 22px;
+	color: #AAA;
 }

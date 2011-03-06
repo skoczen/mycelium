@@ -39,7 +39,7 @@ LANGUAGES = (
 )
 SITE_ID = 1
 USE_I18N = True
-USE_L10N = True
+# USE_L10N = True
 
 
 
@@ -76,6 +76,10 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     "qi_toolkit.context_processors.add_env_to_request",
     "qi_toolkit.context_processors.add_favicon_to_request",    
 )
+
+DATE_INPUT_FORMATS = ('%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%b %d %Y',
+'%b %d, %Y', '%d %b %Y', '%d %b, %Y', '%B %d %Y',
+'%B %d, %Y', '%d %B %Y', '%d %B, %Y')
 
 ROOT_URLCONF = 'mycelium.urls'
 
@@ -121,15 +125,17 @@ INSTALLED_APPS = (
     'reports',
     'import',
     'logo_maker',
+    'volunteers',
+    'conversations',
+    'donors',
+    'recent_activity',
+
 
     'djangosanetesting',
 )
 
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
     "%stemplates" % (PROJECT_ROOT),
 )
 GOOGLE_ANALYTICS_MODEL = True
