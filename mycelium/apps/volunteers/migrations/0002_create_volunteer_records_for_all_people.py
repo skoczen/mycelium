@@ -3,17 +3,17 @@ import datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
-from volunteers.models import Volunteer
+# from volunteers.models import Volunteer
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
-        Volunteer.make_volunteers_for_each_person()
+        # Volunteer.make_volunteers_for_each_person()
 
     def backwards(self, orm):
         "Write your backwards methods here."
-        Volunteer.objects.all().delete()
+        # Volunteer.objects.all().delete()
 
 
     models = {
