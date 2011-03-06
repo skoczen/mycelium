@@ -11,7 +11,7 @@ from django.views.decorators.cache import cache_page
 
 
 from people.models import Person
-from volunteers.models import Volunteer
+from volunteers.models import Volunteer, CompletedShift
 from volunteers.forms import NewShiftForm
 
 def _render_people_volunteer_tab(context):
@@ -29,6 +29,18 @@ def save_completed_volunteer_shift(request, volunteer_id):
             completed_shift = form.save(commit=False)
             completed_shift.volunteer = volunteer
             completed_shift.save()
+
+    if request.is_ajax():
+        return HttpResponse(simplejson.dumps( {"fragments":{"detail_tab":_render_people_volunteer_tab(locals())}}))
+    else:
+        return HttpResponseRedirect(reverse("people:person",args=(person.pk,)))
+
+
+def delete_completed_volunteer_from_people_tab(request, volunteer_shift_id):
+    cs = CompletedShift.objects.get(pk=volunteer_shift_id)
+    volunteer = cs.volunteer
+    person = volunteer.person
+    cs.delete()
 
     if request.is_ajax():
         return HttpResponse(simplejson.dumps( {"fragments":{"detail_tab":_render_people_volunteer_tab(locals())}}))
