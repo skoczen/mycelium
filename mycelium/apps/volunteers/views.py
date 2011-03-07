@@ -12,11 +12,13 @@ from django.views.decorators.cache import cache_page
 
 from people.models import Person
 from volunteers.models import Volunteer, CompletedShift
-from volunteers.forms import NewShiftForm
+from volunteers.forms import NewShiftForm, VolunteerStatusForm
 
 def _render_people_volunteer_tab(context):
     form = NewShiftForm()
-    context.update({"form":form})
+    status_form = VolunteerStatusForm()
+    all_skills = Volunteer.skills.all()
+    context.update({"form":form,"status_form":status_form,"all_skills":all_skills})
     return render_to_string("volunteers/_people_volunteer_tab.html", RequestContext(context["request"],context))
     
 

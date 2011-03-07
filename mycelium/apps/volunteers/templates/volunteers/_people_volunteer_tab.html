@@ -1,63 +1,86 @@
 {% load i18n generic_fields friendly_data_formatting humanize %}
-<tabbed_box class="with_button closed" name="add_a_volunteer_shift">
-	<tab_title_container>	
-	<tab_title>
-		<text>Add a Volunteer Shift</text>
-	</tab_title>
-	</tab_title_container>
-	<box_content>
-	<form id="new_completed_volunteer_shift" action="{% url volunteers:save_completed_volunteer_shift person.volunteer.pk %}" method="POST">{% csrf_token %}
-	<span class="edit_mode_on">
-		<div class="sentence">
-		<span class="sentence_fragment">Add</span>
-		<span class="duration">{{form.duration}}</span> 
-		<span class="sentence_fragment">hours on</span>
-		<span class="date">{{form.date}}</span> 
-		<span class="sentence_fragment">for</span>
-		<span class="shift">{{form.shift}}</span>
-		<span class="sentence_fragment">. </span>
-		</div>
-		</span>
-		
-		<form_actions>
-			<input type="submit" class="mycelium_btn add_shift_btn" value="Add Shift">
-		</form_actions>
-		<box_close>
-			<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
-		</box_close>
+<table class="two_column_70_30">
+<tr>
+<td class="column_1">
+	<tabbed_box class="with_button closed" name="add_a_volunteer_shift">
+		<tab_title_container>	
+		<tab_title>
+			<text>Add a Volunteer Shift</text>
+		</tab_title>
+		</tab_title_container>
+		<box_content>
+		<form id="new_completed_volunteer_shift" action="{% url volunteers:save_completed_volunteer_shift person.volunteer.pk %}" method="POST">{% csrf_token %}
+		<span class="edit_mode_on">
+			<div class="sentence">
+			<span class="sentence_fragment">Add</span>
+			<span class="duration">{{form.duration}}</span> 
+			<span class="sentence_fragment">hours on</span>
+			<span class="date">{{form.date}}</span> 
+			<span class="sentence_fragment">for</span>
+			<span class="shift">{{form.shift}}</span>
+			<span class="sentence_fragment">. </span>
+			</div>
+			</span>
+			
+			<form_actions>
+				<input type="submit" class="mycelium_btn add_shift_btn" value="Add Shift">
+			</form_actions>
+			<box_close>
+				<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
+			</box_close>
 
-	</form>
-	</box_content>
+		</form>
+		</box_content>
+		</tabbed_box>
 	</tabbed_box>
-</tabbed_box>
 
-{% if person.volunteer.completed_shifts_by_year|length > 0 %}
-<div class="detail_header recent_volunteer_header">Recent Volunteer Activity</div>
-<table class="volunteer_shift_table striped">
-	{% for cs in person.volunteer.completed_shifts|slice:":3" %}
-		{% include "volunteers/_completed_volunteer_shift_row.html" %}
+	{% if person.volunteer.completed_shifts_by_year|length > 0 %}
+	<div class="detail_header recent_volunteer_header">Recent Volunteer Activity</div>
+	<table class="volunteer_shift_table striped">
+		{% for cs in person.volunteer.completed_shifts|slice:":3" %}
+			{% include "volunteers/_completed_volunteer_shift_row.html" %}
+		{% endfor %}
+	</table>
+	{% endif %}
+	<div class="detail_header">All Volunteer Activity</div>
+	<table class="volunteer_shift_table striped">
+		{% for year_of_shifts in person.volunteer.completed_shifts_by_year %}
+		<tr class="year_overview">
+			<td class="year">{{year_of_shifts.year}}</td>
+			<td class="total_shifts">{{year_of_shifts.total_shifts|floatformat:"0"}} shift{{year_of_shifts.total_shifts|pluralize}}</td>
+			<td class="total_hours">{{year_of_shifts.total_hours|floatformat:"0"}} hour{{year_of_shifts.total_hours|pluralize}}</td>
+			<td class="details_link"><a href="#" class="year_details_link">See details</a></td>
+		</tr>
+		<tr class="year_of_shifts">
+			<td colspan="4" >
+				<table class="year_of_volunteer_shifts_table striped">
+					{% for cs in year_of_shifts.shifts %}
+						{% include "volunteers/_completed_volunteer_shift_row.html" %}
+					{% endfor %}
+				</table>
+			</td>
+		</tr>
+		{% empty %}
+			<div class="no_records_message">No volunteer shifts yet!</div>
+		{% endfor %}
+	</table>
+</td>
+<td class="column_2">
+<div class="status_and_skills">
+	Status:
+	{{status_form.as_p}}
+	Skills:
+	{% for s in all_skills %}
+		{{s}}<br/>
 	{% endfor %}
-</table>
-{% endif %}
-<div class="detail_header">All Volunteer Activity</div>
-<table class="volunteer_shift_table striped">
-	{% for year_of_shifts in person.volunteer.completed_shifts_by_year %}
-	<tr class="year_overview">
-		<td class="year">{{year_of_shifts.year}}</td>
-		<td class="total_shifts">{{year_of_shifts.total_shifts|floatformat:"0"}} shift{{year_of_shifts.total_shifts|pluralize}}</td>
-		<td class="total_hours">{{year_of_shifts.total_hours|floatformat:"0"}} hour{{year_of_shifts.total_hours|pluralize}}</td>
-		<td class="details_link"><a href="#" class="year_details_link">See details</a></td>
-	</tr>
-	<tr class="year_of_shifts">
-		<td colspan="4" >
-			<table class="year_of_volunteer_shifts_table striped">
-				{% for cs in year_of_shifts.shifts %}
-					{% include "volunteers/_completed_volunteer_shift_row.html" %}
-				{% endfor %}
-			</table>
-		</td>
-	</tr>
-	{% empty %}
-		<div class="no_records_message">No volunteer shifts yet!</div>
-	{% endfor %}
+	<form action="{% url people:add_person_tag %}" method="POST" id="new_tag_form">{% csrf_token %}
+	<tag class="new_tag">
+		<input type="hidden" name="person_pk" value="{{person.pk}}">
+		<input type="text" name="new_tag" value="" placeholder="Type a new skill" maxlength="100" autocomplete="off" results_url="{% url people:new_tag_search_results %}">
+		<input type="submit" class="mycelium_btn mycelium_small_btn tag_add_btn" value="Add">
+	</tag>
+		
+</div>
+</td>
+</tr>
 </table>

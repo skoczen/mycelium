@@ -28,21 +28,7 @@ function cancel_add_shift() {
 
 function process_fragments_and_rebind_volunteer_shift_form(json) {
         $.Mycelium.fragments.process_fragments_from_json(json);
-        $("#new_completed_volunteer_shift").ajaxForm({
-            "success":process_fragments_and_rebind_volunteer_shift_form,
-            "dataType": 'json'
-        });
-        $("#new_completed_volunteer_shift .sentence input").autoGrowInput({comfortZone: 20, resizeNow:true});
-        $("#new_completed_volunteer_shift input[name$=date]").datepicker({
-            numberOfMonths: 2,
-            showButtonPanel: true,
-            // gotoCurrent: true
-            showCurrentAtPos: 1                
-        });
-        $("tabbed_box[name=add_a_volunteer_shift]").bind("mycelium.tabbed_box.opened",function(){
-            $("#new_completed_volunteer_shift input[name$=duration]").focus()
-        });
-        $.Mycelium.update_stripes(".year_of_shifts");
+        bind_volunteer_tab_events();
 }
 
 function bind_volunteer_tab_events() {
@@ -55,8 +41,9 @@ function bind_volunteer_tab_events() {
         numberOfMonths: 2,
         showButtonPanel: true,
         // gotoCurrent: true
-showCurrentAtPos: 1            
+        showCurrentAtPos: 1            
     });
+    $(".status_and_skills input[name=reactivation_date]").datepicker();    
     $("tabbed_box[name=add_a_volunteer_shift]").bind("mycelium.tabbed_box.opened",function(){
         $("#new_completed_volunteer_shift input[name$=duration]").focus()
     });
