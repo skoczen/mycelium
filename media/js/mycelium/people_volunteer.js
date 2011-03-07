@@ -51,14 +51,14 @@ function bind_volunteer_tab_events() {
     $("#volunteer_status_and_skills").genericFieldForm();
     $.Mycelium.update_stripes(".year_of_shifts");
     show_or_hide_datefield();
-    $(".status_and_skills select[name$=status]").change(show_or_hide_datefield);
+    $(".status_and_skills input[name$=status]").change(show_or_hide_datefield);
 }
 
 function show_or_hide_datefield(){
-    if ($(".status_and_skills select option:selected").val() == "temp_inactive") {
-        $(".status_and_skills .generic_editable_field[id$=reactivation_date]").show();
+    if ($(".status_and_skills input[name$=status]:checked").val() == "temp_inactive") {
+        $(".status_and_skills .reactivation_date").show();
     } else {
-        $(".status_and_skills .generic_editable_field[id$=reactivation_date]").hide()
+        $(".status_and_skills .reactivation_date").hide()
         $(".status_and_skills .generic_editable_field[id$=reactivation_date] input").val("");
     }
 }

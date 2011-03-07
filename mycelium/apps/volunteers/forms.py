@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, RadioSelect
 from volunteers.models import CompletedShift, Volunteer
 from django.forms.models import inlineformset_factory
 
@@ -15,3 +15,6 @@ class VolunteerStatusForm(ModelForm):
     class Meta:
         model = Volunteer
         fields = ("status", "reactivation_date",)
+        widgets = {
+            'status': RadioSelect(),
+        }

@@ -2,6 +2,7 @@
 <table class="two_column_70_30">
 <tr>
 <td class="column_1">
+	<div class="detail_header">Volunteer Shifts</div>
 	<tabbed_box class="with_button closed" name="add_a_volunteer_shift">
 		<tab_title_container>	
 		<tab_title>
@@ -33,16 +34,17 @@
 		</box_content>
 		</tabbed_box>
 	</tabbed_box>
-
+		
 	{% if person.volunteer.completed_shifts_by_year|length > 0 %}
-	<div class="detail_header recent_volunteer_header">Recent Volunteer Activity</div>
+	<div class="detail_header recent_volunteer_header">Recent</div>
 	<table class="volunteer_shift_table striped">
 		{% for cs in person.volunteer.completed_shifts|slice:":3" %}
 			{% include "volunteers/_completed_volunteer_shift_row.html" %}
 		{% endfor %}
 	</table>
 	{% endif %}
-	<div class="detail_header">All Volunteer Activity</div>
+
+	<div class="detail_header">Historical Totals</div>
 	<table class="volunteer_shift_table striped">
 		{% for year_of_shifts in person.volunteer.completed_shifts_by_year %}
 		<tr class="year_overview">
@@ -69,8 +71,8 @@
 <div class="status_and_skills">
 <form id="volunteer_status_and_skills" class="edit_mode_on" action="{% url volunteers:save_status_and_skills person.volunteer.pk %}" method="POST">
 	<div class="detail_header">Status</div>
-		{% generic_editable_field status_form.status %}
-		{% generic_editable_field status_form.reactivation_date %}		
+		<div class="status_field">{% generic_editable_field status_form.status %}</div>
+		<div class="reactivation_date"><span class="question_label">Until</span> {% generic_editable_field status_form.reactivation_date %}</div>
 	
 {% comment %}
 	<div class="detail_header">Skills/Roles</div>

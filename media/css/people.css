@@ -576,3 +576,34 @@ tabbed_box[name=add_a_volunteer_shift] {
 .status_and_skills {
 	padding: 0px 20px;
 }
+.status_and_skills .generic_editable_field li {
+	display: block;
+	float: none;
+	margin-left: 0px;
+}
+.status_and_skills .status_field {
+	margin-top: 2px
+}
+.status_and_skills .status_field .generic_field_label {
+	display: none;
+}
+.status_and_skills .edit_mode_on .edit_field {
+	margin-bottom: 0px;
+}
+.status_and_skills .reactivation_date {
+	padding-left: 21px;
+
+}
+.status_and_skills .reactivation_date .question_label {
+	float: left;
+	padding: 1px 6px 0px 0px;
+
+	font-size: 18px;
+}
+.status_and_skills .reactivation_date .generic_editable_field {
+	float: left;
+}
+.status_and_skills .reactivation_date .generic_editable_field input[name$=reactivation_date] {
+	width: 120px;
+/*	text-align: center;*/
+}
