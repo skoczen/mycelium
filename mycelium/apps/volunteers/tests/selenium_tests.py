@@ -254,6 +254,36 @@ class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbs
         self.assertEqual("Dec. 28, 2010", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .date"))
         self.assertEqual("on an unscheduled shift.", sel.get_text("css=.volunteer_shift_table .completed_volunteer_shift_row:nth(1) .shift"))
 
+    def test_changing_status(self):
+        sel = self.selenium
+        self.create_new_volunteer()
+        sel.click("css=.status_field input[id$=status_0]")
+        time.sleep(0.25)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.detail_tab[href=#volunteer]")
+        time.sleep(1)
+        assert sel.is_element_present("css=.status_field input[id$=status_0]:checked")
+
+        sel.click("css=.status_field label[for$=status_1]")
+        time.sleep(0.25)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.detail_tab[href=#volunteer]")
+        time.sleep(1)
+        assert sel.is_element_present("css=.status_field input[id$=status_1]:checked")
+
+        sel.click("css=.status_field label[for$=status_2]")
+        sel.wait(1)
+        sel.type("css=.status_field input[name$=reactivation_date]", "01/2/2010")
+        time.sleep(0.25)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.detail_tab[href=#volunteer]")
+        time.sleep(1)
+        assert sel.is_element_present("css=.status_field input[id$=status_1]:checked")
+        self.assertEqual(sel.get_value("css=.status_field input[name$=reactivation_date]"),"01/02/2010")
+
 
 
 class TestAgainstGeneratedData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions):

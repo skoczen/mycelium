@@ -220,7 +220,7 @@ $(function(){
                 data.previous_serialized_str = data.form.serialize();
                 $this.data('genericFieldForm',data)
                 
-                // bind to window close, confirm if there's anything in the ajax queue
+                // bind to window close, save if there's anything in the ajax queue
                 $(window).unload(function(){
                     data.async = false;
                     data.target.genericFieldForm('save_form');
