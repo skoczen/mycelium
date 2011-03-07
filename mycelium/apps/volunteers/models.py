@@ -8,15 +8,17 @@ import datetime
 
 VOLUNTEER_STATII = [
     ("active", "Active"),
-    ("inactive", "Active"),
+    ("inactive", "Inactive"),
     ("temp_inactive", "Temporarily Inactive"),
 ]
 
 class Volunteer(TimestampModelMixin):
     """A volunteer!"""
     person = models.OneToOneField(Person)
-    status = models.CharField(max_length=50,default=VOLUNTEER_STATII[0])
+    status = models.CharField(max_length=50,default=VOLUNTEER_STATII[0], choices=VOLUNTEER_STATII)
     reactivation_date = models.DateField(blank=True, null=True)
+
+    skills = TaggableManager()
 
     def __unicode__(self):
         return "%s" % self.person

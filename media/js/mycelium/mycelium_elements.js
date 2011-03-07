@@ -210,6 +210,9 @@ $(function(){
                 $(data.options.last_save_time_class,data.target).hide();
                 $("input", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save')});
                 $("input", data.target).live("keyup",  function(){data.target.genericFieldForm('queue_form_save')});
+                $("textarea", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save')});
+                $("textarea", data.target).live("keyup",  function(){data.target.genericFieldForm('queue_form_save')});                
+                $("select", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save')});
                 $("input", data.target).autoGrowInput({comfortZone: 30, resizeNow:true});
 
                 $(data.options.save_and_status_btn_class, data.target).live("click", function(){data.target.genericFieldForm('save_and_status_btn_clicked')});
@@ -217,7 +220,7 @@ $(function(){
                 data.previous_serialized_str = data.form.serialize();
                 $this.data('genericFieldForm',data)
                 
-                // bind to window close, confirm if there's anything in the ajax queue
+                // bind to window close, save if there's anything in the ajax queue
                 $(window).unload(function(){
                     data.async = false;
                     data.target.genericFieldForm('save_form');
@@ -267,7 +270,7 @@ $(function(){
                     data = $this.data('genericFieldForm');
 
                 // if any fields have changed
-                var ser = $("input",data.form).serialize();
+                var ser = $("input, select, textarea",data.form).serialize();
 
                 if (data.previous_serialized_str != ser) {
                     data.previous_serialized_str = ser;
@@ -286,12 +289,12 @@ $(function(){
                 $(data.options.last_save_time_class).html(data.options.last_saved_saving_text).fadeIn(50);
                 $(data.options.save_and_status_btn_class).html(data.options.saving_text).removeClass(data.options.save_now_class);
                 var save_start_time = new Date();
-                $.ajax({
+                $(data.form).ajaxSubmit({
                   url: data.save_url,
                   type: data.save_method,
                   dataType: "json",
                   async: data.async,
-                  data: $.param( $("input",data.form) ),
+                  // data: $.param( $("input",data.form) ),
                 	  success: function(json) {
                 		$(".generic_editable_field",data.target).each(function(){
                 			var field = $(this);

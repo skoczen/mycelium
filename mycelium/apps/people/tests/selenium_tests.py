@@ -280,7 +280,6 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         sel.click("link=Done")
         sel.click("link=Back to All People")
         sel.wait_for_page_to_load("30000")
-        sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Organization 555123")
         sel.key_down("css=#id_search_query","g")

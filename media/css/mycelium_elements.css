@@ -536,3 +536,14 @@ tags search_results .new_tag_list .similar_tags a {
 	opacity: 1;
 	text-decoration: none;
 }
+table.two_column_70_30 {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+.two_column_70_30 .column_1 {
+	width: 70%
+}
+.two_column_70_30 .column_2 {
+	width: 30%
+}
