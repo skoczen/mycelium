@@ -67,9 +67,13 @@
 </td>
 <td class="column_2">
 <div class="status_and_skills">
-	Status:
-	{{status_form.as_p}}
-	Skills:
+<form id="volunteer_status_and_skills" class="edit_mode_on" action="{% url volunteers:save_status_and_skills person.volunteer.pk %}" method="POST">
+	<div class="detail_header">Status</div>
+		{% generic_editable_field status_form.status %}
+		{% generic_editable_field status_form.reactivation_date %}		
+	
+{% comment %}
+	<div class="detail_header">Skills/Roles</div>
 	{% for s in all_skills %}
 		{{s}}<br/>
 	{% endfor %}
@@ -79,7 +83,8 @@
 		<input type="text" name="new_tag" value="" placeholder="Type a new skill" maxlength="100" autocomplete="off" results_url="{% url people:new_tag_search_results %}">
 		<input type="submit" class="mycelium_btn mycelium_small_btn tag_add_btn" value="Add">
 	</tag>
-		
+	</form>
+{% endcomment %}
 </div>
 </td>
 </tr>

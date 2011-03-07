@@ -573,3 +573,6 @@ tabbed_box[name=add_a_volunteer_shift] {
 	font-size: 22px;
 	color: #AAA;
 }
+.status_and_skills {
+	padding: 0px 20px;
+}
