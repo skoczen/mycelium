@@ -7,7 +7,7 @@ parser = dselector.Parser()
 url = parser.url
 
 urlpatterns = parser.patterns('',                      
-    url(r'{donor_id:digits}/save-new-donation$',		        views.save_completed_donor_shift,               name='save_new_donation'),
+    url(r'{donor_id:digits}/save-new-donation$',		        views.save_new_donation,		                name='save_new_donation'),
 	url(r'{donation_id:digits}/delete-donation$',     	  		views.delete_donation_from_people_tab,     		name='delete_donation_from_people_tab'),
 
 )

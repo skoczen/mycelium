@@ -1,3 +1,65 @@
-<div class="tab_content_coming_soon">
-	Donor info is coming soon (like next week!)
-</div>
+{% load i18n generic_fields friendly_data_formatting humanize %}
+<tab_contents class="people_donor_tab">
+<div class="detail_header">Donations</div>
+<tabbed_box class="with_button closed" name="add_a_donation">
+	<tab_title_container>	
+	<tab_title>
+		<text>Add a Donation</text>
+	</tab_title>
+	</tab_title_container>
+	<box_content>
+	<form id="new_donation" action="{% url donors:save_new_donation person.donor.pk %}" method="POST">{% csrf_token %}
+	<span class="edit_mode_on">
+		<div class="sentence">
+		<span class="sentence_fragment">Add donation of $</span>
+		<span class="duration">{{donation_form.amount}}</span> 
+		<span class="sentence_fragment">on</span>
+		<span class="date">{{donation_form.date}}</span> 
+		<span class="sentence_fragment">. </span>
+		</div>
+		</span>
+		
+		<form_actions>
+			<input type="submit" class="mycelium_btn add_donation_btn" value="Add Donation">
+		</form_actions>
+		<box_close>
+			<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
+		</box_close>
+
+	</form>
+	</box_content>
+	</tabbed_box>
+</tabbed_box>
+	
+{% if person.donor.donations_by_year|length > 0 %}
+<div class="detail_header recent_donor_header">Recent</div>
+<table class="donor_donation_table striped">
+	{% for d in person.donor.donations|slice:":3" %}
+		{% include "donors/_donation_row.html" %}
+	{% endfor %}
+</table>
+{% endif %}
+
+<div class="detail_header">Historical Totals</div>
+<table class="donor_donation_table striped">
+	{% for year_of_donations in person.donor.donations_by_year %}
+	<tr class="year_overview">
+		<td class="year">{{year_of_donations.year}}</td>
+		<td class="total_number_of_donations">{{year_of_donations.total_donations|floatformat:"0"}} donation{{year_of_donations.total_number_of_donations|pluralize}}</td>
+		<td class="total_donations">totalling ${{year_of_donations.total_donations|floatformat:"2"}}</td>
+		<td class="details_link"><a href="#" class="year_details_link">See details</a></td>
+	</tr>
+	<tr class="year_of_donations">
+		<td colspan="4" >
+			<table class="year_of_donor_donations_table striped">
+				{% for d in year_of_donations.donations %}
+					{% include "donors/_donation_row.html" %}
+				{% endfor %}
+			</table>
+		</td>
+	</tr>
+	{% empty %}
+		<div class="no_records_message">No donations yet!</div>
+	{% endfor %}
+</table>
+</tab_contents>

@@ -78,6 +78,7 @@ function detail_tab_clicked(e) {
             "async": false,
         });
         bind_volunteer_tab_events();
+        bind_donor_tab_events();
         prev_tab_name = tab_name;
     }
     return false;

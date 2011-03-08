@@ -46,11 +46,12 @@ class Donor(TimestampModelMixin):
         current_year = 0
         cur_year_dict = {}
         donations_this_year = 0
+        number_of_donations_this_year = 0
         for donation in self.donations:
             if donation.date.year != current_year:
                 if cur_year_dict != {}:
                     cur_year_dict['total_donations'] = donations_this_year
-
+                    cur_year_dict["total_number_of_donations"] = number_of_donations_this_year
                     donations_by_year.append(cur_year_dict)
 
                 current_year = donation.date.year
@@ -62,10 +63,12 @@ class Donor(TimestampModelMixin):
                 }
 
             cur_year_dict["donations"].append(donation)
+            number_of_donations_this_year += 1
             donations_this_year += donation.amount
         
         if cur_year_dict != {}:
             cur_year_dict['total_donations'] = donations_this_year
+            cur_year_dict["total_number_of_donations"] = number_of_donations_this_year            
             donations_by_year.append(cur_year_dict)
         return donations_by_year
 

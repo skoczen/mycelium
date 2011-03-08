@@ -14,6 +14,7 @@ def test_donations_by_year_returns_sanely():
 
     target = [{'donations': [d1, d2],
           'total_donations': d1.amount+d2.amount,
+          'total_number_of_donations':2,
           'year': today.year
     }]
     

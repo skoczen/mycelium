@@ -10,6 +10,7 @@ from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
 from donors.forms import NewDonationForm
+from donors.models import Donor
 
 def _render_people_donor_tab(context):
     donation_form = NewDonationForm()
