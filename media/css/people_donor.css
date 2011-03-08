@@ -44,7 +44,6 @@ tab_contents.people_donor_tab .no_records_message {
 	padding: 10px 10px;
 	font-size: 22px;
 	color: #AAA;
-
 }
 tab_contents.people_donor_tab tabbed_box[name=add_a_donation] {
 	margin-bottom: 10px;
