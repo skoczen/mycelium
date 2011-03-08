@@ -1,0 +1,6 @@
+{% for t in donor.alphabetical_tags %}
+<tag>
+	<a href="{% url donors:remove_donor_tag donor.pk %}?tag={{t.name|urlencode}}" class="remove_tag_link"> </a>
+	<name>{{t.name}}</name>
+</tag>
+{% endfor %}

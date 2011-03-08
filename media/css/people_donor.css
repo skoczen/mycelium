@@ -52,3 +52,20 @@ tab_contents.people_donor_tab tabbed_box[name=add_a_donation] {
 tab_contents.people_donor_tab .delete_donation {
 	text-align: right;
 }
+tab_contents.people_donor_tab fragment[name=donor_tags] {
+	padding: 10px;
+}
+tab_contents.people_donor_tab fragment[name=donor_tags] tag {
+	clear: both;
+}
+tab_contents.people_donor_tab .new_tag {
+	display: block;
+	clear: both;
+}
+tab_contents.people_donor_tab .section_details {
+	display: block;
+	padding: 10px;
+}
+tab_contents.people_donor_tab .tags_and_other_info {
+	padding: 0px 20px;
+}

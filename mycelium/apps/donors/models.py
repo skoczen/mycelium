@@ -32,6 +32,10 @@ class Donor(TimestampModelMixin):
             d = Donor.objects.get_or_create(person=instance)[0]
             d.save()
     
+    @property
+    def alphabetical_tags(self):
+        return self.tags.all().order_by("name")
+    
     @classmethod
     def make_donors_for_each_person(cls):
         [cls.make_each_person_a_donor(Person,p,True) for p in Person.objects.all()]
