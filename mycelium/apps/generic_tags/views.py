@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 
 class TagViews(object):
     TargetModel = None
-    fragment_name = None
+    namespace_name = None
     default_redirect_url = None
     default_redirect_args = None
 
@@ -18,11 +18,11 @@ class TagViews(object):
             raise "_get_model_tag_field not defined!"
         # return Model
     
-    def _fragment_name(self):
-        if self.fragment_name:
-            return self.fragment_name
+    def _namespace_name(self):
+        if self.namespace_name:
+            return self.namespace_name
         else:
-            raise "_fragment_name not defined!"
+            raise "_namespace_name not defined!"
 
     def _default_redirect_url(self):
         if self.default_redirect_url:
@@ -38,7 +38,7 @@ class TagViews(object):
 
     def _update_with_tag_fragments(self, context):
         c = {
-            "fragments":{self._fragment_name(): render_to_string("generic_tags/_tag_list.html", RequestContext(context["request"],context)),},
+            "fragments":{"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_list.html", RequestContext(context["request"],context)),},
             "success": context["success"],
         }
         return c
@@ -73,10 +73,10 @@ class TagViews(object):
         return self._return_fragments_or_redirect(request,locals())
 
 
-    def new_tag_search_results(request):
+    def new_tag_search_results(self, request):
         all_tags = False
         if 'q' in request.GET:
             q = request.GET['q']
             if q != "":
                 all_tags = self._TargetModel().tags.filter(name__icontains=q).order_by("name")[:5]
-        return HttpResponse(simplejson.dumps({"fragments":{"new_tag_search_results":render_to_string("generic_tags/_new_tag_search_results.html", locals())}}))
+        return HttpResponse(simplejson.dumps({"fragments":{"new_%s_tag_search_results" % self._namespace_name():render_to_string("generic_tags/_new_tag_search_results.html", locals())}}))

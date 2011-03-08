@@ -1,7 +1,7 @@
 <fragment name="{{namespace_string}}_tags" action="replace">
 	{% include "generic_tags/_tag_list.html" %}
 </fragment>
-<form action="{{add_tag_url}}" method="POST" id="new_{{namespace_string}}_tag_form">{% csrf_token %}
+<form action="{{add_tag_url}}" method="POST" id="new_{{namespace_string}}_tag_form" class="new_tag_form" >{% csrf_token %}
 <tag class="new_tag">
 	<input type="hidden" name="target_pk" value="{{obj.pk}}">
 	<input type="text" name="new_tag" value="" placeholder="Type a new tag" maxlength="100" autocomplete="off" results_url="{{search_results_url}}">

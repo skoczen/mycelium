@@ -48,7 +48,7 @@ def delete_donation_from_people_tab(request, donation_id):
 
 class DonorTagViews(TagViews):
     TargetModel = Donor
-    fragment_name = "donor_tags"
+    namespace_name = "donor"
     default_redirect_url = "people:person"
     def _default_redirect_args(self, context):
         return (context["obj"].person.pk,)
