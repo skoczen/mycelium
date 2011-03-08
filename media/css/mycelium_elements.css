@@ -91,7 +91,7 @@ record_list {
 form_actions {
 	display: block;
 	clear: both;
-	width: 100%;
+	width: 96%;
 	padding: 20px 10px 0px 10px;	
 }
 add_another {
@@ -116,6 +116,7 @@ breadcrumb {
 	left: -34px;
 	top: -13px;
 	float: left;
+	box-shadow: 0px 1px 2px rgba(0,0,0,0.55);
 	-moz-box-shadow: 0px 1px 2px rgba(0,0,0,0.55);
 	-khtml-box-shadow: 0px 1px 2px rgba(0,0,0,0.55);
 	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.55);
@@ -156,6 +157,10 @@ breadcrumb:hover {
 .breadcrumb_container:hover .triangle-l {
 	border-color: transparent #003A8D transparent transparent;	
     z-index: -1;
+}
+new_object_buttons {
+	display: block;
+	padding: 10px;
 }
 #page {
 	display: block;
@@ -211,7 +216,7 @@ breadcrumb:hover {
 	background-color: #0044A8;
 	color: #FFF;	
 }
-.mycelium_small_btn {
+.mycelium_small_btn, input.mycelium_small_btn {
 	font-size: 12px;
 	padding: 3px 6px;
 }
@@ -220,13 +225,26 @@ breadcrumb:hover {
 	border-color: #EEE;
 	background-color: #EEE;
 	color: #999;
-	text-shadow: 1px 1px 2px rgba(240,240,240,0.2);		
+	text-shadow: 1px 1px 2px rgba(240,240,240,0.2);
 }
-.mycelium_gray:hover, .mycelium_grey:hover {
-	border-color: #DDD;
+.mycelium_gray:hover, .mycelium_grey:hover, input.mycelium_gray:hover, input.mycelium_grey:hover, a.mycelium_gray:hover, a.mycelium_grey:hover {
+	border-color: #EEE;
+	background-color: #EEE;
+	color: #999;
+}
+
+.mycelium_active_gray, .mycelium_active_grey, input.mycelium_active_gray, input.mycelium_active_grey, a.mycelium_active_gray, a.mycelium_active_grey {
+	border-color: #EEE;
 	background-color: #DDD;
 	color: #454545;
+	text-shadow: 1px 1px 2px rgba(240,240,240,0.2);
 }
+.mycelium_active_gray:hover, .mycelium_active_grey:hover, input.mycelium_active_gray:hover, input.mycelium_active_grey:hover, a.mycelium_active_gray:hover, a.mycelium_active_grey:hover {
+	border-color: #DDD;
+	background-color: #CCC;
+	color: #454545;
+}
+
 .mycelium_left_arrow_btn, .mycelium_left_arrow_btn:hover {
 	padding: 5px 12px 5px 25px ;
 	background-color: transparent;
@@ -239,6 +257,23 @@ breadcrumb:hover {
 }
 .mycelium_left_arrow_btn:hover {
 	color: #0044A8;
+}
+.mycelium_delete_btn {
+	padding: 5px 12px 5px 29px ;
+	background-color: #DDD;
+	background-image: url("../images/icon-delete-grey-18.png");	
+	background-position: 5px 6px;
+	background-repeat: no-repeat;
+}
+.mycelium_delete_btn:hover {
+	background-color: #E2E2E2 !important;
+	color: #FE1E00 !important;
+	background-image: url("../images/icon-delete-red-18.png");	
+}
+.mycelium_delete_btn.mycelium_small_btn {
+	padding: 2px 5px 2px 19px;
+	background-position: 4px 3px;
+	background-image: url("../images/icon-delete-grey-12.png");		
 }
 
 table.record_table {
@@ -254,4 +289,262 @@ table.record_table td {
 }
 table.striped tr.even td {
 	background-color: #F2F2F2;
+}
+save_status_and_button {
+	position: absolute;
+	right: 10px;
+	top: 4px;
+}
+fragment {
+	position: relative;
+}
+
+tabbed_box {
+	display: block;
+	position: relative;	
+	overflow: visible;
+}
+tabbed_box tab_title_container {
+	display: block;
+	width: 100%;
+	margin: 0px;
+	height: 34px;
+	position: relative;
+}
+tabbed_box tab_title {
+	display: block;
+	float: left;
+	border: 1px solid #999;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+
+	text-decoration: none;
+	background-color: #F8F8F8;
+	color: #0355aa;
+	border-bottom: 1px solid #FFF;
+	font-size: 18px;
+	margin: 0px;
+	padding: 5px 11px 3px 11px;
+	cursor: pointer;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+	position: absolute;
+	bottom: -1px;
+}
+tabbed_box.open tab_title {
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;	
+	border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+}
+tabbed_box.with_button tab_title {
+	border: 1px solid #004486;
+	background-color: #004486;
+	color: #FFF;
+	padding: 5px 11px;
+	cursor: pointer;
+}
+tabbed_box.with_button.open tab_title {
+	background-color: #3E9CFD;
+	border-color: #3E9CFD;
+	color: #FFF;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+}
+tabbed_box tab_title icon {
+	display: block;
+	float: left;
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	width: 24px;
+	height: 22px;
+	margin-right: 3px;
+}
+tabbed_box tab_title icon.home {
+	background-image: url("../images/icon-home-22h.png");	
+	background-position: 0px 2px;
+}
+tabbed_box tab_title icon.company {
+	background-image: url("../images/icon-business-grey-22h.png");	
+	background-position: 3px 2px;
+}
+tabbed_box tab_title text {
+	float:right;
+	padding-top: 2px;
+}
+tabbed_box box_content {
+	display: block;
+	width: 96%;
+	margin: 0px;
+	border: 1px solid #DDD;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-top-left-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	-webkit-border-top-left-radius: 0px;	
+	
+	background-color: #EEE;
+	padding: 10px 2%;
+
+	min-height: 60px;
+	overflow: auto;
+	
+}
+tabbed_box.with_button.closed box_content {
+	display: none;
+}
+tabbed_box.with_button.open box_content {
+	display: block;
+	border-color: #3E9CFD;	
+}
+tabbed_box box_close {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	z-index: 200;
+}
+
+delete_object_block {
+	display: block;
+	padding: 10px;
+}
+
+tags {
+	display: block;
+	width: 96%;
+	overflow: auto;
+	padding: 20px;
+}
+
+tag {
+	display: block;
+	float: left;
+	background-image: url("../images/tag-24h.png");	
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	color: #FFF;
+	padding: 2px 0px 5px 15px;
+	margin: 0px 4px;
+}
+tag .remove_tag_link {
+	display: block;
+	float: right;
+	width: 18px;
+	height: 18px;
+	color: #95ADC0;
+	margin: 2px 3px 2px 0px;
+	text-decoration: none;
+	background-image: url("../images/icon-delete-lightblue-15.png");
+	background-repeat: no-repeat;
+}
+tag .remove_tag_link:hover {
+	background-image: url("../images/icon-delete-lightblue-hover-15.png");
+}
+tags label {
+	display: block;
+	float: left;
+	font-size: 18px;
+}
+tag name {
+	margin-right: 5px;
+	white-space: nowrap;
+}
+tag.new_tag {
+	background-image: url("../images/tag-new-24.png");
+	text-decoration: none;
+	padding-top: 0px;
+}
+tag.new_tag name {
+	margin: 0px 10px 0px 5px;
+}
+tag.new_tag input[type=text] {
+	margin: 0px 4px 0px 0px ;
+	padding: 0px 2px;
+	font-size: 14px;
+	color: #FFF;
+	background-color: #535FB0;
+	background-color: rgba(255,255,255,0.3);
+	border: 1px solid #000486;
+	border-width: 0px 0px 1px 0px;
+/*	min-width: 30px;*/
+	
+}
+tag.new_tag input::-webkit-input-placeholder { color: #DDD; }
+tag.new_tag input:-moz-placeholder { color: #DDD; }
+tag.new_tag input:focus { 
+	color: #FFF; 
+	outline-style:none;
+	background-color: #535FB0;
+	background-color: rgba(255,255,255,0.2);
+	
+}
+tag.new_tag .tag_add_btn {
+	display: none;
+	padding: 1px 5px;
+	margin: 0px 5px 0px 0px;
+	background-color: #035DCD;
+	border: 0px;
+}
+tag.new_tag .tag_add_btn:hover {
+	background-color: #2669FE;	
+}
+tags form#new_tag_form {
+	position: relative;
+}
+tags search_results {
+	position: fixed;
+	display: block;
+	width: auto;
+}
+tags search_results .new_tag_list {
+	margin-top: 10px;
+	width: auto;
+	display: block;
+	z-index: 60;
+	background-color: #EEE;
+	background-color: rgba(255,255,255,0.85);
+	border: 1px solid #535FB0;
+	border-width: 0px 1px 1px 1px;
+	padding: 5px;
+	display: none;	
+	box-shadow: 		0px 1px 2px rgba(0,0,0,0.35);
+	-moz-box-shadow:	0px 1px 2px rgba(0,0,0,0.35);
+	-khtml-box-shadow: 	0px 1px 2px rgba(0,0,0,0.35);
+	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.35);
+
+}
+tags search_results .tag_suggestion_link {
+	display: block;
+}
+tags search_results .new_tag_list list_title {
+	color: #888;
+	font-size: 15px;
+
+}
+tags search_results .new_tag_list .similar_tags {
+	padding: 0px 5px 5px 5px;
+}
+tags search_results .new_tag_list .similar_tags a {
+	font-size: 15px;
+	padding: 2px 0px;
+}
+.pre_delete {
+	opacity: 0.6;
+	text-decoration: line-through;
+}
+.pre_delete .mycelium_delete_btn {
+	opacity: 1;
+	text-decoration: none;
+}
+table.two_column_70_30 {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+.two_column_70_30 .column_1 {
+	width: 70%
+}
+.two_column_70_30 .column_2 {
+	width: 30%
 }

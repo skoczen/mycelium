@@ -1,7 +1,7 @@
 fabric
-psycopg2
-# mysql-python
-pysqlite
+#psycopg2
+mysql-python
+#pysqlite
 PIL
 python-memcached
 django >=1.2
@@ -10,7 +10,7 @@ gunicorn
 pyparsing
 django-xmlrpc
 akismet
-django-tagging
+django-taggit
 BeautifulSoup
 django-extensions
 -e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit  > 0.3.1
@@ -30,3 +30,6 @@ nose-exclude
 south
 -e git://github.com/Almad/django-sane-testing.git#egg=djangosanetesting
 cherrypy
+celery
+django-celery
+-e git://github.com/kmmbvnr/django-jenkins.git#egg=django-jenkins

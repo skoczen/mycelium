@@ -1,79 +1,22 @@
 {% extends "people/base.html" %}
 {% block title %}People - Search{% endblock %}
+{% block breadcrumb %}{% endblock %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
-$(function(){
-	$('#id_search_query').toggleVal({populateFrom:"custom", text:"Type in a name, phone number, or email..."}).addClass("prefilled");
-	$("#id_search_query").live("keydown",queue_searching);
-	update_stripes();
-	$("#id_search_query").bind('keyup', 'return', open_if_only_result);
-});
-var q;
-var search_timeout;
-function queue_searching() {
-	clearTimeout(search_timeout);
-	search_timeout = setTimeout(update_search, 50);
-}
-function update_search() {
-	q = $("#id_search_query").val();
-	$.ajax({
-	  url: "{% url people:search_results %}",
-	  type: "GET",
-	  dataType: "json",
-	  data: {'q':q},
-	  mode: 'abort',
-	  success: function(json) {
-		$(".search_results").html(json.html);
-		highlight_search_terms(q);
-		update_stripes();
-	 },
-	});
-}
-function highlight_search_terms(q) {
-	var space_queries = q.split(" ");
-	highlight_regexes = [];
-	for (var j in space_queries) {
-		var q = space_queries[j];
-		if (q != "") {
-			highlight_regexes.push(new RegExp(q, "gi"));
-
-			var dash_queries = q.split("-");
-			if (dash_queries.length > 1) {
-				for (var k in dash_queries) {
-					if (dash_queries[k] != "") {
-						highlight_regexes.push(new RegExp(dash_queries[k], "gi"));
-					}
-				}
-			}
-		}
-	}
-	$(".highlightable").each(function(){
-		var text = $(this).text();
-		for (var j in highlight_regexes) {
-			text = text.replace(highlight_regexes[j], '<b>$&</b>')
-		}
-		$(this).html(text);
-	});
-
-}
-function update_stripes() {
-	$(".result_row:even").addClass("even");
-	$(".result_row:odd").addClass("odd");
-}
-function open_if_only_result(e) {
-	if ($(".results_table").length == 1 && $(".results_table tr.result_row").length == 1) {
-		document.location = $(".results_table tr.result_row td.name a").attr("href");
-	}
-}
+	var SEARCH_URL = "{% url people:search_results %}";
 </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_search.js"> </script>
 {% endblock %}
-{% block breadcrumb %}{% endblock %}
 {% block page_content %}
 <div class="main_search_box">
+	<label for="id_search_query">Search:</label> <input type="search" name="search_query" id="id_search_query" placeholder="Type in a name, phone number, or email..." autofocus />
+</div>
+<new_object_buttons>
 	<a href="{% url people:new_person %}" class="new_person_btn mycelium_btn">New Person</a>
-	<label for="id_search_query">Search:</label> <input name="search_query" id="id_search_query" />
-</div>
-<div class="search_results">
+	<a href="{% url people:new_organization %}" class="new_organization_btn mycelium_btn">New Organization</a>	
+</new_object_buttons>
+<search_results><fragment name="main_search_results" action="replace">
 	{% include "people/_search_results.html" %}
-</div>
+</fragment>
+</search_results>
 {% endblock %}

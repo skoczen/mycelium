@@ -12,9 +12,9 @@ class Migration(SchemaMigration):
         db.alter_column('people_person', 'qi_simple_searchable_search_field', self.gf('django.db.models.fields.TextField')(null=True))
 
         # Adding index on 'Person', fields ['qi_simple_searchable_search_field']
-        db.create_index('people_person', ['qi_simple_searchable_search_field'])
-        from qi_toolkit import models as qi_models
-        qi_models.resave_searchable_models()
+        # db.create_index('people_person', ['qi_simple_searchable_search_field'])
+        # from qi_toolkit import models as qi_models
+        # qi_models.resave_searchable_models()
 
 
     def backwards(self, orm):
@@ -24,8 +24,8 @@ class Migration(SchemaMigration):
 
         # Changing field 'Person.qi_simple_searchable_search_field'
         db.alter_column('people_person', 'qi_simple_searchable_search_field', self.gf('django.db.models.fields.CharField')(default='', max_length=255))
-        from qi_toolkit import models as qi_models
-        qi_models.resave_searchable_models()
+        # from qi_toolkit import models as qi_models
+        # qi_models.resave_searchable_models()
 
     models = {
         'people.address': {

@@ -1,0 +1,32 @@
+#!/bin/sh
+# chkconfig: 2345 20 80
+# description: The Celery start-stop-script
+#
+# for /etc/default/celeryd
+# via http://tumblr.whatupderek.com/post/1072002968/celery-django-and-virtualenv-playing-nice
+# and http://ask.github.com/celery/cookbook/daemonizing.html
+
+# we could have three nodes:
+#CELERYD_NODES="w1 w2 w3"
+
+# Where to chdir at start.
+CELERYD_CHDIR="/var/www/mycelium.git/mycelium"
+
+DJANGO_SETTINGS_MODULE="envs.live"
+CELERYD_OPTS="-v 2 -B -s --time-limit 300 --concurrency=8 celery -E"
+CELERYD_LOG_FILE="/root/.virtualenvs/mycelium/logs/celery.log"
+
+# How to call "manage.py celeryd_multi"
+CELERYD_MULTI="/root/.virtualenvs/mycelium/bin/python2.6 $CELERYD_CHDIR/manage.py celeryd_multi"
+CELERYD="/root/.virtualenvs/mycelium/bin/python2.6 $CELERYD_CHDIR/manage.py celeryd"
+
+
+# %n will be replaced with the nodename.
+CELERYD_LOG_FILE="/var/log/celery/%n.log"
+CELERYD_PID_FILE="/var/run/celery/%n.pid"
+
+# Workers should run as an unprivileged user.
+# CELERYD_USER="celery"
+# CELERYD_GROUP="celery"
+
+

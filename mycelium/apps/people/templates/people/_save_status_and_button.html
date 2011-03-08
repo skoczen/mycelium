@@ -1,0 +1,8 @@
+{% load i18n friendly_data_formatting %}<save_status_and_button>
+<a href="#" class="mycelium_btn start_edit_btn" >{% if not edit_label %}Edit Person{% else %}{{edit_label}}{% endif %}</a>
+<a href="#" class="mycelium_btn edit_done_btn " >Done</a>
+<a href="#" class="mycelium_btn save_and_status_btn mycelium_grey" >Saved</a>
+<span class="save_info">
+	<span class="last_save_time">Last changed {{form.instance.modified_at|pretty_timesince}}.</span>
+</span>
+</save_status_and_button>

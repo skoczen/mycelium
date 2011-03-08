@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
 <link rel="stylesheet" href="{{ MEDIA_URL }}css/mycelium_elements.css" type="text/css" media="screen" title="" charset="utf-8">
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/contrib/jquery-ui-1.8.10.custom.css" type="text/css" media="screen" title="" charset="utf-8">
 {% endblock %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.scrollTo-min.js"> </script>
@@ -8,6 +9,7 @@
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.hotkeys-0.7.9.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.ajax.queue.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.autogrow.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.form.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/mycelium_elements.js"> </script>
 {% endblock %}
 {% block content %}
@@ -18,10 +20,12 @@
 	</logo>
 	<main_nav>{% spaceless %}
 		<a href="{% url people:search %}" {% if not section %}class="current"{% endif %}>People</a>
-		<a href="#">Fund{# Multiply #}</a>
-		<a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports{# Yardstick #}</a>
-		<a href="#">Communicate{# Soapbox #}</a>
-		<a href="#">Events{# Shindig #}</a>
+		<a href="#">Volunteers</a>
+		<a href="#">Donors</a>
+		{# <a href="#">Fund</a> #}
+		<a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports</a>
+		<a href="#">Communicate</a>
+		{# <a href="#">Events</a> #}
 		<a href="{% url core:more_menu %}" class="{% if section == "more" %}current{% endif %}">More</a>
 	{% endspaceless %}</main_nav>
 	{% endblock %}

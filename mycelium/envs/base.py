@@ -42,14 +42,7 @@ LANGUAGES = (
 )
 SITE_ID = 1
 USE_I18N = True
-USE_L10N = True
-
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#         'LOCATION': '127.0.0.1:11211',
-#     }
-# }
+# USE_L10N = True
 
 
 
@@ -87,11 +80,11 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     "qi_toolkit.context_processors.add_favicon_to_request",    
 )
 
-ROOT_URLCONF = 'mycelium.urls'
+DATE_INPUT_FORMATS = ('%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%b %d %Y',
+'%b %d, %Y', '%d %b %Y', '%d %b, %Y', '%B %d %Y',
+'%B %d, %Y', '%d %B %Y', '%d %B, %Y')
 
-TEMPLATE_DIRS = (
-    # Don't forget to use absolute paths, not relative paths.
-)
+ROOT_URLCONF = 'mycelium.urls'
 
 
 INSTALLED_APPS = (
@@ -112,6 +105,9 @@ INSTALLED_APPS = (
     'gunicorn',
     'sorl.thumbnail',
     'django_nose',
+    'djcelery',
+    'taggit',
+    'django_jenkins',
 
 
     'cms',
@@ -133,15 +129,17 @@ INSTALLED_APPS = (
     'reports',
     'import',
     'logo_maker',
+    'volunteers',
+    'conversations',
+    'donors',
+    'recent_activity',
+
 
     'djangosanetesting',
 )
 
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
     "%stemplates" % (PROJECT_ROOT),
 )
 GOOGLE_ANALYTICS_MODEL = True
@@ -169,9 +167,7 @@ NOSE_ARGS = ['--where=apps', '-s']
 
 FORCE_SELENIUM_TESTS = False
 SELENIUM_BROWSER_COMMAND = "*safari"
-LIVE_SERVER_PORT = 8009
-# SELENIUM_URL_ROOT = "http:/127.0.0.1:8009"
-# URL_ROOT_SERVER_ADDRESS = "127.0.0.1"
+LIVE_SERVER_PORT = 8099
 
 
 SOUTH_LOGGING_ON = True
@@ -179,3 +175,14 @@ SOUTH_LOGGING_FILE = "/dev/null"
 
 THUMBNAIL_FORMAT = "PNG"
 THUMBNAIL_COLORSPACE = None
+
+# celery / rabbitmq
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = "mycelium"
+BROKER_PASSWORD = "68WXmV6K49r8veczVaUK"
+BROKER_VHOST = "digitalmycelium"
+
+CELERY_RESULT_BACKEND = "amqp"
+import djcelery
+djcelery.setup_loader()

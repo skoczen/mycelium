@@ -1,0 +1,6 @@
+{% load i18n generic_fields friendly_data_formatting humanize %}<tr class="striped_row completed_volunteer_shift_row">
+	<td class="duration">{{cs.duration|html_fraction|safe}} hour{{cs.duration|pluralize}}</td>
+	<td class="date">{{cs.date|naturalday}}</td>
+	<td class="shift">{% if cs.shift %} on {{cs.shift}}{% else %}on an unscheduled shift.{% endif %}</td>
+	<td class="delete_shift"><a href="{% url volunteers:delete_completed_volunteer_from_people_tab cs.pk %}" class="delete_shift_btn mycelium_delete_btn mycelium_active_grey mycelium_small_btn mycelium_btn">Delete Shift</a></td>	
+</tr>

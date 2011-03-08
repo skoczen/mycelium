@@ -1,0 +1,10 @@
+#error_message {
+	width: 60%;
+	margin: 40px auto;
+}
+#error_message .adorable_image {
+	text-align: center;
+}
+#error_message h1 {
+	text-align: center;
+}

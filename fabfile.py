@@ -32,7 +32,8 @@ setup_env_webfaction("mycelium","skoczen",
                 overrides={
                     'git_origin':"http://mycelium.skoczen.webfactional.com/mycelium.git",
                     # 'dry_run':True,
-                    'local_working_path':"~/workingCopy/goodcloud"
+                    'local_working_path':"~/workingCopy/goodcloud",
+                    'disable_known_hosts': True,
                 },
                 )
 

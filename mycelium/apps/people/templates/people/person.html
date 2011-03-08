@@ -5,193 +5,122 @@
 {% generic_field_css %}
 {% endblock %}
 {% block javascript %}{{block.super}}
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_common.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_volunteer.js"> </script>
+{% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
-	$(function(){
-		$(".save_info a").hide();
-
-		$(".switch").click(toggle_edit);
-		$("body").bind('keydown', 'ctrl+e', toggle_edit);
-		$("body").bind('keydown', 'alt+e', toggle_edit);
-		$("body").bind('keydown', 'meta+e', toggle_edit);
-		$("body").bind('keydown', 'ctrl+f', focus_search);
-		// $("input").check_width();
-		$(".last_save_time").hide();
-		$("form input").live("change", save_basic_form)
-		$("form input").autoGrowInput({comfortZone: 30, resizeNow:true});
-
-		$(".save_now_btn").live("click", save_basic_form)
-		
-		$("#id_page_top_search").bind("keydown", function(){
-			setTimeout(function(){
-				if ($("#id_page_top_search").val() == "") {
-					$(".small_search .nyi").fadeOut();
-				} else {
-					$(".small_search .nyi").fadeIn();
-				}
-			}, 100)
-		});
-		{% if request.GET.edit == "ON" %}
-		toggle_edit();
-		{% endif %}
-		intelligently_show_hide_comma();
-	});
-	function toggle_edit(){
-		var box = $(".switch_box");
-		if (box.hasClass("off")) {
-			box.removeClass("off").addClass("on");
-			$(".basic_info.view").hide();
-			$(".basic_info.edit").show();
-			$(".save_info a").show();
-			$("#basic_info_form").removeClass("edit_mode_off").addClass("edit_mode_on");
-			$(".last_save_time").fadeIn();
-			$(".city_state_comma").show();
-		} else {
-			box.removeClass("on").addClass("off");
-			$(".basic_info.view").show();
-			$(".basic_info.edit").hide();
-			$(".save_info a").hide();
-			$("#basic_info_form").addClass("edit_mode_off").removeClass("edit_mode_on");
-			intelligently_show_hide_comma();
-		}
-		return false;
-	}
-	function focus_search(){
-		$("#id_page_top_search").focus();
-	}
-	function intelligently_show_hide_comma() {
-		if ($("#container_id_city .view_field").html() != "" && $("#container_id_state .view_field").html() != "") {
-			$(".city_state_comma").show();	
-		} else {
-			$(".city_state_comma").hide();
-		}
-	}
-	var saving_timeout;
-	function save_basic_form() {
-		savingTimeout = setTimeout(function(){$(".last_save_time").html("Saving...");},200);
-		$.ajax({
-		  url: $("#basic_info_form").attr("action"),
-		  type: "POST",
-		  dataType: "json",
-		  data: $.param( $("#basic_info_form input") ),
-			  success: function(json) {
-				clearTimeout(savingTimeout);
-				$(".generic_editable_field").each(function(){
-					var field = $(this);
-					$(".view_field",field).html($(".edit_field input",field).val());
-				});
-				$(".last_save_time").hide();
-				$(".last_save_time").html("Last saved a few seconds ago.").fadeIn();
-			 },
-		
-			  error: function() {
-				clearTimeout(savingTimeout);
-				alert("error");
-			  },
-		});
-	}
+$(function(){
+    $("#basic_info_form").genericFieldForm('toggle_edit');
+	$("#id_first_name").focus();
+});
 </script>
+{% endif %}
+
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
 {% block page_content %}
-<div id="page_header">
-	<div class="small_search">
-		<input id="id_page_top_search" name="page_top_search" />
-		<div class="nyi"><img src="{{MEDIA_URL}}images/up-pointout-arrow-20.png"/> Sorry, this part isn't done yet!</div>
-	</div>
-
-	<span class="switch">
-		<div class="left_label">Edit</div>
-		<div class="switch_box off">
-		<div class="left_switch">on</div>
-		<div class="right_switch">off</div>
-		</div>
-		<div class="right_label"></div>
-	</span>
-	<span class="save_info">
-		<span class="last_save_time">Last saved {{person.modified_at|pretty_timesince}}.</span>
-		{# <a href="#" class="mycelium_btn myelium_gray save_now_btn">Save Now</a> #}
-	</span>
-</div>
+<form action="{% url people:person_save_basic person.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
+{% include "people/_save_status_and_button.html" %}
 
 
-<form action="{% url people:person_save_basic person.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
+
 <div class="basic_info">
 	<div class="name_phone_email">
 		<div class="name">
 			{% generic_editable_field form.first_name %}
 			{% generic_editable_field form.last_name %}
 		</div>
-		{% generic_editable_field phone_form.phone_number %}
-		{% generic_editable_field_email email_form.email %}
 	</div>
-	<div class="address">
-		{% generic_editable_field address_form.line_1 %}
-		{% generic_editable_field address_form.line_2 %}
+		<tabbed_box class="open" name="home">
+			<tab_title_container>
+			<tab_title>
+				<icon class="home"></icon>
+				<text>Home</text>
+			</tab_title>
+			</tab_title_container>
+			<box_content>
+				<div id="no_home_contact_info_message"></div>
+				<div class="phone_email">
+				{% generic_editable_field form.phone_number %}
+				{% generic_editable_field_email form.email %}
+				</div>
+			<div class="address">
+				{% generic_editable_field form.line_1 %}
+				{% generic_editable_field form.line_2 %}
 
-		<div class="city_state_zip">
-			{% generic_editable_field address_form.city %}<span class="city_state_comma">,</span>
-			{% generic_editable_field address_form.state %}
-			{% generic_editable_field address_form.postal_code %}
-		</div>
-	
-	</div>
+				<div class="city_state_zip">
+					{% generic_editable_field form.city %}<span class="city_state_comma">,</span>
+					{% generic_editable_field form.state %}
+					{% generic_editable_field form.postal_code %}
+				</div>
 
+			</div>
+			</box_content>
+		</tabbed_box>
+		{% for e_form in employee_formset.forms %}
+		<tabbed_box class="open" name="job">
+			<tab_title_container>
+			<a href="{% url people:organization e_form.instance.organization.pk %}">
+			<tab_title>
+				<icon class="company"></icon>
+				<text>{{e_form.instance.organization}}</text>
+			</tab_title>
+			</a>
+			</tab_title_container>
+			<box_content>
+				{% generic_editable_field e_form.role %}
+				{% generic_editable_field e_form.phone_number %}
+				{% generic_editable_field_email e_form.email %}
+				{% for f in e_form.hidden_fields %}{{f}}{% endfor %}
+			</box_content>
+		</tabbed_box>
+		{% endfor %}
+		{{employee_formset.management_form}}
 </div>
-</form>
 
-{# {% include "people/_basic_view.html" %} #}
-{# {% include "people/_basic_edit.html" %} #}
+</form>
 
 <div class="additional_information">
 	{# Extra emails, phone #s, Addresses #}
 </div>
-	
-	
-<div id="detail_tabs">
-	<a class="detail_tab" href="#">Conversations</a>
-	<a class="detail_tab" href="#">Participant</a>
-	<a class="detail_tab current" href="#">Volunteer</a>
-	<a class="detail_tab" href="#">Donor</a>
-</div>
-<div id="detail_tab_contents">
-	<div class="detail_header">Recent Volunteer Activity</div>
-	{# add btn #}
-	<table class="volunteer_shift_table striped">
-		<tr>
-			<td>3 hours</td>
-			<td>last wednesday</td>
-			<td>on Office Shift</td>
-		</tr>
-		<tr>
-			<td>2 hours</td>
-			<td>Nov 26</td>
-			<td>on Tabling</td>
-		</tr>
-		<tr>
-			<td>6 hours</td>
-			<td>Nov 14</td>
-			<td>on Training</td>
-		</tr>
-	</table>
-	<div class="detail_header">All Volunteer Activity</div>
-	{# add btn #}
-	<table class="volunteer_shift_table striped">
-		<tr>
-			<td>2010</td>
-			<td>83 hours</td>
-			<td><a href="#">See details</a></td>
-		</tr>
-		<tr>
-			<td>2009</td>
-			<td>136 hours</td>
-			<td><a href="#">See details</a></td>
-		</tr>
-		<tr>
-			<td>2008</td>
-			<td>42 hours</td>
-			<td><a href="#">See details</a></td>
-		</tr>
-		
-	</table>	
-</div>
+
+<tags>
+	<label>Tags:</label>
+	<fragment name="person_tags" action="replace">
+		{% include "people/_person_tags.html" %}
+	</fragment>
+	<form action="{% url people:add_person_tag %}" method="POST" id="new_tag_form">{% csrf_token %}
+	<tag class="new_tag">
+		<input type="hidden" name="person_pk" value="{{person.pk}}">
+		<input type="text" name="new_tag" value="" placeholder="Type a new tag" maxlength="100" autocomplete="off" results_url="{% url people:new_tag_search_results %}">
+		<input type="submit" class="mycelium_btn mycelium_small_btn tag_add_btn" value="Add">
+	</tag>
+	<search_results>
+	<fragment name="new_tag_search_results" action="replace">
+
+	</fragment>
+	</search_results>
+	</form>
+</tags>
+
+
+<detail_tabs update_url="{% url people:tab_contents person.pk %}">
+	<a class="detail_tab current" href="#recent_activity">Recent Activity</a>
+	<a class="detail_tab" href="#conversations">Conversations</a>
+	{# <a class="detail_tab" href="#participant">Participant</a> #}
+	<a class="detail_tab" href="#volunteer">Volunteer</a>
+	<a class="detail_tab" href="#donor">Donor</a>
+</detail_tabs>
+<detail_tab_contents>
+	<fragment name="detail_tab" action="replace">
+		{% include "recent_activity/_people_recent_activity_tab.html" %}
+	</fragment>
+</detail_tab_contents>
+<delete_object_block>
+	<form action="{% url people:delete_person %}" method="POST" id="delete_person_form">{% csrf_token %}
+	<input type="hidden" name="person_pk" value="{{form.instance.pk}}">
+	<a href="#" class="mycelium_btn mycelium_active_grey mycelium_delete_btn person_delete_btn" >Delete this Person</a>
+	</form>
+</delete_object_block>
 {% endblock %}
