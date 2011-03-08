@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     'conversations',
     'donors',
     'recent_activity',
+    'generic_tags',
 
 
     'djangosanetesting',

@@ -1,4 +1,4 @@
-{% load i18n generic_fields friendly_data_formatting humanize %}
+{% load i18n generic_fields friendly_data_formatting humanize generic_tags %}
 <tab_contents class="people_donor_tab">
 <table class="two_column_70_30">
 <tr>
@@ -70,21 +70,7 @@
 <div class="tags_and_other_info">
 	<div class="detail_header">Donor Categories</div>
 	<div class="section_details">
-	<fragment name="donor_tags" action="replace">
-		{% include "donors/_donor_tags.html" %}
-	</fragment>
-	<form action="{% url donors:add_donor_tag %}" method="POST" id="new_donor_tag_form">{% csrf_token %}
-	<tag class="new_tag">
-		<input type="hidden" name="donor_pk" value="{{person.donor.pk}}">
-		<input type="text" name="new_tag" value="" placeholder="Type a new tag" maxlength="100" autocomplete="off" results_url="{% url donors:new_tag_search_results %}">
-		<input type="submit" class="mycelium_btn mycelium_small_btn tag_add_btn" value="Add">
-	</tag>
-	<search_results>
-	<fragment name="new_donor_tag_search_results" action="replace">
-
-	</fragment>
-	</search_results>
-	</form>
+	{% render_tags_and_add_tag donor "donor" "donors" %}
 	</div>
 </div>
 </td>

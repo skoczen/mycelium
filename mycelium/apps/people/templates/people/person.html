@@ -1,5 +1,5 @@
 {% extends "people/base.html" %}
-{% load i18n generic_fields friendly_data_formatting %}
+{% load i18n generic_fields friendly_data_formatting generic_tags %}
 {% block title %}People - {{person.full_name}}{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
@@ -11,6 +11,7 @@
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_volunteer.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_donations.js"> </script>
+{% generic_tags_js %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
 $(function(){

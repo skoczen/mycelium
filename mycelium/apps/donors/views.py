@@ -11,6 +11,7 @@ from django.views.decorators.cache import cache_page
 
 from donors.forms import NewDonationForm
 from donors.models import Donor
+from generic_tags.views import TagViews
 
 def _render_people_donor_tab(context):
     donation_form = NewDonationForm()
@@ -35,7 +36,6 @@ def save_new_donation(request, donor_id):
             new_donation.save()
 
     return _return_fragments_or_redirect(request,locals())
-    
 
 def delete_donation_from_people_tab(request, donation_id):
     d = Donation.objects.get(pk=donation_id)
@@ -44,52 +44,13 @@ def delete_donation_from_people_tab(request, donation_id):
     d.delete()
 
     return _return_fragments_or_redirect(request,locals())
-    
 
 
+class DonorTagViews(TagViews):
+    TargetModel = Donor
+    fragment_name = "donor_tags"
+    default_redirect_url = "people:person"
+    def _default_redirect_args(self, context):
+        return (context["obj"].person.pk,)
 
-def _update_with_tag_fragments(context):
-    d = {
-        "fragments":{'donor_tags': render_to_string("donors/_donor_tags.html", RequestContext(context["request"],context)),},
-        "success": context["success"],
-    }
-    return d
-
-def add_donor_tag(request):
-    success = False
-    if request.method == "POST":
-        pk = int(request.POST['donor_pk'])
-        new_tag = request.POST['new_tag'].strip().lower()
-        if new_tag != "":
-            donor = Donor.objects.get(pk=pk)
-            donor.tags.add(new_tag)
-            success = True
-
-    if request.is_ajax():
-        return HttpResponse(simplejson.dumps(_update_with_tag_fragments(locals())))
-    else:
-        return HttpResponseRedirect(reverse("people:person",args=(donor.person.pk,)))
-
-
-def remove_donor_tag(request, donor_id):
-    success = False
-    if request.method == "GET":
-        tag = request.GET['tag'].strip().lower()
-        if tag != "":
-            donor = Donor.objects.get(pk=donor_id)
-            donor.tags.remove(tag)
-            success = True
-
-    if request.is_ajax():
-        return HttpResponse(simplejson.dumps(_update_with_tag_fragments(locals())))
-    else:
-        return HttpResponseRedirect(reverse("people:person",args=(donor.person.pk,)))
-
-@json_view
-def new_tag_search_results(request):
-    all_tags = False
-    if 'q' in request.GET:
-        q = request.GET['q']
-        if q != "":
-            all_tags = Donor.tags.filter(name__icontains=q).order_by("name")[:5]
-    return {"fragments":{"new_tag_search_results":render_to_string("people/_new_tag_search_results.html", locals())}}
+tag_views = DonorTagViews()
