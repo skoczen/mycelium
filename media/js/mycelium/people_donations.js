@@ -48,7 +48,7 @@ function bind_donor_tab_events() {
     });
     $.Mycelium.update_stripes(".year_of_donations");
     show_or_hide_datefield();
-    $(".tags_and_other_info").genericTags();
+    $(".people_donor_tab .tags_and_other_info").genericTags();
 }
 
 function delete_donor_from_people_tab() {

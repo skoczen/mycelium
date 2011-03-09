@@ -31,9 +31,9 @@
                     
                 data.new_input_field.bind("keyup",function(e){
                     if ($(e.target).val() != "") {
-                        $(".tag_add_btn",$(e.target).parents(".new_tag")).show();
+                        $(".tag_add_btn",data.target).show();
                     } else {
-                        $(".tag_add_btn",$(e.target).parents(".new_tag")).hide();
+                        $(".tag_add_btn",data.target).hide();
                     }
                 });
 
@@ -51,15 +51,12 @@
                 }
                 data.move_tag_results = function() {
                     if (data){
-                        console.log(data.new_input_field)
+                        console.log(data)
                         if (data.new_input_field.length) {
                             var o = data.new_input_field.offset();
-                            console.log(o)
                             $("tags search_results",data.target).offset({"top":o.top+10, "left":o.left});
                         }                
-                    } else {
                     }
-                    
                 }
                 data.set_tag_results_fadeout = function (t, timeout) {
                     if (timeout === undefined) {
@@ -67,7 +64,7 @@
                     }
                     data.tag_fadeout_timeout = setTimeout(function(){
                         t.hide();
-                        t.parents("search_results").removeClass("visible");
+                        $("search_results",data.target).removeClass("visible");
                     }, timeout);
                 }
 
