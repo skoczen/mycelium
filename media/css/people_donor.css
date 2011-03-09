@@ -68,3 +68,8 @@ tab_contents.people_donor_tab .section_details {
 tab_contents.people_donor_tab .tags_and_other_info {
 	padding: 0px 20px;
 }
+tab_contents.people_donor_tab tags {
+	width: 100%;
+	overflow: auto;
+	padding: 0px;
+}

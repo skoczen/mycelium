@@ -36,11 +36,49 @@
                         $(".tag_add_btn",$(e.target).parents(".new_tag")).hide();
                     }
                 });
+
+                data.new_tag_results = function(){
+                    if (data){
+                        data.move_tag_results();
+                        var list = $("tags search_results", data.target);
+                        if (!list.hasClass("visible")) {
+                            list.addClass("visible");
+                            $(".new_tag_list",list).fadeIn();
+                        } else {
+                            $(".new_tag_list",list).show();
+                        }                
+                    }        
+                }
+                data.move_tag_results = function() {
+                    if (data){
+                        console.log(data.new_input_field.length)
+                        if (data.new_input_field.length) {
+                            var o = data.new_input_field.offset();
+                            console.log(o)
+                            $("tags search_results",data.target).offset({"top":o.top+10, "left":o.left});
+                        }                
+                    } else {
+                    }
+                    
+                }
+                data.set_tag_results_fadeout = function (t, timeout) {
+                    if (timeout === undefined) {
+                        timeout = data.options.default_fade_timeout;
+                    }
+                    data.tag_fadeout_timeout = setTimeout(function(){
+                        t.hide();
+                        t.parents("search_results").removeClass("visible");
+                    }, timeout);
+                }
+
+                data.clear_tag_results_fadeout = function() {
+                    clearTimeout(data.tag_fadeout_timeout);
+                }
                 $(data.options.form_selector, data.target).ajaxForm({
                     success: function(json){
                         $.Mycelium.fragments.process_fragments_from_json(json);
                         data.new_input_field.val("");
-                        data.target.genericTags('set_tag_results_fadeout', $(".new_tag_list", data.target),0)
+                        data.set_tag_results_fadeout($(".new_tag_list", data.target),0);
                     },
                     dataType: 'json'
                 });
@@ -60,73 +98,30 @@
                     search_url: data.new_input_field.attr("results_url"),
                     results_element: $("fragment[name=new_tag_search_results]", data.target),
                     striped_results: false,
-                    results_processed_callback: data.target.genericTags('new_tag_results'),
+                    results_processed_callback: data.new_tag_results,
                 });
                 $("tags a.tag_suggestion_link", data.target).live("click",function(){
-                    data.target.genericTags('clear_tag_results_fadeout');
+                    data.clear_tag_results_fadeout();
                     data.new_input_field.val($(this).text());
-                    data.target.genericTags('set_tag_results_fadeout', $(".new_tag_list", data.target),10);
+                    data.set_tag_results_fadeout($(".new_tag_list", data.target),10);
                     return false;
                 });
                 data.new_input_field.bind("focus",function(){
-                    data.target.genericTags('clear_tag_results_fadeout');
+                    data.clear_tag_results_fadeout();
                     if ($(this).val() != "") {
                         data.target.genericTags('new_tag_results');
                     }
                 });
                 data.new_input_field.bind("blur",function(){
-                    data.target.genericTags('set_tag_results_fadeout', $(".new_tag_list", data.target));
+                    data.set_tag_results_fadeout($(".new_tag_list", data.target));
                 });
-                data.target.genericTags('move_tag_results');
+                data.move_tag_results(data.target);
 
                 $this.data('genericTags',data)
             });
         },
        
-        set_tag_results_fadeout: function (t, timeout) {
-            var $this = $(this),
-                data = $this.data('genericTags');
-            if (timeout === undefined) {
-                timeout = data.options.default_fade_timeout;
-            }
-            data.tag_fadeout_timeout = setTimeout(function(){
-                t.hide();
-                t.parents("search_results").removeClass("visible");
-            }, timeout);
-        },
 
-        clear_tag_results_fadeout: function() {
-            var $this = $(this),
-                data = $this.data('genericTags');
-            clearTimeout(data.tag_fadeout_timeout);
-        },
-        new_tag_results: function(){
-            var $this = $(this),
-                data = $this.data('genericTags');
-            if (data){
-                data.target.genericTags('move_tag_results');
-                var list = $("tags search_results", data.target);
-                if (!list.hasClass("visible")) {
-                    list.addClass("visible");
-                    $(".new_tag_list",list).fadeIn();
-                } else {
-                    $(".new_tag_list",list).show();
-                }                
-            }        
-        },
-        move_tag_results: function() {
-
-            var $this = $(this),
-                data = $this.data('genericTags');
-            if (data){
-                if (data.new_input_field.length) {
-                    var o = data.new_input_field.offset();
-                    $("tags search_results").offset({"top":o.top+10, "left":o.left});
-                }                
-            } else {
-            }
-            
-        },
     };
 
 
