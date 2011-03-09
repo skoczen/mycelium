@@ -51,7 +51,6 @@
                 }
                 data.move_tag_results = function() {
                     if (data){
-                        console.log(data)
                         if (data.new_input_field.length) {
                             var o = data.new_input_field.offset();
                             $("tags search_results",data.target).offset({"top":o.top+10, "left":o.left});
