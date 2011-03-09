@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
-
+from generic_tags.views import TagViews
 
 from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy, Employee
 from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
@@ -203,83 +203,24 @@ def add_person_via_organization_search_results(request):
 
 
 
-def _update_with_tag_fragments(context):
-    d = {
-        "fragments":{'person_tags': render_to_string("people/_person_tags.html", RequestContext(context["request"],context)),},
-        "success": context["success"],
-    }
-    return d
+class PersonTagViews(TagViews):
+    TargetModel = Person
+    namespace_name = "person"
+    default_redirect_url = "people:person"
+    def _default_redirect_args(self, context):
+        return (context["obj"].pk,)
 
-def add_person_tag(request):
-    success = False
-    if request.method == "POST":
-        pk = int(request.POST['person_pk'])
-        new_tag = request.POST['new_tag'].strip().lower()
-        if new_tag != "":
-            person = Person.objects.get(pk=pk)
-            person.tags.add(new_tag)
-            success = True
+person_tag_views = PersonTagViews()
 
-    if request.is_ajax():
-        return HttpResponse(simplejson.dumps(_update_with_tag_fragments(locals())))
-    else:
-        return HttpResponseRedirect(reverse("people:person",args=(person.pk,)))
+class OrganizationTagViews(TagViews):
+    TargetModel = Organization
+    namespace_name = "organization"
+    default_redirect_url = "people:person"
+    def _default_redirect_args(self, context):
+        return (context["obj"].pk,)
 
+org_tag_views = OrganizationTagViews()
 
-def add_organization_tag(request):
-    success = False    
-    if request.method == "POST":
-        pk = int(request.POST['org_pk'])
-        new_tag = request.POST['new_tag'].strip().lower()
-        if new_tag != "":
-            org = Organization.objects.get(pk=pk)
-            org.tags.add(new_tag)
-            success = True
-            
-    if request.is_ajax():
-        return json_view(_update_with_tag_fragments(locals()))
-    else:
-        return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))
-
-
-def remove_person_tag(request, person_id):
-    success = False
-    if request.method == "GET":
-        tag = request.GET['tag'].strip().lower()
-        if tag != "":
-            person = Person.objects.get(pk=person_id)
-            person.tags.remove(tag)
-            success = True
-
-    if request.is_ajax():
-        return HttpResponse(simplejson.dumps(_update_with_tag_fragments(locals())))
-    else:
-        return HttpResponseRedirect(reverse("people:person",args=(person.pk,)))
-
-
-def remove_organization_tag(request, org_id):
-    success = False
-    if request.method == "POST":
-        tag = request.POST['tag'].strip().lower()
-        if tag != "":
-            org = Organization.objects.get(pk=org_id)
-            org.tags.remove(tag)
-            success = True
-
-    if request.is_ajax():
-        return json_view(_update_with_tag_fragments(locals()))
-    else:
-        return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))
-
-@json_view
-def new_tag_search_results(request):
-    # all_tags = Person.tags.all()
-    all_tags = False
-    if 'q' in request.GET:
-        q = request.GET['q']
-        if q != "":
-            all_tags = Person.tags.filter(name__icontains=q).order_by("name")[:5]
-    return {"fragments":{"new_tag_search_results":render_to_string("people/_new_tag_search_results.html", locals())}}
 
 @json_view
 def tab_contents(request, person_id):
