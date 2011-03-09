@@ -20,6 +20,8 @@ $(function(){
     $("employee").genericFieldForm();
     $(".delete_contact_btn").live("click", confirm_employee_removal);
     $(".org_delete_btn").live("click",delete_organization);
+
+    $(".general_organization_tags").genericTags();        
 });
 
 function start_add_new_person_to_org() {

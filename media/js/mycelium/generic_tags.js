@@ -51,7 +51,7 @@
                 }
                 data.move_tag_results = function() {
                     if (data){
-                        console.log(data.new_input_field.length)
+                        console.log(data.new_input_field)
                         if (data.new_input_field.length) {
                             var o = data.new_input_field.offset();
                             console.log(o)
@@ -109,7 +109,7 @@
                 data.new_input_field.bind("focus",function(){
                     data.clear_tag_results_fadeout();
                     if ($(this).val() != "") {
-                        data.target.genericTags('new_tag_results');
+                        data.new_tag_results();
                     }
                 });
                 data.new_input_field.bind("blur",function(){

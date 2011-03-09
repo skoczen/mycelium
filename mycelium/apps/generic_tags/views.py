@@ -10,33 +10,52 @@ class TagViews(object):
     namespace_name = None
     default_redirect_url = None
     default_redirect_args = None
+    app_name = None
 
     def _TargetModel(self):
         if self.TargetModel:
             return self.TargetModel
         else:
-            raise "_get_model_tag_field not defined!"
+            raise Exception, "_get_model_tag_field not defined!"
         # return Model
-    
+
+    def _app_name(self):
+        if self.app_name:
+            return self.app_name
+        else:
+            raise Exception, "_app_name not defined!"    
+
     def _namespace_name(self):
         if self.namespace_name:
             return self.namespace_name
         else:
-            raise "_namespace_name not defined!"
+            raise Exception, "_namespace_name not defined!"
 
     def _default_redirect_url(self):
         if self.default_redirect_url:
             return self.default_redirect_url
         else:
-            raise "_default_redirect_url not defined!"
+            raise Exception, "_default_redirect_url not defined!"
 
     def _default_redirect_args(self):
         if self.default_redirect_args:
             return self.default_redirect_args
         else:
-            raise "_default_redirect_url not defined!"
+            raise Exception, "_default_redirect_url not defined!"
+
+    @classmethod
+    def _tag_urls(cls, app_name, namespace_name, obj):
+        add_tag_url = reverse("%s:%sadd_tag" % (app_name, namespace_name))
+        delete_tag_url = reverse("%s:%sremove_tag" % (app_name, namespace_name), args=(obj.pk,))
+        search_results_url = reverse("%s:%snew_tag_search_results" % (app_name, namespace_name))
+        return {
+            'add_tag_url':add_tag_url,
+            'delete_tag_url':delete_tag_url,
+            'search_results_url':search_results_url,
+        }
 
     def _update_with_tag_fragments(self, context):
+        context.update(self._tag_urls(self._app_name(), self._namespace_name(), context["obj"]))
         c = {
             "fragments":{"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_list.html", RequestContext(context["request"],context)),},
             "success": context["success"],

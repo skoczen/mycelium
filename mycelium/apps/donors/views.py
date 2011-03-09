@@ -50,6 +50,7 @@ class DonorTagViews(TagViews):
     TargetModel = Donor
     namespace_name = "donor"
     default_redirect_url = "people:person"
+    app_name = "donors"
     def _default_redirect_args(self, context):
         return (context["obj"].person.pk,)
 

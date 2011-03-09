@@ -1,5 +1,5 @@
 {% extends "people/base.html" %}
-{% load i18n generic_fields friendly_data_formatting %}
+{% load i18n generic_fields friendly_data_formatting generic_tag_tags %}
 {% block title %}Organizations - {% if org.name %}{{org.name}}{% else %}New Organization{% endif %}{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
@@ -8,6 +8,7 @@
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_common.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_organization.js"> </script>
+{% generic_tags_js %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "No Name" %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
@@ -58,6 +59,10 @@ $(function(){
 	{# Extra emails, phone #s, Addresses #}
 </div>
 	
+<div class="general_organization_tags">
+	{% render_tags_and_add_tag org "people" "organization" %}
+</div>
+
 	
 <detail_tabs update_url="">
 	<a class="detail_tab" href="#">Conversations</a>

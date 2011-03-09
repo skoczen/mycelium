@@ -130,7 +130,9 @@ class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     twitter_username = models.CharField(max_length=255, blank=True, null=True)
 
     tags = TaggableManager()
-
+    def alphabetical_tags(self):
+        return self.tags.all().order_by("name")
+    
     @property
     def full_name(self):
         if self.name:

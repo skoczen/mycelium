@@ -207,6 +207,7 @@ class PersonTagViews(TagViews):
     TargetModel = Person
     namespace_name = "person"
     default_redirect_url = "people:person"
+    app_name = "people"
     def _default_redirect_args(self, context):
         return (context["obj"].pk,)
 
@@ -215,7 +216,8 @@ person_tag_views = PersonTagViews()
 class OrganizationTagViews(TagViews):
     TargetModel = Organization
     namespace_name = "organization"
-    default_redirect_url = "people:person"
+    default_redirect_url = "people:organization"
+    app_name = "people"
     def _default_redirect_args(self, context):
         return (context["obj"].pk,)
 

@@ -1,4 +1,4 @@
-{% load i18n generic_fields friendly_data_formatting humanize generic_tags %}
+{% load i18n generic_fields friendly_data_formatting humanize generic_tag_tags %}
 <tab_contents class="people_donor_tab">
 <table class="two_column_70_30">
 <tr>
@@ -70,7 +70,7 @@
 <div class="tags_and_other_info">
 	<div class="detail_header">Donor Categories</div>
 	<div class="section_details">
-	{% render_tags_and_add_tag donor "donor" "donors" %}
+	{% render_tags_and_add_tag donor "donors" "donor" %}
 	</div>
 </div>
 </td>
