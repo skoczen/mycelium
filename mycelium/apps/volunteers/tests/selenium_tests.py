@@ -258,7 +258,7 @@ class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbs
         sel = self.selenium
         self.create_new_volunteer()
         sel.click("css=.status_field input[id$=status_0]")
-        time.sleep(0.25)
+        time.sleep(5)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         sel.click("css=.detail_tab[href=#volunteer]")
