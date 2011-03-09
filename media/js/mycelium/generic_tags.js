@@ -90,7 +90,7 @@
                    });
                    return false;
                 });
-                $.Mycelium.search.setUp({
+                data.new_input_field.myceliumSearch({
                     search_element: data.new_input_field,
                     search_url: data.new_input_field.attr("results_url"),
                     results_element: $("fragment[name=new_tag_search_results]", data.target),

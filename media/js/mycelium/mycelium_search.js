@@ -60,8 +60,9 @@
                                 }
                                 data.options.results_processed_callback(data.options.search_element);
                             
-                         },
-                        });
+                         }
+                        },
+                    });
 
                     }
                 }
@@ -77,7 +78,7 @@
                     data.search_element.live("change",data.queue_searching);
                 }
                 data.search_element.bind('keyup', 'return', function(){
-                    trigger("myceliumSearch.return_pressed");
+                    data.search_element.trigger("myceliumSearch.return_pressed");
                 });
 
                 if (data.options.focus_on_setup && !("autofocus" in document.createElement("input"))) {
