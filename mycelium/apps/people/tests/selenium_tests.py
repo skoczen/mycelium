@@ -603,7 +603,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         sel.close()
         sel.select_window("one")        
         sel.refresh()
-        sel.wait_for_page_to_load("3000")
+        time.sleep(4)
 
         self.assertEqual("Jon", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
         try: self.assertEqual("Smithe", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
