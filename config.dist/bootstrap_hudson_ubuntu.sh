@@ -13,3 +13,4 @@ wget -O /tmp/hudson.deb http://hudson-ci.org/latest/debian/hudson.deb
 sudo dpkg --install /tmp/hudson.deb
 sudo /etc/init.d/hudson start
 sudo usermod -c Jenkins,,, hudson
+service xvfb start

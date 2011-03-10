@@ -31,25 +31,6 @@ function process_fragments_and_rebind_donation_form(json) {
         bind_donor_tab_events();
 }
 
-function bind_donor_tab_events() {
-	$("#new_donation").ajaxForm({
-        "success":process_fragments_and_rebind_donation_form,
-        "dataType": 'json'
-    });
-    $("#new_donation .sentence input[name=amount]").autoGrowInput({comfortZone: 20, resizeNow:true});
-    $("#new_donation input[name=date]").datepicker({
-        numberOfMonths: 2,
-        showButtonPanel: true,
-        gotoCurrent: true,
-        showCurrentAtPos: 1            
-    });
-    $("tabbed_box[name=add_a_donation]").bind("mycelium.tabbed_box.opened",function(){
-        $("#new_donation input[name$=amount]").focus()
-    });
-    $.Mycelium.update_stripes(".year_of_donations");
-    show_or_hide_datefield();
-    $(".people_donor_tab .tags_and_other_info").genericTags();
-}
 
 function delete_donor_from_people_tab() {
 	var row = $(this).parents(".donation_row");
@@ -70,4 +51,24 @@ function delete_donor_from_people_tab() {
 	}
 	
     return false;	
+}
+
+function bind_donor_tab_events() {
+    $("#new_donation").ajaxForm({
+        "success":process_fragments_and_rebind_donation_form,
+        "dataType": 'json'
+    });
+    $("#new_donation .sentence input[name=amount]").autoGrowInput({comfortZone: 20, resizeNow:true});
+    $("tabbed_box[name=add_a_donation]").bind("mycelium.tabbed_box.opened",function(){
+        $("#new_donation input[name$=amount]").focus()
+    });
+    $.Mycelium.update_stripes(".year_of_donations");
+    show_or_hide_datefield();
+    $(".people_donor_tab .tags_and_other_info").genericTags();
+    $("#new_donation input[name=date]").datepicker({
+        "numberOfMonths": 2,
+        "showButtonPanel": true,
+        // "gotoCurrent": true,
+        "showCurrentAtPos": 1            
+    });    
 }

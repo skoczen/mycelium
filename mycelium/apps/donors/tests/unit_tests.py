@@ -11,11 +11,17 @@ def test_donations_by_year_returns_sanely():
     
     d1 = Donation.objects.create(donor=person.donor, amount=5, date=today)
     d2 = Donation.objects.create(donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=1))
+    d3 = Donation.objects.create(donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=360))    
+
 
     target = [{'donations': [d1, d2],
           'total_donations': d1.amount+d2.amount,
           'total_number_of_donations':2,
           'year': today.year
+    },{'donations': [d3],
+          'total_donations': d3.amount,
+          'total_number_of_donations':1,
+          'year': d3.date.year
     }]
     
     assert person.donor.donations_by_year == target

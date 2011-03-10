@@ -22,8 +22,16 @@ function detail_tab_clicked(e) {
             "data": {'tab_name': tab_name},
             "async": false,
         });
-        bind_volunteer_tab_events();
-        bind_donor_tab_events();
+        console.log(tab_name)
+        switch(tab_name){
+            case "#volunteer":
+                bind_volunteer_tab_events();
+                break;
+            case "#donor":
+                bind_donor_tab_events();                
+                break;
+        }
+
         prev_tab_name = tab_name;
     }
     return false;

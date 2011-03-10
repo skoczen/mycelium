@@ -60,6 +60,7 @@ class Donor(TimestampModelMixin):
 
                 current_year = donation.date.year
                 donations_this_year = 0
+                number_of_donations_this_year = 0
                     
                 cur_year_dict = {
                     'year':donation.date.year,

@@ -37,7 +37,7 @@ class TagViews(object):
         else:
             raise Exception, "_default_redirect_url not defined!"
 
-    def _default_redirect_args(self):
+    def _default_redirect_args(self, context):
         if self.default_redirect_args:
             return self.default_redirect_args
         else:

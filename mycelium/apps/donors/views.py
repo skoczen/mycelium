@@ -22,7 +22,7 @@ def _return_fragments_or_redirect(request,context):
     if request.is_ajax():
         return HttpResponse(simplejson.dumps( {"fragments":{"detail_tab":_render_people_donor_tab(context)}}))
     else:
-        return HttpResponseRedirect(reverse("people:person",args=(person.pk,)))    
+        return HttpResponseRedirect(reverse("people:person",args=(context["person"].pk,)))    
 
 
 def save_new_donation(request, donor_id):
@@ -52,6 +52,7 @@ class DonorTagViews(TagViews):
     default_redirect_url = "people:person"
     app_name = "donors"
     def _default_redirect_args(self, context):
+        print context["obj"]
         return (context["obj"].person.pk,)
 
 tag_views = DonorTagViews()
