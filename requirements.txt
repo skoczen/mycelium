@@ -33,5 +33,5 @@ cherrypy
 celery
 django-celery
 -e git://github.com/kmmbvnr/django-jenkins.git#egg=django-jenkins
-coverage
+coverage >= 3.4
 git+git://github.com/jparise/nose-xcover.git#egg=nosexcover
