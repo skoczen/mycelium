@@ -20,6 +20,10 @@ from recent_activity.views import _render_people_recent_activity_tab
 @render_to("people/search.html")
 def search(request):
     people_proxies = PeopleAndOrganizationsSearchProxy.objects.all()
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if q != "":
+            people_proxies = PeopleAndOrganizationsSearchProxy.search(q,ignorable_chars=["-","(",")"])
     return locals()
 
 @json_view

@@ -32,6 +32,15 @@
                     clearTimeout(data.search_timeout);
                     data.search_timeout = setTimeout(data.update_search, data.options.search_queue_delay_ms);
                 }
+                data.format_search_response = function() {
+                    if (data.options.highlight_results) {
+                        $.Mycelium.highlight_search_terms(data.q,data.options.results_element);
+                    }
+                    if (data.options.striped_results) {
+                        $.Mycelium.update_stripes(data.options.results_element);
+                    }
+                    data.options.results_processed_callback(data.options.search_element);                  
+                },
 
                 data.update_search = function() {
                     if (data.previous_query != $.trim(data.options.search_element.val())) {
@@ -46,20 +55,13 @@
                           mode: 'abort',
                           success: function(json) {
                             if (typeof(json) == typeof({})) {
-                                if (data.options.process_results_as_fragments) {
-                                    $.Mycelium.fragments.process_fragments_from_json(json)
-                                }
-                                if (data.options.process_results_as_replace_html) {
-                                    $(data.options.results_element).html(json.html);
-                                }
-                                if (data.options.highlight_results) {
-                                    $.Mycelium.highlight_search_terms(data.q,data.options.results_element);
-                                }
-                                if (data.options.striped_results) {
-                                    $.Mycelium.update_stripes(data.options.results_element);
-                                }
-                                data.options.results_processed_callback(data.options.search_element);
-                            
+                              if (data.options.process_results_as_fragments) {
+                                  $.Mycelium.fragments.process_fragments_from_json(json)
+                              }
+                              if (data.options.process_results_as_replace_html) {
+                                  $(data.options.results_element).html(json.html);
+                              }                              
+                              data.format_search_response();
                          }
                         },
                     });
@@ -84,7 +86,14 @@
                 if (data.options.focus_on_setup && !("autofocus" in document.createElement("input"))) {
                     data.search_element.focus();
                 }
-
+                
+                qs = $.deparam.querystring();
+                if (qs['q'] !== undefined) {
+                  data.q = qs['q'];
+                  data.previous_query = data.q
+                  data.search_element.val(data.q);
+                  data.format_search_response();
+                }
 
 
                 $this.data('myceliumSearch',data)

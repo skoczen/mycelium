@@ -20,5 +20,8 @@ class Command(BaseCommand):
         except:
             pass
         output.close()
-        selenium_subprocess.kill()
+        try:
+            selenium_subprocess.kill()
+        except:
+            pass
         # celery_subprocess.kill()

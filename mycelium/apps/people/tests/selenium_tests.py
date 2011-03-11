@@ -1126,3 +1126,30 @@ class TestAgainstGeneratedData(SeleniumTestCase, PeopleTestAbstractions):
         sel.wait_for_page_to_load("30000")
 
         self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+
+    def test_that_clicking_next_on_the_search_results_works(self):
+        sel = self.selenium
+        sel.open("/people/")
+        first_result = sel.get_text("css=search_results .result_row:nth(0) .name a")
+        sel.click("css=.pagination .next")
+        sel.wait_for_page_to_load("30000")
+
+        assert first_result != sel.get_text("css=search_results .result_row:nth(0) .name a")
+
+
+    def test_that_clicking_next_on_the_search_results_keeps_the_search(self):
+        sel = self.selenium
+        sel.open("/people/")
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "a")
+        time.sleep(2)
+
+        first_result = sel.get_text("css=search_results .result_row:nth(0) .name a")
+        sel.click("css=.pagination .next")
+        sel.wait_for_page_to_load("30000")
+
+        assert first_result != sel.get_text("css=search_results .result_row:nth(0) .name a")
+        sel.click("css=.pagination .prev")
+        sel.wait_for_page_to_load("30000")
+        assert first_result == sel.get_text("css=search_results .result_row:nth(0) .name a")
+

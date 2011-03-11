@@ -411,7 +411,7 @@
 			"file": "/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/envs/jenkins.py",
 			"settings":
 			{
-				"buffer_size": 788,
+				"buffer_size": 790,
 				"line_ending": "Unix"
 			}
 		}
@@ -762,15 +762,15 @@
 					"file": "/Users/skoczen/Dropbox/workingCopy/goodcloud/mycelium/mycelium/envs/jenkins.py",
 					"settings":
 					{
-						"buffer_size": 788,
+						"buffer_size": 790,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								787,
-								787
+								790,
+								790
 							]
 						],
 						"settings":
