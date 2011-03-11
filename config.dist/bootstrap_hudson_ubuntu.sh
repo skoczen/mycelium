@@ -17,8 +17,11 @@ sudo usermod -c Jenkins,,, hudson
 service xvfb start
 mysqladmin create mycelium -u root -p
 
+# add to /etc/init.d/hudson:
+# JAVA_ARGS="-Dorg.apache.commons.jelly.tags.fmt.timeZone=America/Los_Angeles"
 
-# something like:
+
+# set up with something like:
 #cd $WORKSPACE
 #virtualenv -q --no-site-packages ve 
 #. ./ve/bin/activate
@@ -29,3 +32,10 @@ mysqladmin create mycelium -u root -p
 #deactivate
 #rm -rf ../ve
 #kill -9 $(ps aux | grep -v grep | grep selenium-server | awk '{print $2}')
+
+# try to run one test - it'll fail.  then:
+ cd /var/lib/hudson/jobs/mycelium/workspace/
+ rm -rf cookbooks
+ rm -rf ve
+ git checkout live
+
