@@ -269,19 +269,33 @@ $(function(){
 })(jQuery);
 
 // Highlights
+    
     $.Mycelium.highlight_search_terms = function(q, context_ele) {
     	var space_queries = q.split(" ");
     	highlight_regexes = [];
+        var has_single_b = false;
     	for (var j in space_queries) {
     		var q = space_queries[j];
     		if (q != "") {
-    			highlight_regexes.push(new RegExp(q, "gi"));
+                if (q == "<" || q == ">" || q == "/" || q == "b") {
+                    if (q == "b") {
+                        has_single_b = true;
+                    }
+                } else {
+        			highlight_regexes.push(new RegExp(q, "gi"));
+                }
 
     			var dash_queries = q.split("-");
     			if (dash_queries.length > 1) {
     				for (var k in dash_queries) {
     					if (dash_queries[k] != "") {
-    						highlight_regexes.push(new RegExp(dash_queries[k], "gi"));
+                            if (dash_queries[k] == "<" || dash_queries[k] == ">" || dash_queries[k] == "/" || dash_queries[k] == "b") {
+                                if (dash_queries[k] == "b") {
+                                    has_single_b = true;
+                                }
+                            } else {
+                                highlight_regexes.push(new RegExp(dash_queries[k], "gi"));
+                            }
     					}
     				}
     			}
@@ -289,10 +303,13 @@ $(function(){
     	}
     	$(".highlightable", context_ele).each(function(){
     		var text = $(this).text();
-    		for (var j in highlight_regexes) {
-    			text = text.replace(highlight_regexes[j], '<b>$&</b>')
+            if (has_single_b) {
+                text = text.replace(new RegExp('b', "gi"), '<b>$&</b>');
+            }
+            for (var j in highlight_regexes) {
+                text = text.replace(highlight_regexes[j], '<b>$&</b>');
     		}
-    		$(this).html(text);
+            $(this).html(text);
     	});
 
     }

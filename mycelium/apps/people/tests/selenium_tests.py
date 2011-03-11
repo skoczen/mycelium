@@ -1153,3 +1153,11 @@ class TestAgainstGeneratedData(SeleniumTestCase, PeopleTestAbstractions):
         sel.wait_for_page_to_load("30000")
         assert first_result == sel.get_text("css=search_results .result_row:nth(0) .name a")
 
+    def test_that_searching_for_a_b_highlights_sanely(self):
+        sel = self.selenium
+        sel.open("/people/")
+        sel.focus("css=#id_search_query")
+        sel.type("css=#id_search_query", "a b")
+        time.sleep(1)
+        first_result = sel.get_text("css=search_results .result_row:nth(0)")
+        assert first_result.find('<b>') == -1
