@@ -9,7 +9,7 @@
 #
 #
 # Source function library.
-.  /etc/init.d/functions
+#.  /etc/init.d/functions
 XVFB_OUTPUT=/tmp/Xvfb.out
 XVFB=/usr/bin/Xvfb
 XVFB_OPTIONS=":5 -screen 0 1024x768x24 -fbdir /var/run"
