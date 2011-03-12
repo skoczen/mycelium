@@ -9,4 +9,5 @@ except:
     from qi_toolkit.helpers import print_exception
     print "Excepted"
     print_exception()
+    raise Exception, "Not Loading Django"
     from dev import *
