@@ -6,7 +6,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mycelium',
         'USER': 'root',
-        'PASSWORD': 'Q3lg8Af81tj6vr5PdcIs',        
+        'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
         'HOST': 'int-mysql.staging.digitalmycelium.com',
         'PORT': '3306',
     },
