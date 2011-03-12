@@ -37,5 +37,3 @@ mysqladmin create mycelium -u root -p
  cd /var/lib/hudson/jobs/mycelium/workspace/
  rm -rf cookbooks
  rm -rf ve
- git checkout live
-

@@ -1,7 +1,7 @@
 #!/bin/bash
 rpm -ivh http://repo.webtatic.com/yum/centos/5/`uname -i`/webtatic-release-5-1.noarch.rpm
 yum install --enablerepo=webtatic git
-yum install python26 python26-setuptools python26-devel python26-devel.x86_64 mysql-devel.x86_64 sqlite3 gmp rabbitmq-server memcached
+yum install python26 python26-setuptools python26-devel python26-devel.x86_64 mysql-devel.x86_64 sqlite3 gmp rabbitmq-server memcached nginx
 # eventually memcached will get its own server, but not right now.
 cd /etc/init.d; wget https://github.com/ask/celery/raw/master/contrib/generic-init.d/celeryd --no-check-certificate; chmod +x celeryd
 sed '1d' celeryd > celeryd.tmp
@@ -37,6 +37,7 @@ ln -s /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf
 chkconfig --add memcached
 chkconfig --add rabbitmq-server
 chkconfig --add celeryd
+chkconfig --add nginx
 chkconfig --add mycelium
 service memcached start
 service rabbitmq-server start

@@ -32,6 +32,7 @@ south
 cherrypy
 celery
 django-celery
--e git://github.com/kmmbvnr/django-jenkins.git#egg=django-jenkins
 coverage >= 3.4
 -e git://github.com/jparise/nose-xcover.git@coverage-3.4#egg=nosexcover
+-e git://github.com/kmmbvnr/django-jenkins.git#egg=django-jenkins
+
