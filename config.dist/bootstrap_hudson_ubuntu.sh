@@ -22,18 +22,12 @@ mysqladmin create mycelium -u root -p
 
 
 # set up with something like:
-#cd $WORKSPACE
-#virtualenv -q --no-site-packages ve 
-#. ./ve/bin/activate
-#cd mycelium
-#export DISPLAY=:5.0
-#pip install -q --upgrade -r ../requirements.txt
-#../ve/bin/python manage.py jenkins_with_selenium_tests --settings=envs.jenkins
-#deactivate
-#rm -rf ../ve
-#kill -9 $(ps aux | grep -v grep | grep selenium-server | awk '{print $2}')
-
-# try to run one test - it'll fail.  then:
- cd /var/lib/hudson/jobs/mycelium/workspace/
- rm -rf cookbooks
- rm -rf ve
+# cd $WORKSPACE
+# rm -rf ../ve
+# virtualenv -q --no-site-packages ve 
+# . ./ve/bin/activate
+# cd mycelium
+# export DISPLAY=:5.0
+# echo "pip install -q --upgrade -r ../requirements.txt"
+# ../ve/bin/python manage.py jenkins_with_selenium_tests --settings=envs.jenkins
+# kill -9 $(ps aux | grep -v grep | grep selenium-server | awk '{print $2}')
