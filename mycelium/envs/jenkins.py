@@ -29,4 +29,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 GOOGLE_KEY = 'ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRi_j0U6kJrkFvY4-OX2XYmEAa76BQkakI7eN4BbYehPxnhnOMnaAhOPw'
 
 SELENIUM_BROWSER_COMMAND = "*firefox"
-SOUTH_TESTS_MIGRATE = False
+# SOUTH_TESTS_MIGRATE = False
