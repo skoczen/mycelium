@@ -376,7 +376,7 @@ def backup_for_deploy():
         env.current_backup_file = "%(backup_dir)s/currentDeployBackup.dump" % env    
         if not os.path.isfile(env.current_backup_file):
             magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdb %(manage_py_settings)s > %(current_backup_file)s")
-            magic_run("zip -r9q %(backup_dir)s/pre_deploy_`date +%%F`.zip %(current_backup_file)s; rm %(current_backup_file)s")
+            magic_run("zip -9q %(backup_dir)s/pre_deploy_`date +%%F`.zip %(current_backup_file)s; rm %(current_backup_file)s;cp %(backup_dir)s/pre_deploy_`date +%%F`.zip %(backup_dir)s/latest_deploy.zip")
             if env.is_local:
                 magic_run("cp %(current_backup_file)s %(git_path)s/db/all_data.json")
         else:
@@ -384,7 +384,7 @@ def backup_for_deploy():
 
 def download_data_dump():
     backup_for_deploy()
-    get("%(backup_dir)s/pre_deploy_`date +%%F`.zip")
+    get("%(backup_dir)s/latest_deploy.zip" % env, env.local_working_path)
 
 def setup_backup_dir_and_cron():
     # requires fabric and python-crontab installed on the target
