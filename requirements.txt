@@ -7,7 +7,7 @@ python-memcached
 django >=1.2
 gunicorn
 #-e git://github.com/skoczen/django-cms.git#egg=django-cms
-django-cms > 2.0
+-e git://github.com/divio/django-cms.git#egg=django-cms
 pyparsing
 django-xmlrpc
 akismet
