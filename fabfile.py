@@ -173,6 +173,8 @@ def staging():
 def localhost():
     env.hosts = ['localhost']
     env.role = "localhost"
+    env.is_webfaction = False
+    env.is_centos = False
     env.manage_py_settings = "--settings=envs.dev"
     env.base_path = "%(local_working_path)s/%(project_name)s" % env
     env.git_path = env.base_path
@@ -324,19 +326,18 @@ def restart():
 
 def reboot():
     "Reboot the wsgi server."
-    if not env.is_local:
-        if env.is_webfaction:
-            shut_down = False
-            while not shut_down:
-                output = magic_run("%(base_path)s/apache2/bin/stop;")
-                shut_down = (output.find("Apache is not running") != -1)
-                if not shut_down:
-                    time.sleep(1)
+    if env.is_webfaction:
+        shut_down = False
+        while not shut_down:
+            output = magic_run("%(base_path)s/apache2/bin/stop;")
+            shut_down = (output.find("Apache is not running") != -1)
+            if not shut_down:
+                time.sleep(1)
 
-            magic_run("%(base_path)s/apache2/bin/start;")
-        elif env.is_centos:
-            magic_run("service %(project_name)s stop")
-            magic_run("service %(project_name)s start")
+        magic_run("%(base_path)s/apache2/bin/start;")
+    elif env.is_centos:
+        magic_run("service %(project_name)s stop")
+        magic_run("service %(project_name)s start")
 
 
 def stop():
@@ -374,13 +375,16 @@ def backup_for_deploy():
     elif env.is_centos:
         env.current_backup_file = "%(backup_dir)s/currentDeployBackup.dump" % env    
         if not os.path.isfile(env.current_backup_file):
-            magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dbdump %(manage_py_settings)s > %(current_backup_file)s")
+            magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdb %(manage_py_settings)s > %(current_backup_file)s")
             magic_run("zip -r9q %(backup_dir)s/pre_deploy_`date +%%F`.zip %(current_backup_file)s; rm %(current_backup_file)s")
             if env.is_local:
                 magic_run("cp %(current_backup_file)s %(git_path)s/db/all_data.json")
         else:
             raise  Exception, "Deploy backup failed - previous deploy did not finish cleanly."
 
+def download_data_dump():
+    backup_for_deploy()
+    get("%(backup_dir)s/pre_deploy_`date +%%F`.zip")
 
 def setup_backup_dir_and_cron():
     # requires fabric and python-crontab installed on the target
@@ -508,6 +512,7 @@ def deploy():
     pull()
     kill_pyc()
     install_requirements()
+    syncdb()
     migrate()
     reboot()
 
