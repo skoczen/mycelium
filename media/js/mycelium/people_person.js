@@ -22,7 +22,6 @@ function detail_tab_clicked(e) {
             "data": {'tab_name': tab_name},
             "async": false,
         });
-        console.log(tab_name)
         switch(tab_name){
             case "#volunteer":
                 bind_volunteer_tab_events();
