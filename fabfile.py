@@ -74,7 +74,7 @@ def setup_env_webfaction(project_name, webfaction_user, initial_settings={}, ove
 
     env.staging_hosts = env.production_hosts
     env.virtualenv_name = env.project_name
-    env.manage_py_settings = ""
+
     env.staging_virtualenv_name = "staging_%(project_name)s" % env
     env.live_app_dir = "%(user_home)s/webapps/%(project_name)s_live" % env
     env.live_static_dir = "%(user_home)s/webapps/%(project_name)s_static" % env
@@ -140,13 +140,11 @@ def setup_backup_env_webfaction():
     env.daily_backup_script = daily_backup_script()
     env.weekly_backup_script = weekly_backup_script()
     env.monthly_backup_script = monthly_backup_script()
-    if env.is_webfaction:
-        env.manage_py_settings = ""
+
 
 def live():
     env.python = "python2.6"
     env.role = "live"
-    env.manage_py_settings = "--settings=envs.%(role)s" % env
     env.hosts = env.production_hosts
     env.base_path = env.live_app_dir
     env.git_path = "%(live_app_dir)s/%(project_name)s.git" % env
@@ -159,7 +157,6 @@ def staging():
     env.python = "python2.6"
     env.role = "staging"
     env.hosts = env.staging_hosts
-    env.manage_py_settings = "--settings=envs.%(role)s" % env
     env.base_path = env.staging_app_dir
     env.git_path = "%(staging_app_dir)s/%(project_name)s.git" % env
     env.media_path = env.staging_static_dir
@@ -175,7 +172,6 @@ def localhost():
     env.role = "localhost"
     env.is_webfaction = False
     env.is_centos = False
-    env.manage_py_settings = "--settings=envs.dev"
     env.base_path = "%(local_working_path)s/%(project_name)s" % env
     env.git_path = env.base_path
     env.backup_dir = "%(local_working_path)s/db" % env
@@ -366,7 +362,7 @@ def backup_for_deploy():
     if env.is_webfaction:
         env.current_backup_file = "%(backup_dir)s/currentDeployBackup.json" % env    
         if not os.path.isfile(env.current_backup_file):
-            magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdata %(manage_py_settings)s --indent 4 > %(current_backup_file)s")
+            magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdata --indent 4 > %(current_backup_file)s")
             magic_run("zip -r9q %(backup_dir)s/pre_deploy_`date +%%F`.zip %(current_backup_file)s; rm %(current_backup_file)s")
             if env.is_local:
                 magic_run("cp %(current_backup_file)s %(git_path)s/db/all_data.json")
@@ -375,7 +371,7 @@ def backup_for_deploy():
     elif env.is_centos:
         env.current_backup_file = "%(backup_dir)s/currentDeployBackup.dump" % env    
         if not os.path.isfile(env.current_backup_file):
-            magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdb %(manage_py_settings)s > %(current_backup_file)s")
+            magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdb > %(current_backup_file)s")
             magic_run("zip -9q %(backup_dir)s/pre_deploy_`date +%%F`.zip %(current_backup_file)s; rm %(current_backup_file)s;cp %(backup_dir)s/pre_deploy_`date +%%F`.zip %(backup_dir)s/latest_deploy.zip")
             if env.is_local:
                 magic_run("cp %(current_backup_file)s %(git_path)s/db/all_data.json")
@@ -450,7 +446,7 @@ def daily_backup_script():
     script = """#!/bin/bash
 source %(user_home)s/bin/virtualenvwrapper.sh
 %(work_on)s cd %(project_name)s; 
-%(python)s manage.py dumpdata %(manage_py_settings)s --indent 4 > %(current_backup_file)s
+%(python)s manage.py dumpdata --indent 4 > %(current_backup_file)s
 
 mv %(backup_dir)s/days-ago-6.zip %(backup_dir)s/days-ago-7.zip
 mv %(backup_dir)s/days-ago-5.zip %(backup_dir)s/days-ago-6.zip
@@ -507,10 +503,10 @@ def kill_pyc():
     magic_run("%(work_on)s cd %(git_path)s;find . -iname '*.pyc' -delete")
 
 def migrate():
-    magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py migrate %(manage_py_settings)s")
+    magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py migrate")
 
 def syncdb():
-    magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py syncdb --noinput %(manage_py_settings)s")
+    magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py syncdb --noinput")
 
 def deploy_fast():
     backup_for_deploy()
@@ -533,7 +529,7 @@ def deploy_slow():
 
 
 def test():
-    local("cd %(base_path)s; python manage.py test %(manage_py_settings)s" % env, fail='abort')
+    local("cd %(base_path)s; python manage.py test" % env, fail='abort')
 
 def reset(repo, hash):
     """
@@ -575,7 +571,7 @@ setup_env_centos("mycelium","root",
 
 
 def dump_marketing_fixture():
-    magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdata %(manage_py_settings)s --natural --exclude=contenttypes auth.User marketing_site cms mptt menus text  > %(git_path)s/%(project_name)s/apps/marketing_site/fixtures/marketing_site.json")
+    magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdata --natural --exclude=contenttypes auth.User marketing_site cms mptt menus text  > %(git_path)s/%(project_name)s/apps/marketing_site/fixtures/marketing_site.json")
 
 
    
