@@ -108,7 +108,7 @@ INSTALLED_APPS = (
     'djcelery',
     'taggit',
     'django_jenkins',
-
+    'django_dumpdb',
 
     'cms',
     'mptt',
@@ -138,7 +138,6 @@ INSTALLED_APPS = (
 
     'djangosanetesting',
 )
-
 
 TEMPLATE_DIRS = (
     "%stemplates" % (PROJECT_ROOT),

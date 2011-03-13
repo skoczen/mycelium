@@ -21,6 +21,7 @@ cd ~;mkdir .virtualenvs
 echo 'source /usr/bin/virtualenvwrapper.sh' >> .bashrc
 source ~/.bashrc
 mkdir /var/www
+mkdir /var/backups
 cd /var/www
 git clone http://mycelium.skoczen.webfactional.com/mycelium.git mycelium.git
 cd mycelium.git;git checkout live
@@ -48,3 +49,5 @@ service rabbitmq-server start
 service celeryd start
 service mycelium start
 service nginx start
+
+# one-time thing to be aware of - syncdb has to be run once with CELERY_RESULT_BACKEND = "database", or dumpdata fails.
