@@ -4,8 +4,6 @@ from django.conf import settings
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-
 
     (r'^',              include('marketing_site.urls',      app_name="marketing_site",  namespace="marketing_site"),),
     (r'^',              include('email_list.urls')),                                    
@@ -26,3 +24,7 @@ urlpatterns = patterns('',
     url(r'^', include('cms.urls')),
     url(r'^', include('django_ses.urls')),
 )
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    )

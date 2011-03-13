@@ -20,9 +20,6 @@ ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
 
-from os.path import join, abspath
-MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
-
 SEND_BROKEN_LINK_EMAILS = False
 INTERNAL_IPS = ('127.0.0.1')
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
