@@ -2,10 +2,10 @@ from qi_toolkit.fabbase import *
 
 setup_env_centos("mycelium","root",
                 initial_settings={
-                    'staging_hosts':['staging.digitalmycelium.com'],
-                    'production_hosts':['digitalmycelium.com'],
+                    'staging_hosts':['digitalmycelium.com'],
+                    'production_hosts':['agoodcloud.com'],
                     'production_db_hosts':['ext-mysql.digitalmycelium.com'],
-                    'staging_db_hosts':['ext-mysql.staging.digitalmycelium.com']
+                    'staging_db_hosts':['ext-mysql.agoodcloud.com']
                 }, 
                 overrides={
                     'git_origin':"http://mycelium.skoczen.webfactional.com/mycelium.git",
