@@ -19,8 +19,7 @@ source ~/.bashrc
 mkdir /var/www
 mkdir /var/backups
 pip install --upgrade pip virtualenv virtualenvwrapper
-cd /var/www/;mkdir .virtualenvs
-ln -s /var/www/.virtualenvs ~/.virtualenvs
+cd ~;mkdir .virtualenvs
 echo 'source /usr/bin/virtualenvwrapper.sh' >> .bashrc
 source ~/.bashrc
 cd /var/www
@@ -28,10 +27,10 @@ git clone http://mycelium.skoczen.webfactional.com/mycelium.git mycelium.git
 cd mycelium.git;git checkout live
 cat /var/www/mycelium.git/config.dist/authorized_keys >> ~/.ssh/authorized_keys
 mkvirtualenv mycelium
-echo 'cd /var/www/mycelium.git' >> /var/www/.virtualenvs/mycelium/bin/postactivate
+echo 'cd /var/www/mycelium.git' >> ~/.virtualenvs/mycelium/bin/postactivate
 workon mycelium
 pip install -r requirements.txt 
-echo 'mysql_config = /usr/bin/mysql_config' >> /var/www/.virtualenvs/mycelium/build/mysql-python/site.cfg
+echo 'mysql_config = /usr/bin/mysql_config' >> ~/.virtualenvs/mycelium/build/mysql-python/site.cfg
 pip install -r requirements.txt 
 mkdir /var/log/celery
 mv /etc/default/celeryd /etc/default/celeryd.bak
