@@ -390,14 +390,16 @@ def setup_backup_dir_and_cron():
     # requires fabric and python-crontab installed on the target
     safe_magic_run("mkdir %(backup_root)s")
     safe_magic_run("mkdir %(backup_dir)s")
-    magic_run("echo '%(daily_backup_script)s' > %(backup_dir)s/%(daily_backup_script_name)s")
-    magic_run("echo '%(weekly_backup_script)s' > %(backup_dir)s/%(weekly_backup_script_name)s")
-    magic_run("echo '%(monthly_backup_script)s' > %(backup_dir)s/%(monthly_backup_script_name)s")
-    magic_run("chmod +x %(backup_dir)s/%(daily_backup_script_name)s")
-    magic_run("chmod +x %(backup_dir)s/%(weekly_backup_script_name)s")
-    magic_run("chmod +x %(backup_dir)s/%(monthly_backup_script_name)s")
-
+    
     try:
+        magic_run("echo '%(daily_backup_script)s' > %(backup_dir)s/%(daily_backup_script_name)s")
+        magic_run("echo '%(weekly_backup_script)s' > %(backup_dir)s/%(weekly_backup_script_name)s")
+        magic_run("echo '%(monthly_backup_script)s' > %(backup_dir)s/%(monthly_backup_script_name)s")
+        magic_run("chmod +x %(backup_dir)s/%(daily_backup_script_name)s")
+        magic_run("chmod +x %(backup_dir)s/%(weekly_backup_script_name)s")
+        magic_run("chmod +x %(backup_dir)s/%(monthly_backup_script_name)s")
+
+    
         magic_run("%(work_on)s fab %(role)s setup_crontab")
     except:
         print "CRONTAB SETUP FAILED. Set up the crontabs manually."

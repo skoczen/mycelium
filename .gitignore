@@ -17,4 +17,4 @@ mycelium.sublime-project
 mycelium/nosetests.xml
 mycelium/apps/coverage.xml
 mycelium/.coverage
-settings.py
+mycelium/settings.py
