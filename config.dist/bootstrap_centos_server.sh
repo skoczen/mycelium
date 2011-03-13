@@ -20,6 +20,7 @@ mkdir /var/www
 mkdir /var/backups
 pip install --upgrade pip virtualenv virtualenvwrapper
 cd /var/www/;mkdir .virtualenvs
+ln -s /var/www/.virtualenvs ~/.virtualenvs
 echo 'source /usr/bin/virtualenvwrapper.sh' >> .bashrc
 source ~/.bashrc
 cd /var/www
