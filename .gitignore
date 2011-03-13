@@ -14,3 +14,6 @@ media/cache/*
 media/logos/*
 mycelium/reports
 mycelium.sublime-project
+mycelium/nosetests.xml
+mycelium/apps/coverage.xml
+mycelium/.coverage

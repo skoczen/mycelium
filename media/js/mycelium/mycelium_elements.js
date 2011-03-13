@@ -64,83 +64,6 @@ $(function(){
 	$.Mycelium.fragments = fragments;
 
 
-// Search handler
-	var sh = new Object();
-	
-	sh.options = {
-	    search_queue_delay_ms: 50, 
-	    striped_results: true,
-	    highlight_results: true,
-	    focus_on_setup: true,
-	    search_element: $("input[type=search]"),
-	    results_element: $("search_results"),
-	    search_url: SEARCH_URL,
-	    process_results_as_fragments: true,
-	    process_results_as_replace_html: false,
-	    bind_to_keydown: true,
-	    bind_to_change: true,
-	    results_processed_callback: function(){},
-	}
-	sh.previous_query = "%*(#:LKCL:DSF@()#SDF)";
-    sh.search_timeout = false;
-
-	sh.setUp = function (options) {
-		$.extend(true, sh.options, options);
-        var t = $(sh.options.search_element);
-        if (sh.options.bind_to_keydown) {
-            t.live("keydown",sh.queue_searching);            
-        }
-        if (sh.options.bind_to_change) {
-            t.live("change",sh.queue_searching);
-        }
-        t.bind('keyup', 'return', function(){
-            t.trigger("mycelium.search.return_pressed");
-        });
-
-        if (sh.options.focus_on_setup && !("autofocus" in document.createElement("input"))) {
-            t.focus();
-        }
-	}
-	
-    sh.queue_searching = function() {
-    	clearTimeout(sh.search_timeout);
-    	sh.search_timeout = setTimeout(sh.update_search, sh.options.search_queue_delay_ms);
-    }
-
-    sh.update_search = function() {
-        if (sh.previous_query != $.trim(sh.options.search_element.val())) {
-            sh.q = $.trim(sh.options.search_element.val());
-            sh.previous_query = sh.q;
-
-            $.ajax({
-              url: sh.options.search_url,
-              type: "GET",
-              dataType: "json",
-              data: {'q':sh.q},
-              mode: 'abort',
-              success: function(json) {
-                if (typeof(json) == typeof({})) {
-                    if (sh.options.process_results_as_fragments) {
-                        $.Mycelium.fragments.process_fragments_from_json(json)
-                    }
-                    if (sh.options.process_results_as_replace_html) {
-                        $(sh.options.results_element).html(json.html);
-                    }
-                    if (sh.options.highlight_results) {
-                        $.Mycelium.highlight_search_terms(sh.q,sh.options.results_element);
-                    }
-                    if (sh.options.striped_results) {
-                        $.Mycelium.update_stripes(sh.options.results_element);
-                    }
-                    sh.options.results_processed_callback(sh.options.search_element);
-                }
-        	 },
-        	});
-
-        }
-    }
-	$.Mycelium.search = sh;
-	
 	
 // Generic Fields
 (function($){
@@ -346,19 +269,33 @@ $(function(){
 })(jQuery);
 
 // Highlights
+    
     $.Mycelium.highlight_search_terms = function(q, context_ele) {
     	var space_queries = q.split(" ");
     	highlight_regexes = [];
+        var has_single_b = false;
     	for (var j in space_queries) {
     		var q = space_queries[j];
     		if (q != "") {
-    			highlight_regexes.push(new RegExp(q, "gi"));
+                if (q == "<" || q == ">" || q == "/" || q == "b") {
+                    if (q == "b") {
+                        has_single_b = true;
+                    }
+                } else {
+        			highlight_regexes.push(new RegExp(q, "gi"));
+                }
 
     			var dash_queries = q.split("-");
     			if (dash_queries.length > 1) {
     				for (var k in dash_queries) {
     					if (dash_queries[k] != "") {
-    						highlight_regexes.push(new RegExp(dash_queries[k], "gi"));
+                            if (dash_queries[k] == "<" || dash_queries[k] == ">" || dash_queries[k] == "/" || dash_queries[k] == "b") {
+                                if (dash_queries[k] == "b") {
+                                    has_single_b = true;
+                                }
+                            } else {
+                                highlight_regexes.push(new RegExp(dash_queries[k], "gi"));
+                            }
     					}
     				}
     			}
@@ -366,10 +303,13 @@ $(function(){
     	}
     	$(".highlightable", context_ele).each(function(){
     		var text = $(this).text();
-    		for (var j in highlight_regexes) {
-    			text = text.replace(highlight_regexes[j], '<b>$&</b>')
+            if (has_single_b) {
+                text = text.replace(new RegExp('b', "gi"), '<b>$&</b>');
+            }
+            for (var j in highlight_regexes) {
+                text = text.replace(highlight_regexes[j], '<b>$&</b>');
     		}
-    		$(this).html(text);
+            $(this).html(text);
     	});
 
     }

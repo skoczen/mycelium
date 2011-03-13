@@ -1,28 +1,28 @@
 from base import *
-ENV = "STAGING"
+ENV = "LIVE"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'postgresql_psycopg2',
-        'NAME': 'skoczen_mycelium_staging',
-        'USER': 'skoczen_mycelium_staging',
-        'PASSWORD': 'ba21794b',
-        'HOST': 'web58.webfaction.com',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mycelium',
+        'USER': 'root',
+        'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
+        'HOST': 'int-mysql.staging.digitalmycelium.com',
+        'PORT': '3306',
     },
 }
 
-STATIC_ROOT = join(abspath(dirname(__file__)), "../../../../mycelium_staging_static")
-MEDIA_ROOT = abspath(STATIC_ROOT)
-
-MEDIA_URL = 'http://staging.agoodcloud.com/media/'
+MEDIA_URL = 'http://staging.digitalmycelium.com/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#         'LOCATION': '127.0.0.1:11211',
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'PREFIX':ENV
+    }
+}
+
+CACHE_BACKEND = 'memcached://127.0.0.1:11211/'

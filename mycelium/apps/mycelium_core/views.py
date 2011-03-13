@@ -12,3 +12,7 @@ from django.views.decorators.cache import cache_page
 def more_menu(request):
     section = "more"
     return locals()
+
+@render_to("mycelium_core/more_menu.html")
+def always_500(request):
+    assert True == "This page loaded!"

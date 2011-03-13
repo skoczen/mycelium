@@ -5,11 +5,11 @@ var scroll_options = {
 };
 
 $(function(){
-    $.Mycelium.search.setUp({
+    $("#id_search_new_person").myceliumSearch({
         search_element: $("#id_search_new_person"),
-	    search_url: $("#id_search_new_person").attr("results_url"),
-	    results_element: $("fragment[name=new_person_search_results]")
-    });
+        search_url: $("#id_search_new_person").attr("results_url"),
+        results_element: $("fragment[name=new_person_search_results]")
+    });    
     $("tabbed_box[name=add_a_person] tab_title").live("click",start_add_new_person_to_org).bind("mycelium.tabbed_box.opened",open_tabbed_box).bind("mycelium.tabbed_box.closed",close_tabbed_box);;
     $(".not_in_goodcloud_btn").live("click",show_new_person_add_form);
     $(".select_person_to_add_btn").live("click",show_existing_person_add_form);
@@ -20,6 +20,8 @@ $(function(){
     $("employee").genericFieldForm();
     $(".delete_contact_btn").live("click", confirm_employee_removal);
     $(".org_delete_btn").live("click",delete_organization);
+
+    $(".general_organization_tags").genericTags();        
 });
 
 function start_add_new_person_to_org() {

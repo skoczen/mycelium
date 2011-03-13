@@ -257,8 +257,12 @@ class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbs
     def test_changing_status(self):
         sel = self.selenium
         self.create_new_volunteer()
+        time.sleep(1)
         sel.click("css=.status_field input[id$=status_0]")
-        time.sleep(0.25)
+        time.sleep(5)
+        self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
+        self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))    
+
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         sel.click("css=.detail_tab[href=#volunteer]")

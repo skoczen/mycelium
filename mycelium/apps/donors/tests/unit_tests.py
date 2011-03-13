@@ -1,20 +1,34 @@
 from test_factory import Factory
 from nose.tools import istest
 import datetime
+from donors.models import Donation
 
-# @istest
-# def test_completed_shifts_by_year_returns_sanely():
-#     person = Factory.person()
-#     today = datetime.date.today()
+@istest
+def test_donations_by_year_returns_sanely():
+    person = Factory.person()
+    today = datetime.date.today()
     
     
-#     s1 = CompletedShift.objects.create(volunteer=person.volunteer, duration=5, date=today)
-#     s2 = CompletedShift.objects.create(volunteer=person.volunteer, duration=1, date=today)
+    d1 = Donation.objects.create(donor=person.donor, amount=5, date=today)
+    d2 = Donation.objects.create(donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=1))
+    d3 = Donation.objects.create(donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=360))    
 
-#     target = [{'shifts': [s2, s1],
-#           'total_hours': s1.duration+s2.duration,
-#           'total_shifts': 2,
-#           'year': today.year
-#     }]
+
+    target = [{'donations': [d1, d2],
+          'total_donations': d1.amount+d2.amount,
+          'total_number_of_donations':2,
+          'year': today.year
+    },{'donations': [d3],
+          'total_donations': d3.amount,
+          'total_number_of_donations':1,
+          'year': d3.date.year
+    }]
     
-#     assert person.volunteer.completed_shifts_by_year == target
+    assert person.donor.donations_by_year == target
+
+@istest
+def test_donations_by_year_for_non_donors_returns_properly():
+    person = Factory.person()
+    target = []
+
+    assert person.donor.donations_by_year == target

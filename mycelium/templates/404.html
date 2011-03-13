@@ -12,21 +12,21 @@
 	<div class="adorable_image">
 	<img src="{{MEDIA_URL}}images/icon-raincloud-400.png" />
 	</div>
+	<div class="detail_box">
 	<h1>Oh Dear.  Looks like we don't have that page.</h1>
 
 	<div class="detail_text">
 	Somehow, you've ended up at a page that we don't have.  If you clicked a link in GoodCloud to get here, we've been emailed about it, and will be taking a look shortly! <br/><br/>
 	
-	It's also possible you mistyped the address of the page you wanted to visit.<br/><br/>
+	If you typed in the page address by hand, somehow it isn't quite right. Maybe zeros that look like O's, or L's that look like one's?<br/><br/>
 	
-	Some useful places to go from here?
+	Some useful places to go from here:
 	<ul>
-	<li><a href="javascript:window.back();">Back to the last page you were on</a></li>
+	<li><a href="javascript:window.history.go(-1);">Back to the last page you were on</a></li>
 	<li><a href="{% url marketing_site:home %}">GoodCloud Home</a></li>
 	</ul>
-
 	</div>
 	</div>
-	<br/><br/>	
+	</div>
 </body>
 </html>

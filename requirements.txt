@@ -33,3 +33,6 @@ cherrypy
 celery
 django-celery
 -e git://github.com/kmmbvnr/django-jenkins.git#egg=django-jenkins
+coverage >= 3.4
+-e git://github.com/skoczen/nose-xcover.git#egg=nosexcover
+-e hg+https://django-dumpdb.googlecode.com/hg/django-dumpdb#egg=django_dumpdb

@@ -108,7 +108,7 @@ INSTALLED_APPS = (
     'djcelery',
     'taggit',
     'django_jenkins',
-
+    'django_dumpdb',
 
     'cms',
     'mptt',
@@ -133,11 +133,11 @@ INSTALLED_APPS = (
     'conversations',
     'donors',
     'recent_activity',
+    'generic_tags',
 
 
     'djangosanetesting',
 )
-
 
 TEMPLATE_DIRS = (
     "%stemplates" % (PROJECT_ROOT),
@@ -168,7 +168,7 @@ NOSE_ARGS = ['--where=apps', '-s']
 FORCE_SELENIUM_TESTS = False
 SELENIUM_BROWSER_COMMAND = "*safari"
 LIVE_SERVER_PORT = 8099
-
+SELENIUM_PORT = 64444
 
 SOUTH_LOGGING_ON = True
 SOUTH_LOGGING_FILE = "/dev/null"

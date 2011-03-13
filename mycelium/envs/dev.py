@@ -27,7 +27,7 @@ STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
-SELENIUM_BROWSER_COMMAND = "*safari"
+# SELENIUM_BROWSER_COMMAND = "*safari"
 
 from os.path import join, abspath
 MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
@@ -39,3 +39,4 @@ INTERNAL_IPS = ('127.0.0.1')
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 GOOGLE_KEY = 'ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRi_j0U6kJrkFvY4-OX2XYmEAa76BQkakI7eN4BbYehPxnhnOMnaAhOPw'
 
+SOUTH_TESTS_MIGRATE = False

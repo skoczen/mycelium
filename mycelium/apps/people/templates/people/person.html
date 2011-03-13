@@ -1,13 +1,17 @@
 {% extends "people/base.html" %}
-{% load i18n generic_fields friendly_data_formatting %}
+{% load i18n generic_fields friendly_data_formatting generic_tag_tags %}
 {% block title %}People - {{person.full_name}}{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/people_volunteer.css" type="text/css" media="screen" title="" charset="utf-8">
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/people_donor.css" type="text/css" media="screen" title="" charset="utf-8">
 {% endblock %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_common.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
 <script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_volunteer.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_donations.js"> </script>
+{% generic_tags_js %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
@@ -85,25 +89,9 @@ $(function(){
 	{# Extra emails, phone #s, Addresses #}
 </div>
 
-<tags>
-	<label>Tags:</label>
-	<fragment name="person_tags" action="replace">
-		{% include "people/_person_tags.html" %}
-	</fragment>
-	<form action="{% url people:add_person_tag %}" method="POST" id="new_tag_form">{% csrf_token %}
-	<tag class="new_tag">
-		<input type="hidden" name="person_pk" value="{{person.pk}}">
-		<input type="text" name="new_tag" value="" placeholder="Type a new tag" maxlength="100" autocomplete="off" results_url="{% url people:new_tag_search_results %}">
-		<input type="submit" class="mycelium_btn mycelium_small_btn tag_add_btn" value="Add">
-	</tag>
-	<search_results>
-	<fragment name="new_tag_search_results" action="replace">
-
-	</fragment>
-	</search_results>
-	</form>
-</tags>
-
+<div class="general_person_tags">
+{% render_tags_and_add_tag person "people" "person"  %}
+</div>
 
 <detail_tabs update_url="{% url people:tab_contents person.pk %}">
 	<a class="detail_tab current" href="#recent_activity">Recent Activity</a>
