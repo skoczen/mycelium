@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^', include('qi_toolkit.urls')),
     url(r'^', include('cms.urls')),
     url(r'^', include('django_ses.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
 )
 if settings.DEBUG:
     urlpatterns += patterns('',

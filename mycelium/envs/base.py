@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     'cms.plugins.snippet',
     'cms.plugins.googlemap',
     'form_designer',
+    'tinymce',
 
     'marketing_site',
     'email_list',
@@ -156,6 +157,7 @@ CMS_SEO_FIELDS = True
 CMS_APPLICATIONS_URLS = (
     ('marketing_site.urls', 'Marketing Site'),
 )
+CMS_USE_TINYMCE = True
 GOOGLE_MAPS_KEY = "ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRHA9ICmOpg9-1g76S5BMdlTE0SKRRfIwbO5xyH_2XiYLy9Wt8qQ9Ymz"
 
 SESSION_COOKIE_AGE = 1209600

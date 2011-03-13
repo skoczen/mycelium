@@ -1,7 +1,12 @@
 #!/bin/bash
 rpm -ivh -y http://repo.webtatic.com/yum/centos/5/`uname -i`/webtatic-release-5-1.noarch.rpm
 yum install -y --enablerepo=webtatic git
-yum install -y python26 python26-setuptools python26-devel python26-devel.x86_64 mysql-devel.x86_64 sqlite3 gmp rabbitmq-server memcached nginx hg libjpeg-devel zlib-devel freetype-devel 
+# poss nginx solution
+wget http://dl.iuscommunity.org/pub/ius/stable/Redhat/5/x86_64/epel-release-1-1.ius.el5.noarch.rpm
+wget http://dl.iuscommunity.org/pub/ius/stable/Redhat/5/x86_64/ius-release-1.0-6.ius.el5.noarch.rpm
+rpm -Uvh epel-release-1-1.ius.el5.noarch.rpm ius-release-1.0-6.ius.el5.noarch.rpm
+yum install -y nginx
+yum install -y python26 python26-setuptools python26-devel python26-devel.x86_64 mysql-devel.x86_64 sqlite3 gmp rabbitmq-server memcached hg libjpeg-devel zlib-devel freetype-devel 
 # eventually memcached will get its own server, but not right now.
 cd /etc/init.d; wget https://github.com/ask/celery/raw/master/contrib/generic-init.d/celeryd --no-check-certificate; chmod +x celeryd
 sed '1d' celeryd > celeryd.tmp
