@@ -2,7 +2,7 @@ sudo add-apt-repository "deb http://archive.canonical.com/ lucid partner"
 sudo apt-get update
 sudo apt-get install -y sun-java6-jdk daemon git-core
 sudo apt-get install -y --no-install-recommends ant ant-optional
-apt-get install -y postgresql mysql-server libpq-dev sqlite3 python-setuptools python-dev build-essential libmysqlclient-dev xvfb firefox htop
+apt-get install -y postgresql mysql-server libpq-dev sqlite3 python-setuptools python-dev build-essential libmysqlclient-dev xvfb firefox htop mercurial
 # set staging root pword: Q3lg8Af81tj6vr5PdcIs
 easy_install pip
 /usr/local/bin/pip install --upgrade pip

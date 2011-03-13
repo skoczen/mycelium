@@ -20,4 +20,5 @@ def dump_marketing_fixture():
     magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdata --natural --exclude=contenttypes auth.User marketing_site cms mptt menus text  > %(git_path)s/%(project_name)s/apps/marketing_site/fixtures/marketing_site.json")
 
 
-   
+def repopulate_search_caches():
+    magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py repopulate_search_caches")
