@@ -16,3 +16,7 @@ def more_menu(request):
 @render_to("mycelium_core/more_menu.html")
 def always_500(request):
     assert True == "This page loaded!"
+
+@render_to("502.html")
+def always_502(request):
+    return {}
