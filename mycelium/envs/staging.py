@@ -7,7 +7,7 @@ DATABASES = {
         'NAME': 'mycelium',
         'USER': 'root',
         'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
-        'HOST': 'int-mysql.staging.digitalmycelium.com',
+        'HOST': 'int-mysql.digitalmycelium.com',
         'PORT': '3306',
     },
 }
