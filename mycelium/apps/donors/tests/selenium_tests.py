@@ -98,14 +98,14 @@ class TestAgainstNoData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstr
     def test_that_deleting_donation_works(self):
         sel = self.selenium        
         self.create_person_with_one_donation()
-        a1, d1 = self.add_a_donation(amount=85.12, date="3/12/2011")
-        a2, d2 = self.add_a_donation(amount=12.15, date="1/4/2011")        
+        a1, d1 = self.add_a_donation(amount=85.12, date="3/8/2011")
+        a2, d2 = self.add_a_donation(amount=8.15, date="1/4/2011")        
 
         sel.choose_cancel_on_next_confirmation()
         sel.click("css=.donor_donation_table .donation_row:nth(1) .delete_donation_btn")
         self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove this donation?\n\nPress OK to remove the donation.\nPress Cancel to leave things as-is.")
         self.assertEqual("$%.2f"%a1, sel.get_text("css=.donor_donation_table .donation_row:nth(0) .amount"))
-        self.assertEqual("March 12, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
+        self.assertEqual("March 8, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
 
         self.assertEqual("$%.2f"%a2, sel.get_text("css=.donor_donation_table .donation_row:nth(1) .amount"))
         self.assertEqual("Jan. 4, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(1) .date"))
@@ -115,7 +115,7 @@ class TestAgainstNoData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstr
 
         time.sleep(5)
         self.assertEqual("$%.2f"%a1, sel.get_text("css=.donor_donation_table .donation_row:nth(0) .amount"))
-        self.assertEqual("March 12, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
+        self.assertEqual("March 8, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
 
     def test_people_can_have_tags_added_and_removed_and_the_results_stick(self):
         sel = self.selenium
