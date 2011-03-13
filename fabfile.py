@@ -386,6 +386,9 @@ def download_data_dump():
     backup_for_deploy()
     get("%(backup_dir)s/latest_deploy.zip" % env, env.local_working_path)
 
+def freeze_current_versions():
+    local("pip freeze -r requirements.txt > requirements.stable.txt")
+
 def setup_backup_dir_and_cron():
     # requires fabric and python-crontab installed on the target
     safe_magic_run("mkdir %(backup_root)s")
