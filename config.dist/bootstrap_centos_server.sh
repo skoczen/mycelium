@@ -39,6 +39,7 @@ mv /etc/init.d/mycelium /etc/init.d/mycelium.bak
 ln -s  /var/www/mycelium.git/config.dist/gunicorn /etc/init.d/mycelium; chmod +x /etc/init.d/mycelium
 mv /etc/nginx/nginx.conf /etc/default/nginx.conf.bak
 ln -s /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf
+echo "from envs.dev import *" > /var/www/mycelium.git/mycelium/settings.py
 chkconfig --add memcached
 chkconfig --add rabbitmq-server
 chkconfig --add celeryd
