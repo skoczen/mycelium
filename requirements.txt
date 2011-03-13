@@ -6,7 +6,8 @@ PIL
 python-memcached
 django >=1.2
 gunicorn
--e git://github.com/skoczen/django-cms.git#egg=django-cms
+#-e git://github.com/skoczen/django-cms.git#egg=django-cms
+django-cms > 2.0
 pyparsing
 django-xmlrpc
 akismet
