@@ -348,16 +348,16 @@ def stop():
         elif env.is_centos:
             magic_run("service %(project_name)s stop")
 
-def install_requirements():
-    "Install the requirements."
-    magic_run("%(work_on)s pip install --upgrade -r requirements.txt ")
-
 def start():
     "Start the wsgi server."
     if env.is_webfaction:
         magic_run("%(base_path)s/apache2/bin/start;")
     elif env.is_centos:
         magic_run("service %(project_name)s stop")    
+
+def install_requirements():
+    "Install the requirements."
+    magic_run("%(work_on)s pip install --upgrade -q -r requirements.txt ")
     
 
 def backup_for_deploy():
@@ -509,7 +509,7 @@ def migrate():
 def syncdb():
     magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py syncdb --noinput %(manage_py_settings)s")
 
-def deploy():
+def deploy_fast():
     backup_for_deploy()
     pull()
     kill_pyc()
@@ -517,6 +517,17 @@ def deploy():
     syncdb()
     migrate()
     reboot()
+
+def deploy_slow():
+    stop()
+    backup_for_deploy()
+    pull()
+    kill_pyc()
+    install_requirements()
+    syncdb()
+    migrate()
+    start()
+
 
 def test():
     local("cd %(base_path)s; python manage.py test %(manage_py_settings)s" % env, fail='abort')
