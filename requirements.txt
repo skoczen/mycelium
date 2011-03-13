@@ -36,3 +36,5 @@ django-celery
 coverage >= 3.4
 -e git://github.com/skoczen/nose-xcover.git#egg=nosexcover
 -e hg+https://django-dumpdb.googlecode.com/hg/django-dumpdb#egg=django_dumpdb
+boto
+django-ses

@@ -109,6 +109,7 @@ INSTALLED_APPS = (
     'taggit',
     'django_jenkins',
     'django_dumpdb',
+    'django_ses',
 
     'cms',
     'mptt',

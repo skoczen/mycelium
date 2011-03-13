@@ -24,4 +24,5 @@ urlpatterns = patterns('',
     (r'^', include('sorl.thumbnail.urls')),
     url(r'^', include('qi_toolkit.urls')),
     url(r'^', include('cms.urls')),
+    url(r'^', include('django_ses.urls')),
 )
