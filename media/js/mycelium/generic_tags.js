@@ -8,7 +8,7 @@
                "autogrow_options": {comfortZone: 20, resizeNow:true},
                "form_selector": ".new_tag_form",
                "default_fade_timeout": 500
-           }
+           };
                  
            var options =  $.extend(defaults, options);
  
@@ -19,11 +19,11 @@
                 
                 if (!data) {
                     data = {};
-                    data.options = options
+                    data.options = options;
                     data.target = $this;
                 }
 
-                data.new_input_field = $(".new_tag input[name=new_tag]", data.target)
+                data.new_input_field = $(".new_tag input[name=new_tag]", data.target);
                 
                 if (data.options.autogrow_tag_name) {
                     data.new_input_field.autoGrowInput(data.options.autogrow_options);                    
@@ -48,7 +48,7 @@
                             $(".new_tag_list",list).show();
                         }                
                     }        
-                }
+                };
                 data.move_tag_results = function() {
                     if (data){
                         if (data.new_input_field.length) {
@@ -56,7 +56,7 @@
                             $("tags search_results",data.target).offset({"top":o.top+10, "left":o.left});
                         }                
                     }
-                }
+                };
                 data.set_tag_results_fadeout = function (t, timeout) {
                     if (timeout === undefined) {
                         timeout = data.options.default_fade_timeout;
@@ -65,11 +65,11 @@
                         t.hide();
                         $("search_results",data.target).removeClass("visible");
                     }, timeout);
-                }
+                };
 
                 data.clear_tag_results_fadeout = function() {
                     clearTimeout(data.tag_fadeout_timeout);
-                }
+                };
                 $(data.options.form_selector, data.target).ajaxForm({
                     success: function(json){
                         $.Mycelium.fragments.process_fragments_from_json(json);
@@ -85,7 +85,7 @@
                      dataType: "json",
                      success: function(json) {
                         $.Mycelium.fragments.process_fragments_from_json(json);
-                     },
+                     }
                    });
                    return false;
                 });
@@ -94,7 +94,7 @@
                     search_url: data.new_input_field.attr("results_url"),
                     results_element: $("fragment[name=new_tag_search_results]", data.target),
                     striped_results: false,
-                    results_processed_callback: data.new_tag_results,
+                    results_processed_callback: data.new_tag_results
                 });
                 $("tags a.tag_suggestion_link", data.target).live("click",function(){
                     data.clear_tag_results_fadeout();
@@ -113,9 +113,9 @@
                 });
                 data.move_tag_results(data.target);
 
-                $this.data('genericTags',data)
+                $this.data('genericTags',data);
             });
-        },
+        }
        
 
     };
@@ -124,7 +124,7 @@
     $.fn.genericTags = function( method, do_not_call ) {
        if ( methods[method] ) {
         if (do_not_call !== true) {
-            return methods[method]
+            return methods[method];
         } else {
             return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));            
         }

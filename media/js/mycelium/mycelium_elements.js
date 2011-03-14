@@ -4,7 +4,7 @@ $(function(){
 		$.Mycelium = new Object();
 	}
 	if (typeof(SEARCH_URL) == "undefined") {
-	    var SEARCH_URL = ""
+	    var SEARCH_URL = "";
 	}
 
 // Fragments handler
@@ -20,11 +20,11 @@ $(function(){
           dataType: "json",
           success: function(json) {
              $.Mycelium.fragments.process_fragments_from_json(json);
-          },
-        }
+          }
+        };
         var options =  $.extend(default_options, override_options);
         $.ajax(options);
-	}
+	};
 	
     fragments.process_fragments_from_json = function(json) {
         if (json[fragments.options.json_dict_name] != undefined) {
@@ -32,7 +32,7 @@ $(function(){
         } else {
             return fragments.process_fragments(json);
         }
-    }
+    };
     
 	fragments.process_fragments = function(fragment_dict) {
 	    $("fragment").each(function(){
@@ -82,11 +82,11 @@ $(function(){
                "saving_text": "Saving",
                "saving_class": "mycelium_grey",
                "last_saved_saving_text": "Saving changes...",               
-               "saved_recently_text": "Saved a few seconds ago.",
-           }
-                 
+               "saved_recently_text": "Saved a few seconds ago."
+           };
+
            var options =  $.extend(defaults, options);
- 
+
            return this.each(function() {
                 var $this = $(this),
                     data = $this.data('genericFieldForm');
@@ -94,10 +94,10 @@ $(function(){
                 
                 if (!data) {
                     data = {};
-                    data.options = options
+                    data.options = options;
                     data.target = $this;
                     if (options.hasOwnProperty("form")) {
-                        data.form = $(options.form)
+                        data.form = $(options.form);
                     } else {
                         if (data.target.is("form")) {
                             data.form = data.target;
@@ -112,36 +112,36 @@ $(function(){
                     data.save_url = (options.hasOwnProperty("save_url"))? options.save_url: data.form.attr("action");
                     data.save_method = (options.hasOwnProperty("save_method"))? options.save_method: data.form.attr("method");
                     data.async = true;
-                    $this.data('genericFieldForm',data)
+                    $this.data('genericFieldForm',data);
                     data = $this.data('genericFieldForm');
                 }
 
                 data.form_save_timeout = null;
                 data.previous_serialized_str = "";
                 
-                $(data.options.start_edit_btn_class,data.target).click(function(){data.target.genericFieldForm('toggle_edit')});
-                $(data.options.done_edit_btn_class,data.target).click(function(){data.target.genericFieldForm('toggle_edit')});
+                $(data.options.start_edit_btn_class,data.target).click(function(){data.target.genericFieldForm('toggle_edit');});
+                $(data.options.done_edit_btn_class,data.target).click(function(){data.target.genericFieldForm('toggle_edit');});
 
-                $("body").bind('keydown', 'ctrl+e',  function(){data.target.genericFieldForm('toggle_edit')});
-                $("body").bind('keydown', 'alt+e',   function(){data.target.genericFieldForm('toggle_edit')});
-                $("body").bind('keydown', 'meta+e',  function(){data.target.genericFieldForm('toggle_edit')});
-                $("body").bind('keydown', 'meta+s',  function(){data.target.genericFieldForm('save_and_status_btn_clicked')});
-                $("body").bind('keydown', 'ctrl+s',  function(){data.target.genericFieldForm('save_and_status_btn_clicked')});
-                $("input").bind('keydown', 'meta+s', function(){data.target.genericFieldForm('save_and_status_btn_clicked')});
-                $("input").bind('keydown', 'ctrl+s', function(){data.target.genericFieldForm('save_and_status_btn_clicked')});
+                $("body").bind('keydown', 'ctrl+e',  function(){data.target.genericFieldForm('toggle_edit');});
+                $("body").bind('keydown', 'alt+e',   function(){data.target.genericFieldForm('toggle_edit');});
+                $("body").bind('keydown', 'meta+e',  function(){data.target.genericFieldForm('toggle_edit');});
+                $("body").bind('keydown', 'meta+s',  function(){data.target.genericFieldForm('save_and_status_btn_clicked');});
+                $("body").bind('keydown', 'ctrl+s',  function(){data.target.genericFieldForm('save_and_status_btn_clicked');});
+                $("input").bind('keydown', 'meta+s', function(){data.target.genericFieldForm('save_and_status_btn_clicked');});
+                $("input").bind('keydown', 'ctrl+s', function(){data.target.genericFieldForm('save_and_status_btn_clicked');});
 
                 $(data.options.last_save_time_class,data.target).hide();
-                $("input", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save')});
-                $("input", data.target).live("keyup",  function(){data.target.genericFieldForm('queue_form_save')});
-                $("textarea", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save')});
-                $("textarea", data.target).live("keyup",  function(){data.target.genericFieldForm('queue_form_save')});                
-                $("select", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save')});
+                $("input", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save');});
+                $("input", data.target).live("keyup",  function(){data.target.genericFieldForm('queue_form_save');});
+                $("textarea", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save');});
+                $("textarea", data.target).live("keyup",  function(){data.target.genericFieldForm('queue_form_save');});
+                $("select", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save');});
                 $("input", data.target).autoGrowInput({comfortZone: 30, resizeNow:true});
 
-                $(data.options.save_and_status_btn_class, data.target).live("click", function(){data.target.genericFieldForm('save_and_status_btn_clicked')});
+                $(data.options.save_and_status_btn_class, data.target).live("click", function(){data.target.genericFieldForm('save_and_status_btn_clicked');});
 
                 data.previous_serialized_str = data.form.serialize();
-                $this.data('genericFieldForm',data)
+                $this.data('genericFieldForm',data);
                 
                 // bind to window close, save if there's anything in the ajax queue
                 $(window).unload(function(){
@@ -174,7 +174,7 @@ $(function(){
             		data.target.trigger("genericFieldForm.toggle_off");
             	}
             	return false;
-            })
+            });
 
         },
         save_and_status_btn_clicked: function(){
@@ -182,7 +182,7 @@ $(function(){
                 var $this = $(this),
                     data = $this.data('genericFieldForm');
 
-                clearTimeout(data.form_save_timeout)
+                clearTimeout(data.form_save_timeout);
                 data.target.genericFieldForm('save_form');
                 return false;
             });
@@ -198,8 +198,8 @@ $(function(){
                 if (data.previous_serialized_str != ser) {
                     data.previous_serialized_str = ser;
                     $(data.options.save_and_status_btn_class).html(data.options.save_now_text).addClass(data.options.save_now_class);
-                    clearTimeout(data.form_save_timeout)
-                    data.form_save_timeout = setTimeout(function(){data.target.genericFieldForm('save_form')}, 1500);
+                    clearTimeout(data.form_save_timeout);
+                    data.form_save_timeout = setTimeout(function(){data.target.genericFieldForm('save_form');}, 1500);
                 }
             });
         },
@@ -226,14 +226,14 @@ $(function(){
                 		var savetime = new Date();
                 		total_saving_time = savetime - save_start_time;
                 		if (total_saving_time < data.options.min_save_message_display_time) {
-                		    setTimeout(function(){data.target.genericFieldForm('show_saved_message')},data.options.min_save_message_display_time-total_saving_time);
+                		    setTimeout(function(){data.target.genericFieldForm('show_saved_message');},data.options.min_save_message_display_time-total_saving_time);
                 		} else {
                 		    data.target.genericFieldForm('show_saved_message');
                 		}
                 	 },
 
                 	  error: function() {
-                	    console.log("error")
+                	    console.log("error");
                         // alert("Error Saving.");
                 	  }
                 });
@@ -248,9 +248,9 @@ $(function(){
                 $(data.options.last_save_time_class).html(data.options.saved_recently_text).fadeIn();
                 setTimeout(function(){
                     $(data.options.save_and_status_btn_class).html(data.options.saved_text).removeClass(data.options.save_now_class);
-                }, 200)
+                }, 200);
             });
-        },
+        }
     };
 
 
@@ -312,13 +312,13 @@ $(function(){
             $(this).html(text);
     	});
 
-    }
+    };
 
 // Striping
     $.Mycelium.update_stripes = function(context_ele) {
         $(".striped .striped_row:even",context_ele).addClass("even");
         $(".striped .striped_row:odd",context_ele).addClass("odd");
-    }
+    };
     $.Mycelium.update_stripes();
 
 //  Mycelium Elements
