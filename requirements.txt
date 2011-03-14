@@ -40,3 +40,4 @@ coverage >= 3.4
 boto
 django-ses
 django-tinymce
+django-static

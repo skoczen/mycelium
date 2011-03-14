@@ -110,6 +110,7 @@ INSTALLED_APPS = (
     'django_jenkins',
     'django_dumpdb',
     'django_ses',
+    'django_static',
 
     'cms',
     'mptt',
@@ -179,6 +180,11 @@ SOUTH_LOGGING_FILE = "/dev/null"
 THUMBNAIL_FORMAT = "PNG"
 THUMBNAIL_COLORSPACE = None
 
+# django-static
+DJANGO_STATIC = True
+DJANGO_STATIC_SAVE_PREFIX = '/tmp/media'
+DJANGO_STATIC_NAME_PREFIX = '/media' 
+
 # celery / rabbitmq
 BROKER_HOST = "localhost"
 BROKER_PORT = 5672
@@ -189,3 +195,4 @@ BROKER_VHOST = "digitalmycelium"
 CELERY_RESULT_BACKEND = "amqp"
 import djcelery
 djcelery.setup_loader()
+
