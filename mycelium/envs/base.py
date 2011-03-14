@@ -166,6 +166,11 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 ENV = None
 
+# qi toolkit
+DEFAULT_SMOKE_TEST_OPTIONS = {
+    'verbose'           : False,
+}
+
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--where=apps', '-s']
 

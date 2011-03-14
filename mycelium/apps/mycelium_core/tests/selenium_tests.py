@@ -12,8 +12,6 @@ class TestAgainstNoData(SeleniumTestCase):
     
     def tearDown(self):
         self.assertEqual([], self.verificationErrors)
-        call_command('flush', interactive=False)
-
 
     # def test_404(self):
     #     sel = self.selenium        

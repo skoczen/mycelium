@@ -19,7 +19,6 @@ class TestAgainstNoData(SeleniumTestCase, RecentActivityTestAbstractions, People
     
     def tearDown(self):
         self.assertEqual([], self.verificationErrors)
-        call_command('flush', interactive=False)
 
     def test_recent_activity_tab_is_a_stub(self):
         sel = self.selenium
@@ -33,5 +32,4 @@ class TestAgainstGeneratedData(SeleniumTestCase, RecentActivityTestAbstractions,
         self.verificationErrors = []
     
     def tearDown(self,*args, **kwargs):
-        call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)

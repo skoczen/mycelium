@@ -45,7 +45,6 @@ class TestAgainstNoData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstr
     
     def tearDown(self):
         self.assertEqual([], self.verificationErrors)
-        call_command('flush', interactive=False)
 
     def test_that_new_donations_can_be_added_and_display_properly(self):
         sel = self.selenium        
@@ -87,7 +86,7 @@ class TestAgainstNoData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstr
     def test_that_donations_are_rounded_to_cents(self):
         sel = self.selenium
         self.create_person_and_go_to_donor_tab()
-        a1, d1 = self.add_a_donation(amount=87.851154683, date="3/8/2011")
+        a1, d1 = self.add_a_donation(amount=87.1251154683, date="3/8/2011")
 
         # because jquery datepicker + selenium argue.
         self.switch_to_donor_tab()
@@ -224,7 +223,6 @@ class TestAgainstGeneratedData(SeleniumTestCase, DonorTestAbstractions, PeopleTe
         self.verificationErrors = []
     
     def tearDown(self,*args, **kwargs):
-        call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)
 
 

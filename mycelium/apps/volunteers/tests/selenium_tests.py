@@ -298,7 +298,6 @@ class TestAgainstGeneratedData(SeleniumTestCase,VolunteerTestAbstractions,People
         self.verificationErrors = []
     
     def tearDown(self,*args, **kwargs):
-        call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)
 
 
