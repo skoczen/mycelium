@@ -41,3 +41,4 @@ boto
 django-ses
 django-tinymce
 django-static
+slimmer

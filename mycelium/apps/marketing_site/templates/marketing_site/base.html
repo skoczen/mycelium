@@ -1,15 +1,16 @@
-{% extends "base.html" %}
-{% block css %}{{block.super}}
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/marketing_site.css" type="text/css" media="screen" title="" charset="utf-8">
+{% extends "base.html" %}{% load django_static %}
+{% block css %}{{block.super}}{% slimall %}
+<link rel="stylesheet" href="/css/marketing_site.css" type="text/css" media="screen" title="" charset="utf-8">
+{% endslimall %}
 <!--[if lt IE 8]>
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/ie7_marketing_site.css" type="text/css" media="screen" title="" charset="utf-8">
+<link rel="stylesheet" href="/css/ie7_marketing_site.css" type="text/css" media="screen" title="" charset="utf-8">
 <![endif]-->
 {% endblock %}
-{% block javascript %}{{block.super}}
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.scrollTo-min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.toggleval.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/marketing_site.js"> </script>
-{% endblock %}
+<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}/js/contrib/jquery.scrollTo-min.js"> </script>
+{% block javascript %}{{block.super}}{% slimall %}
+<script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.toggleval.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/mycelium/marketing_site.js"> </script>
+{% endslimall %}{% endblock %}
 {% block content %}
 	{% include "marketing_site/_top_nav.html" %}
 	{% block page_content %}

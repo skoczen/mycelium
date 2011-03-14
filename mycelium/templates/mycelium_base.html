@@ -1,19 +1,19 @@
-{% extends "base.html" %}
-{% block css %}{{block.super}}
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/mycelium_elements.css" type="text/css" media="screen" title="" charset="utf-8">
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/contrib/jquery-ui-1.8.10.custom.css" type="text/css" media="screen" title="" charset="utf-8">
-{% endblock %}
-{% block javascript %}{{block.super}}
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.scrollTo-min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.toggleval.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.hotkeys-0.7.9.min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.ajax.queue.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.autogrow.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.form.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/contrib/jquery.ba-bbq.min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/mycelium_elements.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/mycelium_search.js"> </script>
-{% endblock %}
+{% extends "base.html" %}{% load django_static %}
+{% block css %}{{block.super}}{% slimall %}
+<link rel="stylesheet" href="/css/mycelium_elements.css" type="text/css" media="screen" title="" charset="utf-8">
+<link rel="stylesheet" href="/css/contrib/jquery-ui-1.8.10.custom.css" type="text/css" media="screen" title="" charset="utf-8">
+{% endslimall %}{% endblock %}
+{% block javascript %}{{block.super}}{% slimall %}
+<script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.scrollTo-min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.toggleval.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.hotkeys-0.7.9.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.ajax.queue.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.autogrow.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.form.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.ba-bbq.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/mycelium/mycelium_elements.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/mycelium/mycelium_search.js"> </script>
+{% endslimall %}{% endblock %}
 {% block content %}
 	<span id="test_badge"></span>
 	{% block nav %}
