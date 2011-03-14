@@ -1,4 +1,5 @@
 from djangosanetesting.cases import SeleniumTestCase
+from django.core.management import call_command
 
 class TestSelenium(SeleniumTestCase):
     selenium_fixtures = []
@@ -7,6 +8,7 @@ class TestSelenium(SeleniumTestCase):
         self.verificationErrors = []
     
     def tearDown(self):
+        call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)
 
     def test_all_pages_load(self):

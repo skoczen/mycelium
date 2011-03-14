@@ -1,6 +1,7 @@
 from djangosanetesting.cases import SeleniumTestCase
 import time 
 from test_factory import Factory
+from django.core.management import call_command
 
 class TestMockupPages(SeleniumTestCase):
     selenium_fixtures = []
@@ -9,6 +10,7 @@ class TestMockupPages(SeleniumTestCase):
         self.verificationErrors = []
     
     def tearDown(self):
+        call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)
 
 

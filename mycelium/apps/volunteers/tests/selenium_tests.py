@@ -56,8 +56,8 @@ class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbs
         self.verificationErrors = []
     
     def tearDown(self):
+        call_command('flush', interactive=False)        
         self.assertEqual([], self.verificationErrors)
-        call_command('flush', no_input=True, interactive=False)
 
 
     def test_create_new_volunteer(self):
@@ -298,6 +298,7 @@ class TestAgainstGeneratedData(SeleniumTestCase,VolunteerTestAbstractions,People
         self.verificationErrors = []
     
     def tearDown(self,*args, **kwargs):
+        call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)
 
 

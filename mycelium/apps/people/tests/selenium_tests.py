@@ -113,6 +113,7 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         self.verificationErrors = []
     
     def tearDown(self):
+        call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)
 
     def test_creating_and_editing_a_new_person(self):
@@ -940,6 +941,7 @@ class TestAgainstGeneratedData(SeleniumTestCase, PeopleTestAbstractions):
         self.verificationErrors = []
     
     def tearDown(self,*args, **kwargs):
+        call_command('flush', interactive=False)        
         self.assertEqual([], self.verificationErrors)
 
 

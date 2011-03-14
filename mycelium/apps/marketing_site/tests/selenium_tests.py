@@ -9,6 +9,7 @@ class TestMarketingSite(SeleniumTestCase):
         self.verificationErrors = []
     
     def tearDown(self):
+        # call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)
 
     def test_home_page_loads(self):

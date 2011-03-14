@@ -45,5 +45,5 @@ class Command(BaseCommand):
             celery_subprocess.kill()
         except:
             pass
-        
+        print "Stopping..."
         time.sleep(6)

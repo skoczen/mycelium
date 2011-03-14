@@ -44,6 +44,7 @@ class TestAgainstNoData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstr
         self.verificationErrors = []
     
     def tearDown(self):
+        call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)
 
     def test_that_new_donations_can_be_added_and_display_properly(self):
@@ -223,6 +224,7 @@ class TestAgainstGeneratedData(SeleniumTestCase, DonorTestAbstractions, PeopleTe
         self.verificationErrors = []
     
     def tearDown(self,*args, **kwargs):
+        call_command('flush', interactive=False)
         self.assertEqual([], self.verificationErrors)
 
 
