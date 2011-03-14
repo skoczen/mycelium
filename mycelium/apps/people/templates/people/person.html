@@ -1,16 +1,18 @@
 {% extends "people/base.html" %}
-{% load i18n generic_fields friendly_data_formatting generic_tag_tags %}
+{% load i18n generic_fields friendly_data_formatting generic_tag_tags django_static %}
 {% block title %}People - {{person.full_name}}{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/people_volunteer.css" type="text/css" media="screen" title="" charset="utf-8">
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/people_donor.css" type="text/css" media="screen" title="" charset="utf-8">
-{% endblock %}
-{% block javascript %}{{block.super}}
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_common.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_person.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_volunteer.js"> </script>
-<script type="text/javascript" charset="utf-8" src="{{MEDIA_URL}}js/mycelium/people_donations.js"> </script>
+{% slimall %}
+<link rel="stylesheet" href="/css/people_volunteer.css" type="text/css" media="screen" title="" charset="utf-8">
+<link rel="stylesheet" href="/css/people_donor.css" type="text/css" media="screen" title="" charset="utf-8">
+{% endslimall %}{% endblock %}
+{% block javascript %}{{block.super}}{% slimall %}
+<script type="text/javascript" charset="utf-8" src="/js/mycelium/people_common.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/mycelium/people_person.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/mycelium/people_volunteer.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/js/mycelium/people_donations.js"> </script>
+{% endslimall %}
 {% generic_tags_js %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
@@ -19,6 +21,7 @@ $(function(){
 	$("#id_first_name").focus();
 });
 </script>
+
 {% endif %}
 
 {% endblock %}
