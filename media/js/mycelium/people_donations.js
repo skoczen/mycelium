@@ -12,7 +12,7 @@ function round_donation() {
     input.val(dur);
 }
 function toggle_year_details() {
-    var link = $(this)
+    var link = $(this);
     if (link.text() == "See details") {
         link.html("Hide details");
     } else {
@@ -44,7 +44,7 @@ function delete_donor_from_people_tab() {
 			success: function(json) {
 			$.Mycelium.fragments.process_fragments_from_json(json);
             process_fragments_and_rebind_donation_form(json);
-			},
+			}
 		});		
 	} else {
 		row.removeClass("pre_delete");		
@@ -60,7 +60,7 @@ function bind_donor_tab_events() {
     });
     $("#new_donation .sentence input[name=amount]").autoGrowInput({comfortZone: 20, resizeNow:true});
     $("tabbed_box[name=add_a_donation]").bind("mycelium.tabbed_box.opened",function(){
-        $("#new_donation input[name$=amount]").focus()
+        $("#new_donation input[name$=amount]").focus();
     });
     $.Mycelium.update_stripes(".year_of_donations");
     show_or_hide_datefield();

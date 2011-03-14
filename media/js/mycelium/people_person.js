@@ -20,7 +20,7 @@ function detail_tab_clicked(e) {
         // Go get the tab content from the server.
         $.Mycelium.fragments.get_and_update_fragments(tab_container.attr("update_url"), {
             "data": {'tab_name': tab_name},
-            "async": false,
+            "async": false
         });
         switch(tab_name){
             case "#volunteer":

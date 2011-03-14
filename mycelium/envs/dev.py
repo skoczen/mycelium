@@ -49,3 +49,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # AWS_SECRET_ACCESS_KEY = 'WT1wp3UQsFPdeXMxwUyvjF7IM8q/qkcm/EW6EKvy'
 
 VIRTUALENV_PATH = "~/.virtualenvs/mycelium"
+SELENIUM_TEST_SERVER_SETTINGS="selserver_dev"

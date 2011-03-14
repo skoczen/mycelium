@@ -14,7 +14,7 @@ $(function(){
     $(".not_in_goodcloud_btn").live("click",show_new_person_add_form);
     $(".select_person_to_add_btn").live("click",show_existing_person_add_form);
     $(".cancel_add_btn").live("click",cancel_add_person);
-    $("#up_to_search").live("click",up_to_search_clicked)
+    $("#up_to_search").live("click",up_to_search_clicked);
 
 	$("pane.pane_2 input").autoGrowInput({comfortZone: 30, resizeNow:true});    
     $("employee").genericFieldForm();
@@ -72,7 +72,7 @@ function scroll_to_pane_1() {
             $("pane[name=2]").hide();
             $("tabbed_box box_content").height("auto");
         }
-    }
+    };
 	$.extend(true, my_options, scroll_options);
     
     $("tabbed_box box_content").height($("pane[name=1]").height());
@@ -81,7 +81,7 @@ function scroll_to_pane_1() {
 function scroll_to_pane_2() {
     var my_options = {
         
-    }
+    };
 	$.extend(true, my_options, scroll_options);
 	    
     $("pane[name=2]").show();    
@@ -101,11 +101,11 @@ function confirm_employee_removal(e) {
     var t = $(e.target);
     var emp = t.parents("employee");
     var name = $(".name",emp).text();
-    var org_name = $(".basic_info .name_phone_email .name .view_field").text()
+    var org_name = $(".basic_info .name_phone_email .name .view_field").text();
     emp.addClass("warning");
     var do_it = confirm("Are you sure you want to remove "+name+" from "+org_name+"?\n\nThis will not remove "+name+" from the database, only from this role at "+org_name+".");
     if (!do_it) {
-        emp.removeClass("warning")
+        emp.removeClass("warning");
     }
     return do_it;
 }
