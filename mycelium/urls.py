@@ -27,5 +27,6 @@ urlpatterns = patterns('',
 )
 if settings.DEBUG:
     urlpatterns += patterns('',
+        (r'^media/cache-forever/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.DJANGO_STATIC_SAVE_PREFIX}),
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     )

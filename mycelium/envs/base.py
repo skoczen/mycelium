@@ -183,7 +183,8 @@ THUMBNAIL_COLORSPACE = None
 # django-static
 DJANGO_STATIC = True
 DJANGO_STATIC_SAVE_PREFIX = '/tmp/cache-forever'
-DJANGO_STATIC_NAME_PREFIX = '/cache-forever' 
+DJANGO_STATIC_NAME_PREFIX = '/cache-forever'
+DJANGO_STATIC_MEDIA_URL_ALWAYS = True
 
 # celery / rabbitmq
 BROKER_HOST = "localhost"
