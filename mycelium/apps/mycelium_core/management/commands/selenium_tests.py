@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 import subprocess
 from os.path import abspath, join
-
+import time 
 
 class Command(BaseCommand):
     help = "Run the selenium tests."
@@ -45,3 +45,5 @@ class Command(BaseCommand):
             celery_subprocess.kill()
         except:
             pass
+        
+        time.sleep(6)

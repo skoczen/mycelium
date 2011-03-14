@@ -57,7 +57,7 @@ class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbs
     
     def tearDown(self):
         self.assertEqual([], self.verificationErrors)
-        call_command('flush', interactive=False)
+        call_command('flush', no_input=True, interactive=False)
 
 
     def test_create_new_volunteer(self):
@@ -258,16 +258,17 @@ class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbs
         sel = self.selenium
         self.create_new_volunteer()
         time.sleep(1)
+        sel.click("css=.status_field label[for$=status_0]")
         sel.click("css=.status_field input[id$=status_0]")
         time.sleep(5)
         self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
-        self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))    
 
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         sel.click("css=.detail_tab[href=#volunteer]")
         time.sleep(1)
         assert sel.is_element_present("css=.status_field input[id$=status_0]:checked")
+
 
         sel.click("css=.status_field label[for$=status_1]")
         time.sleep(0.25)
@@ -278,15 +279,15 @@ class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbs
         assert sel.is_element_present("css=.status_field input[id$=status_1]:checked")
 
         sel.click("css=.status_field label[for$=status_2]")
-        sel.wait(1)
-        sel.type("css=.status_field input[name$=reactivation_date]", "01/2/2010")
+        time.sleep(1)
+        sel.type("css=#id_VOLUNTEER_STATUS-reactivation_date", "01/2/2010")
         time.sleep(0.25)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         sel.click("css=.detail_tab[href=#volunteer]")
         time.sleep(1)
-        assert sel.is_element_present("css=.status_field input[id$=status_1]:checked")
-        self.assertEqual(sel.get_value("css=.status_field input[name$=reactivation_date]"),"01/02/2010")
+        assert sel.is_element_present("css=.status_field input[id$=status_2]:checked")
+        self.assertEqual(sel.get_value("css=#id_VOLUNTEER_STATUS-reactivation_date"),"01/02/2010")
 
 
 

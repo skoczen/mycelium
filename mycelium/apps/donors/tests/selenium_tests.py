@@ -50,13 +50,13 @@ class TestAgainstNoData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstr
     def test_that_new_donations_can_be_added_and_display_properly(self):
         sel = self.selenium        
         self.create_person_and_go_to_donor_tab()
-        a1, d1 = self.add_a_donation(amount=85.12, date="3/12/2011")
-        a2, d2 = self.add_a_donation(amount=12.15, date="1/4/2011")
+        a1, d1 = self.add_a_donation(amount=85.8, date="3/8/2011")
+        a2, d2 = self.add_a_donation(amount=8.15, date="1/4/2011")
         a3, d3 = self.add_a_donation(amount=8.04, date="10/17/2010")
 
         # make sure recent donations display cleanly
         self.assertEqual("$%.2f"%a1, sel.get_text("css=.donor_donation_table .donation_row:nth(0) .amount"))
-        self.assertEqual("March 12, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
+        self.assertEqual("March 8, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
 
         self.assertEqual("$%.2f"%a2, sel.get_text("css=.donor_donation_table .donation_row:nth(1) .amount"))
         self.assertEqual("Jan. 4, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(1) .date"))
@@ -76,7 +76,7 @@ class TestAgainstNoData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstr
         # TODO: re-enable this once jquery + datepicker get along.
         # sel.click("link=See details")
         # self.assertEqual("$%.2f"%a1, sel.get_text("css=.year_of_shifts:nth(0) .year_of_donor_donations_table .donation_row:nth(0) .amount"))
-        # self.assertEqual("March 12, 2011", sel.get_text("css=.year_of_shifts:nth(0) .year_of_donor_donations_table .donation_row:nth(0) .date"))
+        # self.assertEqual("March 8, 2011", sel.get_text("css=.year_of_shifts:nth(0) .year_of_donor_donations_table .donation_row:nth(0) .date"))
 
         # self.assertEqual("$%.2f"%a2, sel.get_text("css=.year_of_shifts:nth(0) .year_of_donor_donations_table .donation_row:nth(1) .amount"))
         # self.assertEqual("Jan. 4, 2011", sel.get_text("css=.year_of_shifts:nth(0) .year_of_donor_donations_table .donation_row:nth(1) .date"))
@@ -87,18 +87,18 @@ class TestAgainstNoData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstr
     def test_that_donations_are_rounded_to_cents(self):
         sel = self.selenium
         self.create_person_and_go_to_donor_tab()
-        a1, d1 = self.add_a_donation(amount=87.12511546123, date="3/12/2011")
+        a1, d1 = self.add_a_donation(amount=87.851154683, date="3/8/2011")
 
         # because jquery datepicker + selenium argue.
         self.switch_to_donor_tab()
         # make sure recent donations display cleanly
         self.assertEqual("$87.13", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .amount"))
-        self.assertEqual("March 12, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
+        self.assertEqual("March 8, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
 
     def test_that_deleting_donation_works(self):
         sel = self.selenium        
         self.create_person_with_one_donation()
-        a1, d1 = self.add_a_donation(amount=85.12, date="3/8/2011")
+        a1, d1 = self.add_a_donation(amount=85.8, date="3/8/2011")
         a2, d2 = self.add_a_donation(amount=8.15, date="1/4/2011")        
 
         sel.choose_cancel_on_next_confirmation()
