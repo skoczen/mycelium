@@ -930,6 +930,19 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
 
         self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
 
+    def test_that_the_last_selected_tab_stays_open_after_refresh_in_people(self):
+        sel = self.selenium
+        self.create_john_smith()
+        time.sleep(4)
+        assert not sel.is_text_present("Volunteer Shifts")
+        sel.click("css=.detail_tab[href=#volunteer]")
+        time.sleep(2)
+        assert sel.is_text_present("Volunteer Shifts")
+        # TODO: JS refresh?  Selenium is eating the hashtag
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        time.sleep(30)
+        assert sel.is_text_present("Volunteer Shifts")
 
 
 
@@ -1161,3 +1174,5 @@ class TestAgainstGeneratedData(SeleniumTestCase, PeopleTestAbstractions):
         time.sleep(1)
         first_result = sel.get_text("css=search_results .result_row:nth(0)")
         assert first_result.find('<b>') == -1
+
+
