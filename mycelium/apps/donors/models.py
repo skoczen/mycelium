@@ -81,7 +81,7 @@ class Donor(TimestampModelMixin):
 class Donation(TimestampModelMixin):
     """A specific donation"""
     donor = models.ForeignKey(Donor)
-    date = models.DateTimeField()
+    date = models.DateField(default=datetime.date.today)
     currency = models.CharField(default="USD", max_length=255)
     amount = models.DecimalField(blank=True, null=True, max_digits=18, decimal_places=2)
 

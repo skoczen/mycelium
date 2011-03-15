@@ -58,7 +58,7 @@ function bind_donor_tab_events() {
         "success":process_fragments_and_rebind_donation_form,
         "dataType": 'json'
     });
-    $("#new_donation .sentence input[name=amount]").autoGrowInput({comfortZone: 20, resizeNow:true});
+    $("#new_donation .sentence input").autoGrowInput({comfortZone: 20, resizeNow:true});
     $("tabbed_box[name=add_a_donation]").bind("mycelium.tabbed_box.opened",function(){
         $("#new_donation input[name$=amount]").focus();
     });
