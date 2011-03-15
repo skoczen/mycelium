@@ -49,6 +49,7 @@ function delete_person(e) {
         name = "Unnamed Person";
     }
     if (confirm("Are you sure you want to completely delete " + name + " from the database? \n\nDeleting will remove this person, and all their data (contact info, job info, etc).  It cannot be undone.\n\nPress OK to delete "+ name +".\nPress Cancel to leave things unchanged.")) {
+        $(window).unbind("unload.genericFieldForm");
         $("#delete_person_form").submit();
     }
 }

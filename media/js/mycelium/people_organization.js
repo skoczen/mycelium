@@ -115,6 +115,7 @@ function delete_organization(e) {
         name = "Unnamed Organization";
     }
     if (confirm("Are you sure you want to completely delete " + name + " from the database? \n\nDeleting will remove this organization and all their data (contact info, employees, etc).  The people associated with this organization will not be removed.\n\nThis action cannot be undone.\n\nPress OK to delete "+ name +".\nPress Cancel to leave things unchanged.")) {
+        $(window).unbind("unload.genericFieldForm");
         $("#delete_org_form").submit();
     }
 }
