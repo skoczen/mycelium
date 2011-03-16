@@ -938,10 +938,9 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
         sel.click("css=.detail_tab[href=#volunteer]")
         time.sleep(2)
         assert sel.is_text_present("Volunteer Shifts")
-        # TODO: JS refresh?  Selenium is eating the hashtag
-        sel.refresh()
-        sel.wait_for_page_to_load("30000")
-        time.sleep(30)
+        sel.get_eval("window.location.href")
+        sel.get_eval("window.location.href=window.location.href;")
+        time.sleep(4)
         assert sel.is_text_present("Volunteer Shifts")
 
 
