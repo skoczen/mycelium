@@ -1,17 +1,11 @@
-from djangosanetesting.cases import SeleniumTestCase
+from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time 
 from test_factory import Factory
-from django.core.management import call_command
 
-class TestAgainstNoData(SeleniumTestCase):
-    selenium_fixtures = []
-    
-    def setUp(self):
-        self.verificationErrors = []
-    
-    def tearDown(self):
-        call_command('flush', interactive=False)
-        self.assertEqual([], self.verificationErrors)
+
+class TestAgainstNoData(QiConservativeSeleniumTestCase):
+    pass
+
 
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium

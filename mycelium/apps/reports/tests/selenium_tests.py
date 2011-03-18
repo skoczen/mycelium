@@ -1,7 +1,7 @@
-from djangosanetesting.cases import SeleniumTestCase
-from django.core.management import call_command
+from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 
-class TestSelenium(SeleniumTestCase):
+
+class TestSelenium(QiConservativeSeleniumTestCase):
     selenium_fixtures = []
     
     def setUp(self):

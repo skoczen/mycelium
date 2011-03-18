@@ -4,6 +4,7 @@ from django.core.management import call_command
 import subprocess
 from os.path import abspath, join
 import time 
+from qi_toolkit.helpers import print_exception
 
 class Command(BaseCommand):
     help = "Run the selenium tests."
@@ -29,6 +30,7 @@ class Command(BaseCommand):
             call_command('test', "--with-selenium", "--with-selenium-fixtures", *args, **options )
             output.close()    
         except:
+            print_exception()
             pass
         
         try:
