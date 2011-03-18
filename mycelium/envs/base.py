@@ -78,6 +78,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     "cms.context_processors.media",
     "qi_toolkit.context_processors.add_env_to_request",
     "qi_toolkit.context_processors.add_favicon_to_request",    
+    "mycelium_core.context_processors.cdn_media_url",
 )
 
 DATE_INPUT_FORMATS = ('%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%b %d %Y',
@@ -203,3 +204,10 @@ CELERY_RESULT_BACKEND = "amqp"
 import djcelery
 djcelery.setup_loader()
 
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_ACCESS_KEY_ID = 'AKIAJTNZWCZDOIDWFR4A'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = "goodcloud1"
+
+CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME

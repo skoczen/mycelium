@@ -43,3 +43,5 @@ django-tinymce
 django-static
 slimmer
 django-taggit-templatetags
+#django-storages
+-e hg+https://bitbucket.org/david/django-storages#egg=storages
