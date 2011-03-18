@@ -4,12 +4,8 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 class TestSelenium(QiConservativeSeleniumTestCase):
     selenium_fixtures = []
     
-    def setUp(self):
-        self.verificationErrors = []
-    
-    def tearDown(self):
-        call_command('flush', interactive=False)
-        self.assertEqual([], self.verificationErrors)
+
+
 
     def test_all_pages_load(self):
         sel = self.selenium
