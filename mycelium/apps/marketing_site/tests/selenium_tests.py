@@ -1,4 +1,4 @@
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase, QiSeleniumTestCase
 from email_list.models import EmailSubscription
 
 class TestMarketingSite(QiSeleniumTestCase):

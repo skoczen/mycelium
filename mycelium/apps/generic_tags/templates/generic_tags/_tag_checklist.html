@@ -1,0 +1,5 @@
+{% for tag in obj_tags.all_tags_of_my_type_alphabetical_by_name %}
+<div style="clear: both">
+{% include "generic_tags/_single_tag.html" %}
+</div>
+{% endfor %}

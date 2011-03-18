@@ -42,3 +42,4 @@ django-ses
 django-tinymce
 django-static
 slimmer
+django-taggit-templatetags

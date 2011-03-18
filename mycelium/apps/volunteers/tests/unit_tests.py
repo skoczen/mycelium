@@ -24,7 +24,4 @@ def test_completed_shifts_by_year_returns_sanely():
 def test_completed_shifts_by_year_for_non_volunteer_returns_properly():
     person = Factory.person()
     target = []
-    print target
-    print person.volunteer.completed_shifts_by_year
-
     assert person.volunteer.completed_shifts_by_year == target

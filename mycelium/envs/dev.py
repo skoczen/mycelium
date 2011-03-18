@@ -50,3 +50,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 VIRTUALENV_PATH = "~/.virtualenvs/mycelium"
 SELENIUM_TEST_SERVER_SETTINGS="selserver_dev"
+FORCE_SELENIUM_TESTS = True
