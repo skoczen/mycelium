@@ -12,8 +12,8 @@ DATABASES = {
     },
 }
 
-MEDIA_URL = 'http://media.agoodcloud.com/'
-DJANGO_STATIC_MEDIA_URL = 'http://media.agoodcloud.com'
+MEDIA_URL = 'https://media.agoodcloud.com/'
+DJANGO_STATIC_MEDIA_URL = 'https://media.agoodcloud.com'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
