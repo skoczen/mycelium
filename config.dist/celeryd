@@ -7,7 +7,7 @@
 # and http://ask.github.com/celery/cookbook/daemonizing.html
 
 # we could have three nodes:
-#CELERYD_NODES="w1 w2 w3"
+CELERYD_NODES="w1 w2 w3"
 
 # Where to chdir at start.
 CELERYD_CHDIR="/var/www/mycelium.git/mycelium"
@@ -17,9 +17,9 @@ CELERYD_OPTS="-v 2 -B -s celery -E --concurrency=3"
 #CELERYD_LOG_FILE="/var/log/celery/celery.log"
 
 # How to call "manage.py celeryd_multi"
-#CELERYD_MULTI="/root/.virtualenvs/mycelium/bin/python2.6 $CELERYD_CHDIR/manage.py celeryd_multi"
+CELERYD_MULTI="/root/.virtualenvs/mycelium/bin/python2.6 $CELERYD_CHDIR/manage.py celeryd_multi"
 CELERYD="/root/.virtualenvs/mycelium/bin/python2.6 $CELERYD_CHDIR/manage.py celeryd"
-CELERYD_MULTI="/root/.virtualenvs/mycelium/bin/python2.6 $CELERYD_CHDIR/manage.py celeryd"
+
 
 # %n will be replaced with the nodename.
 CELERYD_LOG_FILE="/var/log/celery/%n.log"
