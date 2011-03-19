@@ -172,6 +172,8 @@ ENV = None
 DEFAULT_SMOKE_TEST_OPTIONS = {
     'verbose'           : False,
 }
+OFFSITE_BACKUP_DIR = "aglzen@quantumimagery.com:/home/aglzen/mycelium/data/"
+
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--where=apps', '-s']
@@ -199,10 +201,10 @@ BROKER_PORT = 5672
 BROKER_USER = "mycelium"
 BROKER_PASSWORD = "68WXmV6K49r8veczVaUK"
 BROKER_VHOST = "digitalmycelium"
-
 CELERY_RESULT_BACKEND = "amqp"
 import djcelery
 djcelery.setup_loader()
+
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
