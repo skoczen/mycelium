@@ -14,7 +14,7 @@ CELERYD_CHDIR="/var/www/mycelium.git/mycelium"
 
 DJANGO_SETTINGS_MODULE="envs.live"
 CELERYD_OPTS="-v 2 -B -s --time-limit 300 --concurrency=8 celery -E"
-CELERYD_LOG_FILE="/root/.virtualenvs/mycelium/logs/celery.log"
+CELERYD_LOG_FILE="/var/log/celery.log"
 
 # How to call "manage.py celeryd_multi"
 CELERYD_MULTI="/root/.virtualenvs/mycelium/bin/python2.6 $CELERYD_CHDIR/manage.py celeryd_multi"
