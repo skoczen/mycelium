@@ -40,7 +40,19 @@ class TagViews(object):
 
     def _tags_for_obj(self,obj):
         return getattr(obj,self._tag_field())
-        
+    
+    def _tags_for_category_and_obj(self, cls, obj):
+        all_tags = self._tags_for_obj(cls).all().order_by("name")
+        my_tags = self._tags_for_obj(obj).all().order_by("name")
+
+        combined_list = []
+        for t in all_tags.all():
+            d = {'tag':t}
+            if t in my_tags:
+                d["have_tag"] = True
+            combined_list.append(d)
+        return combined_list
+
     def _default_redirect_url(self):
         if self.default_redirect_url:
             return self.default_redirect_url
@@ -78,6 +90,11 @@ class TagViews(object):
             'search_results_url':search_results_url,
         }
 
+    def checklist_tag_related_info(self,obj,tag_field=None):
+        return {
+            'all_of_my_type_with_obj_tags': self._tags_for_category_and_obj(self._TargetModel(), obj)
+        }
+
     
     def obj_tag_related_info(self, obj, tag_field=None):
         if tag_field:
@@ -85,7 +102,7 @@ class TagViews(object):
         
         my_tags = self._tags_for_obj(obj).all()
         all_of_my_type = self._tags_for_obj(self._TargetModel()).all()
-        
+
         return {'obj_tags':{
                 "all_tags_of_my_type": all_of_my_type,
                 "all_tags_of_my_type_alphabetical_by_name": all_of_my_type.order_by("name"),
@@ -104,10 +121,11 @@ class TagViews(object):
         context.update(self._tag_urls(context["obj"]))
         fragment_html = ""
         context.update(self.obj_tag_related_info(context["obj"]))
-        
+
         if self.mode == "tags":
             fragment_html = {"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_list.html", RequestContext(context["request"],context)),}
         elif self.mode == "checklist":
+            context["obj_tags"].update(self.checklist_tag_related_info(context["obj"]))
             # This line gets the model of the class, then pulls the tag attribute off of it, and finally gets all tags.
             fragment_html = {"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_checklist.html", RequestContext(context["request"],context)),}
         c = {

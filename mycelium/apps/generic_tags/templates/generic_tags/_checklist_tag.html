@@ -1,0 +1,4 @@
+<tag>
+	<a href="{{delete_tag_url}}?tag={{checklist_tag.tag.name|urlencode}}" class="remove_tag_link"> </a>
+	<name>{% if checklist_tag.has_tag %}CHECK{% endif %} {{checklist_tag.tag.name}}</name>
+</tag>

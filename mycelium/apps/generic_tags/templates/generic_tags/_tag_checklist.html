@@ -1,5 +1,5 @@
-{% for tag in obj_tags.all_tags_of_my_type_alphabetical_by_name %}
+{% for checklist_tag in obj_tags.all_of_my_type_with_obj_tags %}
 <div style="clear: both">
-{% include "generic_tags/_single_tag.html" %}
+{% include "generic_tags/_checklist_tag.html" %}
 </div>
 {% endfor %}
