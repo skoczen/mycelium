@@ -48,5 +48,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # AWS_ACCESS_KEY_ID = 'AKIAJTNZWCZDOIDWFR4A'
 # AWS_SECRET_ACCESS_KEY = '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'
 
+# DEFAULT_FILE_STORAGE = django.core.files.storage.FileSystemStorage
+AWS_STORAGE_BUCKET_NAME = "goodcloud-dev"
+CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
+
 VIRTUALENV_PATH = "~/.virtualenvs/mycelium"
 SELENIUM_TEST_SERVER_SETTINGS="selserver_dev"
+FORCE_SELENIUM_TESTS = True

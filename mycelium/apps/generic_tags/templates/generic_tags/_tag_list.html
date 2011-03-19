@@ -1,6 +1,3 @@
-{% for t in obj.alphabetical_tags %}
-<tag>
-	<a href="{{delete_tag_url}}?tag={{t.name|urlencode}}" class="remove_tag_link"> </a>
-	<name>{{t.name}}</name>
-</tag>
+{% for tag in obj_tags.my_tags_alphabetical_by_name %}
+{% include "generic_tags/_single_tag.html" %}
 {% endfor %}

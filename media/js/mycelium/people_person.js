@@ -1,16 +1,24 @@
 $(function(){
     $(".person_delete_btn").click(delete_person);
     $("detail_tabs a.detail_tab").live("click",detail_tab_clicked);
-    $(".general_person_tags").genericTags();    
+    $(".general_person_tags").genericTags();
+    default_tab = $.bbq.getState('current_detail_tab');
+    if (default_tab !== undefined) {
+        load_detail_tab(default_tab);
+    }
 });
 var tag_fadeout_timeout = false;
 var prev_tab_name = "#recent_activity";
 
 function detail_tab_clicked(e) {
     var tab_link = $(e.target);
-    var tab_container = tab_link.parents("detail_tabs");
     var tab_name = tab_link.attr("href");
-
+    load_detail_tab(tab_name);   
+    return false;
+}
+function load_detail_tab(tab_name) {
+    tab_link = $("detail_tabs a[href="+tab_name+"]");
+    var tab_container = tab_link.parents("detail_tabs");
     if (tab_name != prev_tab_name) {
         // Switch the current tab
         $("fragment[name=detail_tab]").html("Loading...");
@@ -30,10 +38,8 @@ function detail_tab_clicked(e) {
                 bind_donor_tab_events();                
                 break;
         }
-
-        prev_tab_name = tab_name;
-    }
-    return false;
+        $.bbq.pushState({"current_detail_tab":tab_name})
+    } 
 }
 
 
@@ -43,6 +49,7 @@ function delete_person(e) {
         name = "Unnamed Person";
     }
     if (confirm("Are you sure you want to completely delete " + name + " from the database? \n\nDeleting will remove this person, and all their data (contact info, job info, etc).  It cannot be undone.\n\nPress OK to delete "+ name +".\nPress Cancel to leave things unchanged.")) {
+        $(window).unbind("unload.genericFieldForm");
         $("#delete_person_form").submit();
     }
 }

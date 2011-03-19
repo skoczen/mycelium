@@ -15,7 +15,8 @@ from generic_tags.views import TagViews
 
 def _render_people_donor_tab(context):
     donation_form = NewDonationForm()
-    context.update({"donation_form":donation_form,"donor":context["person"].donor})
+    tag_view_obj = tag_views
+    context.update({"donation_form":donation_form,"donor":context["person"].donor,"tag_view_obj":tag_view_obj})
     return render_to_string("donors/_people_donor_tab.html", RequestContext(context["request"],context))
 
 def _return_fragments_or_redirect(request,context):
@@ -28,6 +29,7 @@ def _return_fragments_or_redirect(request,context):
 def save_new_donation(request, donor_id):
     donor = Donor.objects.get(pk=int(donor_id))
     person = donor.person
+    obj = donor
     if request.method == "POST":
         form = NewDonationForm(request.POST)
         if form.is_valid():
@@ -42,6 +44,7 @@ def delete_donation_from_people_tab(request, donation_id):
     donor = d.donor
     person = donor.person
     d.delete()
+    obj = donor
 
     return _return_fragments_or_redirect(request,locals())
 

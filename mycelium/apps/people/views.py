@@ -51,6 +51,7 @@ def _basic_forms(person, request):
 @render_to("people/person.html")
 def person(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
+    tag_view_obj = person_tag_views
     (form, employee_formset) = _basic_forms(person, request)
     return locals()
 
@@ -64,8 +65,6 @@ def save_person_basic_info(request, person_id):
         employee_formset.save()
         success = True
 
-    else:
-        print "invalid"
     return {"success":success}
 
 
@@ -121,6 +120,7 @@ def delete_organization(request):
 def organization(request, org_id):
     org = get_object_or_404(Organization,pk=org_id)
     (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
+    tag_view_obj = org_tag_views
     if form.is_valid():
         form.save()
 

@@ -1,20 +1,16 @@
 # encoding: utf-8
-from djangosanetesting.cases import SeleniumTestCase
-import time 
+from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+import time
 from test_factory import Factory
-from django.core.management import call_command
 from people.tests.selenium_tests import PeopleTestAbstractions
-from django.contrib.humanize.templatetags.humanize import naturalday
 
 class DonorTestAbstractions(object):
 
     def create_person_and_go_to_donor_tab(self):
-        sel = self.selenium
         self.create_john_smith()
         self.switch_to_donor_tab()
     
     def create_person_with_one_donation(self):
-        sel = self.selenium
         self.create_person_and_go_to_donor_tab()
         return self.add_a_donation()
 
@@ -39,13 +35,8 @@ class DonorTestAbstractions(object):
         time.sleep(2)
         return amount,date
 
-class TestAgainstNoData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions):
-    def setUp(self):
-        self.verificationErrors = []
-    
-    def tearDown(self):
-        call_command('flush', interactive=False)
-        self.assertEqual([], self.verificationErrors)
+class TestAgainstNoData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions):
+
 
     def test_that_new_donations_can_be_added_and_display_properly(self):
         sel = self.selenium        
@@ -217,15 +208,13 @@ class TestAgainstNoData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstr
         self.assertEqual("major donor",sel.get_text("css=.tags_and_other_info tags tag:nth(0) name"))
 
 
-class TestAgainstGeneratedData(SeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
-    def tearDown(self,*args, **kwargs):
-        call_command('flush', interactive=False)
-        self.assertEqual([], self.verificationErrors)
+
 
 
 

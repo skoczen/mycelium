@@ -1,16 +1,9 @@
-from djangosanetesting.cases import SeleniumTestCase
+from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase, QiSeleniumTestCase
 from email_list.models import EmailSubscription
 
-class TestMarketingSite(SeleniumTestCase):
+class TestMarketingSite(QiSeleniumTestCase):
     selenium_fixtures = ["marketing_site.json",]
     # fixtures = ["marketing_site.json",]
-
-    def setUp(self):
-        self.verificationErrors = []
-    
-    def tearDown(self):
-        # call_command('flush', interactive=False)
-        self.assertEqual([], self.verificationErrors)
 
     def test_home_page_loads(self):
         sel = self.selenium

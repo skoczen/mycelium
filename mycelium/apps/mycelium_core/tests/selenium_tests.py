@@ -1,18 +1,14 @@
 # encoding: utf-8
-from djangosanetesting.cases import SeleniumTestCase
+from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time 
 from test_factory import Factory
-from django.core.management import call_command
+
 from people.tests.selenium_tests import PeopleTestAbstractions
 
 
-class TestAgainstNoData(SeleniumTestCase):
-    def setUp(self):
-        self.verificationErrors = []
-    
-    def tearDown(self):
-        call_command('flush', interactive=False)
-        self.assertEqual([], self.verificationErrors)
+class TestAgainstNoData(QiConservativeSeleniumTestCase):
+    pass
+
 
     # def test_404(self):
     #     sel = self.selenium        

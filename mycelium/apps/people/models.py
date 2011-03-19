@@ -3,6 +3,7 @@ from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from taggit.managers import TaggableManager
 
+
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING = _("No Name")

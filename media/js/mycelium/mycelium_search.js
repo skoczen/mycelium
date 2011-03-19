@@ -98,7 +98,7 @@
 
                 $this.data('myceliumSearch',data);
             });
-        }
+        },
     };
 
 

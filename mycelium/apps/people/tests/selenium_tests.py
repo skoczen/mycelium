@@ -1,7 +1,7 @@
-from djangosanetesting.cases import SeleniumTestCase
 import time 
 from test_factory import Factory
-from django.core.management import call_command
+
+from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 
 class PeopleTestAbstractions(object):
 
@@ -108,13 +108,7 @@ class PeopleTestAbstractions(object):
         sel.wait_for_page_to_load("30000")        
 
 
-class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
-    def setUp(self):
-        self.verificationErrors = []
-    
-    def tearDown(self):
-        call_command('flush', interactive=False)
-        self.assertEqual([], self.verificationErrors)
+class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
 
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium
@@ -930,20 +924,28 @@ class TestAgainstNoData(SeleniumTestCase, PeopleTestAbstractions):
 
         self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
 
+    def test_that_the_last_selected_tab_stays_open_after_refresh_in_people(self):
+        sel = self.selenium
+        self.create_john_smith()
+        time.sleep(4)
+        assert not sel.is_text_present("Volunteer Shifts")
+        sel.click("css=.detail_tab[href=#volunteer]")
+        time.sleep(2)
+        assert sel.is_text_present("Volunteer Shifts")
+        sel.get_eval("window.location.href")
+        sel.get_eval("window.location.href=window.location.href;")
+        time.sleep(4)
+        assert sel.is_text_present("Volunteer Shifts")
 
 
 
-class TestAgainstGeneratedData(SeleniumTestCase, PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
     # selenium_fixtures = ["200_test_people.json"]
     
     def setUp(self, *args, **kwargs):
         self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
-    def tearDown(self,*args, **kwargs):
-        call_command('flush', interactive=False)        
-        self.assertEqual([], self.verificationErrors)
-
 
     def test_creating_and_editing_a_new_person_with_generated(self):
         sel = self.selenium
@@ -1161,3 +1163,5 @@ class TestAgainstGeneratedData(SeleniumTestCase, PeopleTestAbstractions):
         time.sleep(1)
         first_result = sel.get_text("css=search_results .result_row:nth(0)")
         assert first_result.find('<b>') == -1
+
+

@@ -11,6 +11,7 @@ class TagViews(object):
     default_redirect_url = None
     default_redirect_args = None
     app_name = None
+    mode = "tags" # or "checklist"
 
     def _TargetModel(self):
         if self.TargetModel:
@@ -31,6 +32,15 @@ class TagViews(object):
         else:
             raise Exception, "_namespace_name not defined!"
 
+    def _tag_field(self):
+        if hasattr(self,"tag_field"):
+            return self.tag_field
+        else:
+            return "tags"
+
+    def _tags_for_obj(self,obj):
+        return getattr(obj,self._tag_field())
+        
     def _default_redirect_url(self):
         if self.default_redirect_url:
             return self.default_redirect_url
@@ -43,8 +53,12 @@ class TagViews(object):
         else:
             raise Exception, "_default_redirect_url not defined!"
 
+    def all_tags(self):
+        return self._tags_for_obj(self._TargetModel()).all()
+
+
     @classmethod
-    def _tag_urls(cls, app_name, namespace_name, obj):
+    def _cls_tag_urls(cls, app_name, namespace_name, obj):
         add_tag_url = reverse("%s:%sadd_tag" % (app_name, namespace_name))
         delete_tag_url = reverse("%s:%sremove_tag" % (app_name, namespace_name), args=(obj.pk,))
         search_results_url = reverse("%s:%snew_tag_search_results" % (app_name, namespace_name))
@@ -54,10 +68,50 @@ class TagViews(object):
             'search_results_url':search_results_url,
         }
 
+    def _tag_urls(self, obj):
+        add_tag_url = reverse("%s:%sadd_tag" % (self.app_name, self.namespace_name))
+        delete_tag_url = reverse("%s:%sremove_tag" % (self.app_name, self.namespace_name), args=(obj.pk,))
+        search_results_url = reverse("%s:%snew_tag_search_results" % (self.app_name, self.namespace_name))
+        return {
+            'add_tag_url':add_tag_url,
+            'delete_tag_url':delete_tag_url,
+            'search_results_url':search_results_url,
+        }
+
+    
+    def obj_tag_related_info(self, obj, tag_field=None):
+        if tag_field:
+            self.tag_field = tag_field
+        
+        my_tags = self._tags_for_obj(obj).all()
+        all_of_my_type = self._tags_for_obj(self._TargetModel()).all()
+        
+        return {'obj_tags':{
+                "all_tags_of_my_type": all_of_my_type,
+                "all_tags_of_my_type_alphabetical_by_name": all_of_my_type.order_by("name"),
+                "my_tags": my_tags,
+                "my_tags_alphabetical_by_name": my_tags.order_by("name"),
+        }}
+
+    def namespace_info(self):
+        return {
+            "namespace_name": self.namespace_name,
+            "app_name": self.app_name,
+            "mode": self.mode
+        }
+
     def _update_with_tag_fragments(self, context):
-        context.update(self._tag_urls(self._app_name(), self._namespace_name(), context["obj"]))
+        context.update(self._tag_urls(context["obj"]))
+        fragment_html = ""
+        context.update(self.obj_tag_related_info(context["obj"]))
+        
+        if self.mode == "tags":
+            fragment_html = {"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_list.html", RequestContext(context["request"],context)),}
+        elif self.mode == "checklist":
+            # This line gets the model of the class, then pulls the tag attribute off of it, and finally gets all tags.
+            fragment_html = {"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_checklist.html", RequestContext(context["request"],context)),}
         c = {
-            "fragments":{"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_list.html", RequestContext(context["request"],context)),},
+            "fragments":fragment_html,
             "success": context["success"],
         }
         return c
@@ -76,7 +130,7 @@ class TagViews(object):
             new_tag = request.POST['new_tag'].strip().lower()
             if new_tag != "":
                 obj = self._TargetModel().objects.get(pk=pk)
-                obj.tags.add(new_tag)
+                self._tags_for_obj(obj).add(new_tag)
                 success = True
 
         return self._return_fragments_or_redirect(request,locals())
@@ -87,7 +141,7 @@ class TagViews(object):
             tag = request.GET['tag'].strip().lower()
             if tag != "":
                 obj = self._TargetModel().objects.get(pk=target_id)
-                obj.tags.remove(tag)
+                self._tags_for_obj(obj).remove(tag)
                 success = True
         return self._return_fragments_or_redirect(request,locals())
 
@@ -97,5 +151,5 @@ class TagViews(object):
         if 'q' in request.GET:
             q = request.GET['q']
             if q != "":
-                all_tags = self._TargetModel().tags.filter(name__icontains=q).order_by("name")[:5]
+                all_tags = self._tags_for_obj(self._TargetModel()).filter(name__icontains=q).order_by("name")[:5]
         return HttpResponse(simplejson.dumps({"fragments":{"new_%s_tag_search_results" % self._namespace_name():render_to_string("generic_tags/_new_tag_search_results.html", locals())}}))

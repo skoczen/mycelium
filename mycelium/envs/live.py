@@ -12,8 +12,8 @@ DATABASES = {
     },
 }
 
-MEDIA_URL = 'http://media.agoodcloud.com/'
-DJANGO_STATIC_MEDIA_URL = 'http://media.agoodcloud.com'
+MEDIA_URL = 'https://media.agoodcloud.com/'
+DJANGO_STATIC_MEDIA_URL = 'https://media.agoodcloud.com'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
@@ -28,5 +28,5 @@ CACHES = {
 
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_ACCESS_KEY_ID = 'AKIAJTNZWCZDOIDWFR4A'
-AWS_SECRET_ACCESS_KEY = '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'
+
+CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME

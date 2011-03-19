@@ -11,4 +11,4 @@ urlpatterns = parser.patterns('',
 	url(r'{donation_id:digits}/delete-donation$',     	  		views.delete_donation_from_people_tab,     		name='delete_donation_from_people_tab'),
 )
 from generic_tags.urls import tag_urls
-urlpatterns += tag_urls(views.tag_views, "donor/", url_namespace="donor")
+urlpatterns += tag_urls(views.tag_views, "donor/")

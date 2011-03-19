@@ -1,8 +1,7 @@
 # encoding: utf-8
-from djangosanetesting.cases import SeleniumTestCase
+from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time 
 from test_factory import Factory
-from django.core.management import call_command
 from people.tests.selenium_tests import PeopleTestAbstractions
 
 class VolunteerTestAbstractions(object):
@@ -51,14 +50,7 @@ class VolunteerTestAbstractions(object):
         sel.click("css=tabbed_box[name=add_a_volunteer_shift] .add_shift_btn")
         time.sleep(2)
 
-class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions):
-    def setUp(self):
-        self.verificationErrors = []
-    
-    def tearDown(self):
-        call_command('flush', interactive=False)        
-        self.assertEqual([], self.verificationErrors)
-
+class TestAgainstNoData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions):
 
     def test_create_new_volunteer(self):
         self.create_new_volunteer()
@@ -291,15 +283,11 @@ class TestAgainstNoData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbs
 
 
 
-class TestAgainstGeneratedData(SeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
-    
-    def tearDown(self,*args, **kwargs):
-        call_command('flush', interactive=False)
-        self.assertEqual([], self.verificationErrors)
 
 
     def test_create_new_volunteer(self):

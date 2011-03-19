@@ -21,7 +21,8 @@ $(function(){
     $(".delete_contact_btn").live("click", confirm_employee_removal);
     $(".org_delete_btn").live("click",delete_organization);
 
-    $(".general_organization_tags").genericTags();        
+    $(".general_organization_tags").genericTags();
+    $(".pagination_row a").live("click",add_person_pagination_row_clicked);
 });
 
 function start_add_new_person_to_org() {
@@ -115,6 +116,11 @@ function delete_organization(e) {
         name = "Unnamed Organization";
     }
     if (confirm("Are you sure you want to completely delete " + name + " from the database? \n\nDeleting will remove this organization and all their data (contact info, employees, etc).  The people associated with this organization will not be removed.\n\nThis action cannot be undone.\n\nPress OK to delete "+ name +".\nPress Cancel to leave things unchanged.")) {
+        $(window).unbind("unload.genericFieldForm");
         $("#delete_org_form").submit();
     }
+}
+function add_person_pagination_row_clicked() {
+    $("#id_search_new_person").myceliumSearch("update_search");
+    return false;
 }
