@@ -76,10 +76,10 @@
 	<div class="reactivation_date"><span class="question_label">Until</span> {% generic_editable_field status_form.reactivation_date %}</div>
 </form>	
 
-{# 	<div class="detail_header">Skills/Roles</div> #}
-{# 	<span class="skills_tags"> #}
-{# 	{% render_tags_as_checklist person.volunteer tag_view_obj  %} #}
-{# 	</span> #}
+	<div class="detail_header">Skills/Roles</div>
+	<span class="skills_tags">
+		{% render_tags_as_checklist person.volunteer tag_view_obj  %}
+	</span>
 </div>
 </td>
 </tr>

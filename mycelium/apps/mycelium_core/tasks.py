@@ -7,4 +7,4 @@ from django.conf import settings
 @periodic_task(run_every=crontab(hour="*", minute="*", day_of_week="*"))
 def test():    
     print "firing test task"                  
-    # send_mail("Hi","Oh yes, every minute.",settings.SERVER_EMAIL, 'steven@agoodcloud.com')
+    send_mail("Hi","Oh yes, every minute.",settings.SERVER_EMAIL, ['steven@agoodcloud.com'])
