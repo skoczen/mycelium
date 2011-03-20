@@ -20,3 +20,5 @@ mycelium/apps/coverage.xml
 mycelium/.coverage
 mycelium/settings.py
 media/_cache
+media/_goodcloud_people
+media/_logos
