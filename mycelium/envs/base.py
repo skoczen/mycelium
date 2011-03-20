@@ -199,6 +199,8 @@ CELERY_RESULT_BACKEND = "amqp"
 import djcelery
 djcelery.setup_loader()
 
+# sorl
+THUMBNAIL_PREFIX = "_cache/"
 
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
