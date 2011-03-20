@@ -19,3 +19,4 @@ mycelium/nosetests.xml
 mycelium/apps/coverage.xml
 mycelium/.coverage
 mycelium/settings.py
+media/_cache
