@@ -1,5 +1,6 @@
 from base import *
 ENV = "DEV"
+ROLE = ENV
 
 DATABASES = {
     'default': {
