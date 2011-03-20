@@ -3,13 +3,11 @@
 {% block title %}Organizations - {% if org.name %}{{org.name}}{% else %}New Organization{% endif %}{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
-{% slimall %}
- <link rel="stylesheet" href="/css/people_organizations.css" type="text/css" media="screen" title="" charset="utf-8">
-{% endslimall %}{% endblock %}
-{% block javascript %}{{block.super}}{% slimall %}
-<script type="text/javascript" charset="utf-8" src="/js/mycelium/people_common.js"> </script>
-<script type="text/javascript" charset="utf-8" src="/js/mycelium/people_organization.js"> </script>
-{% endslimall %}
+{% css "/css/people_organizations.css" %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+{% js "/js/mycelium/people_common.js"%}
+{% js "/js/mycelium/people_organization.js"%}
 {% generic_tags_js %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "No Name" %}
 <script type="text/javascript" charset="utf-8">
