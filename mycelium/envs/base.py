@@ -220,21 +220,22 @@ CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 
 
 # django-mediasync
+
 MEDIASYNC = {
     'BACKEND': 'mediasync.backends.s3',
     'AWS_KEY': AWS_ACCESS_KEY_ID,
     'AWS_SECRET': AWS_SECRET_ACCESS_KEY,
     'AWS_BUCKET': AWS_STORAGE_BUCKET_NAME,
-    'CACHE_BUSTER': 1234567892,
+    'CACHE_BUSTER': 1234567893,
     'PROCESSORS': (
         'mediasync.processors.slim.css_minifier',
         'mediasync.processors.slim.js_minifier',
     ),
-    # 'PROCESSORS': (
-    #     'mediasync.processors.yuicompressor.css_minifier',
-    #     'mediasync.processors.yuicompressor.js_minifier',
-    # ),    
-    # 'YUI_COMPRESSOR_PATH': join(LIB_DIR, '/lib/yuicompressor.jar'),
+    'PROCESSORS': (
+        'mediasync.processors.yuicompressor.css_minifier',
+        'mediasync.processors.yuicompressor.js_minifier',
+    ),    
+    'YUI_COMPRESSOR_PATH': join(abspath(LIB_DIR), 'yuicompressor.jar'),
 
 }
 MEDIASYNC['SERVE_REMOTE'] = False
