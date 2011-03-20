@@ -15,8 +15,12 @@ DATABASES = {
     },
 }
 
+CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = 'http://media.agoodcloud.com/'
+MEDIA_URL = CDN_MEDIA_URL
 STATIC_URL = MEDIA_URL
+STATIC_ROOT = MEDIA_ROOT
+
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
@@ -31,11 +35,8 @@ CACHES = {
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 EMAIL_BACKEND = 'django_ses.SESBackend'
 
-CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
+
 
 # django-mediasync
 MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
-MEDIA_URL = CDN_MEDIA_URL
-STATIC_URL = MEDIA_URL
-STATIC_ROOT = MEDIA_ROOT
 MEDIASYNC['USE_SSL'] = True
