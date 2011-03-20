@@ -13,7 +13,6 @@ DATABASES = {
 }
 
 MEDIA_URL = 'http://media.digitalmycelium.com/'
-DJANGO_STATIC_MEDIA_URL = '//media.digitalmycelium.com'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
@@ -33,3 +32,9 @@ AWS_SECRET_ACCESS_KEY = 'WT1wp3UQsFPdeXMxwUyvjF7IM8q/qkcm/EW6EKvy'
 AWS_STORAGE_BUCKET_NAME = "goodcloud-staging"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
+
+# django-mediasync
+MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
+MEDIA_URL = CDN_MEDIA_URL
+STATIC_URL = MEDIA_URL
+STATIC_ROOT = MEDIA_ROOT

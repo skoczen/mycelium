@@ -112,7 +112,7 @@ INSTALLED_APPS = (
     'django_jenkins',
     'django_dumpdb',
     'django_ses',
-    'django_static',
+    'mediasync',
 
     'cms',
     'mptt',
@@ -189,12 +189,6 @@ SOUTH_LOGGING_FILE = "/dev/null"
 THUMBNAIL_FORMAT = "PNG"
 THUMBNAIL_COLORSPACE = None
 
-# django-static
-DJANGO_STATIC = True
-DJANGO_STATIC_SAVE_PREFIX = '/tmp/cache-forever'
-DJANGO_STATIC_NAME_PREFIX = '/cache-forever'
-DJANGO_STATIC_MEDIA_URL_ALWAYS = True
-
 # celery / rabbitmq
 BROKER_HOST = "localhost"
 BROKER_PORT = 5672
@@ -205,6 +199,9 @@ CELERY_RESULT_BACKEND = "amqp"
 import djcelery
 djcelery.setup_loader()
 
+# sorl
+THUMBNAIL_PREFIX = "_cache/"
+
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
@@ -214,3 +211,29 @@ AWS_STORAGE_BUCKET_NAME = "goodcloud1"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
+
+# get git commit
+from git import Repo
+GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
+
+
+
+# django-mediasync
+MEDIASYNC = {
+    'BACKEND': 'mediasync.backends.s3',
+    'AWS_KEY': AWS_ACCESS_KEY_ID,
+    'AWS_SECRET': AWS_SECRET_ACCESS_KEY,
+    'AWS_BUCKET': AWS_STORAGE_BUCKET_NAME,
+    'CACHE_BUSTER': GIT_CURRENT_SHA,
+    # 'PROCESSORS': (
+    #     'mediasync.processors.slim.css_minifier',
+    #     'mediasync.processors.slim.js_minifier',
+    # ),
+    'PROCESSORS': (
+        'mediasync.processors.yuicompressor.css_minifier',
+        'mediasync.processors.yuicompressor.js_minifier',
+    ),    
+    'YUI_COMPRESSOR_PATH': join(abspath(LIB_DIR), 'yuicompressor.jar'),
+
+}
+MEDIASYNC['SERVE_REMOTE'] = True

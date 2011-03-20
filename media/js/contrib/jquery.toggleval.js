@@ -9,7 +9,6 @@
 ** -------------------------------------------------- */
 
 (function($) {
-	// main plugin function
 	$.fn.toggleVal = function(theOptions) {
 		// check whether we want real options, or to destroy functionality
 		if(!theOptions || typeof theOptions == 'object') {

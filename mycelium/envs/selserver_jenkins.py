@@ -11,5 +11,5 @@ DATABASES = {
     },
 }
 
-# Use django-static
-DJANGO_STATIC = True
+# turn on to test pre-deploy
+MEDIASYNC['EMULATE_COMBO'] = True

@@ -14,4 +14,5 @@ DATABASES = {
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-DJANGO_STATIC = True
+# turn on to test pre-deploy
+MEDIASYNC['EMULATE_COMBO'] = True
