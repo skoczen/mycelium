@@ -19,7 +19,7 @@ def test():
 @periodic_task(run_every=crontab(hour="2", minute="1", day_of_week="*"))
 def offsite_backups():
     opts = {
-        'backup_file': "/tmp/current_backup_%s.dump" % settings.ENV,
+        'backup_file': "/tmp/current_backup_%s.dump" % settings.ROLE,
         'offsite_server_dir': settings.OFFSITE_BACKUP_DIR,
         'env': settings.ENV,
     }
