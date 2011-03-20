@@ -40,7 +40,7 @@ coverage >= 3.4
 boto
 django-ses
 django-tinymce
-django-static
+#django-static
 slimmer
 django-taggit-templatetags
 #django-storages
