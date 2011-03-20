@@ -112,7 +112,6 @@ INSTALLED_APPS = (
     'django_jenkins',
     'django_dumpdb',
     'django_ses',
-    # 'django_static',
     'mediasync',
 
     'cms',
@@ -190,13 +189,6 @@ SOUTH_LOGGING_FILE = "/dev/null"
 THUMBNAIL_FORMAT = "PNG"
 THUMBNAIL_COLORSPACE = None
 
-# django-static
-DJANGO_STATIC = False
-DJANGO_STATIC_SAVE_PREFIX = '/tmp/cache-forever'
-DJANGO_STATIC_NAME_PREFIX = '/cache-forever'
-DJANGO_STATIC_MEDIA_URL_ALWAYS = True
-
-
 # celery / rabbitmq
 BROKER_HOST = "localhost"
 BROKER_PORT = 5672
@@ -227,10 +219,10 @@ MEDIASYNC = {
     'AWS_SECRET': AWS_SECRET_ACCESS_KEY,
     'AWS_BUCKET': AWS_STORAGE_BUCKET_NAME,
     'CACHE_BUSTER': 1234567893,
-    'PROCESSORS': (
-        'mediasync.processors.slim.css_minifier',
-        'mediasync.processors.slim.js_minifier',
-    ),
+    # 'PROCESSORS': (
+    #     'mediasync.processors.slim.css_minifier',
+    #     'mediasync.processors.slim.js_minifier',
+    # ),
     'PROCESSORS': (
         'mediasync.processors.yuicompressor.css_minifier',
         'mediasync.processors.yuicompressor.js_minifier',
@@ -238,5 +230,4 @@ MEDIASYNC = {
     'YUI_COMPRESSOR_PATH': join(abspath(LIB_DIR), 'yuicompressor.jar'),
 
 }
-MEDIASYNC['SERVE_REMOTE'] = False
-MEDIASYNC['EMULATE_COMBO'] = True
+MEDIASYNC['SERVE_REMOTE'] = True

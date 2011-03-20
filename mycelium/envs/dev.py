@@ -22,12 +22,7 @@ CACHES = {
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 
 
-# Use django-static
-DJANGO_STATIC = False
-
-
 MEDIA_URL = '/media/'
-DJANGO_STATIC_MEDIA_URL = "/media"
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
@@ -58,8 +53,10 @@ CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 STATIC_URL = MEDIA_URL
 STATIC_ROOT = MEDIA_ROOT
 MEDIASYNC['SERVE_REMOTE'] = False
-MEDIASYNC['EMULATE_COMBO'] = True
+MEDIASYNC['EMULATE_COMBO'] = False
 MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
+# turn on to test pre-deploy
+MEDIASYNC['EMULATE_COMBO'] = True
 
 
 VIRTUALENV_PATH = "~/.virtualenvs/mycelium"
