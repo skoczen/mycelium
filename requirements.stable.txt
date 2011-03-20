@@ -12,7 +12,7 @@ BeautifulSoup==3.2.0
 -e git://github.com/skoczen/django-form-designer.git@b9d1716acbda950e440fb13e877d3836e7b0a124#egg=form_designer-dev
 
 django-extensions==0.6
--e git://github.com/skoczen/qi-toolkit.git@b788f922e5386693043c513c5e0de2cf97540217#egg=qi_toolkit-dev
+-e git://github.com/skoczen/qi-toolkit.git@22419cb051790f804168e5eaebf9127dff11017c#egg=qi_toolkit-dev
 python-crontab==0.9.5
 -e git://github.com/clintecker/django-google-analytics.git@e835a1e1a0eb7d2ce3008daea65c64ad2b539f98#egg=google_analytics-dev
 
@@ -56,7 +56,6 @@ distribute==0.6.12
 django-classy-tags==0.3.3
 django-mailer==0.1.0
 django-picklefield==0.1.9
-django-static==1.5.2
 -e hg+https://bitbucket.org/david/django-storages@0181134a8edb01c5f91734ba001ea14be4f22ef7#egg=django_storages-dev
 django-tagging==0.3.1
 django-templatetag-sugar==0.1
