@@ -21,8 +21,9 @@ function load_detail_tab(tab_name) {
     var tab_container = tab_link.parents("detail_tabs");
     if (tab_name != prev_tab_name) {
         // Switch the current tab
+        prev_tab_name = tab_name;
         $("fragment[name=detail_tab]").html("Loading...");
-        $(".detail_tab", tab_container).removeClass("current");
+        $(".detail_tab.current", tab_container).removeClass("current");
         tab_link.addClass("current");
 
         // Go get the tab content from the server.

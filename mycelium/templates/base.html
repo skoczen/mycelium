@@ -1,4 +1,4 @@
-{% load i18n cache analytics django_static %}<!doctype html> 
+{% load i18n cache analytics %}<!doctype html> 
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
@@ -15,26 +15,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="{{FAVICON_URL}}">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-{% slimall %}
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" title="" charset="utf-8">
-{% endslimall %}
+  {% css "/css/style.css" %}
+  {% css "/css/main.css" %}
   {# <!--	Uncomment if you are specifically targeting less enabled mobile browsers   --> #}
   {# <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2"> #}
   {% block css %}{% endblock %}
-  <script src="{% slimfile "/js/libs/modernizr-1.6.min.js"%}" ></script>
+
+  {% js "/js/libs/modernizr-1.6.min.js"%}
 {% block javascript %}
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
-  {% slimall %}
-  <script type="text/javascript" charset="utf-8" src="/js/contrib/jquery-ui.js"> </script>
-  <script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.django.csrf.js"> </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+  
+  {% js "/js/contrib/jquery-ui.js" %}
+  {% js "/js/contrib/jquery.django.csrf.js" %}
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/contrib/jquery.js"%3E%3C/script%3E'))</script>
-  <script src="/js/plugins.js"></script>
-  <script src="/js/script.js"></script>
-  {% endslimall %}
+  {% js "/js/plugins.js" %}
+  {% js "/js/script.js" %}
+  
   <!--[if lt IE 7 ]>
-    <script src="{{MEDIA_URL}}js/libs/dd_belatedpng.js"></script>
-    <script> DD_belatedPNG.fix('img, .png_bg');
+    {% js "js/libs/dd_belatedpng.js" %}
+    <script> DD_belatedPNG.fix('img, .png_bg');</script>
   <![endif]-->
 {% endblock %}
 {% endblock %}

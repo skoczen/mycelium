@@ -3,6 +3,9 @@ from django.contrib import admin
 from django.conf import settings
 admin.autodiscover()
 
+from django.template import add_to_builtins
+add_to_builtins('mediasync.templatetags.media')
+
 urlpatterns = patterns('',
 
     (r'^',              include('marketing_site.urls',      app_name="marketing_site",  namespace="marketing_site"),),
@@ -24,9 +27,9 @@ urlpatterns = patterns('',
     url(r'^', include('cms.urls')),
     url(r'^', include('django_ses.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^', include('mediasync.urls')),
 )
 if settings.DEBUG:
     urlpatterns += patterns('',
-        (r'^media/cache-forever/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.DJANGO_STATIC_SAVE_PREFIX}),
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     )

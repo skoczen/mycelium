@@ -7,7 +7,7 @@ class GoodCloudEmployee(TimestampModelMixin):
     user = models.ForeignKey(User)
     bio = models.TextField(blank=True, null=True)
     phone = models.CharField(blank=True, null=True, max_length=255)
-    picture = models.ImageField(blank=True, null=True, upload_to="goodcloud_people")
+    picture = models.ImageField(blank=True, null=True, upload_to="_goodcloud_people")
 
     @property
     def full_name(self):
