@@ -47,7 +47,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # AWS_ACCESS_KEY_ID = 'AKIAJTNZWCZDOIDWFR4A'
 # AWS_SECRET_ACCESS_KEY = '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'
 
-# DEFAULT_FILE_STORAGE = django.core.files.storage.FileSystemStorage
+# local file storage
+DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+
+# s3 info
 AWS_STORAGE_BUCKET_NAME = "goodcloud-dev"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME

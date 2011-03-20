@@ -218,7 +218,6 @@ GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
 
 
 
-
 # django-mediasync
 MEDIASYNC = {
     'BACKEND': 'mediasync.backends.s3',
