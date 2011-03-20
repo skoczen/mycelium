@@ -7,7 +7,8 @@
                "autogrow_tag_name": true,
                "autogrow_options": {comfortZone: 20, resizeNow:true},
                "form_selector": ".new_tag_form",
-               "default_fade_timeout": 500
+               "default_fade_timeout": 500,
+               "mode": "tag"   // "tag" or  "checkbox"
            };
                  
            var options =  $.extend(defaults, options);
@@ -70,11 +71,16 @@
                 data.clear_tag_results_fadeout = function() {
                     clearTimeout(data.tag_fadeout_timeout);
                 };
+                data.bind_checkbox_inputs_if_needed = function() {
+                    // TODO
+                    console.log("bind_checkbox_inputs_if_needed");
+                }
                 $(data.options.form_selector, data.target).ajaxForm({
                     success: function(json){
                         $.Mycelium.fragments.process_fragments_from_json(json);
                         data.new_input_field.val("");
                         data.set_tag_results_fadeout($(".new_tag_list", data.target),0);
+                        bind_checkbox_inputs_if_needed();
                     },
                     dataType: 'json'
                 });
@@ -85,6 +91,7 @@
                      dataType: "json",
                      success: function(json) {
                         $.Mycelium.fragments.process_fragments_from_json(json);
+                        bind_checkbox_inputs_if_needed();
                      }
                    });
                    return false;
@@ -111,6 +118,9 @@
                 data.new_input_field.bind("blur",function(){
                     data.set_tag_results_fadeout($(".new_tag_list", data.target));
                 });
+                data.bind_checkbox_inputs_if_needed();
+                
+
                 data.move_tag_results(data.target);
 
                 $this.data('genericTags',data);
