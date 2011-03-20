@@ -8,6 +8,7 @@ pip-log.txt
 db/full_backup.json
 
 media/cms
+media/admin
 media/cache
 media/cache/*
 media/goodcloud_people/*
