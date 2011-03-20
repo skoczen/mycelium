@@ -55,7 +55,6 @@ class DonorTagViews(TagViews):
     default_redirect_url = "people:person"
     app_name = "donors"
     def _default_redirect_args(self, context):
-        print context["obj"]
         return (context["obj"].person.pk,)
 
 tag_views = DonorTagViews()

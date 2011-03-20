@@ -48,7 +48,7 @@ function bind_volunteer_tab_events() {
         $("#new_completed_volunteer_shift input[name$=duration]").focus();
     });
     $("#volunteer_status_and_skills").genericFieldForm();
-    $(".people_volunteer_tab .status_and_skills .skills_tags").genericTags();
+    $(".people_volunteer_tab .status_and_skills .skills_tags").genericTags({'mode':'checkbox'});
     $.Mycelium.update_stripes(".year_of_shifts");
     show_or_hide_datefield();
     $(".status_and_skills input[name$=status]").change(show_or_hide_datefield);

@@ -68,7 +68,10 @@ tab_contents.people_volunteer_tab .status_and_skills .edit_mode_on .edit_field {
 }
 tab_contents.people_volunteer_tab .status_and_skills .reactivation_date {
 	padding-left: 21px;
-
+	overflow: auto;
+	padding-bottom: 20px;
+	width: 90%;
+	clear: both;
 }
 tab_contents.people_volunteer_tab .status_and_skills .reactivation_date .question_label {
 	float: left;

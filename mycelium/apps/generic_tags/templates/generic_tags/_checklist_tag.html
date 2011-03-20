@@ -1,4 +1,4 @@
-<tag>
-	<a href="{{delete_tag_url}}?tag={{checklist_tag.tag.name|urlencode}}" class="remove_tag_link"> </a>
-	<name>{% if checklist_tag.has_tag %}CHECK{% endif %} {{checklist_tag.tag.name}}</name>
+<tag class="checkbox">
+	<input type="checkbox" class="checkbox_input" id="{{namespace_name}}_{{checklist_tag.tag.pk}}" {% if checklist_tag.have_tag %}checked=checked{% endif %} remove_url="{{delete_tag_url}}?tag={{checklist_tag.tag.name|urlencode}}" add_url="{{add_tag_url}}?new_tag={{checklist_tag.tag.name|urlencode}}&amp;target_pk={{obj.pk}}"/>
+	<label for="{{namespace_name}}_{{checklist_tag.tag.pk}}"><name>{{checklist_tag.tag.name|title}}</name></label>
 </tag>

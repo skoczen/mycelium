@@ -7,7 +7,8 @@
                "autogrow_tag_name": true,
                "autogrow_options": {comfortZone: 20, resizeNow:true},
                "form_selector": ".new_tag_form",
-               "default_fade_timeout": 500
+               "default_fade_timeout": 500,
+               "mode": "tag"   // "tag" or  "checkbox"
            };
                  
            var options =  $.extend(defaults, options);
@@ -23,7 +24,11 @@
                     data.target = $this;
                 }
 
-                data.new_input_field = $(".new_tag input[name=new_tag]", data.target);
+                if (data.options.mode == "tag") {
+                    data.new_input_field = $(".new_tag input[name=new_tag]", data.target);
+                } else {
+                    data.new_input_field = $(".new_checkbox_tag input[name=new_tag]", data.target);
+                }
                 
                 if (data.options.autogrow_tag_name) {
                     data.new_input_field.autoGrowInput(data.options.autogrow_options);                    
@@ -70,11 +75,42 @@
                 data.clear_tag_results_fadeout = function() {
                     clearTimeout(data.tag_fadeout_timeout);
                 };
+                data.bind_checkbox_inputs_if_needed = function() {
+                    if (data.options.mode == "checkbox") {
+                        $(".checkbox .checkbox_input",data.target).unbind("change.tagCheckbox");
+                        $(".checkbox .checkbox_input", data.target).bind("change.tagCheckbox",function(){
+                            checked = $(this).attr("checked")
+                            if (checked) {
+                                $.ajax({
+                                 url: $(this).attr("add_url"),
+                                 type: "GET",
+                                 dataType: "json",
+                                 success: function(json) {
+                                    $.Mycelium.fragments.process_fragments_from_json(json);
+                                    data.bind_checkbox_inputs_if_needed();
+                                 }
+                               });
+                            } else {
+                                $.ajax({
+                                 url: $(this).attr("remove_url"),
+                                 type: "GET",
+                                 dataType: "json",
+                                 success: function(json) {
+                                    $.Mycelium.fragments.process_fragments_from_json(json);
+                                    data.bind_checkbox_inputs_if_needed();
+                                 }
+                               });
+                            }
+                        });
+                    }
+                }
                 $(data.options.form_selector, data.target).ajaxForm({
                     success: function(json){
                         $.Mycelium.fragments.process_fragments_from_json(json);
+                        console.log(data.new_input_field)
                         data.new_input_field.val("");
                         data.set_tag_results_fadeout($(".new_tag_list", data.target),0);
+                        data.bind_checkbox_inputs_if_needed();
                     },
                     dataType: 'json'
                 });
@@ -85,33 +121,39 @@
                      dataType: "json",
                      success: function(json) {
                         $.Mycelium.fragments.process_fragments_from_json(json);
+                        data.bind_checkbox_inputs_if_needed();
                      }
                    });
                    return false;
                 });
-                data.new_input_field.myceliumSearch({
-                    search_element: data.new_input_field,
-                    search_url: data.new_input_field.attr("results_url"),
-                    results_element: $("fragment[name=new_tag_search_results]", data.target),
-                    striped_results: false,
-                    results_processed_callback: data.new_tag_results
-                });
-                $("tags a.tag_suggestion_link", data.target).live("click",function(){
-                    data.clear_tag_results_fadeout();
-                    data.new_input_field.val($(this).text());
-                    data.set_tag_results_fadeout($(".new_tag_list", data.target),10);
-                    return false;
-                });
-                data.new_input_field.bind("focus",function(){
-                    data.clear_tag_results_fadeout();
-                    if ($(this).val() != "") {
-                        data.new_tag_results();
-                    }
-                });
-                data.new_input_field.bind("blur",function(){
-                    data.set_tag_results_fadeout($(".new_tag_list", data.target));
-                });
-                data.move_tag_results(data.target);
+                if (data.options.mode == "tag") {
+                    data.new_input_field.myceliumSearch({
+                        search_element: data.new_input_field,
+                        search_url: data.new_input_field.attr("results_url"),
+                        results_element: $("fragment[name=new_tag_search_results]", data.target),
+                        striped_results: false,
+                        results_processed_callback: data.new_tag_results
+                    });
+                    $("tags a.tag_suggestion_link", data.target).live("click",function(){
+                        data.clear_tag_results_fadeout();
+                        data.new_input_field.val($(this).text());
+                        data.set_tag_results_fadeout($(".new_tag_list", data.target),10);
+                        return false;
+                    });
+                    data.new_input_field.bind("focus",function(){
+                        data.clear_tag_results_fadeout();
+                        if ($(this).val() != "") {
+                            data.new_tag_results();
+                        }
+                    });
+                    data.new_input_field.bind("blur",function(){
+                        data.set_tag_results_fadeout($(".new_tag_list", data.target));
+                    });
+                    data.move_tag_results(data.target);
+                }
+                data.bind_checkbox_inputs_if_needed();
+                
+
 
                 $this.data('genericTags',data);
             });

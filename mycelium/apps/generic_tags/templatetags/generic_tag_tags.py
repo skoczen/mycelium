@@ -20,7 +20,6 @@ def _render_tags_context(obj, tag_view_obj):
     d.update(tag_view_obj.obj_tag_related_info(obj))
     if tag_view_obj.mode == "checklist":
         d["obj_tags"].update(tag_view_obj.checklist_tag_related_info(obj))
-    print d
     return d
 
 @register.inclusion_tag('generic_tags/_tags_and_add_tag.html')

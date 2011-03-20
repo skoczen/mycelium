@@ -548,3 +548,38 @@ table.two_column_70_30 {
 .two_column_70_30 .column_2 {
 	width: 30%
 }
+tag.checkbox, tag.new_checkbox_tag {
+	display: block;
+	background: transparent;
+	color: #454545;
+	padding: 0px;
+	/*padding: 2px 0px 5px 15px;*/
+	width: 100%;
+	margin: 2px 0px;
+}
+tag.checkbox label {
+	float: none;
+	display: inline;
+}
+tag.checkbox .checkbox_input {
+	margin: 0px 4px 2px 0px;
+}
+tags.checkboxes {
+	padding: 0px 0px 0px 16px;
+}
+tags.checkboxes .new_checkbox_tag input.checkbox_input {
+	margin-bottom: 4px;
+}
+tags.checkboxes .new_checkbox_tag input.new_tag_name_input {
+	border: 1px solid #BBB;
+	padding: 0px;
+	margin: 0px 0px 0px 4px;
+	border-width: 0px 0px 1px 0px;
+	font-size: 18px;
+	min-width: 100px;
+}
+tags.checkboxes .new_checkbox_tag input.new_tag_name_input:focus {
+	outline-style:none;
+	border: 1px solid #3E9CFD;
+	border-width: 0px 0px 1px 0px;	
+}
