@@ -1,6 +1,8 @@
 from base import *
 ENV = "LIVE"
 ROLE = ENV
+SSL_FORCE = True
+SESSION_COOKIE_SECURE = True
 
 DATABASES = {
     'default': {
