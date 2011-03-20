@@ -32,8 +32,8 @@
   {% js "/js/script.js" %}
   
   <!--[if lt IE 7 ]>
-    <script src="{{MEDIA_URL}}js/libs/dd_belatedpng.js"></script>
-    <script> DD_belatedPNG.fix('img, .png_bg');
+    {% js "js/libs/dd_belatedpng.js" %}
+    <script> DD_belatedPNG.fix('img, .png_bg');</script>
   <![endif]-->
 {% endblock %}
 {% endblock %}
