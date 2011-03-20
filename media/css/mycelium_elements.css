@@ -567,3 +567,16 @@ tag.checkbox .checkbox_input {
 tags.checkboxes {
 	padding: 0px 0px 0px 16px;
 }
+tags.checkboxes .new_tag_checkbox input.new_tag_name_input {
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+	border-width: 0px 0px 1px 0px;
+	padding-bottom: 0px;
+	font-size: 14px;
+}
+tags.checkboxes .new_tag_checkbox input.new_tag_name_input:focus {
+	outline-style:none;
+	border: 1px solid #3E9CFD;
+	border-width: 0px 0px 1px 0px;	
+}

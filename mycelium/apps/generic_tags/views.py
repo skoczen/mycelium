@@ -143,13 +143,12 @@ class TagViews(object):
 
     def add_tag(self,request):
         success = False
-        if request.method == "POST":
-            pk = int(request.POST['target_pk'])
-            new_tag = request.POST['new_tag'].strip().lower()
-            if new_tag != "":
-                obj = self._TargetModel().objects.get(pk=pk)
-                self._tags_for_obj(obj).add(new_tag)
-                success = True
+        pk = int(request.REQUEST['target_pk'])
+        new_tag = request.REQUEST['new_tag'].strip().lower()
+        if new_tag != "":
+            obj = self._TargetModel().objects.get(pk=pk)
+            self._tags_for_obj(obj).add(new_tag)
+            success = True
 
         return self._return_fragments_or_redirect(request,locals())
 
