@@ -1,32 +1,15 @@
-
 // remap jQuery to $
-(function($){
-
- 
-
-
-
-
-
- 
-
-
-
-})(this.jQuery);
-
-
+(function($){})(this.jQuery);
 
 // usage: log('inside coolFunc',this,arguments);
 // paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
 window.log = function(){
-  log.history = log.history || [];   // store logs to an array for reference
+  log.history = log.history || []; 
   log.history.push(arguments);
   if(this.console){
     console.log( Array.prototype.slice.call(arguments) );
   }
 };
-
-
 
 // catch all document.write() calls
 (function(doc){
@@ -36,5 +19,3 @@ window.log = function(){
     if (/docwriteregexwhitelist/.test(q)) write.apply(doc,arguments);  
   };
 })(document);
-
-

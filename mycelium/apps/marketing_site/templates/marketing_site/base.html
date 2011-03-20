@@ -1,16 +1,15 @@
-{% extends "base.html" %}{% load django_static %}
-{% block css %}{{block.super}}{% slimall %}
-<link rel="stylesheet" href="/css/marketing_site.css" type="text/css" media="screen" title="" charset="utf-8">
-{% endslimall %}
+{% extends "base.html" %}
+{% block css %}{{block.super}}
+{% css "/css/marketing_site.css" %}
 <!--[if lt IE 8]>
-<link rel="stylesheet" href="/css/ie7_marketing_site.css" type="text/css" media="screen" title="" charset="utf-8">
+{% css "/css/ie7_marketing_site.css" %}
 <![endif]-->
 {% endblock %}
-{% block javascript %}{{block.super}}{% slimall %}
-<script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.scrollTo-min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="/js/contrib/jquery.toggleval.js"> </script>
-<script type="text/javascript" charset="utf-8" src="/js/mycelium/marketing_site.js"> </script>
-{% endslimall %}{% endblock %}
+{% block javascript %}{{block.super}}
+{% js "/js/contrib/jquery.scrollTo-min.js"%}
+{% js "/js/contrib/jquery.toggleval.js"	%}
+{% js "/js/mycelium/marketing_site.js"	%}
+{% endblock %}
 {% block content %}
 	{% include "marketing_site/_top_nav.html" %}
 	{% block page_content %}

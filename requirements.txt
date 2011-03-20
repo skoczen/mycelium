@@ -45,3 +45,4 @@ slimmer
 django-taggit-templatetags
 #django-storages
 -e hg+https://bitbucket.org/david/django-storages#egg=storages
+django-mediasync
