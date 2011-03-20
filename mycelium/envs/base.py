@@ -68,6 +68,9 @@ MIDDLEWARE_CLASSES = (
     # 'cms.middleware.multilingual.MultilingualURLMiddleware',
     'cms.middleware.media.PlaceholderMediaMiddleware',
 )
+
+SSL_ENABLED = True
+
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 TEMPLATE_CONTEXT_PROCESSORS += (
     "django.core.context_processors.i18n",
