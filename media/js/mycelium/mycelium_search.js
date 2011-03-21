@@ -42,10 +42,27 @@
                     data.options.results_processed_callback(data.options.search_element);                  
                 };
 
-                data.update_search = function() {
-                    if (data.previous_query != $.trim(data.options.search_element.val())) {
+                data.update_search = function(override) {
+                    var query_changed = data.previous_query != $.trim(data.options.search_element.val());
+                    if (override === true || query_changed) {
                         data.q = $.trim(data.options.search_element.val());
                         data.previous_query = data.q;
+
+                        // Handle pagination passed in "page="
+                        if (query_changed) {
+                           if (data.options.search_url.indexOf("page=") != -1) {
+                             var search_url = data.options.search_url;
+                             next_marker = search_url.slice(search_url.indexOf("page=")).indexOf("&")
+                             data.options.search_url = search_url.slice(0,search_url.indexOf("page=")-1);
+                             if (next_marker != -1) {
+                               data.options.search_url += search_url.slice(next_marker);
+                             }
+                           }
+                        }
+                        
+
+                        
+                        
 
                         $.ajax({
                           url: data.options.search_url,
@@ -99,6 +116,22 @@
                 $this.data('myceliumSearch',data);
             });
         },
+        update_search_url : function(new_search_url) {
+            return $(this).each(function(){
+                var $this = $(this),
+                    data = $this.data('myceliumSearch');
+              data.options.search_url = new_search_url;
+              return false;
+            });      
+        },
+        update_search : function() {
+            return $(this).each(function(){
+                var $this = $(this),
+                    data = $this.data('myceliumSearch');
+              data.update_search(true);
+            });      
+        },
+
     };
 
 
