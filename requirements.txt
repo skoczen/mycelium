@@ -48,3 +48,4 @@ django-ses
 django-mediasync
 slimmer
 gitpython
+#Numeric==24.2
