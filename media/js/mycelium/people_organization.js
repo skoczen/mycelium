@@ -120,7 +120,13 @@ function delete_organization(e) {
         $("#delete_org_form").submit();
     }
 }
-function add_person_pagination_row_clicked() {
+var last_query = false;
+function add_person_pagination_row_clicked(e) {
+    // Special-cased, but we can abstract it when we have other ajax, paginated, inline searches.
+    var link = $(e.target).attr("href");
+    pm = $.deparam(link);
+    new_search_url = $("#id_search_new_person").attr("results_url") + "?page=" + pm["?page"];
+    $("#id_search_new_person").myceliumSearch("update_search_url",new_search_url);
     $("#id_search_new_person").myceliumSearch("update_search");
     return false;
 }
