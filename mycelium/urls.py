@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     (r'^import/',       include('import.urls',              app_name="import",          namespace="import")),
     (r'^logo/',         include('logo_maker.urls',          app_name="logo_maker",      namespace="logo_maker")),
     
-    (r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodrain.agoodcloud.com"}, 'blog_home'),
+    (r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodcloud.posterous.com"}, 'blog_home'),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^', include('sorl.thumbnail.urls')),
