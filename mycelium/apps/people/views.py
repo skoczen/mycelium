@@ -17,6 +17,7 @@ from conversations.views import _render_people_conversations_tab
 from donors.views import _render_people_donor_tab
 from recent_activity.views import _render_people_recent_activity_tab 
 
+
 @render_to("people/search.html")
 def search(request):
     people_proxies = PeopleAndOrganizationsSearchProxy.objects.all()
