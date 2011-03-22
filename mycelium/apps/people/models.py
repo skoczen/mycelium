@@ -224,11 +224,20 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
 
     @property
     def type(self):
-        if self.person:
+        if self.person_id != None:
             return "person"
-        elif self.organization:
+        elif self.organization_id != None:
             return "organization"
         return None
+    
+    @property
+    def obj_id(self):
+        if self.person_id:
+            return self.person_id
+        elif self.organization_id:
+            return self.organization_id
+        else:
+            return None
 
     def get_sorting_name(self):
         sn = ""
@@ -257,7 +266,7 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
 
     @property
     def cache_name(self):
-        return "%s-%s-%s" % (self.search_group_name, self.type, self.obj.pk)
+        return "%s-%s-%s" % (self.search_group_name, self.type, self.obj_id)
 
     def generate_search_string(self):
         return self.obj.qi_simple_searchable_search_field
