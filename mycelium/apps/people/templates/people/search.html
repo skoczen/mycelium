@@ -12,8 +12,11 @@
 	<label for="id_search_query">Search:</label> <input type="search" name="search_query" id="id_search_query" placeholder="Type in a name, phone number, or email..." autofocus />
 </div>
 <new_object_buttons>
-	<a href="{% url people:new_person %}" class="new_person_btn mycelium_btn">New Person</a>
-	<a href="{% url people:new_organization %}" class="new_organization_btn mycelium_btn">New Organization</a>	
+	<span class="new_label">New:</span>
+	<a href="{% url people:new_person %}" class="new_person_btn mycelium_btn mycelium_new_btn">Person</a>
+	<a href="{% url people:new_organization %}" class="new_organization_btn mycelium_btn mycelium_new_btn">Organization</a>
+	<a href="#" class="new_group_btn mycelium_btn mycelium_new_btn">Group</a>
+	<a href="#" class="new_smart_group_btn mycelium_btn mycelium_new_btn">Smart Group</a>
 </new_object_buttons>
 <search_results><fragment name="main_search_results" action="replace">
 	{% include "people/_search_results.html" %}
