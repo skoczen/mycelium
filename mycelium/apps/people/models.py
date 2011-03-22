@@ -243,6 +243,7 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     @property
     def search_result_row(self):
         if cache.get(self.cache_name):
+            print "got it from cache"
             return cache.get(self.cache_name)
         elif self.cached_search_result:
             cache.set(self.cache_name,self.cached_search_result, 9000000)
