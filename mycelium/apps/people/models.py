@@ -208,7 +208,7 @@ class SearchableItemProxy(SimpleSearchableModel):
         self.sorting_name = self.get_sorting_name()
         ss = self.render_result_row()
         self.cached_search_result = ss
-        cache.set(self.cache_name, ss, 9000000)
+        put_in_cache_forever(self.cache_name, ss)
         super(SearchableItemProxy,self).save(*args,**kwargs)
 
 from django.template.loader import render_to_string
@@ -224,11 +224,20 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
 
     @property
     def type(self):
-        if self.person:
+        if self.person_id != None:
             return "person"
-        elif self.organization:
+        elif self.organization_id != None:
             return "organization"
         return None
+    
+    @property
+    def obj_id(self):
+        if self.person_id:
+            return self.person_id
+        elif self.organization_id:
+            return self.organization_id
+        else:
+            return None
 
     def get_sorting_name(self):
         sn = ""
@@ -245,18 +254,18 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         if cache.get(self.cache_name):
             return cache.get(self.cache_name)
         elif self.cached_search_result:
-            cache.set(self.cache_name,self.cached_search_result, 9000000)
+            put_in_cache_forever(self.cache_name,self.cached_search_result)
             return self.cached_search_result
         else:
             ss = self.render_result_row()
-            cache.set(self.cache_name,ss, 9000000)
             # popping over to celery
+            put_in_cache_forever(self.cache_name,ss)
             update_proxy_results_db_cache.delay(self,ss)
             return ss
 
     @property
     def cache_name(self):
-        return "%s-%s-%s" % (self.search_group_name, self.type, self.obj.pk)
+        return "%s-%s-%s" % (self.search_group_name, self.type, self.obj_id)
 
     def generate_search_string(self):
         return self.obj.qi_simple_searchable_search_field
