@@ -208,7 +208,7 @@ class SearchableItemProxy(SimpleSearchableModel):
         self.sorting_name = self.get_sorting_name()
         ss = self.render_result_row()
         self.cached_search_result = ss
-        cache.set(self.cache_name, ss, 9000000)
+        put_in_cache_forever(self.cache_name, ss)
         super(SearchableItemProxy,self).save(*args,**kwargs)
 
 from django.template.loader import render_to_string
@@ -252,15 +252,14 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     @property
     def search_result_row(self):
         if cache.get(self.cache_name):
-            print "got it from cache"
             return cache.get(self.cache_name)
         elif self.cached_search_result:
-            cache.set(self.cache_name,self.cached_search_result, 9000000)
+            put_in_cache_forever(self.cache_name,self.cached_search_result)
             return self.cached_search_result
         else:
             ss = self.render_result_row()
-            cache.set(self.cache_name,ss, 9000000)
             # popping over to celery
+            put_in_cache_forever(self.cache_name,ss)
             update_proxy_results_db_cache.delay(self,ss)
             return ss
 
