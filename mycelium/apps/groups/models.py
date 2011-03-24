@@ -12,7 +12,7 @@ add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
 from people.models import Person
 
-class Group(TaggedItemBase):
+class Group(TaggedItemBase, TimestampModelMixin):
     content_object = models.ForeignKey('people.Person')
 
 
