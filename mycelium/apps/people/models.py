@@ -3,6 +3,8 @@ from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from taggit.managers import TaggableManager
 
+from south.modelsinspector import add_ignored_fields
+add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
@@ -59,7 +61,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     search_fields = ["searchable_full_name","searchable_primary_email", "searchable_primary_phone_number"]
     contact_type = "person"
     
-    tags = TaggableManager()
+    groups = TaggableManager(through="groups.Group")
 
     class Meta(object):
         verbose_name_plural = "People"
