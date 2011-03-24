@@ -1,0 +1,16 @@
+{% extends "groups/base.html" %}
+{% load i18n generic_fields friendly_data_formatting generic_tag_tags %}
+{% block title %}Groups - {{group.name}}{% endblock %}
+{% block css %}{{block.super}}
+{% generic_field_css %}
+{# {% css "/css/people_volunteer.css" %} #}
+{% endblock %}
+{% block javascript %}{{block.super}}
+{# {% js "/js/mycelium/people_common.js" %} #}
+{% generic_tags_js %}
+{% endblock %}
+
+{% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
+{% block page_content %}
+Group
+{% endblock %}

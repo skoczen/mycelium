@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'donors',
     'recent_activity',
     'generic_tags',
+    'groups',
 
 
     'djangosanetesting',
