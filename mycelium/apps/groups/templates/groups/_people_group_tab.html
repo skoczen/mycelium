@@ -1,0 +1,22 @@
+{% load i18n generic_fields friendly_data_formatting humanize generic_tag_tags %}
+<tab_contents class="people_groups_tab">
+<table class="two_column_70_30">
+<tr>
+<td class="column_1 groups_list">
+<div class="detail_header">Groups</div>
+<two_columns class="group_tag_list">
+	{% render_tags_as_checklist person tag_view_obj %}
+</two_columns>
+</div>
+</td>
+<td class="column_2 smart_groups_list">
+<div class="tags_and_other_info">
+	<div class="detail_header">Smart Groups</div>
+	<div class="section_details">
+	
+	</div>
+</div>
+</td>
+</tr>
+</table>
+</tab_contents>

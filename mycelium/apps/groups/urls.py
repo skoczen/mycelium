@@ -15,3 +15,5 @@ urlpatterns = parser.patterns('',
     url(r'smart_group/{smart_group_id:digits}$',                     views.smart_group,                             name='smart_group'),
     url(r'smart_group/delete$',                                      views.delete_smart_group,                      name='delete_smart_group'),    
 )
+from generic_tags.urls import tag_urls
+urlpatterns += tag_urls(views.tag_views, "group/")

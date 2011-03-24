@@ -5,12 +5,14 @@
 {% generic_field_css %}
 {% css "/css/people_volunteer.css" %}
 {% css "/css/people_donor.css" %}
+{% css "/css/people_groups.css" %}
 {% endblock %}
 {% block javascript %}{{block.super}}
-{% js "/js/mycelium/people_common.js" %}
-{% js "/js/mycelium/people_person.js" %}
 {% js "/js/mycelium/people_volunteer.js" %}
 {% js "/js/mycelium/people_donations.js" %}
+{% js "/js/mycelium/people_groups.js" %}
+{% js "/js/mycelium/people_common.js" %}
+{% js "/js/mycelium/people_person.js" %}
 {% generic_tags_js %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
@@ -90,16 +92,12 @@ $(function(){
 	{# Extra emails, phone #s, Addresses #}
 </div>
 
-<div class="general_person_tags">
-{% render_tags_and_add_tag person tag_view_obj %}
-</div>
-
 <detail_tabs update_url="{% url people:tab_contents person.pk %}">
 	<a class="detail_tab current" href="#recent_activity">Recent Activity</a>
-	<a class="detail_tab" href="#conversations">Conversations</a>
-	{# <a class="detail_tab" href="#participant">Participant</a> #}
+	<a class="detail_tab" href="#groups">Groups</a>
 	<a class="detail_tab" href="#volunteer">Volunteer</a>
 	<a class="detail_tab" href="#donor">Donor</a>
+	{# <a class="detail_tab" href="#conversations">Conversations</a>	 #}
 </detail_tabs>
 <detail_tab_contents>
 	<fragment name="detail_tab" action="replace">

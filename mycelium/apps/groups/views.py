@@ -1,13 +1,29 @@
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
+from generic_tags.views import TagViews
 
 from groups.models import Group, SmartGroup
+from people.models import Person
+
+class GroupTagViews(TagViews):
+    TargetModel = Person
+    namespace_name = "groups"
+    default_redirect_url = "people:person"
+    app_name = "groups"
+    mode = "checklist"
+    def _default_redirect_args(self, context):
+        return (context["obj"].pk,)
+
+tag_views = GroupTagViews()
+
+def _render_people_group_tab(context):
+    context.update({"tag_view_obj":tag_views})
+    return render_to_string("groups/_people_group_tab.html", RequestContext(context["request"],context))
 
 
 @render_to("groups/group.html")
@@ -28,6 +44,7 @@ def delete_group(request):
         pass
 
     return HttpResponseRedirect(reverse("people:search"))
+
 
 
 @render_to("groups/smart_group.html")
