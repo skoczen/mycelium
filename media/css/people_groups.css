@@ -23,3 +23,7 @@ tab_contents.people_groups_tab  .groups_list .detail_header {
 tag.new_checkbox_tag {
 	padding-top: 5px;
 }
+tab_contents.people_groups_tab .smart_groups .explanation{
+	color: #AAA;
+	padding: 10px;
+}
