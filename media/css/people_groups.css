@@ -27,3 +27,10 @@ tab_contents.people_groups_tab .smart_groups .explanation{
 	color: #AAA;
 	padding: 10px;
 }
+tag.checkbox {
+	color: #777;
+}
+tag.checkbox.checked {
+	color: #000;
+
+}
