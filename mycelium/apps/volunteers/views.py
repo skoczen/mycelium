@@ -73,6 +73,7 @@ class VolunteerTagViews(TagViews):
     app_name = "volunteers"
     tag_field = "skills"
     mode = "checklist"
+    new_tag_placeholder = "New skill/role"
     def _default_redirect_args(self, context):
         return (context["obj"].person.pk,)
 

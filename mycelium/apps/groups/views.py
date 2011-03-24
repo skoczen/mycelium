@@ -16,6 +16,7 @@ class GroupTagViews(TagViews):
     default_redirect_url = "people:person"
     app_name = "groups"
     mode = "checklist"
+    new_tag_placeholder = "New Group"
     def _default_redirect_args(self, context):
         return (context["obj"].pk,)
 

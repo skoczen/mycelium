@@ -11,6 +11,7 @@ class TagViews(object):
     default_redirect_url = None
     default_redirect_args = None
     app_name = None
+    new_tag_placeholder = "New tag"
     mode = "tags" # or "checklist"
 
     def _TargetModel(self):
@@ -19,6 +20,7 @@ class TagViews(object):
         else:
             raise Exception, "_get_model_tag_field not defined!"
         # return Model
+
 
     def _app_name(self):
         if self.app_name:
@@ -114,7 +116,8 @@ class TagViews(object):
         return {
             "namespace_name": self.namespace_name,
             "app_name": self.app_name,
-            "mode": self.mode
+            "mode": self.mode,
+            'new_tag_placeholder':self.new_tag_placeholder,
         }
 
     def _update_with_tag_fragments(self, context):
@@ -126,6 +129,7 @@ class TagViews(object):
             fragment_html = {"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_list.html", RequestContext(context["request"],context)),}
         elif self.mode == "checklist":
             context["obj_tags"].update(self.checklist_tag_related_info(context["obj"]))
+
             # This line gets the model of the class, then pulls the tag attribute off of it, and finally gets all tags.
             fragment_html = {"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_checklist.html", RequestContext(context["request"],context)),}
         c = {

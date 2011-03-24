@@ -1,8 +1,8 @@
-$(function(){
-	
-})
-
 function bind_groups_tab_events() {
-    $(".people_groups_tab .group_tag_list").genericTags({'mode':'checkbox'});
-$("tab_contents.people_groups_tab  .groups_list two_columns tags").columnize({ 'columns': 2 });
+	$("tab_contents.people_groups_tab .groups_list").genericTags({'mode':'checkbox'});
+	$("tab_contents.people_groups_tab .groups_list").bind("genericTags.bind_checkbox_inputs_if_needed", setup_columns);
+	setup_columns();
+}
+function setup_columns() {
+	$("tab_contents.people_groups_tab .groups_list tags fragment").columnize({ 'columns': 2 });	
 }
