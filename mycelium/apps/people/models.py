@@ -61,8 +61,6 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     search_fields = ["searchable_full_name","searchable_primary_email", "searchable_primary_phone_number"]
     contact_type = "person"
     
-    groups = TaggableManager(through="groups.Group")
-
     class Meta(object):
         verbose_name_plural = "People"
         ordering = ("first_name", "last_name")
@@ -117,6 +115,11 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
                 if e.email:
                     return e.email
         return None
+
+    @property
+    def groups(self):
+        from groups.models import Group
+        return Group.objects.filter(id__in=self.groupmembership_set.all())
 
 
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):

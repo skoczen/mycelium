@@ -7,7 +7,7 @@ from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 from generic_tags.views import TagViews
 
-from groups.models import Group, SmartGroup
+from groups.models import Group, GroupMembership, SmartGroup
 from people.models import Person
 
 class GroupTagViews(TagViews):

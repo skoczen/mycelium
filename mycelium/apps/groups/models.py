@@ -12,8 +12,12 @@ add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
 from people.models import Person
 
-class Group(TaggedItemBase, TimestampModelMixin):
-    content_object = models.ForeignKey('people.Person')
+class Group(TimestampModelMixin):
+    name = models.CharField(max_length=255, blank=True, null=True)
+
+class GroupMembership(TimestampModelMixin):
+    group = models.ForeignKey(Group, blank=True, null=True)
+    person = models.ForeignKey(Person, blank=True, null=True)
 
 
 class SmartGroup(TimestampModelMixin):
