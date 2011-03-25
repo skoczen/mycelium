@@ -3,7 +3,10 @@ from qi_toolkit.fabbase import *
 setup_env_centos("mycelium","root",
                 initial_settings={
                     'staging_hosts':['digitalmycelium.com'],
-                    'production_hosts':['184.73.193.80', '50.17.219.15'],
+                    'production_hosts':[
+                                        '184.73.193.80', 
+                                        # '50.17.219.15'
+                                        ],
                     'production_db_hosts':['ext-mysql.digitalmycelium.com'],
                     'staging_db_hosts':['ext-mysql.agoodcloud.com']
                 }, 

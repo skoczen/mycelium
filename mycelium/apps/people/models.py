@@ -124,12 +124,19 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
 
 
     def add_group(self, name):
-        group = Group.objects.get_or_create(name=name)[0]
+        group = Group.objects.filter(name__iexact=name)
+        if group.count() == 1:
+            group = group[0]
+        elif group.count() == 0:
+            group = Group.objects.create(name=name)[0]
+        else:
+            raise Exception, "More than one group with this name!"
+        
         return self.groupmembership_set.get_or_create(group=group)
 
     def remove_group(self, name):
         try:
-            group = Group.objects.get(name=name)
+            group = Group.objects.get(name__iexact=name)
             gm = self.groupmembership_set.get(group=group)
             gm.delete()
         except:

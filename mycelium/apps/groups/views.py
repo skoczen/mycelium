@@ -53,7 +53,7 @@ class GroupTagViews(TagViews):
     def add_tag(self,request):
         success = False
         pk = int(request.REQUEST['target_pk'])
-        new_tag = request.REQUEST['new_tag'].strip().lower()
+        new_tag = request.REQUEST['new_tag'].strip()
         if new_tag != "":
             obj = Person.objects.get(pk=pk)
             obj.add_group(new_tag)
@@ -64,7 +64,7 @@ class GroupTagViews(TagViews):
     def remove_tag(self, request, target_id):
         success = False
         if request.method == "GET":
-            tag = request.GET['tag'].strip().lower()
+            tag = request.GET['tag'].strip()
             if tag != "":
                 obj = self._TargetModel().objects.get(pk=target_id)
                 obj.remove_group(tag)
@@ -89,6 +89,7 @@ def _render_people_group_tab(context):
 
 @render_to("groups/group.html")
 def group(request, group_id):
+    group = Group.objects.get(pk=group_id)
     return locals()
 
 def new_group(request):

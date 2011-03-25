@@ -12,7 +12,7 @@ class Migration(DataMigration):
         from django.contrib.contenttypes.models import ContentType
         from taggit.models import TaggedItem
         p_ct = ContentType.objects.get(app_label="people",model="Person")
-        for pt in TaggedItem.objects.all():
+        for pt in TaggedItem.objects.filter(content_type=p_ct):
             if pt.content_type == p_ct:
                 orm.Group.objects.create(id=pt.id, tag_id=pt.tag_id, content_object_id=pt.object_id)
         
