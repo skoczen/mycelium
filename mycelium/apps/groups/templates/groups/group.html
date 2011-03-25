@@ -13,4 +13,9 @@
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
 {% block page_content %}
 Group {{group.name}}
+<ul>
+{% for p in group.members %}
+	<li>{{p}}</li>
+{% endfor %}
+</ul>
 {% endblock %}

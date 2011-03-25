@@ -1,36 +1,21 @@
 tab_contents.people_groups_tab .groups_list tags fragment {
 	display: block;
-
-/*	-webkit-column-count: 3;
-	-moz-column-count: 3;
-	column-count: 3;
-
-	-webkit-column-gap: 5px;
-	-moz-column-gap: 5px;
-	column-gap: 5px;
-
-	-moz-column-fill: balance;
-	-webkit-column-fill: balance;
-	column-fill: balance;
-*/
-
 }
 tab_contents.people_groups_tab  .groups_list .detail_header {
 	width: 96%;
 }
 
-
-tag.new_checkbox_tag {
+tab_contents.people_groups_tab tag.new_checkbox_tag {
 	padding-top: 5px;
 }
 tab_contents.people_groups_tab .smart_groups .explanation{
 	color: #AAA;
 	padding: 10px;
 }
-tag.checkbox {
+tab_contents.people_groups_tab tag.checkbox {
 	color: #777;
 }
-tag.checkbox.checked {
+tab_contents.people_groups_tab tag.checkbox.checked {
 	color: #000;
 
 }
