@@ -21,6 +21,65 @@ class GroupTagViews(TagViews):
     def _default_redirect_args(self, context):
         return (context["obj"].pk,)
 
+    def _tags_for_obj(self,obj):
+        return obj.groups
+    
+    def _tags_for_category_and_obj(self, cls, obj):
+        all_tags = Group.objects.order_by("name")
+        my_tags = obj.groups.order_by("name")
+
+        combined_list = []
+        for t in all_tags.all():
+            d = {'tag':t}
+            if t in my_tags:
+                d["have_tag"] = True
+            combined_list.append(d)
+        return combined_list
+
+    def obj_tag_related_info(self, obj, tag_field=None):
+        if tag_field:
+            self.tag_field = tag_field
+        
+        my_tags = self._tags_for_obj(obj)
+        all_of_my_type = Group.objects.all()
+
+        return {'obj_tags':{
+                "all_tags_of_my_type": all_of_my_type,
+                "all_tags_of_my_type_alphabetical_by_name": all_of_my_type.order_by("name"),
+                "my_tags": my_tags,
+                "my_tags_alphabetical_by_name": my_tags.order_by("name"),
+        }}
+
+    def add_tag(self,request):
+        success = False
+        pk = int(request.REQUEST['target_pk'])
+        new_tag = request.REQUEST['new_tag'].strip().lower()
+        if new_tag != "":
+            obj = Person.objects.get(pk=pk)
+            obj.add_group(new_tag)
+            success = True
+
+        return self._return_fragments_or_redirect(request,locals())
+
+    def remove_tag(self, request, target_id):
+        success = False
+        if request.method == "GET":
+            tag = request.GET['tag'].strip().lower()
+            if tag != "":
+                obj = self._TargetModel().objects.get(pk=target_id)
+                obj.remove_group(tag)
+                success = True
+        return self._return_fragments_or_redirect(request,locals())
+
+
+    def new_tag_search_results(self, request):
+        all_tags = False
+        if 'q' in request.GET:
+            q = request.GET['q']
+            if q != "":
+                all_tags = Group.objects.filter(name__icontains=q).order_by("name")[:5]
+        return HttpResponse(simplejson.dumps({"fragments":{"new_%s_tag_search_results" % self._namespace_name():render_to_string("generic_tags/_new_tag_search_results.html", locals())}}))
+
 tag_views = GroupTagViews()
 
 def _render_people_group_tab(context):

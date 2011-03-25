@@ -9,8 +9,8 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
         for gm in orm.GroupMembership.objects.all():
-            gm.person_id = gm.content_object_id
             group = orm.Group.objects.get_or_create(name=gm.tag.name)[0]
+            gm.person_id = gm.content_object_id
             gm.group = group
             gm.save()
 

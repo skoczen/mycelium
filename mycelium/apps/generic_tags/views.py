@@ -41,7 +41,7 @@ class TagViews(object):
             return "tags"
 
     def _tags_for_obj(self,obj):
-        return getattr(obj,self._tag_field())
+        return getattr(obj,self._tag_field()).all()
     
     def _tags_for_category_and_obj(self, cls, obj):
         all_tags = self._tags_for_obj(cls).all().order_by("name")
@@ -102,8 +102,8 @@ class TagViews(object):
         if tag_field:
             self.tag_field = tag_field
         
-        my_tags = self._tags_for_obj(obj).all()
-        all_of_my_type = self._tags_for_obj(self._TargetModel()).all()
+        my_tags = self._tags_for_obj(obj)
+        all_of_my_type = self._tags_for_obj(self._TargetModel())
 
         return {'obj_tags':{
                 "all_tags_of_my_type": all_of_my_type,

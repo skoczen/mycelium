@@ -10,6 +10,8 @@ import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING = _("No Name")
 
+from groups.models import Group
+
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
     friendly_name = models.CharField(max_length=255)
@@ -118,9 +120,20 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
 
     @property
     def groups(self):
-        from groups.models import Group
-        return Group.objects.filter(id__in=self.groupmembership_set.all())
+        return Group.objects.filter(id__in=self.groupmembership_set.values("group_id")).all()
 
+
+    def add_group(self, name):
+        group = Group.objects.get_or_create(name=name)[0]
+        return self.groupmembership_set.get_or_create(group=group)
+
+    def remove_group(self, name):
+        try:
+            group = Group.objects.get(name=name)
+            gm = self.groupmembership_set.get(group=group)
+            gm.delete()
+        except:
+            pass
 
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
