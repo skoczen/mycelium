@@ -124,7 +124,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
 
 
     def add_group(self, name):
-        group = Group.objects.filter(name__iexact=name)
+        group = Group.objects.filter(name__iexact=name).all()
         if group.count() == 1:
             group = group[0]
         elif group.count() == 0:
