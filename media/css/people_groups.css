@@ -17,5 +17,7 @@ tab_contents.people_groups_tab tag.checkbox {
 }
 tab_contents.people_groups_tab tag.checkbox.checked {
 	color: #000;
-
+/*	background-color: #000486;
+	color: #FFF;
+*/
 }
