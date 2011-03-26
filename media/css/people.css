@@ -357,13 +357,18 @@ detail_tabs a.detail_tab.current {
 detail_tab_contents {
 	width: 94%;
 	margin: 0px auto;
+	
 
 	display: block;
 	border: 1px solid #999;
 	min-height: 100px;
 	padding: 15px 2%;
 }
-
+detail_tab_contents fragment.detail_tab {
+	display: block;
+	width: 100%;
+	overflow: auto;
+}
 .detail_header {
 	font-size: 24px;
 	color: #454545;

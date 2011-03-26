@@ -606,3 +606,8 @@ tags.checkboxes .new_checkbox_tag input.new_tag_name_input:focus {
 	border: 1px solid #3E9CFD;
 	border-width: 0px 0px 1px 0px;	
 }
+
+column {
+	display: block;
+	float: left;
+}
