@@ -8,7 +8,7 @@
                "autogrow_options": {comfortZone: 20, resizeNow:true},
                "form_selector": ".new_tag_form",
                "default_fade_timeout": 500,
-               "mode": "tag"   // "tag" or  "checkbox"
+               "mode": "checkbox"   // "tag" or  "checkbox"
            };
                  
            var options =  $.extend(defaults, options);

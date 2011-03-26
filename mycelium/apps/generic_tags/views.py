@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from generic_tags.models import TagSet, TagSetMembership
+from people.models import Person
 
 def _render_people_tag_tab(context):
     return render_to_string("generic_tags/_people_tag_tab.html", RequestContext(context["request"],context))
@@ -11,7 +12,7 @@ def _render_people_tag_tab(context):
 
 
 class TagViews(object):
-    TargetModel = None
+    TargetModel = Person
     tag_set_name = None
     app_name = "generic_tags"
     new_tag_placeholder = "New tag"
@@ -69,9 +70,9 @@ class TagViews(object):
 
         return {'target_tags':{
                 "all_tags_of_my_type": all_of_my_type,
-                "all_tags_of_my_type_alphabetical_by_name": all_of_my_type.order_by("name"),
+                "all_tags_of_my_type_alphabetical_by_name": all_of_my_type,
                 "my_tags": my_tags,
-                "my_tags_alphabetical_by_name": my_tags.order_by("name"),
+                "my_tags_alphabetical_by_name": my_tags,
         }}
 
     @property
@@ -79,9 +80,10 @@ class TagViews(object):
         d = {}
         d.update(self._tag_urls)
         d.update(self._namespace_info)
-        d.update(self._target_tag_related_info)
+        d.update({'target':self.target})
+        # d.update(self._target_tag_related_info)
         if self.mode == "checklist":
-            d["target_tags"].update(self.tag_set_membership.all_tags_with_my_tags_marked)
+            d.update({"target_tags":self.tag_set_membership.all_tags_with_my_tags_marked})
 
         return d
 
@@ -90,14 +92,12 @@ class TagViews(object):
 
     def _update_with_tag_fragments(self, context):
         fragment_html = ""
-        context.update(self._tag_urls)
-        context.update(self._target_tag_related_info)
+
+        context.update(self.tag_render_context)
 
         if self.mode == "tags":
             fragment_html = {"%s_tags" % self.tag_set_name: render_to_string("generic_tags/_tag_list.html", RequestContext(context["request"],context)),}
         elif self.mode == "checklist":
-            context["target_tags"].update(self.checklist_tag_related_info(context["target"]))
-
             # This line gets the model of the class, then pulls the tag attribute off of it, and finally gets all tags.
             fragment_html = {"%s_tags" % self.tag_set_name: render_to_string("generic_tags/_tag_checklist.html", RequestContext(context["request"],context)),}
         c = {
@@ -109,12 +109,13 @@ class TagViews(object):
 
     def _return_fragments_or_redirect(self, request, context):
         if request.is_ajax():
-            return HttpResponse(simplejson.dumps(self._update_with_tag_fragments))
+            return HttpResponse(simplejson.dumps(self._update_with_tag_fragments(context)))
         else:
             return HttpResponseRedirect(reverse(self._default_redirect_url,args=self._default_redirect_args))
 
 
-    def add_tag(self,request):
+    def add_tag(self,request, tag_set_name, target_id):
+        self.__init__(target=self.TargetModel.objects.get(pk=int(target_id)), tag_set_name=tag_set_name)
         success = False
         new_tag = request.REQUEST['new_tag'].strip().lower()
         if new_tag != "":
@@ -123,8 +124,9 @@ class TagViews(object):
 
         return self._return_fragments_or_redirect(request,locals())
 
-    def remove_tag(self, request, target_id):
+    def remove_tag(self, request, tag_set_name, target_id):
         success = False
+        self.__init__(target=self.TargetModel.objects.get(pk=int(target_id)), tag_set_name=tag_set_name)
         if request.method == "GET":
             tag = request.GET['tag'].strip().lower()
             if tag != "":
@@ -133,7 +135,8 @@ class TagViews(object):
         return self._return_fragments_or_redirect(request,locals())
 
 
-    def new_tag_search_results(self, request):
+    def new_tag_search_results(self, request, tag_set_name, target_id):
+        self.__init__(target=self.TargetModel.objects.get(pk=int(target_id)), tag_set_name=tag_set_name)
         all_tags = False
         if 'q' in request.GET:
             q = request.GET['q']

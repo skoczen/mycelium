@@ -41,7 +41,9 @@ function load_detail_tab(tab_name) {
             case "#groups":
                 bind_groups_tab_events();
                 break;
-            
+            case "#tags":
+            	bind_tags_tab_events();
+            	break;
         }
         $.bbq.pushState({"current_detail_tab":tab_name})
     } 

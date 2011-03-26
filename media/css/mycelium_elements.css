@@ -575,7 +575,7 @@ tag.checkbox, tag.new_checkbox_tag {
 	background: transparent;
 	color: #454545;
 	padding: 0px;
-	/*padding: 2px 0px 5px 15px;*/
+	
 	width: 100%;
 	margin: 2px 0px;
 }
@@ -583,6 +583,7 @@ tag.checkbox label {
 	float: none;
 	display: inline;
 }
+
 tag.checkbox .checkbox_input {
 	margin: 0px 4px 2px 0px;
 }
