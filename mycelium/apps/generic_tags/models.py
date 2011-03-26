@@ -16,11 +16,6 @@ class TagSet(TimestampModelMixin):
     def __unicode__(self):
         return "%s" % self.name
 
-    # @property
-    # def members(self):
-    #     from people.models import Person
-    #     return Person.objects.filter(pk__in=self.groupmembership_set.all())
-
     class Meta(object):
         ordering = ("name",)
 
@@ -58,7 +53,7 @@ class TagSetMembership(TimestampModelMixin):
     tags = TaggableManager()
 
     def __unicode__(self):
-        return "%s in %s" % self.tagset, self.person
+        return "%s in %s" % (self.tagset, self.person)
 
     class Meta(object):
         ordering = ("tagset","person",)

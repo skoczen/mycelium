@@ -6,48 +6,28 @@ from django.db import models
 
 class Migration(DataMigration):
 
-    depends_on = (
-        ("groups", "0014_copy_data_to_generic_tags"),
-    )
-
     def forwards(self, orm):
-        # Previous migrations moved the general current tags into the TagSet object. Crap.  Fix that, and move them to the right place.
-        
-        # Get the right one again
-        gen_ts = orm.TagSet.objects.get_or_create(name="General")[0]
-
+        "Write your forwards methods here."
         from django.contrib.contenttypes.models import ContentType
+        donor_ts = orm.TagSet.objects.get_or_create(name="Donor")[0]
         tsm_ct = ContentType.objects.get_for_model(orm.TagSetMembership)
-        people_whose_tsms_to_clear = []
+        d_ct = ContentType.objects.get(app_label="donors",model="Donor")
 
-        for tsm in orm.TagSetMembership.objects.all():
-            new_person_tsm = orm.TagSetMembership.objects.get_or_create(person=tsm.person,tagset=gen_ts)[0]
+        for dt in orm["taggit.taggeditem"].objects.filter(content_type=d_ct):
+            person = orm["donors.donor"].objects.get(id=dt.object_id).person
 
-            new_tag = orm["taggit.tag"].objects.get_or_create(name=tsm.tagset.name)[0]
-            orm["taggit.taggeditem"].objects.get_or_create(tag=new_tag, object_id=new_person_tsm.id, content_type_id=tsm_ct.id)
-            people_whose_tsms_to_clear.append(tsm.person)
+            d_tsm = orm.TagSetMembership.objects.get_or_create(person=person, tagset=donor_ts)[0]
 
-        # clear out people's non-general tsms.
-        for p in people_whose_tsms_to_clear:
-            for tsm in orm.TagSetMembership.objects.filter(person=p):
-                if tsm.tagset != gen_ts:
-                    tsm.delete()
+            # update the taggeditem
+            dt.content_type_id=tsm_ct.id
+            dt.object_id = d_tsm.id
+            dt.save()
 
-        # Clear out all the crap
-        for ts in orm.TagSet.objects.all():
-            if ts != gen_ts:
-                ts.delete()
-        
-        # Re-make the other general tagsets we want.
-        orm.TagSet.objects.get_or_create(name="Volunteer")
-        orm.TagSet.objects.get_or_create(name="Donor")
-       
 
 
     def backwards(self, orm):
         "Write your backwards methods here."
 
-        print "NO BACKWARDS MIGRATION!!  Seriously. Have you seen the forwards migration? Hell no!"
 
     models = {
         'contenttypes.contenttype': {
@@ -56,6 +36,23 @@ class Migration(DataMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        'donors.donation': {
+            'Meta': {'ordering': "['-date', 'amount']", 'object_name': 'Donation'},
+            'amount': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '18', 'decimal_places': '2', 'blank': 'True'}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'currency': ('django.db.models.fields.CharField', [], {'default': "'USD'", 'max_length': '255'}),
+            'date': ('django.db.models.fields.DateField', [], {'default': 'datetime.date.today'}),
+            'donor': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['donors.Donor']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'})
+        },
+        'donors.donor': {
+            'Meta': {'ordering': "['person']", 'object_name': 'Donor'},
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'person': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['people.Person']", 'unique': 'True'})
         },
         'generic_tags.tagset': {
             'Meta': {'ordering': "('name',)", 'object_name': 'TagSet'},
@@ -103,4 +100,4 @@ class Migration(DataMigration):
         }
     }
 
-    complete_apps = ['taggit', 'generic_tags']
+    complete_apps = ['donors', 'generic_tags']
