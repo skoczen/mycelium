@@ -6,29 +6,24 @@ from django.db import models
 
 class Migration(DataMigration):
 
-
-    depends_on = (
-        ("generic_tags", "0001_initial"),
-    )
-
-
     def forwards(self, orm):
-        for ts in orm["groups.tagset"].objects.all():
-            orm["generic_tags.tagset"].objects.get_or_create(name=ts.name, id=ts.id)
-        
-        for tsm in orm["groups.tagsetmembership"].objects.all():
-            orm["generic_tags.tagsetmembership"].objects.get_or_create(tagset_id=tsm.group_id,person_id=tsm.person_id)
+        orm.TagSet.objects.get_or_create(name="General")
+        orm.TagSet.objects.get_or_create(name="Volunteer")
+        orm.TagSet.objects.get_or_create(name="Donor")
+
 
     def backwards(self, orm):
-        for ts in ["generic_tags.tagset"].objects.all():
-            ts.delete()
-        
-        for tsm in orm["generic_tags.tagsetmembership"].objects.all():
-            tsm.delete()
-
+        orm.TagSet.objects.all().delete()
 
 
     models = {
+        'contenttypes.contenttype': {
+            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
+            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
         'generic_tags.tagset': {
             'Meta': {'ordering': "('name',)", 'object_name': 'TagSet'},
             'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
@@ -43,33 +38,6 @@ class Migration(DataMigration):
             'modified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'person': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['people.Person']", 'null': 'True', 'blank': 'True'}),
             'tagset': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['generic_tags.TagSet']", 'null': 'True', 'blank': 'True'})
-        },
-        'groups.smartgroup': {
-            'Meta': {'ordering': "('name',)", 'object_name': 'SmartGroup'},
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'unique': 'True', 'null': 'True', 'blank': 'True'})
-        },
-        'groups.smartgrouprule': {
-            'Meta': {'ordering': "('group', 'id')", 'object_name': 'SmartGroupRule'},
-            'group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['groups.SmartGroup']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
-        },
-        'groups.tagset': {
-            'Meta': {'ordering': "('name',)", 'object_name': 'TagSet'},
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'unique': 'True', 'null': 'True', 'blank': 'True'})
-        },
-        'groups.tagsetmembership': {
-            'Meta': {'ordering': "('group', 'person')", 'object_name': 'TagSetMembership'},
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'person': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'groupmembership'", 'null': 'True', 'to': "orm['people.Person']"}),
-            'group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['groups.TagSet']", 'null': 'True', 'blank': 'True'})
         },
         'people.person': {
             'Meta': {'ordering': "('first_name', 'last_name')", 'object_name': 'Person'},
@@ -86,7 +54,20 @@ class Migration(DataMigration):
             'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'qi_simple_searchable_search_field': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'state': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
+        },
+        'taggit.tag': {
+            'Meta': {'object_name': 'Tag'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
+        },
+        'taggit.taggeditem': {
+            'Meta': {'object_name': 'TaggedItem'},
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_tagged_items'", 'to': "orm['contenttypes.ContentType']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_items'", 'to': "orm['taggit.Tag']"})
         }
     }
 
-    complete_apps = ['generic_tags', 'groups']
+    complete_apps = ['generic_tags']

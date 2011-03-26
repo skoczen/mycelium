@@ -55,10 +55,10 @@ class TagSetMembership(TimestampModelMixin):
     tagset = models.ForeignKey(TagSet, blank=True, null=True)
     person = models.ForeignKey('people.Person', blank=True, null=True)
 
-    # tags = TaggableManager()
+    tags = TaggableManager()
 
     def __unicode__(self):
-        return "%s in %s" % self.group, self.person
+        return "%s in %s" % self.tagset, self.person
 
     class Meta(object):
         ordering = ("tagset","person",)
