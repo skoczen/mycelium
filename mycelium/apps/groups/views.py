@@ -7,7 +7,7 @@ from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 from generic_tags.views import TagViews
 
-from groups.models import Group, GroupMembership, SmartGroup
+from groups.models import Group
 from people.models import Person
 
 class GroupTagViews(TagViews):
@@ -114,14 +114,14 @@ def smart_group(request, smart_group_id):
     return locals()
 
 def new_smart_group(request):
-    smart_group = SmartGroup.objects.create()
+    smart_group = Group.objects.create()
     return HttpResponseRedirect("%s?edit=ON" %reverse("groups:smart_group",args=(smart_group.pk,)))
 
 def delete_smart_group(request):
     try:
         if request.method == "POST":
             pk = request.POST['smart_group_pk']
-            smart_group = SmartGroup.objects.get(pk=pk)
+            smart_group = Group.objects.get(pk=pk)
             smart_group.delete()
     except:
         pass

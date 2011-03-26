@@ -10,8 +10,6 @@ import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING = _("No Name")
 
-from groups.models import Group
-
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
     friendly_name = models.CharField(max_length=255)
@@ -119,28 +117,9 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
         return None
 
     @property
-    def groups(self):
-        return Group.objects.filter(id__in=self.groupmembership_set.values("group_id")).all()
-
-
-    def add_group(self, name):
-        group = Group.objects.filter(name__iexact=name).all()
-        if group.count() == 1:
-            group = group[0]
-        elif group.count() == 0:
-            group = Group.objects.create(name=name)[0]
-        else:
-            raise Exception, "More than one group with this name!"
-        
-        return self.groupmembership_set.get_or_create(group=group)
-
-    def remove_group(self, name):
-        try:
-            group = Group.objects.get(name__iexact=name)
-            gm = self.groupmembership_set.get(group=group)
-            gm.delete()
-        except:
-            pass
+    def tagsets(self):
+        return self.tagset_set.all()
+  
 
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)

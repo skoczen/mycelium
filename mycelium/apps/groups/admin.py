@@ -3,5 +3,5 @@ from models import *
 
 
 admin.site.register(Group)
-admin.site.register(GroupMembership)
+admin.site.register(GroupRule)
 
