@@ -1,16 +1,16 @@
 <tags class="checkboxes">
-<fragment name="{{namespace_name}}_tags" action="replace">
+<fragment name="{{tag_set_name}}_tags" action="replace">
 	{% include "generic_tags/_tag_checklist.html" %}
 </fragment>
-<form action="{{add_tag_url}}" method="POST" id="new_{{namespace_name}}_tag_form" class="new_tag_form" >{% csrf_token %}
+<form action="{{add_tag_url}}" method="POST" id="new_{{tag_set_name}}_tag_form" class="new_tag_form" >{% csrf_token %}
 <tag class="new_checkbox_tag">
 	<input type="hidden" name="target_pk" value="{{obj.pk}}">
-	<input type="checkbox" class="checkbox_input" id="{{namespace_name}}_new" />
+	<input type="checkbox" class="checkbox_input" id="{{tag_set_name}}_new" />
 	<input type="text" name="new_tag" value="" placeholder="{{new_tag_placeholder}}" maxlength="100" autocomplete="off" results="0" results_url="{{search_results_url}}" class="new_tag_name_input">
 	<input type="submit" class="mycelium_btn mycelium_small_btn tag_add_btn" value="Add">
 </tag>
 <search_results>
-<fragment name="new_{{namespace_name}}_tag_search_results" action="replace">
+<fragment name="new_{{tag_set_name}}_tag_search_results" action="replace">
 
 </fragment>
 </search_results>

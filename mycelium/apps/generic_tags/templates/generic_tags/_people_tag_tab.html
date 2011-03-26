@@ -1,0 +1,7 @@
+{% load i18n generic_fields friendly_data_formatting humanize generic_tag_tags %}
+<tab_contents class="people_tags_tab">
+{% for tsm in person.tagsets %}
+	{{tsm.name}}
+	{% render_tags_as_checklist person tsm.name %}
+{% endfor %}
+</tab_contents>

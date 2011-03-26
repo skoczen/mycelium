@@ -4,7 +4,7 @@ from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from django.db.models.signals import post_save
 import datetime
 from taggit.managers import TaggableManager
-from taggit.models import TaggedItemBase
+from taggit.models import TaggedItem, Tag
 
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
@@ -19,6 +19,22 @@ class TagSet(TimestampModelMixin):
     class Meta(object):
         ordering = ("name",)
 
+    @property
+    def all_tags(self):
+        """Returns all tags possible in this set"""
+        # Should be cached, most likely.
+
+        # Needs to be a queryset, for the other options to like it.
+        from django.contrib.contenttypes.models import ContentType
+        tsm_ct = ContentType.objects.get_for_model(TagSetMembership)
+        tsms = self.tagsetmembership_set.all()
+        
+        all_tags = TaggedItem.objects.filter(content_type=tsm_ct, object_id__in=tsms).distinct()
+
+        return all_tags
+
+        # Needs clear definition on what it's returning. Do this tomorrow.
+        raise Exception, "Not Implemented yet"
 
     # @property
     # def groups(self):
@@ -51,6 +67,17 @@ class TagSetMembership(TimestampModelMixin):
     person = models.ForeignKey('people.Person', blank=True, null=True)
 
     tags = TaggableManager()
+
+    @property
+    def all_tags_with_my_tags_marked(self):
+        my_tags = self.tags.all()
+        all_tags = self.tagset.all_tags
+        combined_tags = []
+        for at in all_tags:
+            has_tag = at in my_tags
+            combined_tags.append({'has_tag':has_tag,'tag':at})
+
+        return combined_tags
 
     def __unicode__(self):
         return "%s in %s" % (self.tagset, self.person)

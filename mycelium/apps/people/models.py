@@ -9,6 +9,7 @@ add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING = _("No Name")
+from generic_tags.models import TagSet
 
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
@@ -118,7 +119,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
 
     @property
     def tagsets(self):
-        return self.tagset_set.all()
+        return TagSet.objects.all()
   
 
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):

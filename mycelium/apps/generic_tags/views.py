@@ -3,135 +3,103 @@ from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
+from generic_tags.models import TagSet, TagSetMembership
+
+def _render_people_tag_tab(context):
+    return render_to_string("generic_tags/_people_tag_tab.html", RequestContext(context["request"],context))
+
 
 
 class TagViews(object):
     TargetModel = None
-    namespace_name = None
-    default_redirect_url = None
-    default_redirect_args = None
-    app_name = None
+    tag_set_name = None
+    app_name = "generic_tags"
     new_tag_placeholder = "New tag"
-    mode = "tags" # or "checklist"
+    mode = "checklist" # or "tags"
+    target = None
+    reverse_string = "people:person"
 
-    def _TargetModel(self):
-        if self.TargetModel:
-            return self.TargetModel
-        else:
-            raise Exception, "_get_model_tag_field not defined!"
-        # return Model
+    def __init__(self, target=None, tag_set_name=None, *args, **kwargs):
+        if target and tag_set_name:
+            self.target = target
+            self.tag_set_name = tag_set_name
+            self.tag_set = TagSet.objects.get(name__iexact=self.tag_set_name)
+            self.tag_set_membership = TagSetMembership.objects.get_or_create(person=self.target,tagset=self.tag_set)[0]
 
+    @property
+    def _namespace_info(self):
+        return {
+            "tag_set_name": self.tag_set_name,
+            "app_name": self.app_name,
+            "mode": self.mode,
+            "new_tag_placeholder":self.new_tag_placeholder,
+        }
 
-    def _app_name(self):
-        if self.app_name:
-            return self.app_name
-        else:
-            raise Exception, "_app_name not defined!"    
+    @property
+    def _tag_urls(self):
+        add_tag_url = reverse("generic_tags:add_tag", args=(self.tag_set_name, self.target.pk))
+        delete_tag_url = reverse("generic_tags:remove_tag", args=(self.tag_set_name, self.target.pk))
+        search_results_url = reverse("generic_tags:new_tag_search_results", args=(self.tag_set_name, self.target.pk))
+        return {
+            'add_tag_url':add_tag_url,
+            'delete_tag_url':delete_tag_url,
+            'search_results_url':search_results_url,
+        }
 
-    def _namespace_name(self):
-        if self.namespace_name:
-            return self.namespace_name
-        else:
-            raise Exception, "_namespace_name not defined!"
-
-    def _tag_field(self):
-        if hasattr(self,"tag_field"):
-            return self.tag_field
-        else:
-            return "tags"
-
-    def _tags_for_obj(self,obj):
-        return getattr(obj,self._tag_field()).all()
-    
-    def _tags_for_category_and_obj(self, cls, obj):
-        all_tags = self._tags_for_obj(cls).all().order_by("name")
-        my_tags = self._tags_for_obj(obj).all().order_by("name")
-
-        combined_list = []
-        for t in all_tags.all():
-            d = {'tag':t}
-            if t in my_tags:
-                d["have_tag"] = True
-            combined_list.append(d)
-        return combined_list
-
+    @property
     def _default_redirect_url(self):
-        if self.default_redirect_url:
-            return self.default_redirect_url
-        else:
-            raise Exception, "_default_redirect_url not defined!"
+        return self.reverse_string
 
-    def _default_redirect_args(self, context):
-        if self.default_redirect_args:
-            return self.default_redirect_args
-        else:
-            raise Exception, "_default_redirect_url not defined!"
+    @property
+    def _default_redirect_args(self):
+        return (self.target.pk,)
 
-    def all_tags(self):
-        return self._tags_for_obj(self._TargetModel()).all()
+    @property
+    def _tags_for_target(self):
+        return self.tag_set_membership.tags
+   
+    @property
+    def _all_tags_for_tagset(self):
+        return self.tag_set.all_tags
 
+    @property
+    def _target_tag_related_info(self):
+        my_tags = self._tags_for_target.all()
+        all_of_my_type = self._all_tags_for_tagset
 
-    @classmethod
-    def _cls_tag_urls(cls, app_name, namespace_name, obj):
-        add_tag_url = reverse("%s:%sadd_tag" % (app_name, namespace_name))
-        delete_tag_url = reverse("%s:%sremove_tag" % (app_name, namespace_name), args=(obj.pk,))
-        search_results_url = reverse("%s:%snew_tag_search_results" % (app_name, namespace_name))
-        return {
-            'add_tag_url':add_tag_url,
-            'delete_tag_url':delete_tag_url,
-            'search_results_url':search_results_url,
-        }
-
-    def _tag_urls(self, obj):
-        add_tag_url = reverse("%s:%sadd_tag" % (self.app_name, self.namespace_name))
-        delete_tag_url = reverse("%s:%sremove_tag" % (self.app_name, self.namespace_name), args=(obj.pk,))
-        search_results_url = reverse("%s:%snew_tag_search_results" % (self.app_name, self.namespace_name))
-        return {
-            'add_tag_url':add_tag_url,
-            'delete_tag_url':delete_tag_url,
-            'search_results_url':search_results_url,
-        }
-
-    def checklist_tag_related_info(self,obj,tag_field=None):
-        return {
-            'all_of_my_type_with_obj_tags': self._tags_for_category_and_obj(self._TargetModel(), obj)
-        }
-
-    
-    def obj_tag_related_info(self, obj, tag_field=None):
-        if tag_field:
-            self.tag_field = tag_field
-        
-        my_tags = self._tags_for_obj(obj)
-        all_of_my_type = self._tags_for_obj(self._TargetModel())
-
-        return {'obj_tags':{
+        return {'target_tags':{
                 "all_tags_of_my_type": all_of_my_type,
                 "all_tags_of_my_type_alphabetical_by_name": all_of_my_type.order_by("name"),
                 "my_tags": my_tags,
                 "my_tags_alphabetical_by_name": my_tags.order_by("name"),
         }}
 
-    def namespace_info(self):
-        return {
-            "namespace_name": self.namespace_name,
-            "app_name": self.app_name,
-            "mode": self.mode,
-            'new_tag_placeholder':self.new_tag_placeholder,
-        }
+    @property
+    def tag_render_context(self):
+        d = {}
+        d.update(self._tag_urls)
+        d.update(self._namespace_info)
+        d.update(self._target_tag_related_info)
+        if self.mode == "checklist":
+            d["target_tags"].update(self.tag_set_membership.all_tags_with_my_tags_marked)
+
+        return d
+
+
+
 
     def _update_with_tag_fragments(self, context):
-        context.update(self._tag_urls(context["obj"]))
         fragment_html = ""
-        context.update(self.obj_tag_related_info(context["obj"]))
+        context.update(self._tag_urls)
+        context.update(self._target_tag_related_info)
 
         if self.mode == "tags":
-            fragment_html = {"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_list.html", RequestContext(context["request"],context)),}
+            fragment_html = {"%s_tags" % self.tag_set_name: render_to_string("generic_tags/_tag_list.html", RequestContext(context["request"],context)),}
         elif self.mode == "checklist":
-            context["obj_tags"].update(self.checklist_tag_related_info(context["obj"]))
+            context["target_tags"].update(self.checklist_tag_related_info(context["target"]))
 
             # This line gets the model of the class, then pulls the tag attribute off of it, and finally gets all tags.
-            fragment_html = {"%s_tags" % self._namespace_name(): render_to_string("generic_tags/_tag_checklist.html", RequestContext(context["request"],context)),}
+            fragment_html = {"%s_tags" % self.tag_set_name: render_to_string("generic_tags/_tag_checklist.html", RequestContext(context["request"],context)),}
         c = {
             "fragments":fragment_html,
             "success": context["success"],
@@ -141,17 +109,16 @@ class TagViews(object):
 
     def _return_fragments_or_redirect(self, request, context):
         if request.is_ajax():
-            return HttpResponse(simplejson.dumps(self._update_with_tag_fragments(context)))
+            return HttpResponse(simplejson.dumps(self._update_with_tag_fragments))
         else:
-            return HttpResponseRedirect(reverse(self._default_redirect_url(),args=self._default_redirect_args(context)))
+            return HttpResponseRedirect(reverse(self._default_redirect_url,args=self._default_redirect_args))
+
 
     def add_tag(self,request):
         success = False
-        pk = int(request.REQUEST['target_pk'])
         new_tag = request.REQUEST['new_tag'].strip().lower()
         if new_tag != "":
-            obj = self._TargetModel().objects.get(pk=pk)
-            self._tags_for_obj(obj).add(new_tag)
+            self._tags_for_target.add(new_tag)
             success = True
 
         return self._return_fragments_or_redirect(request,locals())
@@ -161,8 +128,7 @@ class TagViews(object):
         if request.method == "GET":
             tag = request.GET['tag'].strip().lower()
             if tag != "":
-                obj = self._TargetModel().objects.get(pk=target_id)
-                self._tags_for_obj(obj).remove(tag)
+                self._tags_for_target.remove(tag)
                 success = True
         return self._return_fragments_or_redirect(request,locals())
 
@@ -172,5 +138,7 @@ class TagViews(object):
         if 'q' in request.GET:
             q = request.GET['q']
             if q != "":
-                all_tags = self._tags_for_obj(self._TargetModel()).filter(name__icontains=q).order_by("name")[:5]
-        return HttpResponse(simplejson.dumps({"fragments":{"new_%s_tag_search_results" % self._namespace_name():render_to_string("generic_tags/_new_tag_search_results.html", locals())}}))
+                all_tags = self._all_tags_for_tagset.filter(name__icontains=q).order_by("name")[:5]
+        return HttpResponse(simplejson.dumps({"fragments":{"new_%s_tag_search_results" % self._tag_set_name:render_to_string("generic_tags/_new_tag_search_results.html", locals())}}))
+
+tag_views = TagViews()
