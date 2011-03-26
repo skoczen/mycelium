@@ -29,7 +29,7 @@ class TagSet(TimestampModelMixin):
         tsm_ct = ContentType.objects.get_for_model(TagSetMembership)
         tsms = self.tagsetmembership_set.all()
         
-        all_tags = Tag.objects.filter(pk__in=TaggedItem.objects.filter(content_type=tsm_ct, object_id__in=tsms).values("tag").distinct())
+        all_tags = Tag.objects.filter(pk__in=TaggedItem.objects.filter(content_type=tsm_ct, object_id__in=tsms).values("tag").distinct()).order_by("name")
 
         return all_tags
 
