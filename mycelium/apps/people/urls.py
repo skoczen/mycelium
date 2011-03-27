@@ -26,6 +26,3 @@ urlpatterns = parser.patterns('',
     
     url(r'person/{person_id:digits}/tab-contents$',                         views.tab_contents,                                   name='tab_contents'),
 )
-from generic_tags.urls import tag_urls
-urlpatterns += tag_urls(views.person_tag_views, "person/")
-urlpatterns += tag_urls(views.org_tag_views, "organization/")

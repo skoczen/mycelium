@@ -1,0 +1,23 @@
+tab_contents.people_groups_tab .groups_list tags fragment {
+	display: block;
+}
+tab_contents.people_groups_tab  .groups_list .detail_header {
+	width: 96%;
+}
+
+tab_contents.people_groups_tab tag.new_checkbox_tag {
+	padding-top: 5px;
+}
+tab_contents.people_groups_tab .smart_groups .explanation{
+	color: #AAA;
+	padding: 10px;
+}
+tab_contents.people_groups_tab tag.checkbox {
+	color: #777;
+}
+tab_contents.people_groups_tab tag.checkbox.checked {
+	color: #000;
+/*	background-color: #000486;
+	color: #FFF;
+*/
+}

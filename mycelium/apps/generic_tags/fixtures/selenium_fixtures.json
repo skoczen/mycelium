@@ -1,0 +1,29 @@
+[
+    {
+        "pk": 22, 
+        "model": "generic_tags.tagset", 
+        "fields": {
+            "created_at": null, 
+            "modified_at": null, 
+            "name": "General"
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "generic_tags.tagset", 
+        "fields": {
+            "created_at": null, 
+            "modified_at": null, 
+            "name": "Volunteer"
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "generic_tags.tagset", 
+        "fields": {
+            "created_at": null, 
+            "modified_at": null, 
+            "name": "Donor"
+        }
+    }
+]

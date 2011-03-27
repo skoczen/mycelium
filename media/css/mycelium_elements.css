@@ -160,8 +160,24 @@ breadcrumb:hover {
 }
 new_object_buttons {
 	display: block;
-	padding: 10px;
+	padding: 10px 10px 10px 15px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+/*	background-color: #e1f4fe;
+	width: 96%;
+	margin: 0px auto;
+*/
 }
+new_object_buttons .new_label {
+	display: block;
+	float: left;
+	position: relative;
+	margin: -3px 10px 0px 0px;
+	font-size: 24px;
+
+}
+
 #page {
 	display: block;
 	margin: 80px auto;
@@ -274,6 +290,12 @@ new_object_buttons {
 	padding: 2px 5px 2px 19px;
 	background-position: 4px 3px;
 	background-image: url("../images/icon-delete-grey-12.png");		
+}
+.mycelium_new_btn {
+/*	background-repeat: no-repeat;
+	padding: 2px 5px 2px 19px;
+	background-position: 4px 7px;
+	background-image: url("../images/icon-new-12.png");*/
 }
 
 table.record_table {
@@ -553,7 +575,7 @@ tag.checkbox, tag.new_checkbox_tag {
 	background: transparent;
 	color: #454545;
 	padding: 0px;
-	/*padding: 2px 0px 5px 15px;*/
+	
 	width: 100%;
 	margin: 2px 0px;
 }
@@ -561,6 +583,7 @@ tag.checkbox label {
 	float: none;
 	display: inline;
 }
+
 tag.checkbox .checkbox_input {
 	margin: 0px 4px 2px 0px;
 }
@@ -582,4 +605,9 @@ tags.checkboxes .new_checkbox_tag input.new_tag_name_input:focus {
 	outline-style:none;
 	border: 1px solid #3E9CFD;
 	border-width: 0px 0px 1px 0px;	
+}
+
+column {
+	display: block;
+	float: left;
 }

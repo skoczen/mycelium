@@ -829,101 +829,6 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
         self.assertEqual("John Smith", sel.get_text("css=search_results .result_row:nth(1) .name a"))
         self.assertEqual("Test Organization", sel.get_text("css=search_results .result_row:nth(2) .name a"))
 
-    def test_people_can_have_tags_added_and_removed_and_the_results_stick(self):
-        sel = self.selenium
-        self.create_john_smith()
-        time.sleep(5)        
-        self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
-        self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
-        sel.click("link=Done")
-        time.sleep(1)        
-        
-        sel.click("css=tag.new_tag input[name=new_tag]")
-        sel.type("css=tag.new_tag input[name=new_tag]","Volunteer")
-        sel.click("css=tag.new_tag .tag_add_btn")
-        time.sleep(2)
-        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(0) name"))
-
-        sel.click("css=tag.new_tag input[name=new_tag]")
-        sel.type("css=tag.new_tag input[name=new_tag]","Major Donor")
-        sel.click("css=tag.new_tag .tag_add_btn")
-        time.sleep(2)
-        # Alphabetical order checked
-        self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
-        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(1) name"))
-
-        sel.click("css=tag.new_tag input[name=new_tag]")
-        sel.type("css=tag.new_tag input[name=new_tag]","mistake tag")
-        sel.click("css=tag.new_tag .tag_add_btn")
-        time.sleep(2)
-        self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
-        self.assertEqual("mistake tag",sel.get_text("css=tags tag:nth(1) name"))
-        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(2) name"))
-
-        sel.click("css=tags tag:nth(1) .remove_tag_link")
-        time.sleep(2)
-        self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
-        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(1) name"))
-
-        sel.refresh()
-        sel.wait_for_page_to_load("30000")
-        self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
-        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(1) name"))
-
-    def test_people_can_see_and_select_previous_tags_via_autocomplete(self):
-        sel = self.selenium
-        sel.open("/people/search")
-        self.create_john_smith()
-        time.sleep(5)        
-        self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
-        self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
-        sel.click("link=Done")
-        time.sleep(1)        
-
-        sel.click("css=tag.new_tag input[name=new_tag]")
-        sel.type("css=tag.new_tag input[name=new_tag]","Volunteer")
-        sel.click("css=tag.new_tag .tag_add_btn")
-        time.sleep(2)
-        self.assertEqual("volunteer",sel.get_text("css=tags tag:nth(0) name"))
-        sel.click("css=tag.new_tag input[name=new_tag]")
-        sel.type("css=tag.new_tag input[name=new_tag]","Major Donor")
-        sel.click("css=tag.new_tag .tag_add_btn")
-        time.sleep(2)
-        sel.click("css=tag.new_tag input[name=new_tag]")
-        sel.type("css=tag.new_tag input[name=new_tag]","mistake tag")
-        sel.click("css=tag.new_tag .tag_add_btn")
-        time.sleep(2)
-
-        sel.click("link=People")
-        sel.wait_for_page_to_load("30000")
-        sel.click("link=New Person")
-        sel.wait_for_page_to_load("30000")
-        sel.type("id_first_name", "Joe")
-        sel.type("id_last_name", "Williams")
-        sel.click("css=tag.new_tag input[name=new_tag]")
-        sel.type("css=tag.new_tag input[name=new_tag]","M")
-        time.sleep(1)
-        assert sel.is_element_present("css=.new_tag_list .tag_suggestion_link")
-        self.assertEqual("major donor",sel.get_text("css=.new_tag_list .tag_suggestion_link:nth(0)"))
-        self.assertEqual("mistake tag",sel.get_text("css=.new_tag_list .tag_suggestion_link:nth(1)"))
-        sel.click("css=tag.new_tag input[name=new_tag]")
-        sel.type("css=tag.new_tag input[name=new_tag]","")
-        time.sleep(1)
-        assert not sel.is_element_present("css=.new_tag_list .tag_suggestion_link")
-
-        sel.click("css=tag.new_tag input[name=new_tag]")
-        sel.type("css=tag.new_tag input[name=new_tag]","Ma")
-        time.sleep(1)
-        assert sel.is_element_present("css=.new_tag_list .tag_suggestion_link")
-        self.assertEqual("major donor",sel.get_text("css=.new_tag_list .tag_suggestion_link:nth(0)"))
-        sel.click("css=.new_tag_list .tag_suggestion_link:nth(0)")
-        time.sleep(1)
-        self.assertEqual(sel.get_value("css=tag.new_tag input[name=new_tag]"), "major donor")
-        sel.click("css=tag.new_tag .tag_add_btn")
-        time.sleep(1)
-
-        self.assertEqual("major donor",sel.get_text("css=tags tag:nth(0) name"))
-
     def test_that_the_last_selected_tab_stays_open_after_refresh_in_people(self):
         sel = self.selenium
         self.create_john_smith()
@@ -932,9 +837,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
         sel.click("css=.detail_tab[href=#volunteer]")
         time.sleep(2)
         assert sel.is_text_present("Volunteer Shifts")
-        sel.get_eval("window.location.href")
-        sel.get_eval("window.location.href=window.location.href;")
-        time.sleep(4)
+        self.js_refresh()
         assert sel.is_text_present("Volunteer Shifts")
 
 

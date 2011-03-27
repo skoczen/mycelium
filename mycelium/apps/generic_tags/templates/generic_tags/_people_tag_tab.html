@@ -1,0 +1,14 @@
+{% load i18n generic_fields friendly_data_formatting humanize generic_tag_tags %}
+<tab_contents class="people_tags_tab">
+
+{% for tsm in person.tagsets %}
+<column>
+	<div class="detail_header">{{tsm.name}}</div>	
+	<div class="tags_list">
+	{% render_tags_as_checklist person tsm.name %}
+	</div>
+</column>
+{% if forloop.counter|divisibleby:3 and not forloop.last %}<clear class="clearfix"></clear>{% endif %}
+{% endfor %}
+
+</tab_contents>

@@ -11,12 +11,10 @@ from django.views.decorators.cache import cache_page
 
 from donors.forms import NewDonationForm
 from donors.models import Donor, Donation
-from generic_tags.views import TagViews
 
 def _render_people_donor_tab(context):
     donation_form = NewDonationForm()
-    tag_view_obj = tag_views
-    context.update({"donation_form":donation_form,"donor":context["person"].donor,"tag_view_obj":tag_view_obj})
+    context.update({"donation_form":donation_form,"donor":context["person"].donor})
     return render_to_string("donors/_people_donor_tab.html", RequestContext(context["request"],context))
 
 def _return_fragments_or_redirect(request,context):
@@ -47,14 +45,3 @@ def delete_donation_from_people_tab(request, donation_id):
     obj = donor
 
     return _return_fragments_or_redirect(request,locals())
-
-
-class DonorTagViews(TagViews):
-    TargetModel = Donor
-    namespace_name = "donor"
-    default_redirect_url = "people:person"
-    app_name = "donors"
-    def _default_redirect_args(self, context):
-        return (context["obj"].person.pk,)
-
-tag_views = DonorTagViews()

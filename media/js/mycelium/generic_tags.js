@@ -8,7 +8,7 @@
                "autogrow_options": {comfortZone: 20, resizeNow:true},
                "form_selector": ".new_tag_form",
                "default_fade_timeout": 500,
-               "mode": "tag"   // "tag" or  "checkbox"
+               "mode": "checkbox"   // "tag" or  "checkbox"
            };
                  
            var options =  $.extend(defaults, options);
@@ -102,12 +102,12 @@
                                });
                             }
                         });
+                        data.target.trigger("genericTags.bind_checkbox_inputs_if_needed");
                     }
                 }
                 $(data.options.form_selector, data.target).ajaxForm({
                     success: function(json){
                         $.Mycelium.fragments.process_fragments_from_json(json);
-                        console.log(data.new_input_field)
                         data.new_input_field.val("");
                         data.set_tag_results_fadeout($(".new_tag_list", data.target),0);
                         data.bind_checkbox_inputs_if_needed();

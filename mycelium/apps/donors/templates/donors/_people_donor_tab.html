@@ -1,8 +1,5 @@
 {% load i18n generic_fields friendly_data_formatting humanize generic_tag_tags %}
 <tab_contents class="people_donor_tab">
-<table class="two_column_70_30">
-<tr>
-<td class="column_1">
 	<div class="detail_header">Donations</div>
 	<tabbed_box class="with_button closed" name="add_a_donation">
 		<tab_title_container>	
@@ -65,15 +62,4 @@
 			<div class="no_records_message">No donations yet!</div>
 		{% endfor %}
 	</table>
-</td>
-<td class="column_2">
-<div class="tags_and_other_info">
-	<div class="detail_header">Donor Categories</div>
-	<div class="section_details">
-	{% render_tags_and_add_tag donor tag_view_obj %}
-	</div>
-</div>
-</td>
-</tr>
-</table>
 </tab_contents>
