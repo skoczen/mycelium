@@ -3,19 +3,66 @@
 {% block title %}Groups - {{group.name}}{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
-{# {% css "/css/people_volunteer.css" %} #}
 {% endblock %}
 {% block javascript %}{{block.super}}
-{# {% js "/js/mycelium/people_common.js" %} #}
 {% generic_tags_js %}
+{% js "/js/mycelium/people_common.js" %}
+{% js "/js/mycelium/groups.js" %}
+{% if request.GET.edit == "ON" or form.instance.name == "No Name"  %}
+<script type="text/javascript" charset="utf-8">
+$(function(){
+    $("#basic_info_form").genericFieldForm('toggle_edit');
+	$("#id_name").focus();
+});
+</script>
+
+{% endif %}
+
 {% endblock %}
 
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
 {% block page_content %}
-Group {{group.name}}
-<ul>
-{% for p in group.members %}
-	<li>{{p}}</li>
-{% endfor %}
-</ul>
+<form action="{% url groups:save_basic_info group.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
+{% with "Edit Group" as edit_label %}
+	{% include "people/_save_status_and_button.html" %}
+{% endwith %}
+
+<div class="basic_info">
+	{% generic_editable_field form.name %}
+</div>
+
+<div class="group_rules group_detail_column edit_mode_on">
+	<div class="detail_header">Rules</div>
+	<div class="group_rules_boolean_sentence">
+	All people who match <select><option>any</option><option>all</option></select> of the following rules:
+	</div>
+
+	{% include "groups/_rule.html" %}
+		
+	<div class="rule">
+		<select><option>has any tag that</option><option>has a general tag that</option><option>has a volunteer tag that</option><option>has a donor tag that</option><option>volunteer status</option><option selected>last volunteer shift</option><option>last donation</option></select>
+
+		<select><option>have a tag that</option><option>volunteer status</option><option selected>last volunteer shift</option><option>last donation</option></select>
+
+		<select><option>is</option><option>is before</option><option selected>is after</option></select>
+
+		<input type="text" class="datepicker" value="{% now "m/d/Y" %}" />
+	</div>
+	<div class="new_criterium">
+		<a href="#" class="mycelium_btn mycelium_grey mycelium_small_btn">Add new criteria</a>
+	</div>
+</div>
+<div class="group_members group_detail_column">
+	<div class="detail_header">Members</div>
+	<div class="member_meta"><span class="count">{{group.members.count}}</span> people in this group:</div>
+	<div class="member_list">
+	<table class="striped members_table">
+	{% for p in group.members %}
+		{{p.search_result_row|safe}}
+	{% endfor %}
+	</table>
+	</div>
+</div>
+</form>
+<div class="clearfix"></div>
 {% endblock %}
