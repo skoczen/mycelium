@@ -48,5 +48,4 @@ django-ses
 django-mediasync
 slimmer
 gitpython
-#Numeric==24.2
 django-debug-toolbar
