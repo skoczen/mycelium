@@ -11,7 +11,14 @@ class GroupTestAbstractions(object):
         self.switch_to_donor_tab()
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions):
-    pass
+
+    def test_that_the_test_group_page_loads(self):
+        sel = self.selenium
+        sel.open("/people")
+        sel.wait_for_page_to_load("30000")
+        sel.click("link=New Group")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("All people who match")
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions):

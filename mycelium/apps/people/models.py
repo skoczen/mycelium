@@ -121,6 +121,10 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     def tagsets(self):
         return TagSet.objects.all()
   
+    @property
+    def search_result_row(self):
+        # Ugh.
+        return self.peopleandorganizationssearchproxy_set.all()[0].search_result_row
 
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
