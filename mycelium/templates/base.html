@@ -44,6 +44,9 @@
 	{% endblock %}
 {% if ENV != "DEV" and not user.is_staff %}
 {% analytics %} 
+{# Start of HubSpot Tracking Code  #}
+<script type="text/javascript" language="javascript"> var hs_portalid=98343; var hs_salog_version = "2.00"; var hs_ppa = "agoodcloud.app9.hubspot.com"; document.write(unescape("%3Cscript src='" + document.location.protocol + "//" + hs_ppa + "/salog.js.aspx' type='text/javascript'%3E%3C/script%3E")); </script>
+{#  End of HubSpot Tracking Code  #}
 {# {% include "owa/_analytics.html" %} #}
 {% endif %} 
 </body>
