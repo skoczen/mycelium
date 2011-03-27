@@ -40,7 +40,7 @@ def save_basic_info(request, group_id):
 
 def new_group(request):
     # group = Group.objects.create()
-    group = Group.objects.get_or_create(pk=1,name="Example Group")[0]
+    group = Group.objects.get_or_create(name="Example Group")[0]
     return HttpResponseRedirect("%s?edit=ON" %reverse("groups:group",args=(group.pk,)))
     
 
