@@ -3,10 +3,13 @@ from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from taggit.managers import TaggableManager
 
+from south.modelsinspector import add_ignored_fields
+add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING = _("No Name")
+from generic_tags.models import TagSet
 
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
@@ -58,10 +61,6 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
     
     search_fields = ["searchable_full_name","searchable_primary_email", "searchable_primary_phone_number"]
     contact_type = "person"
-    
-    tags = TaggableManager()
-    def alphabetical_tags(self):
-        return self.tags.all().order_by("name")
     
     class Meta(object):
         verbose_name_plural = "People"
@@ -118,6 +117,10 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
                     return e.email
         return None
 
+    @property
+    def tagsets(self):
+        return TagSet.objects.all()
+  
 
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)

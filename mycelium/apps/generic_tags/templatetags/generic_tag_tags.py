@@ -8,23 +8,18 @@ from django.db.models import get_model
 
 
 
-def _render_tags_context(obj, tag_view_obj):
-    d = {
+def _render_tags_context(obj, tag_set_name):
+    tv = TagViews(target=obj,tag_set_name=tag_set_name)
+    d = tv.tag_render_context
+    d.update({
         'MEDIA_URL':settings.MEDIA_URL,
-        'obj':obj,
-        'tag_view_obj':tag_view_obj,
-    }
+    })
 
-    d.update(tag_view_obj._tag_urls(obj))
-    d.update(tag_view_obj.namespace_info())
-    d.update(tag_view_obj.obj_tag_related_info(obj))
-    if tag_view_obj.mode == "checklist":
-        d["obj_tags"].update(tag_view_obj.checklist_tag_related_info(obj))
     return d
 
-@register.inclusion_tag('generic_tags/_tags_and_add_tag.html')
-def render_tags_and_add_tag(obj, tag_view_obj):
-    return _render_tags_context(obj, tag_view_obj)
+# @register.inclusion_tag('generic_tags/_tags_and_add_tag.html')
+# def render_tags_and_add_tag(obj, tag_set_name):
+#     return _render_tags_context(obj, tag_set_name)
 
 @register.inclusion_tag('generic_tags/_js.html')
 def generic_tags_js():
@@ -32,5 +27,5 @@ def generic_tags_js():
     return locals()
 
 @register.inclusion_tag('generic_tags/_tags_as_checklist.html')
-def render_tags_as_checklist(obj, tag_view_obj, include_new=True):
-    return _render_tags_context(obj, tag_view_obj)
+def render_tags_as_checklist(obj, tag_set_name, include_new=True):
+    return _render_tags_context(obj, tag_set_name)

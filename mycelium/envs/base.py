@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'donors',
     'recent_activity',
     'generic_tags',
+    'groups',
 
 
     'djangosanetesting',
@@ -201,6 +202,9 @@ BROKER_VHOST = "digitalmycelium"
 CELERY_RESULT_BACKEND = "amqp"
 import djcelery
 djcelery.setup_loader()
+
+# for initial sync
+CELERY_RESULT_BACKEND = "database"
 
 # sorl
 THUMBNAIL_PREFIX = "_cache/"

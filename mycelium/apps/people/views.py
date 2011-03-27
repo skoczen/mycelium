@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
-from generic_tags.views import TagViews
 
 from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy, Employee
 from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
@@ -16,6 +15,7 @@ from volunteers.views import _render_people_volunteer_tab
 from conversations.views import _render_people_conversations_tab
 from donors.views import _render_people_donor_tab
 from recent_activity.views import _render_people_recent_activity_tab 
+from generic_tags.views import _render_people_tag_tab
 
 
 @render_to("people/search.html")
@@ -52,7 +52,6 @@ def _basic_forms(person, request):
 @render_to("people/person.html")
 def person(request, person_id):
     person = get_object_or_404(Person,pk=person_id)
-    tag_view_obj = person_tag_views
     (form, employee_formset) = _basic_forms(person, request)
     return locals()
 
@@ -121,7 +120,6 @@ def delete_organization(request):
 def organization(request, org_id):
     org = get_object_or_404(Organization,pk=org_id)
     (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
-    tag_view_obj = org_tag_views
     if form.is_valid():
         form.save()
 
@@ -207,28 +205,6 @@ def add_person_via_organization_search_results(request):
     return {"fragments":{"new_person_search_results":render_to_string("people/_add_person_to_org_results.html", locals())}}
 
 
-
-class PersonTagViews(TagViews):
-    TargetModel = Person
-    namespace_name = "person"
-    default_redirect_url = "people:person"
-    app_name = "people"
-    def _default_redirect_args(self, context):
-        return (context["obj"].pk,)
-
-person_tag_views = PersonTagViews()
-
-class OrganizationTagViews(TagViews):
-    TargetModel = Organization
-    namespace_name = "organization"
-    default_redirect_url = "people:organization"
-    app_name = "people"
-    def _default_redirect_args(self, context):
-        return (context["obj"].pk,)
-
-org_tag_views = OrganizationTagViews()
-
-
 @json_view
 def tab_contents(request, person_id):
     success = False
@@ -240,6 +216,8 @@ def tab_contents(request, person_id):
             html = _render_people_conversations_tab(locals())
         elif tab_name == "recent_activity":
             html = _render_people_recent_activity_tab(locals())
+        elif tab_name == "tags":
+            html = _render_people_tag_tab(locals())    
         elif tab_name == "volunteer":
             html = _render_people_volunteer_tab(locals())
         elif tab_name == "donor":

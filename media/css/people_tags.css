@@ -1,0 +1,21 @@
+tab_contents.people_tags_tab .tags_list tags fragment {
+	display: block;
+}
+tab_contents.people_tags_tab tag.new_checkbox_tag {
+	padding-top: 5px;
+}
+tab_contents.people_tags_tab tag.checkbox {
+	color: #777;
+}
+tab_contents.people_tags_tab tag.checkbox.checked {
+	color: #000;
+/*	background-color: #000486;
+	color: #FFF;
+*/
+}
+tab_contents.people_tags_tab column {
+	width: 33%;
+}
+tab_contents.people_tags_tab column .detail_header {
+	width: 92%;
+}

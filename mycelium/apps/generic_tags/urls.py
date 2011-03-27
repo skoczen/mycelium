@@ -1,13 +1,13 @@
 from django.conf.urls.defaults import *
-from django.conf import settings
 
 import dselector
 parser = dselector.Parser()
 url = parser.url
 
-def tag_urls(view_class, prefix=""):
-	return parser.patterns('',                      
-    url(r'%sadd-tag$' % prefix,                                      		view_class.add_tag,                                  name='%sadd_tag' % view_class.namespace_name),
-    url(r'%s{target_id:digits}/remove-tag$' % prefix,                		view_class.remove_tag,                               name='%sremove_tag' % view_class.namespace_name),
-    url(r'%snew-tag-results$' % prefix,                              		view_class.new_tag_search_results,                   name='%snew_tag_search_results' % view_class.namespace_name),
-	)
+import views
+
+urlpatterns = parser.patterns('',                      
+    url(r'{tag_set_name:word}/{target_id:digits}/add$',                     views.tag_views.add_tag,                             name='add_tag'),
+    url(r'{tag_set_name:word}/{target_id:digits}/remove$',                  views.tag_views.remove_tag,                          name='remove_tag'),    
+    url(r'{tag_set_name:word}/{target_id:digits}/search-results$',          views.tag_views.new_tag_search_results,              name='new_tag_search_results'),    
+)
