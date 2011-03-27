@@ -13,6 +13,7 @@ class GroupTestAbstractions(object):
 class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions):
     pass
 
+
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions):
 
     def setUp(self, *args, **kwargs):
