@@ -43,9 +43,12 @@ class Migration(DataMigration):
         ]
 
         for ren_tup in rename_tags:
-            tag = orm["taggit.tag"].objects.get(name=ren_tup[0])
-            tag.name=ren_tup[1]
-            tag.save()
+            try:
+                tag = orm["taggit.tag"].objects.get(name=ren_tup[0])
+                tag.name=ren_tup[1]
+                tag.save()
+            except:
+                pass
         
 
     def backwards(self, orm):
