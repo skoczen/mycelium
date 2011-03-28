@@ -15,7 +15,7 @@ class Migration(DataMigration):
 
         volunteer_tags = ["friday morning volunteer", "monday volunteer", "tuesday volunteer", "wednesday volunteer"]
         donor_tags = ["potential donor",]
-        delete_tags = ["volunteer", "donor", "testing", "developer", "cook", "editing"]
+        delete_tags = ["volunteer", "donor", "testing", "developer", "cook", "editing", "awesome", "photographer"]
 
         for ti in orm["taggit.taggeditem"].objects.filter(content_type=tsm_ct):
             my_tsm = orm.TagSetMembership.objects.get(pk=ti.object_id)
