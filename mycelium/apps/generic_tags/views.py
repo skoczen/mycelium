@@ -4,9 +4,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from generic_tags.models import TagSet, TagSetMembership
+from generic_tags.forms import TagSetForm
 from people.models import Person
 
 def _render_people_tag_tab(context):
+    context.update({'new_tagset_form':TagSetForm(),})
     return render_to_string("generic_tags/_people_tag_tab.html", RequestContext(context["request"],context))
 
 
@@ -21,11 +23,12 @@ class TagViews(object):
     reverse_string = "people:person"
 
     def __init__(self, target=None, tag_set_name=None, *args, **kwargs):
-        if target and tag_set_name:
+        if target:
             self.target = target
-            self.tag_set_name = tag_set_name
-            self.tag_set = TagSet.objects.get(name__iexact=self.tag_set_name)
-            self.tag_set_membership = TagSetMembership.objects.get_or_create(person=self.target,tagset=self.tag_set)[0]
+            if tag_set_name:
+                self.tag_set_name = tag_set_name
+                self.tag_set = TagSet.objects.get(slug__iexact=self.tag_set_name)
+                self.tag_set_membership = TagSetMembership.objects.get_or_create(person=self.target,tagset=self.tag_set)[0]
 
     @property
     def _namespace_info(self):
@@ -80,7 +83,10 @@ class TagViews(object):
         d = {}
         d.update(self._tag_urls)
         d.update(self._namespace_info)
-        d.update({'target':self.target})
+        d.update({
+            'target':self.target,
+            'new_tagset_form':TagSetForm(),
+        })
         # d.update(self._target_tag_related_info)
         if self.mode == "checklist":
             d.update({"target_tags":self.tag_set_membership.all_tags_with_my_tags_marked})
@@ -111,7 +117,7 @@ class TagViews(object):
         if request.is_ajax():
             return HttpResponse(simplejson.dumps(self._update_with_tag_fragments(context)))
         else:
-            return HttpResponseRedirect(reverse(self._default_redirect_url,args=self._default_redirect_args))
+            return HttpResponseRedirect("%s#current_detail_tab=%%23tags" % reverse(self._default_redirect_url,args=self._default_redirect_args))
 
 
     def add_tag(self,request, tag_set_name, target_id):
@@ -144,4 +150,16 @@ class TagViews(object):
                 all_tags = self._all_tags_for_tagset.filter(name__icontains=q).order_by("name")[:5]
         return HttpResponse(simplejson.dumps({"fragments":{"new_%s_tag_search_results" % self._tag_set_name:render_to_string("generic_tags/_new_tag_search_results.html", locals())}}))
 
+    def new_tagset(self, request, target_id):
+        success=False
+        self.__init__(target=self.TargetModel.objects.get(pk=int(target_id)))
+        form = TagSetForm(request.POST)
+        if form.is_valid():
+            if TagSet.objects.filter(name__iexact=form.cleaned_data["name"]).count() == 0:
+                new_tagset = form.save()
+            success = True
+        return self._return_fragments_or_redirect(request,locals())
+
 tag_views = TagViews()
+
+

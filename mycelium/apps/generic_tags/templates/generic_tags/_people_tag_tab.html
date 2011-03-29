@@ -5,10 +5,34 @@
 <column>
 	<div class="detail_header">{{tsm.name}}</div>	
 	<div class="tags_list">
-	{% render_tags_as_checklist person tsm.name %}
+	{% render_tags_as_checklist person tsm.slug %}
 	</div>
 </column>
-{% if forloop.counter|divisibleby:3 and not forloop.last %}<clear class="clearfix"></clear>{% endif %}
+{% if forloop.counter|divisibleby:4 or forloop.last%}<div class="clearfix"></div>{% endif %}
 {% endfor %}
+<div class="actions">
+	<tabbed_box class="with_button closed" name="add_a_category">
+		<tab_title_container>	
+		<tab_title>
+			<text>Add a Category</text>
+		</tab_title>
+		</tab_title_container>
+		<box_content>
+		<form id="new_category" action="{% url generic_tags:new_tagset person.pk %}" method="POST">{% csrf_token %}
+		<span class="edit_mode_on">
+			{% generic_editable_field new_tagset_form.name %}
+		</span>
+		
+		<form_actions>
+			<input type="submit" class="mycelium_btn add_category_btn" value="Add Tag Category">
+		</form_actions>
+		<box_close>
+			<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
+		</box_close>
 
+		</form>
+		</box_content>
+		</tabbed_box>
+	</tabbed_box>
+</div>
 </tab_contents>
