@@ -1,63 +1,39 @@
 {% extends "reports/base.html" %}
 {% block title %}Reports - Unsaved Report{% endblock %}
 {% load humanize %}
-{% block breadcrumb_links %}<a href="{% url reports:search %}">Back to All Reports</a>{% endblock %}
+{% block breadcrumb_links %}<a href="{% url reports:search %}">Back to All Spreadsheets</a>{% endblock %}
 {% block page_content %}
 <div class="right_actions">
 	<a href="#" class="mycelium_btn mycelium_grey">Saved</a>
 </div>
-<div class="title"><img src="{% media_url "images/report-32.png" %}/>Active Email Subscriptions</div>
+<div class="title"><img src="{% media_url "images/icon-spreadsheet-32.png" %}"/>Active Email Subscriptions</div>
 
-<div class="setup_phrase">Find all of the people who:</div>
+<div class="setup_phrase">Include people who match <select><option selected>all</option><option>any</option></select> of the following rules:</div>
 <div class="criteria_list">
-	<div class="criterium">
-		<span class="additive"></span>
-		<span class="tense"></span>
-		<span class="negator"></span>
-		<span class="left_side">have</span>
-		<span class="operator">an</span>
-		<span class="right_side">
-			<span class="value">email address</span>
-			<span class="units"></span>
-		</span>
+	<div class="rule">
+		<select><option selected>has any tag that</option><option>has a general tag that</option><option>has a volunteer tag that</option><option>has a donor tag that</option><option>volunteer status</option><option>last volunteer shift</option><option >last donation</option></select>
+
+		<select><option selected>is</option><option>is before</option><option>is after</option></select>
+
+		<input type="text" class="" value="email subscriber" />
 	</div>
-	<div class="criterium">
-		<span class="additive"></span>
-		<span class="tense">are</span>
-		<span class="negator">not</span>
-		<span class="left_side">tagged</span>
-		<span class="operator">with</span>
-		<span class="right_side">
-			<span class="value">"do not email"</span>
-			<span class="units"></span>
-		</span>
-	</div>
-	<div class="criterium">
-		<span class="additive"></span>
-		<span class="tense">are</span>
-		<span class="negator">not</span>
-		<span class="left_side">tagged</span>
-		<span class="operator">with</span>
-		<span class="right_side">
-			<span class="value">"do not contact"</span>
-			<span class="units"></span>
-		</span>
-	</div>
+			
 	<div class="new_criterium">
 		<a href="#" class="mycelium_btn mycelium_grey mycelium_small_btn">Add new criteria</a>
 	</div>
 </div>
 
-<div class="setup_phrase">Make a report that includes these columns:</div>
+
+<div class="setup_phrase">Include these columns:</div>
 <div class="column_list">
 	<div class="column"><input type="checkbox" checked id="id_first_name"><label for="id_first_name">First Name</label></div>
 	<div class="column"><input type="checkbox" checked id="id_last_name"><label for="id_last_name">Last Name </label></div>
 	<div class="column"><input type="checkbox" checked id="id_email"><label for="id_email_name">Email</label></div>
 	<div class="column"><input type="checkbox" id="id_primary_address"><label for="id_primary_address">Main Address</label></div>
-	<div class="column"><input type="checkbox" id="id_phone"><label for="id_phone">Phone</label></div>
+	<div class="column"><input type="checkbox" checked id="id_phone"><label for="id_phone">Phone</label></div>
 	<div class="column"><input type="checkbox" id="id_last_volunteer"><label for="id_last_volunteer">Last Volunteer Shift</label></div>
 	<div class="column"><input type="checkbox" id="id_no_volunteer_hrs_month"><label for="id_no_volunteer_hrs_month">Number of volunteer hours this month</label></div>
-	<div class="column"><input type="checkbox" checked id="id_no_volunteer_hrs_year"><label for="id_no_volunteer_hrs_year">Number of volunteer hours this year</label></div>	
+	<div class="column"><input type="checkbox" id="id_no_volunteer_hrs_year"><label for="id_no_volunteer_hrs_year">Number of volunteer hours this year</label></div>	
 </div>
 
 <div class="sample_results">
@@ -93,9 +69,8 @@
 </table>
 </div>
 <div class="actions">
-	<a href="#" class="mycelium_btn">View Results</a>
-	<a href="#" class="mycelium_btn">Download CSV</a>
-
+	<a href="#" class="mycelium_btn">View All Results</a>
+	<a href="#" class="mycelium_btn">Download Spreadsheet</a>
 </div>
 
 {% endblock %}

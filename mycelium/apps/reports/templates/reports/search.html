@@ -6,10 +6,10 @@
 <div class="small_search">
 	<input id="id_page_top_search" name="page_top_search" />
 </div>
-<div class="title"><img src="{% media_url "images/report-32.png" %}" />Reports</div>
+<div class="title"><img src="{% media_url "images/icon-spreadsheet-32.png" %}" />Saved Spreadsheets</div>
 
 <div class="report_list">
-	<a href="{% url reports:new_report %}" class="mycelium_btn">New Report</a>
+	<a href="{% url reports:new_report %}" class="mycelium_btn">New Spreadsheet</a>
 	<table class="report_results">
 		{% for r in all_reports %}
 		<tr>
@@ -19,19 +19,19 @@
 			<td class="name"		><a href="{% url reports:report_detail 1 %}" >Thursday Volunteer List</a></td>
 			<td class="count"		>53 people</td>
 			<td class="view_results"><a href="#" class="mycelium_btn mycelium_small_btn">View Results</a></td>
-			<td class="download_csv"><a href="#" class="mycelium_btn mycelium_small_btn">Download CSV</a></td>
+			<td class="download_csv"><a href="#" class="mycelium_btn mycelium_small_btn">Download</a></td>
 		</tr>
 		<tr>
 			<td class="name"		><a href="{% url reports:report_detail 2 %}" >2010 Monthly Donors</a></td>
 			<td class="count"		class="name"		>162 people</td>
 			<td class="view_results"class="name"		><a href="#" class="mycelium_btn mycelium_small_btn">View Results</a></td>
-			<td class="download_csv"class="name"		><a href="#" class="mycelium_btn mycelium_small_btn">Download CSV</a></td>
+			<td class="download_csv"class="name"		><a href="#" class="mycelium_btn mycelium_small_btn">Download</a></td>
 		</tr>
 		<tr>
 			<td class="name"		><a href="{% url reports:report_detail 3 %}" >Active Email Subscriptions</a></td>
 			<td class="count"		class="name"		>1,354 people</td>
 			<td class="view_results"class="name"		><a href="#" class="mycelium_btn mycelium_small_btn">View Results</a></td>
-			<td class="download_csv"class="name"		><a href="#" class="mycelium_btn mycelium_small_btn">Download CSV</a></td>
+			<td class="download_csv"class="name"		><a href="#" class="mycelium_btn mycelium_small_btn">Download</a></td>
 		</tr>		
 	</table>
 </div>

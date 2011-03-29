@@ -1,55 +1,31 @@
 {% extends "reports/base.html" %}
 {% block title %}Reports - Unsaved Report{% endblock %}
 {% load humanize %}
-{% block breadcrumb_links %}<a href="{% url reports:search %}">Back to All Reports</a>{% endblock %}
+{% block breadcrumb_links %}<a href="{% url reports:search %}">Back to All Spreadsheets</a>{% endblock %}
 {% block page_content %}
 
 <div class="right_actions">
-	<a href="#" class="mycelium_btn">Save Report</a>
+	<a href="#" class="mycelium_btn">Save Spreadsheet</a>
 </div>
-<div class="title"><img src="{% media_url "images/report-32.png" %}/>Unsaved Report</div>
+<div class="title"><img src="{% media_url "images/icon-spreadsheet-32.png" %}"/>Unsaved Spreadsheet</div>
 
-<div class="setup_phrase">Find all of the people who:</div>
+<div class="setup_phrase">Include people who match <select><option selected>all</option><option>any</option></select> of the following rules:</div>
 <div class="criteria_list">
-	<div class="criterium">
-		<span class="additive"></span>
-		<span class="tense">have</span>
-		<span class="negator"></span>
-		<span class="left_side">donated</span>
-		<span class="operator">in the last</span>
-		<span class="right_side">
-			<span class="value">6</span>
-			<span class="units">months</span>
-		</span>
+	<div class="rule">
+		<select><option>has any tag that</option><option>has a general tag that</option><option>has a volunteer tag that</option><option>has a donor tag that</option><option>volunteer status</option><option>last volunteer shift</option><option >last donation</option></select>
+
+		<select><option>is</option><option>is before</option><option>is after</option></select>
+
+		<input type="text" class="datepicker" value="" />
 	</div>
-	<div class="criterium">
-		<span class="additive"></span>
-		<span class="tense">are</span>
-		<span class="negator"></span>
-		<span class="left_side"></span>
-		<span class="operator">more than</span>
-		<span class="right_side">
-			<span class="value">30</span>
-			<span class="units">years old</span>
-		</span>
-	</div>
-	<div class="criterium">
-		<span class="additive"></span>
-		<span class="tense">have</span>
-		<span class="negator"></span>
-		<span class="left_side">had a volunteer shift</span>
-		<span class="operator">in the last</span>
-		<span class="right_side">
-			<span class="value"></span>
-			<span class="units">year</span>
-		</span>
-	</div>
+			
+
 	<div class="new_criterium">
 		<a href="#" class="mycelium_btn mycelium_grey mycelium_small_btn">Add new criteria</a>
 	</div>
 </div>
 
-<div class="setup_phrase">Make a report that includes these columns:</div>
+<div class="setup_phrase">Include these columns:</div>
 <div class="column_list">
 	<div class="column"><input type="checkbox" checked id="id_first_name"><label for="id_first_name">First Name</label></div>
 	<div class="column"><input type="checkbox" checked id="id_last_name"><label for="id_last_name">Last Name </label></div>
@@ -94,8 +70,8 @@
 </table>
 </div>
 <div class="actions">
-	<a href="#" class="mycelium_btn">View Results</a>
-	<a href="#" class="mycelium_btn">Download CSV</a>
+	<a href="#" class="mycelium_btn">View All Results</a>
+	<a href="#" class="mycelium_btn">Download Spreadsheet</a>
 
 </div>
 
