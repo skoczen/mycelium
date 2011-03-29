@@ -8,13 +8,19 @@ from taggit.models import TaggedItem, Tag
 
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
-
+from django.template.defaultfilters import slugify
 
 class TagSet(TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True, unique=True)
+    slug = models.SlugField(max_length=255)
 
     def __unicode__(self):
         return "%s" % self.name
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(TagSet,self).save(*args, **kwargs)
 
     class Meta(object):
         ordering = ("id",)

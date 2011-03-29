@@ -611,3 +611,12 @@ column {
 	display: block;
 	float: left;
 }
+feedback_button {
+	background-image: url("../images/feedback-and-help.png");
+	width: 40px;
+	height: 196px;
+	position: fixed;
+	left: 0px;
+	top: 35%;
+	
+}
