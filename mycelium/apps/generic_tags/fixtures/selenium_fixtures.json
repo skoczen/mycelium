@@ -5,7 +5,8 @@
         "fields": {
             "created_at": null, 
             "modified_at": null, 
-            "name": "General"
+            "name": "General",
+            "slug": "general"
         }
     }, 
     {
@@ -14,7 +15,8 @@
         "fields": {
             "created_at": null, 
             "modified_at": null, 
-            "name": "Volunteer"
+            "name": "Volunteer",
+            "slug": "volunteer"
         }
     }, 
     {
@@ -23,7 +25,8 @@
         "fields": {
             "created_at": null, 
             "modified_at": null, 
-            "name": "Donor"
+            "name": "Donor",
+            "slug": "donor"
         }
     }
 ]
