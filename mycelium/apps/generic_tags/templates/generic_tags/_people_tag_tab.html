@@ -3,7 +3,13 @@
 
 {% for tsm in person.tagsets %}
 <column>
-	<div class="detail_header">{{tsm.name}}</div>	
+	<div class="detail_header">
+		<div class="header_actions">
+			<img src="{% media_url "images/icon-edit-16.png" %}"/>
+			<img src="{% media_url "images/icon-trash-16.png" %}"/>
+		</div>
+		{{tsm.name}}
+	</div>	
 	<div class="tags_list">
 	{% render_tags_as_checklist person tsm.slug %}
 	</div>
