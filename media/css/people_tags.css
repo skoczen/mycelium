@@ -51,3 +51,6 @@ tab_contents.people_tags_tab tag name {
 tab_contents.people_tags_tab .actions {
 	padding:  20px 0px;
 }
+tab_contents.people_tags_tab column .detail_header .header_actions {
+	float: right;
+}

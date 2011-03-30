@@ -599,7 +599,7 @@ tags.checkboxes .new_checkbox_tag input.new_tag_name_input {
 	margin: 0px 0px 0px 4px;
 	border-width: 0px 0px 1px 0px;
 	font-size: 18px;
-	min-width: 100px;
+	width: 90px;
 }
 tags.checkboxes .new_checkbox_tag input.new_tag_name_input:focus {
 	outline-style:none;
