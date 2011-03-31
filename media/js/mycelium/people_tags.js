@@ -8,6 +8,7 @@ function bind_tags_tab_events() {
 	$("tab_contents.people_tags_tab .delete_tagset_btn").click(delete_category);
 	$("tab_contents.people_tags_tab .edit_tagset_name_btn").click(toggle_name_edit);
     $("form.category_name").genericFieldForm();
+    
 }
 function cancel_add_category() {
     $("tabbed_box[name=add_a_category] tab_title").trigger("click");
