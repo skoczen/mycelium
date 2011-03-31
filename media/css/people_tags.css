@@ -19,6 +19,7 @@ tab_contents.people_tags_tab column {
 }
 tab_contents.people_tags_tab column .detail_header {
 	width: 96%;
+	position: relative;
 }
 tab_contents.people_tags_tab tags {
 	width: 90%;
@@ -54,7 +55,16 @@ tab_contents.people_tags_tab .actions {
 tab_contents.people_tags_tab column .detail_header .header_actions {
 	display: none;
 	float: right;
+	z-index: 20;
+	position: absolute;
+	right: 0px;
 }
 tab_contents.people_tags_tab column .detail_header:hover .header_actions {
 	display: block;
+}
+tab_contents.people_tags_tab column .detail_header:hover .header_actions a {
+	cursor: pointer;
+}
+tab_contents.people_tags_tab column .detail_header .category_name.edit_mode_on .edit_field input {
+	font-size: 24px;
 }

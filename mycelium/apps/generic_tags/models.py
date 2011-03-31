@@ -18,8 +18,7 @@ class TagSet(TimestampModelMixin):
         return "%s" % self.name
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.name)
+        self.slug = slugify(self.name)
         super(TagSet,self).save(*args, **kwargs)
 
     class Meta(object):
@@ -41,6 +40,11 @@ class TagSet(TimestampModelMixin):
 
         # Needs clear definition on what it's returning. Do this tomorrow.
         raise Exception, "Not Implemented yet"
+
+    @property
+    def form(self, *args, **kwargs):
+        from generic_tags.forms import TagSetForm
+        return TagSetForm(*args, instance=self, **kwargs)
 
     # @property
     # def groups(self):
