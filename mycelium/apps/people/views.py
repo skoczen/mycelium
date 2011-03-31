@@ -206,12 +206,13 @@ def add_person_via_organization_search_results(request):
 
 
 @json_view
-def tab_contents(request, person_id):
+def tab_contents(request, person_id, tab_name=None):
     success = False
     person = Person.objects.get(pk=person_id)
     html = None
-    if request.method == "POST" and 'tab_name' in request.POST:
+    if not tab_name and 'tab_name' in request.POST:
         tab_name = request.POST['tab_name'].strip()[1:]
+    if request.method == "POST" and 'tab_name' in request.POST:
         if tab_name == "conversations":
             html = _render_people_conversations_tab(locals())
         elif tab_name == "recent_activity":

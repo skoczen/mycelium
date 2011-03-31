@@ -5,8 +5,8 @@
 <column>
 	<div class="detail_header">
 		<div class="header_actions">
-			<img src="{% media_url "images/icon-edit-16.png" %}"/>
-			<img src="{% media_url "images/icon-trash-16.png" %}"/>
+			<a href="{% url generic_tags:rename_tagset person.pk tsm.pk %}" class="edit_tagset_name_btn"><img src="{% media_url "images/icon-edit-16.png" %}"/></a>
+			<a href="{% url generic_tags:delete_tagset person.pk tsm.pk %}" class="delete_tagset_btn"><img src="{% media_url "images/icon-trash-16.png" %}"/></a>
 		</div>
 		{{tsm.name}}
 	</div>	

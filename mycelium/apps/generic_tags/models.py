@@ -18,8 +18,7 @@ class TagSet(TimestampModelMixin):
         return "%s" % self.name
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.name)
+        self.slug = slugify(self.name)
         super(TagSet,self).save(*args, **kwargs)
 
     class Meta(object):

@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from generic_tags.models import TagSet, TagSetMembership
 from generic_tags.forms import TagSetForm
 from people.models import Person
+from qi_toolkit.helpers import *
 
 def _render_people_tag_tab(context):
     context.update({'new_tagset_form':TagSetForm(),})
@@ -163,3 +164,15 @@ class TagViews(object):
 tag_views = TagViews()
 
 
+def rename_tagset(request, person_id, tagset_id):
+    from people.views import tab_contents
+    ts = TagSet.objects.get(pk=int(tagset_id))
+    ts.name = request.GET['name']
+    ts.save()
+    return tab_contents(request,person_id, tab_name="#tags")
+
+def delete_tagset(request, person_id, tagset_id):
+    from people.views import tab_contents
+    ts = TagSet.objects.get(pk=int(tagset_id))
+    ts.delete()
+    return tab_contents(request,person_id, tab_name="#tags")
