@@ -212,7 +212,7 @@ def tab_contents(request, person_id, tab_name=None):
     html = None
     if not tab_name and 'tab_name' in request.POST:
         tab_name = request.POST['tab_name'].strip()[1:]
-    if request.method == "POST" and 'tab_name' in request.POST:
+    if request.method == "POST":
         if tab_name == "conversations":
             html = _render_people_conversations_tab(locals())
         elif tab_name == "recent_activity":

@@ -41,6 +41,11 @@ class TagSet(TimestampModelMixin):
         # Needs clear definition on what it's returning. Do this tomorrow.
         raise Exception, "Not Implemented yet"
 
+    @property
+    def form(self, *args, **kwargs):
+        from generic_tags.forms import TagSetForm
+        return TagSetForm(*args, instance=self, **kwargs)
+
     # @property
     # def groups(self):
     #     return Group.objects.filter(id__in=self.groupmembership_set.values("group_id")).all()

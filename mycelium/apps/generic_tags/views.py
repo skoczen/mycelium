@@ -151,28 +151,35 @@ class TagViews(object):
                 all_tags = self._all_tags_for_tagset.filter(name__icontains=q).order_by("name")[:5]
         return HttpResponse(simplejson.dumps({"fragments":{"new_%s_tag_search_results" % self._tag_set_name:render_to_string("generic_tags/_new_tag_search_results.html", locals())}}))
 
-    def new_tagset(self, request, target_id):
-        success=False
-        self.__init__(target=self.TargetModel.objects.get(pk=int(target_id)))
-        form = TagSetForm(request.POST)
-        if form.is_valid():
-            if TagSet.objects.filter(name__iexact=form.cleaned_data["name"]).count() == 0:
-                new_tagset = form.save()
-            success = True
-        return self._return_fragments_or_redirect(request,locals())
-
 tag_views = TagViews()
 
-
-def rename_tagset(request, person_id, tagset_id):
+def _tab_or_person_redirect(request,person_id):
     from people.views import tab_contents
+    if request.is_ajax():
+        return tab_contents(request, person_id, tab_name="tags")
+    else:
+        return HttpResponseRedirect(reverse("people:person", args=(person_id,)))
+
+def new_tagset(request, person_id):
+
+    form = TagSetForm(request.POST)
+    if form.is_valid():
+        if TagSet.objects.filter(name__iexact=form.cleaned_data["name"]).count() == 0:
+            form.save()
+    return _tab_or_person_redirect(request,person_id)
+
+@json_view
+def rename_tagset(request, person_id, tagset_id):
     ts = TagSet.objects.get(pk=int(tagset_id))
-    ts.name = request.GET['name']
-    ts.save()
-    return tab_contents(request,person_id, tab_name="#tags")
+    success = False
+
+    form = TagSetForm(request.POST, instance=ts)
+    if form.is_valid():
+        form.save()
+        success = True
+    return {"success": success}
 
 def delete_tagset(request, person_id, tagset_id):
-    from people.views import tab_contents
     ts = TagSet.objects.get(pk=int(tagset_id))
     ts.delete()
-    return tab_contents(request,person_id, tab_name="#tags")
+    return _tab_or_person_redirect(request,person_id)
