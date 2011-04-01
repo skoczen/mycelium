@@ -39,7 +39,7 @@ def save_basic_info(request, group_id):
 
 
 def new_group(request):
-    group = Group.objects.create(name="Unnamed Group")
+    group = Group.objects.create()
     return HttpResponseRedirect("%s?edit=ON" %reverse("groups:group",args=(group.pk,)))
     
 

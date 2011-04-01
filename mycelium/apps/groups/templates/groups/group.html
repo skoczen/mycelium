@@ -8,7 +8,7 @@
 {% generic_tags_js %}
 {% js "/js/mycelium/people_common.js" %}
 {% js "/js/mycelium/groups.js" %}
-{% if request.GET.edit == "ON" or form.instance.name == "No Name"  %}
+{% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
     $("#basic_info_form").genericFieldForm('toggle_edit');
@@ -20,7 +20,7 @@ $(function(){
 
 {% endblock %}
 
-{% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
+{% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People and Groups</a>{% endblock %}
 {% block page_content %}
 <form action="{% url groups:save_basic_info group.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
 {% with "Edit Group" as edit_label %}
@@ -34,7 +34,7 @@ $(function(){
 <div class="group_rules group_detail_column edit_mode_on">
 	<div class="detail_header">Rules</div>
 	<div class="group_rules_boolean_sentence">
-	All people who match <select><option selected>all</option><option>any</option></select> of the following rules:
+	All <select><option>people</option><option>people or organizations</option><option>people or groups</option><option>organizations or groups</option><option selected>people, organizations or groups</option></select> who match <select><option selected>all</option><option>any</option></select> of the following rules:
 	</div>
 
 	{% include "groups/_rule.html" %}

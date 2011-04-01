@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
+from people.models import NO_NAME_STRING
 
 class Group(SimpleSearchableModel, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
@@ -24,6 +25,14 @@ class Group(SimpleSearchableModel, TimestampModelMixin):
             print "Implement this!"
             self.cached_members = Person.objects.all().order_by("?")[:50]
         return self.cached_members
+
+
+    @property
+    def full_name(self):
+        if self.name:
+            return "%s" % (self.name,)
+        else:
+            return NO_NAME_STRING
 
 class GroupRule(models.Model):
     group = models.ForeignKey(Group)
