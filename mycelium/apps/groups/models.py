@@ -3,8 +3,14 @@ from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from people.models import NO_NAME_STRING
 
+
 class Group(SimpleSearchableModel, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
+
+    # include_people
+    # include_organizations
+    # include_groups
+    # rules_boolean = models.BooleanField()
 
     search_fields = ["name",]
     contact_type = "group"
