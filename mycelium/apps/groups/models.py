@@ -7,10 +7,10 @@ from people.models import NO_NAME_STRING
 class Group(SimpleSearchableModel, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
 
-    # include_people
-    # include_organizations
-    # include_groups
-    # rules_boolean = models.BooleanField()
+    # include_people = models.BooleanField(default=True)
+    # include_organizations = models.BooleanField(default=False)
+    # include_groups = models.BooleanField(default=False)
+    # rules_boolean = models.BooleanField() # True==All  False==Any
 
     search_fields = ["name",]
     contact_type = "group"
