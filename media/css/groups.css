@@ -72,3 +72,6 @@
 .group_rules_boolean_sentence select {
 	margin-top: -6px;
 }
+.basic_info #id_name {
+	min-width: 150px;
+}
