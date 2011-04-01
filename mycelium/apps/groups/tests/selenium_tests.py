@@ -12,13 +12,26 @@ class GroupTestAbstractions(object):
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions):
 
-    def test_that_the_test_group_page_loads(self):
+    def test_that_the_new_group_page_loads(self):
         sel = self.selenium
         sel.open("/people")
         sel.wait_for_page_to_load("30000")
         sel.click("link=New Group")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("All people who match")
+
+    def test_that_the_group_name_can_be_edited(self, new_name="Super duper test group"):
+        sel = self.selenium
+        self.test_that_the_new_group_page_loads()
+        sel.type("css=#basic_info_form #id_name",new_name)
+        time.sleep(4)
+        self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.edit_done_btn")
+        time.sleep(1)
+        self.assertEqual(new_name, sel.get_text("css=#container_id_name .view_field"))
+
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions):
