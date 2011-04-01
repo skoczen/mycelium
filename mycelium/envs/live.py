@@ -15,6 +15,7 @@ DATABASES = {
     },
 }
 
+
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = 'http://media.agoodcloud.com/'
 MEDIA_URL = CDN_MEDIA_URL

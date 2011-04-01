@@ -8,7 +8,7 @@
 {% generic_tags_js %}
 {% js "/js/mycelium/people_common.js" %}
 {% js "/js/mycelium/groups.js" %}
-{% if request.GET.edit == "ON" or form.instance.name == "No Name"  %}
+{% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
     $("#basic_info_form").genericFieldForm('toggle_edit');
@@ -20,7 +20,7 @@ $(function(){
 
 {% endblock %}
 
-{% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
+{% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People and Groups</a>{% endblock %}
 {% block page_content %}
 <form action="{% url groups:save_basic_info group.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
 {% with "Edit Group" as edit_label %}
@@ -63,4 +63,10 @@ $(function(){
 </div>
 </form>
 <div class="clearfix"></div>
+<delete_object_block>
+	<form action="{% url groups:delete_group %}" method="POST" id="delete_group_form">{% csrf_token %}
+	<input type="hidden" name="group_pk" value="{{form.instance.pk}}">
+	<a href="#" class="mycelium_btn mycelium_active_grey mycelium_delete_btn group_delete_btn" >Delete this Group</a>
+	</form>
+</delete_object_block>
 {% endblock %}
