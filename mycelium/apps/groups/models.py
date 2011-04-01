@@ -1,24 +1,27 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
-from django.db.models.signals import post_save
 
+class Group(SimpleSearchableModel, TimestampModelMixin):
+    name = models.CharField(max_length=255, blank=True, null=True)
 
-from people.models import Person
-from test_factory import Factory
-
-class Group(TimestampModelMixin):
-    name = models.CharField(max_length=255, blank=True, null=True, unique=True)
-
+    search_fields = ["name",]
+    contact_type = "group"
+    
     def __unicode__(self):
         return "%s" % self.name
+
+    def searchable_name(self):
+        return self.name
 
     class Meta(object):
         ordering = ("name",)
 
     def members(self):
+        from people.models import Person
         if not hasattr(self,"cached_members"):
-            self.cached_members = Person.objects.all().order_by("?")[:Factory.rand_int(10,100)]
+            print "Implement this!"
+            self.cached_members = Person.objects.all().order_by("?")[:50]
         return self.cached_members
 
 class GroupRule(models.Model):
@@ -29,3 +32,4 @@ class GroupRule(models.Model):
 
     class Meta(object):
         ordering = ("group","id",)
+

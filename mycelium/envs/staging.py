@@ -13,6 +13,8 @@ DATABASES = {
     },
 }
 
+
+
 MEDIA_URL = 'http://media.digitalmycelium.com/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)

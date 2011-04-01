@@ -53,4 +53,3 @@ def delete_group(request):
         pass
 
     return HttpResponseRedirect(reverse("people:search"))
-

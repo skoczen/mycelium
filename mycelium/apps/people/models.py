@@ -10,6 +10,7 @@ import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING = _("No Name")
 from generic_tags.models import TagSet
+from groups.models import Group
 
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
@@ -224,10 +225,11 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     SEARCH_GROUP_NAME = "people_and_orgs"
     person = models.ForeignKey(Person, blank=True, null=True)
     organization = models.ForeignKey(Organization, blank=True, null=True)
+    group = models.ForeignKey('groups.Group', blank=True, null=True)
 
     @property
     def obj(self):
-        return self.person or self.organization or None
+        return self.person or self.organization or self.group or None
 
     @property
     def type(self):
@@ -235,6 +237,8 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
             return "person"
         elif self.organization_id != None:
             return "organization"
+        elif self.group_id != None:
+            return "group"
         return None
     
     @property
@@ -243,15 +247,19 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
             return self.person_id
         elif self.organization_id:
             return self.organization_id
+        elif self.group_id:
+            return self.group_id            
         else:
             return None
 
     def get_sorting_name(self):
         sn = ""
-        if self.person:
+        if self.person_id:
             sn =  self.person.full_name
-        elif self.organization:
+        elif self.organization_id:
             sn = self.organization.searchable_name
+        elif self.group_id:
+            sn = self.group.searchable_name
         if sn == NO_NAME_STRING:
             sn = ""
         return sn
@@ -278,10 +286,12 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         return self.obj.qi_simple_searchable_search_field
 
     def render_result_row(self):
-        if self.person:
+        if self.person_id:
             return render_to_string("people/_search_result_row_person.html",{'obj':self.obj})
-        elif self.organization:
+        elif self.organization_id:
             return render_to_string("people/_search_result_row_organization.html",{'obj':self.obj})
+        elif self.group_id:
+            return render_to_string("groups/_search_result_row_group.html",{'obj':self.obj})
         else:
             return ""
         
@@ -298,6 +308,12 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         proxy.save()
 
     @classmethod
+    def group_record_changed(cls, sender, instance, created=None, *args, **kwargs):
+        proxy, nil = cls.objects.get_or_create(group=instance, search_group_name=cls.SEARCH_GROUP_NAME)
+        cache.delete(proxy.cache_name)
+        proxy.save()
+
+    @classmethod
     def related_people_record_changed(cls, sender, instance, created=None, *args, **kwargs):
         cls.people_record_changed(sender, instance.person, *args, **kwargs)
 
@@ -306,14 +322,21 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         cls.organization_record_changed(sender, instance.organization, *args, **kwargs)
 
     @classmethod
+    def related_group_record_changed(cls, sender, instance, created=None, *args, **kwargs):
+        cls.group_record_changed(sender, instance.group, *args, **kwargs)
+
+
+    @classmethod
     def populate_cache(cls):
         [cls.people_record_changed(Person,p) for p in Person.objects.all()]
         [cls.organization_record_changed(Organization,o) for o in Organization.objects.all()]
+        [cls.group_record_changed(Group,g) for g in Group.objects.all()]
 
     @classmethod
     def resave_all_people_and_organizations(cls):
         [p.save() for p in Person.objects.all()]
         [o.save() for o in Organization.objects.all()]
+        [g.save() for g in Group.objects.all()]
 
     class Meta(SearchableItemProxy.Meta):
         verbose_name_plural = "PeopleAndOrganizationsSearchProxies"
@@ -323,4 +346,4 @@ post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender
 post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
 post_save.connect(PeopleAndOrganizationsSearchProxy.related_organization_record_changed,sender=Employee)
 post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=Employee)
-
+post_save.connect(PeopleAndOrganizationsSearchProxy.group_record_changed,sender=Group)

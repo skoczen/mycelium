@@ -443,6 +443,12 @@ detail_tab_contents fragment.detail_tab {
 	background-image: url("../images/icon-business-grey-22h.png");	
 	background-position: 3px 2px;
 }
+.person_row icon.group {
+/*	background-image: url("../images/icon-business-blue-22h.png");*/
+	background-image: url("../images/icon-group-grey-22h.png");	
+	background-position: 0px 2px;
+	width: 36px;
+}
 save_status_and_button {
 	padding-top: 8px;
 }

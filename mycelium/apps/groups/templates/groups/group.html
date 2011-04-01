@@ -63,4 +63,10 @@ $(function(){
 </div>
 </form>
 <div class="clearfix"></div>
+<delete_object_block>
+	<form action="{% url groups:delete_group %}" method="POST" id="delete_group_form">{% csrf_token %}
+	<input type="hidden" name="group_pk" value="{{form.instance.pk}}">
+	<a href="#" class="mycelium_btn mycelium_active_grey mycelium_delete_btn group_delete_btn" >Delete this Group</a>
+	</form>
+</delete_object_block>
 {% endblock %}
