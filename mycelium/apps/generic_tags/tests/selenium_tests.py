@@ -230,20 +230,20 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Peo
         time.sleep(0.5)
         sel.type("css=#new_category #id_name", "Test Category 1")
         sel.click("css=tabbed_box .add_category_btn")
-        sel.wait_for_page_to_load("30000")
+        time.sleep(3)
         self.switch_to_tag_tab()                
         assert sel.is_element_present("css=.people_tags_tab column:nth(3) .detail_header")
-        self.assertEqual(sel.get_text("css=.people_tags_tab column:nth(3) .detail_header"),"Test Category 1")
+        self.assertEqual(sel.get_text("css=.people_tags_tab column:nth(3) .detail_header .view_field"),"Test Category 1")
 
 
         sel.click("css=tabbed_box[name=add_a_category]")
         time.sleep(0.5)
         sel.type("css=#new_category #id_name", "testcategory2")
         sel.click("css=tabbed_box .add_category_btn")
-        sel.wait_for_page_to_load("30000")
+        time.sleep(3)
         self.switch_to_tag_tab()                
         assert sel.is_element_present("css=.people_tags_tab column:nth(4) .detail_header")
-        self.assertEqual(sel.get_text("css=.people_tags_tab column:nth(4) .detail_header"),"testcategory2")
+        self.assertEqual(sel.get_text("css=.people_tags_tab column:nth(4) .detail_header .view_field"),"testcategory2")
 
 
     def test_that_tags_can_be_added_and_removed_from_custom_categories(self):    

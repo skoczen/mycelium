@@ -4,6 +4,7 @@ from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from people.models import NO_NAME_STRING
 
 
+
 class Group(SimpleSearchableModel, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
 
@@ -42,6 +43,7 @@ class Group(SimpleSearchableModel, TimestampModelMixin):
 
 class GroupRule(models.Model):
     group = models.ForeignKey(Group)
+
 
     def __unicode__(self):
         return "Rule for %s" % self.group
