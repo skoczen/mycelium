@@ -428,7 +428,7 @@ detail_tab_contents fragment.detail_tab {
 	float: left;
 	background-position: 0px 0px;
 	background-repeat: no-repeat;
-	width: 25px;
+	width: 28px;
 	height: 28px;
 	margin-right: 5px;
 }
@@ -441,7 +441,7 @@ detail_tab_contents fragment.detail_tab {
 .person_row icon.organization {
 /*	background-image: url("../images/icon-business-blue-22h.png");*/
 	background-image: url("../images/icon-business-grey-22h.png");	
-	background-position: 3px 2px;
+	background-position: 5px 2px;
 }
 .person_row icon.group {
 /*	background-image: url("../images/icon-business-blue-22h.png");*/
