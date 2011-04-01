@@ -11,6 +11,7 @@ class Group(SimpleSearchableModel, TimestampModelMixin):
     def __unicode__(self):
         return "%s" % self.name
 
+    @property
     def searchable_name(self):
         return self.name
 
