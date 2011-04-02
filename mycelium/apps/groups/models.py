@@ -3,7 +3,7 @@ from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from people.models import NO_NAME_STRING
 
-
+from rules.models import Rule
 
 class Group(SimpleSearchableModel, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
@@ -41,9 +41,11 @@ class Group(SimpleSearchableModel, TimestampModelMixin):
         else:
             return NO_NAME_STRING
 
-class GroupRule(models.Model):
+from people.models import Person
+class GroupRule(Rule):
     group = models.ForeignKey(Group)
-
+    
+    target_model = Person
 
     def __unicode__(self):
         return "Rule for %s" % self.group
@@ -51,3 +53,6 @@ class GroupRule(models.Model):
     class Meta(object):
         ordering = ("group","id",)
 
+from django.db.models.signals import post_save
+from people.models import PeopleAndOrganizationsSearchProxy
+post_save.connect(PeopleAndOrganizationsSearchProxy.group_record_changed,sender=Group)

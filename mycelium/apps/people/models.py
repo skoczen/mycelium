@@ -10,7 +10,6 @@ import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING = _("No Name")
 from generic_tags.models import TagSet
-from groups.models import Group
 
 class OrganizationType(models.Model):
     internal_name = models.CharField(max_length=255)
@@ -328,12 +327,14 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
 
     @classmethod
     def populate_cache(cls):
+        from groups.models import Group
         [cls.people_record_changed(Person,p) for p in Person.objects.all()]
         [cls.organization_record_changed(Organization,o) for o in Organization.objects.all()]
         [cls.group_record_changed(Group,g) for g in Group.objects.all()]
 
     @classmethod
     def resave_all_people_and_organizations(cls):
+        from groups.models import Group
         [p.save() for p in Person.objects.all()]
         [o.save() for o in Organization.objects.all()]
         [g.save() for g in Group.objects.all()]
@@ -346,4 +347,4 @@ post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender
 post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
 post_save.connect(PeopleAndOrganizationsSearchProxy.related_organization_record_changed,sender=Employee)
 post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=Employee)
-post_save.connect(PeopleAndOrganizationsSearchProxy.group_record_changed,sender=Group)
+

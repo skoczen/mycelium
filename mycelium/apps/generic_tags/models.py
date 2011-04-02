@@ -94,3 +94,6 @@ class TagSetMembership(TimestampModelMixin):
 
     class Meta(object):
         ordering = ("tagset","person",)
+
+from rules.tasks import populate_rule_components
+post_save.connect(populate_rule_components,sender=TagSet)

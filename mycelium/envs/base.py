@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'recent_activity',
     'generic_tags',
     'groups',
+    'rules',
 
 
     'djangosanetesting',
