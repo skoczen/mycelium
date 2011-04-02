@@ -4,7 +4,7 @@ from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from django.db.models.signals import post_save
 import datetime
 from taggit.managers import TaggableManager
-from taggit.models import TaggedItem, Tag
+from taggit.models import TaggedItem, Tag, TaggedItemBase
 
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
@@ -46,6 +46,15 @@ class TagSet(TimestampModelMixin):
         from generic_tags.forms import TagSetForm
         return TagSetForm(*args, instance=self, **kwargs)
 
+    @classmethod
+    def create_tag_for_person(cls, tagset_name=None, person=None, tag=None):
+        if tagset_name and person and tag:
+            ts = cls.objects.get_or_create(name=tagset_name)[0]
+            tsm = TagSetMembership.objects.get_or_create(tagset=ts, person=person)[0]
+            tsm.tags.add(tag)
+        else:
+            raise Exception, "Missing tagset_name, person and/or tag!"
+
     # @property
     # def groups(self):
     #     return Group.objects.filter(id__in=self.groupmembership_set.values("group_id")).all()
@@ -71,12 +80,14 @@ class TagSet(TimestampModelMixin):
     #     except:
     #         pass
 
+class TaggedTagSetMembership(TaggedItemBase):
+    content_object = models.ForeignKey('TagSetMembership')
 
 class TagSetMembership(TimestampModelMixin):
     tagset = models.ForeignKey(TagSet, blank=True, null=True)
     person = models.ForeignKey('people.Person', blank=True, null=True)
 
-    tags = TaggableManager()
+    tags = TaggableManager(through=TaggedTagSetMembership)
 
     @property
     def all_tags_with_my_tags_marked(self):
@@ -94,6 +105,10 @@ class TagSetMembership(TimestampModelMixin):
 
     class Meta(object):
         ordering = ("tagset","person",)
+
+
+
+
 
 from rules.tasks import populate_rule_components
 post_save.connect(populate_rule_components,sender=TagSet)

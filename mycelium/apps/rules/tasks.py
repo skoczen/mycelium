@@ -19,16 +19,16 @@ def populate_rule_components(*args, **kwargs):
 
     # Operators
     all_operators = []
-    operator_is_exactly =           Operator.objects.get_or_create(display_name="is exactly"        , query_string_partial="__iexact"     , use_filter=True)[0]
-    operator_is_not_exactly =       Operator.objects.get_or_create(display_name="is not exactly"    , query_string_partial="__iexact"     , use_filter=False)[0]
-    operator_contains =             Operator.objects.get_or_create(display_name="contains"          , query_string_partial="__icontains"  , use_filter=True)[0]
-    operator_does_not_contain =     Operator.objects.get_or_create(display_name="does not contain"  , query_string_partial="__icontains"  , use_filter=False)[0]
-    operator_is_on =                Operator.objects.get_or_create(display_name="is on"             , query_string_partial="="            , use_filter=True)[0]
-    operator_is_before =            Operator.objects.get_or_create(display_name="is before"         , query_string_partial="__lt"         , use_filter=True)[0]
-    operator_is_after =             Operator.objects.get_or_create(display_name="is after"          , query_string_partial="__gt"         , use_filter=True)[0]
-    operator_is_equal =             Operator.objects.get_or_create(display_name="is equal to"       , query_string_partial="="            , use_filter=True)[0]
-    operator_is_less_than =         Operator.objects.get_or_create(display_name="is less than"      , query_string_partial="__lt"         , use_filter=True)[0]
-    operator_is_more_than =         Operator.objects.get_or_create(display_name="is more than"      , query_string_partial="__gt"         , use_filter=True)[0]
+    operator_is_exactly =           Operator.objects.get_or_create(display_name="is exactly"        , query_string_partial="__iexact="     , use_filter=True)[0]
+    operator_is_not_exactly =       Operator.objects.get_or_create(display_name="is not exactly"    , query_string_partial="__iexact="     , use_filter=False)[0]
+    operator_contains =             Operator.objects.get_or_create(display_name="contains"          , query_string_partial="__icontains="  , use_filter=True)[0]
+    operator_does_not_contain =     Operator.objects.get_or_create(display_name="does not contain"  , query_string_partial="__icontains="  , use_filter=False)[0]
+    operator_is_on =                Operator.objects.get_or_create(display_name="is on"             , query_string_partial="="             , use_filter=True)[0]
+    operator_is_before =            Operator.objects.get_or_create(display_name="is before"         , query_string_partial="__lt="         , use_filter=True)[0]
+    operator_is_after =             Operator.objects.get_or_create(display_name="is after"          , query_string_partial="__gt="         , use_filter=True)[0]
+    operator_is_equal =             Operator.objects.get_or_create(display_name="is equal to"       , query_string_partial="="             , use_filter=True)[0]
+    operator_is_less_than =         Operator.objects.get_or_create(display_name="is less than"      , query_string_partial="__lt="         , use_filter=True)[0]
+    operator_is_more_than =         Operator.objects.get_or_create(display_name="is more than"      , query_string_partial="__gt="         , use_filter=True)[0]
     all_operators = [   operator_is_exactly, operator_is_not_exactly, operator_contains, operator_does_not_contain, 
                         operator_is_on, operator_is_before, operator_is_after,
                         operator_is_equal, operator_is_less_than, operator_is_more_than,
@@ -111,19 +111,19 @@ def populate_rule_components(*args, **kwargs):
 
 
     # Left sides - built-ins
-    left_side_for_text(     display_name="have any tag that"                            ,query_string_partial="tagsetmembership__tags__name"       , order=10     )
-    left_side_for_text(     display_name="volunteer status"                             ,query_string_partial="volunteer__status"                  , order=100     )
-    left_side_for_date(     display_name="last donation"                                ,query_string_partial="donor__donation__date"              , order=110     )
-    left_side_for_number(   display_name="total donations in the last 12 months"        ,query_string_partial="donor__twelvemonth_total"           , order=120     )
-    left_side_for_date(     display_name="last volunteer shift"                         ,query_string_partial="volunteer__completedshift__date"    , order=130     )    
-    left_side_for_number(   display_name="total volunteer hours in the last 12 months"  ,query_string_partial="volunteer__twelvemonth_total"       , order=140     )
+    left_side_for_text(     display_name="have any tag that"                            ,query_string_partial="tagsetmembership__taggedtagsetmembership__tag__name" , order=10     )
+    left_side_for_text(     display_name="volunteer status"                             ,query_string_partial="volunteer__status"                                   , order=100     )
+    left_side_for_date(     display_name="last donation"                                ,query_string_partial="donor__donation__date"                               , order=110     )
+    left_side_for_number(   display_name="total donations in the last 12 months"        ,query_string_partial="donor__twelvemonth_total"                            , order=120     )
+    left_side_for_date(     display_name="last volunteer shift"                         ,query_string_partial="volunteer__completedshift__date"                     , order=130     )    
+    left_side_for_number(   display_name="total volunteer hours in the last 12 months"  ,query_string_partial="volunteer__twelvemonth_total"                        , order=140     )
 
     # Left sides - generateds
     from generic_tags.models import TagSet
     i = 0
     for ts in TagSet.objects.all():
         i = i+1
-        left_side_for_text(display_name="have a %s tag that" % (ts.name) ,query_string_partial="tagsetmembership__tagset__name='%s',tagsetmembership__tags__name" % (ts.name), order=20+i)
+        left_side_for_text(display_name="have a %s tag that" % (ts.name) ,query_string_partial="tagsetmembership__tagset__name='%s',tagsetmembership__taggedtagsetmembership__tag__name" % (ts.name), order=20+i)
 
 
     # Cleanup

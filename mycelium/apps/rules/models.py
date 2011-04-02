@@ -26,7 +26,10 @@ class RightSideType(TimestampModelMixin):
 
     def prepare_query_value(self, value_to_prep):
         """Converts value (a string) into the appropriate type to query against"""
-        raise NotYetImplemented
+        if self.name == "text":
+            return "'%s'" % value_to_prep
+        else:
+            raise NotYetImplemented
 
 
 class RightSideValue(TimestampModelMixin):
@@ -37,12 +40,13 @@ class RightSideValue(TimestampModelMixin):
     def __unicode__(self):
         return "%s: %s" % (self.right_side_type, self.value)
 
+    @property
     def cleaned_query_value(self):
         """Converts value (a string) into the appropriate type to query against"""
-        raise NotYetImplemented
+        # raise NotYetImplemented
 
         # Idea/pseudocode
-        if self.right_side_value:
+        if self.value:
             return self.right_side_type.prepare_query_value(self.value)
         else:
             return None
@@ -85,7 +89,7 @@ class Rule(TimestampModelMixin):
         raise NotYetImplemented
         return self.left_side and self.operator and self.right_side_value
 
-
+    @property
     def queryset_filter_string(self):
         """Creates a filter/exclude string, with string replace placeholders for:
             operator - to be filled in by the operator's query_string_partial
@@ -97,13 +101,20 @@ class Rule(TimestampModelMixin):
                                                             "right_side_value": "joe",
                                                         }
         """
-        raise NotYetImplemented
+        filter_str = "%s%s%s" % (self.left_side.query_string_partial, self.operator.query_string_partial, self.right_side_value.cleaned_query_value)
+        if self.operator.use_filter:
+            return "filter(%s)" % filter_str
+        else:
+            return "exclude(%s)" % filter_str
 
-
+    @property
     def queryset(self):
         """Returns a working queryset of self.target_model's class, filtered/excluded 
            as appropriate"""
-        raise NotYetImplemented
+        if not self.target_model:
+            raise Exception, "No target model defined!"
+        else:
+            return eval("self.target_model.objects.%s" % self.queryset_filter_string)
 
     class Meta(object):
         abstract = True

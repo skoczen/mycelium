@@ -1,5 +1,6 @@
 from qi_toolkit.factory import QiFactory
 from people.models import Person, Organization, Employee
+from groups.models import Group, GroupRule
 from volunteers.models import CompletedShift
 import datetime
 
@@ -92,3 +93,7 @@ class Factory(QiFactory):
         o = DummyObj()
         o.pk = 1
         return o
+
+    @classmethod
+    def group(cls):
+        return Group.objects.create(name=cls.rand_str())
