@@ -12,7 +12,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
     pass
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
     # selenium_fixtures = ["200_test_people.json"]
     
     def setUp(self, *args, **kwargs):
