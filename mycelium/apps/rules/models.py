@@ -107,6 +107,7 @@ class Rule(TimestampModelMixin):
         else:
             return "exclude(%s)" % filter_str
 
+
     @property
     def queryset(self):
         """Returns a working queryset of self.target_model's class, filtered/excluded 

@@ -247,17 +247,18 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
     def _generate_people(self, number=5):
         people = []
         for i in range(0,number):
-            people.append(Factory.person())
+            people.append(Factory.person().pk)
+        people = Person.objects.filter(pk__in=people)
         return people
     
 
-    def test_create_new_group_rule_for_general_tag_contains(self):
+    def test_create_new_group_rule_for_general_tag_contains(self, right_hand_term="test", operator_name="contains"):
         # create a new group rule
         group = Factory.group()
         left_side = LeftSide.objects.get(display_name="have a General tag that")
-        icontains = Operator.objects.get(display_name="contains")
+        icontains = Operator.objects.get(display_name=operator_name)
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="test")
+        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
         group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
         new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
 
@@ -307,12 +308,7 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
         TagSet.create_tag_for_person(person=ppl[4], tagset_name="General", tag="another tag")
 
         # create a new group rule
-        group = Factory.group()
-        left_side = LeftSide.objects.get(display_name="have a General tag that")
-        icontains = Operator.objects.get(display_name="contains")
-        rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="test")
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        group_rule = self.test_create_new_group_rule_for_general_tag_contains()
 
         # assert the queryset string is right
         self.assertEqual(group_rule.queryset_filter_string, "filter(tagsetmembership__tagset__name='General',tagsetmembership__taggedtagsetmembership__tag__name__icontains='test')")
@@ -322,6 +318,22 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
     
         hand_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
         self.assertEqualQuerySets(qs,hand_qs)
+
+        # check the opposite
+        opposite_group_rule = self.test_create_new_group_rule_for_general_tag_contains(right_hand_term="test", operator_name="does not contain")
+        self.assertEqual(opposite_group_rule.queryset_filter_string, "exclude(tagsetmembership__tagset__name='General',tagsetmembership__taggedtagsetmembership__tag__name__icontains='test')")
+        opposite_hand_qs = Person.objects.filter(Q(pk=ppl[1].pk) | Q(pk=ppl[3].pk) | Q(pk=ppl[4].pk) )
+        self.assertEqualQuerySets(opposite_group_rule.queryset,opposite_hand_qs)
+
+        # try for the other tag group
+        group_rule2 = self.test_create_new_group_rule_for_general_tag_contains(right_hand_term="another")
+        hand_qs2 = Person.objects.filter(Q(pk=ppl[4].pk) )
+        self.assertEqualQuerySets(group_rule2.queryset,hand_qs2)
+
+        # opposite
+        opposite_group_rule2 = self.test_create_new_group_rule_for_general_tag_contains(right_hand_term="another", operator_name="does not contain")
+        opposite_hand_qs2 = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[1].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk) )
+        self.assertEqualQuerySets(opposite_group_rule2.queryset,opposite_hand_qs2)
 
     # def test_queryset_for_new_group_rule_for_custom_tag_is_not_exactly(self):
     #     assert True == "Test written"
