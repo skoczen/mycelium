@@ -15,7 +15,7 @@ class TagTestAbstractions(object):
         self.switch_to_tag_tab()
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions):
-    selenium_fixtures = ["selenium_fixtures.json",]
+    selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def test_that_tags_tab_display_and_has_the_three_categories(self):
         sel = self.selenium

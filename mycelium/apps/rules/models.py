@@ -12,6 +12,9 @@ class Operator(TimestampModelMixin):
     use_filter = models.BooleanField(default=True) # if False, use exclude
     order = models.IntegerField(default=100)
 
+    class Meta(object):
+        ordering = ("order",)
+
     def __unicode__(self):
         return "%s" % self.display_name
 
@@ -49,9 +52,13 @@ class LeftSide(TimestampModelMixin):
     query_string_partial = models.TextField()
     allowed_operators = models.ManyToManyField(Operator)
     allowed_right_side_types = models.ManyToManyField(RightSideType)
+    order = models.IntegerField(default=100)
 
     def __unicode__(self):
         return "%s" % self.display_name
+    
+    class Meta(object):
+        ordering = ("order",)
 
     @property
     def operators(self):
