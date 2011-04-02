@@ -9,11 +9,17 @@ class NotYetImplemented(Exception):
 class Operator(TimestampModelMixin):
     display_name = models.CharField(max_length=255)
     query_string_partial = models.CharField(max_length=255)
+    use_filter = models.BooleanField(default=True) # if False, use exclude
     order = models.IntegerField(default=100)
 
+    def __unicode__(self):
+        return "%s" % self.display_name
 
 class RightSideType(TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s" % self.name
 
     def prepare_query_value(self, value_to_prep):
         """Converts value (a string) into the appropriate type to query against"""
@@ -23,6 +29,10 @@ class RightSideType(TimestampModelMixin):
 class RightSideValue(TimestampModelMixin):
     right_side_type = models.ForeignKey(RightSideType)
     value = models.TextField(blank=True, null=True)
+
+
+    def __unicode__(self):
+        return "%s: %s" % (self.right_side_type, self.value)
 
     def cleaned_query_value(self):
         """Converts value (a string) into the appropriate type to query against"""
@@ -40,6 +50,16 @@ class LeftSide(TimestampModelMixin):
     allowed_operators = models.ManyToManyField(Operator)
     allowed_right_side_types = models.ManyToManyField(RightSideType)
 
+    def __unicode__(self):
+        return "%s" % self.display_name
+
+    @property
+    def operators(self):
+        return self.allowed_operators.all()
+    
+    @property
+    def right_side_types(self):
+        return self.allowed_right_side_types.all()
 
 class Rule(TimestampModelMixin):
     left_side = models.ForeignKey(LeftSide, blank=True, null=True)
@@ -48,9 +68,14 @@ class Rule(TimestampModelMixin):
 
     target_model = None
 
+
+    def __unicode__(self):
+        return "Rule: %s %s %s" % (self.left_side, self.operator, self.right_side_value)
+
     @property
     def is_valid(self):
         """Boolean - if true, this rule is complete, and ok to query against."""
+        raise NotYetImplemented
         return self.left_side and self.operator and self.right_side_value
 
 
