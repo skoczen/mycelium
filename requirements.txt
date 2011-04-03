@@ -1,6 +1,7 @@
 fabric
 #psycopg2
 mysql-python
+python-dateutil
 
 PIL
 python-memcached

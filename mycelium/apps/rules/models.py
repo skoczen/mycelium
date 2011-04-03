@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import TimestampModelMixin
+from django.db.models import Q
+from generic_tags.models import TagSetMembership
+import datetime
+from dateutil.parser import parse
 
 class NotYetImplemented(Exception):
     pass
@@ -28,6 +32,9 @@ class RightSideType(TimestampModelMixin):
         """Converts value (a string) into the appropriate type to query against"""
         if self.name == "text":
             return "'%s'" % value_to_prep
+        if self.name == "date":
+            d = parse(value_to_prep).date()
+            return "datetime.date(month=%s,day=%s,year=%s)" % (d.month, d.day, d.year)
         else:
             raise NotYetImplemented
 
@@ -57,6 +64,7 @@ class LeftSide(TimestampModelMixin):
     allowed_operators = models.ManyToManyField(Operator)
     allowed_right_side_types = models.ManyToManyField(RightSideType)
     order = models.IntegerField(default=100)
+    add_closing_paren = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "%s" % self.display_name
@@ -102,6 +110,8 @@ class Rule(TimestampModelMixin):
                                                         }
         """
         filter_str = "%s%s%s" % (self.left_side.query_string_partial, self.operator.query_string_partial, self.right_side_value.cleaned_query_value)
+        if self.left_side.add_closing_paren:
+            filter_str = "%s)" % filter_str
         if self.operator.use_filter:
             return "filter(%s)" % filter_str
         else:

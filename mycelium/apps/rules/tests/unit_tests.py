@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.test import TestCase
 from generic_tags.models import TagSet
 from people.models import Person
+import datetime
 
 class RuleTestAbstractions(object):
     @property
@@ -22,6 +23,10 @@ class RuleTestAbstractions(object):
     @property
     def _number_operators(self):
         return Operator.objects.filter(Q(display_name="is equal to") | Q(display_name="is less than") | Q(display_name="is more than"))
+
+    @property
+    def _tag_operators(self):
+        return Operator.objects.filter(Q(display_name="is exactly") | Q(display_name="contains") )
 
     @property
     def _text_right_side_types(self):
@@ -59,65 +64,77 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
     def test_any_tags(self):
         left_side = LeftSide.objects.get(display_name="have any tag that")
         self.assertEqual(left_side.query_string_partial, "tagsetmembership__taggedtagsetmembership__tag__name")
-        self.assertEqualQuerySets(left_side.operators,  self._text_operators )
+        self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types  )
+        self.assertEqual(left_side.add_closing_paren, False)
 
     def test_general_tags(self):
         left_side = LeftSide.objects.get(display_name="have a General tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__tagset__name='General',tagsetmembership__taggedtagsetmembership__tag__name")
-        self.assertEqualQuerySets(left_side.operators,  self._text_operators )
+        self.assertEqual(left_side.query_string_partial, "tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='General',taggedtagsetmembership__tag__name")
+        self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types,  self._text_right_side_types)
+        self.assertEqual(left_side.add_closing_paren, True)
     
     def test_donor_tags(self):
         left_side = LeftSide.objects.get(display_name="have a Donor tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__tagset__name='Donor',tagsetmembership__taggedtagsetmembership__tag__name")
-        self.assertEqualQuerySets(left_side.operators,  self._text_operators )
+        self.assertEqual(left_side.query_string_partial, "tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='Donor',taggedtagsetmembership__tag__name")
+        self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types,  self._text_right_side_types)
+        self.assertEqual(left_side.add_closing_paren, True)
     
     def test_volunteer_tags(self):
         left_side = LeftSide.objects.get(display_name="have a Volunteer tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__tagset__name='Volunteer',tagsetmembership__taggedtagsetmembership__tag__name")
-        self.assertEqualQuerySets(left_side.operators,  self._text_operators )
+        self.assertEqual(left_side.query_string_partial, "tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='Volunteer',taggedtagsetmembership__tag__name")
+        self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types,  self._text_right_side_types)
+        self.assertEqual(left_side.add_closing_paren, True)
     
     def test_custom_tag_1(self):
         # make a new tagset
-        TagSet.objects.create(name="new test tagset")
+        TagSet.objects.get_or_create(name="new test tagset")
         populate_rule_components()
         left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__tagset__name='new test tagset',tagsetmembership__taggedtagsetmembership__tag__name")
-        self.assertEqualQuerySets(left_side.operators,  self._text_operators )
+        self.assertEqual(left_side.query_string_partial, "tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='new test tagset',taggedtagsetmembership__tag__name")
+        self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types)
+        self.assertEqual(left_side.add_closing_paren, True)
+
+        return left_side
 
     def test_volunteer_status(self):
         left_side = LeftSide.objects.get(display_name="volunteer status")
         self.assertEqual(left_side.query_string_partial, "volunteer__status")
         self.assertEqualQuerySets(left_side.operators,  self._text_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types)
+        self.assertEqual(left_side.add_closing_paren, False)
     
     def test_last_donation(self):
         left_side = LeftSide.objects.get(display_name="last donation")
         self.assertEqual(left_side.query_string_partial, "donor__donation__date")
         self.assertEqualQuerySets(left_side.operators,  self._date_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._date_right_side_types)
+        self.assertEqual(left_side.add_closing_paren, False)
 
     def test_total_donation_amount_in_past_12_month(self):
         left_side = LeftSide.objects.get(display_name="total donations in the last 12 months")
         self.assertEqual(left_side.query_string_partial, "donor__twelvemonth_total")
         self.assertEqualQuerySets(left_side.operators,  self._number_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._number_right_side_types)
+        self.assertEqual(left_side.add_closing_paren, False)
 
     def test_last_volunteer_shift(self):
         left_side = LeftSide.objects.get(display_name="last volunteer shift")
         self.assertEqual(left_side.query_string_partial, "volunteer__completedshift__date")
         self.assertEqualQuerySets(left_side.operators,  self._date_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._date_right_side_types)
+        self.assertEqual(left_side.add_closing_paren, False)
 
     def test_total_volunteer_hours_in_past_12_month(self):
         left_side = LeftSide.objects.get(display_name="total volunteer hours in the last 12 months")
         self.assertEqual(left_side.query_string_partial, "volunteer__twelvemonth_total")
         self.assertEqualQuerySets(left_side.operators,  self._number_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._number_right_side_types)
+        self.assertEqual(left_side.add_closing_paren, False)
 
     def test_right_side_for_text(self):
         rs = self._text_right_side_types
@@ -218,15 +235,15 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
     def test_populate_cleans_up_unused_rules(self):
         # create a custom tag
         from generic_tags.models import TagSet
-        ts1 = TagSet.objects.create(name="new test tagset")
+        ts1 = TagSet.objects.get_or_create(name="new test tagset")[0]
         
         # repopulate
         populate_rule_components()
         
         # make sure it's there
         left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__tagset__name='new test tagset',tagsetmembership__taggedtagsetmembership__tag__name")
-        self.assertEqualQuerySets(left_side.operators,  self._text_operators )
+        self.assertEqual(left_side.query_string_partial, "tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='new test tagset',taggedtagsetmembership__tag__name")
+        self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types)
 
         # delete it
@@ -251,6 +268,11 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
         people = Person.objects.filter(pk__in=people)
         return people
     
+    def _generate_people_with_volunteer_history(self, number=5):
+        ppl = self._generate_people(number=number)
+        for p in ppl:
+            Factory.volunteer_history(p)
+        return ppl
 
     def test_create_new_group_rule_for_general_tag_contains(self, right_hand_term="test", operator_name="contains"):
         # create a new group rule
@@ -272,15 +294,51 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
         return new_group_rule
 
 
-    # def test_create_new_group_rule_for_custom_tag_is_not_exactly(self):
-    #     # create a new group rule
-    #     # assert the correct models exist
-    #     assert True == "Test written"
-    
-    # def test_create_new_group_rule_for_last_volunteer_shift_is_on(self):
-    #     # create a new group rule
-    #     # assert the correct models exist
-    #     assert True == "Test written"
+    def test_create_new_group_rule_for_custom_tag_is_exactly(self, right_hand_term="test", operator_name="is exactly"):
+        # create a new group 
+        group = Factory.group()
+        
+        # make the custom tag
+        TagSet.objects.get_or_create(name="new test tagset")
+        populate_rule_components()
+        # create a new group rule
+        left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
+        icontains = Operator.objects.get(display_name=operator_name)
+        rst = self._text_right_side_types[0]
+        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
+
+        # assert the correct models exist
+        self.assertEqual(new_group_rule.group, group)
+        self.assertEqual(new_group_rule.left_side, left_side)
+        self.assertEqual(new_group_rule.operator, icontains)
+        self.assertEqual(new_group_rule.right_side_value, rsv)
+        self.assertEqual(new_group_rule.group, group)
+
+        return new_group_rule
+
+    def test_create_new_group_rule_for_last_volunteer_shift_is_on(self, right_hand_term="3/24/2010", operator_name="is on"):
+        # create a new group 
+        group = Factory.group()
+        
+        # create a new group rule
+        left_side = LeftSide.objects.get(display_name="last volunteer shift")
+        op = Operator.objects.get(display_name=operator_name)
+        rst = self._date_right_side_types[0]
+        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=op, right_side_value=rsv)
+        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
+
+        # assert the correct models exist
+        self.assertEqual(new_group_rule.group, group)
+        self.assertEqual(new_group_rule.left_side, left_side)
+        self.assertEqual(new_group_rule.operator, op)
+        self.assertEqual(new_group_rule.right_side_value, rsv)
+        self.assertEqual(new_group_rule.group, group)
+
+        return new_group_rule
+
 
     # def test_create_new_group_rule_for_last_donation_is_after(self):
     #     # create a new group rule
@@ -300,18 +358,19 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
 
 
     def test_queryset_for_new_group_rule_for_general_tag_contains(self):
+        # create a new group rule (and TagSet)
+        group_rule = self.test_create_new_group_rule_for_general_tag_contains()
+
         # hand-create a few people, some of whom match, and others who don't
-        ppl = self._generate_people(number=5)
+        ppl = self._generate_people(number=6)
 
         TagSet.create_tag_for_person(person=ppl[0], tagset_name="General", tag="really cool test tag")
         TagSet.create_tag_for_person(person=ppl[2], tagset_name="General", tag="really cool test tag")
         TagSet.create_tag_for_person(person=ppl[4], tagset_name="General", tag="another tag")
-
-        # create a new group rule
-        group_rule = self.test_create_new_group_rule_for_general_tag_contains()
+        TagSet.create_tag_for_person(person=ppl[5], tagset_name="Donor", tag="really cool test tag")
 
         # assert the queryset string is right
-        self.assertEqual(group_rule.queryset_filter_string, "filter(tagsetmembership__tagset__name='General',tagsetmembership__taggedtagsetmembership__tag__name__icontains='test')")
+        self.assertEqual(group_rule.queryset_filter_string, "filter(tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='General',taggedtagsetmembership__tag__name__icontains='test'))")
 
         # get the queryset, make sure it matches a hand-created one.
         qs = group_rule.queryset
@@ -319,37 +378,61 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
         hand_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
         self.assertEqualQuerySets(qs,hand_qs)
 
-        # check the opposite
-        opposite_group_rule = self.test_create_new_group_rule_for_general_tag_contains(right_hand_term="test", operator_name="does not contain")
-        self.assertEqual(opposite_group_rule.queryset_filter_string, "exclude(tagsetmembership__tagset__name='General',tagsetmembership__taggedtagsetmembership__tag__name__icontains='test')")
-        opposite_hand_qs = Person.objects.filter(Q(pk=ppl[1].pk) | Q(pk=ppl[3].pk) | Q(pk=ppl[4].pk) )
-        self.assertEqualQuerySets(opposite_group_rule.queryset,opposite_hand_qs)
-
         # try for the other tag group
         group_rule2 = self.test_create_new_group_rule_for_general_tag_contains(right_hand_term="another")
         hand_qs2 = Person.objects.filter(Q(pk=ppl[4].pk) )
         self.assertEqualQuerySets(group_rule2.queryset,hand_qs2)
 
-        # opposite
-        opposite_group_rule2 = self.test_create_new_group_rule_for_general_tag_contains(right_hand_term="another", operator_name="does not contain")
-        opposite_hand_qs2 = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[1].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk) )
-        self.assertEqualQuerySets(opposite_group_rule2.queryset,opposite_hand_qs2)
 
-    # def test_queryset_for_new_group_rule_for_custom_tag_is_not_exactly(self):
-    #     assert True == "Test written"
-    #     # hand-create a few people, some of whom match, and others who don't
-    #     # create a new group rule
-    #     self.test_create_new_group_rule_for_custom_tag_is_not_exactly()
-    #     # assert the queryset string is right
-    #     # get the queryset, make sure it matches a hand-created one.
+    def test_queryset_for_new_group_rule_for_custom_tag_is_exactly(self):
+        # hand-create a few people, some of whom match, and others who don't
+        ppl = self._generate_people(number=5)
+
+        TagSet.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
+        TagSet.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
+        TagSet.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
+
+        # create a new group rule
+        group_rule = self.test_create_new_group_rule_for_custom_tag_is_exactly()
+
+        # assert the queryset string is right
+        self.assertEqual(group_rule.queryset_filter_string, "filter(tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='new test tagset',taggedtagsetmembership__tag__name__iexact='test'))")
+
+        # get the queryset, make sure it matches a hand-created one.
+        qs = group_rule.queryset
     
-    # def test_queryset_for_new_group_rule_for_last_volunteer_shift_is_on(self):
-    #     assert True == "Test written"
-    #     # hand-create a few people, some of whom match, and others who don't
-    #     # create a new group rule
-    #     self.test_create_new_group_rule_for_last_volunteer_shift_is_on()
-    #     # assert the queryset string is right
-    #     # get the queryset, make sure it matches a hand-created one.
+        self.assertEqualQuerySets(qs,Person.objects.none())
+
+        # check the contains group
+        opposite_group_rule = self.test_create_new_group_rule_for_custom_tag_is_exactly(right_hand_term="test", operator_name="contains")
+        opposite_hand_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
+        self.assertEqualQuerySets(opposite_group_rule.queryset,opposite_hand_qs)
+
+        # try for the other tag group
+        group_rule2 = self.test_create_new_group_rule_for_custom_tag_is_exactly(right_hand_term="another tag")
+        hand_qs2 = Person.objects.filter(Q(pk=ppl[4].pk))
+        self.assertEqualQuerySets(group_rule2.queryset,hand_qs2)
+
+    
+    def test_queryset_for_new_group_rule_for_last_volunteer_shift_is_on(self):
+        # create a new group rule (and TagSet)
+        group_rule = self.test_create_new_group_rule_for_last_volunteer_shift_is_on()
+
+        # hand-create a few people, some of whom match, and others who don't
+        ppl = self._generate_people_with_volunteer_history()
+        target_date = datetime.date(month=3,day=24,year=2010)
+        Factory.completed_volunteer_shift(ppl[2], date=target_date)
+        Factory.completed_volunteer_shift(ppl[4], date=target_date)
+
+        # assert the queryset string is right
+        self.assertEqual(group_rule.queryset_filter_string, "filter(volunteer__completedshift__date=datetime.date(month=3,day=24,year=2010))")
+
+        # get the queryset, make sure it matches a hand-created one.
+        qs = group_rule.queryset
+    
+        hand_qs = Person.objects.filter(Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk) )
+        self.assertEqualQuerySets(qs,hand_qs)
+
 
     # def test_queryset_for_new_group_rule_for_last_donation_is_after(self):
     #     assert True == "Test written"

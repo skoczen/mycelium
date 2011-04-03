@@ -79,39 +79,57 @@ def populate_rule_components(*args, **kwargs):
         _add_number_operators(ls)
         _add_right_type_number(ls)
 
+    def _add_tag_operators(ls):
+        ls.allowed_operators.add(operator_is_exactly)
+        ls.allowed_operators.add(operator_contains)
+        ls.save()    
+
+    def _add_operators_and_right_side_tag(ls):
+        _add_tag_operators(ls)
+        _add_right_type_text(ls)
+
+
     def _add_to_all_left_sides(ls):
         all_left_sides.append(ls)
 
-    def left_side_for_text(display_name=None, query_string_partial=None, order=None):
-        if not display_name or not query_string_partial:
+    def left_side_for_text(**kwargs):
+        if not "display_name" in kwargs or not "query_string_partial" in kwargs:
             raise Exception, "display_name and query_string_partial not passed!"
 
-        ls = LeftSide.objects.get_or_create(display_name=display_name,query_string_partial=query_string_partial, order=order)[0]
+        ls = LeftSide.objects.get_or_create(**kwargs)[0]
         _add_operators_and_right_side_text(ls)
         _add_to_all_left_sides(ls)
         return ls
 
-    def left_side_for_date(display_name=None, query_string_partial=None, order=None):
-        if not display_name or not query_string_partial:
+    def left_side_for_date(**kwargs):
+        if not "display_name" in kwargs or not "query_string_partial" in kwargs:
             raise Exception, "display_name and query_string_partial not passed!"
 
-        ls = LeftSide.objects.get_or_create(display_name=display_name,query_string_partial=query_string_partial, order=order)[0]
+        ls = LeftSide.objects.get_or_create(**kwargs)[0]
         _add_operators_and_right_side_date(ls)
         _add_to_all_left_sides(ls)
         return ls
 
-    def left_side_for_number(display_name=None, query_string_partial=None, order=None):
-        if not display_name or not query_string_partial:
+    def left_side_for_number(**kwargs):
+        if not "display_name" in kwargs or not "query_string_partial" in kwargs:
             raise Exception, "display_name and query_string_partial not passed!"
 
-        ls = LeftSide.objects.get_or_create(display_name=display_name,query_string_partial=query_string_partial, order=order)[0]
+        ls = LeftSide.objects.get_or_create(**kwargs)[0]
         _add_operators_and_right_side_number(ls)
         _add_to_all_left_sides(ls)
         return ls
+    
+    def left_side_for_tag(**kwargs):
+        if not "display_name" in kwargs or not "query_string_partial" in kwargs:
+            raise Exception, "display_name and query_string_partial not passed!"
 
+        ls = LeftSide.objects.get_or_create(**kwargs)[0]
+        _add_operators_and_right_side_tag(ls)
+        _add_to_all_left_sides(ls)
+        return ls
 
     # Left sides - built-ins
-    left_side_for_text(     display_name="have any tag that"                            ,query_string_partial="tagsetmembership__taggedtagsetmembership__tag__name" , order=10     )
+    left_side_for_tag (     display_name="have any tag that"                            ,query_string_partial="tagsetmembership__taggedtagsetmembership__tag__name" , order=10     , add_closing_paren=False)
     left_side_for_text(     display_name="volunteer status"                             ,query_string_partial="volunteer__status"                                   , order=100     )
     left_side_for_date(     display_name="last donation"                                ,query_string_partial="donor__donation__date"                               , order=110     )
     left_side_for_number(   display_name="total donations in the last 12 months"        ,query_string_partial="donor__twelvemonth_total"                            , order=120     )
@@ -123,7 +141,11 @@ def populate_rule_components(*args, **kwargs):
     i = 0
     for ts in TagSet.objects.all():
         i = i+1
-        left_side_for_text(display_name="have a %s tag that" % (ts.name) ,query_string_partial="tagsetmembership__tagset__name='%s',tagsetmembership__taggedtagsetmembership__tag__name" % (ts.name), order=20+i)
+        left_side_for_tag(display_name="have a %s tag that" % (ts.name) ,
+                            query_string_partial="tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='%s',taggedtagsetmembership__tag__name" % (ts.name), 
+                            order=20+i,
+                            add_closing_paren=True)
+                                                                                                
 
 
     # Cleanup
