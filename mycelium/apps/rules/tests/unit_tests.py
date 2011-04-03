@@ -554,3 +554,18 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
     #     # assert the queryset string is right
     #     # get the queryset, make sure it matches a hand-created one.
 
+    # def test_queryset_total_donations_in_the_last_12_months(self):
+    #     # hand-create a few people, some of whom match, and others who don't. Include temporarily inactive
+    #     # create a new group rule
+    #     self.test_create_new_group_rule_for_volunteer_status_is_inactive()
+    #     # assert the queryset string is right
+    #     # get the queryset, make sure it matches a hand-created one.
+
+    def test_invalid_rule_missing_left_side(self):
+        assert True == "test written"
+
+    def test_invalid_rule_missing_operator_side(self):
+        assert True == "test written"
+        
+    def test_invalid_rule_missing_right_side(self):
+        assert True == "test written"

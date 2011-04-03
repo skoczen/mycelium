@@ -156,7 +156,7 @@ def populate_rule_components(*args, **kwargs):
 
     # Left sides - built-ins
     left_side_for_tag (     display_name="have any tag that"                            ,query_string_partial="tagsetmembership__taggedtagsetmembership__tag__name" , order=10     , add_closing_paren=False)
-    left_side_for_choices(  display_name="volunteer status"                             ,query_string_partial="volunteer__status"                                   , order=100     )
+    left_side_for_choices(  display_name="volunteer status"                             ,query_string_partial="volunteer__status"                                   , order=100    ,)
     left_side_for_date(     display_name="last donation"                                ,query_string_partial="donor__donation__date"                               , order=110     )
     left_side_for_number(   display_name="total donations in the last 12 months"        ,query_string_partial="donor__twelvemonth_total"                            , order=120     )
     left_side_for_date(     display_name="last volunteer shift"                         ,query_string_partial="volunteer__completedshift__date"                     , order=130     )    

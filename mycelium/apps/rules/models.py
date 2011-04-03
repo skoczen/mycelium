@@ -93,7 +93,6 @@ class Rule(TimestampModelMixin):
     @property
     def is_valid(self):
         """Boolean - if true, this rule is complete, and ok to query against."""
-        raise NotYetImplemented
         return self.left_side and self.operator and self.right_side_value
 
     @property
@@ -108,13 +107,16 @@ class Rule(TimestampModelMixin):
                                                             "right_side_value": "joe",
                                                         }
         """
-        filter_str = "%s%s%s" % (self.left_side.query_string_partial, self.operator.query_string_partial, self.right_side_value.cleaned_query_value)
-        if self.left_side.add_closing_paren:
-            filter_str = "%s)" % filter_str
-        if self.operator.use_filter:
-            return "filter(%s)" % filter_str
+        if not self.is_valid:
+            raise Exception, "Rule Incomplete"
         else:
-            return "exclude(%s)" % filter_str
+            filter_str = "%s%s%s" % (self.left_side.query_string_partial, self.operator.query_string_partial, self.right_side_value.cleaned_query_value)
+            if self.left_side.add_closing_paren:
+                filter_str = "%s)" % filter_str
+            if self.operator.use_filter:
+                return "filter(%s)" % filter_str
+            else:
+                return "exclude(%s)" % filter_str
 
 
     @property
