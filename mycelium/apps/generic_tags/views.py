@@ -126,7 +126,10 @@ class TagViews(object):
         success = False
         new_tag = request.REQUEST['new_tag'].strip().lower()
         if new_tag != "":
-            self._tags_for_target.add(new_tag)
+            print self._tags_for_target
+            print new_tag
+            print self._tags_for_target.add(new_tag)
+            print "Added"
             success = True
 
         return self._return_fragments_or_redirect(request,locals())

@@ -10,6 +10,9 @@ from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 from django.template.defaultfilters import slugify
 
+
+
+
 class TagSet(TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True, unique=True)
     slug = models.SlugField(max_length=255)
@@ -30,11 +33,10 @@ class TagSet(TimestampModelMixin):
         # Should be cached, most likely.
 
         # Needs to be a queryset, for the other options to like it.
-        from django.contrib.contenttypes.models import ContentType
-        tsm_ct = ContentType.objects.get_for_model(TagSetMembership)
         tsms = self.tagsetmembership_set.all()
         
-        all_tags = Tag.objects.filter(pk__in=TaggedItem.objects.filter(content_type=tsm_ct, object_id__in=tsms).values("tag").distinct()).order_by("name")
+        # raise Exception, "The line below broke in refactor."
+        all_tags = Tag.objects.filter(pk__in=TaggedTagSetMembership.objects.filter(content_object__in=self.tagsetmembership_set.all()).values("tag")).distinct().order_by("name")
 
         return all_tags
 
@@ -82,6 +84,7 @@ class TagSet(TimestampModelMixin):
 
 class TaggedTagSetMembership(TaggedItemBase):
     content_object = models.ForeignKey('TagSetMembership')
+
 
 class TagSetMembership(TimestampModelMixin):
     tagset = models.ForeignKey(TagSet, blank=True, null=True)
