@@ -32,10 +32,6 @@ class TagSet(TimestampModelMixin):
         """Returns all tags possible in this set"""
         # Should be cached, most likely.
 
-        # Needs to be a queryset, for the other options to like it.
-        tsms = self.tagsetmembership_set.all()
-        
-        # raise Exception, "The line below broke in refactor."
         all_tags = Tag.objects.filter(pk__in=TaggedTagSetMembership.objects.filter(content_object__in=self.tagsetmembership_set.all()).values("tag")).distinct().order_by("name")
 
         return all_tags
