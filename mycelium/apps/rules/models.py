@@ -35,6 +35,8 @@ class RightSideType(TimestampModelMixin):
         if self.name == "date":
             d = parse(value_to_prep).date()
             return "datetime.date(month=%s,day=%s,year=%s)" % (d.month, d.day, d.year)
+        if self.name == "choices":
+            raise NotYetImplemented
         else:
             raise NotYetImplemented
 
@@ -50,13 +52,10 @@ class RightSideValue(TimestampModelMixin):
     @property
     def cleaned_query_value(self):
         """Converts value (a string) into the appropriate type to query against"""
-        # raise NotYetImplemented
-
-        # Idea/pseudocode
         if self.value:
             return self.right_side_type.prepare_query_value(self.value)
         else:
-            return None
+            raise Exception, "No Value"
 
 class LeftSide(TimestampModelMixin):
     display_name = models.CharField(max_length=255)

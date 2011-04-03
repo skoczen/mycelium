@@ -126,6 +126,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
         # Ugh.
         return self.peopleandorganizationssearchproxy_set.all()[0].search_result_row
 
+
 class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
 
@@ -347,4 +348,3 @@ post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender
 post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
 post_save.connect(PeopleAndOrganizationsSearchProxy.related_organization_record_changed,sender=Employee)
 post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=Employee)
-

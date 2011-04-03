@@ -15,10 +15,13 @@ def populate_rule_components(*args, **kwargs):
     right_type_text     = RightSideType.objects.get_or_create(name="text")[0]
     right_type_date     = RightSideType.objects.get_or_create(name="date")[0]
     right_type_number   = RightSideType.objects.get_or_create(name="number")[0]
-    all_right_side_types = [right_type_text, right_type_date, right_type_number]
+    right_type_choices   = RightSideType.objects.get_or_create(name="choices")[0]
+    all_right_side_types = [right_type_text, right_type_date, right_type_number, right_type_choices]
 
     # Operators
     all_operators = []
+    operator_is =                   Operator.objects.get_or_create(display_name="is"                , query_string_partial="="             , use_filter=True)[0]
+    operator_is_not =               Operator.objects.get_or_create(display_name="is not"            , query_string_partial="="             , use_filter=False)[0]
     operator_is_exactly =           Operator.objects.get_or_create(display_name="is exactly"        , query_string_partial="__iexact="     , use_filter=True)[0]
     operator_is_not_exactly =       Operator.objects.get_or_create(display_name="is not exactly"    , query_string_partial="__iexact="     , use_filter=False)[0]
     operator_contains =             Operator.objects.get_or_create(display_name="contains"          , query_string_partial="__icontains="  , use_filter=True)[0]
@@ -32,6 +35,7 @@ def populate_rule_components(*args, **kwargs):
     all_operators = [   operator_is_exactly, operator_is_not_exactly, operator_contains, operator_does_not_contain, 
                         operator_is_on, operator_is_before, operator_is_after,
                         operator_is_equal, operator_is_less_than, operator_is_more_than,
+                        operator_is, operator_is_not
                     ]
 
     # Helper methods
@@ -88,6 +92,19 @@ def populate_rule_components(*args, **kwargs):
         _add_tag_operators(ls)
         _add_right_type_text(ls)
 
+    def _add_choices_operators(ls):
+        ls.allowed_operators.add(operator_is)
+        ls.allowed_operators.add(operator_is_not)
+        ls.save()
+    
+    def _add_right_type_choices(ls):
+        ls.allowed_right_side_types.add(right_type_choices)
+        ls.save()
+    
+    def _add_operators_and_right_side_choices(ls):
+        _add_choices_operators(ls)
+        _add_right_type_choices(ls)
+
 
     def _add_to_all_left_sides(ls):
         all_left_sides.append(ls)
@@ -128,9 +145,18 @@ def populate_rule_components(*args, **kwargs):
         _add_to_all_left_sides(ls)
         return ls
 
+    def left_side_for_choices(**kwargs):
+        if not "display_name" in kwargs or not "query_string_partial" in kwargs:
+            raise Exception, "display_name and query_string_partial not passed!"
+
+        ls = LeftSide.objects.get_or_create(**kwargs)[0]
+        _add_operators_and_right_side_choices(ls)
+        _add_to_all_left_sides(ls)
+        return ls
+
     # Left sides - built-ins
     left_side_for_tag (     display_name="have any tag that"                            ,query_string_partial="tagsetmembership__taggedtagsetmembership__tag__name" , order=10     , add_closing_paren=False)
-    left_side_for_text(     display_name="volunteer status"                             ,query_string_partial="volunteer__status"                                   , order=100     )
+    left_side_for_choices(  display_name="volunteer status"                             ,query_string_partial="volunteer__status"                                   , order=100     )
     left_side_for_date(     display_name="last donation"                                ,query_string_partial="donor__donation__date"                               , order=110     )
     left_side_for_number(   display_name="total donations in the last 12 months"        ,query_string_partial="donor__twelvemonth_total"                            , order=120     )
     left_side_for_date(     display_name="last volunteer shift"                         ,query_string_partial="volunteer__completedshift__date"                     , order=130     )    

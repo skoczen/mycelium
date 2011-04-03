@@ -29,6 +29,10 @@ class RuleTestAbstractions(object):
         return Operator.objects.filter(Q(display_name="is exactly") | Q(display_name="contains") )
 
     @property
+    def _choices_operators(self):
+        return Operator.objects.filter(Q(display_name="is") | Q(display_name="is not") )
+
+    @property
     def _text_right_side_types(self):
         return RightSideType.objects.filter(name="text")
     
@@ -39,6 +43,10 @@ class RuleTestAbstractions(object):
     @property
     def _number_right_side_types(self):
         return RightSideType.objects.filter(name="number")
+
+    @property
+    def _choices_right_side_types(self):
+        return RightSideType.objects.filter(name="choices")
 
 
 class TestRuleModelFunctions(QiUnitTestMixin, TestCase):
@@ -104,8 +112,8 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
     def test_volunteer_status(self):
         left_side = LeftSide.objects.get(display_name="volunteer status")
         self.assertEqual(left_side.query_string_partial, "volunteer__status")
-        self.assertEqualQuerySets(left_side.operators,  self._text_operators )
-        self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types)
+        self.assertEqualQuerySets(left_side.operators,  self._choices_operators )
+        self.assertEqualQuerySets(left_side.right_side_types, self._choices_right_side_types)
         self.assertEqual(left_side.add_closing_paren, False)
     
     def test_last_donation(self):
@@ -150,6 +158,12 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
         rs = self._number_right_side_types
         rs.count() == 1
         assert rs[0].name == "number"
+
+    def test_right_side_for_choices(self):
+        rs = self._choices_right_side_types
+        rs.count() == 1
+        assert rs[0].name == "choices"
+
 
     def test_operator_display_name_and_query_string_model_for_is_exactly(self):
         o = Operator.objects.get(display_name="is exactly")
@@ -219,6 +233,8 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
     def test_operator_ordering(self):
         list_of_names = [o.display_name for o in Operator.objects.all()]
         target_list_of_names = [
+            "is",
+            "is not",
             "is exactly",
             "is not exactly",
             "contains",
@@ -255,7 +271,7 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
         # make sure it's gone
         self.assertEqual(LeftSide.objects.filter(display_name="have a new test tagset tag that").count(), 0)
 
-class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
+class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, DestructiveDatabaseTestCase):
     fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
@@ -340,15 +356,49 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
         return new_group_rule
 
 
-    # def test_create_new_group_rule_for_last_donation_is_after(self):
-    #     # create a new group rule
-    #     # assert the correct models exist
-    #     assert True == "Test written"
+    def test_create_new_group_rule_for_last_donation_is_after(self, right_hand_term="2/12/2009", operator_name="is after"):
+       # create a new group 
+        group = Factory.group()
+        
+        # create a new group rule
+        left_side = LeftSide.objects.get(display_name="last donation")
+        op = Operator.objects.get(display_name=operator_name)
+        rst = self._date_right_side_types[0]
+        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=op, right_side_value=rsv)
+        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
 
-    # def test_create_new_group_rule_for_volunteer_status_is_active(self):
-    #     # create a new group rule
-    #     # assert the correct models exist
-    #     assert True == "Test written"
+        # assert the correct models exist
+        self.assertEqual(new_group_rule.group, group)
+        self.assertEqual(new_group_rule.left_side, left_side)
+        self.assertEqual(new_group_rule.operator, op)
+        self.assertEqual(new_group_rule.right_side_value, rsv)
+        self.assertEqual(new_group_rule.group, group)
+
+        return new_group_rule
+
+
+    def test_create_new_group_rule_for_volunteer_status_is_active(self, right_hand_term="active", operator_name="is"):
+        # create a new group 
+        group = Factory.group()
+        
+        # create a new group rule
+        left_side = LeftSide.objects.get(display_name="volunteer status")
+        icontains = Operator.objects.get(display_name=operator_name)
+        rst = self._choices_right_side_types[0]
+        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
+
+        # assert the correct models exist
+        self.assertEqual(new_group_rule.group, group)
+        self.assertEqual(new_group_rule.left_side, left_side)
+        self.assertEqual(new_group_rule.operator, icontains)
+        self.assertEqual(new_group_rule.right_side_value, rsv)
+        self.assertEqual(new_group_rule.group, group)
+
+        return new_group_rule
+
 
     # def test_create_new_group_rule_for_volunteer_status_is_inactive(self):
     #     # create a new group rule
@@ -419,7 +469,7 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
         group_rule = self.test_create_new_group_rule_for_last_volunteer_shift_is_on()
 
         # hand-create a few people, some of whom match, and others who don't
-        ppl = self._generate_people_with_volunteer_history()
+        ppl = self._generate_people()
         target_date = datetime.date(month=3,day=24,year=2010)
         Factory.completed_volunteer_shift(ppl[2], date=target_date)
         Factory.completed_volunteer_shift(ppl[4], date=target_date)
@@ -434,21 +484,59 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
         self.assertEqualQuerySets(qs,hand_qs)
 
 
-    # def test_queryset_for_new_group_rule_for_last_donation_is_after(self):
-    #     assert True == "Test written"
-    #     # hand-create a few people, some of whom match, and others who don't
-    #     # create a new group rule
-    #     self.test_create_new_group_rule_for_last_donation_is_after()
-    #     # assert the queryset string is right
-    #     # get the queryset, make sure it matches a hand-created one.
+    def test_queryset_for_new_group_rule_for_last_donation_is_after(self):
+        # create a new group rule
+        group_rule = self.test_create_new_group_rule_for_last_donation_is_after()
+
+        # hand-create a few people, some of whom match, and others who don't
+        ppl = self._generate_people()
+        target_date = datetime.date(month=2,day=12,year=2009)
+        Factory.donation(ppl[1], date=target_date+datetime.timedelta(days=10))
+        Factory.donation(ppl[2], date=target_date)
+        Factory.donation(ppl[4], date=target_date-datetime.timedelta(days=59))
+
+        self.assertEqual(group_rule.queryset_filter_string, "filter(donor__donation__date__gt=datetime.date(month=2,day=12,year=2009))")
+
+        # get the queryset, make sure it matches a hand-created one.
+        qs = group_rule.queryset
+    
+        hand_qs = Person.objects.filter(Q(pk=ppl[1].pk))
+        self.assertEqualQuerySets(qs,hand_qs)
+
+        # check the opposite
+        opposite_group_rule = self.test_create_new_group_rule_for_last_donation_is_after(operator_name="is before")
+        oppostite_hand_qs = Person.objects.filter(Q(pk=ppl[4].pk))
+        self.assertEqualQuerySets(opposite_group_rule.queryset,oppostite_hand_qs)
 
 
-    # def test_queryset_for_new_group_rule_for_volunteer_status_is_active(self):
-    #     # hand-create a few people, some of whom match, and others who don't. Include temporarily inactive
-    #     # create a new group rule
-    #     self.test_create_new_group_rule_for_volunteer_status_is_active()
-    #     # assert the queryset string is right
-    #     # get the queryset, make sure it matches a hand-created one.
+
+    def test_queryset_for_new_group_rule_for_volunteer_status_is_active(self):
+        from volunteers.models import VOLUNTEER_STATII
+        # hand-create a few people, some of whom match, and others who don't
+        ppl = self._generate_people()
+        v = ppl[1].volunteer
+        v.status = VOLUNTEER_STATII[1][0]
+        v.save()
+        v = ppl[3].volunteer
+        v.status = VOLUNTEER_STATII[2][0]
+        v.save()
+
+        # create a new group rule
+        group_rule = self.test_create_new_group_rule_for_volunteer_status_is_active()
+
+        self.assertEqual(group_rule.queryset_filter_string, "filter(volunteer__status='active')")
+
+        # get the queryset, make sure it matches a hand-created one.
+        qs = group_rule.queryset
+        hand_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk))
+
+        self.assertEqualQuerySets(qs,hand_qs)
+
+        # check the opposite
+        opposite_group_rule = self.test_create_new_group_rule_for_volunteer_status_is_active(operator_name="is not")
+        oppostite_hand_qs = Person.objects.filter(Q(pk=ppl[1].pk) | Q(pk=ppl[3].pk))
+        self.assertEqualQuerySets(opposite_group_rule.queryset,oppostite_hand_qs)
+
 
 
     # def test_queryset_for_new_group_rule_for_volunteer_status_is_inactive(self):
@@ -457,3 +545,12 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin):
     #     self.test_create_new_group_rule_for_volunteer_status_is_inactive()
     #     # assert the queryset string is right
     #     # get the queryset, make sure it matches a hand-created one.
+
+
+    # def test_queryset_total_volunteer_hours_in_the_last_12_months(self):
+    #     # hand-create a few people, some of whom match, and others who don't. Include temporarily inactive
+    #     # create a new group rule
+    #     self.test_create_new_group_rule_for_volunteer_status_is_inactive()
+    #     # assert the queryset string is right
+    #     # get the queryset, make sure it matches a hand-created one.
+

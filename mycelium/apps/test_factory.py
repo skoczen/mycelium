@@ -2,6 +2,7 @@ from qi_toolkit.factory import QiFactory
 from people.models import Person, Organization, Employee
 from groups.models import Group, GroupRule
 from volunteers.models import CompletedShift
+from donors.models import Donation
 import datetime
 
 class DummyObj(object):
@@ -91,6 +92,18 @@ class Factory(QiFactory):
 
         return CompletedShift.objects.create(volunteer=person.volunteer,
                                             duration=duration,
+                                            date=date)
+         
+    @classmethod
+    def donation(cls, person, date=None, amount=None):
+        if not date:
+            date = datetime.datetime.now() - datetime.timedelta(days=cls.rand_int(0,3000))
+        
+        if not amount:
+            amount = cls.rand_currency()
+
+        return Donation.objects.create(donor=person.donor,
+                                            amount=amount,
                                             date=date)
          
 
