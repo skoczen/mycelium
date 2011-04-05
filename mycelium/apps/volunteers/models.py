@@ -6,12 +6,7 @@ from taggit.managers import TaggableManager
 from people.models import Person
 from django.db.models.signals import post_save
 import datetime
-
-VOLUNTEER_STATII = [
-    ("active", "Active"),
-    ("inactive", "Inactive"),
-    ("temp_inactive", "Temporarily Inactive"),
-]
+from volunteers import VOLUNTEER_STATII
 
 class Volunteer(TimestampModelMixin):
     """A volunteer!"""

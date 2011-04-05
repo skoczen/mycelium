@@ -5,9 +5,8 @@ from django.db.models import Q
 from generic_tags.models import TagSetMembership
 import datetime
 from dateutil.parser import parse
-
-class NotYetImplemented(Exception):
-    pass
+from picklefield.fields import PickledObjectField
+from rules import NotYetImplemented, IncompleteRuleException
 
 
 class Operator(TimestampModelMixin):
@@ -36,7 +35,7 @@ class RightSideType(TimestampModelMixin):
             d = parse(value_to_prep).date()
             return "datetime.date(month=%s,day=%s,year=%s)" % (d.month, d.day, d.year)
         if self.name == "choices":
-            raise NotYetImplemented
+            return "'%s'" % value_to_prep
         else:
             raise NotYetImplemented
 
@@ -64,6 +63,7 @@ class LeftSide(TimestampModelMixin):
     allowed_right_side_types = models.ManyToManyField(RightSideType)
     order = models.IntegerField(default=100)
     add_closing_paren = models.BooleanField(default=False)
+    choices = PickledObjectField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s" % self.display_name
@@ -108,7 +108,7 @@ class Rule(TimestampModelMixin):
                                                         }
         """
         if not self.is_valid:
-            raise Exception, "Rule Incomplete"
+            raise IncompleteRuleException
         else:
             filter_str = "%s%s%s" % (self.left_side.query_string_partial, self.operator.query_string_partial, self.right_side_value.cleaned_query_value)
             if self.left_side.add_closing_paren:
@@ -124,9 +124,12 @@ class Rule(TimestampModelMixin):
         """Returns a working queryset of self.target_model's class, filtered/excluded 
            as appropriate"""
         if not self.target_model:
-            raise Exception, "No target model defined!"
+            raise IncompleteRuleException, "No target model defined!"
         else:
             return eval("self.target_model.objects.%s" % self.queryset_filter_string)
+
+    def queryset_callable(self):
+        return self.queryset
 
     class Meta(object):
         abstract = True

@@ -10,6 +10,7 @@ from django.test import TestCase
 from generic_tags.models import TagSet
 from people.models import Person
 import datetime
+from rules import NotYetImplemented, IncompleteRuleException
 
 class RuleTestAbstractions(object):
     @property
@@ -123,12 +124,12 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
         self.assertEqualQuerySets(left_side.right_side_types, self._date_right_side_types)
         self.assertEqual(left_side.add_closing_paren, False)
 
-    def test_total_donation_amount_in_past_12_month(self):
-        left_side = LeftSide.objects.get(display_name="total donations in the last 12 months")
-        self.assertEqual(left_side.query_string_partial, "donor__twelvemonth_total")
-        self.assertEqualQuerySets(left_side.operators,  self._number_operators )
-        self.assertEqualQuerySets(left_side.right_side_types, self._number_right_side_types)
-        self.assertEqual(left_side.add_closing_paren, False)
+    # def test_total_donation_amount_in_past_12_month(self):
+    #     left_side = LeftSide.objects.get(display_name="total donations in the last 12 months")
+    #     self.assertEqual(left_side.query_string_partial, "donor__twelvemonth_total")
+    #     self.assertEqualQuerySets(left_side.operators,  self._number_operators )
+    #     self.assertEqualQuerySets(left_side.right_side_types, self._number_right_side_types)
+    #     self.assertEqual(left_side.add_closing_paren, False)
 
     def test_last_volunteer_shift(self):
         left_side = LeftSide.objects.get(display_name="last volunteer shift")
@@ -137,12 +138,12 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
         self.assertEqualQuerySets(left_side.right_side_types, self._date_right_side_types)
         self.assertEqual(left_side.add_closing_paren, False)
 
-    def test_total_volunteer_hours_in_past_12_month(self):
-        left_side = LeftSide.objects.get(display_name="total volunteer hours in the last 12 months")
-        self.assertEqual(left_side.query_string_partial, "volunteer__twelvemonth_total")
-        self.assertEqualQuerySets(left_side.operators,  self._number_operators )
-        self.assertEqualQuerySets(left_side.right_side_types, self._number_right_side_types)
-        self.assertEqual(left_side.add_closing_paren, False)
+    # def test_total_volunteer_hours_in_past_12_month(self):
+    #     left_side = LeftSide.objects.get(display_name="total volunteer hours in the last 12 months")
+    #     self.assertEqual(left_side.query_string_partial, "volunteer__twelvemonth_total")
+    #     self.assertEqualQuerySets(left_side.operators,  self._number_operators )
+    #     self.assertEqualQuerySets(left_side.right_side_types, self._number_right_side_types)
+    #     self.assertEqual(left_side.add_closing_paren, False)
 
     def test_right_side_for_text(self):
         rs = self._text_right_side_types
@@ -224,9 +225,9 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
             "have a Donor tag that",
             "volunteer status",
             "last donation",
-            "total donations in the last 12 months",
+            # "total donations in the last 12 months",
             "last volunteer shift",
-            "total volunteer hours in the last 12 months"
+            # "total volunteer hours in the last 12 months"
         ]
         self.assertEqual(list_of_names,target_list_of_names)
 
@@ -400,6 +401,27 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         return new_group_rule
 
 
+    def test_create_new_group_rule_for_volunteer_status_is_inactive(self, right_hand_term="inactive", operator_name="is"):
+        # create a new group 
+        group = Factory.group()
+        
+        # create a new group rule
+        left_side = LeftSide.objects.get(display_name="volunteer status")
+        icontains = Operator.objects.get(display_name=operator_name)
+        rst = self._choices_right_side_types[0]
+        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
+
+        # assert the correct models exist
+        self.assertEqual(new_group_rule.group, group)
+        self.assertEqual(new_group_rule.left_side, left_side)
+        self.assertEqual(new_group_rule.operator, icontains)
+        self.assertEqual(new_group_rule.right_side_value, rsv)
+        self.assertEqual(new_group_rule.group, group)
+
+        return new_group_rule
+
     # def test_create_new_group_rule_for_volunteer_status_is_inactive(self):
     #     # create a new group rule
     #     # assert the correct models exist
@@ -511,14 +533,14 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
 
 
     def test_queryset_for_new_group_rule_for_volunteer_status_is_active(self):
-        from volunteers.models import VOLUNTEER_STATII
+        from volunteers import VOLUNTEER_STATII
         # hand-create a few people, some of whom match, and others who don't
         ppl = self._generate_people()
         v = ppl[1].volunteer
-        v.status = VOLUNTEER_STATII[1][0]
+        v.status = VOLUNTEER_STATII[1][0]  #inactive
         v.save()
         v = ppl[3].volunteer
-        v.status = VOLUNTEER_STATII[2][0]
+        v.status = VOLUNTEER_STATII[2][0]  #temporarily inactive
         v.save()
 
         # create a new group rule
@@ -539,12 +561,32 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
 
 
 
-    # def test_queryset_for_new_group_rule_for_volunteer_status_is_inactive(self):
-    #     # hand-create a few people, some of whom match, and others who don't. Include temporarily inactive
-    #     # create a new group rule
-    #     self.test_create_new_group_rule_for_volunteer_status_is_inactive()
-    #     # assert the queryset string is right
-    #     # get the queryset, make sure it matches a hand-created one.
+    def test_queryset_for_new_group_rule_for_volunteer_status_is_inactive(self):
+        from volunteers import VOLUNTEER_STATII
+        # hand-create a few people, some of whom match, and others who don't
+        ppl = self._generate_people()
+        v = ppl[2].volunteer
+        v.status = VOLUNTEER_STATII[1][0]    #inactive
+        v.save()   
+        v = ppl[4].volunteer   
+        v.status = VOLUNTEER_STATII[2][0]   #temporarily inactive
+        v.save()
+
+        # create a new group rule
+        group_rule = self.test_create_new_group_rule_for_volunteer_status_is_inactive()
+
+        self.assertEqual(group_rule.queryset_filter_string, "filter(volunteer__status='inactive')")
+
+        # get the queryset, make sure it matches a hand-created one.
+        qs = group_rule.queryset
+        hand_qs = Person.objects.filter( Q(pk=ppl[2].pk) )
+
+        self.assertEqualQuerySets(qs,hand_qs)
+
+        # check the opposite
+        opposite_group_rule = self.test_create_new_group_rule_for_volunteer_status_is_inactive(operator_name="is not")
+        oppostite_hand_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[1].pk) | Q(pk=ppl[3].pk) | Q(pk=ppl[4].pk) )
+        self.assertEqualQuerySets(opposite_group_rule.queryset,oppostite_hand_qs)
 
 
     # def test_queryset_total_volunteer_hours_in_the_last_12_months(self):
@@ -554,6 +596,7 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
     #     # assert the queryset string is right
     #     # get the queryset, make sure it matches a hand-created one.
 
+
     # def test_queryset_total_donations_in_the_last_12_months(self):
     #     # hand-create a few people, some of whom match, and others who don't. Include temporarily inactive
     #     # create a new group rule
@@ -561,11 +604,43 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
     #     # assert the queryset string is right
     #     # get the queryset, make sure it matches a hand-created one.
 
+
     def test_invalid_rule_missing_left_side(self):
-        assert True == "test written"
+        right_hand_term="test"
+        operator_name="contains"
+        group = Factory.group()
+        # left_side = LeftSide.objects.get(display_name="have a General tag that")
+        left_side = None
+        icontains = Operator.objects.get(display_name=operator_name)
+        rst = self._text_right_side_types[0]
+        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+
+        self.assertRaises(IncompleteRuleException, group_rule.queryset_callable)
+
 
     def test_invalid_rule_missing_operator_side(self):
-        assert True == "test written"
+        right_hand_term="test"
+        # operator_name="contains"
+        group = Factory.group()
+        left_side = LeftSide.objects.get(display_name="have a General tag that")
+        # icontains = Operator.objects.get(display_name=operator_name)
+        icontains = None
+        rst = self._text_right_side_types[0]
+        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+
+        self.assertRaises(IncompleteRuleException, group_rule.queryset_callable)
         
     def test_invalid_rule_missing_right_side(self):
-        assert True == "test written"
+        # right_hand_term="test"
+        operator_name="contains"
+        group = Factory.group()
+        left_side = LeftSide.objects.get(display_name="have a General tag that")
+        icontains = Operator.objects.get(display_name=operator_name)
+        # rst = self._text_right_side_types[0]
+        # rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
+        rsv = None
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+
+        self.assertRaises(IncompleteRuleException, group_rule.queryset_callable)
