@@ -157,10 +157,11 @@ class RuleGroup(models.Model):
             for r in self.rules:
                 results = "%s.%s" % (results, r.queryset_filter_string)
         else:
+            results = "self.target_model.objects.none()"
             for r in self.rules:
-                results = "self.target_model.objects.none()"
-                results = "%s | %s.%s " (results, "self.target_model.objects.", r.queryset_filter_string)
+                results = "%s | %s.%s " % (results, "self.target_model.objects", r.queryset_filter_string)
         
-        return eval(results)
+        qs = eval(results).distinct().all()
+        return qs
 
 
