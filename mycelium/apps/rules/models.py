@@ -4,7 +4,7 @@ from qi_toolkit.models import TimestampModelMixin
 from django.db.models import Q
 from generic_tags.models import TagSetMembership
 import datetime
-from dateutil.parser import parse
+from dateutil import parser
 from picklefield.fields import PickledObjectField
 from rules import NotYetImplemented, IncompleteRuleException
 
@@ -32,7 +32,7 @@ class RightSideType(TimestampModelMixin):
         if self.name == "text":
             return "'%s'" % value_to_prep
         if self.name == "date":
-            d = parse(value_to_prep).date()
+            d = parser.parse(value_to_prep).date()
             return "datetime.date(month=%s,day=%s,year=%s)" % (d.month, d.day, d.year)
         if self.name == "choices":
             return "'%s'" % value_to_prep
@@ -112,7 +112,7 @@ class Rule(TimestampModelMixin):
                                                         }
         """
         if not self.is_valid:
-            raise IncompleteRuleException
+            return ""
         else:
             filter_str = "%s%s%s" % (self.left_side.query_string_partial, self.operator.query_string_partial, self.right_side_value.cleaned_query_value)
             if self.left_side.add_closing_paren:
