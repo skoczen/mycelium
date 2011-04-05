@@ -1,4 +1,3 @@
-from rules.models import LeftSide, Operator, RightSideType
 
 def populate_rule_components(*args, **kwargs):
     """This function performs several actions, and is idempotent.
@@ -10,6 +9,11 @@ def populate_rule_components(*args, **kwargs):
     - Cleans up unused rule options
 
     """
+    # dependencies
+    from rules.models import LeftSide, Operator, RightSideType
+    from volunteers import VOLUNTEER_STATII
+
+
     # RightSideTypes
     all_right_side_types = []
     right_type_text     = RightSideType.objects.get_or_create(name="text")[0]
@@ -154,8 +158,6 @@ def populate_rule_components(*args, **kwargs):
         _add_to_all_left_sides(ls)
         return ls
 
-    # dependencies
-    from volunteers import VOLUNTEER_STATII
 
     # Left sides - built-ins
     left_side_for_tag (     display_name="have any tag that"                            ,query_string_partial="tagsetmembership__taggedtagsetmembership__tag__name" , order=10     , add_closing_paren=False)

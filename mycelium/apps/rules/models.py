@@ -78,6 +78,10 @@ class LeftSide(TimestampModelMixin):
     @property
     def right_side_types(self):
         return self.allowed_right_side_types.all()
+    
+    @property
+    def first_right_side_type(self):
+        return self.allowed_right_side_types.all()[0]
 
 class Rule(TimestampModelMixin):
     left_side = models.ForeignKey(LeftSide, blank=True, null=True)

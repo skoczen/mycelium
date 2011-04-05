@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     (r'^logo/',         include('logo_maker.urls',          app_name="logo_maker",      namespace="logo_maker")),
     (r'^groups/',       include('groups.urls',              app_name="groups",          namespace="groups")),
     (r'^tags/',         include('generic_tags.urls',        app_name="generic_tags",    namespace="generic_tags")),
+    (r'^rules/',        include('rules.urls',               app_name="rules",           namespace="rules")),
     
     (r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodcloud.posterous.com"}, 'blog_home'),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
