@@ -3,15 +3,17 @@ from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from people.models import NO_NAME_STRING
 
-from rules.models import Rule
+from rules.models import Rule, RuleGroup
+from people.models import Person
 
-class Group(SimpleSearchableModel, TimestampModelMixin):
+class Group(SimpleSearchableModel, TimestampModelMixin, RuleGroup):
     name = models.CharField(max_length=255, blank=True, null=True)
 
     # include_people = models.BooleanField(default=True)
     # include_organizations = models.BooleanField(default=False)
     # include_groups = models.BooleanField(default=False)
-    # rules_boolean = models.BooleanField() # True==All  False==Any
+
+    target_model = Person
 
     search_fields = ["name",]
     contact_type = "group"
@@ -21,17 +23,17 @@ class Group(SimpleSearchableModel, TimestampModelMixin):
 
     @property
     def searchable_name(self):
-        return self.name
+        if self.name:
+            return "%s" % self.name
+        else:
+            return ""
 
     class Meta(object):
         ordering = ("name",)
 
-    def members(self):
-        from people.models import Person
-        if not hasattr(self,"cached_members"):
-            print "Implement this!"
-            self.cached_members = Person.objects.all().order_by("?")[:50]
-        return self.cached_members
+    @property
+    def rules(self):
+        return self.grouprule_set.all()
 
 
     @property
@@ -41,7 +43,6 @@ class Group(SimpleSearchableModel, TimestampModelMixin):
         else:
             return NO_NAME_STRING
 
-from people.models import Person
 class GroupRule(Rule):
     group = models.ForeignKey(Group)
     

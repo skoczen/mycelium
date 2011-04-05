@@ -90,6 +90,10 @@ class Rule(TimestampModelMixin):
     def __unicode__(self):
         return "Rule: %s %s %s" % (self.left_side, self.operator, self.right_side_value)
 
+    class Meta(object):
+        abstract = True
+
+
     @property
     def is_valid(self):
         """Boolean - if true, this rule is complete, and ok to query against."""
@@ -113,6 +117,7 @@ class Rule(TimestampModelMixin):
             filter_str = "%s%s%s" % (self.left_side.query_string_partial, self.operator.query_string_partial, self.right_side_value.cleaned_query_value)
             if self.left_side.add_closing_paren:
                 filter_str = "%s)" % filter_str
+            
             if self.operator.use_filter:
                 return "filter(%s)" % filter_str
             else:
@@ -131,5 +136,31 @@ class Rule(TimestampModelMixin):
     def queryset_callable(self):
         return self.queryset
 
+
+class RuleGroup(models.Model):
+    rules_boolean = models.BooleanField(default=True) # True==All  False==Any
+
     class Meta(object):
         abstract = True
+
+    @property
+    def rules(self):
+        return self.rule_set.all()
+
+    @property
+    def members(self):
+        # TODO: cache/improve the speed.
+
+        results = ""
+        if self.rules_boolean:
+            results = "self.target_model.objects.all()"
+            for r in self.rules:
+                results = "%s.%s" % (results, r.queryset_filter_string)
+        else:
+            for r in self.rules:
+                results = "self.target_model.objects.none()"
+                results = "%s | %s.%s " (results, "self.target_model.objects.", r.queryset_filter_string)
+        
+        return eval(results)
+
+

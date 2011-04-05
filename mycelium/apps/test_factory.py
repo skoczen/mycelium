@@ -121,7 +121,8 @@ class Factory(QiFactory):
         return o
 
     @classmethod
-    def group(cls, name=None):
+    def group(cls, name=None, **kwargs):
         if not name:
             name = cls.rand_str()
-        return Group.objects.get_or_create(name=name)[0]
+        return Group.objects.get_or_create(name=name, **kwargs)[0]
+
