@@ -5,6 +5,7 @@ from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
 from rules.models import LeftSide, Operator, RightSideType
 
