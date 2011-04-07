@@ -150,21 +150,34 @@ class RuleGroup(models.Model):
     @property
     def rules(self):
         return self.rule_set.all()
+    
+    @property
+    def has_a_valid_rule(self):
+        for r in self.rules:
+            if r.is_valid:
+                return True
+        return False
+
 
     @property
     def members(self):
         # TODO: cache/improve the speed.
 
         results = ""
-        if self.rules_boolean:
-            results = "self.target_model.objects.all()"
-            for r in self.rules:
-                results = "%s.%s" % (results, r.queryset_filter_string)
+        if self.has_a_valid_rule:
+            if self.rules_boolean:
+                results = "self.target_model.objects.all()"
+                for r in self.rules:
+                    if r.is_valid:
+                        results = "%s.%s" % (results, r.queryset_filter_string)
+            else:
+                results = "self.target_model.objects.none()"
+                for r in self.rules:
+                    if r.is_valid:
+                        results = "%s | %s.%s " % (results, "self.target_model.objects", r.queryset_filter_string)
         else:
-            results = "self.target_model.objects.none()"
-            for r in self.rules:
-                results = "%s | %s.%s " % (results, "self.target_model.objects", r.queryset_filter_string)
-        
+            return self.target_model.objects.none()
+
         qs = eval(results).distinct().all()
         return qs
 

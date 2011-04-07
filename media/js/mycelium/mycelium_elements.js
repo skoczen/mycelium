@@ -221,7 +221,12 @@ $(function(){
                 	  success: function(json) {
                 		$(".generic_editable_field",data.target).each(function(){
                 			var field = $(this);
-                			$(".view_field",field).html($(".edit_field input",field).val());
+                			if ($(".edit_field select",field).length > 0) {
+                				$(".view_field",field).html($(".edit_field select option:selected",field).text());	
+                			} else {
+                				$(".view_field",field).html($(".edit_field input, .edit_field textarea",field).val());	
+                			}
+                			
                 		});
                 		var savetime = new Date();
                 		total_saving_time = savetime - save_start_time;

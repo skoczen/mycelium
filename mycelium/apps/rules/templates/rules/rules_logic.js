@@ -1,4 +1,4 @@
-{
+rules_logic = {
 "left_sides": {
 {% for l in left_sides %}
 	"{{l.pk}}": {
