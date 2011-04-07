@@ -75,3 +75,18 @@
 .basic_info #id_name {
 	min-width: 150px;
 }
+rules .generic_field_label {
+	display: none;
+}
+.group_rules_boolean_sentence .generic_field_label {
+	display: none;
+}
+.group_rules_boolean_sentence .generic_editable_field {
+	display: inline;
+}
+rules .generic_editable_field {
+	display: inline;
+}
+rules rule {
+	display: block;
+}

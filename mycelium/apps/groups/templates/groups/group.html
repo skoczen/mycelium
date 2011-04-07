@@ -68,7 +68,7 @@ $(function(){
 	<table class="striped members_table">
 	<fragment name="group_member_list" action="replace">
 	{% for p in group_members %}
-		{# {{p.search_result_row|safe}} #}
+		{{p.search_result_row|safe}}
 	{% endfor %}
 	</fragment>
 	</table>

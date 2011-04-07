@@ -21,18 +21,17 @@ class GroupRuleForm(ModelForm):
         if self.instance.right_side_type:
             if self.instance.right_side_type.name == "text":
                 self.fields["right_side_value"].widget=TextInput()
+                # self.fields["right_side_value"].initial=self.instance.right_side_value
             elif self.instance.right_side_type.name == "date":
                 self.fields["right_side_value"].widget=TextInput()
+                # self.fields["right_side_value"].initial=self.instance.right_side_value
             elif self.instance.right_side_type.name == "choices":
                 self.fields["right_side_value"].widget=Select()
+                # self.fields["right_side_value"].initial=self.instance.right_side_value
         
-
         self.fields["right_side_type"].widget=HiddenInput()
+        # self.fields["right_side_type"].initial=self.instance.right_side_type
 
-    def clean_right_side_value(self):
-        data = self.cleaned_data['right_side_value']
-        
-        return data
         
     class Meta:
         model = GroupRule

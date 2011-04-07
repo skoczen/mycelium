@@ -31,6 +31,7 @@ function left_side_changed() {
 		}
 		var old_name = old_target.attr("name");
 		var old_id = old_target.attr("id");
+		var old_val = old_target.val()
 
 		// set right side
 		$("right_side .edit_field",rule).html(left_side_logic.right_side_partial)
@@ -52,6 +53,12 @@ function left_side_changed() {
 		
 		// set right side type
 		$("right_side_type input",rule).val(left_side_logic.right_side_type)
+
+		// try to keep the value
+		try {
+			new_target.val(old_val);
+		} 
+		catch (e) {}
 	}
 	
 
