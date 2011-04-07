@@ -5,6 +5,7 @@ $(function(){
 	    showCurrentAtPos: 1            
 	});
 	$(".group_delete_btn").click(delete_group);	
+	$("rule").formset();
 });
 
 function delete_group(e) {

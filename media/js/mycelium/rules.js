@@ -10,11 +10,17 @@ function left_side_changed() {
 		var left_side_logic = RULES_LOGIC.left_sides[left_select.val()]
 
 		// set operators
+		operator_field = $("operator select",rule);
+		var old_operator_val = operator_field.val()
 		var operator_html = "";
 		for (var j=0; j<left_side_logic.operator_ids.length; j++) {
 			operator_html += RULES_LOGIC.operators[left_side_logic.operator_ids[j]].partial;
 		};
-		$("operator select",rule).html(operator_html)
+		operator_field.html(operator_html)
+		try {
+			operator_field.val(old_operator_val);
+		}
+		catch (e) {}
 
 		// get right side meta
 		var old_target;

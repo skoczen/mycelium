@@ -19,16 +19,17 @@ class GroupRuleForm(ModelForm):
         super(GroupRuleForm, self).__init__(*args,**kwargs)
         self.fields["right_side_value"].widget=TextInput()
         if self.instance.right_side_type:
-            if self.instance.right_side_type.name == "text":
-                self.fields["right_side_value"].widget=TextInput()
-                # self.fields["right_side_value"].initial=self.instance.right_side_value
-            elif self.instance.right_side_type.name == "date":
-                self.fields["right_side_value"].widget=TextInput()
-                # self.fields["right_side_value"].initial=self.instance.right_side_value
-            elif self.instance.right_side_type.name == "choices":
-                self.fields["right_side_value"].widget=Select()
-                # self.fields["right_side_value"].initial=self.instance.right_side_value
-        
+            # if self.instance.right_side_type.name == "text":
+            #     self.fields["right_side_value"].widget=TextInput()
+            #     # self.fields["right_side_value"].initial=self.instance.right_side_value
+            # elif self.instance.right_side_type.name == "date":
+            #     self.fields["right_side_value"].widget=TextInput()
+            #     # self.fields["right_side_value"].initial=self.instance.right_side_value
+            # elif self.instance.right_side_type.name == "choices":
+            #     self.fields["right_side_value"].widget=Select()
+            #     # self.fields["right_side_value"].initial=self.instance.right_side_value
+            pass
+
         self.fields["right_side_type"].widget=HiddenInput()
         # self.fields["right_side_type"].initial=self.instance.right_side_type
 
@@ -37,4 +38,4 @@ class GroupRuleForm(ModelForm):
         model = GroupRule
         
 
-GroupRuleFormset = inlineformset_factory(Group, GroupRule, fields=("left_side", "operator", "right_side_value", "right_side_type" ), can_delete=True, extra=1, form=GroupRuleForm)
+GroupRuleFormset = inlineformset_factory(Group, GroupRule, fields=("left_side", "operator", "right_side_value", "right_side_type" ), can_delete=True, extra=0, form=GroupRuleForm)

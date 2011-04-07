@@ -37,7 +37,7 @@ $(function(){
 <div class="group_rules group_detail_column edit_mode_on">
 	<div class="detail_header">Rules</div>
 	<div class="group_rules_boolean_sentence">
-	All people who match {% generic_editable_field form.rules_boolean %} of the following rules:
+	Find people who match {% generic_editable_field_anyall_bool form.rules_boolean %} of the following rules:
 	</div>
 		
 	<rules>
@@ -48,7 +48,7 @@ $(function(){
 			<right_side>{% generic_editable_field r_form.right_side_value %}</right_side>
 			<right_side_type>{{r_form.right_side_type}}</right_side_type>
 			<hidden>{% for f in r_form.hidden_fields %}{{f}}{% endfor %} </hidden>
-			<delete>{{r_form.DELETE}}</delete>
+			<delete>{% if r_form.instance.pk %}{{r_form.DELETE}}{% endif %}</delete>
 		</rule>
 		{% endfor %}
 		{{rule_formset.management_form}}
