@@ -9,7 +9,8 @@
 {% js "/js/mycelium/people_common.js" %}
 {% js "/js/mycelium/groups.js" %}
 
-{% js "/rules/rules_logic.js" %}
+<script src="{% url rules:rules_logic_js %}"></script>
+{% js "/js/mycelium/rules.js" %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "No Name"  %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
