@@ -1,6 +1,6 @@
 from test_factory import Factory
 from nose.tools import istest
-from rules.models import LeftSide, Operator, RightSideType, RightSideValue, Rule
+from rules.models import LeftSide, Operator, RightSideType, Rule
 from rules.tasks import populate_rule_components
 from groups.models import GroupRule
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
@@ -90,8 +90,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="volunteer status")
         icontains = Operator.objects.get(display_name="is")
         rst = self._choices_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="active")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="active"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
         self.assertEqualQuerySets(group.members, active_volunteer_qs)
 
@@ -99,8 +99,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="last volunteer shift")
         icontains = Operator.objects.get(display_name="is after")
         rst = self._date_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="1/15/2010")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="1/15/2010"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
 
         self.assertEqualQuerySets(group.members, active_volunteer_with_shift)
@@ -126,8 +126,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="have any tag that")
         icontains = Operator.objects.get(display_name="contains")
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="test")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="test"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
         self.assertEqualQuerySets(group.members, test_tag_qs)
 
@@ -135,8 +135,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="have a Donor tag that")
         icontains = Operator.objects.get(display_name="is exactly")
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="major")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="major"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
 
         self.assertEqualQuerySets(group.members, test_and_donor_tag_qs)
@@ -165,8 +165,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
         icontains = Operator.objects.get(display_name="contains")
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="test")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="test"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
         self.assertEqualQuerySets(group.members, test_tag_qs)
 
@@ -174,8 +174,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="last donation")
         icontains = Operator.objects.get(display_name="is after")
         rst = self._date_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="02/05/2010")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="02/05/2010"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
 
         self.assertEqualQuerySets(group.members, test_and_donation_tag_qs)
@@ -205,8 +205,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="volunteer status")
         icontains = Operator.objects.get(display_name="is")
         rst = self._choices_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="active")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="active"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
         self.assertEqualQuerySets(group.members, active_volunteer_qs)
 
@@ -214,8 +214,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="last volunteer shift")
         icontains = Operator.objects.get(display_name="is after")
         rst = self._date_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="1/15/2010")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="1/15/2010"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
 
         self.assertEqualQuerySets(group.members, active_volunteer_with_shift)
@@ -241,8 +241,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="have any tag that")
         icontains = Operator.objects.get(display_name="contains")
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="test")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="test"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
         self.assertEqualQuerySets(group.members, test_tag_qs)
 
@@ -250,8 +250,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="have a Donor tag that")
         icontains = Operator.objects.get(display_name="is exactly")
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="major")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="major"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
 
         self.assertEqualQuerySets(group.members, test_and_donor_tag_qs)
@@ -280,8 +280,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
         icontains = Operator.objects.get(display_name="contains")
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="test")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="test"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
         self.assertEqualQuerySets(group.members, test_tag_qs)
 
@@ -289,8 +289,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="last donation")
         icontains = Operator.objects.get(display_name="is after")
         rst = self._date_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="02/05/2010")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="02/05/2010"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
 
         self.assertEqualQuerySets(group.members, test_and_donation_tag_qs)
@@ -319,8 +319,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
         icontains = Operator.objects.get(display_name="contains")
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="test")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="test"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
         self.assertEqualQuerySets(group.members, test_tag_qs)
 
@@ -328,8 +328,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="last donation")
         icontains = Operator.objects.get(display_name="is after")
         rst = self._date_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="02/05/2010")
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv ="02/05/2010"
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
 
         self.assertEqualQuerySets(group.members, test_and_donation_tag_qs)
@@ -340,11 +340,11 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.assertEqualQuerySets(group.members, test_and_donation_tag_qs)
 
         # add a rule missing an operator
-        GroupRule.objects.create(group=group, left_side=left_side, operator=None, right_side_value=rsv)
+        GroupRule.objects.create(group=group, left_side=left_side, operator=None, right_side_value=rsv, right_side_type=rst)
         self.assertEqualQuerySets(group.members, test_and_donation_tag_qs)
 
         # add a rule missing a left side
-        GroupRule.objects.create(group=group, left_side=None, operator=icontains, right_side_value=rsv)
+        GroupRule.objects.create(group=group, left_side=None, operator=icontains, right_side_value=rsv, right_side_type=rst)
         self.assertEqualQuerySets(group.members, test_and_donation_tag_qs)
 
         # add a rule missing everything
@@ -356,22 +356,25 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         left_side = LeftSide.objects.get(display_name="last donation")
         icontains = Operator.objects.get(display_name="is after")
         rst = self._date_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value="02/05/2010")
+        rsv = "02/05/2010"
 
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=None)
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=None)
+        self.assertEqual(group.has_a_valid_rule, False)
+
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=None, right_side_type=rst)
         self.assertEqual(group.has_a_valid_rule, False)
 
         # add a rule missing an operator
-        GroupRule.objects.create(group=group, left_side=left_side, operator=None, right_side_value=rsv)
+        GroupRule.objects.create(group=group, left_side=left_side, operator=None, right_side_value=rsv, right_side_type=rst)
         self.assertEqual(group.has_a_valid_rule, False)
 
         # add a rule missing a left side
-        GroupRule.objects.create(group=group, left_side=None, operator=icontains, right_side_value=rsv)
+        GroupRule.objects.create(group=group, left_side=None, operator=icontains, right_side_value=rsv, right_side_type=rst)
         self.assertEqual(group.has_a_valid_rule, False)
 
         # add a rule missing everything
-        GroupRule.objects.create(group=group, left_side=None, operator=None, right_side_value=None)
+        GroupRule.objects.create(group=group, left_side=None, operator=None, right_side_value=None,  right_side_type=None)
         self.assertEqual(group.has_a_valid_rule, False)
 
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
         self.assertEqual(group.has_a_valid_rule, True)

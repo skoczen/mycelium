@@ -1,6 +1,6 @@
 from test_factory import Factory
 from nose.tools import istest
-from rules.models import LeftSide, Operator, RightSideType, RightSideValue, Rule
+from rules.models import LeftSide, Operator, RightSideType, Rule
 from rules.tasks import populate_rule_components
 from groups.models import GroupRule
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
@@ -297,8 +297,8 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         left_side = LeftSide.objects.get(display_name="have a General tag that")
         icontains = Operator.objects.get(display_name=operator_name)
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv = right_hand_term
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
         new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
 
         # assert the correct models exist
@@ -322,8 +322,8 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
         icontains = Operator.objects.get(display_name=operator_name)
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv = right_hand_term
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
         new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
 
         # assert the correct models exist
@@ -343,8 +343,8 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         left_side = LeftSide.objects.get(display_name="last volunteer shift")
         op = Operator.objects.get(display_name=operator_name)
         rst = self._date_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=op, right_side_value=rsv)
+        rsv = right_hand_term
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=op, right_side_value=rsv, right_side_type=rst)
         new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
 
         # assert the correct models exist
@@ -365,8 +365,8 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         left_side = LeftSide.objects.get(display_name="last donation")
         op = Operator.objects.get(display_name=operator_name)
         rst = self._date_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=op, right_side_value=rsv)
+        rsv = right_hand_term
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=op, right_side_value=rsv, right_side_type=rst)
         new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
 
         # assert the correct models exist
@@ -387,8 +387,8 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         left_side = LeftSide.objects.get(display_name="volunteer status")
         icontains = Operator.objects.get(display_name=operator_name)
         rst = self._choices_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv = right_hand_term
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
         new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
 
         # assert the correct models exist
@@ -409,8 +409,8 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         left_side = LeftSide.objects.get(display_name="volunteer status")
         icontains = Operator.objects.get(display_name=operator_name)
         rst = self._choices_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv = right_hand_term
+        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
         new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
 
         # assert the correct models exist
@@ -613,10 +613,10 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         left_side = None
         icontains = Operator.objects.get(display_name=operator_name)
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv = right_hand_term
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
-        self.assertRaises(IncompleteRuleException, group_rule.queryset_callable)
+        self.assertEqual(group.has_a_valid_rule, False)
 
 
     def test_invalid_rule_missing_operator_side(self):
@@ -627,10 +627,10 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         # icontains = Operator.objects.get(display_name=operator_name)
         icontains = None
         rst = self._text_right_side_types[0]
-        rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rsv = right_hand_term
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
-        self.assertRaises(IncompleteRuleException, group_rule.queryset_callable)
+        self.assertEqual(group.has_a_valid_rule, False)
         
     def test_invalid_rule_missing_right_side(self):
         # right_hand_term="test"
@@ -639,8 +639,9 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         left_side = LeftSide.objects.get(display_name="have a General tag that")
         icontains = Operator.objects.get(display_name=operator_name)
         # rst = self._text_right_side_types[0]
-        # rsv = RightSideValue.objects.create(right_side_type=rst, value=right_hand_term)
+        # rsv = right_hand_term
         rsv = None
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv)
+        rst = None
+        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
-        self.assertRaises(IncompleteRuleException, group_rule.queryset_callable)
+        self.assertEqual(group.has_a_valid_rule, False)

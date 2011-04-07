@@ -16,7 +16,7 @@ def _render_people_group_tab(context):
 
 def _basic_forms(group, request):
     data = None
-    if request.method == "POST":
+    if request and request.method == "POST":
         data = request.POST
     
     group_form = GroupForm(data, instance=group)
@@ -34,12 +34,13 @@ def save_basic_info(request, group_id):
     group = Group.objects.get(pk=group_id)
     form, rule_formset = _basic_forms(group, request)
     success = False
-    if form.is_valid():
-        group = form.save()
     if rule_formset.is_valid():
         rule_formset.save()
-        
+    if form.is_valid():
+        group = form.save()
         success = True
+
+    form, rule_formset = _basic_forms(group, None)
 
     return {"success":success}
 

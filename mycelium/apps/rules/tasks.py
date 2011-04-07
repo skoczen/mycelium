@@ -45,6 +45,7 @@ def populate_rule_components(*args, **kwargs):
     # Helper methods
     all_left_sides = []
     def _add_text_operators(ls):
+        ls.allowed_operators.clear()
         ls.allowed_operators.add(operator_is_exactly)
         ls.allowed_operators.add(operator_is_not_exactly)
         ls.allowed_operators.add(operator_contains)
@@ -52,6 +53,7 @@ def populate_rule_components(*args, **kwargs):
         ls.save()
     
     def _add_right_type_text(ls):
+        ls.allowed_right_side_types.clear()
         ls.allowed_right_side_types.add(right_type_text)
         ls.save()
     
@@ -60,12 +62,14 @@ def populate_rule_components(*args, **kwargs):
         _add_right_type_text(ls)
 
     def _add_date_operators(ls):
+        ls.allowed_operators.clear()
         ls.allowed_operators.add(operator_is_on)
         ls.allowed_operators.add(operator_is_before)
         ls.allowed_operators.add(operator_is_after)
         ls.save()
     
     def _add_right_type_date(ls):
+        ls.allowed_right_side_types.clear()
         ls.allowed_right_side_types.add(right_type_date)
         ls.save()
     
@@ -74,12 +78,14 @@ def populate_rule_components(*args, **kwargs):
         _add_right_type_date(ls)
 
     def _add_number_operators(ls):
+        ls.allowed_operators.clear()
         ls.allowed_operators.add(operator_is_equal)
         ls.allowed_operators.add(operator_is_less_than)
         ls.allowed_operators.add(operator_is_more_than)
         ls.save()
     
     def _add_right_type_number(ls):
+        ls.allowed_right_side_types.clear()
         ls.allowed_right_side_types.add(right_type_number)
         ls.save()
     
@@ -88,6 +94,7 @@ def populate_rule_components(*args, **kwargs):
         _add_right_type_number(ls)
 
     def _add_tag_operators(ls):
+        ls.allowed_operators.clear()
         ls.allowed_operators.add(operator_is_exactly)
         ls.allowed_operators.add(operator_contains)
         ls.save()    
@@ -97,11 +104,13 @@ def populate_rule_components(*args, **kwargs):
         _add_right_type_text(ls)
 
     def _add_choices_operators(ls):
+        ls.allowed_operators.clear()
         ls.allowed_operators.add(operator_is)
         ls.allowed_operators.add(operator_is_not)
         ls.save()
     
     def _add_right_type_choices(ls):
+        ls.allowed_right_side_types.clear()
         ls.allowed_right_side_types.add(right_type_choices)
         ls.save()
     

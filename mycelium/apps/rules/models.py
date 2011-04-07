@@ -40,21 +40,6 @@ class RightSideType(TimestampModelMixin):
             raise NotYetImplemented
 
 
-class RightSideValue(TimestampModelMixin):
-    right_side_type = models.ForeignKey(RightSideType)
-    value = models.TextField(blank=True, null=True)
-
-
-    def __unicode__(self):
-        return "%s: %s" % (self.right_side_type, self.value)
-
-    @property
-    def cleaned_query_value(self):
-        """Converts value (a string) into the appropriate type to query against"""
-        if self.value:
-            return self.right_side_type.prepare_query_value(self.value)
-        else:
-            raise Exception, "No Value"
 
 class LeftSide(TimestampModelMixin):
     display_name = models.CharField(max_length=255)
@@ -64,6 +49,7 @@ class LeftSide(TimestampModelMixin):
     order = models.IntegerField(default=100)
     add_closing_paren = models.BooleanField(default=False)
     choices = PickledObjectField(blank=True, null=True)
+
 
     def __unicode__(self):
         return "%s" % self.display_name
@@ -86,7 +72,8 @@ class LeftSide(TimestampModelMixin):
 class Rule(TimestampModelMixin):
     left_side = models.ForeignKey(LeftSide, blank=True, null=True)
     operator = models.ForeignKey(Operator, blank=True, null=True)
-    right_side_value = models.ForeignKey(RightSideValue, blank=True, null=True)
+    right_side_type = models.ForeignKey(RightSideType, blank=True, null=True)
+    right_side_value = models.TextField(blank=True, null=True)
 
     target_model = None
 
@@ -101,7 +88,11 @@ class Rule(TimestampModelMixin):
     @property
     def is_valid(self):
         """Boolean - if true, this rule is complete, and ok to query against."""
-        return self.left_side and self.operator and self.right_side_value
+        return self.left_side and self.operator and self.right_side_value and self.right_side_type
+    
+    @property
+    def cleaned_right_side_value(self):
+        return self.right_side_type.prepare_query_value(self.right_side_value)
 
     @property
     def queryset_filter_string(self):
@@ -118,7 +109,7 @@ class Rule(TimestampModelMixin):
         if not self.is_valid:
             return ""
         else:
-            filter_str = "%s%s%s" % (self.left_side.query_string_partial, self.operator.query_string_partial, self.right_side_value.cleaned_query_value)
+            filter_str = "%s%s%s" % (self.left_side.query_string_partial, self.operator.query_string_partial, self.cleaned_right_side_value)
             if self.left_side.add_closing_paren:
                 filter_str = "%s)" % filter_str
             

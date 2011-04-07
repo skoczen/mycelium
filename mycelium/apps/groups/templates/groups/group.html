@@ -46,7 +46,8 @@ $(function(){
 			<left_side>{% generic_editable_field r_form.left_side %}</left_side>
 			<operator>{% generic_editable_field r_form.operator %}</operator>
 			<right_side>{% generic_editable_field r_form.right_side_value %}</right_side>
-			{% for f in r_form.hidden_fields %}{{f}}{% endfor %}
+			<right_side_type>{{r_form.right_side_type}}</right_side_type>
+			<hidden>{% for f in r_form.hidden_fields %}{{f}}{% endfor %} </hidden>
 			<delete>{{r_form.DELETE}}</delete>
 		</rule>
 		{% endfor %}
