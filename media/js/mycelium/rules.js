@@ -14,4 +14,9 @@ function left_side_changed() {
 	};
 	$("operator select",rule).html(operator_html)
 
+	// set right side
+	$("right_side .edit_field",rule).html(left_side_logic.right_side_partial)
+	
+
+
 }

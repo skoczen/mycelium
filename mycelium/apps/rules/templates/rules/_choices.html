@@ -1,1 +1,1 @@
-{% filter force_escape %}<select>{% for c in choices %}<option value="{{c|first}}">{{c|last}}</option>{% endfor %}</select>{% endfilter %}
+<select>{% for c in choices %}<option value='{{c|first}}'>{{c|last|force_escape}}</option>{% endfor %}</select>
