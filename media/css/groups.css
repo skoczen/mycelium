@@ -110,3 +110,6 @@ rules .add-row {
 	width: 100%;
 
 }
+rules left_side, rules operator, rules right_side_value {
+	padding: 1px;
+}

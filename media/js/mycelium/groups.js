@@ -17,7 +17,7 @@ function remove_rule_row(target) {
 	$("input[name$=-right_side_value]",rule).val("");
 	$("select",rule).val("");
 	$("textarea",rule).val("");
-		$("input[name$=-DELETE]",rule).val("checked").attr("checked","checked");
+		$("input[name$=-DELETE]",rule).attr("checked","checked");
 	$("#basic_info_form").genericFieldForm('queue_form_save');
 	rule.hide();
 	$(".add_new_rule_btn").show();
@@ -46,6 +46,7 @@ function update_member_count(){
           success: function(json) {
             if (typeof(json) == typeof({})) {
 				$.Mycelium.fragments.process_fragments_from_json(json);
+				$.Mycelium.update_stripes(".group_detail_column");
              }
           }
      });

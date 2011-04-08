@@ -33,6 +33,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
     def test_that_the_new_group_page_loads(self):
         sel = self.selenium
         self.create_new_group()
+        assert True == "test written"
         assert sel.is_text_present("the following rules")
 
     def test_creating_and_deleting_a_new_group(self):
@@ -57,6 +58,48 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         
         sel.wait_for_page_to_load("30000")
         assert not sel.is_text_present("Test Group")
+
+    def test_that_the_edit_toggle_works(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"
+
+    def test_that_the_add_and_remove_buttons_show_hide_properly(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"
+
+    def test_adding_one_rule_saves_the_rule(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"
+
+    def test_adding_one_valid_one_invalid_and_one_valid_rule_saves_properly(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"
+
+    def test_adding_three_rules_removing_two_adding_one_saves_properly(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"
+    
+    def test_volunteer_status_shows_a_select(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"
+    
+    def test_donation_date_shows_a_datefield(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"
+
+    def test_any_tag_contains_status_shows_a_text_field(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"
+    
+    
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions):
 
@@ -96,3 +139,18 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         time.sleep(2)
         self.assertEqual(sel.get_text("css=.result_row:nth(0) .name"),"A Completely Different name!!")
 
+
+    def test_members_list_and_count_updates_after_rule_added(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"
+
+    def test_members_list_and_count_updates_after_rule_change(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"
+
+    def test_members_list_and_count_updates_after_rule_removed(self):
+        sel = self.selenium
+        self.create_new_group()
+        assert True == "test written"

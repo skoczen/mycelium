@@ -1,7 +1,8 @@
 from django.forms import ModelForm, RadioSelect, HiddenInput, TextInput, Select, NullBooleanSelect
 from groups.models import Group, GroupRule
-from django.forms.models import inlineformset_factory
+from django.forms.models import inlineformset_factory, BaseModelFormSet
 from rules.forms import RuleGroupForm
+
 
 class GroupForm(RuleGroupForm):
     class Meta:
@@ -24,5 +25,10 @@ class GroupRuleForm(ModelForm):
     class Meta:
         model = GroupRule
         
+    # def clean(self):
+    #     """Checks that no two articles have the same title."""
+    #     if any(self.errors):
+    #         print self.errors 
 
-GroupRuleFormset = inlineformset_factory(Group, GroupRule, fields=("left_side", "operator", "right_side_value", "right_side_type" ), can_delete=True, extra=0, form=GroupRuleForm)
+
+GroupRuleFormset = inlineformset_factory(Group, GroupRule, fields=("left_side", "operator", "right_side_value", "right_side_type" ), can_delete=True, extra=0, form=GroupRuleForm )
