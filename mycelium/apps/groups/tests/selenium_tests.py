@@ -165,13 +165,35 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side .view_field"), "have any tag that")
         self.assertEqual(sel.get_text("css=rule:nth(0) operator .view_field"), "contains")
         self.assertEqual(sel.get_text("css=rule:nth(0) right_side .view_field"), "a")
-        self.assertEqual(sel.get_text("css=rule:nth(1) left_side .view_field"), "have a General tag that")
+        self.assertEqual(sel.get_text("css=rule:nth(1) left_side .view_field"), "have a Volunteer tag that")
         self.assertEqual(sel.get_text("css=rule:nth(1) operator .view_field"), "is exactly")
-        self.assertEqual(sel.get_text("css=rule:nth(1) right_side .view_field"), "")
-        self.assertEqual(sel.get_text("css=rule:nth(2) left_side .view_field"), "have a Volunteer tag that")
-        self.assertEqual(sel.get_text("css=rule:nth(2) operator .view_field"), "contains")
-        self.assertEqual(sel.get_text("css=rule:nth(2) right_side .view_field"), "weekly")
+        self.assertEqual(sel.get_text("css=rule:nth(1) right_side .view_field"), "weekly")
 
+
+    def test_adding_three_rules_removing_the_middle_one_and_adding_one_shows_the_new_one_at_the_bottom(self):
+        sel = self.selenium
+        self.create_new_group_with_one_rule()
+        self.create_a_new_rule(left_side="have a Donor tag that", right_side="major")
+        self.create_a_new_rule(left_side="have a Volunteer tag that", right_side="weekly")
+        sel.click("css=rule:nth(1) .remove_rule_btn")
+        time.sleep(1)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        self.assertEqual(sel.get_text("css=rule:nth(0) left_side .view_field"), "have any tag that")
+        self.assertEqual(sel.get_text("css=rule:nth(0) operator .view_field"), "contains")
+        self.assertEqual(sel.get_text("css=rule:nth(0) right_side .view_field"), "a")
+        self.assertEqual(sel.get_text("css=rule:nth(1) left_side .view_field"), "have a Volunteer tag that")
+        self.assertEqual(sel.get_text("css=rule:nth(1) operator .view_field"), "is exactly")
+        self.assertEqual(sel.get_text("css=rule:nth(1) right_side .view_field"), "weekly")
+        sel.click("css=.add_new_rule_btn")
+        time.sleep(0.25)
+        self.assertEqual(sel.get_text("css=rule:nth(0) left_side .view_field"), "have any tag that")
+        self.assertEqual(sel.get_text("css=rule:nth(0) operator .view_field"), "contains")
+        self.assertEqual(sel.get_text("css=rule:nth(0) right_side .view_field"), "a")
+        self.assertEqual(sel.get_text("css=rule:nth(1) left_side .view_field"), "have a Volunteer tag that")
+        self.assertEqual(sel.get_text("css=rule:nth(1) operator .view_field"), "is exactly")
+        self.assertEqual(sel.get_text("css=rule:nth(1) right_side .view_field"), "weekly")
+        
     
     def test_volunteer_status_shows_a_select(self):
         sel = self.selenium

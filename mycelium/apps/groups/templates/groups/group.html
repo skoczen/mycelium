@@ -63,9 +63,7 @@ $(function(){
 		{% include "groups/_group_member_count.html" %}
 	</fragment>
 	<div class="member_list">
-	<fragment name="group_member_list" action="replace">
-		{% include "groups/_group_member_list.html" %}
-	</fragment>
+	<fragment name="group_member_list" action="replace">{% include "groups/_group_member_list.html" %}</fragment>
 	</div>
 	{% endwith %}
 </div>
