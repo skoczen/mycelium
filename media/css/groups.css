@@ -110,6 +110,9 @@ rules .add-row {
 	width: 100%;
 
 }
-rules left_side, rules operator, rules right_side_value {
+.edit_mode_off rules left_side, rules operator, rules right_side_value {
 	padding: 1px;
+}
+.edit_mode_on rules left_side, rules operator, rules right_side_value {
+	padding: 2px 4px;
 }

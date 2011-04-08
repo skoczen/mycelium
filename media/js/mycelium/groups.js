@@ -9,6 +9,7 @@ $(function(){
 	$(".remove_rule_btn").click(remove_rule_row);
 	$("#basic_info_form").bind("genericFieldForm.save_form_success",rules_saved);
 	$("#basic_info_form").bind("genericFieldForm.queue_form_save",rule_changed);
+
 });
 function remove_rule_row(target) {
 	btn = $(this)
@@ -19,12 +20,12 @@ function remove_rule_row(target) {
 	$("textarea",rule).val("");
 		$("input[name$=-DELETE]",rule).attr("checked","checked");
 	$("#basic_info_form").genericFieldForm('queue_form_save');
-	rule.hide();
+	rule.addClass("empty");
 	$(".add_new_rule_btn").show();
 	return false;
 }
 function add_rule_row() {
-	$("rules rule:not(:visible):first").show().css("display","block");
+	$("rules rule:not(:visible):first").removeClass("empty");
 	if ($("rules rule:not(:visible)").length == 0) {
 		$(".add_new_rule_btn").hide();
 	}
