@@ -664,7 +664,6 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
         sel.refresh()
         sel.wait_for_page_to_load("30000")
 
-
         self.assertEqual("Test Org", sel.get_text("//span[@id='container_id_name']/span[1]"))
         self.assertEqual("555 123-4568", sel.get_text("//span[@id='container_id_primary_phone_number']/span[1]"))        
         self.assertEqual("example.org", sel.get_text("link=example.org"))
