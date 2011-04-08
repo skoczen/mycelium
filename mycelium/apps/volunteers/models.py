@@ -6,17 +6,12 @@ from taggit.managers import TaggableManager
 from people.models import Person
 from django.db.models.signals import post_save
 import datetime
-
-VOLUNTEER_STATII = [
-    ("active", "Active"),
-    ("inactive", "Inactive"),
-    ("temp_inactive", "Temporarily Inactive"),
-]
+from volunteers import VOLUNTEER_STATII
 
 class Volunteer(TimestampModelMixin):
     """A volunteer!"""
     person = models.OneToOneField(Person)
-    status = models.CharField(max_length=50,default=VOLUNTEER_STATII[0], choices=VOLUNTEER_STATII)
+    status = models.CharField(max_length=50,default=VOLUNTEER_STATII[0][0], choices=VOLUNTEER_STATII)
     reactivation_date = models.DateField(blank=True, null=True)
 
     skills = TaggableManager()

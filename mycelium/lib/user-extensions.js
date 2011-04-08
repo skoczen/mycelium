@@ -3,3 +3,7 @@ function eval_css(locator, inDocument) {
     window.Sizzle(locator, inDocument, results);
     return results
 }
+Selenium.prototype.getHTML = function (locator) {  
+    var element = this.page().findElement(locator);  
+    return element.innerHTML;
+};

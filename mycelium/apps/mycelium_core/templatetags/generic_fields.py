@@ -29,6 +29,13 @@ def generic_editable_field_email(field, field_type="input",include_context=True)
     generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_email_view.html",locals())
     return locals()
 
+@register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
+def generic_editable_field_anyall_bool(field, field_type="input",include_context=True):
+    MEDIA_URL = settings.MEDIA_URL
+    generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_anyall_bool_view.html",locals())
+    return locals()
+
+
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
 def generic_editable_field_twitter(field, field_type="input",include_context=True):
@@ -68,6 +75,12 @@ def field_value(field):
             val = field.data 
     if val is None: 
         val = '' 
+
+    from django.forms.fields import ChoiceField
+    if isinstance(field.field, ChoiceField): 
+        for (v, desc) in field.field.choices: 
+            if v == val: 
+                return desc 
     return val
 
 def display_field_value(field):
