@@ -57,6 +57,17 @@ function left_side_changed() {
 		new_target.attr("name",old_name);
 		new_target.attr("id",old_id);		
 		
+		// if it's a date, add a datepicker
+		if (left_side_logic.is_date) {
+			new_target.datepicker({
+		        "numberOfMonths": 2,
+		        "showButtonPanel": true,
+		        // "gotoCurrent": true,
+		        "showCurrentAtPos": 1            
+		    });    
+		}
+		
+
 		// set right side type
 		$("right_side_type input",rule).val(left_side_logic.right_side_type)
 

@@ -8,6 +8,7 @@ RULES_LOGIC = {
 		"operator_ids": [{% for o in l.operators %}{{o.pk}}{% if not forloop.last %}, {% endif %}{% endfor %}],
 		"right_side_type":"{{l.first_right_side_type.pk}}",
 		"right_side_partial":"{% with l.first_right_side_type as rst %}{% include "rules/_right_side_values.html" %}{% endwith %}",
+		"is_date":{% if l.is_date %}true{% else %}false{% endif %}
 	}{% if not forloop.last %},{% endif %}
 {% endfor %}
 },
