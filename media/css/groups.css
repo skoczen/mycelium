@@ -103,3 +103,10 @@ rules .add-row {
 .edit_mode_off .group_rules .new_criterium {
 	display: none;
 }
+.group_members fragment .loading_text {
+	display: block;
+	text-align: center;
+	padding: 40px 0px;
+	width: 100%;
+
+}

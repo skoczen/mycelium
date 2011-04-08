@@ -69,7 +69,7 @@ function left_side_changed() {
 		
 
 		// set right side type
-		$("right_side_type input",rule).val(left_side_logic.right_side_type)
+		$("input[name$=right_side_type]",rule).val(left_side_logic.right_side_type)
 
 		// try to keep the value
 		try {

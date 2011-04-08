@@ -45,6 +45,7 @@ def save_basic_info(request, group_id):
     return {"success":success}
 
 
+
 def new_group(request):
     group = Group.objects.create()
     return HttpResponseRedirect("%s?edit=ON" %reverse("groups:group",args=(group.pk,)))
@@ -60,3 +61,14 @@ def delete_group(request):
         pass
 
     return HttpResponseRedirect(reverse("people:search"))
+
+@json_view
+def group_members_partial(request, group_id):
+    group = Group.objects.get(pk=group_id)
+    group_members = group.members
+    return {
+    "fragments":{
+        "group_member_count":render_to_string("groups/_group_member_count.html", locals()),
+        "group_member_list":render_to_string("groups/_group_member_list.html", locals())
+            }
+    }

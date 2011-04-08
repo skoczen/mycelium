@@ -253,6 +253,7 @@ MEDIASYNC = {
                                                 "/js/contrib/jquery.ba-bbq.min.js", 
                                                 "/js/contrib/autocolumn.min.js",
                                                 "/js/mycelium/mycelium_elements.js",
+                                                "/js/mycelium/generic_fields.js",
                                                 "/js/mycelium/mycelium_search.js",
                                             ]
     }
