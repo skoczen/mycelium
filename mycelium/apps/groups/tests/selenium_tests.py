@@ -288,6 +288,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         self.assertNotEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]",)))
         
         sel.click("css=rule:nth(0) .remove_rule_btn")
+        time.sleep(5)        
         self.assertEqual(start_people_count,sel.get_text("css=fragment[name=group_member_count] .count"))
         self.assertEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]")))
 
