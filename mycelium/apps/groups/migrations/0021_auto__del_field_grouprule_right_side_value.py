@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
         
         # Deleting field 'GroupRule.right_side_value'
         db.delete_column('groups_grouprule', 'right_side_value_id')
-        db.delete_column('groups_grouprule', 'right_side_type_id')
+        # db.delete_column('groups_grouprule', 'right_side_type_id')
 
 
     def backwards(self, orm):
