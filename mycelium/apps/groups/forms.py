@@ -1,8 +1,9 @@
 from django.forms import ModelForm, RadioSelect, HiddenInput, TextInput, Select, NullBooleanSelect
 from groups.models import Group, GroupRule
 from django.forms.models import inlineformset_factory
+from rules.forms import RuleGroupForm
 
-class GroupForm(ModelForm):
+class GroupForm(RuleGroupForm):
     class Meta:
         model = Group
         fields = ("name", "rules_boolean")
@@ -18,21 +19,7 @@ class GroupRuleForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(GroupRuleForm, self).__init__(*args,**kwargs)
         self.fields["right_side_value"].widget=TextInput()
-        if self.instance.right_side_type:
-            # if self.instance.right_side_type.name == "text":
-            #     self.fields["right_side_value"].widget=TextInput()
-            #     # self.fields["right_side_value"].initial=self.instance.right_side_value
-            # elif self.instance.right_side_type.name == "date":
-            #     self.fields["right_side_value"].widget=TextInput()
-            #     # self.fields["right_side_value"].initial=self.instance.right_side_value
-            # elif self.instance.right_side_type.name == "choices":
-            #     self.fields["right_side_value"].widget=Select()
-            #     # self.fields["right_side_value"].initial=self.instance.right_side_value
-            pass
-
         self.fields["right_side_type"].widget=HiddenInput()
-        # self.fields["right_side_type"].initial=self.instance.right_side_type
-
         
     class Meta:
         model = GroupRule

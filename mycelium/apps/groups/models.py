@@ -35,6 +35,8 @@ class Group(SimpleSearchableModel, TimestampModelMixin, RuleGroup):
     def rules(self):
         return self.grouprule_set.all()
 
+    def make_blank_rule(self):
+        return self.grouprule_set.create()
 
     @property
     def full_name(self):

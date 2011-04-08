@@ -89,4 +89,17 @@ rules .generic_editable_field {
 }
 rules rule {
 	display: block;
+	padding: 2px 0px 5px 10px;
+}
+rules rule.empty {
+	display: none;
+}
+.edit_mode_off rules .remove_rule_btn {
+	display: none;
+}
+rules .add-row {
+	display: none;
+}
+.edit_mode_off .group_rules .new_criterium {
+	display: none;
 }

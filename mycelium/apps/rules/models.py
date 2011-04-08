@@ -84,12 +84,15 @@ class Rule(TimestampModelMixin):
     class Meta(object):
         abstract = True
 
-
     @property
     def is_valid(self):
         """Boolean - if true, this rule is complete, and ok to query against."""
-        return self.left_side and self.operator and self.right_side_value and self.right_side_type
+        return self.left_side_id and self.operator_id and self.right_side_value and self.right_side_type_id
     
+    @property
+    def is_blank(self):
+        return not self.left_side_id and not self.operator_id and not self.right_side_value and not self.right_side_type_id
+
     @property
     def cleaned_right_side_value(self):
         return self.right_side_type.prepare_query_value(self.right_side_value)
@@ -149,6 +152,12 @@ class RuleGroup(models.Model):
                 return True
         return False
 
+    @property
+    def num_blank_rules(self):
+        return self.rules.filter(left_side=None, operator=None, right_side_type=None, right_side_value=None).count()
+    
+    def make_blank_rule(self):
+        return self.rules_set.create()
 
     @property
     def members(self):

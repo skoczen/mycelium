@@ -5,8 +5,29 @@ $(function(){
 	    showCurrentAtPos: 1            
 	});
 	$(".group_delete_btn").click(delete_group);	
-	$("rule").formset();
+	$(".add_new_rule_btn").click(add_rule_row);
+	$(".remove_rule_btn").click(remove_rule_row);
 });
+function remove_rule_row(target) {
+	btn = $(this)
+	rule = btn.parents("rule");
+	$("input[name$=-right_side_type]",rule).val("");
+	$("input[name$=-right_side_value]",rule).val("");
+	$("select",rule).val("");
+	$("textarea",rule).val("");
+		$("input[name$=-DELETE]",rule).val("checked").attr("checked","checked");
+	$("#basic_info_form").genericFieldForm('queue_form_save');
+	rule.hide();
+	$(".add_new_rule_btn").show();
+	return false;
+}
+function add_rule_row() {
+	$("rules rule:not(:visible):first").show().css("display","block");
+	if ($("rules rule:not(:visible)").length == 0) {
+		$(".add_new_rule_btn").hide();
+	}
+	return false;
+}
 
 function delete_group(e) {
     var name = $("#container_id_name .view_field").text();
@@ -17,5 +38,6 @@ function delete_group(e) {
         $(window).unbind("unload.genericFieldForm");
         $("#delete_group_form").submit();
     }
+    return false;
 }
 
