@@ -1,6 +1,7 @@
 fabric
 #psycopg2
 mysql-python
+python-dateutil
 
 PIL
 python-memcached
@@ -49,3 +50,4 @@ django-mediasync
 slimmer
 gitpython
 django-debug-toolbar
+-e git://github.com/gintas/django-picklefield.git#egg=django-picklefield

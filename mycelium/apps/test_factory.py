@@ -1,6 +1,8 @@
 from qi_toolkit.factory import QiFactory
 from people.models import Person, Organization, Employee
+from groups.models import Group, GroupRule
 from volunteers.models import CompletedShift
+from donors.models import Donation
 import datetime
 
 class DummyObj(object):
@@ -71,15 +73,40 @@ class Factory(QiFactory):
         if not person:
             person = cls.person()
 
-        days_ago = 0
         cur_date = datetime.datetime.now()
         for i in range(0,cls.rand_int(end=300)):
             cur_date = cur_date - datetime.timedelta(days=cls.rand_int(0,30))
-            cs = CompletedShift.objects.create(volunteer=person.volunteer,
+            CompletedShift.objects.create(volunteer=person.volunteer,
                                     duration=cls.rand_int(1,16),
                                     date=cur_date
             )
         return person
+    
+    @classmethod
+    def completed_volunteer_shift(cls, person, date=None, duration=None):
+        if not date:
+            date = datetime.datetime.now() - datetime.timedelta(days=cls.rand_int(0,3000))
+        
+        if not duration:
+            duration = cls.rand_int(1,16)
+
+        return CompletedShift.objects.create(volunteer=person.volunteer,
+                                            duration=duration,
+                                            date=date)
+         
+    @classmethod
+    def donation(cls, person, date=None, amount=None):
+        if not date:
+            date = datetime.datetime.now() - datetime.timedelta(days=cls.rand_int(0,3000))
+        
+        if not amount:
+            amount = cls.rand_currency()
+
+        return Donation.objects.create(donor=person.donor,
+                                            amount=amount,
+                                            date=date)
+         
+
         
     @classmethod
     def report(cls):
@@ -92,3 +119,10 @@ class Factory(QiFactory):
         o = DummyObj()
         o.pk = 1
         return o
+
+    @classmethod
+    def group(cls, name=None, **kwargs):
+        if not name:
+            name = cls.rand_str()
+        return Group.objects.get_or_create(name=name, **kwargs)[0]
+

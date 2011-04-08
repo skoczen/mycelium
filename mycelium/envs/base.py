@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'recent_activity',
     'generic_tags',
     'groups',
+    'rules',
 
 
     'djangosanetesting',
@@ -183,7 +184,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--where=apps', '-s']
 
 FORCE_SELENIUM_TESTS = False
-SELENIUM_BROWSER_COMMAND = "*safari"
+SELENIUM_BROWSER_COMMAND = "*googlechrome"
 LIVE_SERVER_PORT = 8099
 SELENIUM_PORT = 64444
 
@@ -248,9 +249,11 @@ MEDIASYNC = {
                                                 "/js/contrib/jquery.ajax.queue.js", 
                                                 "/js/contrib/jquery.autogrow.js", 
                                                 "/js/contrib/jquery.form.js", 
+                                                "/js/contrib/jquery.formset.min.js",
                                                 "/js/contrib/jquery.ba-bbq.min.js", 
                                                 "/js/contrib/autocolumn.min.js",
                                                 "/js/mycelium/mycelium_elements.js",
+                                                "/js/mycelium/generic_fields.js",
                                                 "/js/mycelium/mycelium_search.js",
                                             ]
     }
