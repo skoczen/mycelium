@@ -10,3 +10,33 @@
 	font-size: 24px;
 }
 */
+page_title {
+	background-image: url("../images/icon-tags-black-40h.png");
+	background-repeat: no-repeat;
+	background-position: 10px 8px;
+	padding-left: 74px;
+	padding-top: 5px;
+	margin-bottom: 20px;
+}
+tagset {
+	display: block;
+	padding: 10px;
+	width: 95%;
+}
+tagset .tag_list {
+	width: 100%;
+}
+tagset .tag_list td {
+	padding: 4px;
+}
+tagset .tag_list .tag_name		{	width: 50%; padding-left: 10px;		}
+tagset .tag_list .num_people	{	width: 50%; text-align: left;		}
+
+tagset .tag_list .num_people .count	{	
+	display: block;
+	float: left;
+	width: 100px;
+	text-align: right;
+	padding-right: 6px;
+}
+

@@ -1,5 +1,5 @@
 {% extends "generic_tags/base.html" %}
-{% load i18n generic_fields friendly_data_formatting generic_tag_tags %}
+{% load i18n generic_fields friendly_data_formatting generic_tag_tags humanize %}
 {% block title %}Manage Tags and Tag Categories{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
@@ -9,15 +9,17 @@
 {% js "/js/mycelium/manage_tags.js" %}
 {% endblock %}
 
-
+{% block breadcrumb %}{% endblock %}
 {% block page_content %}
+<page_title>Manage Tags</page_title>
 <form action="" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
 {% with "Edit Tags" as edit_label %}
 	{# {% include "people/_save_status_and_button.html" %} #}
 
 {% endwith %}
-Tags and Tag Categories
+
 {% for ts in all_tagsets %}
+<tagset>
 		<div class="detail_header">
 			<div class="header_actions">
 				<a href="{% url generic_tags:rename_tagset ts.pk %}" class="edit_tagset_name_btn"><img src="{% media_url "images/icon-edit-16.png" %}"/></a>
@@ -27,12 +29,18 @@ Tags and Tag Categories
 				{% generic_editable_field ts.form.name %}
 			</form>
 		</div>
-	<ul>
+	<table class="tag_list striped">
 	{% for t in ts.all_tags_and_counts %}
-		<li>{{t.tag.name}} - {{t.num_people}}</li>
+		<tr class="striped_row">
+			<td class="tag_name">{{t.tag.name}}</td>
+			<td class="num_people"><span class="count">{{t.num_people|intcomma}}</span> 
+				{# {% if t.num_people == 1 %}person{% else %}people{% endif %} #}
+				people
+			</td>
+		</tr>
 	{% endfor %}
-	</ul>
-	
+	</table>
+</tagset>
 {% endfor %}
 </form>
 {% endblock %}

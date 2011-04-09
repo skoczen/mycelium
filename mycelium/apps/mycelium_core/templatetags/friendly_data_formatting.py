@@ -18,6 +18,11 @@ def clean_none(str):
 
 
 @register.filter
+def multiply(n1, n2):
+    """Multiply by a value."""
+    return n1*n2
+
+@register.filter
 def shorttime(str):
     """Shorten a timesince entry, to lop off a second unit of time."""
     last_comma = str.find(",")
