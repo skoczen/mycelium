@@ -15,7 +15,7 @@ from generic_tags import BLANK_TAGSET_NAME
 
 
 class TagSet(TimestampModelMixin):
-    name = models.CharField(max_length=255, blank=True, null=True, unique=True)
+    name = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=255)
 
     def __unicode__(self):
@@ -48,14 +48,14 @@ class TagSet(TimestampModelMixin):
             all_tags_and_counts.append({
                 'tag':t,
                 'num_people': TaggedTagSetMembership.objects.filter(tag=t.id).count(),
-                'tag_form': TagForm(prefix=t.slug.upper(), instance=t)
+                'tag_form': TagForm(prefix="TAG-%s" % t.pk, instance=t)
             })
         return all_tags_and_counts
 
 
     def form(self, *args, **kwargs):
         from generic_tags.forms import TagSetForm
-        return TagSetForm(*args, prefix=self.slug.upper(), instance=self, **kwargs)
+        return TagSetForm(*args, prefix="TAGSET-%s" % self.pk, instance=self, **kwargs)
 
     @classmethod
     def create_tag_for_person(cls, tagset_name=None, person=None, tag=None):

@@ -178,7 +178,7 @@ def save_tags_and_tagsets(request):
         all_tagsets = TagSet.objects.all()
 
         tagset_forms = [ts.form(data) for ts in all_tagsets]
-        tag_forms = [TagForm(data, prefix=t.slug.upper(), instance=t) for t in ts.all_tags for ts in all_tagsets]
+        tag_forms = [TagForm(data, prefix="TAG-%s" % t.pk, instance=t) for t in ts.all_tags for ts in all_tagsets]
 
         # process tagset forms
         for f in tagset_forms:
@@ -197,20 +197,14 @@ def save_tags_and_tagsets(request):
 
 def new_tagset(request):
     success = False
-    form = TagSetForm(request.POST)
-    if form.is_valid():
-        if TagSet.objects.filter(name__iexact=form.cleaned_data["name"]).count() == 0:
-            form.save()
-            success = True
+    TagSet.objects.create()
+    success = True
     return _tab_or_manage_tags_redirect(locals())
 
 def new_tag(request, tagset_id):
     success = False
-    form = TagSetForm(request.POST)
-    if form.is_valid():
-        if TagSet.objects.filter(name__iexact=form.cleaned_data["name"]).count() == 0:
-            form.save()
-            success = True
+    ts = TagSet.objects.get(pk=tagset_id)
+    Tag.objects.create(content_object=ts)
     return _tab_or_manage_tags_redirect(locals())
 
 def delete_tagset(request, tagset_id):

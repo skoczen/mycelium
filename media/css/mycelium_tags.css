@@ -54,13 +54,19 @@ tagset .tag_list .num_people .count	{
 .manage_tags .edit_mode_on .detail_header  .edit_field input {
 	font-size: 24px;
 }
-.edit_mode_off .mycelium_delete_btn {
+.edit_mode_off .mycelium_delete_btn, .edit_mode_off .add_a_category_btn, .edit_mode_off .add_a_tag_btn, .edit_mode_off form_actions {
 	display: none;
+}
+tagset form_actions{
+	padding: 4px 10px;
 }
 .manage_tags .edit_mode_on .detail_header .generic_editable_field {
 	width: 80%;
 }
-.tag_row.pre_delete td,  .detail_header.pre_delete, .tag_row.pre_delete td input {
+.tag_row.pre_delete td,  .detail_header.pre_delete, .tag_row.pre_delete td input, a.pre_delete {
 	text-decoration: line-through;
 	opacity: 0.6;
+}
+#basic_info_form {
+	padding-bottom: 20px;
 }

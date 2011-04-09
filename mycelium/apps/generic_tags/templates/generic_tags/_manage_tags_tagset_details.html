@@ -23,5 +23,11 @@
 		{% endwith %}
 	{% endfor %}
 	</table>
+	<form_actions>
+	<a href="{% url generic_tags:new_tag ts.pk %}" class="mycelium_btn mycelium_small_btn add_a_tag_btn">Add a Tag</a>
+	</form_actions>
 </tagset>
 {% endfor %}
+<form_actions>
+	<a href="{% url generic_tags:new_tagset %}" class="mycelium_btn add_a_category_btn">Add a Category</a>
+</form_actions>
