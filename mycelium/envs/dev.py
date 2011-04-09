@@ -39,7 +39,7 @@ FAVICON_URL = "%s/images/favicon.png" % MEDIA_URL
 # SELENIUM_BROWSER_COMMAND = "*safari"
 VIRTUALENV_PATH = "~/.virtualenvs/mycelium"
 SELENIUM_TEST_SERVER_SETTINGS="selserver_dev"
-FORCE_SELENIUM_TESTS = True
+# FORCE_SELENIUM_TESTS = True
 
 
 SOUTH_TESTS_MIGRATE = False

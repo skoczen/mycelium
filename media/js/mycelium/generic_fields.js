@@ -46,6 +46,7 @@
                     data.save_url = (options.hasOwnProperty("save_url"))? options.save_url: data.form.attr("action");
                     data.save_method = (options.hasOwnProperty("save_method"))? options.save_method: data.form.attr("method");
                     data.async = true;
+                    data.save_queued = false;
                     $this.data('genericFieldForm',data);
                     data = $this.data('genericFieldForm');
                 }
@@ -79,8 +80,11 @@
                 
                 // bind to window close, save if there's anything in the ajax queue
                 $(window).bind("unload.genericFieldForm",function(){
-                    data.async = false;
-                    data.target.genericFieldForm('save_form');
+                	if (data.save_queued) {
+                		clearTimeout(data.form_save_timeout);
+                    	data.async = false;
+                    	data.target.genericFieldForm('save_form');                		
+                	}
                 });
             });
         },
@@ -130,12 +134,13 @@
                 var ser = $("input, select, textarea",data.form).serialize();
 
                 if (data.previous_serialized_str != ser) {
+                	data.save_queued = true;
                     data.previous_serialized_str = ser;
                     $(data.options.save_and_status_btn_class).html(data.options.save_now_text).addClass(data.options.save_now_class);
                     clearTimeout(data.form_save_timeout);
                     data.form_save_timeout = setTimeout(function(){data.target.genericFieldForm('save_form');}, 1500);
-                }
-                data.target.trigger("genericFieldForm.queue_form_save");
+                    data.target.trigger("genericFieldForm.queue_form_save");
+                }                
             });
         },
         save_form: function(){
@@ -154,6 +159,7 @@
                   async: data.async,
                   // data: $.param( $("input",data.form) ),
                 	  success: function(json) {
+                	  	data.save_queued = false;
                 		$(".generic_editable_field",data.target).each(function(){
                 			var field = $(this);
                 			if ($(".edit_field select",field).length > 0) {
@@ -174,6 +180,7 @@
                 	 },
 
                 	  error: function() {
+                	  	data.save_queued = false;
                 	    console.log("error");
                         // alert("Error Saving.");
                 	  }

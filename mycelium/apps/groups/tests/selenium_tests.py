@@ -159,7 +159,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         sel.click("css=rule:not(.empty):last .remove_rule_btn")
         time.sleep(0.1)
         self.create_a_new_rule(left_side="have a Volunteer tag that", right_side="weekly")
-        
+        time.sleep(0.1)
+
+        # two refreshes because of a race condition between the save and the read
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side .view_field"), "have any tag that")
@@ -177,6 +179,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         self.create_a_new_rule(left_side="have a Volunteer tag that", right_side="weekly")
         sel.click("css=rule:nth(1) .remove_rule_btn")
         time.sleep(1)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side .view_field"), "have any tag that")

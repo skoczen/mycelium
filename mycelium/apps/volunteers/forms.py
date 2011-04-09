@@ -12,6 +12,9 @@ class NewShiftForm(ModelForm):
         fields = ("duration", "date", "shift",) #,"categories"
 
 class VolunteerStatusForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(VolunteerStatusForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = Volunteer
         fields = ("status", "reactivation_date",)
