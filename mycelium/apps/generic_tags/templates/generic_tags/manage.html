@@ -1,46 +1,31 @@
 {% extends "generic_tags/base.html" %}
 {% load i18n generic_fields friendly_data_formatting generic_tag_tags humanize %}
 {% block title %}Manage Tags and Tag Categories{% endblock %}
+{% block extra_body %}class="manage_tags"{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
 {% endblock %}
 {% block javascript %}{{block.super}}
 {% generic_tags_js %}
+{% js "/js/mycelium/people_common.js" %}
 {% js "/js/mycelium/manage_tags.js" %}
 {% endblock %}
 
 {% block breadcrumb %}{% endblock %}
 {% block page_content %}
 <page_title>Manage Tags</page_title>
-<form action="" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
-{% with "Edit Tags" as edit_label %}
-	{# {% include "people/_save_status_and_button.html" %} #}
+<form action="{% url generic_tags:save_tags_and_tagsets %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
+	<save_status_and_button>
+	<a href="#" class="mycelium_btn start_edit_btn" >{% if not edit_label %}Edit Tags{% else %}{{edit_label}}{% endif %}</a>
+	<a href="#" class="mycelium_btn edit_done_btn " >Done</a>
+	<a href="#" class="mycelium_btn save_and_status_btn mycelium_grey" >Saved</a>
+	<span class="save_info">
+		<span class="last_save_time"></span>
+	</span>
+	</save_status_and_button>
 
-{% endwith %}
-
-{% for ts in all_tagsets %}
-<tagset>
-		<div class="detail_header">
-			<div class="header_actions">
-				<a href="{% url generic_tags:rename_tagset ts.pk %}" class="edit_tagset_name_btn"><img src="{% media_url "images/icon-edit-16.png" %}"/></a>
-				<a href="{% url generic_tags:delete_tagset ts.pk %}" class="delete_tagset_btn"><img src="{% media_url "images/icon-trash-16.png" %}"/></a>
-			</div>
-			<form id="category_name" class="category_name" action="{% url generic_tags:rename_tagset ts.pk %}" method="POST">{% csrf_token %}
-				{% generic_editable_field ts.form.name %}
-			</form>
-		</div>
-	<table class="tag_list striped">
-	{% for t in ts.all_tags_and_counts %}
-		<tr class="striped_row">
-			<td class="tag_name">{{t.tag.name}}</td>
-			<td class="num_people"><span class="count">{{t.num_people|intcomma}}</span> 
-				{# {% if t.num_people == 1 %}person{% else %}people{% endif %} #}
-				people
-			</td>
-		</tr>
-	{% endfor %}
-	</table>
-</tagset>
-{% endfor %}
+<fragment name="tagset_details" action="replace">
+	{% include "generic_tags/_manage_tags_tagset_details.html" %}
+</fragment>
 </form>
 {% endblock %}

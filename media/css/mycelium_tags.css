@@ -2,8 +2,7 @@
 .detail_header .header_actions {
 	display: block;
 	float: right;
-	z-index: 20;
-
+	z-index: 200;
 	right: 0px;
 }
 /*.detail_header .category_name.edit_mode_on .edit_field input {
@@ -16,21 +15,24 @@ page_title {
 	background-position: 10px 8px;
 	padding-left: 74px;
 	padding-top: 5px;
-	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 0px;
 }
 tagset {
 	display: block;
-	padding: 10px;
-	width: 95%;
+	padding: 0px;
+	width: 97%;
+	margin: 0px auto 20px auto;
 }
 tagset .tag_list {
 	width: 100%;
 }
 tagset .tag_list td {
-	padding: 4px;
+	padding: 2px 4px;
 }
 tagset .tag_list .tag_name		{	width: 50%; padding-left: 10px;		}
-tagset .tag_list .num_people	{	width: 50%; text-align: left;		}
+tagset .tag_list .num_people	{	width: 40%; text-align: left;		}
+tagset .tag_list .tag_actions	{	width: 10%; text-align: right;		}
 
 tagset .tag_list .num_people .count	{	
 	display: block;
@@ -40,3 +42,21 @@ tagset .tag_list .num_people .count	{
 	padding-right: 6px;
 }
 
+.generic_field_label {
+	display: none;
+}
+.manage_tags .edit_mode_on .edit_field {
+	margin: 0px;
+}
+.manage_tags .edit_mode_on .detail_header .edit_field {
+	margin-bottom: 5px;
+}
+.manage_tags .edit_mode_on .detail_header  .edit_field input {
+	font-size: 24px;
+}
+.edit_mode_off .mycelium_delete_btn {
+	display: none;
+}
+.manage_tags .edit_mode_on .detail_header .generic_editable_field {
+	width: 80%;
+}

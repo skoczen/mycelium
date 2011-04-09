@@ -40,21 +40,22 @@ class TagSet(TimestampModelMixin):
         return self.cached_all_tags
 
     @property
-    def all_tags_and_counts(self):
+    def all_tags_and_counts_with_form(self):
+        from generic_tags.forms import TagForm
         # TODO Should also be cached.
         all_tags_and_counts = []
         for t in self.all_tags:
             all_tags_and_counts.append({
                 'tag':t,
-                'num_people': TaggedTagSetMembership.objects.filter(tag=t.id).count()
+                'num_people': TaggedTagSetMembership.objects.filter(tag=t.id).count(),
+                'tag_form': TagForm(prefix=t.slug.upper(), instance=t)
             })
         return all_tags_and_counts
 
 
-    @property
     def form(self, *args, **kwargs):
         from generic_tags.forms import TagSetForm
-        return TagSetForm(*args, instance=self, **kwargs)
+        return TagSetForm(*args, prefix=self.slug.upper(), instance=self, **kwargs)
 
     @classmethod
     def create_tag_for_person(cls, tagset_name=None, person=None, tag=None):
@@ -117,6 +118,7 @@ class TagSetMembership(TimestampModelMixin):
 
     class Meta(object):
         ordering = ("tagset","person",)
+
 
 
 

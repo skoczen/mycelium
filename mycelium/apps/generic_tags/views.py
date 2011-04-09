@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from generic_tags.models import TagSet, TagSetMembership
-from generic_tags.forms import TagSetForm
+from generic_tags.forms import TagSetForm, TagForm
 from people.models import Person
 from qi_toolkit.helpers import *
 
@@ -153,36 +153,73 @@ class TagViews(object):
 
 tag_views = TagViews()
 
-def _tab_or_person_redirect(request,person_id):
-    from people.views import tab_contents
+
+#  Normal views
+def _tab_or_manage_tags_redirect(context):
+    request = context["request"]
     if request.is_ajax():
-        return tab_contents(request, person_id, tab_name="tags")
+        fragment_html = {"tagset_details" : render_to_string("generic_tags/_manage_tags_tagset_details.html", RequestContext(request,context)),}
+        c = {
+            "fragments":fragment_html,
+            "success": context["success"],
+        }
+        return HttpResponse(simplejson.dumps(c))
     else:
-        return HttpResponseRedirect(reverse("people:person", args=(person_id,)))
+        return HttpResponseRedirect(reverse("generic_tags:manage"))
 
-def new_tagset(request, person_id):
+def save_tags_and_tagsets(request):
+    success = False
+    if request.method == "POST":
+        data = request.POST
 
+        all_tagsets = TagSet.objects.all()
+
+        tagset_forms = [ts.form(data) for ts in all_tagsets]
+        tag_forms = [TagForm(data, prefix=t.slug.upper(), instance=t) for t in ts.all_tags for ts in all_tagsets]
+
+        print tagset_forms
+        # process tagset forms
+        for f in tagset_forms:
+            if f.is_valid():
+                f.save()
+
+        # process tag forms
+        for f in tag_forms:
+            if f.is_valid():
+                f.save()
+        
+        success = True
+
+    return _tab_or_manage_tags_redirect(locals())
+
+
+def new_tagset(request):
+    success = False
     form = TagSetForm(request.POST)
     if form.is_valid():
         if TagSet.objects.filter(name__iexact=form.cleaned_data["name"]).count() == 0:
             form.save()
-    return _tab_or_person_redirect(request,person_id)
+            success = True
+    return _tab_or_manage_tags_redirect(locals())
 
-@json_view
-def rename_tagset(request, tagset_id):
-    ts = TagSet.objects.get(pk=int(tagset_id))
+def new_tag(request, tagset_id):
     success = False
-
-    form = TagSetForm(request.POST, instance=ts)
+    form = TagSetForm(request.POST)
     if form.is_valid():
-        form.save()
-        success = True
-    return {"success": success}
+        if TagSet.objects.filter(name__iexact=form.cleaned_data["name"]).count() == 0:
+            form.save()
+            success = True
+    return _tab_or_manage_tags_redirect(locals())
 
 def delete_tagset(request, tagset_id):
     ts = TagSet.objects.get(pk=int(tagset_id))
     ts.delete()
-    return _tab_or_person_redirect(request)
+    return _tab_or_manage_tags_redirect(locals())
+
+def delete_tag(request, tag_id):
+    t = Tag.objects.get(pk=int(tag_id))
+    t.delete()
+    return _tab_or_manage_tags_redirect(locals())
 
 @render_to("generic_tags/manage.html")
 def manage(request):
