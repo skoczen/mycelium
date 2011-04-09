@@ -25,7 +25,11 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
     def _generate_people(self, number=5):
         people = []
         for i in range(0,number):
-            people.append(Factory.person().pk)
+            p = Factory.person()
+            v = p.volunteer
+            v.status = VOLUNTEER_STATII[1][0]
+            v.save()
+            people.append(p.pk)
         people = Person.objects.filter(pk__in=people)
         return people
     
@@ -71,10 +75,10 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         group = Factory.group()
         ppl = self._generate_people()
         v = ppl[1].volunteer
-        v.status = VOLUNTEER_STATII[1][0]  #inactive
+        v.status = VOLUNTEER_STATII[2][0]  #inactive
         v.save()
         v = ppl[3].volunteer
-        v.status = VOLUNTEER_STATII[2][0]  #temporarily inactive
+        v.status = VOLUNTEER_STATII[3][0]  #temporarily inactive
         target_date = datetime.date(month=3,day=24,year=2010)
         Factory.completed_volunteer_shift(ppl[2], date=target_date)
         v.save()        
@@ -186,10 +190,10 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         group = Factory.group(rules_boolean=False)
         ppl = self._generate_people()
         v = ppl[1].volunteer
-        v.status = VOLUNTEER_STATII[1][0]  #inactive
+        v.status = VOLUNTEER_STATII[2][0]  #inactive
         v.save()
         v = ppl[3].volunteer
-        v.status = VOLUNTEER_STATII[2][0]  #temporarily inactive
+        v.status = VOLUNTEER_STATII[3][0]  #temporarily inactive
         target_date = datetime.date(month=3,day=24,year=2010)
         v.save()        
         Factory.completed_volunteer_shift(ppl[2], date=target_date)

@@ -10,7 +10,6 @@ class Migration(DataMigration):
         "Write your forwards methods here."
         from volunteers import VOLUNTEER_STATII
         for v in orm.Volunteer.objects.all():
-            print v.status
             if v.status == None or v.status == "('active', 'Active')":
                 v.status = VOLUNTEER_STATII[0][0]
                 v.save()

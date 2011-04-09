@@ -279,9 +279,15 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         populate_rule_components()
 
     def _generate_people(self, number=5):
+        from volunteers import VOLUNTEER_STATII
         people = []
         for i in range(0,number):
-            people.append(Factory.person().pk)
+            p = Factory.person()
+            v = p.volunteer
+            v.status = VOLUNTEER_STATII[1][0]
+            v.save()
+            people.append(p.pk)
+
         people = Person.objects.filter(pk__in=people)
         return people
     
@@ -537,10 +543,10 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         # hand-create a few people, some of whom match, and others who don't
         ppl = self._generate_people()
         v = ppl[1].volunteer
-        v.status = VOLUNTEER_STATII[1][0]  #inactive
+        v.status = VOLUNTEER_STATII[2][0]  #inactive
         v.save()
         v = ppl[3].volunteer
-        v.status = VOLUNTEER_STATII[2][0]  #temporarily inactive
+        v.status = VOLUNTEER_STATII[3][0]  #temporarily inactive
         v.save()
 
         # create a new group rule
@@ -566,10 +572,10 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         # hand-create a few people, some of whom match, and others who don't
         ppl = self._generate_people()
         v = ppl[2].volunteer
-        v.status = VOLUNTEER_STATII[1][0]    #inactive
+        v.status = VOLUNTEER_STATII[2][0]    #inactive
         v.save()   
         v = ppl[4].volunteer   
-        v.status = VOLUNTEER_STATII[2][0]   #temporarily inactive
+        v.status = VOLUNTEER_STATII[3][0]   #temporarily inactive
         v.save()
 
         # create a new group rule
