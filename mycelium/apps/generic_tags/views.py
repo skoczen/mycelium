@@ -3,8 +3,9 @@ from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
-from generic_tags.models import TagSet, TagSetMembership
+from generic_tags.models import TagSet, TagSetMembership, TaggedTagSetMembership
 from generic_tags.forms import TagSetForm, TagForm
+from taggit.models import Tag
 from people.models import Person
 from qi_toolkit.helpers import *
 
@@ -157,6 +158,8 @@ tag_views = TagViews()
 #  Normal views
 def _tab_or_manage_tags_redirect(context):
     request = context["request"]
+    context["all_tagsets"] = TagSet.objects.all()
+
     if request.is_ajax():
         fragment_html = {"tagset_details" : render_to_string("generic_tags/_manage_tags_tagset_details.html", RequestContext(request,context)),}
         c = {
@@ -177,7 +180,6 @@ def save_tags_and_tagsets(request):
         tagset_forms = [ts.form(data) for ts in all_tagsets]
         tag_forms = [TagForm(data, prefix=t.slug.upper(), instance=t) for t in ts.all_tags for ts in all_tagsets]
 
-        print tagset_forms
         # process tagset forms
         for f in tagset_forms:
             if f.is_valid():
@@ -212,13 +214,21 @@ def new_tag(request, tagset_id):
     return _tab_or_manage_tags_redirect(locals())
 
 def delete_tagset(request, tagset_id):
+    success = False
     ts = TagSet.objects.get(pk=int(tagset_id))
+    # delete ttsms
+    TaggedTagSetMembership.objects.filter(content_object__tagset=ts).delete()
     ts.delete()
+    success = True
     return _tab_or_manage_tags_redirect(locals())
 
 def delete_tag(request, tag_id):
+    success = False
     t = Tag.objects.get(pk=int(tag_id))
+    # delete ttsms
+    TaggedTagSetMembership.objects.filter(tag=t).delete()
     t.delete()
+    success = True
     return _tab_or_manage_tags_redirect(locals())
 
 @render_to("generic_tags/manage.html")

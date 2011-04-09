@@ -60,3 +60,7 @@ tagset .tag_list .num_people .count	{
 .manage_tags .edit_mode_on .detail_header .generic_editable_field {
 	width: 80%;
 }
+.tag_row.pre_delete td,  .detail_header.pre_delete, .tag_row.pre_delete td input {
+	text-decoration: line-through;
+	opacity: 0.6;
+}
