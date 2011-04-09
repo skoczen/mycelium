@@ -183,3 +183,8 @@ def delete_tagset(request, person_id, tagset_id):
     ts = TagSet.objects.get(pk=int(tagset_id))
     ts.delete()
     return _tab_or_person_redirect(request,person_id)
+
+@render_to("generic_tags/tags_and_tagsets.html")
+def manage(request):
+    section = "more"
+    return locals()

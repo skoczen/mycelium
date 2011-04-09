@@ -13,4 +13,6 @@ urlpatterns = parser.patterns('',
     url(r'{person_id:digits}/new-tagset$',                                  views.new_tagset,                                    name='new_tagset'),
     url(r'{person_id:digits}/{tagset_id:digits}/rename-tagset$',            views.rename_tagset,                                 name='rename_tagset'),
     url(r'{person_id:digits}/{tagset_id:digits}/delete-tagset$',            views.delete_tagset,                                 name='delete_tagset'),
+    url(r'manage/$',                                                        views.manage,                                        name='manage'),
+    
 )

@@ -251,6 +251,20 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Peo
         self.test_adding_multiple_tags_to_one_category(tag_name="testcategory2")
 
 
+    def test_that_the_manage_tags_link_works_from_the_people_tab(self):
+        sel = self.selenium
+        self.create_person_and_go_to_tag_tab()
+        self.click_and_wait("css=.manage_tags_btn")
+        assert sel.is_text_present("Tags and Tag Categories")
+
+    def test_that_the_manage_tags_link_works_from_the_more_page(self):
+        sel = self.selenium
+        sel.open("/people")
+        self.click_and_wait("link=More")
+        self.click_and_wait("css=.tag_button")
+        assert sel.is_text_present("Tags and Tag Categories")
+
+
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions):
 
     def setUp(self, *args, **kwargs):

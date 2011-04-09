@@ -1,7 +1,7 @@
 {% load i18n generic_fields friendly_data_formatting humanize generic_tag_tags %}
 <tab_contents class="people_tags_tab">
 <actions>
-	<a href="#" class="mycelium_btn mycelium_small_btn mycelium_active_grey mycelium_tool_btn">Manage Tags</a>
+	<a href="{% url generic_tags:manage %}" class="mycelium_btn mycelium_small_btn mycelium_active_grey mycelium_tool_btn manage_tags_btn">Manage Tags</a>
 </actions>
 {% for tsm in person.tagsets %}
 <column>
