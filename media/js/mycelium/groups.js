@@ -25,7 +25,9 @@ function remove_rule_row(target) {
 	return false;
 }
 function add_rule_row() {
-	$("rules rule:not(:visible):first").removeClass("empty");
+	new_rule = $("rules rule:not(:visible):first");
+	new_rule.removeClass("empty");
+	$("input[name$=-DELETE]",new_rule).removeAttr("checked");
 	if ($("rules rule:not(:visible)").length == 0) {
 		$(".add_new_rule_btn").hide();
 	}

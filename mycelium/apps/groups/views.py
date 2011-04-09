@@ -37,7 +37,6 @@ def save_basic_info(request, group_id):
 
     if rule_formset.is_valid():
         rule_formset.save()
-                
 
     if form.is_valid():
         group = form.save()
