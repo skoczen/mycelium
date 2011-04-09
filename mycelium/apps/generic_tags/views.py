@@ -169,7 +169,7 @@ def new_tagset(request, person_id):
     return _tab_or_person_redirect(request,person_id)
 
 @json_view
-def rename_tagset(request, person_id, tagset_id):
+def rename_tagset(request, tagset_id):
     ts = TagSet.objects.get(pk=int(tagset_id))
     success = False
 
@@ -179,12 +179,13 @@ def rename_tagset(request, person_id, tagset_id):
         success = True
     return {"success": success}
 
-def delete_tagset(request, person_id, tagset_id):
+def delete_tagset(request, tagset_id):
     ts = TagSet.objects.get(pk=int(tagset_id))
     ts.delete()
-    return _tab_or_person_redirect(request,person_id)
+    return _tab_or_person_redirect(request)
 
-@render_to("generic_tags/tags_and_tagsets.html")
+@render_to("generic_tags/manage.html")
 def manage(request):
     section = "more"
+    all_tagsets = TagSet.objects.all()
     return locals()

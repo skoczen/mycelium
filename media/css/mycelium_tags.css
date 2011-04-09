@@ -1,0 +1,12 @@
+
+.detail_header .header_actions {
+	display: block;
+	float: right;
+	z-index: 20;
+
+	right: 0px;
+}
+/*.detail_header .category_name.edit_mode_on .edit_field input {
+	font-size: 24px;
+}
+*/

@@ -5,11 +5,12 @@ from django.db.models.signals import post_save
 import datetime
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItem, Tag, TaggedItemBase
+from django.db.models import Count
 
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 from django.template.defaultfilters import slugify
-
+from generic_tags import BLANK_TAGSET_NAME
 
 
 
@@ -21,6 +22,8 @@ class TagSet(TimestampModelMixin):
         return "%s" % self.name
 
     def save(self, *args, **kwargs):
+        if self.name == None or self.name == "":
+            self.name = BLANK_TAGSET_NAME
         self.slug = slugify(self.name)
         super(TagSet,self).save(*args, **kwargs)
 
@@ -31,13 +34,22 @@ class TagSet(TimestampModelMixin):
     def all_tags(self):
         """Returns all tags possible in this set"""
         # Should be cached, most likely.
+        if not hasattr(self, "cached_all_tags"):
+            self.cached_all_tags = Tag.objects.filter(pk__in=TaggedTagSetMembership.objects.filter(content_object__in=self.tagsetmembership_set.all()).values("tag")).distinct().order_by("name")
 
-        all_tags = Tag.objects.filter(pk__in=TaggedTagSetMembership.objects.filter(content_object__in=self.tagsetmembership_set.all()).values("tag")).distinct().order_by("name")
+        return self.cached_all_tags
 
-        return all_tags
+    @property
+    def all_tags_and_counts(self):
+        # TODO Should also be cached.
+        all_tags_and_counts = []
+        for t in self.all_tags:
+            all_tags_and_counts.append({
+                'tag':t,
+                'num_people': TaggedTagSetMembership.objects.filter(tag=t.id).count()
+            })
+        return all_tags_and_counts
 
-        # Needs clear definition on what it's returning. Do this tomorrow.
-        raise Exception, "Not Implemented yet"
 
     @property
     def form(self, *args, **kwargs):
@@ -53,6 +65,7 @@ class TagSet(TimestampModelMixin):
         else:
             raise Exception, "Missing tagset_name, person and/or tag!"
 
+        
     # @property
     # def groups(self):
     #     return Group.objects.filter(id__in=self.groupmembership_set.values("group_id")).all()

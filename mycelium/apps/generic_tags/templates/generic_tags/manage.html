@@ -1,0 +1,38 @@
+{% extends "generic_tags/base.html" %}
+{% load i18n generic_fields friendly_data_formatting generic_tag_tags %}
+{% block title %}Manage Tags and Tag Categories{% endblock %}
+{% block css %}{{block.super}}
+{% generic_field_css %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+{% generic_tags_js %}
+{% js "/js/mycelium/manage_tags.js" %}
+{% endblock %}
+
+
+{% block page_content %}
+<form action="" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
+{% with "Edit Tags" as edit_label %}
+	{# {% include "people/_save_status_and_button.html" %} #}
+
+{% endwith %}
+Tags and Tag Categories
+{% for ts in all_tagsets %}
+		<div class="detail_header">
+			<div class="header_actions">
+				<a href="{% url generic_tags:rename_tagset ts.pk %}" class="edit_tagset_name_btn"><img src="{% media_url "images/icon-edit-16.png" %}"/></a>
+				<a href="{% url generic_tags:delete_tagset ts.pk %}" class="delete_tagset_btn"><img src="{% media_url "images/icon-trash-16.png" %}"/></a>
+			</div>
+			<form id="category_name" class="category_name" action="{% url generic_tags:rename_tagset ts.pk %}" method="POST">{% csrf_token %}
+				{% generic_editable_field ts.form.name %}
+			</form>
+		</div>
+	<ul>
+	{% for t in ts.all_tags_and_counts %}
+		<li>{{t.tag.name}} - {{t.num_people}}</li>
+	{% endfor %}
+	</ul>
+	
+{% endfor %}
+</form>
+{% endblock %}
