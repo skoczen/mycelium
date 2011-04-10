@@ -20,6 +20,7 @@ class TagSet(TimestampModelMixin):
     def save(self, *args, **kwargs):
         if self.name == None or self.name == "":
             self.name = BLANK_TAGSET_NAME
+
         self.slug = slugify(self.name)
         super(TagSet,self).save(*args, **kwargs)
 
@@ -88,6 +89,7 @@ class Tag(models.Model):
         return TagForm(*args, **form_context)
 
     def save(self, *args, **kwargs):
+        self.name = self.name.lower()
         self.slug = slugify(self.name)
         return super(Tag, self).save(*args, **kwargs)
 
