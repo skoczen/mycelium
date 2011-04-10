@@ -7,11 +7,11 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting model 'TagSetMembership'
-        db.delete_table('generic_tags_tagsetmembership')
-
         # Deleting model 'TaggedTagSetMembership'
         db.delete_table('generic_tags_taggedtagsetmembership')
+
+        # Deleting model 'TagSetMembership'
+        db.delete_table('generic_tags_tagsetmembership')
 
 
     def backwards(self, orm):

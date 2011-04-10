@@ -58,5 +58,6 @@ function add_a_category() {
 
 function process_fragments_and_rebind_tags_form(json) {
     $.Mycelium.fragments.process_fragments_from_json(json);
+    $.Mycelium.update_stripes();
     bind_tags_events();
 }
