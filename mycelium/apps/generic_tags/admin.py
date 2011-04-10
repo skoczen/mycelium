@@ -3,5 +3,6 @@ from models import *
 
 
 admin.site.register(TagSet)
-admin.site.register(TagSetMembership)
+admin.site.register(Tag)
+admin.site.register(TaggedItem)
 

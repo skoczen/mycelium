@@ -9,12 +9,12 @@ from django.db.models import Q
 from django.test import TestCase
 from people.models import Person, NO_NAME_STRING
 from volunteers import VOLUNTEER_STATII
-from rules.tests.unit_tests import RuleTestAbstractions
 import datetime
-from generic_tags.models import TagSet
+from generic_tags.models import TagSet, Tag
+from groups.tests import GroupTestAbstractions
+from rules.tests import RuleTestAbstractions
 
-class GroupTestAbstractions(object):
-    pass
+
 
 class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, DestructiveDatabaseTestCase, RuleTestAbstractions):
     fixtures = ["generic_tags.selenium_fixtures.json"]
@@ -113,11 +113,11 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         # create the people
         group = Factory.group()
         ppl = self._generate_people()
-        TagSet.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
-        TagSet.create_tag_for_person(person=ppl[2], tagset_name="Donor", tag="major")
-        TagSet.create_tag_for_person(person=ppl[3], tagset_name="Donor", tag="major")
+        self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
+        self.create_tag_for_person(person=ppl[2], tagset_name="Donor", tag="major")
+        self.create_tag_for_person(person=ppl[3], tagset_name="Donor", tag="major")
         
 
         all_ppl_qs = Person.objects.none()
@@ -149,9 +149,9 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         # create the people
         group = Factory.group()
         ppl = self._generate_people()
-        TagSet.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
+        self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
         target_date = datetime.date(month=3,day=24,year=2010)
         Factory.donation(ppl[0], date=target_date-datetime.timedelta(days=600))
         Factory.donation(ppl[1], date=target_date-datetime.timedelta(days=600))
@@ -228,11 +228,11 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         # create the people
         group = Factory.group(rules_boolean=False)
         ppl = self._generate_people()
-        TagSet.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
-        TagSet.create_tag_for_person(person=ppl[2], tagset_name="Donor", tag="major")
-        TagSet.create_tag_for_person(person=ppl[3], tagset_name="Donor", tag="major")
+        self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
+        self.create_tag_for_person(person=ppl[2], tagset_name="Donor", tag="major")
+        self.create_tag_for_person(person=ppl[3], tagset_name="Donor", tag="major")
         
 
         all_ppl_qs = Person.objects.none()
@@ -264,9 +264,10 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         # create the people
         group = Factory.group(rules_boolean=False)
         ppl = self._generate_people()
-        TagSet.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
+        self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
+        
         target_date = datetime.date(month=3,day=24,year=2010)
         Factory.donation(ppl[0], date=target_date-datetime.timedelta(days=600))
         Factory.donation(ppl[1], date=target_date-datetime.timedelta(days=600))
@@ -277,6 +278,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         all_ppl_qs = Person.objects.none()
         test_tag_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
         test_and_donation_tag_qs = Person.objects.filter( Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk) )
+
 
         self.assertEqualQuerySets(group.members, all_ppl_qs)
 
@@ -296,6 +298,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         rsv ="02/05/2010"
         GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
+        # test_donation_qs = Person.objects.filter( Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk) )
+        # self.assertEqualQuerySets(group.members, test_donation_qs)
 
         self.assertEqualQuerySets(group.members, test_and_donation_tag_qs)
 
@@ -303,9 +307,9 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         # create the people
         group = Factory.group(rules_boolean=False)
         ppl = self._generate_people()
-        TagSet.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
+        self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
         target_date = datetime.date(month=3,day=24,year=2010)
         Factory.donation(ppl[0], date=target_date-datetime.timedelta(days=600))
         Factory.donation(ppl[1], date=target_date-datetime.timedelta(days=600))

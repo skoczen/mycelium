@@ -1,46 +1,17 @@
 {% load i18n generic_fields friendly_data_formatting humanize generic_tag_tags %}
 <tab_contents class="people_tags_tab">
-
-{% for tsm in person.tagsets %}
+<actions>
+	<a href="{% url generic_tags:manage %}" class="mycelium_btn mycelium_small_btn mycelium_active_grey mycelium_tool_btn manage_tags_btn">Manage Tags</a>
+</actions>
+{% for ts in person.tagsets %}
 <column>
 	<div class="detail_header">
-		<div class="header_actions">
-			<a href="{% url generic_tags:rename_tagset person.pk tsm.pk %}" class="edit_tagset_name_btn"><img src="{% media_url "images/icon-edit-16.png" %}"/></a>
-			<a href="{% url generic_tags:delete_tagset person.pk tsm.pk %}" class="delete_tagset_btn"><img src="{% media_url "images/icon-trash-16.png" %}"/></a>
-		</div>
-		<form id="category_name" class="category_name" action="{% url generic_tags:rename_tagset person.pk tsm.pk %}" method="POST">{% csrf_token %}
-			{% generic_editable_field tsm.form.name %}
-		</form>
+		{{ts.name}}
 	</div>	
 	<div class="tags_list">
-	{% render_tags_as_checklist person tsm.slug %}
+	{% render_tags_as_checklist person ts.pk %}
 	</div>
 </column>
 {% if forloop.counter|divisibleby:4 or forloop.last%}<div class="clearfix"></div>{% endif %}
 {% endfor %}
-<div class="actions">
-	<tabbed_box class="with_button closed" name="add_a_category">
-		<tab_title_container>	
-		<tab_title>
-			<text>Add a Category</text>
-		</tab_title>
-		</tab_title_container>
-		<box_content>
-		<form id="new_category" action="{% url generic_tags:new_tagset person.pk %}" method="POST">{% csrf_token %}
-		<span class="edit_mode_on">
-			{% generic_editable_field new_tagset_form.name %}
-		</span>
-		
-		<form_actions>
-			<input type="submit" class="mycelium_btn add_category_btn" value="Add Tag Category">
-		</form_actions>
-		<box_close>
-			<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
-		</box_close>
-
-		</form>
-		</box_content>
-		</tabbed_box>
-	</tabbed_box>
-</div>
 </tab_contents>

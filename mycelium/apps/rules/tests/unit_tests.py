@@ -4,50 +4,15 @@ from rules.models import LeftSide, Operator, RightSideType, Rule
 from rules.tasks import populate_rule_components
 from groups.models import GroupRule
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from qi_toolkit.selenium_test_case import QiUnitTestMixin
 from django.db.models import Q
+from qi_toolkit.selenium_test_case import QiUnitTestMixin
 from django.test import TestCase
 from generic_tags.models import TagSet
 from people.models import Person
 import datetime
 from rules import NotYetImplemented, IncompleteRuleException
-
-class RuleTestAbstractions(object):
-    @property
-    def _text_operators(self):
-        return Operator.objects.filter(Q(display_name="is exactly") | Q(display_name="is not exactly") | Q(display_name="contains") | Q(display_name="does not contain") )
-
-    @property
-    def _date_operators(self):
-        return Operator.objects.filter(Q(display_name="is on") | Q(display_name="is before") | Q(display_name="is after"))
-
-    @property
-    def _number_operators(self):
-        return Operator.objects.filter(Q(display_name="is equal to") | Q(display_name="is less than") | Q(display_name="is more than"))
-
-    @property
-    def _tag_operators(self):
-        return Operator.objects.filter(Q(display_name="is exactly") | Q(display_name="contains") )
-
-    @property
-    def _choices_operators(self):
-        return Operator.objects.filter(Q(display_name="is") | Q(display_name="is not") )
-
-    @property
-    def _text_right_side_types(self):
-        return RightSideType.objects.filter(name="text")
-    
-    @property
-    def _date_right_side_types(self):
-        return RightSideType.objects.filter(name="date")
-
-    @property
-    def _number_right_side_types(self):
-        return RightSideType.objects.filter(name="number")
-
-    @property
-    def _choices_right_side_types(self):
-        return RightSideType.objects.filter(name="choices")
+from groups.tests import GroupTestAbstractions
+from rules.tests import RuleTestAbstractions
 
 
 class TestRuleModelFunctions(QiUnitTestMixin, TestCase):
@@ -64,7 +29,7 @@ class TestRuleModelFunctions(QiUnitTestMixin, TestCase):
         self.assertEqualQuerySets(self.left_side.right_side_types, self.left_side.allowed_right_side_types.all())
 
 
-class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase):
+class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTestAbstractions, TestCase):
     fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
@@ -72,41 +37,41 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
     
     def test_any_tags(self):
         left_side = LeftSide.objects.get(display_name="have any tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__taggedtagsetmembership__tag__name")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types  )
         self.assertEqual(left_side.add_closing_paren, False)
 
     def test_general_tags(self):
         left_side = LeftSide.objects.get(display_name="have a General tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='General',taggedtagsetmembership__tag__name")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__tagset__name='General',taggeditem__tag__name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types,  self._text_right_side_types)
-        self.assertEqual(left_side.add_closing_paren, True)
+        self.assertEqual(left_side.add_closing_paren, False)
     
     def test_donor_tags(self):
         left_side = LeftSide.objects.get(display_name="have a Donor tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='Donor',taggedtagsetmembership__tag__name")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__tagset__name='Donor',taggeditem__tag__name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types,  self._text_right_side_types)
-        self.assertEqual(left_side.add_closing_paren, True)
+        self.assertEqual(left_side.add_closing_paren, False)
     
     def test_volunteer_tags(self):
         left_side = LeftSide.objects.get(display_name="have a Volunteer tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='Volunteer',taggedtagsetmembership__tag__name")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__tagset__name='Volunteer',taggeditem__tag__name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types,  self._text_right_side_types)
-        self.assertEqual(left_side.add_closing_paren, True)
+        self.assertEqual(left_side.add_closing_paren, False)
     
     def test_custom_tag_1(self):
         # make a new tagset
         TagSet.objects.get_or_create(name="new test tagset")
         populate_rule_components()
         left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='new test tagset',taggedtagsetmembership__tag__name")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__tagset__name='new test tagset',taggeditem__tag__name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types)
-        self.assertEqual(left_side.add_closing_paren, True)
+        self.assertEqual(left_side.add_closing_paren, False)
 
         return left_side
 
@@ -259,7 +224,7 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
         
         # make sure it's there
         left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
-        self.assertEqual(left_side.query_string_partial, "tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='new test tagset',taggedtagsetmembership__tag__name")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__tagset__name='new test tagset',taggeditem__tag__name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types)
 
@@ -272,7 +237,7 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, TestCase
         # make sure it's gone
         self.assertEqual(LeftSide.objects.filter(display_name="have a new test tagset tag that").count(), 0)
 
-class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, DestructiveDatabaseTestCase):
+class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractions, QiUnitTestMixin, DestructiveDatabaseTestCase):
     fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
@@ -442,13 +407,13 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         # hand-create a few people, some of whom match, and others who don't
         ppl = self._generate_people(number=6)
 
-        TagSet.create_tag_for_person(person=ppl[0], tagset_name="General", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[2], tagset_name="General", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[4], tagset_name="General", tag="another tag")
-        TagSet.create_tag_for_person(person=ppl[5], tagset_name="Donor", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[0], tagset_name="General", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[2], tagset_name="General", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[4], tagset_name="General", tag="another tag")
+        self.create_tag_for_person(person=ppl[5], tagset_name="Donor", tag="really cool test tag")
 
         # assert the queryset string is right
-        self.assertEqual(group_rule.queryset_filter_string, "filter(tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='General',taggedtagsetmembership__tag__name__icontains='test'))")
+        self.assertEqual(group_rule.queryset_filter_string, "filter(taggeditem__tag__tagset__name='General',taggeditem__tag__name__icontains='test')")
 
         # get the queryset, make sure it matches a hand-created one.
         qs = group_rule.queryset
@@ -466,15 +431,16 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, QiUnitTestMixin, De
         # hand-create a few people, some of whom match, and others who don't
         ppl = self._generate_people(number=5)
 
-        TagSet.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
-        TagSet.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
+
+        self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
+        self.create_tag_for_person(person=ppl[4], tagset_name="new test tagset", tag="another tag")
 
         # create a new group rule
         group_rule = self.test_create_new_group_rule_for_custom_tag_is_exactly()
 
         # assert the queryset string is right
-        self.assertEqual(group_rule.queryset_filter_string, "filter(tagsetmembership__in=TagSetMembership.objects.filter(tagset__name='new test tagset',taggedtagsetmembership__tag__name__iexact='test'))")
+        self.assertEqual(group_rule.queryset_filter_string, "filter(taggeditem__tag__tagset__name='new test tagset',taggeditem__tag__name__iexact='test')")
 
         # get the queryset, make sure it matches a hand-created one.
         qs = group_rule.queryset

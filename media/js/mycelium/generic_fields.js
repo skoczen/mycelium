@@ -140,7 +140,8 @@
                     clearTimeout(data.form_save_timeout);
                     data.form_save_timeout = setTimeout(function(){data.target.genericFieldForm('save_form');}, 1500);
                     data.target.trigger("genericFieldForm.queue_form_save");
-                }                
+                }
+                
             });
         },
         save_form: function(){

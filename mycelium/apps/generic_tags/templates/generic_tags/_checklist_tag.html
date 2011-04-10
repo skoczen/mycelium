@@ -1,3 +1,3 @@
 <tag class="checkbox {% if checklist_tag.has_tag %}checked{% endif %}">
-	<input type="checkbox" class="checkbox_input" id="{{tag_set_name}}_{{checklist_tag.tag.pk}}" {% if checklist_tag.has_tag %}checked=checked{% endif %} remove_url="{{delete_tag_url}}?tag={{checklist_tag.tag.name|urlencode}}" add_url="{{add_tag_url}}?new_tag={{checklist_tag.tag.name|urlencode}}&amp;target_pk={{target.pk}}"/><label for="{{tag_set_name}}_{{checklist_tag.tag.pk}}"><name>{{checklist_tag.tag.name|title}}</name></label>
+	<input type="checkbox" class="checkbox_input" id="{{tag_set_id}}_{{checklist_tag.tag.pk}}" {% if checklist_tag.has_tag %}checked=checked{% endif %} remove_url="{% url generic_tags:remove_tag tag_set_id checklist_tag.tag.pk target.pk %}" add_url="{% url generic_tags:add_tag tag_set_id checklist_tag.tag.pk target.pk %}"/><label for="{{tag_set_id}}_{{checklist_tag.tag.pk}}"><name>{{checklist_tag.tag.name|title}}</name></label>
 </tag>

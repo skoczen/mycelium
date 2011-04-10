@@ -505,7 +505,7 @@ tabbed_box box_content {
 	margin-right: 5%;
 }
 #basic_info_form.edit_mode_on input { 
-	background-color: #FAFAFA;
+	background-color: transparent;
 }
 .basic_info tabbed_box[name=job] a {
 	text-decoration: none;
