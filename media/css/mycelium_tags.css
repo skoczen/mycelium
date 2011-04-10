@@ -22,7 +22,7 @@ tagset {
 	display: block;
 	padding: 0px;
 	width: 97%;
-	margin: 0px auto 20px auto;
+	margin: 0px auto 10px auto;
 }
 tagset .tag_list {
 	width: 100%;
@@ -72,5 +72,5 @@ tagset form_actions{
 	opacity: 0.6;
 }
 #basic_info_form {
-	padding-bottom: 20px;
+	padding-bottom: 30px;
 }

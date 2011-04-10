@@ -14,6 +14,13 @@ class TagTestAbstractions(object):
         self.create_john_smith()
         self.switch_to_tag_tab()
 
+    def create_person_and_go_to_manage_tags_page(self):
+        sel = self.selenium
+        self.create_person_and_go_to_tag_tab()
+        self.click_and_wait("css=.manage_tags_btn")
+        assert sel.is_text_present("Manage Tags")
+
+
 class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions):
     selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
@@ -186,7 +193,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Peo
         self.assertEqual("Test Tag 1",sel.get_text("css=fragment[name=donor_tags] .checkbox:nth(0) label name"))
 
 
-    def test_unchecking_a_tag_with_no_other_tags_pulls_it_from_the_list(self):
+    def test_unchecking_a_tag_with_no_other_tags_leaves_it_on_the_list(self):
         sel = self.selenium
         self.test_adding_multiple_tags_to_one_category()
 
@@ -194,10 +201,11 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Peo
         sel.click("css=fragment[name=general_tags] .checkbox:nth(1) input[type=checkbox]")
         time.sleep(1)
 
-        # Make sure it fell off the list
+        # Make sure it stayed on the list
         assert not sel.is_element_present("css=fragment[name=general_tags] .checkbox:nth(2)")
         self.assertEqual("Test Tag 1",sel.get_text("css=fragment[name=general_tags] .checkbox:nth(0) label name"))
         self.assertEqual("Test Tag 3",sel.get_text("css=fragment[name=general_tags] .checkbox:nth(1) label name"))
+        self.assertEqual("Test Tag 3",sel.get_text("css=fragment[name=general_tags] .checkbox:nth(2) label name"))
 
                 
 
@@ -225,26 +233,92 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Peo
         
     def test_that_new_categories_can_be_added(self):
         sel = self.selenium
-        self.create_person_and_go_to_tag_tab()
-        sel.click("css=tabbed_box[name=add_a_category]")
+        self.create_person_and_go_to_manage_tags_page()
+        sel.click("css=.start_edit_btn")
         time.sleep(0.5)
-        sel.type("css=#new_category #id_name", "Test Category 1")
-        sel.click("css=tabbed_box .add_category_btn")
-        time.sleep(3)
-        self.switch_to_tag_tab()                
-        assert sel.is_element_present("css=.people_tags_tab column:nth(3) .detail_header")
-        self.assertEqual(sel.get_text("css=.people_tags_tab column:nth(3) .detail_header .view_field"),"Test Category 1")
+        sel.click("css=.add_a_category_btn")
+        time.sleep(2)
+        sel.type("css=.detail_header:last input", "Test Category 1")
+        time.sleep(4)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=.detail_header:last .view_field")
+        self.assertEqual(sel.get_text("css=.detail_header:last .view_field"),"Test Category 1")
 
-
-        sel.click("css=tabbed_box[name=add_a_category]")
+        sel.click("css=.start_edit_btn")
         time.sleep(0.5)
-        sel.type("css=#new_category #id_name", "testcategory2")
-        sel.click("css=tabbed_box .add_category_btn")
-        time.sleep(3)
-        self.switch_to_tag_tab()                
-        assert sel.is_element_present("css=.people_tags_tab column:nth(4) .detail_header")
-        self.assertEqual(sel.get_text("css=.people_tags_tab column:nth(4) .detail_header .view_field"),"testcategory2")
+        sel.click("css=.add_a_category_btn")
+        time.sleep(2)
+        sel.type("css=.detail_header:last input", "testcategory2")
+        time.sleep(4)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=.detail_header:last .view_field")
+        self.assertEqual(sel.get_text("css=.detail_header:last .view_field"),"testcategory2")
 
+
+    def test_deleting_a_category_works(self):
+        sel = self.selenium
+        self.test_that_new_categories_can_be_added()
+        
+        sel.click("css=.start_edit_btn")
+        time.sleep(0.5)
+        sel.choose_cancel_on_next_confirmation()
+        sel.click("css=.delete_tagset_btn:last")
+        self.assertEqual(sel.get_confirmation(),"Hold on there.\n\nThis will delete the entire tag category, including all tags in it!\n\nThis action can not be undone.\n\nPress OK to delete this tag category.\nPress Cancel to leave it intact.")
+        sel.click("css=.delete_tagset_btn:last")
+        self.assertEqual(sel.get_confirmation(),"Hold on there.\n\nThis will delete the entire tag category, including all tags in it!\n\nThis action can not be undone.\n\nPress OK to delete this tag category.\nPress Cancel to leave it intact.")
+        time.sleep(0.1)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=.detail_header:last .view_field")
+        self.assertEqual(sel.get_text("css=.detail_header:last .view_field"),"Test Category 1")
+                
+
+    def test_adding_a_tag_via_the_manage_page(self):
+        sel = self.selenium
+        self.create_person_and_go_to_manage_tags_page()
+        sel.click("css=.start_edit_btn")
+        time.sleep(0.5)
+        sel.click("css=.add_a_tag_btn:first")
+        time.sleep(2)
+        sel.type("css=.tag_name .generic_editable_field .edit_field input","really cool tag")
+        sel.click("css=.tag_name .generic_editable_field .edit_field input")
+        time.sleep(3)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual(sel.get_text("css=.tag_name .view_field"),"really cool tag")
+
+    
+    def test_adding_a_tag_via_the_manage_page_shows_up_on_a_person(self):
+        assert True == "test written"
+
+    def test_adding_a_tag_via_the_a_person_shows_up_on_the_manage_page(self):
+        assert True == "test written"
+
+    def test_adding_several_tags_via_the_manage_page(self):
+        assert True == "test written"
+    
+    def test_deleting_a_tag_via_the_manage_page(self):
+        assert True == "test written"
+    
+    def test_the_count_of_tags_on_the_manage_page_is_correct(self):
+        assert True == "test written"
+
+        # make a tag
+        
+        # assert zero
+
+        # give it to one person
+
+        # verify
+
+        # rinse & repeat for two more
+
+        # remove it from one person
+
+        # verify
 
     def test_that_tags_can_be_added_and_removed_from_custom_categories(self):    
         self.test_that_new_categories_can_be_added()
@@ -252,17 +326,14 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Peo
 
 
     def test_that_the_manage_tags_link_works_from_the_people_tab(self):
-        sel = self.selenium
-        self.create_person_and_go_to_tag_tab()
-        self.click_and_wait("css=.manage_tags_btn")
-        assert sel.is_text_present("Tags and Tag Categories")
+        self.create_person_and_go_to_manage_tags_page()
 
     def test_that_the_manage_tags_link_works_from_the_more_page(self):
         sel = self.selenium
         sel.open("/people")
         self.click_and_wait("link=More")
         self.click_and_wait("css=.tag_button")
-        assert sel.is_text_present("Tags and Tag Categories")
+        assert sel.is_text_present("Manage Tags")
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions):
