@@ -202,9 +202,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Peo
         time.sleep(1)
 
         # Make sure it stayed on the list
-        assert not sel.is_element_present("css=fragment[name=22_tags] .checkbox:nth(2)")
+        assert sel.is_element_present("css=fragment[name=22_tags] .checkbox:nth(2)")
         self.assertEqual("Test Tag 1",sel.get_text("css=fragment[name=22_tags] .checkbox:nth(0) label name"))
-        self.assertEqual("Test Tag 3",sel.get_text("css=fragment[name=22_tags] .checkbox:nth(1) label name"))
+        self.assertEqual("Test Tag 2",sel.get_text("css=fragment[name=22_tags] .checkbox:nth(1) label name"))
         self.assertEqual("Test Tag 3",sel.get_text("css=fragment[name=22_tags] .checkbox:nth(2) label name"))
 
                 
@@ -391,7 +391,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Peo
 
     def test_that_tags_can_be_added_and_removed_from_custom_categories(self):    
         self.test_that_new_categories_can_be_added()
-        self.test_adding_multiple_tags_to_one_category(tag_name="testcategory2")
+        self.test_adding_multiple_tags_to_one_category(tag_name="26")
 
 
     def test_that_the_manage_tags_link_works_from_the_people_tab(self):
