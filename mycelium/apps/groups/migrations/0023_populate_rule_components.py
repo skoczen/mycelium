@@ -6,6 +6,10 @@ from django.db import models
 
 class Migration(DataMigration):
 
+    depends_on = (
+        ("rules", "0007_auto__del_rightsidevalue"),
+    )
+
     def forwards(self, orm):
         "Write your forwards methods here."
         from rules.tasks import populate_rule_components

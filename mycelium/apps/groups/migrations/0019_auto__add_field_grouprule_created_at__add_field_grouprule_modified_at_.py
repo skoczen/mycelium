@@ -6,6 +6,10 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ("rules", "0001_initial"),
+    )
+
     def forwards(self, orm):
         
         # Adding field 'GroupRule.created_at'

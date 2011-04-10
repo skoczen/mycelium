@@ -1,0 +1,31 @@
+{% extends "generic_tags/base.html" %}
+{% load i18n generic_fields friendly_data_formatting generic_tag_tags humanize %}
+{% block title %}Manage Tags{% endblock %}
+{% block extra_body %}class="manage_tags"{% endblock %}
+{% block css %}{{block.super}}
+{% generic_field_css %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+{% generic_tags_js %}
+{% js "/js/mycelium/people_common.js" %}
+{% js "/js/mycelium/manage_tags.js" %}
+{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+{% block page_content %}
+<page_title>Manage Tags</page_title>
+<form action="{% url generic_tags:save_tags_and_tagsets %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
+	<save_status_and_button>
+	<a href="#" class="mycelium_btn start_edit_btn" >{% if not edit_label %}Edit Tags{% else %}{{edit_label}}{% endif %}</a>
+	<a href="#" class="mycelium_btn edit_done_btn " >Done</a>
+	<a href="#" class="mycelium_btn save_and_status_btn mycelium_grey" >Saved</a>
+	<span class="save_info">
+		<span class="last_save_time"></span>
+	</span>
+	</save_status_and_button>
+
+<fragment name="tagset_details" action="replace">
+	{% include "generic_tags/_manage_tags_tagset_details.html" %}
+</fragment>
+</form>
+{% endblock %}

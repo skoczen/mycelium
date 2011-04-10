@@ -291,6 +291,19 @@ new_object_buttons .new_label {
 	background-position: 4px 3px;
 	background-image: url("../images/icon-delete-grey-12.png");		
 }
+.mycelium_tool_btn {
+	padding: 5px 12px 5px 29px ;
+	background-color: #DDD;
+	background-image: url("../images/icon-tool-grey-18.png");	
+	background-position: 7px 6px;
+	background-repeat: no-repeat;
+}
+.mycelium_tool_btn.mycelium_small_btn {
+	padding: 2px 5px 2px 19px;
+	background-position: 4px 3px;
+	background-image: url("../images/icon-tool-grey-12.png");		
+}
+
 .mycelium_new_btn {
 /*	background-repeat: no-repeat;
 	padding: 2px 5px 2px 19px;
@@ -619,4 +632,10 @@ feedback_button {
 	left: 0px;
 	top: 35%;
 	
+}
+tab_contents actions {
+	display: block;
+	width: 100%;
+	text-align: right;
+	padding: 4px 0px 0px 0px;
 }
