@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import TimestampModelMixin
 from django.db.models import Q
-from generic_tags.models import TagSetMembership
 import datetime
 from dateutil import parser
 from picklefield.fields import PickledObjectField

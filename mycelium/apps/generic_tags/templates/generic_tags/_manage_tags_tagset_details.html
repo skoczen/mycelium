@@ -9,7 +9,7 @@
 	</div>
 	<table class="tag_list striped">
 	{% for t in ts.all_tags_and_counts_with_form %}
-		{% with t.tag_form as t_form %}
+		{% with t.tag.form as t_form %}
 		<tr class="striped_row tag_row">
 			<td class="tag_name">{% generic_editable_field t_form.name %}</td>
 			<td class="num_people"><span class="count">{{t.num_people|intcomma}}</span> 

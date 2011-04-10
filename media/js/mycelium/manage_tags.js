@@ -41,7 +41,7 @@ function delete_tag() {
 	var tag_row = $(this).parents(".tag_row");
 	tag_row.addClass("pre_delete");
 	if (confirm("You sure?\n\nPress OK to delete this tag.\nPress Cancel to leave it in place.")) {
-
+		process_link_via_json($(this));
 	} else {
 		tag_row.removeClass("pre_delete");
 	}

@@ -3,13 +3,13 @@
 <actions>
 	<a href="{% url generic_tags:manage %}" class="mycelium_btn mycelium_small_btn mycelium_active_grey mycelium_tool_btn manage_tags_btn">Manage Tags</a>
 </actions>
-{% for tsm in person.tagsets %}
+{% for ts in person.tagsets %}
 <column>
 	<div class="detail_header">
-		{{tsm.name}}
+		{{ts.name}}
 	</div>	
 	<div class="tags_list">
-	{% render_tags_as_checklist person tsm.slug %}
+	{% render_tags_as_checklist person ts.pk %}
 	</div>
 </column>
 {% if forloop.counter|divisibleby:4 or forloop.last%}<div class="clearfix"></div>{% endif %}

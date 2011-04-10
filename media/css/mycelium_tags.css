@@ -51,8 +51,12 @@ tagset .tag_list .num_people .count	{
 .manage_tags .edit_mode_on .detail_header .edit_field {
 	margin-bottom: 5px;
 }
-.manage_tags .edit_mode_on .detail_header  .edit_field input {
+.detail_header, .detail_header input {
 	font-size: 24px;
+}
+
+.manage_tags .edit_mode_on .detail_header .edit_field input {
+	
 }
 .edit_mode_off .mycelium_delete_btn, .edit_mode_off .add_a_category_btn, .edit_mode_off .add_a_tag_btn, .edit_mode_off form_actions {
 	display: none;

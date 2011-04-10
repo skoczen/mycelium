@@ -2,16 +2,12 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from django.db.models.signals import post_save
-import datetime
-from taggit.managers import TaggableManager
-from taggit.models import TaggedItem, Tag, TaggedItemBase
-from django.db.models import Count
+from django.template.defaultfilters import slugify
 
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
-from django.template.defaultfilters import slugify
-from generic_tags import BLANK_TAGSET_NAME
 
+from generic_tags import BLANK_TAGSET_NAME
 
 
 class TagSet(TimestampModelMixin):
@@ -35,92 +31,92 @@ class TagSet(TimestampModelMixin):
         """Returns all tags possible in this set"""
         # Should be cached, most likely.
         if not hasattr(self, "cached_all_tags"):
-            self.cached_all_tags = Tag.objects.filter(pk__in=TaggedTagSetMembership.objects.filter(content_object__in=self.tagsetmembership_set.all()).values("tag")).distinct().order_by("name")
+            self.cached_all_tags = self.tag_set.all()
 
         return self.cached_all_tags
 
     @property
     def all_tags_and_counts_with_form(self):
-        from generic_tags.forms import TagForm
         # TODO Should also be cached.
-        all_tags_and_counts = []
-        for t in self.all_tags:
-            all_tags_and_counts.append({
-                'tag':t,
-                'num_people': TaggedTagSetMembership.objects.filter(tag=t.id).count(),
-                'tag_form': TagForm(prefix="TAG-%s" % t.pk, instance=t)
-            })
-        return all_tags_and_counts
+        if not hasattr(self, "cached_all_tags_and_counts"):
+            self.cached_all_tags_and_counts = []
+            for t in self.all_tags:
+                self.cached_all_tags_and_counts.append({
+                    'tag':t,
+                    'num_people': TaggedItem.objects.filter(tag=t.id).count(),
+                })
+
+        return self.cached_all_tags_and_counts
+
+    
+    def all_tags_with_users_tags_marked(self, person):
+        # ghetto caching
+        if not hasattr(self, "cached_all_tags_with_users_tags_marked"):
+            my_tags = person.taggeditem_set.values_list("tag",flat=True)
+            self.cached_all_tags_with_users_tags_marked = []
+            for at in self.all_tags:
+                has_tag = at.pk in my_tags
+                self.cached_all_tags_with_users_tags_marked.append({'has_tag':has_tag,'tag':at})
+
+        return self.cached_all_tags_with_users_tags_marked
 
 
     def form(self, *args, **kwargs):
         from generic_tags.forms import TagSetForm
-        return TagSetForm(*args, prefix="TAGSET-%s" % self.pk, instance=self, **kwargs)
+        form_context = {'instance':self, 'prefix':"TAGSET-%s" % self.pk}
+        form_context.update(**kwargs)
+        return TagSetForm(*args, **form_context)
 
-    @classmethod
-    def create_tag_for_person(cls, tagset_name=None, person=None, tag=None):
-        if tagset_name and person and tag:
-            ts = cls.objects.get_or_create(name=tagset_name)[0]
-            tsm = TagSetMembership.objects.get_or_create(tagset=ts, person=person)[0]
-            tsm.tags.add(tag)
-        else:
-            raise Exception, "Missing tagset_name, person and/or tag!"
+    
 
-        
-    # @property
-    # def groups(self):
-    #     return Group.objects.filter(id__in=self.groupmembership_set.values("group_id")).all()
-
-
-    # def add_tag(self, person, name):
-    #     tsm = self.tagsetmembership_set.filter(person=person).tags()
-    #     group = Group.objects.filter(name__iexact=name).all()
-    #     if group.count() == 1:
-    #         group = group[0]
-    #     elif group.count() == 0:
-    #         group = Group.objects.create(name=name)[0]
-    #     else:
-    #         raise Exception, "More than one group with this name!"
-        
-    #     return self.groupmembership_set.get_or_create(group=group)
-
-    # def remove_group(self, name):
-    #     try:
-    #         group = Group.objects.get(name__iexact=name)
-    #         gm = self.groupmembership_set.get(group=group)
-    #         gm.delete()
-    #     except:
-    #         pass
-
-class TaggedTagSetMembership(TaggedItemBase):
-    content_object = models.ForeignKey('TagSetMembership')
-
-
-class TagSetMembership(TimestampModelMixin):
+class Tag(models.Model):
+    name = models.CharField(verbose_name=_('Name'), max_length=250)
+    slug = models.SlugField(verbose_name=_('Slug'), max_length=255)
     tagset = models.ForeignKey(TagSet, blank=True, null=True)
-    person = models.ForeignKey('people.Person', blank=True, null=True)
-
-    tags = TaggableManager(through=TaggedTagSetMembership)
-
-    @property
-    def all_tags_with_my_tags_marked(self):
-        my_tags = self.tags.all()
-        all_tags = self.tagset.all_tags
-        combined_tags = []
-        for at in all_tags:
-            has_tag = at in my_tags
-            combined_tags.append({'has_tag':has_tag,'tag':at})
-
-        return combined_tags
 
     def __unicode__(self):
-        return "%s in %s" % (self.tagset, self.person)
+        return self.name
 
     class Meta(object):
-        ordering = ("tagset","person",)
+        ordering = ("tagset","name",)
 
 
+    def form(self, *args, **kwargs):
+        from generic_tags.forms import TagForm
+        form_context = {'instance':self, 'prefix':"TAG-%s" % self.pk}
+        form_context.update(**kwargs)
+        return TagForm(*args, **form_context)
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        return super(Tag, self).save(*args, **kwargs)
+
+
+    def add_tag_to_person(self, person=None):
+        if not person:
+            raise Exception, "Missing person"
+        return TaggedItem.objects.get_or_create(tag=self, person=person)[0]
+
+    def remove_tag_from_person(self, person=None):
+        if not person:
+            raise Exception, "Missing person"
+        TaggedItem.objects.filter(tag=self, person=person).delete()
+
+    @classmethod
+    def create_new_tag(cls, tagset=None, name=None):
+        if not tagset or not name:
+            raise Exception, "Missing tagset and/or name"
+        return cls.objects.get_or_create(tagset=tagset, name=name)[0]
+
+class TaggedItem(models.Model):
+    tag = models.ForeignKey(Tag)
+    person = models.ForeignKey('people.Person', blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s tag for %s" % (self.tag, self.person)
+
+    class Meta(object):
+        ordering = ("tag","person",)
 
 
 
