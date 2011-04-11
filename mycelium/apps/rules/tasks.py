@@ -172,18 +172,23 @@ def populate_rule_components(*args, **kwargs):
     ls = left_side_for_tag (     display_name="have any tag that"                            ,query_string_partial="taggeditem__tag__name"                                           )
     ls.order=10
     ls.save()
-    left_side_for_choices(  display_name="volunteer status"                             ,query_string_partial="volunteer__status"                                   , choices=VOLUNTEER_STATII)
+
+    ls = left_side_for_choices(  display_name="volunteer status"                             ,query_string_partial="volunteer__status"                                   , choices=VOLUNTEER_STATII)
     ls.order=100
     ls.save()
-    left_side_for_date(     display_name="last donation"                                ,query_string_partial="donor__donation__date"                               , order=110     )
+
+    ls = left_side_for_date(     display_name="last donation"                                ,query_string_partial="donor__donation__date"                                    )
     ls.order=110
     ls.save()
+    
     # left_side_for_number(   display_name="total donations in the last 12 months"        ,query_string_partial="donor__twelvemonth_total"                                          )
     # ls.order=120
     # ls.save()
-    left_side_for_date(     display_name="last volunteer shift"                         ,query_string_partial="volunteer__completedshift__date"                     , order=130     )    
+    
+    ls = left_side_for_date(     display_name="last volunteer shift"                         ,query_string_partial="volunteer__completedshift__date"                             )    
     ls.order=130
     ls.save()
+    
     # left_side_for_number(   display_name="total volunteer hours in the last 12 months"  ,query_string_partial="volunteer__twelvemonth_total"                                       )
     # ls.order=140
     # ls.save()
@@ -199,7 +204,7 @@ def populate_rule_components(*args, **kwargs):
                             )
         ls.order=20+i
         ls.save()
-                                                                                                
+                                                                                               
 
 
     # Cleanup

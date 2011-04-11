@@ -183,6 +183,7 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTes
 
     def test_left_side_ordering(self):
         list_of_names = [l.display_name for l in LeftSide.objects.all()]
+        print [l.order for l in LeftSide.objects.all()]
         target_list_of_names = [
             "have any tag that",
             "have a General tag that",
