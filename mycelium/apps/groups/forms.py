@@ -2,7 +2,7 @@ from django.forms import ModelForm, RadioSelect, HiddenInput, TextInput, Select,
 from groups.models import Group, GroupRule
 from django.forms.models import inlineformset_factory, BaseModelFormSet, BaseInlineFormSet
 
-class GroupForm(RuleGroupForm):
+class GroupForm(ModelForm):
     class Meta:
         model = Group
         fields = ("name", "rules_boolean")
