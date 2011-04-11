@@ -6,7 +6,7 @@ import datetime
 from dateutil import parser
 from picklefield.fields import PickledObjectField
 from rules import NotYetImplemented, IncompleteRuleException
-
+from generic_tags.models import Tag
 
 class Operator(TimestampModelMixin):
     display_name = models.CharField(max_length=255)
@@ -120,10 +120,11 @@ class Rule(TimestampModelMixin):
                 filter_str = "%s)" % filter_str
             
             if self.operator.use_filter:
-                return "filter(%s)" % filter_str
+                filter_str =  "filter(%s)" % filter_str
             else:
-                return "exclude(%s)" % filter_str
+                filter_str = "exclude(%s)" % filter_str
 
+            return filter_str
 
     @property
     def queryset(self):
@@ -182,6 +183,30 @@ class RuleGroup(models.Model):
             return self.target_model.objects.none()
 
         qs = eval(results).distinct().all()
+
+        # results = None
+        # if self.has_a_valid_rule:
+        #     if self.rules_boolean:
+        #         for r in self.rules:
+        #             if r.is_valid:
+        #                 if not results:
+        #                     results = "%s" % r.queryset_filter_string
+        #                 else:
+        #                     results = "%s & %s" % (results, r.queryset_filter_string)
+                
+        #     else:
+        #         for r in self.rules:
+        #             if r.is_valid:
+        #                 if not results:
+        #                     results = "%s" % r.queryset_filter_string
+        #                 else:
+        #                     results = "%s | %s" % (results, r.queryset_filter_string)
+        # else:
+        #     return self.target_model.objects.none()
+        
+        # print results
+        # qs = eval("self.target_model.objects.filter(%s)" % results).distinct().all()
+
         return qs
 
 
