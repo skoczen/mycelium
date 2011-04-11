@@ -199,12 +199,12 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTes
     def test_operator_ordering(self):
         list_of_names = [o.display_name for o in Operator.objects.all()]
         target_list_of_names = [
+            "contains",
+            "does not contain",
             "is",
             "is not",
             "is exactly",
             "is not exactly",
-            "contains",
-            "does not contain",
             "is on",
             "is before",
             "is after",

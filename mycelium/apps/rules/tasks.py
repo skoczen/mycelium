@@ -24,12 +24,12 @@ def populate_rule_components(*args, **kwargs):
 
     # Operators
     all_operators = []
+    operator_contains =             Operator.objects.get_or_create(display_name="contains"          , query_string_partial="__icontains="  , use_filter=True)[0]
+    operator_does_not_contain =     Operator.objects.get_or_create(display_name="does not contain"  , query_string_partial="__icontains="  , use_filter=False)[0]
     operator_is =                   Operator.objects.get_or_create(display_name="is"                , query_string_partial="="             , use_filter=True)[0]
     operator_is_not =               Operator.objects.get_or_create(display_name="is not"            , query_string_partial="="             , use_filter=False)[0]
     operator_is_exactly =           Operator.objects.get_or_create(display_name="is exactly"        , query_string_partial="__iexact="     , use_filter=True)[0]
     operator_is_not_exactly =       Operator.objects.get_or_create(display_name="is not exactly"    , query_string_partial="__iexact="     , use_filter=False)[0]
-    operator_contains =             Operator.objects.get_or_create(display_name="contains"          , query_string_partial="__icontains="  , use_filter=True)[0]
-    operator_does_not_contain =     Operator.objects.get_or_create(display_name="does not contain"  , query_string_partial="__icontains="  , use_filter=False)[0]
     operator_is_on =                Operator.objects.get_or_create(display_name="is on"             , query_string_partial="="             , use_filter=True)[0]
     operator_is_before =            Operator.objects.get_or_create(display_name="is before"         , query_string_partial="__lt="         , use_filter=True)[0]
     operator_is_after =             Operator.objects.get_or_create(display_name="is after"          , query_string_partial="__gt="         , use_filter=True)[0]
