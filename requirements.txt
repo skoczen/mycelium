@@ -1,11 +1,11 @@
 fabric
 #psycopg2
 mysql-python
-python-dateutil
+python-dateutil <2.0
 
 PIL
 python-memcached
-django >=1.2
+django <1.3
 gunicorn
 django-cms >= 2.1.3
 django-tinymce
