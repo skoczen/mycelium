@@ -7,7 +7,7 @@ from django.db import models
 class Migration(DataMigration):
 
     depends_on = (
-        ("rules", "0007_auto__del_rightsidevalue"),
+        ("rules", "0009_auto__del_field_leftside_wrap_in_parens"),
     )
 
     def forwards(self, orm):
