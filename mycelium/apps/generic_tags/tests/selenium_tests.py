@@ -3,6 +3,7 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
 from test_factory import Factory
 from people.tests.selenium_tests import PeopleTestAbstractions
+from groups.tests.selenium_tests import GroupTestAbstractions
 
 class TagTestAbstractions(object):
     def switch_to_tag_tab(self):
@@ -21,7 +22,7 @@ class TagTestAbstractions(object):
         assert sel.is_text_present("Manage Tags")
 
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions):
+class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, GroupTestAbstractions, PeopleTestAbstractions):
     selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def test_that_tags_tab_display_and_has_the_three_categories(self):
@@ -403,6 +404,30 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Peo
         self.click_and_wait("link=More")
         self.click_and_wait("css=.tag_button")
         assert sel.is_text_present("Manage Tags")
+
+    def test_deleting_a_custom_tag_group_removes_it_from_rules(self):
+        sel = self.selenium
+        self.test_that_new_categories_can_be_added()
+
+        sel.open_window("/people/", "two")
+        sel.select_window("two")        
+        self.create_new_group_with_one_rule()
+        assert sel.is_element_present("css=rule:nth(0) left_side option:nth(5)")
+        self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(5)"), "have a testcategory2 tag that")
+
+        sel.select_window("")
+        sel.click("css=.start_edit_btn")
+        time.sleep(0.5)
+        sel.click("css=.delete_tagset_btn:last")
+        sel.get_confirmation()
+        time.sleep(2)
+
+        sel.select_window("two")
+        sel.refresh()
+        sel.wait_for_page_to_load("3000")
+        assert sel.is_element_present("css=rule:nth(0) left_side option:nth(5)")
+        self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(5)"), "volunteer status")
+
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions):
