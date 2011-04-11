@@ -23,8 +23,8 @@ class Group(SimpleSearchableModel, TimestampModelMixin, RuleGroup):
 
     @property
     def searchable_name(self):
-        if self.name:
-            return "%s" % self.name
+        if self.full_name:
+            return "%s" % self.full_name
         else:
             return ""
 

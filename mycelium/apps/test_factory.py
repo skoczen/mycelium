@@ -3,6 +3,7 @@ from people.models import Person, Organization, Employee
 from groups.models import Group, GroupRule
 from volunteers.models import CompletedShift
 from donors.models import Donation
+from generic_tags.models import Tag, TagSet
 import datetime
 
 class DummyObj(object):
@@ -44,6 +45,50 @@ class Factory(QiFactory):
                 )
         person.__dict__.update(cls.address())
         return person
+
+    @classmethod
+    def tagset(cls, name=None):
+        if not name:
+            name = cls.rand_str()
+        return TagSet.objects.create(name=name)
+
+    @classmethod
+    def tag(cls, name=None, tagset=None):
+        if not name:
+            name = cls.rand_str()
+        if not tagset:
+            tagset = cls.tagset()
+
+        return Tag.objects.get_or_create(name=name, tagset=tagset)[0]    
+
+    @classmethod
+    def tag_person(cls, tag_name=None, tagset=None, person=None):
+        tag = cls.tag(name=tag_name, tagset=tagset)
+        if not person:
+            person= cls.person()
+
+        tag.add_tag_to_person(person)
+
+    @classmethod
+    def give_everyone_favorite_colors(cls):
+        ts = cls.tagset("Favorite Color")
+        red_tag = cls.tag(name="red", tagset=ts)
+        green_tag = cls.tag(name="green", tagset=ts)
+        blue_tag = cls.tag(name="blue", tagset=ts)
+        fuschia_tag = cls.tag(name="fuschia", tagset=ts)
+        yellow_tag = cls.tag(name="yellow", tagset=ts)
+        rose_tag = cls.tag(name="rose", tagset=ts)
+        grey_tag = cls.tag(name="grey", tagset=ts)
+        orange_tag = cls.tag(name="orange", tagset=ts)
+
+        all_color_tags = [red_tag, green_tag, blue_tag, fuschia_tag, yellow_tag, rose_tag, grey_tag, orange_tag ]
+
+        for p in Person.objects.all():
+            if cls.rand_bool():
+                color = all_color_tags[cls.rand_int(0,len(all_color_tags)-1)]
+                print "%s likes %s" % (p, color)
+                cls.tag_person(tag_name=color, tagset=ts, person=p)
+
 
     @classmethod
     def organization(cls):

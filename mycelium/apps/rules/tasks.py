@@ -169,23 +169,36 @@ def populate_rule_components(*args, **kwargs):
 
 
     # Left sides - built-ins
-    left_side_for_tag (     display_name="have any tag that"                            ,query_string_partial="taggeditem__tag__name"                               , order=10                    )
-    left_side_for_choices(  display_name="volunteer status"                             ,query_string_partial="volunteer__status"                                   , order=100    , choices=VOLUNTEER_STATII)
+    ls = left_side_for_tag (     display_name="have any tag that"                            ,query_string_partial="taggeditem__tag__name"                                           )
+    ls.order=10
+    ls.save()
+    left_side_for_choices(  display_name="volunteer status"                             ,query_string_partial="volunteer__status"                                   , choices=VOLUNTEER_STATII)
+    ls.order=100
+    ls.save()
     left_side_for_date(     display_name="last donation"                                ,query_string_partial="donor__donation__date"                               , order=110     )
-    # left_side_for_number(   display_name="total donations in the last 12 months"        ,query_string_partial="donor__twelvemonth_total"                            , order=120     )
+    ls.order=110
+    ls.save()
+    # left_side_for_number(   display_name="total donations in the last 12 months"        ,query_string_partial="donor__twelvemonth_total"                                          )
+    # ls.order=120
+    # ls.save()
     left_side_for_date(     display_name="last volunteer shift"                         ,query_string_partial="volunteer__completedshift__date"                     , order=130     )    
-    # left_side_for_number(   display_name="total volunteer hours in the last 12 months"  ,query_string_partial="volunteer__twelvemonth_total"                        , order=140     )
+    ls.order=130
+    ls.save()
+    # left_side_for_number(   display_name="total volunteer hours in the last 12 months"  ,query_string_partial="volunteer__twelvemonth_total"                                       )
+    # ls.order=140
+    # ls.save()
 
     # Left sides - generateds
     from generic_tags.models import TagSet
     i = 0
     for ts in TagSet.objects.all():
         i = i+1
-        left_side_for_tag(display_name="have a %s tag that" % (ts.name) ,
+        ls = left_side_for_tag(display_name="have a %s tag that" % (ts.name) ,
                             query_string_partial="taggeditem__tag__in=Tag.objects.filter(tagset__name='%s',name" % (ts.name), 
-                            order=20+i,
                             add_closing_paren=True
                             )
+        ls.order=20+i
+        ls.save()
                                                                                                 
 
 
