@@ -123,6 +123,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         all_ppl_qs = Person.objects.none()
         test_tag_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
         test_and_donor_tag_qs = Person.objects.filter( Q(pk=ppl[2].pk) )
+        test_donor_qs = Person.objects.filter( Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk))
 
         self.assertEqualQuerySets(group.members, all_ppl_qs)
 
@@ -142,6 +143,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         rsv ="major"
         GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
+        # self.assertEqualQuerySets(group.members, test_donor_qs)
 
         self.assertEqualQuerySets(group.members, test_and_donor_tag_qs)
 
