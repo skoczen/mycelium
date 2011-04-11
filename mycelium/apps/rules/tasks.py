@@ -184,7 +184,6 @@ def populate_rule_components(*args, **kwargs):
         left_side_for_tag(display_name="have a %s tag that" % (ts.name) ,
                             query_string_partial="taggeditem__tag__in=Tag.objects.filter(tagset__name='%s',name" % (ts.name), 
                             order=20+i,
-                            # wrap_in_parens=True
                             add_closing_paren=True
                             )
                                                                                                 
