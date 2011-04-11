@@ -73,7 +73,7 @@ paramiko==1.7.6
 psycopg2==2.3.2
 pyPdf==1.12
 pycrypto==2.3
-pycurl==7.19.0
+#pycurl==7.19.0
 pylint==0.23.0
 pysqlite==2.6.0
 pytz==2010h
