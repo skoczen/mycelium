@@ -70,7 +70,7 @@ logilab-astng==0.21.1
 logilab-common==0.55.0
 odict==1.4.1
 paramiko==1.7.6
-psycopg2==2.3.2
+#psycopg2==2.3.2
 pyPdf==1.12
 pycrypto==2.3
 #pycurl==7.19.0
