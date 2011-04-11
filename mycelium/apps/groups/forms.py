@@ -1,7 +1,6 @@
 from django.forms import ModelForm, RadioSelect, HiddenInput, TextInput, Select, NullBooleanSelect
 from groups.models import Group, GroupRule
 from django.forms.models import inlineformset_factory, BaseModelFormSet, BaseInlineFormSet
-from rules.forms import RuleGroupForm
 
 class GroupForm(RuleGroupForm):
     class Meta:
@@ -13,6 +12,12 @@ class GroupForm(RuleGroupForm):
 
     def __init__(self, *args, **kwargs):
         super(GroupForm, self).__init__(*args,**kwargs)
+        if self.instance.pk:
+            for i in range(self.instance.num_blank_rules,16):
+                self.instance.make_blank_rule()
+            super(GroupForm, self).__init__(*args,**kwargs)
+
+        
         self.fields['rules_boolean'].widget.choices = [("2", "all"), ("3","any")]
 
 class GroupRuleForm(ModelForm):
