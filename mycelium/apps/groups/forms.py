@@ -3,7 +3,6 @@ from groups.models import Group, GroupRule
 from django.forms.models import inlineformset_factory, BaseModelFormSet, BaseInlineFormSet
 from rules.forms import RuleGroupForm
 
-
 class GroupForm(RuleGroupForm):
     class Meta:
         model = Group
