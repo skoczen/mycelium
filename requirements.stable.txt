@@ -55,7 +55,7 @@ South==0.7.3
 amqplib==0.6.1
 anyjson==0.3.1
 async==0.6.1
-distribute==0.6.12
+#distribute==0.6.12
 django-classy-tags==0.3.3.1
 django-mailer==0.1.0
 -e hg+https://bitbucket.org/david/django-storages@2b44d79635e6c65e917ef5fb3111c9ed2e9a86b7#egg=django_storages-dev
