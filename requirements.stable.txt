@@ -50,12 +50,18 @@ Django==1.2.5
 Fabric==0.9.3
 GitPython
 MySQL-python==1.2.3
+
 #Numeric==24.2
+#distribute==0.6.12
+#psycopg2==2.3.2
+#pycurl==7.19.0
+#pysqlite==2.6.0
+
 South==0.7.3
 amqplib==0.6.1
 anyjson==0.3.1
 async==0.6.1
-#distribute==0.6.12
+
 django-classy-tags==0.3.3.1
 django-mailer==0.1.0
 -e hg+https://bitbucket.org/david/django-storages@2b44d79635e6c65e917ef5fb3111c9ed2e9a86b7#egg=django_storages-dev
@@ -70,12 +76,12 @@ logilab-astng==0.21.1
 logilab-common==0.55.0
 odict==1.4.1
 paramiko==1.7.6
-#psycopg2==2.3.2
+
 pyPdf==1.12
 pycrypto==2.3
-#pycurl==7.19.0
+
 pylint==0.23.0
-pysqlite==2.6.0
+
 pytz==2010h
 reportlab==2.4
 roman==1.4.0
