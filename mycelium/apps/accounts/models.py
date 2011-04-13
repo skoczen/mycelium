@@ -45,4 +45,4 @@ class UserAccount(models.Model):
         return "%s with %s" % (self.user, self.account)
 
     class Meta(object):
-        ordering = ("name",)
+        ordering = ("account","access_level","user")
