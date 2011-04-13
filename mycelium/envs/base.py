@@ -144,6 +144,7 @@ INSTALLED_APPS = (
     'generic_tags',
     'groups',
     'rules',
+    'accounts',
 
 
     'djangosanetesting',
@@ -223,7 +224,6 @@ CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 # get git commit
 from git import Repo
 GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
-
 
 
 # django-mediasync

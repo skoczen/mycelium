@@ -20,7 +20,7 @@ class TestRuleModelFunctions(QiUnitTestMixin, TestCase):
 
     def setUp(self):
         populate_rule_components()
-        self.left_side = LeftSide.objects.get(display_name="have a general tag that")
+        self.left_side = LeftSide.objects.get(display_name="have a General tag that")
 
     def test_left_side_operators_function(self):
         self.assertEqualQuerySets(self.left_side.operators,self.left_side.allowed_operators.all())

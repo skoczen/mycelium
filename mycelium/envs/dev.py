@@ -12,6 +12,18 @@ DATABASES = {
         'PORT': '',
     },
 }
+# use in-memory for tests
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'mycelium',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': '',
+        },
+    }
 
 
 CACHES = {
