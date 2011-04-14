@@ -1,3 +1,21 @@
+body {
+	background: url("../images/green_tweed_background.gif");
+}
+
+#page {
+	padding: 4px;
+}
+
+breadcrumb {
+	left: -18px;
+	top: 3px;
+}
+.breadcrumb_container .triangle-l {
+    left: -27px;
+    top: 23px;
+}
+
+
 logo {
 	display: block;
 	position: absolute;	

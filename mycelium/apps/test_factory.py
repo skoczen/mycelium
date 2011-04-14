@@ -1,10 +1,19 @@
 from qi_toolkit.factory import QiFactory
 from people.models import Person, Organization, Employee
 from groups.models import Group, GroupRule
+from django.conf import settings
 from volunteers.models import CompletedShift
 from donors.models import Donation
+from rules.models import LeftSide, Operator, RightSideType
 from generic_tags.models import Tag, TagSet
+from accounts.models import Plan, Account, UserAccount, AccessLevel
+from django.contrib.sites.models import Site
+from django.template.defaultfilters import slugify
+from volunteers import VOLUNTEER_STATII
 import datetime
+
+import sys, os
+sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 
 class DummyObj(object):
     pass
@@ -12,8 +21,11 @@ class DummyObj(object):
 class Factory(QiFactory):
 
     @classmethod
-    def email(cls):
-        return "%s@%s.com" % (cls.rand_str(), cls.rand_str())
+    def email(cls, name_hint=None):
+        if not name_hint:
+            name_hint = cls.rand_str()
+        
+        return "%s@%s" % (name_hint, cls.rand_domain())
 
 
     @classmethod
@@ -30,7 +42,7 @@ class Factory(QiFactory):
             "line_1": "%s %s %s" % (cls.rand_int(10,1000), cls.rand_plant_name(), cls.rand_street_suffix()),
             "line_2": apt_str,
             "city": cls.rand_plant_name(),
-            "state": cls.rand_str(2).upper(),
+            "state": cls.rand_us_state(),
             "postal_code": cls.rand_int(10000,99999),
             "primary": cls.rand_bool(),
         }
@@ -38,9 +50,10 @@ class Factory(QiFactory):
 
     @classmethod
     def person(cls):
-        person = Person.objects.create(first_name=cls.rand_name(), 
+        first_name = cls.rand_name()
+        person = Person.objects.create(first_name=first_name, 
                                        last_name=cls.rand_name(),
-                                       email=cls.email(),
+                                       email=cls.email(name_hint=first_name),
                                        phone_number=cls.phone(),
                 )
         person.__dict__.update(cls.address())
@@ -50,7 +63,7 @@ class Factory(QiFactory):
     def tagset(cls, name=None):
         if not name:
             name = cls.rand_str()
-        return TagSet.objects.create(name=name)
+        return TagSet.objects.get_or_create(name=name)[0]
 
     @classmethod
     def tag(cls, name=None, tagset=None):
@@ -93,7 +106,6 @@ class Factory(QiFactory):
     @classmethod
     def organization(cls):
         organization = Organization.objects.create(name="%ss for %s" % (cls.rand_name(), cls.rand_name()), 
-                                       email=cls.email(),
                                        twitter_username=cls.rand_str(),
                                        website=cls.rand_str(),                                       
                                        primary_phone_number=cls.phone(),
@@ -138,7 +150,19 @@ class Factory(QiFactory):
         return CompletedShift.objects.create(volunteer=person.volunteer,
                                             duration=duration,
                                             date=date)
-         
+
+    @classmethod
+    def donor_history(cls, person=None):
+        if not person:
+            person = cls.person()
+
+        cur_date = datetime.datetime.now()
+        for i in range(0,cls.rand_int(end=150)):
+            cur_date = cur_date - datetime.timedelta(days=cls.rand_int(0,10))
+            cls.donation(person, date=cur_date)
+
+        return person
+
     @classmethod
     def donation(cls, person, date=None, amount=None):
         if not date:
@@ -151,8 +175,6 @@ class Factory(QiFactory):
                                             amount=amount,
                                             date=date)
          
-
-        
     @classmethod
     def report(cls):
         o = DummyObj()
@@ -170,4 +192,209 @@ class Factory(QiFactory):
         if not name:
             name = cls.rand_str()
         return Group.objects.get_or_create(name=name, **kwargs)[0]
+
+    @classmethod
+    def grouprule(cls, left_side_str, operator_str, right_side_str, group=None, **kwargs):
+        if not group:
+            group = cls.group()
+
+        left_side = LeftSide.objects.get(display_name__iexact=left_side_str)
+        operator = Operator.objects.get(display_name__iexact=operator_str)
+        right_side_type = left_side.first_right_side_type
+        right_side_value = right_side_str
+
+        return GroupRule.objects.get_or_create(left_side=left_side,
+                                               operator=operator,
+                                               right_side_type=right_side_type,
+                                               right_side_value=right_side_value,
+                                               group=group,
+                                               )[0]
+
+
+    @classmethod
+    def account(cls, name=None, subdomain=None):
+        if not name:
+            name = cls.rand_str()
+        if not subdomain:
+            subdomain = slugify(name)
+        
+        assert Account.objects.filter(name=name).count() == 0
+
+        monthly_plan = Plan.objects.get(name="Monthly")
+        return Account.objects.create(plan=monthly_plan, name=name, subdomain=subdomain)
+
+    @classmethod
+    def useraccount(cls, account=account, username=None, password=None, full_name=None, access_level=None):
+        if not username:
+            username = cls.rand_str()
+        if not password:
+            password = username
+        if not account:
+            account = account
+        if not access_level:
+            access_level = AccessLevel.objects.get(name__iexact="Staff")
+        
+        if not full_name:
+            full_name = "%s %s" % (cls.rand_name(), cls.rand_name())
+        
+        return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=full_name))
+
+    @classmethod
+    def create_demo_site(cls, organization_name, subdomain=None):
+        site = Site.objects.get(pk=settings.SITE_ID)
+
+        # Create account
+        print "Starting creation of %s's site." % organization_name
+        account = cls.account(name=organization_name, subdomain=subdomain)
+        print "Creating site at %s.%s." % (account.subdomain, site)
+        print "Account created."
+
+        admin_accesslevel = AccessLevel.objects.get(name__iexact="Admin")
+        staff_accesslevel = AccessLevel.objects.get(name__iexact="Staff")
+        volunteer_accesslevel = AccessLevel.objects.get(name__iexact="Volunteer")
+
+        # create admin user (admin / admin)
+        cls.useraccount(account=account, username="admin", password="admin", access_level=admin_accesslevel)
+
+        # create staff user (staff / staff)
+        cls.useraccount(account=account, username="staff", password="staff", access_level=staff_accesslevel)
+
+        # create volunteer user ( volunteer / volunteer )
+        cls.useraccount(account=account, username="volunteer", password="volunteer", access_level=volunteer_accesslevel)
+        print "Users created."
+
+        # create a bunch of reasonable tags, including the favorite color category
+        gen_ts = cls.tagset(name="General")
+        vol_ts = cls.tagset(name="Volunteer")
+        don_ts = cls.tagset(name="Donor")
+        color_ts = cls.tagset(name="Favorite Color")
+        print "Tagsets created."
+
+        # gen tagsname=
+        cls.tag(tagset=gen_ts, name="Board of Directors")
+        cls.tag(tagset=gen_ts, name="Advocate")
+        cls.tag(tagset=gen_ts, name="Media Contact")
+        cls.tag(tagset=gen_ts, name="Community Partner")
+
+        # vol tags
+        cls.tag(tagset=vol_ts, name="Monday")
+        cls.tag(tagset=vol_ts, name="Tuesday")
+        cls.tag(tagset=vol_ts, name="Wednesday")
+        cls.tag(tagset=vol_ts, name="Thursday")
+        cls.tag(tagset=vol_ts, name="Friday")
+        cls.tag(tagset=vol_ts, name="Weekly")
+        cls.tag(tagset=vol_ts, name="Monthly")
+        cls.tag(tagset=vol_ts, name="Phone Skills")
+
+        # don tags
+        cls.tag(tagset=don_ts, name="Major Donor")
+        cls.tag(tagset=don_ts, name="Potential Major Donor")
+        cls.tag(tagset=don_ts, name="Fundraiser")
+        cls.tag(tagset=don_ts, name="Monthly Donor")
+        cls.tag(tagset=don_ts, name="Quarterly Donor")
+        cls.tag(tagset=don_ts, name="Yearly Donor")
+
+        # color tags
+        cls.tag(tagset=color_ts, name="Red")
+        cls.tag(tagset=color_ts, name="Orange")
+        cls.tag(tagset=color_ts, name="Yellow")
+        cls.tag(tagset=color_ts, name="Green")
+        cls.tag(tagset=color_ts, name="Aquamarine")
+        cls.tag(tagset=color_ts, name="Blue")
+        cls.tag(tagset=color_ts, name="Violet")
+        cls.tag(tagset=color_ts, name="Purple")
+        cls.tag(tagset=color_ts, name="Black")
+        cls.tag(tagset=color_ts, name="White")
+        cls.tag(tagset=color_ts, name="Gray")
+        print "Tags created."
+
+        # create a bunch of people
+        people_created = []
+        num = cls.rand_int(100,2000)
+        print "Creating %s people" % num,
+        for i in range(0, num):
+            p = cls.person()
+            people_created.append(p)
+            sys.stdout.write("."),
+        print "done."
+
+        num = cls.rand_int(10,100)
+        print "Creating %s organizations" % num,
+        # create a few organizations, with people
+        for i in range(0, num):
+            cls.organization()
+            sys.stdout.write("."),
+
+        print "done."
+
+        # give some of the people volunteer histories and statii
+        print "Adding volunteer histories",
+        for p in people_created:
+            if cls.rand_bool():
+                cls.volunteer_history(p)
+                
+            if cls.rand_bool():
+                v = p.volunteer
+                v.status = VOLUNTEER_STATII[1][0]
+                v.save()
+            
+            sys.stdout.write("."),
+        print "done."
+
+        # give some of the people donation histories
+        print "Adding donation histories",
+        for p in people_created:
+            if cls.rand_bool():
+                cls.donor_history(p)
+            
+            sys.stdout.write("."),
+        print "done."
+
+        print "Adding tags",
+        # give some of the people tags
+        all_tags = [t for t in Tag.objects.all()]
+        for p in people_created:
+            for i in range(0,cls.rand_int(0,10)):
+                t = all_tags[cls.rand_int(0,len(all_tags)-1)]
+                if t.tagset!=gen_ts or  (cls.rand_bool() and cls.rand_bool()):
+                    t.add_tag_to_person(p)
+            
+            sys.stdout.write("."),
+        
+        print "done."        
+
+        # create a few groups
+        
+
+        # Board of Directors
+        group = cls.group(name="Board of Directors")
+        cls.grouprule("have a general tag that","contains","Board of Directors", group=group)
+        print "Created Board of Directors group"
+
+        # Active Volunteers
+        group = cls.group(name="Active Volunteers")
+        cls.grouprule("volunteer status","is",VOLUNTEER_STATII[0][0], group=group)
+        print "Created Active Volunteers group"
+
+        # Warm color people
+        group = cls.group(name="Warm Color People", rules_boolean=False)
+        cls.grouprule("have a Favorite Color tag that","contains","red", group=group)
+        cls.grouprule("have a Favorite Color tag that","contains","orange", group=group)
+        cls.grouprule("have a Favorite Color tag that","contains","yellow", group=group)
+        print "Created Warm color people group"
+
+        # Recurring donors
+        group = cls.group(name="Recurring Donors", rules_boolean=False)
+        cls.grouprule("have a Donor tag that","is exactly","monthly donor", group=group)
+        cls.grouprule("have a Donor tag that","is exactly","quarterly donor", group=group)
+        cls.grouprule("have a Donor tag that","is exactly","yearly donor", group=group)
+        print "Created Recurring donors group"
+
+        # Volunteers this year
+        today = datetime.date.today()
+        group = cls.group(name="Volunteers this year")
+        cls.grouprule("last volunteer shift","is after",datetime.date(day=1,month=1,year=today.year), group=group)
+
+        print "Setup complete."
+        return account
 

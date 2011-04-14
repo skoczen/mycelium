@@ -6,6 +6,8 @@ from taggit.managers import TaggableManager
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
+from accounts.models import AccountDataModel
+
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING = _("No Name")

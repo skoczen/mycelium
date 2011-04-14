@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
+from managers import AccountDataModelManager
 
 
 class Plan(models.Model):
@@ -15,7 +16,7 @@ class Plan(models.Model):
 
 class Account(models.Model):
     name = models.CharField(max_length=255)
-    subdomain = models.CharField(max_length=255)
+    subdomain = models.CharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     plan = models.ForeignKey(Plan)
 
@@ -25,6 +26,19 @@ class Account(models.Model):
     class Meta(object):
         ordering = ("name",)
 
+    def namespaced_username_for_username(self, username):
+        return "acct%s_%s" % (self.pk, username)
+
+    def create_useraccount(self, full_name=None, username=None, password=None, email=None, access_level=None, user=None):
+        assert full_name != None and username != None and password != None and access_level != None
+        if not user:
+            user = User.objects.create_user(self.namespaced_username_for_username(username), email, password)
+        
+        user.first_name=full_name
+        user.save()
+        
+        
+        return UserAccount.objects.get_or_create(user=user, account=self, access_level=access_level)
 
 class AccessLevel(models.Model):
     name = models.CharField(max_length=255)
@@ -40,9 +54,21 @@ class UserAccount(models.Model):
     user = models.ForeignKey(User)
     account = models.ForeignKey(Account)
     access_level = models.ForeignKey(AccessLevel)
+    # nickname = models.CharField(max_length=255)
     
     def __unicode__(self):
         return "%s with %s" % (self.user, self.account)
 
     class Meta(object):
         ordering = ("account","access_level","user")
+
+
+class AccountDataModel(models.Model):
+    account = models.ForeignKey(Account)
+
+    objects = AccountDataModelManager()
+    raw_objects = models.Manager()
+
+
+    class Meta(object):
+        abstract = True
