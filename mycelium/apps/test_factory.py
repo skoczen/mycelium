@@ -212,13 +212,17 @@ class Factory(QiFactory):
 
 
     @classmethod
-    def account(cls, name=None, subdomain=None):
+    def account(cls, name=None, subdomain=None, delete_existing=False):
         if not name:
             name = cls.rand_str()
         if not subdomain:
             subdomain = slugify(name)
         
-        assert Account.objects.filter(name=name).count() == 0
+        if not delete_existing:
+            assert Account.objects.filter(name=name).count() == 0
+        else:
+            if Account.objects.filter(name=name).count() == 1:
+                Account.objects.filter(name=name).delete()
 
         monthly_plan = Plan.objects.get(name="Monthly")
         return Account.objects.create(plan=monthly_plan, name=name, subdomain=subdomain)
@@ -240,12 +244,12 @@ class Factory(QiFactory):
         return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=full_name))
 
     @classmethod
-    def create_demo_site(cls, organization_name, subdomain=None):
+    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False):
         site = Site.objects.get(pk=settings.SITE_ID)
 
         # Create account
         print "Starting creation of %s's site." % organization_name
-        account = cls.account(name=organization_name, subdomain=subdomain)
+        account = cls.account(name=organization_name, subdomain=subdomain, delete_existing=delete_existing)
         print "Creating site at %s.%s." % (account.subdomain, site)
         print "Account created."
 

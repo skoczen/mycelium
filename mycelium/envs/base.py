@@ -60,6 +60,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'accounts.middleware.AccountAuthMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
     
@@ -89,6 +90,16 @@ DATE_INPUT_FORMATS = ('%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%b %d %Y',
 '%B %d, %Y', '%d %B %Y', '%d %B, %Y')
 
 ROOT_URLCONF = 'mycelium.urls'
+SUBDOMAIN_URLCONFS = {
+    # The format for these is 'subdomain': 'urlconf'
+    None: 'mycelium.urls',
+    'www': 'mycelium.urls',
+    # 'api': 'myproject.urls.api',
+}
+PUBLIC_SUBDOMAINS = [
+    None,
+    "www"
+]
 
 
 INSTALLED_APPS = (

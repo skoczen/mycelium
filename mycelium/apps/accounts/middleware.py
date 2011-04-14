@@ -2,21 +2,23 @@
 from django.conf import settings
 from subdomains.middleware import SubdomainURLRoutingMiddleware
 from accounts.models import Account, UserAccount
-
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
-    def process_request(self, request):
+    def process_request(self, request, *args, **kwargs):
+        super(AccountAuthMiddleware,self).process_request(request, *args, **kwargs)
 
         subdomain = getattr(request, 'subdomain', False)
-            
+        
         if subdomain is not False:
             # get the account
             poss_account = Account.objects.filter(subdomain=request.subdomain)
             if poss_account.count() == 1:
                 request.account = poss_account[0]
             else:
-                if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
-                    print "redirect to subdomain's login page"
+                if not request.subdomain in settings.PUBLIC_SUBDOMAINS and (reverse("accounts:login") != request.path and (settings.ENV != "DEV" or request.path[:len(settings.MEDIA_URL)] != settings.MEDIA_URL)):
+                    return HttpResponseRedirect(reverse("accounts:login"))
 
             # if it's not in a public site
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
@@ -25,6 +27,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                 try:
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
                 except:
-                    # redirect to login page
-                    print "redirect to subdomain's login page"
-                    pass
+                    if reverse("accounts:login") != request.path and (settings.ENV != "DEV" or request.path[:len(settings.MEDIA_URL)] != settings.MEDIA_URL):
+                        # redirect to login page
+                        return HttpResponseRedirect(reverse("accounts:login"))
+                    
