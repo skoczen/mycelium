@@ -14,6 +14,20 @@
         }
     }, 
     {
+        "pk": 3, 
+        "model": "accounts.plan", 
+        "fields": {
+            "name": "Early Partner, Monthly"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "accounts.plan", 
+        "fields": {
+            "name": "Early Partner, Yearly"
+        }
+    }, 
+    {
         "pk": 1, 
         "model": "accounts.accesslevel", 
         "fields": {

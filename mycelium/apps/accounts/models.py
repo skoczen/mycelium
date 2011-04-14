@@ -16,7 +16,7 @@ class Plan(models.Model):
 
 class Account(models.Model):
     name = models.CharField(max_length=255)
-    subdomain = models.CharField(max_length=255, unique=True)
+    subdomain = models.CharField(max_length=255, unique=True, db_index=True)
     is_active = models.BooleanField(default=True)
     plan = models.ForeignKey(Plan)
 
@@ -51,8 +51,8 @@ class AccessLevel(models.Model):
 
 
 class UserAccount(models.Model):
-    user = models.ForeignKey(User)
-    account = models.ForeignKey(Account)
+    user = models.ForeignKey(User, db_index=True)
+    account = models.ForeignKey(Account, db_index=True)
     access_level = models.ForeignKey(AccessLevel)
     # nickname = models.CharField(max_length=255)
     
@@ -64,7 +64,7 @@ class UserAccount(models.Model):
 
 
 class AccountDataModel(models.Model):
-    account = models.ForeignKey(Account)
+    account = models.ForeignKey(Account, db_index=True)
 
     objects = AccountDataModelManager()
     raw_objects = models.Manager()
