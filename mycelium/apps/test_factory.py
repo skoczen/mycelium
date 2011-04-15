@@ -49,9 +49,14 @@ class Factory(QiFactory):
         return address
 
     @classmethod
-    def person(cls):
+    def person(cls, account=None):
+        if not account:
+            print "No account specified when creating a person. Making one up."
+            account = cls.account
+        
         first_name = cls.rand_name()
-        person = Person.objects.create(first_name=first_name, 
+        person = Person.raw_objects.create(account=account,
+                                       first_name=first_name, 
                                        last_name=cls.rand_name(),
                                        email=cls.email(name_hint=first_name),
                                        phone_number=cls.phone(),
@@ -61,19 +66,19 @@ class Factory(QiFactory):
         return person
 
     @classmethod
-    def tagset(cls, name=None):
+    def tagset(cls, account, name=None):
         if not name:
             name = cls.rand_str()
-        return TagSet.objects.get_or_create(name=name)[0]
+        return TagSet.raw_objects.get_or_create(account=account, name=name)[0]
 
     @classmethod
-    def tag(cls, name=None, tagset=None):
+    def tag(cls, account, name=None, tagset=None):
         if not name:
             name = cls.rand_str()
         if not tagset:
             tagset = cls.tagset()
 
-        return Tag.objects.get_or_create(name=name, tagset=tagset)[0]    
+        return Tag.raw_objects.get_or_create(account=account, name=name, tagset=tagset)[0]    
 
     @classmethod
     def tag_person(cls, tag_name=None, tagset=None, person=None):
@@ -83,30 +88,11 @@ class Factory(QiFactory):
 
         tag.add_tag_to_person(person)
 
-    @classmethod
-    def give_everyone_favorite_colors(cls):
-        ts = cls.tagset("Favorite Color")
-        red_tag = cls.tag(name="red", tagset=ts)
-        green_tag = cls.tag(name="green", tagset=ts)
-        blue_tag = cls.tag(name="blue", tagset=ts)
-        fuschia_tag = cls.tag(name="fuschia", tagset=ts)
-        yellow_tag = cls.tag(name="yellow", tagset=ts)
-        rose_tag = cls.tag(name="rose", tagset=ts)
-        grey_tag = cls.tag(name="grey", tagset=ts)
-        orange_tag = cls.tag(name="orange", tagset=ts)
-
-        all_color_tags = [red_tag, green_tag, blue_tag, fuschia_tag, yellow_tag, rose_tag, grey_tag, orange_tag ]
-
-        for p in Person.objects.all():
-            if cls.rand_bool():
-                color = all_color_tags[cls.rand_int(0,len(all_color_tags)-1)]
-                print "%s likes %s" % (p, color)
-                cls.tag_person(tag_name=color, tagset=ts, person=p)
-
 
     @classmethod
-    def organization(cls):
-        organization = Organization.objects.create(name="%ss for %s" % (cls.rand_name(), cls.rand_name()), 
+    def organization(cls, account):
+        organization = Organization.raw_objects.create(account=account,
+                                       name="%ss for %s" % (cls.rand_name(), cls.rand_name()), 
                                        twitter_username=cls.rand_str(),
                                        website=cls.rand_str(),                                       
                                        primary_phone_number=cls.phone(),
@@ -117,8 +103,9 @@ class Factory(QiFactory):
 
 
     @classmethod
-    def employee(cls):
-        employee = Employee.objects.create(first_name=cls.rand_name(), 
+    def employee(cls, account):
+        employee = Employee.raw_objects.create(account=account,
+                                       first_name=cls.rand_name(), 
                                        last_name=cls.rand_name(),
                                        role=cls.rand_str(),
                                        email=cls.email(),
@@ -127,14 +114,16 @@ class Factory(QiFactory):
         return employee
 
     @classmethod
-    def volunteer_history(cls, person=None):
+    def volunteer_history(cls, account, person=None):
         if not person:
             person = cls.person()
 
         cur_date = datetime.datetime.now()
         for i in range(0,cls.rand_int(end=300)):
             cur_date = cur_date - datetime.timedelta(days=cls.rand_int(0,30))
-            CompletedShift.objects.create(volunteer=person.volunteer,
+            CompletedShift.raw_objects.create(
+                                    account=account,
+                                    volunteer=person.volunteer,
                                     duration=cls.rand_int(1,16),
                                     date=cur_date
             )
@@ -148,7 +137,8 @@ class Factory(QiFactory):
         if not duration:
             duration = cls.rand_int(1,16)
 
-        return CompletedShift.objects.create(volunteer=person.volunteer,
+        return CompletedShift.raw_objects.create(account=person.account,
+                                            volunteer=person.volunteer,
                                             duration=duration,
                                             date=date)
 
@@ -172,9 +162,10 @@ class Factory(QiFactory):
         if not amount:
             amount = cls.rand_currency()
 
-        return Donation.objects.create(donor=person.donor,
-                                            amount=amount,
-                                            date=date)
+        return Donation.raw_objects.create( account=person.account,
+                                        donor=person.donor,
+                                        amount=amount,
+                                        date=date)
          
     @classmethod
     def report(cls):
@@ -189,22 +180,23 @@ class Factory(QiFactory):
         return o
 
     @classmethod
-    def group(cls, name=None, **kwargs):
+    def group(cls, account, name=None, **kwargs):
         if not name:
             name = cls.rand_str()
-        return Group.objects.get_or_create(name=name, **kwargs)[0]
+        return Group.raw_objects.get_or_create(account=account, name=name, **kwargs)[0]
 
     @classmethod
-    def grouprule(cls, left_side_str, operator_str, right_side_str, group=None, **kwargs):
+    def grouprule(cls, account, left_side_str, operator_str, right_side_str, group=None, **kwargs):
         if not group:
             group = cls.group()
 
-        left_side = LeftSide.objects.get(display_name__iexact=left_side_str)
-        operator = Operator.objects.get(display_name__iexact=operator_str)
+        left_side = LeftSide.objects(account).get(display_name__iexact=left_side_str)
+        operator = Operator.objects(account).get(display_name__iexact=operator_str)
         right_side_type = left_side.first_right_side_type
         right_side_value = right_side_str
 
-        return GroupRule.objects.get_or_create(left_side=left_side,
+        return GroupRule.raw_objects.get_or_create(account=account,
+                                               left_side=left_side,
                                                operator=operator,
                                                right_side_type=right_side_type,
                                                right_side_value=right_side_value,
@@ -245,12 +237,24 @@ class Factory(QiFactory):
         return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=full_name))
 
     @classmethod
-    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False):
+    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False):
+        if quick:
+            max_num_people = 20
+            max_num_orgs = 2
+            num_tags = 1
+        else:
+            max_num_people = 2000
+            max_num_orgs = 200
+            num_tags = 10
+
         site = Site.objects.get(pk=settings.SITE_ID)
 
         # Create account
         print "Starting creation of %s's site." % organization_name
         account = cls.account(name=organization_name, subdomain=subdomain, delete_existing=delete_existing)
+        request = DummyObj()
+        request.account = account
+
         print "Creating site at %s.%s." % (account.subdomain, site)
         print "Account created."
 
@@ -269,65 +273,65 @@ class Factory(QiFactory):
         print "Users created."
 
         # create a bunch of reasonable tags, including the favorite color category
-        gen_ts = cls.tagset(name="General")
-        vol_ts = cls.tagset(name="Volunteer")
-        don_ts = cls.tagset(name="Donor")
-        color_ts = cls.tagset(name="Favorite Color")
+        gen_ts = cls.tagset(account, name="General")
+        vol_ts = cls.tagset(account, name="Volunteer")
+        don_ts = cls.tagset(account, name="Donor")
+        color_ts = cls.tagset(account, name="Favorite Color")
         print "Tagsets created."
 
         # gen tagsname=
-        cls.tag(tagset=gen_ts, name="Board of Directors")
-        cls.tag(tagset=gen_ts, name="Advocate")
-        cls.tag(tagset=gen_ts, name="Media Contact")
-        cls.tag(tagset=gen_ts, name="Community Partner")
+        cls.tag(account, tagset=gen_ts, name="Board of Directors")
+        cls.tag(account, tagset=gen_ts, name="Advocate")
+        cls.tag(account, tagset=gen_ts, name="Media Contact")
+        cls.tag(account, tagset=gen_ts, name="Community Partner")
 
         # vol tags
-        cls.tag(tagset=vol_ts, name="Monday")
-        cls.tag(tagset=vol_ts, name="Tuesday")
-        cls.tag(tagset=vol_ts, name="Wednesday")
-        cls.tag(tagset=vol_ts, name="Thursday")
-        cls.tag(tagset=vol_ts, name="Friday")
-        cls.tag(tagset=vol_ts, name="Weekly")
-        cls.tag(tagset=vol_ts, name="Monthly")
-        cls.tag(tagset=vol_ts, name="Phone Skills")
+        cls.tag(account, tagset=vol_ts, name="Monday")
+        cls.tag(account, tagset=vol_ts, name="Tuesday")
+        cls.tag(account, tagset=vol_ts, name="Wednesday")
+        cls.tag(account, tagset=vol_ts, name="Thursday")
+        cls.tag(account, tagset=vol_ts, name="Friday")
+        cls.tag(account, tagset=vol_ts, name="Weekly")
+        cls.tag(account, tagset=vol_ts, name="Monthly")
+        cls.tag(account, tagset=vol_ts, name="Phone Skills")
 
         # don tags
-        cls.tag(tagset=don_ts, name="Major Donor")
-        cls.tag(tagset=don_ts, name="Potential Major Donor")
-        cls.tag(tagset=don_ts, name="Fundraiser")
-        cls.tag(tagset=don_ts, name="Monthly Donor")
-        cls.tag(tagset=don_ts, name="Quarterly Donor")
-        cls.tag(tagset=don_ts, name="Yearly Donor")
+        cls.tag(account, tagset=don_ts, name="Major Donor")
+        cls.tag(account, tagset=don_ts, name="Potential Major Donor")
+        cls.tag(account, tagset=don_ts, name="Fundraiser")
+        cls.tag(account, tagset=don_ts, name="Monthly Donor")
+        cls.tag(account, tagset=don_ts, name="Quarterly Donor")
+        cls.tag(account, tagset=don_ts, name="Yearly Donor")
 
         # color tags
-        cls.tag(tagset=color_ts, name="Red")
-        cls.tag(tagset=color_ts, name="Orange")
-        cls.tag(tagset=color_ts, name="Yellow")
-        cls.tag(tagset=color_ts, name="Green")
-        cls.tag(tagset=color_ts, name="Aquamarine")
-        cls.tag(tagset=color_ts, name="Blue")
-        cls.tag(tagset=color_ts, name="Violet")
-        cls.tag(tagset=color_ts, name="Purple")
-        cls.tag(tagset=color_ts, name="Black")
-        cls.tag(tagset=color_ts, name="White")
-        cls.tag(tagset=color_ts, name="Gray")
+        cls.tag(account, tagset=color_ts, name="Red")
+        cls.tag(account, tagset=color_ts, name="Orange")
+        cls.tag(account, tagset=color_ts, name="Yellow")
+        cls.tag(account, tagset=color_ts, name="Green")
+        cls.tag(account, tagset=color_ts, name="Aquamarine")
+        cls.tag(account, tagset=color_ts, name="Blue")
+        cls.tag(account, tagset=color_ts, name="Violet")
+        cls.tag(account, tagset=color_ts, name="Purple")
+        cls.tag(account, tagset=color_ts, name="Black")
+        cls.tag(account, tagset=color_ts, name="White")
+        cls.tag(account, tagset=color_ts, name="Gray")
         print "Tags created."
 
         # create a bunch of people
         people_created = []
-        num = cls.rand_int(100,2000)
+        num = cls.rand_int(2,max_num_people)
         print "Creating %s people" % num,
         for i in range(0, num):
-            p = cls.person()
+            p = cls.person(account)
             people_created.append(p)
             sys.stdout.write("."),
         print "done."
 
-        num = cls.rand_int(10,100)
+        num = cls.rand_int(2,max_num_orgs)
         print "Creating %s organizations" % num,
         # create a few organizations, with people
         for i in range(0, num):
-            cls.organization()
+            cls.organization(account)
             sys.stdout.write("."),
 
         print "done."
@@ -336,7 +340,7 @@ class Factory(QiFactory):
         print "Adding volunteer histories",
         for p in people_created:
             if cls.rand_bool():
-                cls.volunteer_history(p)
+                cls.volunteer_history(account, p)
                 
             if cls.rand_bool():
                 v = p.volunteer
@@ -357,9 +361,9 @@ class Factory(QiFactory):
 
         print "Adding tags",
         # give some of the people tags
-        all_tags = [t for t in Tag.objects.all()]
+        all_tags = [t for t in Tag.objects(request).all()]
         for p in people_created:
-            for i in range(0,cls.rand_int(0,10)):
+            for i in range(0,cls.rand_int(0,num_tags)):
                 t = all_tags[cls.rand_int(0,len(all_tags)-1)]
                 if t.tagset!=gen_ts or  (cls.rand_bool() and cls.rand_bool()):
                     t.add_tag_to_person(p)
@@ -372,33 +376,33 @@ class Factory(QiFactory):
         
 
         # Board of Directors
-        group = cls.group(name="Board of Directors")
-        cls.grouprule("have a general tag that","contains","Board of Directors", group=group)
+        group = cls.group(account, name="Board of Directors")
+        cls.grouprule(account, "have a general tag that","contains","Board of Directors", group=group)
         print "Created Board of Directors group"
 
         # Active Volunteers
-        group = cls.group(name="Active Volunteers")
-        cls.grouprule("volunteer status","is",VOLUNTEER_STATII[0][0], group=group)
+        group = cls.group(account, name="Active Volunteers")
+        cls.grouprule(account, "volunteer status","is",VOLUNTEER_STATII[0][0], group=group)
         print "Created Active Volunteers group"
 
         # Warm color people
-        group = cls.group(name="Warm Color People", rules_boolean=False)
-        cls.grouprule("have a Favorite Color tag that","contains","red", group=group)
-        cls.grouprule("have a Favorite Color tag that","contains","orange", group=group)
-        cls.grouprule("have a Favorite Color tag that","contains","yellow", group=group)
+        group = cls.group(account, name="Warm Color People", rules_boolean=False)
+        cls.grouprule(account, "have a Favorite Color tag that","contains","red", group=group)
+        cls.grouprule(account, "have a Favorite Color tag that","contains","orange", group=group)
+        cls.grouprule(account, "have a Favorite Color tag that","contains","yellow", group=group)
         print "Created Warm color people group"
 
         # Recurring donors
-        group = cls.group(name="Recurring Donors", rules_boolean=False)
-        cls.grouprule("have a Donor tag that","is exactly","monthly donor", group=group)
-        cls.grouprule("have a Donor tag that","is exactly","quarterly donor", group=group)
-        cls.grouprule("have a Donor tag that","is exactly","yearly donor", group=group)
+        group = cls.group(account, name="Recurring Donors", rules_boolean=False)
+        cls.grouprule(account, "have a Donor tag that","is exactly","monthly donor", group=group)
+        cls.grouprule(account, "have a Donor tag that","is exactly","quarterly donor", group=group)
+        cls.grouprule(account, "have a Donor tag that","is exactly","yearly donor", group=group)
         print "Created Recurring donors group"
 
         # Volunteers this year
         today = datetime.date.today()
-        group = cls.group(name="Volunteers this year")
-        cls.grouprule("last volunteer shift","is after",datetime.date(day=1,month=1,year=today.year), group=group)
+        group = cls.group(account, name="Volunteers this year")
+        cls.grouprule(account, "last volunteer shift","is after",datetime.date(day=1,month=1,year=today.year), group=group)
 
         print "Setup complete."
         return account

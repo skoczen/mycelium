@@ -6,8 +6,9 @@ import datetime
 from people.models import Person
 
 from taggit.managers import TaggableManager
+from accounts.models import AccountBasedModel
 
-class Donor(TimestampModelMixin):
+class Donor(AccountBasedModel,TimestampModelMixin):
     """A donor!"""
     person = models.OneToOneField(Person)
 
@@ -22,7 +23,7 @@ class Donor(TimestampModelMixin):
     @classmethod
     def make_each_person_a_donor(cls, sender, instance, created=None, *args, **kwargs):
         if created:
-            d = Donor.objects.get_or_create(person=instance)[0]
+            d = Donor.raw_objects.get_or_create(account=instance.account, person=instance)[0]
             d.save()
     
     @property
@@ -30,8 +31,8 @@ class Donor(TimestampModelMixin):
         return self.tags.all().order_by("name")
     
     @classmethod
-    def make_donors_for_each_person(cls):
-        [cls.make_each_person_a_donor(Person,p,True) for p in Person.objects.all()]
+    def make_donors_for_each_person(cls, request):
+        [cls.make_each_person_a_donor(Person,p,True) for p in Person.objects(request).all()]
 
     @property
     def donations(self):
@@ -71,7 +72,7 @@ class Donor(TimestampModelMixin):
         return donations_by_year
 
 
-class Donation(TimestampModelMixin):
+class Donation(AccountBasedModel, TimestampModelMixin):
     """A specific donation"""
     donor = models.ForeignKey(Donor)
     date = models.DateField(default=datetime.date.today)
@@ -89,7 +90,7 @@ class Donation(TimestampModelMixin):
     	return "$%s" % self.amount
 
 
-# class RecurringDonation(TimestampModelMixin):
+# class RecurringDonation(AccountBasedModel, TimestampModelMixin):
 #     """A volunteer, scheduled to work a shift"""
 #     volunteer = models.ForeignKey(Volunteer, related_name="volunteer_shifts")
 #     shift = models.ForeignKey(Shift, blank=True, null=True,)

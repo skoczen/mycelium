@@ -1,27 +1,49 @@
 # encoding: utf-8
 import datetime
 from south.db import db
-from south.v2 import DataMigration
+from south.v2 import SchemaMigration
 from django.db import models
 
-class Migration(DataMigration):
-
+class Migration(SchemaMigration):
     depends_on = (
-        ("rules", "0009_auto__del_field_leftside_wrap_in_parens"),
+        ("accounts", "0004_create_old_data_account"),
     )
-
+    
     def forwards(self, orm):
-        "Write your forwards methods here."
-        from rules.tasks import populate_all_rule_components
-        populate_all_rule_components()
+        
+        # Adding field 'GroupRule.account'
+        db.add_column('groups_grouprule', 'account', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['accounts.Account']), keep_default=False)
+
+        # Adding field 'Group.account'
+        db.add_column('groups_group', 'account', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['accounts.Account']), keep_default=False)
+
 
     def backwards(self, orm):
-        "Write your backwards methods here."
+        
+        # Deleting field 'GroupRule.account'
+        db.delete_column('groups_grouprule', 'account_id')
+
+        # Deleting field 'Group.account'
+        db.delete_column('groups_group', 'account_id')
 
 
     models = {
+        'accounts.account': {
+            'Meta': {'ordering': "('name',)", 'object_name': 'Account'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'plan': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['accounts.Plan']"}),
+            'subdomain': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255', 'db_index': 'True'})
+        },
+        'accounts.plan': {
+            'Meta': {'ordering': "('name',)", 'object_name': 'Plan'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+        },
         'groups.group': {
             'Meta': {'ordering': "('name',)", 'object_name': 'Group'},
+            'account': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['accounts.Account']"}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'modified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
@@ -31,6 +53,7 @@ class Migration(DataMigration):
         },
         'groups.grouprule': {
             'Meta': {'ordering': "('group', 'id')", 'object_name': 'GroupRule'},
+            'account': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['accounts.Account']"}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['groups.Group']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -42,6 +65,7 @@ class Migration(DataMigration):
         },
         'rules.leftside': {
             'Meta': {'ordering': "('order',)", 'object_name': 'LeftSide'},
+            'account': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['accounts.Account']"}),
             'add_closing_paren': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'allowed_operators': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['rules.Operator']", 'symmetrical': 'False'}),
             'allowed_right_side_types': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['rules.RightSideType']", 'symmetrical': 'False'}),
@@ -55,6 +79,7 @@ class Migration(DataMigration):
         },
         'rules.operator': {
             'Meta': {'ordering': "('order',)", 'object_name': 'Operator'},
+            'account': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['accounts.Account']"}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'display_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -65,6 +90,7 @@ class Migration(DataMigration):
         },
         'rules.rightsidetype': {
             'Meta': {'object_name': 'RightSideType'},
+            'account': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['accounts.Account']"}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'modified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),

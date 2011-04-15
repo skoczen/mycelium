@@ -8,8 +8,8 @@ import datetime
 #     today = datetime.date.today()
     
     
-#     s1 = CompletedShift.objects.create(volunteer=person.volunteer, duration=5, date=today)
-#     s2 = CompletedShift.objects.create(volunteer=person.volunteer, duration=1, date=today)
+#     s1 = CompletedShift.raw_objects.create(account=account, volunteer=person.volunteer, duration=5, date=today)
+#     s2 = CompletedShift.raw_objects.create(account=account, volunteer=person.volunteer, duration=1, date=today)
 
 #     target = [{'shifts': [s2, s1],
 #           'total_hours': s1.duration+s2.duration,

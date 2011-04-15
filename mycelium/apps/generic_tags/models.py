@@ -9,8 +9,9 @@ add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
 from generic_tags import BLANK_TAGSET_NAME
 
+from accounts.models import AccountBasedModel
 
-class TagSet(TimestampModelMixin):
+class TagSet(AccountBasedModel, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=255)
 
@@ -70,7 +71,7 @@ class TagSet(TimestampModelMixin):
 
     
 
-class Tag(models.Model):
+class Tag(AccountBasedModel, models.Model):
     name = models.CharField(verbose_name=_('Name'), max_length=250)
     slug = models.SlugField(verbose_name=_('Slug'), max_length=255)
     tagset = models.ForeignKey(TagSet, blank=True, null=True)
@@ -97,7 +98,7 @@ class Tag(models.Model):
     def add_tag_to_person(self, person=None):
         if not person:
             raise Exception, "Missing person"
-        return TaggedItem.objects.get_or_create(tag=self, person=person)[0]
+        return TaggedItem.raw_objects.get_or_create(account=person.account, tag=self, person=person)[0]
 
     def remove_tag_from_person(self, person=None):
         if not person:
@@ -108,9 +109,9 @@ class Tag(models.Model):
     def create_new_tag(cls, tagset=None, name=None):
         if not tagset or not name:
             raise Exception, "Missing tagset and/or name"
-        return cls.objects.get_or_create(tagset=tagset, name=name)[0]
+        return cls.raw_objects.get_or_create(tagset=tagset, name=name)[0]
 
-class TaggedItem(models.Model):
+class TaggedItem(AccountBasedModel, models.Model):
     tag = models.ForeignKey(Tag)
     person = models.ForeignKey('people.Person', blank=True, null=True)
 
@@ -122,6 +123,6 @@ class TaggedItem(models.Model):
 
 
 
-from rules.tasks import populate_rule_components
-post_save.connect(populate_rule_components,sender=TagSet)
-post_delete.connect(populate_rule_components,sender=TagSet)
+from rules.tasks import populate_rule_components_for_an_obj_with_an_account_signal_receiver
+post_save.connect(populate_rule_components_for_an_obj_with_an_account_signal_receiver,sender=TagSet)
+post_delete.connect(populate_rule_components_for_an_obj_with_an_account_signal_receiver,sender=TagSet)

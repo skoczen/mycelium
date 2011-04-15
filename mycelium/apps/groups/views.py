@@ -25,13 +25,13 @@ def _basic_forms(group, request):
 
 @render_to("groups/group.html")
 def group(request, group_id):
-    group = Group.objects.get(pk=group_id)
+    group = Group.objects(request).get(pk=group_id)
     form, rule_formset = _basic_forms(group, request)
     return locals()
 
 @json_view
 def save_basic_info(request, group_id):
-    group = Group.objects.get(pk=group_id)
+    group = Group.objects(request).get(pk=group_id)
     form, rule_formset = _basic_forms(group, request)
     success = False
 
@@ -49,7 +49,7 @@ def save_basic_info(request, group_id):
 
 
 def new_group(request):
-    group = Group.objects.create()
+    group = Group.raw_objects.create(account=request.account)
     return HttpResponseRedirect("%s?edit=ON" %reverse("groups:group",args=(group.pk,)))
     
 
@@ -57,7 +57,7 @@ def delete_group(request):
     try:
         if request.method == "POST":
             pk = request.POST['group_pk']
-            group = Group.objects.get(pk=pk)
+            group = Group.objects(request).get(pk=pk)
             group.delete()
     except:
         pass
@@ -66,8 +66,7 @@ def delete_group(request):
 
 @json_view
 def group_members_partial(request, group_id):
-    group = Group.objects.get(pk=group_id)
-    group_members = group.members
+    group = Group.objects(request).get(pk=group_id)
     return {
     "fragments":{
         "group_member_count":render_to_string("groups/_group_member_count.html", locals()),

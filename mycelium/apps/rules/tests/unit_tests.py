@@ -1,7 +1,7 @@
 from test_factory import Factory
 from nose.tools import istest
 from rules.models import LeftSide, Operator, RightSideType, Rule
-from rules.tasks import populate_rule_components
+from rules.tasks import populate_rule_components_for_an_account
 from groups.models import GroupRule
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
 from django.db.models import Q
@@ -14,13 +14,18 @@ from rules import NotYetImplemented, IncompleteRuleException
 from groups.tests import GroupTestAbstractions
 from rules.tests import RuleTestAbstractions
 
+class Dummy(object):
+    pass
 
 class TestRuleModelFunctions(QiUnitTestMixin, TestCase):
     fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
-        populate_rule_components()
-        self.left_side = LeftSide.objects.get(display_name="have a General tag that")
+        self.account = Factory.account()
+        populate_rule_components_for_an_account(self.account)
+        self.request = Dummy()
+        self.request.account = self.account
+        self.left_side = LeftSide.objects(self.request).get(display_name="have a General tag that")
 
     def test_left_side_operators_function(self):
         self.assertEqualQuerySets(self.left_side.operators,self.left_side.allowed_operators.all())
@@ -33,42 +38,45 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTes
     fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
-        populate_rule_components()
+        self.account = Factory.account()
+        populate_rule_components_for_an_account(self.account)
+        self.request = Dummy()
+        self.request.account = self.account
     
     def test_any_tags(self):
-        left_side = LeftSide.objects.get(display_name="have any tag that")
+        left_side = LeftSide.objects(self.request).get(display_name="have any tag that")
         self.assertEqual(left_side.query_string_partial, "taggeditem__tag__name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types  )
         self.assertEqual(left_side.add_closing_paren, False)
 
     def test_general_tags(self):
-        left_side = LeftSide.objects.get(display_name="have a General tag that")
-        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__in=Tag.objects.filter(tagset__name='General',name")
+        left_side = LeftSide.objects(self.request).get(display_name="have a General tag that")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__in=Tag.objects(self.request).filter(tagset__name='General',name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types,  self._text_right_side_types)
         self.assertEqual(left_side.add_closing_paren, True)
     
     def test_donor_tags(self):
-        left_side = LeftSide.objects.get(display_name="have a Donor tag that")
-        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__in=Tag.objects.filter(tagset__name='Donor',name")
+        left_side = LeftSide.objects(self.request).get(display_name="have a Donor tag that")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__in=Tag.objects(self.request).filter(tagset__name='Donor',name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types,  self._text_right_side_types)
         self.assertEqual(left_side.add_closing_paren, True)
     
     def test_volunteer_tags(self):
-        left_side = LeftSide.objects.get(display_name="have a Volunteer tag that")
-        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__in=Tag.objects.filter(tagset__name='Volunteer',name")
+        left_side = LeftSide.objects(self.request).get(display_name="have a Volunteer tag that")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__in=Tag.objects(self.request).filter(tagset__name='Volunteer',name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types,  self._text_right_side_types)
         self.assertEqual(left_side.add_closing_paren, True)
     
     def test_custom_tag_1(self):
         # make a new tagset
-        TagSet.objects.get_or_create(name="new test tagset")
-        populate_rule_components()
-        left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
-        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__in=Tag.objects.filter(tagset__name='new test tagset',name")
+        TagSet.objects(self.request).get_or_create(name="new test tagset")
+        populate_rule_components_for_an_account(self.account)
+        left_side = LeftSide.objects(self.request).get(display_name="have a new test tagset tag that")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__in=Tag.objects(self.request).filter(tagset__name='new test tagset',name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types)
         self.assertEqual(left_side.add_closing_paren, True)
@@ -76,35 +84,35 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTes
         return left_side
 
     def test_volunteer_status(self):
-        left_side = LeftSide.objects.get(display_name="volunteer status")
+        left_side = LeftSide.objects(self.request).get(display_name="volunteer status")
         self.assertEqual(left_side.query_string_partial, "volunteer__status")
         self.assertEqualQuerySets(left_side.operators,  self._choices_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._choices_right_side_types)
         self.assertEqual(left_side.add_closing_paren, False)
     
     def test_last_donation(self):
-        left_side = LeftSide.objects.get(display_name="last donation")
+        left_side = LeftSide.objects(self.request).get(display_name="last donation")
         self.assertEqual(left_side.query_string_partial, "donor__donation__date")
         self.assertEqualQuerySets(left_side.operators,  self._date_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._date_right_side_types)
         self.assertEqual(left_side.add_closing_paren, False)
 
     # def test_total_donation_amount_in_past_12_month(self):
-    #     left_side = LeftSide.objects.get(display_name="total donations in the last 12 months")
+    #     left_side = LeftSide.objects(self.request).get(display_name="total donations in the last 12 months")
     #     self.assertEqual(left_side.query_string_partial, "donor__twelvemonth_total")
     #     self.assertEqualQuerySets(left_side.operators,  self._number_operators )
     #     self.assertEqualQuerySets(left_side.right_side_types, self._number_right_side_types)
     #     self.assertEqual(left_side.add_closing_paren, False)
 
     def test_last_volunteer_shift(self):
-        left_side = LeftSide.objects.get(display_name="last volunteer shift")
+        left_side = LeftSide.objects(self.request).get(display_name="last volunteer shift")
         self.assertEqual(left_side.query_string_partial, "volunteer__completedshift__date")
         self.assertEqualQuerySets(left_side.operators,  self._date_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._date_right_side_types)
         self.assertEqual(left_side.add_closing_paren, False)
 
     # def test_total_volunteer_hours_in_past_12_month(self):
-    #     left_side = LeftSide.objects.get(display_name="total volunteer hours in the last 12 months")
+    #     left_side = LeftSide.objects(self.request).get(display_name="total volunteer hours in the last 12 months")
     #     self.assertEqual(left_side.query_string_partial, "volunteer__twelvemonth_total")
     #     self.assertEqualQuerySets(left_side.operators,  self._number_operators )
     #     self.assertEqualQuerySets(left_side.right_side_types, self._number_right_side_types)
@@ -132,57 +140,57 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTes
 
 
     def test_operator_display_name_and_query_string_model_for_is_exactly(self):
-        o = Operator.objects.get(display_name="is exactly")
+        o = Operator.objects(self.request).get(display_name="is exactly")
         self.assertEqual(o.query_string_partial, "__iexact=")
         self.assertEqual(o.use_filter, True)
 
     def test_operator_display_name_and_query_string_model_for_is_not_exactly(self):
-        o = Operator.objects.get(display_name="is not exactly")
+        o = Operator.objects(self.request).get(display_name="is not exactly")
         self.assertEqual(o.query_string_partial, "__iexact=")
         self.assertEqual(o.use_filter, False)
 
     def test_operator_display_name_and_query_string_model_for_contains(self):
-        o = Operator.objects.get(display_name="contains")
+        o = Operator.objects(self.request).get(display_name="contains")
         self.assertEqual(o.query_string_partial, "__icontains=")
         self.assertEqual(o.use_filter, True)
 
     def test_operator_display_name_and_query_string_model_for_does_not_contain(self):
-        o = Operator.objects.get(display_name="does not contain")
+        o = Operator.objects(self.request).get(display_name="does not contain")
         self.assertEqual(o.query_string_partial, "__icontains=")
         self.assertEqual(o.use_filter, False)
     
     def test_operator_display_name_and_query_string_model_for_is_on(self):
-        o = Operator.objects.get(display_name="is on")
+        o = Operator.objects(self.request).get(display_name="is on")
         self.assertEqual(o.query_string_partial, "=")
         self.assertEqual(o.use_filter, True)
 
     def test_operator_display_name_and_query_string_model_for_is_before(self):
-        o = Operator.objects.get(display_name="is before")
+        o = Operator.objects(self.request).get(display_name="is before")
         self.assertEqual(o.query_string_partial, "__lt=")
         self.assertEqual(o.use_filter, True)
 
     def test_operator_display_name_and_query_string_model_for_is_after(self):
-        o = Operator.objects.get(display_name="is after")
+        o = Operator.objects(self.request).get(display_name="is after")
         self.assertEqual(o.query_string_partial, "__gt=")
         self.assertEqual(o.use_filter, True)
 
     def test_operator_display_name_and_query_string_model_for_is_equal(self):
-        o = Operator.objects.get(display_name="is equal to")
+        o = Operator.objects(self.request).get(display_name="is equal to")
         self.assertEqual(o.query_string_partial, "=")
         self.assertEqual(o.use_filter, True)
 
     def test_operator_display_name_and_query_string_model_for_is_less_than(self):
-        o = Operator.objects.get(display_name="is less than")
+        o = Operator.objects(self.request).get(display_name="is less than")
         self.assertEqual(o.query_string_partial, "__lt=")
         self.assertEqual(o.use_filter, True)
 
     def test_operator_display_name_and_query_string_model_for_is_more_than(self):
-        o = Operator.objects.get(display_name="is more than")
+        o = Operator.objects(self.request).get(display_name="is more than")
         self.assertEqual(o.query_string_partial, "__gt=")
         self.assertEqual(o.use_filter, True)
 
     def test_left_side_ordering(self):
-        list_of_names = [l.display_name for l in LeftSide.objects.all()]
+        list_of_names = [l.display_name for l in LeftSide.objects(self.request).all()]
         target_list_of_names = [
             "have any tag that",
             "have a General tag that",
@@ -197,7 +205,7 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTes
         self.assertEqual(list_of_names,target_list_of_names)
 
     def test_operator_ordering(self):
-        list_of_names = [o.display_name for o in Operator.objects.all()]
+        list_of_names = [o.display_name for o in Operator.objects(self.request).all()]
         target_list_of_names = [
             "contains",
             "does not contain",
@@ -217,14 +225,14 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTes
     def test_populate_cleans_up_unused_rules(self):
         # create a custom tag
         from generic_tags.models import TagSet
-        ts1 = TagSet.objects.get_or_create(name="new test tagset")[0]
+        ts1 = TagSet.objects(self.request).get_or_create(name="new test tagset")[0]
         
         # repopulate
-        populate_rule_components()
+        populate_rule_components_for_an_account(self.account)
         
         # make sure it's there
-        left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
-        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__in=Tag.objects.filter(tagset__name='new test tagset',name")
+        left_side = LeftSide.objects(self.request).get(display_name="have a new test tagset tag that")
+        self.assertEqual(left_side.query_string_partial, "taggeditem__tag__in=Tag.objects(self.request).filter(tagset__name='new test tagset',name")
         self.assertEqualQuerySets(left_side.operators,  self._tag_operators )
         self.assertEqualQuerySets(left_side.right_side_types, self._text_right_side_types)
 
@@ -232,16 +240,19 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTes
         ts1.delete()
 
         # repopulate
-        populate_rule_components()
+        populate_rule_components_for_an_account(self.account)
         
         # make sure it's gone
-        self.assertEqual(LeftSide.objects.filter(display_name="have a new test tagset tag that").count(), 0)
+        self.assertEqual(LeftSide.objects(self.request).filter(display_name="have a new test tagset tag that").count(), 0)
 
 class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractions, QiUnitTestMixin, DestructiveDatabaseTestCase):
     fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
-        populate_rule_components()
+        self.account = Factory.account()
+        populate_rule_components_for_an_account(self.account)
+        self.request = Dummy()
+        self.request.account = self.account
 
     def _generate_people(self, number=5):
         from volunteers import VOLUNTEER_STATII
@@ -253,7 +264,7 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
             v.save()
             people.append(p.pk)
 
-        people = Person.objects.filter(pk__in=people)
+        people = Person.objects(self.request).filter(pk__in=people)
         return people
     
     def _generate_people_with_volunteer_history(self, number=5):
@@ -265,12 +276,12 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
     def test_create_new_group_rule_for_general_tag_contains(self, right_hand_term="test", operator_name="contains"):
         # create a new group rule
         group = Factory.group()
-        left_side = LeftSide.objects.get(display_name="have a General tag that")
-        icontains = Operator.objects.get(display_name=operator_name)
+        left_side = LeftSide.objects(self.request).get(display_name="have a General tag that")
+        icontains = Operator.objects(self.request).get(display_name=operator_name)
         rst = self._text_right_side_types[0]
         rsv = right_hand_term
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
-        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
+        group_rule = GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
+        new_group_rule = GroupRule.objects(self.request).get(pk=group_rule.pk)
 
         # assert the correct models exist
         self.assertEqual(new_group_rule.group, group)
@@ -287,15 +298,15 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         group = Factory.group()
         
         # make the custom tag
-        TagSet.objects.get_or_create(name="new test tagset")
-        populate_rule_components()
+        TagSet.raw_objects.get_or_create(account=self.account, name="new test tagset")
+        populate_rule_components_for_an_account(self.account)
         # create a new group rule
-        left_side = LeftSide.objects.get(display_name="have a new test tagset tag that")
-        icontains = Operator.objects.get(display_name=operator_name)
+        left_side = LeftSide.objects(self.request).get(display_name="have a new test tagset tag that")
+        icontains = Operator.objects(self.request).get(display_name=operator_name)
         rst = self._text_right_side_types[0]
         rsv = right_hand_term
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
-        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
+        group_rule = GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
+        new_group_rule = GroupRule.objects(self.request).get(pk=group_rule.pk)
 
         # assert the correct models exist
         self.assertEqual(new_group_rule.group, group)
@@ -311,12 +322,12 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         group = Factory.group()
         
         # create a new group rule
-        left_side = LeftSide.objects.get(display_name="last volunteer shift")
-        op = Operator.objects.get(display_name=operator_name)
+        left_side = LeftSide.objects(self.request).get(display_name="last volunteer shift")
+        op = Operator.objects(self.request).get(display_name=operator_name)
         rst = self._date_right_side_types[0]
         rsv = right_hand_term
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=op, right_side_value=rsv, right_side_type=rst)
-        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
+        group_rule = GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=op, right_side_value=rsv, right_side_type=rst)
+        new_group_rule = GroupRule.objects(self.request).get(pk=group_rule.pk)
 
         # assert the correct models exist
         self.assertEqual(new_group_rule.group, group)
@@ -333,12 +344,12 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         group = Factory.group()
         
         # create a new group rule
-        left_side = LeftSide.objects.get(display_name="last donation")
-        op = Operator.objects.get(display_name=operator_name)
+        left_side = LeftSide.objects(self.request).get(display_name="last donation")
+        op = Operator.objects(self.request).get(display_name=operator_name)
         rst = self._date_right_side_types[0]
         rsv = right_hand_term
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=op, right_side_value=rsv, right_side_type=rst)
-        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
+        group_rule = GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=op, right_side_value=rsv, right_side_type=rst)
+        new_group_rule = GroupRule.objects(self.request).get(pk=group_rule.pk)
 
         # assert the correct models exist
         self.assertEqual(new_group_rule.group, group)
@@ -355,12 +366,12 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         group = Factory.group()
         
         # create a new group rule
-        left_side = LeftSide.objects.get(display_name="volunteer status")
-        icontains = Operator.objects.get(display_name=operator_name)
+        left_side = LeftSide.objects(self.request).get(display_name="volunteer status")
+        icontains = Operator.objects(self.request).get(display_name=operator_name)
         rst = self._choices_right_side_types[0]
         rsv = right_hand_term
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
-        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
+        group_rule = GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
+        new_group_rule = GroupRule.objects(self.request).get(pk=group_rule.pk)
 
         # assert the correct models exist
         self.assertEqual(new_group_rule.group, group)
@@ -377,12 +388,12 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         group = Factory.group()
         
         # create a new group rule
-        left_side = LeftSide.objects.get(display_name="volunteer status")
-        icontains = Operator.objects.get(display_name=operator_name)
+        left_side = LeftSide.objects(self.request).get(display_name="volunteer status")
+        icontains = Operator.objects(self.request).get(display_name=operator_name)
         rst = self._choices_right_side_types[0]
         rsv = right_hand_term
-        group_rule = GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
-        new_group_rule = GroupRule.objects.get(pk=group_rule.pk)
+        group_rule = GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
+        new_group_rule = GroupRule.objects(self.request).get(pk=group_rule.pk)
 
         # assert the correct models exist
         self.assertEqual(new_group_rule.group, group)
@@ -413,17 +424,17 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         self.create_tag_for_person(person=ppl[5], tagset_name="Donor", tag="really cool test tag")
 
         # assert the queryset string is right
-        self.assertEqual(group_rule.queryset_filter_string, "filter(taggeditem__tag__in=Tag.objects.filter(tagset__name='General',name__icontains='test'))")
+        self.assertEqual(group_rule.queryset_filter_string, "filter(taggeditem__tag__in=Tag.objects(self.request).filter(tagset__name='General',name__icontains='test'))")
 
         # get the queryset, make sure it matches a hand-created one.
         qs = group_rule.queryset
     
-        hand_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
+        hand_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
         self.assertEqualQuerySets(qs,hand_qs)
 
         # try for the other tag group
         group_rule2 = self.test_create_new_group_rule_for_general_tag_contains(right_hand_term="another")
-        hand_qs2 = Person.objects.filter(Q(pk=ppl[4].pk) )
+        hand_qs2 = Person.objects(self.request).filter(Q(pk=ppl[4].pk) )
         self.assertEqualQuerySets(group_rule2.queryset,hand_qs2)
 
 
@@ -440,21 +451,21 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         group_rule = self.test_create_new_group_rule_for_custom_tag_is_exactly()
 
         # assert the queryset string is right
-        self.assertEqual(group_rule.queryset_filter_string, "filter(taggeditem__tag__in=Tag.objects.filter(tagset__name='new test tagset',name__iexact='test'))")
+        self.assertEqual(group_rule.queryset_filter_string, "filter(taggeditem__tag__in=Tag.objects(self.request).filter(tagset__name='new test tagset',name__iexact='test'))")
 
         # get the queryset, make sure it matches a hand-created one.
         qs = group_rule.queryset
     
-        self.assertEqualQuerySets(qs,Person.objects.none())
+        self.assertEqualQuerySets(qs,Person.objects(self.request).none())
 
         # check the contains group
         opposite_group_rule = self.test_create_new_group_rule_for_custom_tag_is_exactly(right_hand_term="test", operator_name="contains")
-        opposite_hand_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
+        opposite_hand_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
         self.assertEqualQuerySets(opposite_group_rule.queryset,opposite_hand_qs)
 
         # try for the other tag group
         group_rule2 = self.test_create_new_group_rule_for_custom_tag_is_exactly(right_hand_term="another tag")
-        hand_qs2 = Person.objects.filter(Q(pk=ppl[4].pk))
+        hand_qs2 = Person.objects(self.request).filter(Q(pk=ppl[4].pk))
         self.assertEqualQuerySets(group_rule2.queryset,hand_qs2)
 
     
@@ -474,7 +485,7 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         # get the queryset, make sure it matches a hand-created one.
         qs = group_rule.queryset
     
-        hand_qs = Person.objects.filter(Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk) )
+        hand_qs = Person.objects(self.request).filter(Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk) )
         self.assertEqualQuerySets(qs,hand_qs)
 
 
@@ -494,12 +505,12 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         # get the queryset, make sure it matches a hand-created one.
         qs = group_rule.queryset
     
-        hand_qs = Person.objects.filter(Q(pk=ppl[1].pk))
+        hand_qs = Person.objects(self.request).filter(Q(pk=ppl[1].pk))
         self.assertEqualQuerySets(qs,hand_qs)
 
         # check the opposite
         opposite_group_rule = self.test_create_new_group_rule_for_last_donation_is_after(operator_name="is before")
-        oppostite_hand_qs = Person.objects.filter(Q(pk=ppl[4].pk))
+        oppostite_hand_qs = Person.objects(self.request).filter(Q(pk=ppl[4].pk))
         self.assertEqualQuerySets(opposite_group_rule.queryset,oppostite_hand_qs)
 
 
@@ -522,13 +533,13 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
 
         # get the queryset, make sure it matches a hand-created one.
         qs = group_rule.queryset
-        hand_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk))
+        hand_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk))
 
         self.assertEqualQuerySets(qs,hand_qs)
 
         # check the opposite
         opposite_group_rule = self.test_create_new_group_rule_for_volunteer_status_is_active(operator_name="is not")
-        oppostite_hand_qs = Person.objects.filter(Q(pk=ppl[1].pk) | Q(pk=ppl[3].pk))
+        oppostite_hand_qs = Person.objects(self.request).filter(Q(pk=ppl[1].pk) | Q(pk=ppl[3].pk))
         self.assertEqualQuerySets(opposite_group_rule.queryset,oppostite_hand_qs)
 
 
@@ -551,13 +562,13 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
 
         # get the queryset, make sure it matches a hand-created one.
         qs = group_rule.queryset
-        hand_qs = Person.objects.filter( Q(pk=ppl[2].pk) )
+        hand_qs = Person.objects(self.request).filter( Q(pk=ppl[2].pk) )
 
         self.assertEqualQuerySets(qs,hand_qs)
 
         # check the opposite
         opposite_group_rule = self.test_create_new_group_rule_for_volunteer_status_is_inactive(operator_name="is not")
-        oppostite_hand_qs = Person.objects.filter(Q(pk=ppl[0].pk) | Q(pk=ppl[1].pk) | Q(pk=ppl[3].pk) | Q(pk=ppl[4].pk) )
+        oppostite_hand_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[1].pk) | Q(pk=ppl[3].pk) | Q(pk=ppl[4].pk) )
         self.assertEqualQuerySets(opposite_group_rule.queryset,oppostite_hand_qs)
 
 
@@ -581,12 +592,12 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         right_hand_term="test"
         operator_name="contains"
         group = Factory.group()
-        # left_side = LeftSide.objects.get(display_name="have a General tag that")
+        # left_side = LeftSide.objects(self.request).get(display_name="have a General tag that")
         left_side = None
-        icontains = Operator.objects.get(display_name=operator_name)
+        icontains = Operator.objects(self.request).get(display_name=operator_name)
         rst = self._text_right_side_types[0]
         rsv = right_hand_term
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
+        GroupRule.raw_objects.create(account=self.account,group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
         self.assertEqual(group.has_a_valid_rule, False)
 
@@ -595,12 +606,12 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         right_hand_term="test"
         # operator_name="contains"
         group = Factory.group()
-        left_side = LeftSide.objects.get(display_name="have a General tag that")
-        # icontains = Operator.objects.get(display_name=operator_name)
+        left_side = LeftSide.objects(self.request).get(display_name="have a General tag that")
+        # icontains = Operator.objects(self.request).get(display_name=operator_name)
         icontains = None
         rst = self._text_right_side_types[0]
         rsv = right_hand_term
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
+        GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
         self.assertEqual(group.has_a_valid_rule, False)
         
@@ -608,12 +619,12 @@ class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractio
         # right_hand_term="test"
         operator_name="contains"
         group = Factory.group()
-        left_side = LeftSide.objects.get(display_name="have a General tag that")
-        icontains = Operator.objects.get(display_name=operator_name)
+        left_side = LeftSide.objects(self.request).get(display_name="have a General tag that")
+        icontains = Operator.objects(self.request).get(display_name=operator_name)
         # rst = self._text_right_side_types[0]
         # rsv = right_hand_term
         rsv = None
         rst = None
-        GroupRule.objects.create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
+        GroupRule.raw_objects.create(account=account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
         self.assertEqual(group.has_a_valid_rule, False)

@@ -2,11 +2,12 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from people.models import NO_NAME_STRING
+from accounts.models import AccountBasedModel
 
 from rules.models import Rule, RuleGroup
 from people.models import Person
 
-class Group(SimpleSearchableModel, TimestampModelMixin, RuleGroup):
+class Group(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, RuleGroup):
     name = models.CharField(max_length=255, blank=True, null=True)
 
     # include_people = models.BooleanField(default=True)
@@ -36,7 +37,7 @@ class Group(SimpleSearchableModel, TimestampModelMixin, RuleGroup):
         return self.grouprule_set.all()
 
     def make_blank_rule(self):
-        return self.grouprule_set.create()
+        return self.grouprule_set.create(account=self.account)
 
     @property
     def full_name(self):
@@ -45,7 +46,7 @@ class Group(SimpleSearchableModel, TimestampModelMixin, RuleGroup):
         else:
             return NO_NAME_STRING
 
-class GroupRule(Rule):
+class GroupRule(AccountBasedModel, Rule):
     group = models.ForeignKey(Group)
     
     target_model = Person

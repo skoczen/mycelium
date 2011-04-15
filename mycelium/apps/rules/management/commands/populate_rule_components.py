@@ -1,4 +1,4 @@
-from rules.tasks import populate_rule_components
+from rules.tasks import populate_all_rule_components
 from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):
@@ -6,4 +6,4 @@ class Command(BaseCommand):
     __test__ = False
 
     def handle(self, *args, **options):
-        populate_rule_components()
+        populate_all_rule_components()

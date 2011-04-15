@@ -1,6 +1,7 @@
 from django.forms import ModelForm, RadioSelect, HiddenInput, TextInput, Select, NullBooleanSelect
 from groups.models import Group, GroupRule
 from django.forms.models import inlineformset_factory, BaseModelFormSet, BaseInlineFormSet
+from accounts.forms import AccountBasedModelForm, adjust_queryset_for_account_based_models
 
 class GroupForm(ModelForm):
     class Meta:
@@ -19,6 +20,7 @@ class GroupForm(ModelForm):
 
         
         self.fields['rules_boolean'].widget.choices = [("2", "all"), ("3","any")]
+
 
 class GroupRuleForm(ModelForm):
     def __init__(self, *args, **kwargs):

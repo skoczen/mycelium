@@ -3,7 +3,7 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
 from test_factory import Factory
 from people.tests.selenium_tests import PeopleTestAbstractions
-from rules.tasks import populate_rule_components
+from rules.tasks import populate_rule_components_for_an_account
 
 class GroupTestAbstractions(object):
 
@@ -50,7 +50,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
     selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        populate_rule_components()
+        self.account = Factory.account()
+        populate_rule_components_for_an_account(self.account)
         self.verificationErrors = []
 
     def test_that_the_new_group_page_loads(self):
@@ -239,7 +240,8 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
     selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        populate_rule_components()
+        self.account = Factory.account()
+        populate_rule_components_for_an_account(self.account)
         self.people = [Factory.volunteer_history() for i in range(1,Factory.rand_int(30,100))]
         self.verificationErrors = []
     

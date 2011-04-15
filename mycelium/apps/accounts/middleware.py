@@ -30,4 +30,13 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                     if reverse("accounts:login") != request.path and (settings.ENV != "DEV" or request.path[:len(settings.MEDIA_URL)] != settings.MEDIA_URL):
                         # redirect to login page
                         return HttpResponseRedirect(reverse("accounts:login"))
+        else:
+            if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
+                from django.contrib.sites.models import Site
+                site = Site.objects.get(pk=settings.SITE_ID)
+                if request.is_secure:
+                    protocol = "https://"
+                else:
+                    protocol = "http://"
+                return HttpResponseRedirect("%s%s" % (protocol, site.domain))
                     

@@ -63,7 +63,7 @@ class UserAccount(models.Model):
         ordering = ("account","access_level","user")
 
 
-class AccountDataModel(models.Model):
+class AccountBasedModel(models.Model):
     account = models.ForeignKey(Account, db_index=True)
 
     objects = AccountDataModelManager()

@@ -21,9 +21,6 @@ def list(request):
 def start(request):
     # TODO: this is obnoxious.  Fix it.
     section = "more"
-    people = Person.objects.order_by("?").all()
-    birthdates = [Factory.rand_date(start_year=1910, end_year=1992) for i in range(0,50)]
-    ages = [Factory.rand_int(18,102) for i in range(0,50)]
     return locals()
 
 @render_to("import/review.html")
