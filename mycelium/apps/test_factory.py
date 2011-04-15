@@ -57,6 +57,7 @@ class Factory(QiFactory):
                                        phone_number=cls.phone(),
                 )
         person.__dict__.update(cls.address())
+        person.save()
         return person
 
     @classmethod

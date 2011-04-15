@@ -89,17 +89,18 @@ DATE_INPUT_FORMATS = ('%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%b %d %Y',
 '%b %d, %Y', '%d %b %Y', '%d %b, %Y', '%B %d %Y',
 '%B %d, %Y', '%d %B %Y', '%d %B, %Y')
 
-ROOT_URLCONF = 'mycelium.urls'
+ROOT_URLCONF = 'mycelium.urls.mycelium'
 SUBDOMAIN_URLCONFS = {
     # The format for these is 'subdomain': 'urlconf'
-    None: 'mycelium.urls',
-    'www': 'mycelium.urls',
+    None: 'mycelium.urls.marketing',
+    'www': 'mycelium.urls.marketing',
     # 'api': 'myproject.urls.api',
 }
 PUBLIC_SUBDOMAINS = [
     None,
     "www"
 ]
+REMOVE_WWW_FROM_SUBDOMAIN = True
 
 
 INSTALLED_APPS = (
