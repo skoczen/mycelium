@@ -45,7 +45,7 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
             for t in self.all_tags:
                 self.cached_all_tags_and_counts.append({
                     'tag':t,
-                    'num_people': TaggedItem.objects.filter(tag=t.id).count(),
+                    'num_people': TaggedItem.objects(self.account).filter(tag=t.id).count(),
                 })
 
         return self.cached_all_tags_and_counts
@@ -103,7 +103,7 @@ class Tag(AccountBasedModel, models.Model):
     def remove_tag_from_person(self, person=None):
         if not person:
             raise Exception, "Missing person"
-        TaggedItem.objects.filter(tag=self, person=person).delete()
+        TaggedItem.objects(self.account).filter(tag=self, person=person).delete()
 
     @classmethod
     def create_new_tag(cls, tagset=None, name=None):

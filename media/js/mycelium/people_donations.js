@@ -1,8 +1,8 @@
 $(function(){
-    $("#new_donation input[name=amount]").live("change",round_donation);
-    $(".year_details_link").live("click",toggle_year_details);
-    $("#new_donation .cancel_add_btn").live("click", cancel_add_donation);
-    $(".delete_donation_btn").live("click",delete_donor_from_people_tab);
+    $(".people_donor_tab #new_donation input[name=amount]").live("change",round_donation);
+    $(".people_donor_tab .year_details_link").live("click",toggle_year_details);
+    $(".people_donor_tab #new_donation .cancel_add_btn").live("click", cancel_add_donation);
+    $(".people_donor_tab .delete_donation_btn").live("click",delete_donor_from_people_tab);
 
 });
 

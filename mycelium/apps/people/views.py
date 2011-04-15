@@ -51,7 +51,7 @@ def _basic_forms(person, request):
 
 @render_to("people/person.html")
 def person(request, person_id):
-    person = get_object_or_404(Person,pk=person_id)
+    person = get_object_or_404(Person,pk=int(person_id))
     (form, employee_formset) = _basic_forms(person, request)
     return locals()
 

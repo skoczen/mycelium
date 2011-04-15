@@ -15,14 +15,8 @@ class Volunteer(AccountBasedModel, TimestampModelMixin):
     status = models.CharField(max_length=50, default=VOLUNTEER_STATII[0][0], choices=VOLUNTEER_STATII)
     reactivation_date = models.DateField(blank=True, null=True)
 
-    # skills = TaggableManager()
-
     def __unicode__(self):
         return "%s" % self.person
-
-    @property
-    def alphabetical_tags(self):
-        return self.skills.all().order_by("name")
 
     
     @property
@@ -63,9 +57,10 @@ class Volunteer(AccountBasedModel, TimestampModelMixin):
                     'shifts':[],
                 }
 
-            cur_year_dict["shifts"].append(cs)
             shifts_this_year += 1
+            cur_year_dict['shifts'].append(cs)
             hours_this_year += cs.duration
+        
         
         if cur_year_dict != {}:
             cur_year_dict['total_shifts'] = shifts_this_year

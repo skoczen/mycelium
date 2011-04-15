@@ -122,7 +122,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
 
     @property
     def tagsets(self):
-        return TagSet.raw_objects.filter(account_id=request.account.id).all()
+        return TagSet.objects(self.account).all()
 
     @property
     def search_result_row(self):

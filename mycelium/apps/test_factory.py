@@ -24,8 +24,8 @@ class Factory(QiFactory):
     def email(cls, name_hint=None):
         if not name_hint:
             name_hint = cls.rand_str()
-        
-        return "%s@%s" % (name_hint, cls.rand_domain())
+        username = "%s%s" (name_hint.lower(), cls.rand_int(0,100) )
+        return "%s@%s" % (username, cls.rand_domain())
 
 
     @classmethod
@@ -92,7 +92,7 @@ class Factory(QiFactory):
     @classmethod
     def organization(cls, account):
         organization = Organization.raw_objects.create(account=account,
-                                       name="%ss for %s" % (cls.rand_name(), cls.rand_name()), 
+                                       name="%ss-%s Corp." % (cls.rand_name(), cls.rand_plant_name()), 
                                        twitter_username=cls.rand_str(),
                                        website=cls.rand_str(),                                       
                                        primary_phone_number=cls.phone(),
@@ -182,7 +182,7 @@ class Factory(QiFactory):
     @classmethod
     def group(cls, account, name=None, **kwargs):
         if not name:
-            name = cls.rand_str()
+            name = "%s for %s" % (cls.rand_name(), cls.rand_plant_name())
         return Group.raw_objects.get_or_create(account=account, name=name, **kwargs)[0]
 
     @classmethod

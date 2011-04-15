@@ -26,6 +26,7 @@ def populate_rule_components_for_an_account(account):
     - Cleans up unused rule options
 
     """
+    # print "populating for %s" % account
 
     request = Dummy()
     request.account = account
@@ -33,8 +34,8 @@ def populate_rule_components_for_an_account(account):
     # RightSideTypes
     all_right_side_types = []
     right_type_text     = RightSideType.raw_objects.get_or_create(account=account, name="text")[0]
-    right_type_date     = RightSideType.raw_objects.get_or_create(account=account,name="date")[0]
-    right_type_number   = RightSideType.raw_objects.get_or_create(account=account,name="number")[0]
+    right_type_date     = RightSideType.raw_objects.get_or_create(account=account, name="date")[0]
+    right_type_number   = RightSideType.raw_objects.get_or_create(account=account, name="number")[0]
     right_type_choices   = RightSideType.raw_objects.get_or_create(account=account,name="choices")[0]
     all_right_side_types = [right_type_text, right_type_date, right_type_number, right_type_choices]
 
@@ -223,7 +224,6 @@ def populate_rule_components_for_an_account(account):
         ls.order=20+i
         ls.save()
                                                                                                
-
 
     # Cleanup
     for rs in RightSideType.objects(request).all():
