@@ -239,7 +239,7 @@ class Factory(QiFactory):
     @classmethod
     def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False):
         if quick:
-            max_num_people = 20
+            max_num_people = 5
             max_num_orgs = 2
             num_tags = 1
         else:
@@ -277,6 +277,8 @@ class Factory(QiFactory):
         vol_ts = cls.tagset(account, name="Volunteer")
         don_ts = cls.tagset(account, name="Donor")
         color_ts = cls.tagset(account, name="Favorite Color")
+        from rules.tasks import populate_rule_components_for_an_account
+        populate_rule_components_for_an_account(account)
         print "Tagsets created."
 
         # gen tagsname=

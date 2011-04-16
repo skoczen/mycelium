@@ -48,3 +48,5 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
             # if there's no subdomain, but tis wasn't handled by the SubdomainURLRoutingMiddleware, something weird is happening. Bail.
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
                 self.redirect_to_public_home(request)
+
+        return None
