@@ -5,7 +5,7 @@
 	<form method="post" action="{% url accounts:login %}">
 	{% csrf_token %}
 	<field>
-	<label>Username:</label><input type="text" name="username" placeholder="Username" autofocus>
+	<label>Username:</label><input type="text" name="username" placeholder="Username" maxlength="25" autofocus>
 	</field>
 	<field>
 	<label>Password:</label><input type="password" name="password" placeholder="Password">

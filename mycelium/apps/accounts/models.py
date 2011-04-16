@@ -76,3 +76,7 @@ class AccountBasedModel(models.Model):
 
     class Meta(object):
         abstract = True
+
+from django.db.models.signals import post_save
+from rules.tasks import populate_rule_components_for_an_account_signal_receiver
+post_save.connect(populate_rule_components_for_an_account_signal_receiver,sender=Account)

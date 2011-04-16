@@ -1,14 +1,13 @@
-from rules.models import LeftSide, Operator, RightSideType
-from volunteers import VOLUNTEER_STATII
-from accounts.models import Account
-
-
 class Dummy(object):
     pass
 
 def populate_all_rule_components(*args, **kwargs):
+    from accounts.models import Account
     for account in Account.objects.all():
         populate_rule_components_for_an_account(account)
+
+def populate_rule_components_for_an_account_signal_receiver(sender, instance, created=None, *args, **kwargs):
+    populate_rule_components_for_an_account(instance)
 
 def populate_rule_components_for_an_obj_with_an_account_signal_receiver(sender, instance, created=None, *args, **kwargs):
     populate_rule_components_for_an_obj_with_an_account(instance)
@@ -17,6 +16,8 @@ def populate_rule_components_for_an_obj_with_an_account(obj):
     populate_rule_components_for_an_account(obj.account)
 
 def populate_rule_components_for_an_account(account):
+    from rules.models import LeftSide, Operator, RightSideType
+    from volunteers import VOLUNTEER_STATII
     """This function performs several actions, and is idempotent.
 
     In order, it:
