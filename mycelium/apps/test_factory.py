@@ -67,6 +67,7 @@ class Factory(QiFactory):
 
     @classmethod
     def tagset(cls, account, name=None):
+        print "tagset acct: " , account
         if not name:
             name = cls.rand_str()
         return TagSet.raw_objects.get_or_create(account=account, name=name)[0]
@@ -190,8 +191,8 @@ class Factory(QiFactory):
         if not group:
             group = cls.group()
 
-        left_side = LeftSide.objects(account).get(display_name__iexact=left_side_str)
-        operator = Operator.objects(account).get(display_name__iexact=operator_str)
+        left_side = LeftSide.objects_by_account(account).get(display_name__iexact=left_side_str)
+        operator = Operator.objects_by_account(account).get(display_name__iexact=operator_str)
         right_side_type = left_side.first_right_side_type
         right_side_value = right_side_str
 
@@ -363,7 +364,7 @@ class Factory(QiFactory):
 
         print "Adding tags",
         # give some of the people tags
-        all_tags = [t for t in Tag.objects(request).all()]
+        all_tags = [t for t in Tag.objects_by_account(request).all()]
         for p in people_created:
             for i in range(0,cls.rand_int(0,num_tags)):
                 t = all_tags[cls.rand_int(0,len(all_tags)-1)]

@@ -34,7 +34,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
             v.status = VOLUNTEER_STATII[1][0]
             v.save()
             people.append(p.pk)
-        people = Person.objects(self.request).filter(pk__in=people)
+        people = Person.objects_by_account(self.request).filter(pk__in=people)
         return people
     
     def _generate_people_with_volunteer_history(self, number=5):
@@ -67,7 +67,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         # create a new group
         group = Factory.group()
         self._generate_people()
-        all_ppl_qs = Person.objects(self.request).none()
+        all_ppl_qs = Person.objects_by_account(self.request).none()
 
         self.assertEqualQuerySets(group.members, all_ppl_qs)
 
@@ -88,15 +88,15 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         v.save()        
         
 
-        all_ppl_qs = Person.objects(self.request).none()
-        active_volunteer_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk))
-        active_volunteer_with_shift = Person.objects(self.request).filter( Q(pk=ppl[2].pk) )
+        all_ppl_qs = Person.objects_by_account(self.request).none()
+        active_volunteer_qs = Person.objects_by_account(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk))
+        active_volunteer_with_shift = Person.objects_by_account(self.request).filter( Q(pk=ppl[2].pk) )
 
         self.assertEqualQuerySets(group.members, all_ppl_qs)
 
         # check the qs active volunteer rule added
-        left_side = LeftSide.objects(self.request).get(display_name="volunteer status")
-        icontains = Operator.objects(self.request).get(display_name="is")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="volunteer status")
+        icontains = Operator.objects_by_account(self.request).get(display_name="is")
         rst = self._choices_right_side_types[0]
         rsv ="active"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -104,8 +104,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.assertEqualQuerySets(group.members, active_volunteer_qs)
 
         # check the qs after last_shift added
-        left_side = LeftSide.objects(self.request).get(display_name="last volunteer shift")
-        icontains = Operator.objects(self.request).get(display_name="is after")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="last volunteer shift")
+        icontains = Operator.objects_by_account(self.request).get(display_name="is after")
         rst = self._date_right_side_types[0]
         rsv ="1/15/2010"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -124,16 +124,16 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.create_tag_for_person(person=ppl[3], tagset_name="Donor", tag="major")
         
 
-        all_ppl_qs = Person.objects(self.request).none()
-        test_tag_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
-        test_and_donor_tag_qs = Person.objects(self.request).filter( Q(pk=ppl[2].pk) )
-        #test_donor_qs = Person.objects(self.request).filter( Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk))
+        all_ppl_qs = Person.objects_by_account(self.request).none()
+        test_tag_qs = Person.objects_by_account(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
+        test_and_donor_tag_qs = Person.objects_by_account(self.request).filter( Q(pk=ppl[2].pk) )
+        #test_donor_qs = Person.objects_by_account(self.request).filter( Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk))
 
         self.assertEqualQuerySets(group.members, all_ppl_qs)
 
         # check the qs active volunteer rule added
-        left_side = LeftSide.objects(self.request).get(display_name="have any tag that")
-        icontains = Operator.objects(self.request).get(display_name="contains")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="have any tag that")
+        icontains = Operator.objects_by_account(self.request).get(display_name="contains")
         rst = self._text_right_side_types[0]
         rsv ="test"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -141,8 +141,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.assertEqualQuerySets(group.members, test_tag_qs)
 
         # check the qs after last_shift added
-        left_side = LeftSide.objects(self.request).get(display_name="have a Donor tag that")
-        icontains = Operator.objects(self.request).get(display_name="is exactly")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="have a Donor tag that")
+        icontains = Operator.objects_by_account(self.request).get(display_name="is exactly")
         rst = self._text_right_side_types[0]
         rsv ="major"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -165,15 +165,15 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         Factory.donation(ppl[3], date=target_date-datetime.timedelta(days=7))
         
 
-        all_ppl_qs = Person.objects(self.request).none()
-        test_tag_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
-        test_and_donation_tag_qs = Person.objects(self.request).filter( Q(pk=ppl[2].pk) )
+        all_ppl_qs = Person.objects_by_account(self.request).none()
+        test_tag_qs = Person.objects_by_account(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
+        test_and_donation_tag_qs = Person.objects_by_account(self.request).filter( Q(pk=ppl[2].pk) )
 
         self.assertEqualQuerySets(group.members, all_ppl_qs)
 
         # check the qs active volunteer rule added
-        left_side = LeftSide.objects(self.request).get(display_name="have a new test tagset tag that")
-        icontains = Operator.objects(self.request).get(display_name="contains")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="have a new test tagset tag that")
+        icontains = Operator.objects_by_account(self.request).get(display_name="contains")
         rst = self._text_right_side_types[0]
         rsv ="test"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -181,8 +181,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.assertEqualQuerySets(group.members, test_tag_qs)
 
         # check the qs after last_shift added
-        left_side = LeftSide.objects(self.request).get(display_name="last donation")
-        icontains = Operator.objects(self.request).get(display_name="is after")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="last donation")
+        icontains = Operator.objects_by_account(self.request).get(display_name="is after")
         rst = self._date_right_side_types[0]
         rsv ="02/05/2010"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -205,15 +205,15 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         Factory.completed_volunteer_shift(ppl[2], date=target_date)
         Factory.completed_volunteer_shift(ppl[3], date=target_date)
 
-        all_ppl_qs = Person.objects(self.request).none()
-        active_volunteer_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk))
-        active_volunteer_with_shift = Person.objects(self.request).filter( Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk) | Q(pk=ppl[3].pk) )
+        all_ppl_qs = Person.objects_by_account(self.request).none()
+        active_volunteer_qs = Person.objects_by_account(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk))
+        active_volunteer_with_shift = Person.objects_by_account(self.request).filter( Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk) | Q(pk=ppl[3].pk) )
 
         self.assertEqualQuerySets(group.members, all_ppl_qs)
 
         # check the qs active volunteer rule added
-        left_side = LeftSide.objects(self.request).get(display_name="volunteer status")
-        icontains = Operator.objects(self.request).get(display_name="is")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="volunteer status")
+        icontains = Operator.objects_by_account(self.request).get(display_name="is")
         rst = self._choices_right_side_types[0]
         rsv ="active"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -221,8 +221,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.assertEqualQuerySets(group.members, active_volunteer_qs)
 
         # check the qs after last_shift added
-        left_side = LeftSide.objects(self.request).get(display_name="last volunteer shift")
-        icontains = Operator.objects(self.request).get(display_name="is after")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="last volunteer shift")
+        icontains = Operator.objects_by_account(self.request).get(display_name="is after")
         rst = self._date_right_side_types[0]
         rsv ="1/15/2010"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -241,15 +241,15 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.create_tag_for_person(person=ppl[3], tagset_name="Donor", tag="major")
         
 
-        all_ppl_qs = Person.objects(self.request).none()
-        test_tag_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
-        test_and_donor_tag_qs = Person.objects(self.request).filter( Q(pk=ppl[2].pk) | Q(pk=ppl[0].pk) | Q(pk=ppl[3].pk)  )
+        all_ppl_qs = Person.objects_by_account(self.request).none()
+        test_tag_qs = Person.objects_by_account(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
+        test_and_donor_tag_qs = Person.objects_by_account(self.request).filter( Q(pk=ppl[2].pk) | Q(pk=ppl[0].pk) | Q(pk=ppl[3].pk)  )
 
         self.assertEqualQuerySets(group.members, all_ppl_qs)
 
         # check the qs active volunteer rule added
-        left_side = LeftSide.objects(self.request).get(display_name="have any tag that")
-        icontains = Operator.objects(self.request).get(display_name="contains")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="have any tag that")
+        icontains = Operator.objects_by_account(self.request).get(display_name="contains")
         rst = self._text_right_side_types[0]
         rsv ="test"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -257,8 +257,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.assertEqualQuerySets(group.members, test_tag_qs)
 
         # check the qs after last_shift added
-        left_side = LeftSide.objects(self.request).get(display_name="have a Donor tag that")
-        icontains = Operator.objects(self.request).get(display_name="is exactly")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="have a Donor tag that")
+        icontains = Operator.objects_by_account(self.request).get(display_name="is exactly")
         rst = self._text_right_side_types[0]
         rsv ="major"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -281,16 +281,16 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         Factory.donation(ppl[3], date=target_date-datetime.timedelta(days=7))
         
 
-        all_ppl_qs = Person.objects(self.request).none()
-        test_tag_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
-        test_and_donation_tag_qs = Person.objects(self.request).filter( Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk) )
+        all_ppl_qs = Person.objects_by_account(self.request).none()
+        test_tag_qs = Person.objects_by_account(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
+        test_and_donation_tag_qs = Person.objects_by_account(self.request).filter( Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk) )
 
 
         self.assertEqualQuerySets(group.members, all_ppl_qs)
 
         # check the qs active volunteer rule added
-        left_side = LeftSide.objects(self.request).get(display_name="have a new test tagset tag that")
-        icontains = Operator.objects(self.request).get(display_name="contains")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="have a new test tagset tag that")
+        icontains = Operator.objects_by_account(self.request).get(display_name="contains")
         rst = self._text_right_side_types[0]
         rsv ="test"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -298,13 +298,13 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.assertEqualQuerySets(group.members, test_tag_qs)
 
         # check the qs after last_shift added
-        left_side = LeftSide.objects(self.request).get(display_name="last donation")
-        icontains = Operator.objects(self.request).get(display_name="is after")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="last donation")
+        icontains = Operator.objects_by_account(self.request).get(display_name="is after")
         rst = self._date_right_side_types[0]
         rsv ="02/05/2010"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
-        # test_donation_qs = Person.objects(self.request).filter( Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk) )
+        # test_donation_qs = Person.objects_by_account(self.request).filter( Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk) )
         # self.assertEqualQuerySets(group.members, test_donation_qs)
 
         self.assertEqualQuerySets(group.members, test_and_donation_tag_qs)
@@ -323,15 +323,15 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         Factory.donation(ppl[3], date=target_date-datetime.timedelta(days=7))
         
 
-        all_ppl_qs = Person.objects(self.request).none()
-        test_tag_qs = Person.objects(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
-        test_and_donation_tag_qs = Person.objects(self.request).filter( Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk) )
+        all_ppl_qs = Person.objects_by_account(self.request).none()
+        test_tag_qs = Person.objects_by_account(self.request).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) )
+        test_and_donation_tag_qs = Person.objects_by_account(self.request).filter( Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[3].pk) )
 
         self.assertEqualQuerySets(group.members, all_ppl_qs)
 
         # check the qs active volunteer rule added
-        left_side = LeftSide.objects(self.request).get(display_name="have a new test tagset tag that")
-        icontains = Operator.objects(self.request).get(display_name="contains")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="have a new test tagset tag that")
+        icontains = Operator.objects_by_account(self.request).get(display_name="contains")
         rst = self._text_right_side_types[0]
         rsv ="test"
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
@@ -339,11 +339,11 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.assertEqualQuerySets(group.members, test_tag_qs)
 
         # check the qs after last_shift added
-        left_side = LeftSide.objects(self.request).get(display_name="last donation")
-        icontains = Operator.objects(self.request).get(display_name="is after")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="last donation")
+        icontains = Operator.objects_by_account(self.request).get(display_name="is after")
         rst = self._date_right_side_types[0]
         rsv ="02/05/2010"
-        GroupRule.objects(self.request).create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
+        GroupRule.objects_by_account(self.request).create(group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
 
 
         self.assertEqualQuerySets(group.members, test_and_donation_tag_qs)
@@ -367,8 +367,8 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_has_a_valid_rule_function(self):
         group = Factory.group(rules_boolean=False)
-        left_side = LeftSide.objects(self.request).get(display_name="last donation")
-        icontains = Operator.objects(self.request).get(display_name="is after")
+        left_side = LeftSide.objects_by_account(self.request).get(display_name="last donation")
+        icontains = Operator.objects_by_account(self.request).get(display_name="is after")
         rst = self._date_right_side_types[0]
         rsv = "02/05/2010"
 

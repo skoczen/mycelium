@@ -28,7 +28,7 @@ def list_logos(request):
     else:
         form = LogoForm()
 
-    logos = Logo.objects(request).all()
+    logos = Logo.objects_by_account(request).all()
     return locals()
 
 

@@ -81,6 +81,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
     def test_that_a_new_person_in_account_1_does_not_show_in_account_2(self):
         pass
+    
+    def test_that_searching_across_accounts_limits_results(self):
+        pass
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     selenium_fixtures = ["generic_tags.selenium_fixtures.json",]

@@ -16,6 +16,9 @@ def populate_rule_components_for_an_obj_with_an_account(obj):
     populate_rule_components_for_an_account(obj.account)
 
 def populate_rule_components_for_an_account(account):
+    print "\n\n\n\n\n\n"
+    print "populate_rule_components_for_an_account for %s" % account
+
     from rules.models import LeftSide, Operator, RightSideType
     from volunteers import VOLUNTEER_STATII
     """This function performs several actions, and is idempotent.
@@ -216,13 +219,13 @@ def populate_rule_components_for_an_account(account):
     i = 0
 
     
-    print TagSet.objects(request).all()
-    print [ts.account for ts in TagSet.objects(request).all()]
-    for ts in TagSet.objects(request).all():
+    print TagSet.objects_by_account(request).all()
+    print [ts.account for ts in TagSet.objects_by_account(request).all()]
+    for ts in TagSet.objects_by_account(request).all():
         i = i+1
         ls = left_side_for_tag(account=account,
                             display_name="have a %s tag that" % (ts.name) ,
-                            query_string_partial="taggeditem__tag__in=Tag.objects(request).filter(tagset__name='%s',name" % (ts.name), 
+                            query_string_partial="taggeditem__tag__in=Tag.objects_by_account(request).filter(tagset__name='%s',name" % (ts.name), 
                             add_closing_paren=True
                             )
         ls.order=20+i
@@ -230,14 +233,14 @@ def populate_rule_components_for_an_account(account):
                                                                                                
                                                                                       
     # Cleanup
-    for rs in RightSideType.objects(request).all():
+    for rs in RightSideType.objects_by_account(request).all():
         if rs not in all_right_side_types:
             rs.delete()
     
-    for o in Operator.objects(request).all():
+    for o in Operator.objects_by_account(request).all():
         if o not in all_operators:
             o.delete()
     
-    for ls in LeftSide.objects(request).all():
+    for ls in LeftSide.objects_by_account(request).all():
         if ls not in all_left_sides:
             ls.delete()

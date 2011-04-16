@@ -20,20 +20,20 @@ from generic_tags.views import _render_people_tag_tab
 
 @render_to("people/search.html")
 def search(request):
-    people_proxies = PeopleAndOrganizationsSearchProxy.objects(request).all()
+    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request).all()
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":
-            people_proxies = PeopleAndOrganizationsSearchProxy.search(q,ignorable_chars=["-","(",")"])
+            people_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
     return locals()
 
 @json_view
 def search_results(request):
-    people_proxies = PeopleAndOrganizationsSearchProxy.objects(request).all()
+    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request).all()
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":
-            people_proxies = PeopleAndOrganizationsSearchProxy.search(q,ignorable_chars=["-","(",")"])
+            people_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
 
     return {"fragments":{"main_search_results":render_to_string("people/_search_results.html", locals())}}
 
@@ -51,7 +51,7 @@ def _basic_forms(person, request):
 
 @render_to("people/person.html")
 def person(request, person_id):
-    person = get_object_or_404(Person,pk=int(person_id))
+    person = Person.objects_by_account(request.account).get(pk=int(person_id))
     (form, employee_formset) = _basic_forms(person, request)
     return locals()
 
@@ -108,7 +108,7 @@ def delete_organization(request):
     try:
         if request.method == "POST":
             pk = request.POST['org_pk']
-            org = Organization.objects(request).get(pk=pk)
+            org = Organization.objects_by_account(request).get(pk=pk)
             org.delete()
     except:
         pass
@@ -118,7 +118,7 @@ def delete_organization(request):
 
 @render_to("people/organization.html")
 def organization(request, org_id):
-    org = get_object_or_404(Organization,pk=org_id)
+    org = Organization.objects_by_account(request.account).get(pk=org_id)
     (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     if form.is_valid():
         form.save()
@@ -167,7 +167,7 @@ def existing_person_via_organization(request, org_id):
     org = get_object_or_404(Organization,pk=org_id)
     try: 
         person_id = int(request.POST['person_pk'])
-        person = Person.objects(request).get(pk=person_id)
+        person = Person.objects_by_account(request).get(pk=person_id)
         (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
         if form_employee.is_valid():
             employee = form_employee.save(commit=False)
@@ -196,7 +196,7 @@ def new_person_via_organization(request, org_id):
 
 @json_view
 def add_person_via_organization_search_results(request):
-    people = Person.objects(request).none()
+    people = Person.objects_by_account(request).none()
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":
@@ -208,7 +208,7 @@ def add_person_via_organization_search_results(request):
 @json_view
 def tab_contents(request, person_id, tab_name=None):
     success = False
-    person = Person.objects(request).get(pk=person_id)
+    person = Person.objects_by_account(request).get(request.account, pk=person_id)
     html = None
     if not tab_name and 'tab_name' in request.POST:
         tab_name = request.POST['tab_name'].strip()[1:]

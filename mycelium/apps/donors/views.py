@@ -25,7 +25,7 @@ def _return_fragments_or_redirect(request,context):
 
 
 def save_new_donation(request, donor_id):
-    donor = Donor.objects(request).get(pk=int(donor_id))
+    donor = Donor.objects_by_account(request).get(pk=int(donor_id))
     person = donor.person
     obj = donor
     if request.method == "POST":
@@ -38,7 +38,7 @@ def save_new_donation(request, donor_id):
     return _return_fragments_or_redirect(request,locals())
 
 def delete_donation_from_people_tab(request, donation_id):
-    d = Donation.objects(request).get(pk=donation_id)
+    d = Donation.objects_by_account(request).get(pk=donation_id)
     donor = d.donor
     person = donor.person
     d.delete()

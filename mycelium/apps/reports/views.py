@@ -23,14 +23,14 @@ def detail(request, report_id):
     if report_id == "new":
         new_report == True
     section = "more"
-    people = Person.objects(request).order_by("?").all()
+    people = Person.objects_by_account(request).order_by("?").all()
     hours = [random.randint(2,280) for i in range(0,50)]
     return locals()
 
 # TODO: clear this out
 def report_demo_page(request):
     section = "more"
-    people = Person.objects(request).order_by("?").all()
+    people = Person.objects_by_account(request).order_by("?").all()
     hours = [random.randint(2,280) for i in range(0,50)]
     return locals()
     
@@ -52,6 +52,6 @@ def detail_email(request):
 def new(request, report_id):
     # Eventually, this should go away. It's just for test.
     section = "reports"
-    people = Person.objects(request).order_by("?").all()
+    people = Person.objects_by_account(request).order_by("?").all()
     hours = [random.randint(2,280) for i in range(0,50)]
     return locals()
