@@ -24,7 +24,7 @@ class Factory(QiFactory):
     def email(cls, name_hint=None):
         if not name_hint:
             name_hint = cls.rand_str()
-        username = "%s%s" (name_hint.lower(), cls.rand_int(0,100) )
+        username = "%s%s" % (name_hint.lower(), cls.rand_int(0,100) )
         return "%s@%s" % (username, cls.rand_domain())
 
 

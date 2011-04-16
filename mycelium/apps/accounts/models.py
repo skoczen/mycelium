@@ -27,7 +27,7 @@ class Account(models.Model):
         ordering = ("name",)
 
     def namespaced_username_for_username(self, username):
-        return "acct%s_%s" % (self.pk, username)
+        return "a%s_%s" % (self.pk, username)
 
     def create_useraccount(self, full_name=None, username=None, password=None, email=None, access_level=None, user=None):
         assert full_name != None and username != None and password != None and access_level != None

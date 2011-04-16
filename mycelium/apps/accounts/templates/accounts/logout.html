@@ -1,9 +1,11 @@
 {% extends "accounts/base_login.html" %}
 {% block title %}Logged out of GoodCloud{% endblock %}
 
-{% block content %}
-You're logged out. Hope you enjoyed using GoodCloud, and are off to something great!
-
-Want to <a href="{% url accounts:login %}">log back in</a>?
-
+{% block dialog_content %}
+	<div class="welcome_message">Logged Out.</div>
+	<div class="log_out_message">
+	You're logged out. We hope you enjoyed using GoodCloud, and are off to do something great!
+	</div>
+	<div class="log_back_in">Want to <a href="{% url accounts:login %}">log back in</a>?</div>
 {% endblock %}
+
