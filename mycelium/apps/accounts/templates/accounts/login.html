@@ -1,7 +1,9 @@
 {% extends "accounts/base_login.html" %}
 
 {% block content %}
-
+{{request.account.subdomain}}.agoodcloud.com
+<br/>
+<br/>
 Log in to {{request.account.name}}'s GoodCloud!
 
 {% if form.errors %}

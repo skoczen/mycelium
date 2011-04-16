@@ -17,7 +17,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
             if poss_account.count() == 1:
                 request.account = poss_account[0]
             else:
-                if not request.subdomain in settings.PUBLIC_SUBDOMAINS and (reverse("accounts:login") != request.path and (settings.ENV != "DEV" or request.path[:len(settings.MEDIA_URL)] != settings.MEDIA_URL)):
+                if not request.subdomain in settings.PUBLIC_SUBDOMAINS and (reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL)):
                     return HttpResponseRedirect(reverse("accounts:login"))
 
             # if it's not in a public site
@@ -27,7 +27,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                 try:
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
                 except:
-                    if reverse("accounts:login") != request.path and (settings.ENV != "DEV" or request.path[:len(settings.MEDIA_URL)] != settings.MEDIA_URL):
+                    if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                         # redirect to login page
                         return HttpResponseRedirect(reverse("accounts:login"))
         else:
