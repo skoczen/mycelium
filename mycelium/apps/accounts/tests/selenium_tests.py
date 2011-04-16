@@ -85,6 +85,12 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
     def test_that_searching_across_accounts_limits_results(self):
         pass
 
+    def test_fixed_switching_accounts_on_search_shows_the_wrong_orgs_results_until_thread_change(self):
+        """Yep, this happens - make demo and demo1, view demo, then type demo1 in the address bar and load - 
+            voila - demo's results :(
+            Classmethod caching?
+        """ 
+        assert False == True
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 

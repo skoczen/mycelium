@@ -20,7 +20,8 @@ from generic_tags.views import _render_people_tag_tab
 
 @render_to("people/search.html")
 def search(request):
-    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request).all()
+    print request.account
+    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).all()
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":
@@ -29,7 +30,8 @@ def search(request):
 
 @json_view
 def search_results(request):
-    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request).all()
+    print request.account
+    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).all()
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":

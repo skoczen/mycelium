@@ -41,6 +41,7 @@ LANGUAGES = (
         ('en', gettext('English')),
 )
 SITE_ID = 1
+SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 USE_I18N = True
 # USE_L10N = True
 
@@ -59,8 +60,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'accounts.middleware.AccountAuthMiddleware',
+        
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
     
@@ -68,11 +71,13 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.user.CurrentUserMiddleware',
     # 'cms.middleware.multilingual.MultilingualURLMiddleware',
     'cms.middleware.media.PlaceholderMediaMiddleware',
+
 )
 AUTHENTICATION_BACKENDS = (
     'accounts.backends.AccountAuthBackend',
     # 'django.contrib.auth.backends.ModelBackend',
 )
+
 
 
 SSL_ENABLED = True

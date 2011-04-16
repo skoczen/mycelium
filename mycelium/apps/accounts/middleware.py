@@ -22,6 +22,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
     def process_request(self, request, *args, **kwargs):
         super(AccountAuthMiddleware,self).process_request(request, *args, **kwargs)
 
+        print request.get_host()
         subdomain = getattr(request, 'subdomain', False)
     
         if subdomain is not False:

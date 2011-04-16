@@ -222,26 +222,6 @@ class SearchableItemProxy(SimpleSearchableModel):
         put_in_cache_forever(self.cache_name, ss)
         super(SearchableItemProxy,self).save(*args,**kwargs)
 
-    # overridden to trust accounts
-    @classmethod
-    def search(cls, account, query, delimiter=" ", ignorable_chars=None):
-        # Accept a list of ignorable characters to strip from the query (dashes in phone numbers, etc)
-        if ignorable_chars:
-            ignorable_re = re.compile("[%s]+"%("".join(ignorable_chars)))
-            query = ignorable_re.sub('',query)
-        
-        # Split the querystring by a given delimiter.
-        if delimiter and delimiter != "":
-            queries = query.split(delimiter)
-        else:
-            queries = [query]
-        
-        results = cls.objects_by_account(account).all()
-        for q in queries:
-            if q != "":
-                results = results.filter(qi_simple_searchable_search_field__icontains=q)
-
-        return results
 
 from django.template.loader import render_to_string
 from people.tasks import *
@@ -363,6 +343,32 @@ class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
         [p.save() for p in Person.raw_objects.all()]
         [o.save() for o in Organization.raw_objects.all()]
         [g.save() for g in Group.raw_objects.all()]
+
+
+    # overridden to trust accounts
+    @classmethod
+    def search(cls, account, query, delimiter=" ", ignorable_chars=None):
+        # Accept a list of ignorable characters to strip from the query (dashes in phone numbers, etc)
+        if ignorable_chars:
+            ignorable_re = re.compile("[%s]+"%("".join(ignorable_chars)))
+            query = ignorable_re.sub('',query)
+        
+        # Split the querystring by a given delimiter.
+        if delimiter and delimiter != "":
+            queries = query.split(delimiter)
+        else:
+            queries = [query]
+        
+        print account
+        print account
+        results = cls.objects_by_account(account).all()
+        for q in queries:
+            if q != "":
+                results = results.filter(qi_simple_searchable_search_field__icontains=q)
+
+        return results
+
+
 
     class Meta(SearchableItemProxy.Meta):
         verbose_name_plural = "PeopleAndOrganizationsSearchProxies"
