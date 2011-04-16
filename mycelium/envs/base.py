@@ -69,6 +69,11 @@ MIDDLEWARE_CLASSES = (
     # 'cms.middleware.multilingual.MultilingualURLMiddleware',
     'cms.middleware.media.PlaceholderMediaMiddleware',
 )
+AUTHENTICATION_BACKENDS = (
+    'accounts.backends.AccountAuthBackend',
+    # 'django.contrib.auth.backends.ModelBackend',
+)
+
 
 SSL_ENABLED = True
 
@@ -167,6 +172,8 @@ TEMPLATE_DIRS = (
 )
 GOOGLE_ANALYTICS_MODEL = True
 
+LOGIN_REDIRECT_URL = "/people/"
+AUTH_PROFILE_MODULE = "accounts.UserAccount"
 
 CMS_TEMPLATES = (
     ('marketing_site/home.html', 'Home Page'),
