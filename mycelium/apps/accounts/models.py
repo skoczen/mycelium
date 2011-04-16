@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-from managers import AccountDataModelManager
+from managers import AccountDataModelManager, ExplicitAccountDataModelManager
 
 
 class Plan(models.Model):
@@ -70,7 +70,7 @@ class UserAccount(models.Model):
 class AccountBasedModel(models.Model):
     account = models.ForeignKey(Account, db_index=True)
 
-    objects_by_account = AccountDataModelManager()
+    objects_by_account = ExplicitAccountDataModelManager()
     objects = AccountDataModelManager()
     raw_objects = models.Manager()
 

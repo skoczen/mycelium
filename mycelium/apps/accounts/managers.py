@@ -1,8 +1,6 @@
 from django.db import models
 
 class AccountDataModelManager(models.Manager):
-
-
     def __call__(self, *args, **kwargs):
         # if not "request" in kwargs or "account" in kwargs:
         #     raise Exception, "Missing Request and/or Account!"
@@ -41,3 +39,27 @@ class AccountDataModelManager(models.Manager):
             else:
                 raise Exception, "Missing Request and/or Account!"
 
+
+class ExplicitAccountDataModelManager(models.Manager):
+    def __call__(self, *args, **kwargs):
+        if "request" in kwargs:
+            self.account = kwargs["request"].account
+            del kwargs["request"]    
+        
+        if "account" in kwargs:
+            self.account = kwargs["account"]
+            del kwargs["account"]
+            
+        if not hasattr(self,"account") and len(args) > 0:
+            if hasattr(args[0],"account"):
+                self.account = args[0].account
+            else:
+                self.account = args[0]
+
+        if not hasattr(self,"account"):
+            raise Exception, "Missing Request and/or Account!"
+
+        return self.get_query_set()
+
+    def get_query_set(self):
+        return super(AccountDataModelManager, self).get_query_set().filter(account=self.account)
