@@ -56,8 +56,12 @@ class UserAccount(models.Model):
     access_level = models.ForeignKey(AccessLevel)
     # nickname = models.CharField(max_length=255)
     
+    @property
+    def denamespaced_username(self):
+        return self.user.username[(2+len("%s"%self.account.pk)):]
+
     def __unicode__(self):
-        return "%s with %s" % (self.user, self.account)
+        return "%s with %s" % (self.denamespaced_username, self. account)
 
     class Meta(object):
         ordering = ("account","access_level","user")
