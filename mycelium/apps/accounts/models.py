@@ -70,6 +70,7 @@ class UserAccount(models.Model):
 class AccountBasedModel(models.Model):
     account = models.ForeignKey(Account, db_index=True)
 
+    objects_by_account = AccountDataModelManager()
     objects = AccountDataModelManager()
     raw_objects = models.Manager()
 

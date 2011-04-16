@@ -215,6 +215,9 @@ def populate_rule_components_for_an_account(account):
     from generic_tags.models import TagSet
     i = 0
 
+    
+    print TagSet.objects(request).all()
+    print [ts.account for ts in TagSet.objects(request).all()]
     for ts in TagSet.objects(request).all():
         i = i+1
         ls = left_side_for_tag(account=account,
@@ -225,7 +228,7 @@ def populate_rule_components_for_an_account(account):
         ls.order=20+i
         ls.save()
                                                                                                
-
+                                                                                      
     # Cleanup
     for rs in RightSideType.objects(request).all():
         if rs not in all_right_side_types:

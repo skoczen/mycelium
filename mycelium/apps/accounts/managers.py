@@ -34,7 +34,8 @@ class AccountDataModelManager(models.Manager):
             # frm = inspect.stack()[1]
             # mod = inspect.getmodule(frm[0])
             # if mod.__name__[:len("django.")] == "django.":
-
+            print inspect.getmodule(inspect.stack()[1][0]).__name__
+            
             if inspect.getmodule(inspect.stack()[1][0]).__name__[:7] == "django.":
                 return super(AccountDataModelManager, self).get_query_set()
             else:
