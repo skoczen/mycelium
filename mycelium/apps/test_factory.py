@@ -15,6 +15,13 @@ import datetime
 import sys, os
 sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 
+def print_if_verbose(verbose, string):
+    if verbose:
+        print string
+
+def print_nobreak_if_verbose(verbose, string="."):
+    sys.stdout.write(string)
+
 class DummyObj(object):
     pass
 
@@ -67,7 +74,6 @@ class Factory(QiFactory):
 
     @classmethod
     def tagset(cls, account, name=None):
-        print "tagset acct: " , account
         if not name:
             name = cls.rand_str()
         return TagSet.raw_objects.get_or_create(account=account, name=name)[0]
@@ -238,26 +244,30 @@ class Factory(QiFactory):
         return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=full_name))
 
     @classmethod
-    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False):
+    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None):
         if quick:
             max_num_people = 5
             max_num_orgs = 2
             num_tags = 1
+            if not verbose:
+                verbose = False
         else:
             max_num_people = 2000
             max_num_orgs = 200
             num_tags = 10
+            if not verbose:
+                verbose = True
 
         site = Site.objects.get(pk=settings.SITE_ID)
 
         # Create account
-        print "Starting creation of %s's site." % organization_name
+        print_if_verbose(verbose, "Starting creation of %s's site." % organization_name)
         account = cls.account(name=organization_name, subdomain=subdomain, delete_existing=delete_existing)
         request = DummyObj()
         request.account = account
 
-        print "Creating site at %s.%s." % (account.subdomain, site)
-        print "Account created."
+        print_if_verbose(verbose, "Creating site at %s.%s." % (account.subdomain, site))
+        print_if_verbose(verbose, "Account created.")
 
         admin_accesslevel = AccessLevel.objects.get(name__iexact="Admin")
         staff_accesslevel = AccessLevel.objects.get(name__iexact="Staff")
@@ -271,7 +281,7 @@ class Factory(QiFactory):
 
         # create volunteer user ( volunteer / volunteer )
         cls.useraccount(account=account, username="volunteer", password="volunteer", access_level=volunteer_accesslevel)
-        print "Users created."
+        print_if_verbose(verbose, "Users created.")
 
         # create a bunch of reasonable tags, including the favorite color category
         gen_ts = cls.tagset(account, name="General")
@@ -280,7 +290,7 @@ class Factory(QiFactory):
         color_ts = cls.tagset(account, name="Favorite Color")
         from rules.tasks import populate_rule_components_for_an_account
         populate_rule_components_for_an_account(account)
-        print "Tagsets created."
+        print_if_verbose(verbose, "Tagsets created.")
 
         # gen tagsname=
         cls.tag(account, tagset=gen_ts, name="Board of Directors")
@@ -318,29 +328,29 @@ class Factory(QiFactory):
         cls.tag(account, tagset=color_ts, name="Black")
         cls.tag(account, tagset=color_ts, name="White")
         cls.tag(account, tagset=color_ts, name="Gray")
-        print "Tags created."
+        print_if_verbose(verbose, "Tags created.")
 
         # create a bunch of people
         people_created = []
         num = cls.rand_int(2,max_num_people)
-        print "Creating %s people" % num,
+        print_if_verbose(verbose, "Creating %s people" % num,)
         for i in range(0, num):
             p = cls.person(account)
             people_created.append(p)
-            sys.stdout.write("."),
-        print "done."
+            print_nobreak_if_verbose(verbose)
+        print_if_verbose(verbose, "done.")
 
         num = cls.rand_int(2,max_num_orgs)
-        print "Creating %s organizations" % num,
+        print_if_verbose(verbose, "Creating %s organizations" % num,)
         # create a few organizations, with people
         for i in range(0, num):
             cls.organization(account)
-            sys.stdout.write("."),
+            print_nobreak_if_verbose(verbose)
 
-        print "done."
+        print_if_verbose(verbose, "done.")
 
         # give some of the people volunteer histories and statii
-        print "Adding volunteer histories",
+        print_if_verbose(verbose, "Adding volunteer histories",)
         for p in people_created:
             if cls.rand_bool():
                 cls.volunteer_history(account, p)
@@ -350,19 +360,19 @@ class Factory(QiFactory):
                 v.status = VOLUNTEER_STATII[1][0]
                 v.save()
             
-            sys.stdout.write("."),
-        print "done."
+            print_nobreak_if_verbose(verbose)
+        print_if_verbose(verbose, "done.")
 
         # give some of the people donation histories
-        print "Adding donation histories",
+        print_if_verbose(verbose, "Adding donation histories",)
         for p in people_created:
             if cls.rand_bool():
                 cls.donor_history(p)
             
-            sys.stdout.write("."),
-        print "done."
+            print_nobreak_if_verbose(verbose)
+        print_if_verbose(verbose, "done.")
 
-        print "Adding tags",
+        print_if_verbose(verbose, "Adding tags",)
         # give some of the people tags
         all_tags = [t for t in Tag.objects_by_account(request).all()]
         for p in people_created:
@@ -370,10 +380,10 @@ class Factory(QiFactory):
                 t = all_tags[cls.rand_int(0,len(all_tags)-1)]
                 if t.tagset!=gen_ts or  (cls.rand_bool() and cls.rand_bool()):
                     t.add_tag_to_person(p)
+            print_nobreak_if_verbose(verbose)
             
-            sys.stdout.write("."),
         
-        print "done."        
+        print_if_verbose(verbose, "done."        )
 
         # create a few groups
         
@@ -381,32 +391,32 @@ class Factory(QiFactory):
         # Board of Directors
         group = cls.group(account, name="Board of Directors")
         cls.grouprule(account, "have a general tag that","contains","Board of Directors", group=group)
-        print "Created Board of Directors group"
+        print_if_verbose(verbose, "Created Board of Directors group")
 
         # Active Volunteers
         group = cls.group(account, name="Active Volunteers")
         cls.grouprule(account, "volunteer status","is",VOLUNTEER_STATII[0][0], group=group)
-        print "Created Active Volunteers group"
+        print_if_verbose(verbose, "Created Active Volunteers group")
 
         # Warm color people
         group = cls.group(account, name="Warm Color People", rules_boolean=False)
         cls.grouprule(account, "have a Favorite Color tag that","contains","red", group=group)
         cls.grouprule(account, "have a Favorite Color tag that","contains","orange", group=group)
         cls.grouprule(account, "have a Favorite Color tag that","contains","yellow", group=group)
-        print "Created Warm color people group"
+        print_if_verbose(verbose, "Created Warm color people group")
 
         # Recurring donors
         group = cls.group(account, name="Recurring Donors", rules_boolean=False)
         cls.grouprule(account, "have a Donor tag that","is exactly","monthly donor", group=group)
         cls.grouprule(account, "have a Donor tag that","is exactly","quarterly donor", group=group)
         cls.grouprule(account, "have a Donor tag that","is exactly","yearly donor", group=group)
-        print "Created Recurring donors group"
+        print_if_verbose(verbose, "Created Recurring donors group")
 
         # Volunteers this year
         today = datetime.date.today()
         group = cls.group(account, name="Volunteers this year")
         cls.grouprule(account, "last volunteer shift","is after",datetime.date(day=1,month=1,year=today.year), group=group)
 
-        print "Setup complete."
+        print_if_verbose(verbose, "Setup complete.")
         return account
 

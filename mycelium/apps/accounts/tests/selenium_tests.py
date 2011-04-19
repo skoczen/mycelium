@@ -89,8 +89,25 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         """Yep, this happens - make demo and demo1, view demo, then type demo1 in the address bar and load - 
             voila - demo's results :(
             Classmethod caching?
+
+            Something, bad.
+
+            # SESSION_SAVE_EVERY_REQUEST = True helps but doesn't fix.
         """ 
         assert False == True
+
+
+    def test_that_requesting_an_invalid_person_404s(self):
+        assert True == "Written"
+    
+    def test_that_requesting_an_invalid_organization_404s(self):
+        assert True == "Written"
+
+    def test_that_requesting_an_invalid_group_404s(self):
+        assert True == "Written"
+
+    
+
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 

@@ -38,7 +38,7 @@ class Account(models.Model):
         user.save()
         
         
-        return UserAccount.objects.get_or_create(user=user, account=self, access_level=access_level)
+        return UserAccount.objects.get_or_create(user=user, account=self, access_level=access_level)[0]
 
 class AccessLevel(models.Model):
     name = models.CharField(max_length=255)
@@ -61,7 +61,7 @@ class UserAccount(models.Model):
         return self.user.username[(2+len("%s"%self.account.pk)):]
 
     def __unicode__(self):
-        return "%s with %s" % (self.denamespaced_username, self. account)
+        return "%s with %s" % (self.denamespaced_username, self.account)
 
     class Meta(object):
         ordering = ("account","access_level","user")

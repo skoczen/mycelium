@@ -210,7 +210,7 @@ def add_person_via_organization_search_results(request):
 @json_view
 def tab_contents(request, person_id, tab_name=None):
     success = False
-    person = Person.objects_by_account(request).get(request.account, pk=person_id)
+    person = Person.objects_by_account(request).get(pk=person_id)
     html = None
     if not tab_name and 'tab_name' in request.POST:
         tab_name = request.POST['tab_name'].strip()[1:]

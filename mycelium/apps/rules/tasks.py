@@ -16,8 +16,6 @@ def populate_rule_components_for_an_obj_with_an_account(obj):
     populate_rule_components_for_an_account(obj.account)
 
 def populate_rule_components_for_an_account(account):
-    print "\n\n\n\n\n\n"
-    print "populate_rule_components_for_an_account for %s" % account
 
     from rules.models import LeftSide, Operator, RightSideType
     from volunteers import VOLUNTEER_STATII
@@ -218,9 +216,6 @@ def populate_rule_components_for_an_account(account):
     from generic_tags.models import TagSet
     i = 0
 
-    
-    print TagSet.objects_by_account(request).all()
-    print [ts.account for ts in TagSet.objects_by_account(request).all()]
     for ts in TagSet.objects_by_account(request).all():
         i = i+1
         ls = left_side_for_tag(account=account,
