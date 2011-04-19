@@ -20,7 +20,8 @@ def print_if_verbose(verbose, string):
         print string
 
 def print_nobreak_if_verbose(verbose, string="."):
-    sys.stdout.write(string)
+    if verbose:
+        sys.stdout.write(string)
 
 class DummyObj(object):
     pass

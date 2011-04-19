@@ -2,7 +2,7 @@
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
 from test_factory import Factory
-from people.tests.selenium_tests import PeopleTestAbstractions
+from people.tests.selenium_abstractions import PeopleTestAbstractions
 from groups.tests.selenium_tests import GroupTestAbstractions
 
 class TagTestAbstractions(object):
@@ -400,7 +400,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
 
     def test_that_the_manage_tags_link_works_from_the_more_page(self):
         sel = self.selenium
-        sel.open("/people")
+        self.open("/people")
         self.click_and_wait("link=More")
         self.click_and_wait("css=.tag_button")
         assert sel.is_text_present("Manage Tags")
@@ -435,7 +435,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
+        self.a1 = self.create_demo_site()
+        self.people = [Factory.person(self.a1) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
 

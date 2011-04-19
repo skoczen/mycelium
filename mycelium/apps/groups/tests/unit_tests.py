@@ -21,7 +21,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
     fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
-        self.account = Factory.account()
+        self.account = self.create_demo_site()
         self.request = Dummy()
         self.request.account = self.account
         populate_rule_components_for_an_account(self.account)

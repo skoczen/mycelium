@@ -1,17 +1,17 @@
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
-
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
 class ReportsTests(QiConservativeSeleniumTestCase):
     def get_to_reports_page(self):
         sel = self.selenium
-        sel.open("/people/search")
+        self.open("/people/search")
         sel.click("link=More")
         sel.wait_for_page_to_load("30000")
         sel.click("css=.reports_btn")
         sel.wait_for_page_to_load("30000")
 
 
-class TestSelenium(ReportsTests):
+class TestSelenium(ReportsTests, AccountTestAbstractions):
     selenium_fixtures = []
     
     def test_all_pages_load(self):

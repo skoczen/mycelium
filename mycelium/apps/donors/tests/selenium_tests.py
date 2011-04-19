@@ -2,7 +2,7 @@
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
 from test_factory import Factory
-from people.tests.selenium_tests import PeopleTestAbstractions
+from people.tests.selenium_abstractions import PeopleTestAbstractions
 
 class DonorTestAbstractions(object):
 

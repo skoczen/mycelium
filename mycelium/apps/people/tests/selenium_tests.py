@@ -2,113 +2,10 @@ import time
 from test_factory import Factory
 
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
+from people.tests.selenium_abstractions import PeopleTestAbstractions
 
-class PeopleTestAbstractions(object):
-
-    def create_john_smith(self):
-        sel = self.selenium
-        sel.open("/people/search")
-        sel.click("link=New Person")
-        sel.wait_for_page_to_load("30000")
-        sel.type("id_first_name", "John")
-        sel.type("id_last_name", "Smith")
-        sel.type("id_phone_number", "555-123-4567")
-        sel.type("id_email", "john@smithfamily.com")
-        sel.type("id_line_1", "123 Main St")
-        sel.type("id_line_2", "Apt 27")
-        sel.type("id_city", "Wilsonville")
-        sel.type("id_state", "KY")
-        sel.type("id_postal_code", "12345")
-        
-
-    def create_john_smith_and_verify(self):
-        sel = self.selenium
-        self.create_john_smith()
-        time.sleep(6)
-        self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
-        self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
-        sel.click("link=Done")
-        time.sleep(1)        
-        self.assertEqual("John", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
-        self.assertEqual("Smith", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
-        self.assertEqual("555-123-4567", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
-        self.assertEqual("john@smithfamily.com", sel.get_text("//span[@id='container_id_email']/span[1]"))
-        self.assertEqual("123 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
-        self.assertEqual("Apt 27", sel.get_text("//span[@id='container_id_line_2']/span[1]"))
-        self.assertEqual("Wilsonville", sel.get_text("//span[@id='container_id_city']/span[1]"))
-        self.assertEqual("KY", sel.get_text("//span[@id='container_id_state']/span[1]"))
-        self.assertEqual("12345", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
-        
-    def create_john_smith_and_return_to_search(self):
-        sel = self.selenium
-        self.create_john_smith()
-        sel.click("link=People")
-        sel.wait_for_page_to_load("30000")
-
-
-    def create_new_organization(self):
-        sel = self.selenium
-        sel.open("/people/")
-        sel.click("link=New Organization")
-        sel.wait_for_page_to_load("30000")
-        sel.type("id_name", "Test Organization")
-        sel.type("id_primary_phone_number", "555 123-4567")
-        sel.type("id_website", "example.com")
-        sel.type("id_twitter_username", "testorg")
-        sel.type("id_line_1", "123 1st St")
-        sel.type("id_line_2", "#125")
-        sel.type("id_city", "Williamsburg")
-        sel.type("id_state", "OH")
-        sel.type("id_postal_code", "54321")
-        time.sleep(3)
-        sel.click("link=Done")
-        self.assertEqual("Test Organization", sel.get_text("//span[@id='container_id_name']/span[1]"))
-        self.assertEqual("555 123-4567", sel.get_text("//span[@id='container_id_primary_phone_number']/span[1]"))
-        self.assertEqual("example.com", sel.get_text("//span[@id='container_id_website']/span[1]"))
-        self.assertEqual("testorg", sel.get_text("//span[@id='container_id_twitter_username']/span[1]"))
-        self.assertEqual("123 1st St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
-        self.assertEqual("#125", sel.get_text("//span[@id='container_id_line_2']/span[1]"))
-        self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_city']/span[1]"))
-        self.assertEqual("OH", sel.get_text("//span[@id='container_id_state']/span[1]"))
-        self.assertEqual("54321", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
-        
-    def create_new_organization_with_employee(self):
-        sel = self.selenium
-        self.create_my_new_org()
-        sel.click("css=tabbed_box tab_title")
-        time.sleep(0.5)
-        sel.click("id_search_new_person")
-        sel.type("id_search_new_person", "Joyellen Smith")
-        sel.click("link=Add a New Person")
-        sel.click("css=#new_person form input[id$=role]")
-        sel.type("css=#new_person form input[id$=role]", "Chief Tester")
-        sel.type("css=#new_person form input[id$=email]", "joesmith@myneworg.org")
-        sel.type("css=#new_person form input[id$=phone_number]", "503-247.8451")
-        sel.click("//div[@id='new_person']/form/form_actions/input")
-        time.sleep(2)
-        sel.wait_for_page_to_load("30000")
-        self.assertEqual("Joyellen Smith", sel.get_text("link=Joyellen Smith"))
-        self.assertEqual("Chief Tester", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=role] .view_field"))
-        self.assertEqual("503-247.8451", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=phone_number] .view_field"))
-        self.assertEqual("joesmith@myneworg.org", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=email] .view_field"))        
-        sel.click("css=tabbed_box tab_title")
-        sel.click("css=tabbed_box box_close a")
-
-    def create_new_organization_and_return_to_search(self):
-        sel = self.selenium
-        self.create_new_organization()
-        sel.click("link=Back to All People and Organizations")
-        sel.wait_for_page_to_load("30000")        
-
-
-    def create_my_new_organization_with_employee_and_return_to_search(self):
-        sel = self.selenium
-        self.create_new_organization_with_employee()
-        sel.click("link=Back to All People and Organizations")
-        sel.wait_for_page_to_load("30000")        
-
-
-class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
+class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
 
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium
@@ -184,7 +81,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
 
     def test_search_page_loads(self):
         sel = self.selenium
-        sel.open("/people/search")
+        self.open("/people/search")
         sel.wait_for_page_to_load("30000")
         
 
@@ -357,7 +254,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
 
     def test_users_should_be_able_to_edit_work_info_via_the_org_page_and_have_the_changes_reflected_on_the_people_page(self):
         sel = self.selenium
-        sel.open("/people/")
+        self.open("/people/")
         self.create_new_organization()
         time.sleep(2)
         sel.click("css=tabbed_box tab_title")
@@ -519,7 +416,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
 
     def test_people_with_no_home_contact_but_business_info_should_have_their_biz_contact_info_listed_in_search(self):
         sel = self.selenium
-        sel.open("/people/")
+        self.open("/people/")
         self.create_new_organization()
         time.sleep(2)
         sel.click("css=tabbed_box tab_title")
@@ -706,7 +603,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
 
     def test_creating_and_deleting_a_blank_person(self):
         sel = self.selenium
-        sel.open("/people/search")
+        self.open("/people/search")
         sel.click("link=New Person")
         sel.wait_for_page_to_load("30000")
         sel.click("link=People")
@@ -734,7 +631,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
     
     def test_creating_and_deleting_a_blank_organization(self):
         sel = self.selenium
-        sel.open("/people/")
+        self.open("/people/")
         sel.click("link=New Organization")
         sel.wait_for_page_to_load("30000")
         sel.click("link=People")
@@ -787,7 +684,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
 
     def test_that_search_ordering_for_people_and_orgs_is_mixed(self):
         sel = self.selenium
-        sel.open("/people/")
+        self.open("/people/")
         sel.click("link=New Organization")
         sel.wait_for_page_to_load("30000")
         sel.type("id_name", "Foo Test Organization")
@@ -841,11 +738,12 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
 
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["200_test_people.json"]
     
     def setUp(self, *args, **kwargs):
-        self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
+        self.a1 = self.create_demo_site()
+        self.people = [Factory.person(self.a1) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
 
@@ -916,12 +814,12 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
     
     def test_search_page_loads(self):
         sel = self.selenium
-        sel.open("/people/search")
+        self.open("/people/search")
         sel.wait_for_page_to_load("30000")
 
     def test_editing_and_searching_a_record(self):
         sel = self.selenium
-        sel.open("/people/search")
+        self.open("/people/search")
         sel.type("css=#id_search_query", "a")
         sel.click("css=search_results .result_row .name a")
         sel.wait_for_page_to_load("30000")
@@ -976,7 +874,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
 
     def test_editing_an_email_or_phone_number_changes_the_search_result(self):
         sel = self.selenium
-        sel.open("/people/search")
+        self.open("/people/search")
         sel.click("css=search_results .result_row:nth(0) .name a")
         sel.wait_for_page_to_load("30000")
         sel.click("css=.start_edit_btn")
@@ -990,7 +888,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         except AssertionError, e: self.verificationErrors.append(str(e))
 
         sel = self.selenium
-        sel.open("/people/search")
+        self.open("/people/search")
         sel.click("css=search_results .result_row:nth(0) .name a")
         sel.wait_for_page_to_load("30000")
         sel.click("css=.start_edit_btn")
@@ -1006,7 +904,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
 
     def test_that_blank_people_show_at_the_top_of_the_search(self):
         sel = self.selenium
-        sel.open("/people/")
+        self.open("/people/")
         assert not sel.is_text_present("No Name")
         sel.click("link=New Person")
         sel.wait_for_page_to_load("30000")
@@ -1020,7 +918,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
 
     def test_that_blank_organizations_show_at_the_top_of_the_search(self):
         sel = self.selenium
-        sel.open("/people/")
+        self.open("/people/")
         assert not sel.is_text_present("No Name")
         sel.click("link=New Organization")
         sel.wait_for_page_to_load("30000")
@@ -1033,7 +931,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
 
     def test_that_clicking_next_on_the_search_results_works(self):
         sel = self.selenium
-        sel.open("/people/")
+        self.open("/people/")
         first_result = sel.get_text("css=search_results .result_row:nth(0) .name a")
         sel.click("css=.pagination .next")
         sel.wait_for_page_to_load("30000")
@@ -1043,7 +941,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
 
     def test_that_clicking_next_on_the_search_results_keeps_the_search(self):
         sel = self.selenium
-        sel.open("/people/")
+        self.open("/people/")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "a")
         time.sleep(2)
@@ -1059,7 +957,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
 
     def test_that_searching_for_a_b_highlights_sanely(self):
         sel = self.selenium
-        sel.open("/people/")
+        self.open("/people/")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "a b")
         time.sleep(1)

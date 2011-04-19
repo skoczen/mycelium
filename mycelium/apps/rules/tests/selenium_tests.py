@@ -16,5 +16,5 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RulesTestAbstract
     # selenium_fixtures = ["200_test_people.json"]
     
     def setUp(self, *args, **kwargs):
-        self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
+        self.a1 = self.create_demo_site()
         self.verificationErrors = []
