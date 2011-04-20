@@ -3,31 +3,28 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
-from groups.tests.selenium_abstractions import GroupTestAbstractions
-from django.conf import settings
 
 class AccountTestAbstractions(object):
     def create_demo_site(self, name="test"):
         return Factory.create_demo_site(name,quick=True)
 
     def go_to_the_login_page(self, site="test"):
+        from django.conf import settings
         sel = self.selenium
         sel.open("http://%s.localhost:%s" % (site,settings.LIVE_SERVER_PORT))
         sel.wait_for_page_to_load("30000")
 
-    def log_in(self, ua=None, with_assert=True):
-        sel = self.selenium
+    def log_in(self, ua=None):
         if not ua:
             username = "admin"
         else:
             username = ua.denamespaced_username
-        
+        sel = self.selenium
         sel.type("css=input[name=username]",username)
         sel.type("css=input[name=password]",username)
         sel.click("css=.login_btn")
         sel.wait_for_page_to_load("30000")
-        if with_assert:
-            assert sel.is_text_present("Powered by")
+        assert sel.is_text_present("Powered by")
     
     def assert_login_failed(self):
         sel = self.selenium
@@ -44,11 +41,11 @@ class AccountTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
 
     
-class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
-    # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
+class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
+    # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()
+        self.create_demo_site()
         self.verificationErrors = []
 
 
@@ -75,9 +72,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
     def test_that_site2s_user_cannot_log_into_site_one(self):
         
         a2 = self.create_demo_site("test2")
-        ua = Factory.useraccount(account=a2)
         self.go_to_the_login_page()
-        self.log_in(ua=ua, with_assert=False)
+        ua = Factory.useraccount(account=a2)
+        self.log_in(ua=ua)
         self.assert_login_failed()
 
         self.go_to_the_login_page("test2")
@@ -93,7 +90,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assert_login_succeeded()
 
         self.go_to_the_login_page()
-        self.open("/people")
+        self.open("/people", site="test2")
         assert sel.is_element_present("css=.login_btn")
 
 
@@ -118,76 +115,38 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         time.sleep(2)
         assert not sel.is_text_present("John Smith")
     
+    def test_that_searching_across_accounts_limits_results(self):
+        pass
+
+
+
+    def test_fixed_switching_accounts_on_search_shows_the_wrong_orgs_results_until_thread_change(self):
+        """Yep, this happens - make demo and demo1, view demo, then type demo1 in the address bar and load - 
+            voila - demo's results :(
+            Classmethod caching?
+
+            # SESSION_SAVE_EVERY_REQUEST = True helps but doesn't fix.
+
+            Not true anymore.  There was just a simple bug in the middleware that just gave the wrong account.
+        """ 
+        assert False == True
+
 
     def test_that_requesting_an_invalid_person_404s(self):
-        sel = self.selenium
-        self.go_to_the_login_page()
-        self.log_in()
-        self.assert_login_succeeded()
-        # make sure to make a new person
-        for i in range(0,20):
-            Factory.person(account=self.a1)
-        self.create_john_smith_and_verify()
-        # get pk
-        url = sel.get_location()
-        person_url = url[url.find(":%s/" % settings.LIVE_SERVER_PORT)+5:]
-
-
-        a2 = self.create_demo_site("test2")
-        ua = Factory.useraccount(account=a2)
-        self.go_to_the_login_page("test2")
-        self.log_in(ua=ua)
-        self.open(person_url, site="test2")
-        assert sel.is_text_present("does not exist")
+        assert True == "Written"
     
     def test_that_requesting_an_invalid_organization_404s(self):
-        sel = self.selenium
-        self.go_to_the_login_page()
-        self.log_in()
-        self.assert_login_succeeded()
-        # make sure to make a new person
-        for i in range(0,5):
-            Factory.organization(account=self.a1)
-        self.create_new_organization()
-        # get pk
-        url = sel.get_location()
-        url = url[url.find(":%s/" % settings.LIVE_SERVER_PORT)+5:]
-
-
-        a2 = self.create_demo_site("test2")
-        ua = Factory.useraccount(account=a2)
-        self.go_to_the_login_page("test2")
-        self.log_in(ua=ua)
-        self.open(url, site="test2")
-        assert sel.is_text_present("does not exist")
+        assert True == "Written"
 
     def test_that_requesting_an_invalid_group_404s(self):
-        sel = self.selenium
-        self.go_to_the_login_page()
-        self.log_in()
-        self.assert_login_succeeded()
-        # make sure to make a new person
-        for i in range(0,10):
-            Factory.group(account=self.a1)
-        self.create_new_group()
-        # get pk
-        url = sel.get_location()
-        url = url[url.find(":%s/" % settings.LIVE_SERVER_PORT)+5:]
-
-
-        a2 = self.create_demo_site("test2")
-        ua = Factory.useraccount(account=a2)
-        self.go_to_the_login_page("test2")
-        self.log_in(ua=ua)
-        self.open(url, site="test2")
-        assert sel.is_text_present("does not exist")
+        assert True == "Written"
 
     
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
-    selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
+    # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()        
+        
         self.verificationErrors = []
     

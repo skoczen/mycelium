@@ -40,6 +40,12 @@ class Account(models.Model):
         
         return UserAccount.objects.get_or_create(user=user, account=self, access_level=access_level)[0]
 
+    @classmethod
+    def create_default_tagsets(cls, instance, created=None, *args, **kwargs):
+        from generic_tags.models import TagSet
+        if instance and created:
+            TagSet.create_default_tagsets_for_an_account(instance)
+
 class AccessLevel(models.Model):
     name = models.CharField(max_length=255)
 
@@ -81,3 +87,4 @@ class AccountBasedModel(models.Model):
 from django.db.models.signals import post_save
 from rules.tasks import populate_rule_components_for_an_account_signal_receiver
 post_save.connect(populate_rule_components_for_an_account_signal_receiver,sender=Account)
+post_save.connect(Account.create_default_tagsets,sender=Account)

@@ -169,7 +169,7 @@ class RuleGroup(models.Model):
     def members(self, request=None):
         # TODO: cache/improve the speed.
         if hasattr(self.target_model,"raw_objects"):
-            objects_str = "objects(self.target_model.account)"
+            objects_str = "objects_by_account(self.account)"
         else:
             objects_str = "objects"
 

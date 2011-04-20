@@ -4,6 +4,7 @@ import time
 from test_factory import Factory
 
 from people.tests.selenium_abstractions import PeopleTestAbstractions
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
 class RecentActivityTestAbstractions(object):
 
@@ -23,7 +24,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstra
         self.create_person_and_go_to_recent_activity_tab()
         assert sel.is_text_present("Recent Activity's not done quite yet, but it's coming!")
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.create_demo_site()

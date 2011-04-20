@@ -18,7 +18,7 @@ class Dummy(object):
     pass
 
 class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, DestructiveDatabaseTestCase, RuleTestAbstractions):
-    fixtures = ["generic_tags.selenium_fixtures.json"]
+    # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
         self.account = self.create_demo_site()
@@ -45,7 +45,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_full_name(self):
         # create a new group rule
-        group = Factory.group()
+        group = Factory.group(self.account,)
         self.assertEqual(group.name, group.full_name)
         
         group.name = None
@@ -55,7 +55,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_searchable_name(self):
         # create a new group rule
-        group = Factory.group()
+        group = Factory.group(self.account,)
         self.assertEqual(group.name, group.searchable_name)
 
         group.name = None
@@ -65,7 +65,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_members(self):
         # create a new group
-        group = Factory.group()
+        group = Factory.group(self.account,)
         self._generate_people()
         all_ppl_qs = Person.objects_by_account(self.request).none()
 
@@ -76,7 +76,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_active_volunteers_and_with_shift_after_date(self):
         # create the people
-        group = Factory.group()
+        group = Factory.group(self.account,)
         ppl = self._generate_people()
         v = ppl[1].volunteer
         v.status = VOLUNTEER_STATII[2][0]  #inactive
@@ -115,7 +115,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_any_tag_test_and_donor_tag_major(self):
         # create the people
-        group = Factory.group()
+        group = Factory.group(self.account,)
         ppl = self._generate_people()
         self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
         self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
@@ -153,7 +153,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_custom_tag_and_last_donation_one_month_ago(self):
         # create the people
-        group = Factory.group()
+        group = Factory.group(self.account,)
         ppl = self._generate_people()
         self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
         self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
@@ -193,7 +193,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_active_volunteers_or_with_shift_after_date(self):
         # create the people
-        group = Factory.group(rules_boolean=False)
+        group = Factory.group(self.account,rules_boolean=False)
         ppl = self._generate_people()
         v = ppl[1].volunteer
         v.status = VOLUNTEER_STATII[2][0]  #inactive
@@ -232,7 +232,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_any_tag_test_or_donor_tag_major(self):
         # create the people
-        group = Factory.group(rules_boolean=False)
+        group = Factory.group(self.account,rules_boolean=False)
         ppl = self._generate_people()
         self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
         self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
@@ -268,7 +268,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_custom_tag_or_last_donation_one_month_ago(self):
         # create the people
-        group = Factory.group(rules_boolean=False)
+        group = Factory.group(self.account,rules_boolean=False)
         ppl = self._generate_people()
         self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
         self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
@@ -311,7 +311,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
     def test_custom_tag_or_last_donation_one_month_ago_with_an_invalid_rules(self):
         # create the people
-        group = Factory.group(rules_boolean=False)
+        group = Factory.group(self.account,rules_boolean=False)
         ppl = self._generate_people()
         self.create_tag_for_person(person=ppl[0], tagset_name="new test tagset", tag="really cool test tag")
         self.create_tag_for_person(person=ppl[2], tagset_name="new test tagset", tag="really cool test tag")
@@ -366,7 +366,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         self.assertEqualQuerySets(group.members, test_and_donation_tag_qs)
 
     def test_has_a_valid_rule_function(self):
-        group = Factory.group(rules_boolean=False)
+        group = Factory.group(self.account,rules_boolean=False)
         left_side = LeftSide.objects_by_account(self.request).get(display_name="last donation")
         icontains = Operator.objects_by_account(self.request).get(display_name="is after")
         rst = self._date_right_side_types[0]

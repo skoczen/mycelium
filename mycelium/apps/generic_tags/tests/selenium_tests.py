@@ -23,7 +23,7 @@ class TagTestAbstractions(object):
 
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, GroupTestAbstractions, PeopleTestAbstractions):
-    selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
+    # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def test_that_tags_tab_display_and_has_the_three_categories(self):
         sel = self.selenium
@@ -435,8 +435,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()
-        self.people = [Factory.person(self.a1) for i in range(1,Factory.rand_int(30,300))]
+        self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
 

@@ -62,6 +62,11 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
 
         return self.cached_all_tags_with_users_tags_marked
 
+    @classmethod
+    def create_default_tagsets_for_an_account(cls, account):
+        cls.raw_objects.get_or_create(account=account, name="General")
+        cls.raw_objects.get_or_create(account=account, name="Volunteer")
+        cls.raw_objects.get_or_create(account=account, name="Donor")
 
     def form(self, *args, **kwargs):
         from generic_tags.forms import TagSetForm

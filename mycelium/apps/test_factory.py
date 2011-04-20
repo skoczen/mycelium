@@ -125,6 +125,7 @@ class Factory(QiFactory):
     def volunteer_history(cls, account, person=None):
         if not person:
             person = cls.person()
+            
 
         cur_date = datetime.datetime.now()
         for i in range(0,cls.rand_int(end=300)):

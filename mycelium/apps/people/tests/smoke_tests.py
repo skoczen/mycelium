@@ -19,22 +19,28 @@ from test_factory import Factory
 # TODO: Abstract this.
 @istest
 def smoke_test_the_app():
+    
+    Factory.create_demo_site(quick=True)
     smoke_test('people:search', check_title=True)
 
 @istest
 def smoke_test_the_app2():
-    p = Factory.person()
+    a1 = Factory.create_demo_site(quick=True)
+    p = Factory.person(a1)
     smoke_test('people:person', reverse_args=(p.pk,), check_title=True)
 
 @istest
 def smoke_test_the_app3():
+    Factory.create_demo_site(quick=True)
     smoke_test('people:search_results')
 
 @istest
 def smoke_test_the_app4():
+    Factory.create_demo_site(quick=True)
     smoke_test('people:new_person', status_code=302)
 
 @istest
 def smoke_test_the_app5():
-    p = Factory.person()
+    a1 = Factory.create_demo_site(quick=True)
+    p = Factory.person(a1)
     smoke_test('people:person_save_basic', reverse_args=(p.pk,))

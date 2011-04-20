@@ -10,7 +10,7 @@ from rules.tasks import populate_rule_components_for_an_account
 
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
-    selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
+    # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
         self.account = self.create_demo_site()
@@ -200,7 +200,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
     
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
-    selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
+    # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
         self.account = self.create_demo_site()
