@@ -8,9 +8,9 @@ from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
 class RecentActivityTestAbstractions(object):
 
-    def create_person_and_go_to_recent_activity_tab(self):
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in_tests()
         sel = self.selenium
-        self.a1 = self.create_demo_site()
         self.create_john_smith()
         sel.click("css=.detail_tab[href=#recent_activity]")
         time.sleep(1)
@@ -27,7 +27,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstra
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()
+        self.account = self.setup_for_logged_in_tests()
         self.verificationErrors = []
     
 

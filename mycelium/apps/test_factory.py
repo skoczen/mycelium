@@ -124,7 +124,7 @@ class Factory(QiFactory):
     @classmethod
     def volunteer_history(cls, account, person=None):
         if not person:
-            person = cls.person()
+            person = cls.person(account)
             
 
         cur_date = datetime.datetime.now()

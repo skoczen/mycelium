@@ -37,6 +37,8 @@ class DonorTestAbstractions(object):
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions):
 
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in_tests()
 
     def test_that_new_donations_can_be_added_and_display_properly(self):
         sel = self.selenium        
@@ -112,7 +114,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DonorTestAbstractions, P
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
+        self.account = self.setup_for_logged_in_tests()
+        self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
 

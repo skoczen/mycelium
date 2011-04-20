@@ -9,12 +9,14 @@ class RulesTestAbstractions(object):
 
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
-    pass
+    
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in_tests()
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
     # selenium_fixtures = ["200_test_people.json"]
     
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()
+        self.account = self.setup_for_logged_in_tests()
         self.verificationErrors = []

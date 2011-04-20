@@ -15,7 +15,8 @@ class ConversationTestAbstractions(object):
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, ConversationTestAbstractions, PeopleTestAbstractions):
 
-
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in_tests()
 
     def test_conversation_tab_is_a_stub(self):
         sel = self.selenium
@@ -25,8 +26,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, ConversationTestAbstract
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, ConversationTestAbstractions, PeopleTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()
-        self.people = [Factory.person(self.a1) for i in range(1,Factory.rand_int(30,300))]
+        self.account = self.setup_for_logged_in_tests()
+        self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
 

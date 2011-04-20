@@ -54,7 +54,7 @@ class VolunteerTestAbstractions(object):
 class TestAgainstNoData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()
+        self.account = self.setup_for_logged_in_tests()
         self.verificationErrors = []
 
 
@@ -289,11 +289,11 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions
 
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()
-        self.people = [Factory.person(self.a1) for i in range(1,Factory.rand_int(30,300))]
+        self.account = self.setup_for_logged_in_tests()
+        self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
 
 

@@ -6,6 +6,8 @@ from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in_tests()
 
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium
@@ -742,8 +744,8 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
     # selenium_fixtures = ["200_test_people.json"]
     
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()
-        self.people = [Factory.person(self.a1) for i in range(1,Factory.rand_int(30,300))]
+        self.account = self.setup_for_logged_in_tests()
+        self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
 

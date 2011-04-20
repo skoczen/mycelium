@@ -13,7 +13,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        self.account = self.create_demo_site()
+        self.account = self.setup_for_logged_in_tests()
         populate_rule_components_for_an_account(self.account)
         self.verificationErrors = []
 
@@ -203,7 +203,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        self.account = self.create_demo_site()
+        self.account = self.setup_for_logged_in_tests()
         populate_rule_components_for_an_account(self.account)
         self.people = [Factory.volunteer_history(self.account) for i in range(1,Factory.rand_int(30,100))]
         self.verificationErrors = []

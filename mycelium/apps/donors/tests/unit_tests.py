@@ -31,7 +31,7 @@ def test_donations_by_year_returns_sanely():
 
 @istest
 def test_donations_by_year_for_non_donors_returns_properly():
-    person = Factory.person()
+    person = Factory.person(Factory.create_demo_site(quick=True, delete_existing=True))
     target = []
 
     assert person.donor.donations_by_year == target
