@@ -22,13 +22,12 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
-        self.account = self.create_demo_site("test")
+        self.account = self.create_demo_site("test",mostly_empty=True)
         self.request = Dummy()
         self.request.account = self.account
         populate_rule_components_for_an_account(self.account)
 
     def tearDown(self):
-        self.account.useraccount_set.all().delete()
         self.account.delete()
 
     def _generate_people(self, number=5):
@@ -92,6 +91,9 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         Factory.completed_volunteer_shift(ppl[2], date=target_date)
         v.save()        
         
+        # things got properly cleaned up
+        self.assertEqual( Person.objects_by_account(self.account).count(), 5)
+        self.assertEqual( Person.raw_objects.count() , 5)
 
         all_ppl_qs = Person.objects_by_account(self.account).none()
         active_volunteer_qs = Person.objects_by_account(self.account).filter(Q(pk=ppl[0].pk) | Q(pk=ppl[2].pk) | Q(pk=ppl[4].pk))

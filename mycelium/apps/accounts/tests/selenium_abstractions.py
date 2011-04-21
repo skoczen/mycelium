@@ -24,6 +24,13 @@ class AccountTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Powered by")
     
+    def open_window(self, url, name):
+        sel = self.selenium
+        self.open_window(name)
+        self.log_in()
+        self.open(url)
+        self.wait_for_page_to_load("3000")
+
     def assert_login_failed(self):
         sel = self.selenium
         assert sel.is_text_present("Your username and password didn't match")
@@ -46,4 +53,4 @@ class AccountTestAbstractions(object):
         return self.account
 
     def setup_for_logged_in_with_no_data(self, name="test", mostly_empty=True):
-        return self.setup_for_logged_in_tests(name=name, mostly_empty=mostly_empty)
+        return self.setup_for_logged_in(name=name, mostly_empty=mostly_empty)

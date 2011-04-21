@@ -11,12 +11,18 @@ class RulesTestAbstractions(object):
 class TestAgainstNoData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
     
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests_with_no_data()
+        self.account = self.setup_for_logged_in_with_no_data()
+
+    def tearDown(self):
+        self.account.delete()
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
     # selenium_fixtures = ["200_test_people.json"]
     
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+        self.account = self.setup_for_logged_in()
         self.verificationErrors = []
+
+    def tearDown(self):
+        self.account.delete()

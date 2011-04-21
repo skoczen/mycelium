@@ -7,8 +7,11 @@ from people.tests.selenium_abstractions import PeopleTestAbstractions
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests_with_no_data()
+        self.account = self.setup_for_logged_in_with_no_data()
         self.verificationErrors = []
+
+    def tearDown(self):
+        self.account.delete()
 
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium
@@ -455,7 +458,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
     def test_that_closing_a_person_page_makes_sure_the_changes_are_saved(self):
         sel = self.selenium
 
-        sel.open_window("/people/search", "one")
+        self.open_window("/people/search", "one")
         sel.select_window("one")        
 
         self.create_john_smith_and_return_to_search()
@@ -470,7 +473,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.click("css=search_results .result_row:nth(0) .name a")
         sel.wait_for_page_to_load("30000")
 
-        sel.open_window("/people/search", "two")
+        self.open_window("/people/search", "two")
         sel.select_window("two")
         time.sleep(4)
         sel.focus("css=#id_search_query")
@@ -518,7 +521,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
     def test_that_closing_an_organization_page_makes_sure_the_changes_are_saved(self):
         sel = self.selenium
 
-        sel.open_window("/people/", "one")
+        self.open_window("/people/", "one")
         sel.select_window("one")
         self.create_new_organization_and_return_to_search()
 
@@ -532,7 +535,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual("Test", sel.get_text("//div[@id='page']/search_results/fragment/table/tbody/tr[2]/td[1]/a/span/b[1]"))
         sel.click("//div[@id='page']/search_results/fragment/table/tbody/tr[2]/td[1]/a/span")
 
-        sel.open_window("/people/", "two")
+        self.open_window("/people/", "two")
         sel.select_window("two")
         time.sleep(2)
 
@@ -745,10 +748,13 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
     # selenium_fixtures = ["200_test_people.json"]
     
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+        self.account = self.setup_for_logged_in()
         self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
-    
+
+    def tearDown(self):
+        self.account.delete()
+  
 
     def test_creating_and_editing_a_new_person_with_generated(self):
         sel = self.selenium

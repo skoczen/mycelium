@@ -84,7 +84,7 @@ class Factory(QiFactory):
         if not name:
             name = cls.rand_str()
         if not tagset:
-            tagset = cls.tagset()
+            tagset = cls.tagset(account)
 
         return Tag.raw_objects.get_or_create(account=account, name=name, tagset=tagset)[0]    
 
@@ -141,10 +141,10 @@ class Factory(QiFactory):
                                     duration=cls.rand_int(1,16),
                                     date=cur_date
             )
-        return person
+        return person.volunteer
     
     @classmethod
-    def completed_volunteer_shift(cls, person, date=None, duration=None):
+    def completed_volunteer_shift(cls, person, date=None, duration=None, **kwargs):
         if not date:
             date = datetime.datetime.now() - datetime.timedelta(days=cls.rand_int(0,3000))
         
@@ -305,46 +305,46 @@ class Factory(QiFactory):
         populate_rule_components_for_an_account(account)
         print_if_verbose(verbose, "Tagsets created.")
 
-        # gen tagsname=
-        cls.tag(account, tagset=gen_ts, name="Board of Directors")
-        cls.tag(account, tagset=gen_ts, name="Advocate")
-        cls.tag(account, tagset=gen_ts, name="Media Contact")
-        cls.tag(account, tagset=gen_ts, name="Community Partner")
-
-        # vol tags
-        cls.tag(account, tagset=vol_ts, name="Monday")
-        cls.tag(account, tagset=vol_ts, name="Tuesday")
-        cls.tag(account, tagset=vol_ts, name="Wednesday")
-        cls.tag(account, tagset=vol_ts, name="Thursday")
-        cls.tag(account, tagset=vol_ts, name="Friday")
-        cls.tag(account, tagset=vol_ts, name="Weekly")
-        cls.tag(account, tagset=vol_ts, name="Monthly")
-        cls.tag(account, tagset=vol_ts, name="Phone Skills")
-
-        # don tags
-        cls.tag(account, tagset=don_ts, name="Major Donor")
-        cls.tag(account, tagset=don_ts, name="Potential Major Donor")
-        cls.tag(account, tagset=don_ts, name="Fundraiser")
-        cls.tag(account, tagset=don_ts, name="Monthly Donor")
-        cls.tag(account, tagset=don_ts, name="Quarterly Donor")
-        cls.tag(account, tagset=don_ts, name="Yearly Donor")
-
-        # color tags
-        cls.tag(account, tagset=color_ts, name="Red")
-        cls.tag(account, tagset=color_ts, name="Orange")
-        cls.tag(account, tagset=color_ts, name="Yellow")
-        cls.tag(account, tagset=color_ts, name="Green")
-        cls.tag(account, tagset=color_ts, name="Aquamarine")
-        cls.tag(account, tagset=color_ts, name="Blue")
-        cls.tag(account, tagset=color_ts, name="Violet")
-        cls.tag(account, tagset=color_ts, name="Purple")
-        cls.tag(account, tagset=color_ts, name="Black")
-        cls.tag(account, tagset=color_ts, name="White")
-        cls.tag(account, tagset=color_ts, name="Gray")
-        print_if_verbose(verbose, "Tags created.")
-
-        # create a bunch of people
         if not mostly_empty:
+            # gen tags
+            cls.tag(account, tagset=gen_ts, name="Board of Directors")
+            cls.tag(account, tagset=gen_ts, name="Advocate")
+            cls.tag(account, tagset=gen_ts, name="Media Contact")
+            cls.tag(account, tagset=gen_ts, name="Community Partner")
+
+            # vol tags
+            cls.tag(account, tagset=vol_ts, name="Monday")
+            cls.tag(account, tagset=vol_ts, name="Tuesday")
+            cls.tag(account, tagset=vol_ts, name="Wednesday")
+            cls.tag(account, tagset=vol_ts, name="Thursday")
+            cls.tag(account, tagset=vol_ts, name="Friday")
+            cls.tag(account, tagset=vol_ts, name="Weekly")
+            cls.tag(account, tagset=vol_ts, name="Monthly")
+            cls.tag(account, tagset=vol_ts, name="Phone Skills")
+
+            # don tags
+            cls.tag(account, tagset=don_ts, name="Major Donor")
+            cls.tag(account, tagset=don_ts, name="Potential Major Donor")
+            cls.tag(account, tagset=don_ts, name="Fundraiser")
+            cls.tag(account, tagset=don_ts, name="Monthly Donor")
+            cls.tag(account, tagset=don_ts, name="Quarterly Donor")
+            cls.tag(account, tagset=don_ts, name="Yearly Donor")
+
+            # color tags
+            cls.tag(account, tagset=color_ts, name="Red")
+            cls.tag(account, tagset=color_ts, name="Orange")
+            cls.tag(account, tagset=color_ts, name="Yellow")
+            cls.tag(account, tagset=color_ts, name="Green")
+            cls.tag(account, tagset=color_ts, name="Aquamarine")
+            cls.tag(account, tagset=color_ts, name="Blue")
+            cls.tag(account, tagset=color_ts, name="Violet")
+            cls.tag(account, tagset=color_ts, name="Purple")
+            cls.tag(account, tagset=color_ts, name="Black")
+            cls.tag(account, tagset=color_ts, name="White")
+            cls.tag(account, tagset=color_ts, name="Gray")
+            print_if_verbose(verbose, "Tags created.")
+
+            # create a bunch of people
             people_created = []
             num = cls.rand_int(2,max_num_people)
             print_if_verbose(verbose, "Creating %s people" % num,)

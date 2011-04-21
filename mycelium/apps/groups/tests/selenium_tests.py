@@ -13,9 +13,13 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests_with_no_data()
+        self.account = self.setup_for_logged_in_with_no_data()
         populate_rule_components_for_an_account(self.account)
         self.verificationErrors = []
+
+    def tearDown(self):
+        self.account.delete()
+
 
     def test_that_the_new_group_page_loads(self):
         sel = self.selenium
@@ -203,10 +207,13 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+        self.account = self.setup_for_logged_in()
         populate_rule_components_for_an_account(self.account)
         self.people = [Factory.volunteer_history(self.account) for i in range(1,Factory.rand_int(30,100))]
         self.verificationErrors = []
+
+    def tearDown(self):
+        self.account.delete()
     
     def test_that_blank_groups_show_at_the_top_of_the_search(self):
         sel = self.selenium

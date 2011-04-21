@@ -4,6 +4,7 @@ import time
 from test_factory import Factory
 
 from people.tests.selenium_abstractions import PeopleTestAbstractions
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
 class ConversationTestAbstractions(object):
 
@@ -13,21 +14,27 @@ class ConversationTestAbstractions(object):
         sel.click("css=.detail_tab[href=#conversations]")
         time.sleep(1)
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, ConversationTestAbstractions, PeopleTestAbstractions):
+class TestAgainstNoData(QiConservativeSeleniumTestCase, ConversationTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests_with_no_data()
+        self.account = self.setup_for_logged_in_with_no_data()
+
+    def tearDown(self):
+        self.account.delete()
+
 
     def test_conversation_tab_is_a_stub(self):
         sel = self.selenium
         self.create_person_and_go_to_conversations_tab()
         assert sel.is_text_present("Conversations aren't done yet, but wait until you see them. I mean, wow.")
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, ConversationTestAbstractions, PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, ConversationTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+        self.account = self.setup_for_logged_in()
         self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
+    def tearDown(self):
+        self.account.delete()
 

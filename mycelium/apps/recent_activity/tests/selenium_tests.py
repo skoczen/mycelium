@@ -18,7 +18,10 @@ class RecentActivityTestAbstractions(object):
 class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests_with_no_data()
+        self.account = self.setup_for_logged_in_with_no_data()
+
+    def tearDown(self):
+        self.account.delete()
 
     def test_recent_activity_tab_is_a_stub(self):
         sel = self.selenium
@@ -28,7 +31,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstra
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+        self.account = self.setup_for_logged_in()
         self.verificationErrors = []
     
+    def tearDown(self):
+        self.account.delete()
 

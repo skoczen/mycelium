@@ -27,8 +27,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests_with_no_data()
+        self.account = self.setup_for_logged_in_with_no_data()
 
+    def tearDown(self):
+        self.account.delete()
 
     def test_that_tags_tab_display_and_has_the_three_categories(self):
         sel = self.selenium
@@ -359,7 +361,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
         self.assertEqual(sel.get_text("css=.tag_row .count"),"0")
 
         # give it to one person
-        sel.open_window("/people/", "two")
+        self.open_window("/people/", "two")
 
         sel.select_window("two")
         self.create_person_and_go_to_tag_tab()
@@ -414,7 +416,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
         sel = self.selenium
         self.test_that_new_categories_can_be_added()
 
-        sel.open_window("/people/", "two")
+        self.open_window("/people/", "two")
         sel.select_window("two")        
         self.create_new_group_with_one_rule()
         assert sel.is_element_present("css=rule:nth(0) left_side option:nth(6)")
@@ -440,8 +442,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+        self.account = self.setup_for_logged_in()
         self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
+    def tearDown(self):
+        self.account.delete()
 

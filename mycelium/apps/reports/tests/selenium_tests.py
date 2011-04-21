@@ -13,6 +13,14 @@ class ReportsTests(QiConservativeSeleniumTestCase):
 
 class TestSelenium(ReportsTests, AccountTestAbstractions):
     selenium_fixtures = []
+
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in()
+    
+    def tearDown(self):
+        self.account.delete()
+
+
     
     def test_all_pages_load(self):
         sel = self.selenium

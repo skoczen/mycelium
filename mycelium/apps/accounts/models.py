@@ -47,6 +47,11 @@ class Account(models.Model):
         from generic_tags.models import TagSet
         if instance and created:
             TagSet.create_default_tagsets_for_an_account(instance)
+    
+    @classmethod
+    def delete_user_accounts(cls, instance, created=None, *args, **kwargs):
+        for ua in instance.useraccount_set.all():
+            ua.user.delete()
 
 class AccessLevel(models.Model):
     name = models.CharField(max_length=255)
@@ -86,7 +91,8 @@ class AccountBasedModel(models.Model):
     class Meta(object):
         abstract = True
 
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from rules.tasks import populate_rule_components_for_an_account_signal_receiver
 post_save.connect(populate_rule_components_for_an_account_signal_receiver,sender=Account)
 post_save.connect(Account.create_default_tagsets,sender=Account)
+pre_delete.connect(Account.delete_user_accounts,sender=Account)
