@@ -19,7 +19,7 @@ def _basic_forms(group, request):
     if request and request.method == "POST":
         data = request.POST
     
-    group_form = GroupForm(data, instance=group)
+    group_form = GroupForm(request, data, instance=group)
     rule_formset = GroupRuleFormset(data, instance=group)
     return group_form, rule_formset
 
