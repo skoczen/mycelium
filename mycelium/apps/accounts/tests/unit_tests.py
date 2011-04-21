@@ -33,11 +33,11 @@ class TestAccountFactory(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase)
         a2.delete()
         self.assertEqual(Account.objects.all().count(), 0)
 
-    def test_objects_by_account_limits_to_account(self, model=Group, factory_method=Factory.group, method_kwargs={}):
+    def test_objects_by_account_limits_to_account(self, model=Group, factory_method=Factory.group):
         a1 = Factory.account("test1",delete_existing=True)
-        g1 = factory_method(account=a1, **method_kwargs)
+        g1 = factory_method(account=a1)
         a2 = Factory.account("test2",delete_existing=True)
-        g2 = factory_method(account=a2, **method_kwargs)
+        g2 = factory_method(account=a2)
 
         request = Dummy()
         request.account = a1
@@ -59,7 +59,7 @@ class TestAccountFactory(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase)
         self.test_objects_by_account_limits_to_account(Person, Factory.person)
         self.test_objects_by_account_limits_to_account(Employee, Factory.employee)
         self.test_objects_by_account_limits_to_account(Donor, Factory.donor_history)
-        self.test_objects_by_account_limits_to_account(Donation, Factory.donation, person=Factory.person())
+        self.test_objects_by_account_limits_to_account(Donation, Factory.donation)
         self.test_objects_by_account_limits_to_account(Organization, Factory.organization)
         self.test_objects_by_account_limits_to_account(Volunteer, Factory.volunteer)
         self.test_objects_by_account_limits_to_account(TagSet, Factory.tagset)

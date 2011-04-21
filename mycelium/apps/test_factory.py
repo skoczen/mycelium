@@ -60,7 +60,7 @@ class Factory(QiFactory):
     def person(cls, account=None):
         if not account:
             print "No account specified when creating a person. Making one up."
-            account = cls.account
+            account = cls.account()
         
         first_name = cls.rand_name()
         person = Person.raw_objects.create(account=account,
@@ -169,7 +169,13 @@ class Factory(QiFactory):
         return person.donor
 
     @classmethod
-    def donation(cls, person, date=None, amount=None, **kwargs):
+    def donation(cls, person=None, date=None, amount=None, account=None):
+        if not person:
+            if account:
+                person = cls.person(account)
+            else:
+                person = cls.person()
+
         if not date:
             date = datetime.datetime.now() - datetime.timedelta(days=cls.rand_int(0,3000))
         

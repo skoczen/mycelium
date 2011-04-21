@@ -22,10 +22,14 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
-        self.account = self.create_demo_site()
+        self.account = self.create_demo_site("test")
         self.request = Dummy()
         self.request.account = self.account
         populate_rule_components_for_an_account(self.account)
+
+    def tearDown(self):
+        self.account.useraccount_set.all().delete()
+        self.account.delete()
 
     def _generate_people(self, number=5):
         people = []

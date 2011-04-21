@@ -2,7 +2,7 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase, QiSele
 from email_list.models import EmailSubscription
 
 class TestMarketingSite(QiSeleniumTestCase):
-    selenium_fixtures = ["marketing_site.json",]
+    selenium_fixtures = ["marketing_site_localhost.json"]
     # fixtures = ["marketing_site.json",]
 
     def test_home_page_loads(self):

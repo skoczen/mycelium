@@ -9,7 +9,7 @@ from qi_toolkit.smoke_tests import *
 from djangosanetesting.cases import DatabaseTestCase
 
 class TestSmoke(DatabaseTestCase):
-    fixtures = ["marketing_site.json",]
+    fixtures = ["marketing_site_localhost.json"]
     
     def setUp(self):
         pass

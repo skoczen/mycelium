@@ -38,12 +38,12 @@ class AccountTestAbstractions(object):
         sel.open("http://%s.localhost:%s%s" % (site,settings.LIVE_SERVER_PORT,url))
         sel.wait_for_page_to_load("30000")
 
-    def setup_for_logged_in_tests(self, name="test", mostly_empty=False):
+    def setup_for_logged_in(self, name="test", mostly_empty=False):
         self.account = self.create_demo_site(name=name, mostly_empty=mostly_empty)
         self.go_to_the_login_page(site=name)
         self.log_in()
         self.assert_login_succeeded()
         return self.account
 
-    def setup_for_logged_in_tests_with_no_data(self, name="test", mostly_empty=True):
+    def setup_for_logged_in_with_no_data(self, name="test", mostly_empty=True):
         return self.setup_for_logged_in_tests(name=name, mostly_empty=mostly_empty)

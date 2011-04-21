@@ -32,11 +32,13 @@ class Account(models.Model):
     def create_useraccount(self, full_name=None, username=None, password=None, email=None, access_level=None, user=None):
         assert full_name != None and username != None and password != None and access_level != None
         if not user:
-            user = User.objects.create_user(self.namespaced_username_for_username(username), email, password)
-        
+            if User.objects.filter(username=self.namespaced_username_for_username(username)).count() != 0:
+                user = User.objects.get(username=self.namespaced_username_for_username(username))
+            else:
+                user = User.objects.create_user(self.namespaced_username_for_username(username), email, password)
+
         user.first_name=full_name
         user.save()
-        
         
         return UserAccount.objects.get_or_create(user=user, account=self, access_level=access_level)[0]
 
