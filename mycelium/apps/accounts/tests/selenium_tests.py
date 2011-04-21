@@ -94,7 +94,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assert_login_succeeded()
 
         self.go_to_the_login_page()
-        self.open("/people", site="test2")
+        self.open("/people")
         assert sel.is_element_present("css=.login_btn")
 
 
@@ -118,23 +118,6 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
         time.sleep(2)
         assert not sel.is_text_present("John Smith")
-    
-    def test_that_searching_across_accounts_limits_results(self):
-        pass
-
-
-
-    def test_fixed_switching_accounts_on_search_shows_the_wrong_orgs_results_until_thread_change(self):
-        """Yep, this happens - make demo and demo1, view demo, then type demo1 in the address bar and load - 
-            voila - demo's results :(
-            Classmethod caching?
-
-            # SESSION_SAVE_EVERY_REQUEST = True helps but doesn't fix.
-
-            Not true anymore.  There was just a simple bug in the middleware that just gave the wrong account.
-        """ 
-        assert False == True
-
 
 
     def test_that_requesting_an_invalid_person_404s(self):

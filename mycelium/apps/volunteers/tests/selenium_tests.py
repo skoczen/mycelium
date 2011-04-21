@@ -54,7 +54,7 @@ class VolunteerTestAbstractions(object):
 class TestAgainstNoData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+        self.account = self.setup_for_logged_in_tests_with_no_data()
         self.verificationErrors = []
 
 

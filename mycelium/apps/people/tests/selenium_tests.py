@@ -7,7 +7,8 @@ from people.tests.selenium_abstractions import PeopleTestAbstractions
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+        self.account = self.setup_for_logged_in_tests_with_no_data()
+        self.verificationErrors = []
 
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium

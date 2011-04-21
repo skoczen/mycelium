@@ -111,10 +111,15 @@ class Factory(QiFactory):
 
 
     @classmethod
-    def employee(cls, account):
+    def employee(cls, account, person=None, organization=None):
+        if not person:
+            person = cls.person(account)
+        if not organization:
+            organization = cls.organization(account)
+            
         employee = Employee.raw_objects.create(account=account,
-                                       first_name=cls.rand_name(), 
-                                       last_name=cls.rand_name(),
+                                       person=person, 
+                                       organization=organization,
                                        role=cls.rand_str(),
                                        email=cls.email(),
                                        phone_number=cls.phone(),
@@ -152,19 +157,19 @@ class Factory(QiFactory):
                                             date=date)
 
     @classmethod
-    def donor_history(cls, person=None):
+    def donor_history(cls, account, person=None):
         if not person:
-            person = cls.person()
+            person = cls.person(account)
 
         cur_date = datetime.datetime.now()
         for i in range(0,cls.rand_int(end=150)):
             cur_date = cur_date - datetime.timedelta(days=cls.rand_int(0,10))
             cls.donation(person, date=cur_date)
 
-        return person
+        return person.donor
 
     @classmethod
-    def donation(cls, person, date=None, amount=None):
+    def donation(cls, person, date=None, amount=None, **kwargs):
         if not date:
             date = datetime.datetime.now() - datetime.timedelta(days=cls.rand_int(0,3000))
         
@@ -246,7 +251,7 @@ class Factory(QiFactory):
         return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=full_name))
 
     @classmethod
-    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None):
+    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False):
         if quick:
             max_num_people = 5
             max_num_orgs = 2
@@ -333,91 +338,94 @@ class Factory(QiFactory):
         print_if_verbose(verbose, "Tags created.")
 
         # create a bunch of people
-        people_created = []
-        num = cls.rand_int(2,max_num_people)
-        print_if_verbose(verbose, "Creating %s people" % num,)
-        for i in range(0, num):
-            p = cls.person(account)
-            people_created.append(p)
-            print_nobreak_if_verbose(verbose)
-        print_if_verbose(verbose, "done.")
+        if not mostly_empty:
+            people_created = []
+            num = cls.rand_int(2,max_num_people)
+            print_if_verbose(verbose, "Creating %s people" % num,)
+            for i in range(0, num):
+                p = cls.person(account)
+                people_created.append(p)
+                print_nobreak_if_verbose(verbose)
+            print_if_verbose(verbose, "done.")
 
-        num = cls.rand_int(2,max_num_orgs)
-        print_if_verbose(verbose, "Creating %s organizations" % num,)
-        # create a few organizations, with people
-        for i in range(0, num):
-            cls.organization(account)
-            print_nobreak_if_verbose(verbose)
+            num = cls.rand_int(2,max_num_orgs)
+            print_if_verbose(verbose, "Creating %s organizations" % num,)
+            # create a few organizations, with people
+            for i in range(0, num):
+                cls.organization(account)
+                print_nobreak_if_verbose(verbose)
 
-        print_if_verbose(verbose, "done.")
+            print_if_verbose(verbose, "done.")
 
-        # give some of the people volunteer histories and statii
-        print_if_verbose(verbose, "Adding volunteer histories",)
-        for p in people_created:
-            if cls.rand_bool():
-                cls.volunteer_history(account, p)
+            # give some of the people volunteer histories and statii
+            print_if_verbose(verbose, "Adding volunteer histories",)
+            for p in people_created:
+                if cls.rand_bool():
+                    cls.volunteer_history(account, p)
+                    
+                if cls.rand_bool():
+                    v = p.volunteer
+                    v.status = VOLUNTEER_STATII[1][0]
+                    v.save()
                 
-            if cls.rand_bool():
-                v = p.volunteer
-                v.status = VOLUNTEER_STATII[1][0]
-                v.save()
+                print_nobreak_if_verbose(verbose)
+            print_if_verbose(verbose, "done.")
+
+            # give some of the people donation histories
+            print_if_verbose(verbose, "Adding donation histories",)
+            for p in people_created:
+                if cls.rand_bool():
+                    cls.donor_history(account, p)
+                
+                print_nobreak_if_verbose(verbose)
+            print_if_verbose(verbose, "done.")
+
+            print_if_verbose(verbose, "Adding tags",)
+            # give some of the people tags
+            all_tags = [t for t in Tag.objects_by_account(request).all()]
+            for p in people_created:
+                for i in range(0,cls.rand_int(0,num_tags)):
+                    t = all_tags[cls.rand_int(0,len(all_tags)-1)]
+                    if t.tagset!=gen_ts or  (cls.rand_bool() and cls.rand_bool()):
+                        t.add_tag_to_person(p)
+                print_nobreak_if_verbose(verbose)
+                
             
-            print_nobreak_if_verbose(verbose)
-        print_if_verbose(verbose, "done.")
+            print_if_verbose(verbose, "done."        )
 
-        # give some of the people donation histories
-        print_if_verbose(verbose, "Adding donation histories",)
-        for p in people_created:
-            if cls.rand_bool():
-                cls.donor_history(p)
+            # create a few groups
             
-            print_nobreak_if_verbose(verbose)
-        print_if_verbose(verbose, "done.")
 
-        print_if_verbose(verbose, "Adding tags",)
-        # give some of the people tags
-        all_tags = [t for t in Tag.objects_by_account(request).all()]
-        for p in people_created:
-            for i in range(0,cls.rand_int(0,num_tags)):
-                t = all_tags[cls.rand_int(0,len(all_tags)-1)]
-                if t.tagset!=gen_ts or  (cls.rand_bool() and cls.rand_bool()):
-                    t.add_tag_to_person(p)
-            print_nobreak_if_verbose(verbose)
-            
-        
-        print_if_verbose(verbose, "done."        )
+            # Board of Directors
+            group = cls.group(account, name="Board of Directors")
+            cls.grouprule(account, "have a general tag that","contains","Board of Directors", group=group)
+            print_if_verbose(verbose, "Created Board of Directors group")
 
-        # create a few groups
-        
+            # Active Volunteers
+            group = cls.group(account, name="Active Volunteers")
+            cls.grouprule(account, "volunteer status","is",VOLUNTEER_STATII[0][0], group=group)
+            print_if_verbose(verbose, "Created Active Volunteers group")
 
-        # Board of Directors
-        group = cls.group(account, name="Board of Directors")
-        cls.grouprule(account, "have a general tag that","contains","Board of Directors", group=group)
-        print_if_verbose(verbose, "Created Board of Directors group")
+            # Warm color people
+            group = cls.group(account, name="Warm Color People", rules_boolean=False)
+            cls.grouprule(account, "have a Favorite Color tag that","contains","red", group=group)
+            cls.grouprule(account, "have a Favorite Color tag that","contains","orange", group=group)
+            cls.grouprule(account, "have a Favorite Color tag that","contains","yellow", group=group)
+            print_if_verbose(verbose, "Created Warm color people group")
 
-        # Active Volunteers
-        group = cls.group(account, name="Active Volunteers")
-        cls.grouprule(account, "volunteer status","is",VOLUNTEER_STATII[0][0], group=group)
-        print_if_verbose(verbose, "Created Active Volunteers group")
+            # Recurring donors
+            group = cls.group(account, name="Recurring Donors", rules_boolean=False)
+            cls.grouprule(account, "have a Donor tag that","is exactly","monthly donor", group=group)
+            cls.grouprule(account, "have a Donor tag that","is exactly","quarterly donor", group=group)
+            cls.grouprule(account, "have a Donor tag that","is exactly","yearly donor", group=group)
+            print_if_verbose(verbose, "Created Recurring donors group")
 
-        # Warm color people
-        group = cls.group(account, name="Warm Color People", rules_boolean=False)
-        cls.grouprule(account, "have a Favorite Color tag that","contains","red", group=group)
-        cls.grouprule(account, "have a Favorite Color tag that","contains","orange", group=group)
-        cls.grouprule(account, "have a Favorite Color tag that","contains","yellow", group=group)
-        print_if_verbose(verbose, "Created Warm color people group")
-
-        # Recurring donors
-        group = cls.group(account, name="Recurring Donors", rules_boolean=False)
-        cls.grouprule(account, "have a Donor tag that","is exactly","monthly donor", group=group)
-        cls.grouprule(account, "have a Donor tag that","is exactly","quarterly donor", group=group)
-        cls.grouprule(account, "have a Donor tag that","is exactly","yearly donor", group=group)
-        print_if_verbose(verbose, "Created Recurring donors group")
-
-        # Volunteers this year
-        today = datetime.date.today()
-        group = cls.group(account, name="Volunteers this year")
-        cls.grouprule(account, "last volunteer shift","is after",datetime.date(day=1,month=1,year=today.year), group=group)
+            # Volunteers this year
+            today = datetime.date.today()
+            group = cls.group(account, name="Volunteers this year")
+            cls.grouprule(account, "last volunteer shift","is after",datetime.date(day=1,month=1,year=today.year), group=group)
+        else:
+            print_if_verbose(verbose, "Mostly empty called - skipping people, etc.")
 
         print_if_verbose(verbose, "Setup complete.")
         return account

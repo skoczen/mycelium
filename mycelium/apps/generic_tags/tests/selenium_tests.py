@@ -4,6 +4,7 @@ import time
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from groups.tests.selenium_tests import GroupTestAbstractions
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
 class TagTestAbstractions(object):
     def switch_to_tag_tab(self):
@@ -22,11 +23,12 @@ class TagTestAbstractions(object):
         assert sel.is_text_present("Manage Tags")
 
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, GroupTestAbstractions, PeopleTestAbstractions):
+class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+        self.account = self.setup_for_logged_in_tests_with_no_data()
+
 
     def test_that_tags_tab_display_and_has_the_three_categories(self):
         sel = self.selenium
@@ -435,7 +437,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
 
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_tests()

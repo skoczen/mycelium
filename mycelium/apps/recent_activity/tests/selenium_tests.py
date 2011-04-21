@@ -6,10 +6,10 @@ from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
+
 class RecentActivityTestAbstractions(object):
 
-    def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+    def create_person_and_go_to_recent_activity_tab(self):
         sel = self.selenium
         self.create_john_smith()
         sel.click("css=.detail_tab[href=#recent_activity]")
@@ -17,7 +17,8 @@ class RecentActivityTestAbstractions(object):
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions):
 
-
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in_tests_with_no_data()
 
     def test_recent_activity_tab_is_a_stub(self):
         sel = self.selenium

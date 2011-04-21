@@ -8,7 +8,7 @@ from django.test import TestCase
 class TestReports(TestCase, QiUnitTestMixin, DatabaseTestCase):
 
     def setUp(self):
-        Factory.create_demo_site(quick=True)
+        Factory.create_demo_site("test", quick=True)
 
     # TODO: Abstract this.
     

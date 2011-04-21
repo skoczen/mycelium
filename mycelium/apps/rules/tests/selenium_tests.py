@@ -11,7 +11,7 @@ class RulesTestAbstractions(object):
 class TestAgainstNoData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
     
     def setUp(self, *args, **kwargs):
-        self.account = self.setup_for_logged_in_tests()
+        self.account = self.setup_for_logged_in_tests_with_no_data()
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
