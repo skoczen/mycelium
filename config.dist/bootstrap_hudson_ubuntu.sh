@@ -23,11 +23,12 @@ mysqladmin create mycelium -u root -p
 
 # set up with something like:
 # cd $WORKSPACE
-# rm -rf ../ve
+# rm -rf ve
+# mysql -h localhost -u root -pQ3lg8Af81tj6vr5PdcIs -e 'drop database IF EXISTS test_mycelium;' > /dev/null
 # virtualenv -q --no-site-packages ve 
 # . ./ve/bin/activate
 # cd mycelium
 # export DISPLAY=:5.0
-# echo "pip install -q --upgrade -r ../requirements.txt"
+# pip install -q  -r ../requirements.stable.txt
 # ../ve/bin/python manage.py jenkins_with_selenium_tests --settings=envs.jenkins
 # kill -9 $(ps aux | grep -v grep | grep selenium-server | awk '{print $2}')

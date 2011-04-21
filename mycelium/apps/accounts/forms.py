@@ -1,4 +1,4 @@
-from django.forms import ModelForm, ModelChoiceField
+from django.forms import ModelForm, ModelChoiceField, BaseModelFormSet
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django import forms
@@ -24,6 +24,20 @@ class AccountBasedModelForm(ModelForm):
         cleaned_data["account"] = self.request.account
         return cleaned_data
     
+class AccountBasedModelFormSet(BaseModelFormSet):
+    account = ModelChoiceField(queryset=Account.objects.all(), required=False)
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(BaseModelFormSet, self).__init__(*args,**kwargs)
+        for f in self.forms:
+            f.fields["account"].queryset = Account.objects.filter(pk=self.request.account.pk)
+
+    def clean(self):
+        super(AccountBasedModelFormSet, self).clean()
+        for f in self.forms:
+            f.cleaned_data["account"] = self.request.account
+        
 
 class AccountAuthenticationForm(AuthenticationForm):
     def __init__(self, request=None, *args, **kwargs):

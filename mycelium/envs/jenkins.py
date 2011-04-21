@@ -30,3 +30,4 @@ SELENIUM_BROWSER_COMMAND = "*firefox"
 VIRTUALENV_PATH = "/var/lib/hudson/jobs/mycelium/workspace/ve"
 SELENIUM_TEST_SERVER_SETTINGS="selserver_jenkins"
 # SOUTH_TESTS_MIGRATE = False
+SOUTH_TESTS_MIGRATE = False
