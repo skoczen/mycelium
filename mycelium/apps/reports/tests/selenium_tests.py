@@ -17,8 +17,8 @@ class TestSelenium(ReportsTests, AccountTestAbstractions):
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in()
     
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
 
     

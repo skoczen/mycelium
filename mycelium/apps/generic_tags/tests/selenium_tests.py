@@ -29,8 +29,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
     def test_that_tags_tab_display_and_has_the_three_categories(self):
         sel = self.selenium
@@ -446,6 +446,6 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, TagTestAbstractio
         self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 

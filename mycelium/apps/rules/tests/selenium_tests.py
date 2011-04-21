@@ -13,8 +13,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
@@ -24,5 +24,5 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RulesTestAbstract
         self.account = self.setup_for_logged_in()
         self.verificationErrors = []
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()

@@ -20,8 +20,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstra
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
     def test_recent_activity_tab_is_a_stub(self):
         sel = self.selenium
@@ -34,6 +34,6 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RecentActivityTes
         self.account = self.setup_for_logged_in()
         self.verificationErrors = []
     
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 

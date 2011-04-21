@@ -17,8 +17,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         populate_rule_components_for_an_account(self.account)
         self.verificationErrors = []
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
 
     def test_that_the_new_group_page_loads(self):
@@ -212,8 +212,8 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         self.people = [Factory.volunteer_history(self.account) for i in range(1,Factory.rand_int(30,100))]
         self.verificationErrors = []
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
     
     def test_that_blank_groups_show_at_the_top_of_the_search(self):
         sel = self.selenium

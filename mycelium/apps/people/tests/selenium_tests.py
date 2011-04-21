@@ -10,8 +10,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.account = self.setup_for_logged_in_with_no_data()
         self.verificationErrors = []
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
     def test_creating_and_editing_a_new_person(self):
         sel = self.selenium
@@ -752,8 +752,8 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
   
 
     def test_creating_and_editing_a_new_person_with_generated(self):

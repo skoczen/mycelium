@@ -9,8 +9,8 @@ class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions):
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in()
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
     def test_mockup_pages_load_and_links_work(self):
         sel = self.selenium        

@@ -41,8 +41,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DonorTestAbstractions, P
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     # self.account.delete()
+    #     pass
 
     def test_that_new_donations_can_be_added_and_display_properly(self):
         sel = self.selenium        
@@ -122,5 +123,5 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DonorTestAbstract
         self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()

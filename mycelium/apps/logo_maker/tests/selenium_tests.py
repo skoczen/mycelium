@@ -9,8 +9,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions)
         self.account = self.setup_for_logged_in()
         self.verificationErrors = []
     
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
 
     def test_creating_and_editing_a_new_person(self):

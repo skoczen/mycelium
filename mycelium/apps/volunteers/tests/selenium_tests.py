@@ -57,8 +57,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions
         self.account = self.setup_for_logged_in_with_no_data()
         self.verificationErrors = []
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
     def test_create_new_volunteer(self):
         self.create_new_volunteer()
@@ -298,8 +298,8 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase,VolunteerTestAbstr
         self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
     def test_create_new_volunteer(self):
         self.create_new_volunteer()

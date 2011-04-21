@@ -19,8 +19,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, ConversationTestAbstract
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
 
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
 
     def test_conversation_tab_is_a_stub(self):
@@ -35,6 +35,6 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, ConversationTestA
         self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
-    def tearDown(self):
-        self.account.delete()
+    # def tearDown(self):
+    #     self.account.delete()
 
