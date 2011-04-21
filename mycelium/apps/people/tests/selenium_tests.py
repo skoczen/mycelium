@@ -29,24 +29,24 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
         sel.click("css=search_results .result_row:nth(0) .name a")
         sel.wait_for_page_to_load("30000")
-        try: self.assertEqual("John", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Smith", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("555-123-4567", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("john@smithfamily.com", sel.get_text("link=john@smithfamily.com"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("123 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Apt 27", sel.get_text("//span[@id='container_id_line_2']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Wilsonville", sel.get_text("//span[@id='container_id_city']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("KY", sel.get_text("//span[@id='container_id_state']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("12345", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
+        self.assertEqual("John", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
+
+        self.assertEqual("Smith", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
+
+        self.assertEqual("555-123-4567", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
+
+        self.assertEqual("john@smithfamily.com", sel.get_text("link=john@smithfamily.com"))
+
+        self.assertEqual("123 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
+
+        self.assertEqual("Apt 27", sel.get_text("//span[@id='container_id_line_2']/span[1]"))
+
+        self.assertEqual("Wilsonville", sel.get_text("//span[@id='container_id_city']/span[1]"))
+
+        self.assertEqual("KY", sel.get_text("//span[@id='container_id_state']/span[1]"))
+
+        self.assertEqual("12345", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
+
         sel.click("css=.start_edit_btn")
         time.sleep(1)
         sel.type("id_first_name", "Jon")
@@ -70,20 +70,20 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.click("css=search_results .result_row .name a")
         sel.wait_for_page_to_load("30000")
         self.assertEqual("Jon", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
-        try: self.assertEqual("Smithe", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("555-765-4321", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("jon@smithefamily.com", sel.get_text("link=jon@smithefamily.com"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("1234 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_city']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("TN", sel.get_text("//span[@id='container_id_state']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("54321", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
+        self.assertEqual("Smithe", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
+
+        self.assertEqual("555-765-4321", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
+
+        self.assertEqual("jon@smithefamily.com", sel.get_text("link=jon@smithefamily.com"))
+
+        self.assertEqual("1234 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
+
+        self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_city']/span[1]"))
+
+        self.assertEqual("TN", sel.get_text("//span[@id='container_id_state']/span[1]"))
+
+        self.assertEqual("54321", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
+
 
     def test_search_page_loads(self):
         sel = self.selenium
@@ -503,20 +503,20 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         time.sleep(4)
 
         self.assertEqual("Jon", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
-        try: self.assertEqual("Smithe", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("555-765-4321", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("jon@smithefamily.com", sel.get_text("link=jon@smithefamily.com"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("1234 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_city']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("TN", sel.get_text("//span[@id='container_id_state']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("54321", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
+        self.assertEqual("Smithe", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
+
+        self.assertEqual("555-765-4321", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
+
+        self.assertEqual("jon@smithefamily.com", sel.get_text("link=jon@smithefamily.com"))
+
+        self.assertEqual("1234 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
+
+        self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_city']/span[1]"))
+
+        self.assertEqual("TN", sel.get_text("//span[@id='container_id_state']/span[1]"))
+
+        self.assertEqual("54321", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
+
 
     def test_that_closing_an_organization_page_makes_sure_the_changes_are_saved(self):
         sel = self.selenium
@@ -805,20 +805,20 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         sel.click("css=search_results .result_row .name a")
         sel.wait_for_page_to_load("30000")
         self.assertEqual("Jon", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
-        try: self.assertEqual("Smithe", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("555-765-4321", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("jon@smithefamily.com", sel.get_text("link=jon@smithefamily.com"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("1234 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_city']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("TN", sel.get_text("//span[@id='container_id_state']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("54321", sel.get_text("css=#container_id_postal_code .view_field"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
+        self.assertEqual("Smithe", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
+
+        self.assertEqual("555-765-4321", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
+
+        self.assertEqual("jon@smithefamily.com", sel.get_text("link=jon@smithefamily.com"))
+
+        self.assertEqual("1234 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
+
+        self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_city']/span[1]"))
+
+        self.assertEqual("TN", sel.get_text("//span[@id='container_id_state']/span[1]"))
+
+        self.assertEqual("54321", sel.get_text("css=#container_id_postal_code .view_field"))
+
 
     
     def test_search_page_loads(self):
@@ -856,30 +856,30 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         sel.key_down("css=#id_search_query","0")
         sel.key_up("css=#id_search_query","0")
         time.sleep(2)
-        try: self.assertEqual("Jennifer", sel.get_text("css=search_results .result_row:nth(0) .name a b"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("520", sel.get_text("css=search_results .result_row:nth(0) .phone_number b"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("520-845-6732", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
+        self.assertEqual("Jennifer", sel.get_text("css=search_results .result_row:nth(0) .name a b"))
+
+        self.assertEqual("520", sel.get_text("css=search_results .result_row:nth(0) .phone_number b"))
+
+        self.assertEqual("520-845-6732", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
+
         sel.click("css=search_results .result_row:nth(0) .name a")
         sel.wait_for_page_to_load("30000")
-        try: self.assertEqual("Jennifer", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("520-845-6732", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("jdawg@gmail.com", sel.get_text("link=jdawg@gmail.com"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("12445 SE Stark St.", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Kalamazoo", sel.get_text("//span[@id='container_id_city']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("MI", sel.get_text("//span[@id='container_id_state']/span[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("12346", sel.get_text("css=#container_id_postal_code .view_field"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
+        self.assertEqual("Jennifer", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
+
+        self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
+
+        self.assertEqual("520-845-6732", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
+
+        self.assertEqual("jdawg@gmail.com", sel.get_text("link=jdawg@gmail.com"))
+
+        self.assertEqual("12445 SE Stark St.", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
+
+        self.assertEqual("Kalamazoo", sel.get_text("//span[@id='container_id_city']/span[1]"))
+
+        self.assertEqual("MI", sel.get_text("//span[@id='container_id_state']/span[1]"))
+
+        self.assertEqual("12346", sel.get_text("css=#container_id_postal_code .view_field"))
+
 
     def test_editing_an_email_or_phone_number_changes_the_search_result(self):
         sel = self.selenium
@@ -893,8 +893,8 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         sel.click("css=.edit_done_btn")
         sel.click("link=People")
         
-        try: self.assertEqual("newemail@test.com", sel.get_text("css=search_results .result_row:nth(0) .email a"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
+        self.assertEqual("newemail@test.com", sel.get_text("css=search_results .result_row:nth(0) .email a"))
+
 
         sel = self.selenium
         self.open("/people/search")
@@ -907,8 +907,8 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         sel.click("css=.edit_done_btn")
         sel.click("link=People")
 
-        try: self.assertEqual("555 123-4567", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
-        except AssertionError, e: self.verificationErrors.append(str(e))        
+        self.assertEqual("555 123-4567", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
+        
 
 
     def test_that_blank_people_show_at_the_top_of_the_search(self):

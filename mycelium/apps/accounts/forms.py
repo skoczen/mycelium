@@ -1,8 +1,9 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelChoiceField
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from accounts.models import Account
 
 def adjust_queryset_for_account_based_models(f, *args, **kwargs):
     if hasattr(f,"queryset"):
@@ -11,17 +12,18 @@ def adjust_queryset_for_account_based_models(f, *args, **kwargs):
 
 
 class AccountBasedModelForm(ModelForm):
+    account = ModelChoiceField(queryset=Account.objects.all(), required=False)
+
     def __init__(self, request, *args, **kwargs):
+        self.request = request
         super(ModelForm, self).__init__(*args,**kwargs)
-        for f in self.fields:
-            if f.instance and  hasattr(f,"queryset"):
-                pass
-                # print f.instance
-                # print f.queryset
-                # f.queryset = f.rel.to._default_manager(request).using(db).complex_filter(f.rel.limit_choices_to)
+        self.fields["account"].queryset = Account.objects.filter(pk=self.request.account.pk)
 
-    # formfield_callback = adjust_queryset_for_account_based_models
-
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        cleaned_data["account"] = self.request.account
+        return cleaned_data
+    
 
 class AccountAuthenticationForm(AuthenticationForm):
     def __init__(self, request=None, *args, **kwargs):

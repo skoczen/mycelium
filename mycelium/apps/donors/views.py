@@ -13,7 +13,7 @@ from donors.forms import NewDonationForm
 from donors.models import Donor, Donation
 
 def _render_people_donor_tab(context):
-    donation_form = NewDonationForm()
+    donation_form = NewDonationForm(context["request"])
     context.update({"donation_form":donation_form,"donor":context["person"].donor})
     return render_to_string("donors/_people_donor_tab.html", RequestContext(context["request"],context))
 
@@ -29,12 +29,13 @@ def save_new_donation(request, donor_id):
     person = donor.person
     obj = donor
     if request.method == "POST":
-        form = NewDonationForm(request.POST)
+        form = NewDonationForm(request, request.POST)
         if form.is_valid():
             new_donation = form.save(commit=False)
             new_donation.donor = donor
             new_donation.save()
-
+        else:
+            print form
     return _return_fragments_or_redirect(request,locals())
 
 def delete_donation_from_people_tab(request, donation_id):
