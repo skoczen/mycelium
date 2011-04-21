@@ -72,7 +72,7 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
         from generic_tags.forms import TagSetForm
         form_context = {'instance':self, 'prefix':"TAGSET-%s" % self.pk}
         form_context.update(**kwargs)
-        return TagSetForm(*args, **form_context)
+        return TagSetForm(self.account, *args, **form_context)
 
     
 
@@ -92,7 +92,7 @@ class Tag(AccountBasedModel, models.Model):
         from generic_tags.forms import TagForm
         form_context = {'instance':self, 'prefix':"TAG-%s" % self.pk}
         form_context.update(**kwargs)
-        return TagForm(*args, **form_context)
+        return TagForm(self.account, *args, **form_context)
 
     def save(self, *args, **kwargs):
         self.name = self.name.lower()

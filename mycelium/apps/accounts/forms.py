@@ -1,4 +1,5 @@
-from django.forms import ModelForm, ModelChoiceField, BaseModelFormSet
+from django.forms import ModelForm, ModelChoiceField
+from django.forms.models import BaseModelFormSet
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django import forms
@@ -15,28 +16,36 @@ class AccountBasedModelForm(ModelForm):
     account = ModelChoiceField(queryset=Account.objects.all(), required=False)
 
     def __init__(self, request, *args, **kwargs):
-        self.request = request
+        if hasattr(request,"account"):
+            self.account = request.account
+        else:
+            self.account = request   # account was actually passed
+
         super(ModelForm, self).__init__(*args,**kwargs)
-        self.fields["account"].queryset = Account.objects.filter(pk=self.request.account.pk)
+        self.fields["account"].queryset = Account.objects.filter(pk=self.account.pk)
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        cleaned_data["account"] = self.request.account
+        cleaned_data["account"] = self.account
         return cleaned_data
     
 class AccountBasedModelFormSet(BaseModelFormSet):
     account = ModelChoiceField(queryset=Account.objects.all(), required=False)
 
     def __init__(self, request, *args, **kwargs):
-        self.request = request
+        if hasattr(request,"account"):
+            self.account = request.account
+        else:
+            self.account = request   # account was actually passed
+
         super(BaseModelFormSet, self).__init__(*args,**kwargs)
         for f in self.forms:
-            f.fields["account"].queryset = Account.objects.filter(pk=self.request.account.pk)
+            f.fields["account"].queryset = Account.objects.filter(pk=self.account.pk)
 
     def clean(self):
         super(AccountBasedModelFormSet, self).clean()
         for f in self.forms:
-            f.cleaned_data["account"] = self.request.account
+            f.cleaned_data["account"] = self.account
         
 
 class AccountAuthenticationForm(AuthenticationForm):
