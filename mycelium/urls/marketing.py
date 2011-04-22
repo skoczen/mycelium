@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     (r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodcloud.posterous.com"}, 'blog_home'),
     (r'^admin/', include(admin.site.urls)),
     (r'^', include('sorl.thumbnail.urls')),
-    url(r'^', include('qi_toolkit.urls')),
+    # url(r'^', include('qi_toolkit.urls')),
     url(r'^', include('cms.urls')),
     url(r'^', include('django_ses.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
@@ -25,3 +25,18 @@ if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     )
+
+
+# override for qi urls to allow indexing
+from qi_tookit import robots
+urlpatterns += patterns('',          
+    url(r'^robots.txt',     robots.robots_txt,      kwargs={'allow':True,},    name='robots_txt'),
+)
+
+try:
+    if settings.FAVICON_URL != "":
+        urlpatterns += patterns('',          
+            (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': settings.FAVICON_URL}),
+        )
+except:
+    pass
