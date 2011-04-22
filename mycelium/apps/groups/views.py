@@ -14,13 +14,14 @@ def _render_people_group_tab(context):
 
 
 
-def _basic_forms(group, request):
+def _basic_forms(group, request, no_data=False):
     data = None
-    if request and request.method == "POST":
+    if not no_data and request and request.method == "POST":
         data = request.POST
     
-    group_form = GroupForm(request, data, instance=group)
-    rule_formset = GroupRuleFormset(data, instance=group)
+    account = request.account
+    group_form = GroupForm(data, instance=group, account=account)
+    rule_formset = GroupRuleFormset(data, instance=group, account=account)
     return group_form, rule_formset
 
 @render_to("groups/group.html")
@@ -42,7 +43,7 @@ def save_basic_info(request, group_id):
         group = form.save()
         success = True
 
-    form, rule_formset = _basic_forms(group, None)
+    form, rule_formset = _basic_forms(group, request, no_data=True)
 
     return {"success":success}
 

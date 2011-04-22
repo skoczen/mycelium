@@ -11,7 +11,7 @@ from rules.models import LeftSide, Operator, RightSideType
 
 @render_to("rules/rules_logic.js")
 def rules_logic_js(request):
-    left_sides = LeftSide.objects_by_account(request).all()
-    operators = Operator.objects_by_account(request).all()
-    right_side_types = RightSideType.objects_by_account(request).all()
+    left_sides = LeftSide.objects_by_account(request.account).all()
+    operators = Operator.objects_by_account(request.account).all()
+    right_side_types = RightSideType.objects_by_account(request.account).all()
     return locals()

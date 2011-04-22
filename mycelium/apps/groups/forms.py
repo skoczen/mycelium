@@ -1,7 +1,7 @@
 from django.forms import ModelForm, RadioSelect, HiddenInput, TextInput, Select, NullBooleanSelect
 from groups.models import Group, GroupRule
 from django.forms.models import inlineformset_factory, BaseModelFormSet, BaseInlineFormSet
-from accounts.forms import AccountBasedModelForm, adjust_queryset_for_account_based_models
+from accounts.forms import AccountBasedModelForm, adjust_queryset_for_account_based_models, AccountBasedModelFormSet
 
 
 class GroupForm(AccountBasedModelForm):
@@ -29,12 +29,11 @@ class GroupRuleForm(AccountBasedModelForm):
         self.fields["right_side_value"].widget=TextInput()
         self.fields["right_side_type"].widget=HiddenInput()
 
-
     class Meta:
         model = GroupRule
         fields = ("account", "left_side", "operator", "right_side_type", "right_side_value", "group")
 
-class GroupRuleFormsetBase(BaseInlineFormSet):
+class GroupRuleFormsetBase(AccountBasedModelFormSet):
     def save_existing_objects(self, *args, **kwargs):
         from django.core.exceptions import ValidationError
         for f in self.initial_forms:
@@ -45,7 +44,6 @@ class GroupRuleFormsetBase(BaseInlineFormSet):
                     del self.forms[self.forms.index(f)]
 
         return super(GroupRuleFormsetBase, self).save_existing_objects(*args, **kwargs)
-
 
 
 GroupRuleFormset = inlineformset_factory(Group, GroupRule, fields=("left_side", "operator", "right_side_value", "right_side_type" ), can_delete=True, extra=0, form=GroupRuleForm, formset=GroupRuleFormsetBase )

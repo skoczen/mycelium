@@ -25,6 +25,8 @@ if 'test' in sys.argv:
             'PORT': '',
         },
     }
+if 'test' in sys.argv or 'selenium_tests' in sys.argv:
+    CELERY_ALWAYS_EAGER = True
 
 
 CACHES = {

@@ -18,15 +18,15 @@ from sorl.thumbnail import get_thumbnail
 def list_logos(request):
     section = "more"
     if request.method == "POST":
-        form = LogoForm(request.POST, request.FILES)
+        form = LogoForm(request.POST, request.FILES, account=request.account)
         if form.is_valid():
             form.save()
-            form = LogoForm()
+            form = LogoForm(account=request.account)
         else: 
             print "not_valid"
             print form.__dict__
     else:
-        form = LogoForm()
+        form = LogoForm(account=request.account)
 
     logos = Logo.objects_by_account(request).all()
     return locals()

@@ -1,5 +1,5 @@
 from django.forms import ModelForm, ModelChoiceField
-from django.forms.models import BaseModelFormSet
+from django.forms.models import BaseModelFormSet, BaseInlineFormSet
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django import forms
@@ -10,37 +10,70 @@ def adjust_queryset_for_account_based_models(f, *args, **kwargs):
     if hasattr(f,"queryset"):
         print "has queryset"
     
-
+def _get_account_from_kwargs(kwargs):
+    account = None
+    if "account" in kwargs:
+        account = kwargs["account"]
+        # print "from account"
+    elif "request" in kwargs and kwargs["request"].account:
+        account = kwargs["request"].account
+        # print "from request"
+    if not account:
+        if "instance" in kwargs and kwargs["instance"] and hasattr(kwargs["instance"],"account"):
+            account = kwargs["instance"].account
+            # print "pulled from instance: %s" % kwargs["instance"]
+    assert account, "Account required"
+    # print "found account: %s" % account
+            
+    return account
 
 class AccountBasedModelForm(ModelForm):
     account = ModelChoiceField(queryset=Account.objects.all(), required=False)
 
-    def __init__(self, request, *args, **kwargs):
-        if hasattr(request,"account"):
-            self.account = request.account
-        else:
-            self.account = request   # account was actually passed
+    def __init__(self, *args, **kwargs):
+        if not hasattr(self,"account"):
+            self.account = _get_account_from_kwargs(kwargs)
+        
+        old_kwargs = kwargs
+        if "account" in kwargs:
+            del kwargs["account"]
+        if "request" in kwargs:
+            del kwargs["request"]    
 
-        super(ModelForm, self).__init__(*args,**kwargs)
-        self.fields["account"].queryset = Account.objects.filter(pk=self.account.pk)
+        
+        super(AccountBasedModelForm, self).__init__(*args,**kwargs)
+        
+        account = _get_account_from_kwargs(old_kwargs)
+        for k,v in self.fields.iteritems():
+            if hasattr(v,"queryset") and k != "account":
+                v.queryset = v.queryset.filter(account=account)
+        self.fields["account"].queryset = Account.objects.filter(pk=account.pk)
+        
 
     def clean(self):
         cleaned_data = self.cleaned_data
         cleaned_data["account"] = self.account
         return cleaned_data
     
-class AccountBasedModelFormSet(BaseModelFormSet):
+class AccountBasedModelFormSet(BaseInlineFormSet):
     account = ModelChoiceField(queryset=Account.objects.all(), required=False)
 
-    def __init__(self, request, *args, **kwargs):
-        if hasattr(request,"account"):
-            self.account = request.account
-        else:
-            self.account = request   # account was actually passed
+    def __init__(self, *args, **kwargs):
+        if not hasattr(self,"account"):
+            self.account = _get_account_from_kwargs(kwargs)
 
-        super(BaseModelFormSet, self).__init__(*args,**kwargs)
+        old_kwargs = kwargs
+        if "account" in kwargs:
+            del kwargs["account"]
+        if "request" in kwargs:
+            del kwargs["request"]
+
+        super(AccountBasedModelFormSet, self).__init__(*args,**kwargs)
+        
+        account = _get_account_from_kwargs(old_kwargs)
         for f in self.forms:
-            f.fields["account"].queryset = Account.objects.filter(pk=self.account.pk)
+            f.fields["account"].queryset = Account.objects.filter(pk=account.pk)
+        
 
     def clean(self):
         super(AccountBasedModelFormSet, self).clean()

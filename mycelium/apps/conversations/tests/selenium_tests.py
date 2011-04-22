@@ -8,7 +8,7 @@ from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
 class ConversationTestAbstractions(object):
 
-    def create_person_and_go_to_convesrsations_tab(self):
+    def create_person_and_go_to_conversations_tab(self):
         sel = self.selenium
         self.create_john_smith()
         sel.click("css=.detail_tab[href=#conversations]")

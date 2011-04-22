@@ -12,9 +12,9 @@ def test_donations_by_year_returns_sanely():
     
     
         
-    d1 = Donation.raw_objects.create(account, donor=person.donor, amount=5, date=today)
-    d2 = Donation.raw_objects.create(account, donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=1))
-    d3 = Donation.raw_objects.create(account, donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=360))    
+    d1 = Donation.raw_objects.create(account=account, donor=person.donor, amount=5, date=today)
+    d2 = Donation.raw_objects.create(account=account, donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=1))
+    d3 = Donation.raw_objects.create(account=account, donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=360))    
 
 
     target = [{'donations': [d1, d2],

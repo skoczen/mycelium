@@ -10,7 +10,7 @@ from people.models import Person
 from qi_toolkit.helpers import *
 
 def _render_people_tag_tab(context):
-    context.update({'new_tagset_form':TagSetForm(context["request"]),})
+    context.update({'new_tagset_form':TagSetForm(account=context["request"].account),})
     return render_to_string("generic_tags/_people_tag_tab.html", RequestContext(context["request"],context))
 
 
@@ -184,8 +184,8 @@ def save_tags_and_tagsets(request):
     if request.method == "POST":
         data = request.POST
 
-        tagset_forms = [ts.form(request, data) for ts in TagSet.objects_by_account(request).all()]
-        tag_forms = [t.form(request, data, prefix="TAG-%s" % t.pk, instance=t) for t in Tag.objects_by_account(request).all()]
+        tagset_forms = [ts.form(data, account=request.account) for ts in TagSet.objects_by_account(request).all()]
+        tag_forms = [t.form(data, prefix="TAG-%s" % t.pk, instance=t, account=request.account) for t in Tag.objects_by_account(request).all()]
 
         # process tagset forms
         for f in tagset_forms:

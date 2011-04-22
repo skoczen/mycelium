@@ -18,7 +18,7 @@ VOLUNTEER_STATUS_PREFIX = "VOLUNTEER_STATUS"
 
 def _render_people_volunteer_tab(context):
     form = NewShiftForm(context["request"])
-    status_form = VolunteerStatusForm(context["request"], prefix=VOLUNTEER_STATUS_PREFIX, instance=context["person"].volunteer)
+    status_form = VolunteerStatusForm(prefix=VOLUNTEER_STATUS_PREFIX, instance=context["person"].volunteer, account=context["request"].account)
     context.update({"form":form,"status_form":status_form,})
     return render_to_string("volunteers/_people_volunteer_tab.html", RequestContext(context["request"],context))
     
@@ -34,7 +34,7 @@ def save_completed_volunteer_shift(request, volunteer_id):
     volunteer = Volunteer.objects_by_account(request).get(pk=int(volunteer_id))
     person = volunteer.person
     if request.method == "POST":
-        form = NewShiftForm(request, request.POST)
+        form = NewShiftForm(request.POST, account=request.account)
         if form.is_valid():
             completed_shift = form.save(commit=False)
             completed_shift.volunteer = volunteer
@@ -56,7 +56,7 @@ def save_status(request, volunteer_id):
     volunteer = Volunteer.objects_by_account(request).get(pk=int(volunteer_id))
     person = volunteer.person
     if request.method == "POST":
-        status_form = VolunteerStatusForm(request, request.POST, prefix=VOLUNTEER_STATUS_PREFIX, instance=volunteer)
+        status_form = VolunteerStatusForm(request.POST, prefix=VOLUNTEER_STATUS_PREFIX, instance=volunteer, account=request.account)
         if status_form.is_valid():
             status_form.save()
 

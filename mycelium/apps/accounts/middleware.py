@@ -38,6 +38,8 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                 if not request.subdomain in settings.PUBLIC_SUBDOMAINS and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                     return self.redirect_to_public_home(request)
             
+            # print "Account: %s " % request.account
+
             user = request.user
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
                 try:
