@@ -49,7 +49,8 @@ class Account(models.Model):
             TagSet.create_default_tagsets_for_an_account(instance)
     
     @classmethod
-    def delete_user_accounts(cls, instance, created=None, *args, **kwargs):
+    def pre_delete_cleanup(cls, instance, created=None, *args, **kwargs):
+        # delete user accounts
         for ua in instance.useraccount_set.all():
             ua.user.delete()
 
@@ -95,4 +96,4 @@ from django.db.models.signals import post_save, pre_delete
 from rules.tasks import populate_rule_components_for_an_account_signal_receiver
 post_save.connect(populate_rule_components_for_an_account_signal_receiver,sender=Account)
 post_save.connect(Account.create_default_tagsets,sender=Account)
-pre_delete.connect(Account.delete_user_accounts,sender=Account)
+pre_delete.connect(Account.pre_delete_cleanup,sender=Account)

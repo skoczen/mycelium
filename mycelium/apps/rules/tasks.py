@@ -15,6 +15,11 @@ def populate_rule_components_for_an_obj_with_an_account_signal_receiver(sender, 
 def populate_rule_components_for_an_obj_with_an_account(obj):
     populate_rule_components_for_an_account(obj.account)
 
+def delete_rule_components_for_a_tagset(sender, instance, created=None, *args, **kwargs):
+    from rules.models import LeftSide
+    LeftSide.objects_by_account(instance.account).filter(display_name="have a %s tag that" % (instance.name)).delete()
+
+
 def populate_rule_components_for_an_account(account):
 
     from rules.models import LeftSide, Operator, RightSideType
@@ -219,7 +224,7 @@ def populate_rule_components_for_an_account(account):
     for ts in TagSet.objects_by_account(account).all():
         i = i+1
         ls = left_side_for_tag(account=account,
-                            display_name="have a %s tag that" % (ts.name) ,
+                            display_name="have a %s tag that" % (ts.name),
                             query_string_partial="taggeditem__tag__in=Tag.objects_by_account(self.account).filter(tagset__name='%s',name" % (ts.name), 
                             add_closing_paren=True
                             )

@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, pre_delete
 from django.template.defaultfilters import slugify
 
 from south.modelsinspector import add_ignored_fields
@@ -132,6 +132,6 @@ class TaggedItem(AccountBasedModel, models.Model):
 
 
 
-from rules.tasks import populate_rule_components_for_an_obj_with_an_account_signal_receiver
+from rules.tasks import populate_rule_components_for_an_obj_with_an_account_signal_receiver, delete_rule_components_for_a_tagset
 post_save.connect(populate_rule_components_for_an_obj_with_an_account_signal_receiver,sender=TagSet)
-post_delete.connect(populate_rule_components_for_an_obj_with_an_account_signal_receiver,sender=TagSet)
+pre_delete.connect(delete_rule_components_for_a_tagset,sender=TagSet)
