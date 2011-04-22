@@ -216,7 +216,7 @@ def populate_rule_components_for_an_account(account):
     from generic_tags.models import TagSet
     i = 0
 
-    for ts in TagSet.objects_by_account(request).all():
+    for ts in TagSet.objects_by_account(account).all():
         i = i+1
         ls = left_side_for_tag(account=account,
                             display_name="have a %s tag that" % (ts.name) ,
@@ -228,14 +228,14 @@ def populate_rule_components_for_an_account(account):
                                                                                                
                                                                                       
     # Cleanup
-    for rs in RightSideType.objects_by_account(request).all():
+    for rs in RightSideType.objects_by_account(account).all():
         if rs not in all_right_side_types:
             rs.delete()
     
-    for o in Operator.objects_by_account(request).all():
+    for o in Operator.objects_by_account(account).all():
         if o not in all_operators:
             o.delete()
     
-    for ls in LeftSide.objects_by_account(request).all():
+    for ls in LeftSide.objects_by_account(account).all():
         if ls not in all_left_sides:
             ls.delete()

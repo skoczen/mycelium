@@ -1,6 +1,7 @@
 from django.template import RequestContext
 from django.conf import settings
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response
+from accounts.managers import get_or_404_by_account
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -28,12 +29,12 @@ def list_logos(request):
     else:
         form = LogoForm(account=request.account)
 
-    logos = Logo.objects_by_account(request).all()
+    logos = Logo.objects_by_account(request.account).all()
     return locals()
 
 
 def download_resized(request, logo_id):
-    logo = get_object_or_404(Logo, pk=int(logo_id))
+    logo = get_or_404_by_account(Logo, request.account, logo_id)
     width = int(request.GET['width'])
     height = int(request.GET['height'])
     w_by_h = "%sx%s" %(width,height)

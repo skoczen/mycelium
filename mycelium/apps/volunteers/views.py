@@ -1,6 +1,6 @@
 from django.template import RequestContext
 from django.conf import settings
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
@@ -32,7 +32,7 @@ def _return_fragments_or_redirect(request,context):
 
 
 def save_completed_volunteer_shift(request, volunteer_id):
-    volunteer = Volunteer.objects_by_account(request).get(pk=int(volunteer_id))
+    volunteer = get_or_404_by_account(Volunteer, request.account, volunteer_id)
     person = volunteer.person
     if request.method == "POST":
         form = NewShiftForm(request.POST, account=request.account)
@@ -46,7 +46,8 @@ def save_completed_volunteer_shift(request, volunteer_id):
 
 
 def delete_completed_volunteer_from_people_tab(request, volunteer_shift_id):
-    cs = CompletedShift.objects_by_account(request).get(pk=volunteer_shift_id)
+
+    cs = get_or_404_by_account(CompletedShift, request.account, volunteer_shift_id)
     volunteer = cs.volunteer
     person = volunteer.person
     cs.delete()
@@ -54,7 +55,7 @@ def delete_completed_volunteer_from_people_tab(request, volunteer_shift_id):
     return _return_fragments_or_redirect(request,locals())
     
 def save_status(request, volunteer_id):
-    volunteer = Volunteer.objects_by_account(request).get(pk=int(volunteer_id))
+    volunteer = get_or_404_by_account(Volunteer, request.account, volunteer_id)
     person = volunteer.person
     if request.method == "POST":
         status_form = VolunteerStatusForm(request.POST, prefix=VOLUNTEER_STATUS_PREFIX, instance=volunteer, account=request.account)

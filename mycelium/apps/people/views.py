@@ -1,5 +1,6 @@
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response
+from accounts.managers import get_or_404_by_account
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
@@ -51,13 +52,13 @@ def _basic_forms(person, request):
 
 @render_to("people/person.html")
 def person(request, person_id):
-    person = Person.objects_by_account(request.account).get(pk=int(person_id))
+    person = get_or_404_by_account(Person, request.account, person_id)
     (form, employee_formset) = _basic_forms(person, request)
     return locals()
 
 @json_view
 def save_person_basic_info(request, person_id):
-    person = get_object_or_404(Person,pk=person_id)
+    person = get_or_404_by_account(Person, request.account, person_id)
     (form, employee_formset) = _basic_forms(person, request)
     success = False
     if form.is_valid() and employee_formset.is_valid():
@@ -76,7 +77,7 @@ def delete_person(request):
     try:
         if request.method == "POST":
             pk = request.POST['person_pk']
-            person = Person.objects.get(pk=pk)
+            person = get_or_404_by_account(Person, request.account, person_id)
             person.delete()
     except:
         pass
@@ -94,7 +95,7 @@ def _org_forms(org, request):
     form_employee = EmployeeForm(data, prefix="EMPLOYEE", account=request.account)
 
     try:
-        employee_formset = EmployeeFormsetFromOrg(data, instance=org, prefix="ROLE")
+        employee_formset = EmployeeFormsetFromOrg(data, instance=org, prefix="ROLE", account=request.account)
     except:
         employee_formset = None
     
@@ -108,7 +109,7 @@ def delete_organization(request):
     try:
         if request.method == "POST":
             pk = request.POST['org_pk']
-            org = Organization.objects_by_account(request).get(pk=pk)
+            org = get_or_404_by_account(Organization, request.account, org_id)
             org.delete()
     except:
         pass
@@ -118,7 +119,7 @@ def delete_organization(request):
 
 @render_to("people/organization.html")
 def organization(request, org_id):
-    org = Organization.objects_by_account(request.account).get(pk=org_id)
+    org = get_or_404_by_account(Organization, request.account, org_id)
     (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     if form.is_valid():
         form.save()
@@ -127,7 +128,7 @@ def organization(request, org_id):
 
 @json_view
 def save_organization_basic_info(request,  org_id):
-    org = get_object_or_404(Organization,pk=org_id)
+    org = get_or_404_by_account(Organization, request.account, org_id)
     (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     success = False
     if form.is_valid():
@@ -137,8 +138,8 @@ def save_organization_basic_info(request,  org_id):
     return {"success":success}
 
 def remove_employee(request, org_id, emp_id):
-    org = get_object_or_404(Organization,pk=org_id)
-    emp = get_object_or_404(Employee, pk=emp_id)
+    org = get_or_404_by_account(Organization, request.account, org_id)
+    emp = get_or_404_by_account(Employee, request.account, emp_id)
     try:
         assert emp.organization == org
         emp.delete()
@@ -153,7 +154,7 @@ def remove_employee(request, org_id, emp_id):
 
 @json_view
 def save_organization_employees(request,  org_id):
-    org = get_object_or_404(Organization,pk=org_id)
+    org = get_or_404_by_account(Organization, request.account, org_id)
     (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     success = False
     if employee_formset.is_valid():
@@ -164,23 +165,25 @@ def save_organization_employees(request,  org_id):
 
 
 def existing_person_via_organization(request, org_id):
-    org = get_object_or_404(Organization,pk=org_id)
+    org = get_or_404_by_account(Organization, request.account, org_id)
     try: 
         person_id = int(request.POST['person_pk'])
-        person = Person.objects_by_account(request).get(pk=person_id)
+        get_or_404_by_account(Person, request.account, person_id)
         (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
         if form_employee.is_valid():
             employee = form_employee.save(commit=False)
             employee.person = person
             employee.organization = org
             employee.save()
+        else:
+            print form_employee
     except:
         pass
     return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))
 
 
 def new_person_via_organization(request, org_id):
-    org = get_object_or_404(Organization,pk=org_id)
+    org = get_or_404_by_account(Organization, request.account, org_id)
     (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     if form_new_person.is_valid():
         person = form_new_person.save()
@@ -196,7 +199,7 @@ def new_person_via_organization(request, org_id):
 
 @json_view
 def add_person_via_organization_search_results(request):
-    people = Person.objects_by_account(request).none()
+    people = Person.objects_by_account(request.account).none()
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":
@@ -208,7 +211,7 @@ def add_person_via_organization_search_results(request):
 @json_view
 def tab_contents(request, person_id, tab_name=None):
     success = False
-    person = Person.objects_by_account(request).get(pk=person_id)
+    person = get_or_404_by_account(Person, request.account, person_id)
     html = None
     if not tab_name and 'tab_name' in request.POST:
         tab_name = request.POST['tab_name'].strip()[1:]

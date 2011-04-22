@@ -32,7 +32,7 @@ class Donor(AccountBasedModel,TimestampModelMixin):
     
     @classmethod
     def make_donors_for_each_person(cls, request):
-        [cls.make_each_person_a_donor(Person,p,True) for p in Person.objects_by_account(request).all()]
+        [cls.make_each_person_a_donor(Person,p,True) for p in Person.objects_by_account(request.account).all()]
 
     @property
     def donations(self):

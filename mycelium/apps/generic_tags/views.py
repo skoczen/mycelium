@@ -1,6 +1,7 @@
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
+from accounts.managers import get_or_404_by_account
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from generic_tags.models import TagSet, Tag
@@ -29,7 +30,8 @@ class TagViews(object):
             self.target = target
         if tag_set_id:
             self.tag_set_id = tag_set_id
-            self.tag_set = TagSet.objects.get(account=target.account, pk=tag_set_id)
+            self.tag_set = get_or_404_by_account(TagSet, request.account, tag_set_id)
+            
 
     @property
     def _namespace_info(self):
@@ -120,11 +122,11 @@ class TagViews(object):
 
     def create_tag(self, request, tag_set_id, target_id):
         success = False
-        self.__init__(target=self.TargetModel.objects_by_account(request).get(pk=int(target_id)), tag_set_id=tag_set_id)
+        self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id), tag_set_id=tag_set_id)
         new_tag = request.REQUEST['new_tag'].strip().lower()
         if new_tag != "":
-            ts = TagSet.objects_by_account(request).get(pk=tag_set_id)
-            person = Person.objects_by_account(request).get(pk=target_id)
+            ts = get_or_404_by_account(TagSet, request.account, tag_set_id)
+            person = get_or_404_by_account(Person, request.account, target_id)
             t = Tag.create_new_tag(tagset=ts,name=new_tag)
             t.add_tag_to_person(person)
             success = True
@@ -132,25 +134,25 @@ class TagViews(object):
         return self._return_fragments_or_redirect(request,locals())
 
     def add_tag(self, request, tag_set_id, tag_id, target_id):
-        self.__init__(target=self.TargetModel.objects_by_account(request).get(pk=int(target_id)), tag_set_id=tag_set_id)
+        self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id), tag_set_id=tag_set_id)
         success = False
-        t = Tag.objects_by_account(request).get(pk=tag_id)
-        person = Person.objects_by_account(request).get(pk=target_id)
+        t = get_or_404_by_account(Tag, request.account, tag_id)
+        person = get_or_404_by_account(Person, request.account, target_id)
         t.add_tag_to_person(person)
         success = True
         return self._return_fragments_or_redirect(request,locals())
 
     def remove_tag(self, request, tag_set_id, tag_id, target_id):
-        self.__init__(target=self.TargetModel.objects_by_account(request).get(pk=int(target_id)), tag_set_id=tag_set_id)
+        self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id), tag_set_id=tag_set_id)
         success = False
-        t = Tag.objects_by_account(request).get(pk=tag_id)
-        person = Person.objects_by_account(request).get(pk=target_id)
+        t = get_or_404_by_account(Tag, request.account, tag_id)
+        person = get_or_404_by_account(Person, request.account, target_id)
         t.remove_tag_from_person(person=person)
         success = True
         return self._return_fragments_or_redirect(request,locals())
         
     def new_tag_search_results(self, request, tag_set_id, target_id):
-        self.__init__(target=self.TargetModel.objects_by_account(request).get(pk=int(target_id)), tag_set_id=tag_set_id)
+        self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id), tag_set_id=tag_set_id)
         all_tags = False
         if 'q' in request.GET:
             q = request.GET['q']
@@ -164,7 +166,7 @@ tag_views = TagViews()
 #  Normal views
 def _tab_or_manage_tags_redirect(context):
     request = context["request"]
-    context["all_tagsets"] = TagSet.objects_by_account(request).all()
+    context["all_tagsets"] = TagSet.objects_by_account(request.account).all()
 
     if request.is_ajax():
         fragment_html = {"tagset_details" : render_to_string("generic_tags/_manage_tags_tagset_details.html", RequestContext(request,context)),}
@@ -184,8 +186,8 @@ def save_tags_and_tagsets(request):
     if request.method == "POST":
         data = request.POST
 
-        tagset_forms = [ts.form(data, account=request.account) for ts in TagSet.objects_by_account(request).all()]
-        tag_forms = [t.form(data, prefix="TAG-%s" % t.pk, instance=t, account=request.account) for t in Tag.objects_by_account(request).all()]
+        tagset_forms = [ts.form(data, account=request.account) for ts in TagSet.objects_by_account(request.account).all()]
+        tag_forms = [t.form(data, prefix="TAG-%s" % t.pk, instance=t, account=request.account) for t in Tag.objects_by_account(request.account).all()]
 
         # process tagset forms
         for f in tagset_forms:
@@ -210,21 +212,21 @@ def new_tagset(request):
 
 def new_tag(request, tagset_id):
     success = False
-    ts = TagSet.objects_by_account(request).get(pk=tagset_id)
+    ts = get_or_404_by_account(TagSet, request.account, tag_set_id)
     # ts.add
     Tag.raw_objects.create(account=request.account, tagset=ts)
     return _tab_or_manage_tags_redirect(locals())
 
 def delete_tagset(request, tagset_id):
     success = False
-    ts = TagSet.objects_by_account(request).get(pk=int(tagset_id))
+    ts = get_or_404_by_account(TagSet, request.account, tag_set_id)
     ts.delete()
     success = True
     return _tab_or_manage_tags_redirect(locals())
 
 def delete_tag(request, tag_id):
     success = False
-    t = Tag.objects_by_account(request).get(pk=int(tag_id))
+    t = get_or_404_by_account(Tag, request.account, tag_id)
     t.delete()
     success = True
     return _tab_or_manage_tags_redirect(locals())
@@ -232,5 +234,5 @@ def delete_tag(request, tag_id):
 @render_to("generic_tags/manage.html")
 def manage(request):
     section = "more"
-    all_tagsets = TagSet.objects_by_account(request).all()
+    all_tagsets = TagSet.objects_by_account(request.account).all()
     return locals()

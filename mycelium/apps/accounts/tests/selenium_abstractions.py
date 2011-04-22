@@ -24,11 +24,12 @@ class AccountTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Powered by")
     
-    def open_window(self, url, name):
+    def open_window(self, url, name, site="test"):
+        from django.conf import settings
         sel = self.selenium
-        sel.open_window(url, name)
+        self.go_to_the_login_page()
         self.log_in()
-        sel.open(url)
+        sel.open(sel.open("http://%s.localhost:%s/%s" % (site,settings.LIVE_SERVER_PORT, url)))
         sel.wait_for_page_to_load("3000")
 
     def assert_login_failed(self):

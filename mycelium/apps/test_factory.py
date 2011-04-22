@@ -4,6 +4,7 @@ from groups.models import Group, GroupRule
 from django.conf import settings
 from volunteers.models import CompletedShift
 from donors.models import Donation
+from accounts.managers import get_or_404_by_account
 from rules.models import LeftSide, Operator, RightSideType
 from generic_tags.models import Tag, TagSet
 from accounts.models import Plan, Account, UserAccount, AccessLevel
@@ -388,7 +389,7 @@ class Factory(QiFactory):
 
             print_if_verbose(verbose, "Adding tags",)
             # give some of the people tags
-            all_tags = [t for t in Tag.objects_by_account(request).all()]
+            all_tags = [t for t in Tag.objects_by_account(account).all()]
             for p in people_created:
                 for i in range(0,cls.rand_int(0,num_tags)):
                     t = all_tags[cls.rand_int(0,len(all_tags)-1)]

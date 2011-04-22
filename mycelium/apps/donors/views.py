@@ -1,6 +1,7 @@
 from django.template import RequestContext
 from django.conf import settings
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response
+from accounts.managers import get_or_404_by_account
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
@@ -8,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
+
 
 from donors.forms import NewDonationForm
 from donors.models import Donor, Donation
@@ -25,7 +27,7 @@ def _return_fragments_or_redirect(request,context):
 
 
 def save_new_donation(request, donor_id):
-    donor = Donor.objects_by_account(request).get(pk=int(donor_id))
+    donor = get_or_404_by_account(Donor, request.account, donor_id)
     person = donor.person
     obj = donor
     if request.method == "POST":
@@ -39,7 +41,7 @@ def save_new_donation(request, donor_id):
     return _return_fragments_or_redirect(request,locals())
 
 def delete_donation_from_people_tab(request, donation_id):
-    d = Donation.objects_by_account(request).get(pk=donation_id)
+    d = get_or_404_by_account(Donation, request.account, donation_id)
     donor = d.donor
     person = donor.person
     d.delete()
