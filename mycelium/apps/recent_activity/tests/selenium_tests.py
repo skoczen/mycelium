@@ -15,7 +15,7 @@ class RecentActivityTestAbstractions(object):
         sel.click("css=.detail_tab[href=#recent_activity]")
         time.sleep(1)
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions):
+class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()

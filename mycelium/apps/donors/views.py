@@ -13,7 +13,7 @@ from donors.forms import NewDonationForm
 from donors.models import Donor, Donation
 
 def _render_people_donor_tab(context):
-    donation_form = NewDonationForm(account=kwargs["request"].account)
+    donation_form = NewDonationForm(account=context["request"].account)
     context.update({"donation_form":donation_form,"donor":context["person"].donor})
     return render_to_string("donors/_people_donor_tab.html", RequestContext(context["request"],context))
 

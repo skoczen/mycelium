@@ -34,7 +34,7 @@ class AccountBasedModelForm(ModelForm):
         if not hasattr(self,"account"):
             self.account = _get_account_from_kwargs(kwargs)
         
-        old_kwargs = kwargs
+        account = _get_account_from_kwargs(kwargs)
         if "account" in kwargs:
             del kwargs["account"]
         if "request" in kwargs:
@@ -43,7 +43,7 @@ class AccountBasedModelForm(ModelForm):
         
         super(AccountBasedModelForm, self).__init__(*args,**kwargs)
         
-        account = _get_account_from_kwargs(old_kwargs)
+        
         for k,v in self.fields.iteritems():
             if hasattr(v,"queryset") and k != "account":
                 v.queryset = v.queryset.filter(account=account)
@@ -62,7 +62,7 @@ class AccountBasedModelFormSet(BaseInlineFormSet):
         if not hasattr(self,"account"):
             self.account = _get_account_from_kwargs(kwargs)
 
-        old_kwargs = kwargs
+        account = _get_account_from_kwargs(kwargs)
         if "account" in kwargs:
             del kwargs["account"]
         if "request" in kwargs:
@@ -70,7 +70,6 @@ class AccountBasedModelFormSet(BaseInlineFormSet):
 
         super(AccountBasedModelFormSet, self).__init__(*args,**kwargs)
         
-        account = _get_account_from_kwargs(old_kwargs)
         for f in self.forms:
             f.fields["account"].queryset = Account.objects.filter(pk=account.pk)
         

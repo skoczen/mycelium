@@ -26,10 +26,10 @@ class AccountTestAbstractions(object):
     
     def open_window(self, url, name):
         sel = self.selenium
-        self.open_window(url, name)
+        sel.open_window(url, name)
         self.log_in()
-        self.open(url)
-        self.wait_for_page_to_load("3000")
+        sel.open(url)
+        sel.wait_for_page_to_load("3000")
 
     def assert_login_failed(self):
         sel = self.selenium

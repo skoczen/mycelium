@@ -17,7 +17,8 @@ from volunteers.forms import NewShiftForm, VolunteerStatusForm
 VOLUNTEER_STATUS_PREFIX = "VOLUNTEER_STATUS"
 
 def _render_people_volunteer_tab(context):
-    form = NewShiftForm(context["request"])
+
+    form = NewShiftForm(account=context["request"].account)
     status_form = VolunteerStatusForm(prefix=VOLUNTEER_STATUS_PREFIX, instance=context["person"].volunteer, account=context["request"].account)
     context.update({"form":form,"status_form":status_form,})
     return render_to_string("volunteers/_people_volunteer_tab.html", RequestContext(context["request"],context))
