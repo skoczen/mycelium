@@ -50,6 +50,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                         # redirect to login page
+                        # return HttpResponseRedirect("%s?next=%s" % (reverse("accounts:login"),request.path))
                         return HttpResponseRedirect(reverse("accounts:login"))
         else:
             

@@ -30,7 +30,7 @@ class TagViews(object):
             self.target = target
         if tag_set_id:
             self.tag_set_id = tag_set_id
-            self.tag_set = get_or_404_by_account(TagSet, request.account, tag_set_id)
+            self.tag_set = get_or_404_by_account(TagSet, target.account, tag_set_id)
             
 
     @property
@@ -158,7 +158,7 @@ class TagViews(object):
             q = request.GET['q']
             if q != "":
                 all_tags = self._all_tags_for_tagset.filter(name__icontains=q).order_by("name")[:5]
-        return HttpResponse(simplejson.dumps({"fragments":{"new_%s_tag_search_results" % self._tag_set_id:render_to_string("generic_tags/_new_tag_search_results.html", locals())}}))
+        return HttpResponse(simplejson.dumps({"fragments":{"new_%s_tag_search_results" % self.tag_set_id:render_to_string("generic_tags/_new_tag_search_results.html", locals())}}))
 
 tag_views = TagViews()
 
@@ -212,14 +212,14 @@ def new_tagset(request):
 
 def new_tag(request, tagset_id):
     success = False
-    ts = get_or_404_by_account(TagSet, request.account, tag_set_id)
+    ts = get_or_404_by_account(TagSet, request.account, tagset_id)
     # ts.add
-    Tag.raw_objects.create(account=request.account, tagset=ts)
+    tag = Tag.raw_objects.create(account=request.account, tagset=ts)
     return _tab_or_manage_tags_redirect(locals())
 
 def delete_tagset(request, tagset_id):
     success = False
-    ts = get_or_404_by_account(TagSet, request.account, tag_set_id)
+    ts = get_or_404_by_account(TagSet, request.account, tagset_id)
     ts.delete()
     success = True
     return _tab_or_manage_tags_redirect(locals())

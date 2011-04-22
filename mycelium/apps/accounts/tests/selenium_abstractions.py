@@ -2,14 +2,18 @@
 import time
 from test_factory import Factory
 
+def _sitespaced_url(url, site="test"):
+    from django.conf import settings
+    return "http://%s.localhost:%s%s" % (site, settings.LIVE_SERVER_PORT, url)
+
 class AccountTestAbstractions(object):
+    
     def create_demo_site(self, name="test", mostly_empty=False):
         return Factory.create_demo_site(name, quick=True, delete_existing=True, mostly_empty=mostly_empty)
 
     def go_to_the_login_page(self, site="test"):
-        from django.conf import settings
         sel = self.selenium
-        sel.open("http://%s.localhost:%s" % (site,settings.LIVE_SERVER_PORT))
+        sel.open(_sitespaced_url("/"))
         sel.wait_for_page_to_load("30000")
 
     def log_in(self, ua=None):
@@ -25,12 +29,8 @@ class AccountTestAbstractions(object):
         assert sel.is_text_present("Powered by")
     
     def open_window(self, url, name, site="test"):
-        from django.conf import settings
         sel = self.selenium
-        self.go_to_the_login_page()
-        self.log_in()
-        sel.open(sel.open("http://%s.localhost:%s/%s" % (site,settings.LIVE_SERVER_PORT, url)))
-        sel.wait_for_page_to_load("3000")
+        sel.open_window(_sitespaced_url(url), name)
 
     def assert_login_failed(self):
         sel = self.selenium

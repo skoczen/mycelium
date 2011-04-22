@@ -72,7 +72,9 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
         from generic_tags.forms import TagSetForm
         form_context = {'instance':self, 'prefix':"TAGSET-%s" % self.pk}
         form_context.update(**kwargs)
-        return TagSetForm(self.account, *args, **form_context)
+        if "account" not in form_context:
+            form_context.update({'account':self.account})
+        return TagSetForm(*args, **form_context)
 
     
 
@@ -92,7 +94,9 @@ class Tag(AccountBasedModel, models.Model):
         from generic_tags.forms import TagForm
         form_context = {'instance':self, 'prefix':"TAG-%s" % self.pk}
         form_context.update(**kwargs)
-        return TagForm(self.account, *args, **form_context)
+        if "account" not in form_context:
+            form_context.update({'account':self.account})
+        return TagForm(*args, **form_context)
 
     def save(self, *args, **kwargs):
         self.name = self.name.lower()
@@ -114,7 +118,7 @@ class Tag(AccountBasedModel, models.Model):
     def create_new_tag(cls, tagset=None, name=None):
         if not tagset or not name:
             raise Exception, "Missing tagset and/or name"
-        return cls.raw_objects.get_or_create(tagset=tagset, name=name)[0]
+        return cls.raw_objects.get_or_create(account=tagset.account, tagset=tagset, name=name)[0]
 
 class TaggedItem(AccountBasedModel, models.Model):
     tag = models.ForeignKey(Tag)
