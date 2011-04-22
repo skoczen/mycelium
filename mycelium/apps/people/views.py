@@ -77,7 +77,7 @@ def delete_person(request):
     try:
         if request.method == "POST":
             pk = request.POST['person_pk']
-            person = get_or_404_by_account(Person, request.account, person_id)
+            person = get_or_404_by_account(Person, request.account, pk)
             person.delete()
     except:
         pass
@@ -109,7 +109,7 @@ def delete_organization(request):
     try:
         if request.method == "POST":
             pk = request.POST['org_pk']
-            org = get_or_404_by_account(Organization, request.account, org_id)
+            org = get_or_404_by_account(Organization, request.account, pk)
             org.delete()
     except:
         pass
@@ -168,15 +168,13 @@ def existing_person_via_organization(request, org_id):
     org = get_or_404_by_account(Organization, request.account, org_id)
     try: 
         person_id = int(request.POST['person_pk'])
-        get_or_404_by_account(Person, request.account, person_id)
+        person = get_or_404_by_account(Person, request.account, person_id)
         (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
         if form_employee.is_valid():
             employee = form_employee.save(commit=False)
             employee.person = person
             employee.organization = org
             employee.save()
-        else:
-            print form_employee
     except:
         pass
     return HttpResponseRedirect(reverse("people:organization",args=(org.pk,)))

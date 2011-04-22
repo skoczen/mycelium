@@ -881,36 +881,6 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         self.assertEqual("12346", sel.get_text("css=#container_id_postal_code .view_field"))
 
 
-    def test_editing_an_email_or_phone_number_changes_the_search_result(self):
-        sel = self.selenium
-        self.open("/people/search")
-        sel.click("css=search_results .result_row:nth(0) .name a")
-        sel.wait_for_page_to_load("30000")
-        sel.click("css=.start_edit_btn")
-        time.sleep(1)
-        sel.type("id_email", "newemail@test.com")
-        time.sleep(2)
-        sel.click("css=.edit_done_btn")
-        sel.click("link=People")
-        
-        self.assertEqual("newemail@test.com", sel.get_text("css=search_results .result_row:nth(0) .email a"))
-
-
-        sel = self.selenium
-        self.open("/people/search")
-        sel.click("css=search_results .result_row:nth(0) .name a")
-        sel.wait_for_page_to_load("30000")
-        sel.click("css=.start_edit_btn")
-        time.sleep(1)
-        sel.type("id_phone_number", "555 123-4567")
-        time.sleep(2)
-        sel.click("css=.edit_done_btn")
-        sel.click("link=People")
-
-        self.assertEqual("555 123-4567", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
-        
-
-
     def test_that_blank_people_show_at_the_top_of_the_search(self):
         sel = self.selenium
         self.open("/people/")
@@ -974,3 +944,31 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         assert first_result.find('<b>') == -1
 
 
+    def test_editing_an_email_or_phone_number_changes_the_search_result(self):
+        sel = self.selenium
+        self.create_john_smith_and_return_to_search()
+        sel.click("css=search_results .result_row:nth(0) .name a")
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.start_edit_btn")
+        time.sleep(1)
+        sel.type("id_email", "newemail@test.com")
+        time.sleep(2)
+        sel.click("css=.edit_done_btn")
+        sel.click("link=People")
+        
+        self.assertEqual("newemail@test.com", sel.get_text("css=search_results .result_row:nth(0) .email a"))
+
+
+        sel = self.selenium
+        self.open("/people/search")
+        sel.click("css=search_results .result_row:nth(0) .name a")
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.start_edit_btn")
+        time.sleep(1)
+        sel.type("id_phone_number", "555 123-4567")
+        time.sleep(2)
+        sel.click("css=.edit_done_btn")
+        sel.click("link=People")
+
+        self.assertEqual("555 123-4567", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
+        

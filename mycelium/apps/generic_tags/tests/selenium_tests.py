@@ -81,22 +81,22 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
         sel.click("css=form.new_tag_form:nth(%s) .tag_add_btn" % tag_num)
         time.sleep(1)
         assert sel.is_text_present("Test Tag 1")
-        assert sel.is_element_present("css=fragment[name=%s_tags] .checkbox.checked:nth(0) input:checked" % tag_num)
-        self.assertEqual("Test Tag 1",sel.get_text("css=fragment[name=%s_tags] .checkbox.checked:nth(0) label name" % tag_num))
+        assert sel.is_element_present("css=fragment[name$=_tags]:nth(%s) .checkbox.checked:nth(0) input:checked" % tag_num)
+        self.assertEqual("Test Tag 1",sel.get_text("css=fragment[name$=_tags]:nth(%s) .checkbox.checked:nth(0) label name" % tag_num))
 
         sel.type("css=form.new_tag_form:nth(%s) .new_tag_name_input" % tag_num,"test tag 2")
         sel.click("css=form.new_tag_form:nth(%s) .tag_add_btn" % tag_num)
         time.sleep(1)
         assert sel.is_text_present("Test Tag 2")
-        assert sel.is_element_present("css=fragment[name=%s_tags] .checkbox.checked:nth(1) input:checked" % tag_num)
-        self.assertEqual("Test Tag 2",sel.get_text("css=fragment[name=%s_tags] .checkbox.checked:nth(1) label name" % tag_num))
+        assert sel.is_element_present("css=fragment[name$=_tags]:nth(%s) .checkbox.checked:nth(1) input:checked" % tag_num)
+        self.assertEqual("Test Tag 2",sel.get_text("css=fragment[name$=_tags]:nth(%s) .checkbox.checked:nth(1) label name" % tag_num))
 
         sel.type("css=form.new_tag_form:nth(%s) .new_tag_name_input" % tag_num,"test tag 3")
         sel.click("css=form.new_tag_form:nth(%s) .tag_add_btn" % tag_num)
         time.sleep(1)
         assert sel.is_text_present("Test Tag 3")
-        assert sel.is_element_present("css=fragment[name=%s_tags] .checkbox.checked:nth(2) input:checked" % tag_num)
-        self.assertEqual("Test Tag 3",sel.get_text("css=fragment[name=%s_tags] .checkbox.checked:nth(2) label name" % tag_num))
+        assert sel.is_element_present("css=fragment[name$=_tags]:nth(%s) .checkbox.checked:nth(2) input:checked" % tag_num)
+        self.assertEqual("Test Tag 3",sel.get_text("css=fragment[name$=_tags]:nth(%s) .checkbox.checked:nth(2) label name" % tag_num))
 
     def test_checking_and_unchecking_works_after_refresh(self):
         # Note - this test relies on the fact that the checked/unchecked tags exist on another person, so they stay in the list.
@@ -366,6 +366,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
         sel.select_window("two")
         self.create_person_and_go_to_tag_tab()
         sel.click("css=.checkbox:nth(0) input[type=checkbox]")
+        time.sleep(2)
 
         # verify
         sel.select_window("")
@@ -378,8 +379,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
         sel.select_window("two")
         self.create_person_and_go_to_tag_tab()
         sel.click("css=.checkbox:nth(0) input[type=checkbox]")
+        time.sleep(2)
         self.create_person_and_go_to_tag_tab()
         sel.click("css=.checkbox:nth(0) input[type=checkbox]")
+        time.sleep(2)
 
         sel.select_window("")
         sel.refresh()
@@ -390,6 +393,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
         # remove it from one person
         sel.select_window("two")
         sel.click("css=.checkbox:nth(0) input[type=checkbox]")
+        time.sleep(2)
 
         # verify
         sel.select_window("")
@@ -399,7 +403,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
 
     def test_that_tags_can_be_added_and_removed_from_custom_categories(self):    
         self.test_that_new_categories_can_be_added()
-        self.test_adding_multiple_tags_to_one_category(tag_num=3)
+        self.test_adding_multiple_tags_to_one_category(tag_num=4)
 
 
     def test_that_the_manage_tags_link_works_from_the_people_tab(self):

@@ -59,7 +59,7 @@ def delete_group(request):
     try:
         if request.method == "POST":
             pk = request.POST['group_pk']
-            group = get_or_404_by_account(Group, request.account, group_id)
+            group = get_or_404_by_account(Group, request.account, pk)
             group.delete()
     except:
         pass

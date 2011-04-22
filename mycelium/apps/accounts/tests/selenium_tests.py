@@ -139,7 +139,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.go_to_the_login_page("test2")
         self.log_in(ua=ua)
         self.open(person_url, site="test2")
-        assert sel.is_text_present("does not exist")
+        assert sel.is_text_present("not found")
     
     def test_that_requesting_an_invalid_organization_404s(self):
         sel = self.selenium
@@ -160,7 +160,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.go_to_the_login_page("test2")
         self.log_in(ua=ua)
         self.open(url, site="test2")
-        assert sel.is_text_present("does not exist")
+        assert sel.is_text_present("not found")
 
     def test_that_requesting_an_invalid_group_404s(self):
         sel = self.selenium
@@ -181,7 +181,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.go_to_the_login_page("test2")
         self.log_in(ua=ua)
         self.open(url, site="test2")
-        assert sel.is_text_present("does not exist")
+        assert sel.is_text_present("not found")
 
     
 

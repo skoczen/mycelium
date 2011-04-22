@@ -46,5 +46,5 @@ class EmployeeForm(AccountBasedModelForm):
         model = Employee
         fields = ("account", "role", "email", "phone_number")
 
-EmployeeFormset = inlineformset_factory(Person, Employee, fields=("account", "role", "email", "phone_number"), can_delete=False, extra=0, formset=AccountBasedModelFormSet)
-EmployeeFormsetFromOrg = inlineformset_factory(Organization, Employee, fields=("account", "role", "email", "phone_number"), can_delete=False, extra=0, formset=AccountBasedModelFormSet)
+EmployeeFormset = inlineformset_factory(Person, Employee, fields=("account", "role", "email", "phone_number"), can_delete=False, extra=0, form=EmployeeForm, formset=AccountBasedModelFormSet)
+EmployeeFormsetFromOrg = inlineformset_factory(Organization, Employee, fields=("account", "role", "email", "phone_number"), can_delete=False, extra=0, form=EmployeeForm, formset=AccountBasedModelFormSet)
