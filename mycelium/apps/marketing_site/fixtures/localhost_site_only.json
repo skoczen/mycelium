@@ -1,40 +1,4 @@
 [
-	{
-	    "pk": 2,
-	    "model": "auth.user",
-	    "fields": {
-	        "username": "tom",
-	        "first_name": "Tom",
-	        "last_name": "Noble",
-	        "is_active": true,
-	        "is_superuser": true,
-	        "is_staff": true,
-	        "last_login": "2011-01-23 22:47:53",
-	        "groups": [],
-	        "user_permissions": [],
-	        "password": "sha1$5c25a$73dd57af39282297af96401727a21c688627589b",
-	        "email": "tom@agoodcloud.com",
-	        "date_joined": "2011-01-02 16:34:17"
-	    }
-	},
-	{
-	    "pk": 1,
-	    "model": "auth.user",
-	    "fields": {
-	        "username": "skoczen",
-	        "first_name": "Steven",
-	        "last_name": "Skoczen",
-	        "is_active": true,
-	        "is_superuser": true,
-	        "is_staff": true,
-	        "last_login": "2011-01-30 19:24:52",
-	        "groups": [],
-	        "user_permissions": [],
-	        "password": "sha1$b0b41$1f2e1ce85f7542bcc4cea40745fdac88d0aac329",
-	        "email": "steven@agoodcloud.com",
-	        "date_joined": "2010-12-05 17:10:56"
-	    }
-	},
     {
         "pk": 1, 
         "model": "marketing_site.goodcloudemployee", 
@@ -212,6 +176,46 @@
         }
     }, 
     {
+        "pk": 20, 
+        "model": "cms.placeholder", 
+        "fields": {
+            "slot": "home_content", 
+            "default_width": null
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "cms.placeholder", 
+        "fields": {
+            "slot": "page_content", 
+            "default_width": null
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "cms.placeholder", 
+        "fields": {
+            "slot": "about_us_header_text", 
+            "default_width": null
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "cms.placeholder", 
+        "fields": {
+            "slot": "page_content", 
+            "default_width": null
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "cms.placeholder", 
+        "fields": {
+            "slot": "page_content", 
+            "default_width": null
+        }
+    }, 
+    {
         "pk": 1, 
         "model": "cms.cmsplugin", 
         "fields": {
@@ -272,6 +276,54 @@
             "tree_id": 4, 
             "position": 0, 
             "placeholder": 9, 
+            "plugin_type": "TextPlugin"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "cms.cmsplugin", 
+        "fields": {
+            "rght": 2, 
+            "parent": null, 
+            "language": "en", 
+            "level": 0, 
+            "creation_date": "2011-04-22 19:16:48", 
+            "lft": 1, 
+            "tree_id": 5, 
+            "position": 0, 
+            "placeholder": 20, 
+            "plugin_type": "TextPlugin"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "cms.cmsplugin", 
+        "fields": {
+            "rght": 2, 
+            "parent": null, 
+            "language": "en", 
+            "level": 0, 
+            "creation_date": "2011-04-22 19:19:17", 
+            "lft": 1, 
+            "tree_id": 6, 
+            "position": 0, 
+            "placeholder": 21, 
+            "plugin_type": "TextPlugin"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "cms.cmsplugin", 
+        "fields": {
+            "rght": 2, 
+            "parent": null, 
+            "language": "en", 
+            "level": 0, 
+            "creation_date": "2011-04-22 19:21:08", 
+            "lft": 1, 
+            "tree_id": 7, 
+            "position": 0, 
+            "placeholder": 24, 
             "plugin_type": "TextPlugin"
         }
     }, 
@@ -440,6 +492,166 @@
         }
     }, 
     {
+        "pk": 6, 
+        "model": "cms.page", 
+        "fields": {
+            "rght": 2, 
+            "navigation_extenders": "", 
+            "site": 2, 
+            "creation_date": "2011-04-22 19:15:59", 
+            "lft": 1, 
+            "in_navigation": true, 
+            "reverse_id": "marketing_site_home", 
+            "login_required": false, 
+            "created_by": "skoczen", 
+            "publication_end_date": null, 
+            "moderator_state": 0, 
+            "template": "marketing_site/home.html", 
+            "tree_id": 6, 
+            "placeholders": [
+                20
+            ], 
+            "limit_visibility_in_menu": null, 
+            "parent": null, 
+            "publisher_state": 1, 
+            "soft_root": false, 
+            "publication_date": "2011-04-22 19:17:39", 
+            "publisher_public": null, 
+            "level": 0, 
+            "changed_by": "skoczen", 
+            "publisher_is_draft": true, 
+            "published": true
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "cms.page", 
+        "fields": {
+            "rght": 2, 
+            "navigation_extenders": "", 
+            "site": 2, 
+            "creation_date": "2011-04-22 19:19:03", 
+            "lft": 1, 
+            "in_navigation": true, 
+            "reverse_id": null, 
+            "login_required": false, 
+            "created_by": "skoczen", 
+            "publication_end_date": null, 
+            "moderator_state": 0, 
+            "template": "marketing_site/normal_page.html", 
+            "tree_id": 7, 
+            "placeholders": [
+                21
+            ], 
+            "limit_visibility_in_menu": null, 
+            "parent": null, 
+            "publisher_state": 1, 
+            "soft_root": false, 
+            "publication_date": "2011-04-22 19:19:33", 
+            "publisher_public": null, 
+            "level": 0, 
+            "changed_by": "skoczen", 
+            "publisher_is_draft": true, 
+            "published": true
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "cms.page", 
+        "fields": {
+            "rght": 2, 
+            "navigation_extenders": "", 
+            "site": 2, 
+            "creation_date": "2011-04-22 19:19:52", 
+            "lft": 1, 
+            "in_navigation": true, 
+            "reverse_id": null, 
+            "login_required": false, 
+            "created_by": "skoczen", 
+            "publication_end_date": null, 
+            "moderator_state": 0, 
+            "template": "marketing_site/about_us.html", 
+            "tree_id": 8, 
+            "placeholders": [
+                22
+            ], 
+            "limit_visibility_in_menu": null, 
+            "parent": null, 
+            "publisher_state": 1, 
+            "soft_root": false, 
+            "publication_date": "2011-04-22 19:20:13", 
+            "publisher_public": null, 
+            "level": 0, 
+            "changed_by": "skoczen", 
+            "publisher_is_draft": true, 
+            "published": true
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "cms.page", 
+        "fields": {
+            "rght": 2, 
+            "navigation_extenders": "", 
+            "site": 2, 
+            "creation_date": "2011-04-22 19:20:31", 
+            "lft": 1, 
+            "in_navigation": true, 
+            "reverse_id": null, 
+            "login_required": false, 
+            "created_by": "skoczen", 
+            "publication_end_date": null, 
+            "moderator_state": 0, 
+            "template": "marketing_site/normal_page.html", 
+            "tree_id": 9, 
+            "placeholders": [
+                23
+            ], 
+            "limit_visibility_in_menu": null, 
+            "parent": null, 
+            "publisher_state": 1, 
+            "soft_root": false, 
+            "publication_date": "2011-04-22 19:20:39", 
+            "publisher_public": null, 
+            "level": 0, 
+            "changed_by": "skoczen", 
+            "publisher_is_draft": true, 
+            "published": true
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "cms.page", 
+        "fields": {
+            "rght": 2, 
+            "navigation_extenders": "", 
+            "site": 2, 
+            "creation_date": "2011-04-22 19:20:58", 
+            "lft": 1, 
+            "in_navigation": true, 
+            "reverse_id": null, 
+            "login_required": false, 
+            "created_by": "skoczen", 
+            "publication_end_date": null, 
+            "moderator_state": 0, 
+            "template": "marketing_site/normal_page.html", 
+            "tree_id": 10, 
+            "placeholders": [
+                24
+            ], 
+            "limit_visibility_in_menu": null, 
+            "parent": null, 
+            "publisher_state": 1, 
+            "soft_root": false, 
+            "publication_date": "2011-04-22 19:21:16", 
+            "publisher_public": null, 
+            "level": 0, 
+            "changed_by": "skoczen", 
+            "publisher_is_draft": true, 
+            "published": true
+        }
+    }, 
+    {
         "pk": 1, 
         "model": "cms.title", 
         "fields": {
@@ -535,6 +747,102 @@
         }
     }, 
     {
+        "pk": 6, 
+        "model": "cms.title", 
+        "fields": {
+            "menu_title": "", 
+            "redirect": "", 
+            "meta_keywords": "", 
+            "page_title": "", 
+            "language": "en", 
+            "title": "Home", 
+            "has_url_overwrite": false, 
+            "application_urls": "", 
+            "creation_date": "2011-04-22 19:16:00", 
+            "page": 6, 
+            "path": "home", 
+            "meta_description": "", 
+            "slug": "home"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "cms.title", 
+        "fields": {
+            "menu_title": "", 
+            "redirect": "", 
+            "meta_keywords": "", 
+            "page_title": "", 
+            "language": "en", 
+            "title": "Mission", 
+            "has_url_overwrite": false, 
+            "application_urls": "", 
+            "creation_date": "2011-04-22 19:19:04", 
+            "page": 7, 
+            "path": "mission", 
+            "meta_description": "", 
+            "slug": "mission"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "cms.title", 
+        "fields": {
+            "menu_title": "", 
+            "redirect": "", 
+            "meta_keywords": "", 
+            "page_title": "", 
+            "language": "en", 
+            "title": "About Us", 
+            "has_url_overwrite": false, 
+            "application_urls": "", 
+            "creation_date": "2011-04-22 19:19:52", 
+            "page": 8, 
+            "path": "about-us", 
+            "meta_description": "", 
+            "slug": "about-us"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "cms.title", 
+        "fields": {
+            "menu_title": "", 
+            "redirect": "", 
+            "meta_keywords": "", 
+            "page_title": "", 
+            "language": "en", 
+            "title": "Blog", 
+            "has_url_overwrite": false, 
+            "application_urls": "", 
+            "creation_date": "2011-04-22 19:20:31", 
+            "page": 9, 
+            "path": "blog", 
+            "meta_description": "", 
+            "slug": "blog"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "cms.title", 
+        "fields": {
+            "menu_title": "", 
+            "redirect": "", 
+            "meta_keywords": "", 
+            "page_title": "", 
+            "language": "en", 
+            "title": "Contact Us", 
+            "has_url_overwrite": false, 
+            "application_urls": "", 
+            "creation_date": "2011-04-22 19:20:58", 
+            "page": 10, 
+            "path": "contact", 
+            "meta_description": "", 
+            "slug": "contact"
+        }
+    }, 
+
+    {
         "pk": 1, 
         "model": "text.text", 
         "fields": {
@@ -564,6 +872,30 @@
         "fields": {
             "body": "<p>GoodCloud is currently a team of two people. We're the ones who answer your calls, add new features, and talk with you about your needs. &#160;Sounds a lot better than a call center halfway across the world, doesn't it?&#160;</p>", 
             "cmsplugin_ptr": 4
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "text.text", 
+        "fields": {
+            "body": "<p>Welcome to GoodCloud.</p>\\r\\n\\t<p>We make great software exclusively for nonprofits.</p>\\r\\n\\t\\r\\n\\t<div class=\\\"more_info\\\">\\r\\n\\t\\r\\n\\t<p>We're in active development on our first product, collaborating with a handful of amazing nonprofits.\\r\\n\\t\\t\\r\\n\\t</p><p>Interested in joining our feedback team? Sign up below, and we'll let you know when we open up more spots!</p></div>", 
+            "cmsplugin_ptr": 5
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "text.text", 
+        "fields": {
+            "body": "<h1>Nonprofits deserve the best software in the world.</h1>\\r\\n<p>There, we said it. Not hand-me-downs, not corporate products that don't fit, but a real solution designed around your needs and how you work. We started GoodCloud after watching first-hand some of our favorite nonprofits struggle with a hodge-podge of programs. We heard stories of daily frustrations, and listened to organizations that were pouring hours into fighting with computers instead of their missions. We said, \\\"Enough with that!\\\", and we started GoodCloud to fix it.</p>\\r\\n<h2>We &hearts; nonprofits.</h2>\\r\\n<p>We care deeply about you and your mission. You've made the decision to make the world a better place instead of making piles of money. We admire you. Nonprofits are doing the biggest things to make the world a better place. We're thankful to have you in the world, and we want to help you thrive.</p>\\r\\n<h2>We get nonprofits.</h2>\\r\\n<p>You're different. You're not a corporation. You're not a club. You're not a small business. We get that. Nobody else has to file Form 990's. Nobody else has to track volunteer hours. Nonprofits are unique, living organizations with different needs and ways of working. &nbsp;We're building software just for you.</p>\\r\\n<h2>We only serve nonprofits.</h2>\\r\\n<p>We're building you the best software in the world. But the cool part is, it's just for you. &nbsp;You can't use GoodCloud unless you're a nonprofit. &nbsp;Run a big company, and want our cool people-tracking software? Tough. Colleague have a corporate web-site editor that's harder to use than GoodCloud's? Tell them we're sorry - maybe it'll get better in a few years. GoodCloud isn't the side project of a giant software maker, it's a small and nimble company that works exclusively with nonprofits. &nbsp;We like it that way, and we think you will too.</p>", 
+            "cmsplugin_ptr": 6
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "text.text", 
+        "fields": {
+            "body": "<p>GoodCloud is currently a team of two people. We're the ones who answer your calls, add new features, and talk with you about your needs. &#160;Sounds a lot better than a call center halfway across the world, doesn't it?&#160;</p>", 
+            "cmsplugin_ptr": 7
         }
     }
 ]

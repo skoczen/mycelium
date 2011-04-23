@@ -423,9 +423,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
         self.open_window("/people/", "two")
         sel.select_window("two")        
         self.create_new_group_with_one_rule()
-        assert sel.is_element_present("css=rule:nth(0) left_side option:nth(6)")
+        
+        assert sel.is_element_present("css=rule:nth(0) left_side option:nth(7)")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(0)"), "---------")
-        self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(6)"), "have a testcategory2 tag that")
+        self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(7)"), "have a testcategory2 tag that")
 
         sel.select_window("")
         sel.click("css=.start_edit_btn")
@@ -437,9 +438,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
         sel.select_window("two")
         sel.refresh()
         sel.wait_for_page_to_load("3000")
-        assert sel.is_element_present("css=rule:nth(0) left_side option:nth(6)")
+        assert sel.is_element_present("css=rule:nth(0) left_side option:nth(7)")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(0)"), "---------")
-        self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(6)"), "volunteer status")
+        self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(7)"), "volunteer status")
 
 
 

@@ -146,7 +146,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         self.create_a_new_rule(left_side="have a Donor tag that", right_side="major")
         self.create_a_new_rule(left_side="have a Volunteer tag that", right_side="weekly")
         sel.click("css=rule:nth(1) .remove_rule_btn")
-        time.sleep(1)
+        time.sleep(3)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         sel.refresh()
@@ -252,13 +252,13 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         sel = self.selenium
         self.create_new_group()
         sel.click("css=.start_edit_btn")
-
+        time.sleep(40)
         start_people_count = sel.get_text("css=fragment[name=group_member_count] .count")
-        start_member_list = sel.do_command("getHTML",("css=fragment[name=group_member_list]"))
+        start_member_list = sel.do_command("getHTML",("css=fragment[name=group_member_list]",))
         self.create_a_new_rule(left_side="last volunteer shift", operator="is before", right_side="02/12/2011")
         time.sleep(5)
         self.assertNotEqual(start_people_count,sel.get_text("css=fragment[name=group_member_count] .count"))
-        self.assertNotEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]")))
+        self.assertNotEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]",)))
 
 
     def test_members_list_and_count_updates_after_rule_change(self):
@@ -266,11 +266,11 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         self.test_members_list_and_count_updates_after_rule_added()
 
         start_people_count = sel.get_text("css=fragment[name=group_member_count] .count")
-        start_member_list = sel.do_command("getHTML",("css=fragment[name=group_member_list]"))
+        start_member_list = sel.do_command("getHTML",("css=fragment[name=group_member_list]",))
         sel.type("css=rule:nth(0) right_side input[type=text]","01/10/2010")
         time.sleep(5)
         self.assertNotEqual(start_people_count,sel.get_text("css=fragment[name=group_member_count] .count"))
-        self.assertNotEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]")))
+        self.assertNotEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]",)))
 
 
     def test_members_list_and_count_updates_after_rule_removed(self):
@@ -279,14 +279,14 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         sel.click("css=.start_edit_btn")
 
         start_people_count = sel.get_text("css=fragment[name=group_member_count] .count")
-        start_member_list = sel.do_command("getHTML",("css=fragment[name=group_member_list]"))
+        start_member_list = sel.do_command("getHTML",("css=fragment[name=group_member_list]",))
         self.create_a_new_rule(left_side="last volunteer shift", operator="is before", right_side="02/12/2011")
         time.sleep(5)
         self.assertNotEqual(start_people_count,sel.get_text("css=fragment[name=group_member_count] .count"))
-        self.assertNotEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]")))
+        self.assertNotEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]",)))
         
         sel.click("css=rule:nth(0) .remove_rule_btn")
         time.sleep(5)        
         self.assertEqual(start_people_count,sel.get_text("css=fragment[name=group_member_count] .count"))
-        self.assertEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]")))
+        self.assertEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]",)))
 

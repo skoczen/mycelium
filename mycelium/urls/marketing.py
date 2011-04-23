@@ -28,7 +28,7 @@ if settings.DEBUG:
 
 
 # override for qi urls to allow indexing
-from qi_tookit import robots
+from qi_toolkit import robots
 urlpatterns += patterns('',          
     url(r'^robots.txt',     robots.robots_txt,      kwargs={'allow':True,},    name='robots_txt'),
 )

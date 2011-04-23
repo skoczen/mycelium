@@ -8,17 +8,20 @@ class AccountAuthBackend(object):
     """
 
     def authenticate(self, request=None, username=None, password=None):
-        print "authenticating"
-        print username
         try:
-            assert request != None
-            # """ If we want to support email login:"""
-            # user = User.objects.get(email=username)
-            # if user.check_password(password):
-            #     return user
-            user = User.objects.get(username=request.account.namespaced_username_for_username(username))
-            if user.check_password(password):
-                return user
+            if request != None:
+                # """ If we want to support email login:"""
+                # user = User.objects.get(email=username)
+                # if user.check_password(password):
+                #     return user
+                user = User.objects.get(username=request.account.namespaced_username_for_username(username))
+                if user.check_password(password):
+                    return user
+            else:
+                user = User.objects.get(username=username)
+                if user.check_password(password):
+                    return user
+
         except User.DoesNotExist:
             return None 
 

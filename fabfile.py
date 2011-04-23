@@ -21,7 +21,7 @@ setup_env_centos("mycelium","root",
 
 
 def dump_marketing_fixture():
-    magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdata --natural --exclude=contenttypes auth.User marketing_site cms mptt menus text  > %(git_path)s/%(project_name)s/apps/marketing_site/fixtures/marketing_site.json")
+    magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py dumpdata --natural --indent 4 --exclude=contenttypes marketing_site cms mptt menus text  > %(git_path)s/%(project_name)s/apps/marketing_site/fixtures/marketing_site.json")
 
 
 def repopulate_search_caches():
