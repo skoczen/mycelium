@@ -50,8 +50,10 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                         # redirect to login page
-                        # return HttpResponseRedirect("%s?next=%s" % (reverse("accounts:login"),request.path))
-                        return HttpResponseRedirect(reverse("accounts:login"))
+                        if request.path != reverse("accounts:login") and request.path != "/":
+                            return HttpResponseRedirect("%s?next=%s" % (reverse("accounts:login"),request.path))
+                        else:
+                            return HttpResponseRedirect(reverse("accounts:login"))
         else:
             
             # if there's no subdomain, but tis wasn't handled by the SubdomainURLRoutingMiddleware, something weird is happening. Bail.

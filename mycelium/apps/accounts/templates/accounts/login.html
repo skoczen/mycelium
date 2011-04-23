@@ -16,6 +16,6 @@
 		{% endif %}
 		<input type="submit" value="Log In" class="mycelium_btn login_btn"/>
 	</actions>
-	<input type="hidden" name="next" value="{{ next }}" />
+	<input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{% endif %}" />
 	</form>
 {% endblock %}

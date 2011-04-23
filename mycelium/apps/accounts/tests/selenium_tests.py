@@ -144,7 +144,20 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         time.sleep(30)
         assert sel.is_text_present("not found")
 
-    
+    def test_that_logging_in_takes_you_to_the_people_page(self):
+        sel = self.selenium
+        self.go_to_the_login_page()
+        self.log_in()
+        self.assert_login_succeeded()
+        assert sel.is_element_present("link=New Person")
+
+    def test_that_logging_in_after_trying_to_reach_a_specific_page_takes_you_to_that_page(self):
+        sel = self.selenium
+        # self.go_to_the_login_page()
+        self.open("/more")
+        self.log_in()
+        self.assert_login_succeeded()
+        assert sel.is_text_present("Update billing and account information")
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
