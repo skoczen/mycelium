@@ -5,45 +5,7 @@ from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
 from django.conf import settings
-
-class AccountTestAbstractions(object):
-    def create_demo_site(self, name="test"):
-        return Factory.create_demo_site(name,quick=True)
-
-    def go_to_the_login_page(self, site="test"):
-        
-        sel = self.selenium
-        sel.open("http://%s.localhost:%s" % (site,settings.LIVE_SERVER_PORT))
-        sel.wait_for_page_to_load("30000")
-
-    def log_in(self, ua=None, with_assert=True):
-        sel = self.selenium
-        if not ua:
-            username = "admin"
-        else:
-            username = ua.denamespaced_username
-        
-        sel.type("css=input[name=username]",username)
-        sel.type("css=input[name=password]",username)
-        sel.click("css=.login_btn")
-        sel.wait_for_page_to_load("30000")
-        if with_assert:
-            assert sel.is_text_present("Powered by")
-    
-    def assert_login_failed(self):
-        sel = self.selenium
-        assert sel.is_text_present("Your username and password didn't match")
-
-    def assert_login_succeeded(self):
-        sel = self.selenium
-        assert sel.is_text_present("Powered by")
-
-    def open(self, url, site="test"):
-        from django.conf import settings
-        sel = self.selenium
-        sel.open("http://%s.localhost:%s%s" % (site,settings.LIVE_SERVER_PORT,url))
-        sel.wait_for_page_to_load("30000")
-
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
     
 class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
@@ -51,7 +13,6 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
     def setUp(self, *args, **kwargs):
         self.a1 = self.create_demo_site()
         self.verificationErrors = []
-
 
     def test_that_logging_in_works(self):
         self.go_to_the_login_page()
@@ -136,7 +97,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
         a2 = self.create_demo_site("test2")
         ua = Factory.useraccount(account=a2)
-        self.go_to_the_login_page("test2")
+        self.go_to_the_login_page(site="test2")
         self.log_in(ua=ua)
         self.open(person_url, site="test2")
         assert sel.is_text_present("not found")
@@ -157,7 +118,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
         a2 = self.create_demo_site("test2")
         ua = Factory.useraccount(account=a2)
-        self.go_to_the_login_page("test2")
+        self.go_to_the_login_page(site="test2")
         self.log_in(ua=ua)
         self.open(url, site="test2")
         assert sel.is_text_present("not found")
@@ -175,12 +136,12 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         url = sel.get_location()
         url = url[url.find(":%s/" % settings.LIVE_SERVER_PORT)+5:]
 
-
         a2 = self.create_demo_site("test2")
         ua = Factory.useraccount(account=a2)
-        self.go_to_the_login_page("test2")
+        self.go_to_the_login_page(site="test2")
         self.log_in(ua=ua)
         self.open(url, site="test2")
+        time.sleep(30)
         assert sel.is_text_present("not found")
 
     

@@ -21,5 +21,3 @@ TEMPLATE_DEBUG = DEBUG
 # turn on to test postsync with live media
 # MEDIASYNC['SERVE_REMOTE'] = True
 # MEDIA_URL = CDN_MEDIA_URL
-
-SITE_ID = 1

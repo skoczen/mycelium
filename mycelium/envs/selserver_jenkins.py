@@ -14,4 +14,3 @@ DATABASES = {
 # turn on to test pre-deploy
 MEDIASYNC['EMULATE_COMBO'] = True
 SOUTH_TESTS_MIGRATE = False
-SITE_ID = 1

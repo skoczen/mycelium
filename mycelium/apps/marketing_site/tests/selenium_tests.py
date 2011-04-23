@@ -9,6 +9,7 @@ class TestMarketingSite(QiSeleniumTestCase):
     def setUp(self):
         from django.contrib.sites.models import Site
         s = Site.objects.get(pk=1)
+        s.id = 2
         s.domain = "localhost"
         s.name = "localhost"
         s.save()
