@@ -1,0 +1,27 @@
+{% extends "accounts/base_login.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}Register for an account at GoodCloud{% endblock %}
+{% block head %}{{block.super}}
+{% js "/li}
+{% endblock %}
+
+{% block dialog_content %}
+We're proud to serve you.
+Register for an account with GoodCloud!
+<form action="" method="POST" id="signup_form" class="edit_mode_on" />{% csrf_token %}
+
+{% editable_field_only account_form.name %}
+{% editable_field_only account_form.subdomain %}
+Organization Name
+Address you want (mygreatnonprofit.goodcloud.com)
+
+{% editable_field_only user_form.first_name %}
+{% editable_field_only user_form.email %}
+{% editable_field_only user_form.username %}
+{% editable_field_only user_form.password %}
+
+<input type="submit" id="submit_button" class="mycelium_btn" value="Create our Account" />
+
+</form>
+
+{% endblock %}

@@ -12,16 +12,15 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
     def redirect_to_public_home(self,request):
         from django.contrib.sites.models import Site
         site = Site.objects.get(pk=settings.SITE_ID)
-        if request.is_secure():
-            protocol = "https://"
-        else:
-            protocol = "http://"
-        return HttpResponseRedirect("%s%s" % (protocol, site.domain))
+        return HttpResponseRedirect("%s%s" % (request.protocol, site.domain))
             
 
     def process_request(self, request, *args, **kwargs):
         super(AccountAuthMiddleware,self).process_request(request, *args, **kwargs)
-
+        if request.is_secure():
+            request.protocol = "https://"
+        else:
+            request.protocol = "http://"
         
         subdomain = getattr(request, 'subdomain', False)
     

@@ -1,5 +1,4 @@
 # This is ripped directly from django's contrib.auth.views, but has been modified to pass the request on to the form consistently.
-
 import re
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME

@@ -10,7 +10,7 @@ urlpatterns = patterns('',
 
     (r'^',              include('marketing_site.urls',      app_name="marketing_site",  namespace="marketing_site"),),
     (r'^',              include('email_list.urls')),                                    
-    (r'^accounts/',     include('accounts.urls',            app_name="accounts",        namespace="accounts")),    
+    (r'^accounts/',     include('accounts.urls.marketing',  app_name="accounts",        namespace="accounts")),    
     
     (r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodcloud.posterous.com"}, 'blog_home'),
     (r'^administration/', include(admin.site.urls)),

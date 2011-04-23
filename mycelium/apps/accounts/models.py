@@ -13,12 +13,15 @@ class Plan(models.Model):
     class Meta(object):
         ordering = ("name",)
 
+    @classmethod
+    def monthly_plan(cls):
+        return cls.objects.get_or_create(name="Monthly")[0]
 
 class Account(models.Model):
-    name = models.CharField(max_length=255)
-    subdomain = models.CharField(max_length=255, unique=True, db_index=True)
+    name = models.CharField(max_length=255, verbose_name="Organization Name")
+    subdomain = models.CharField(max_length=255, unique=True, db_index=True, verbose_name="GoodCloud address (myorganization.agodocloud.com)")
     is_active = models.BooleanField(default=True)
-    plan = models.ForeignKey(Plan)
+    plan = models.ForeignKey(Plan, blank=True)
 
     def __unicode__(self):
         return "%s" % self.name
@@ -59,6 +62,17 @@ class AccessLevel(models.Model):
 
     def __unicode__(self):
         return "%s" % self.name
+
+    @classmethod
+    def admin(cls):
+        return cls.objects.get(name__iexact="Admin")
+    @classmethod
+    def staff(cls):
+        return cls.objects.get(name__iexact="Staff")
+
+    @classmethod
+    def volunteer(cls):
+        return cls.objects.get(name__iexact="Volunteer")
 
     class Meta(object):
         ordering = ("name",)

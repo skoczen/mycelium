@@ -2,9 +2,10 @@ from django.forms import ModelForm, ModelChoiceField
 from django.forms.models import BaseModelFormSet, BaseInlineFormSet
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from accounts.models import Account
+from accounts.models import Account, Plan, AccessLevel
 
 def adjust_queryset_for_account_based_models(f, *args, **kwargs):
     if hasattr(f,"queryset"):
@@ -118,3 +119,22 @@ class AccountAuthenticationForm(AuthenticationForm):
 
     def get_user(self):
         return self.user_cache
+
+
+class NewAccountForm(ModelForm):
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        cleaned_data["plan"] = Plan.monthly_plan()
+        
+        return cleaned_data
+
+    class Meta:
+        model = Account
+        fields = ("name", "subdomain", "plan")
+
+class NewUserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "email", "password", "first_name",)
+    
+    
