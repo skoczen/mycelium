@@ -13,7 +13,7 @@ BeautifulSoup==3.2.0
 -e git://github.com/skoczen/django-form-designer.git@b9d1716acbda950e440fb13e877d3836e7b0a124#egg=form_designer-3-py2.6-dev
 
 django-extensions==0.6
--e git://github.com/skoczen/qi-toolkit.git@adb28f440d4b8194a7e40c8faa989ace796b2bdd#egg=qi_toolkit-0.7-py2.6-dev
+-e git://github.com/skoczen/qi-toolkit.git@a7c7d2005da14a4ec33711b73f94652df18ffced#egg=qi_toolkit-0.7-py2.6-dev
 python-crontab==0.9.5
 -e git://github.com/clintecker/django-google-analytics.git@e835a1e1a0eb7d2ce3008daea65c64ad2b539f98#egg=google_analytics-0.2-py2.6-dev
 
