@@ -35,6 +35,7 @@ CACHES = {
 }
 
 # CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+CACHE_BACKEND = 'johnny.backends.memcached.MemcachedCache://127.0.0.1:11211'
 EMAIL_BACKEND = 'django_ses.SESBackend'
 
 SESSION_COOKIE_DOMAIN = "agoodcloud.com"
