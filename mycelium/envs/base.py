@@ -57,6 +57,8 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'johnny.middleware.LocalStoreClearMiddleware',
+    'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -220,6 +222,9 @@ SOUTH_LOGGING_FILE = "/dev/null"
 
 THUMBNAIL_FORMAT = "PNG"
 THUMBNAIL_COLORSPACE = None
+
+# jonny cache
+JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_mycelium'
 
 # celery / rabbitmq
 BROKER_HOST = "localhost"
