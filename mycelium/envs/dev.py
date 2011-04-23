@@ -1,6 +1,7 @@
 from base import *
 ENV = "DEV"
 ROLE = ENV
+SITE_ID = 2
 
 DATABASES = {
     'default': {
@@ -12,7 +13,20 @@ DATABASES = {
         'PORT': '',
     },
 }
-
+# use in-memory for tests
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'mycelium',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': '',
+        },
+    }
+if 'test' in sys.argv or 'selenium_tests' in sys.argv:
+    CELERY_ALWAYS_EAGER = True
 
 CACHES = {
     'default': {
@@ -23,7 +37,7 @@ CACHES = {
 }
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 
-
+SESSION_COOKIE_DOMAIN = "localhost"
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 SEND_BROKEN_LINK_EMAILS = False

@@ -29,4 +29,4 @@ GOOGLE_KEY = 'ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRi_j0U6kJrkFvY4-OX2XYmEAa76BQkakI7eN
 SELENIUM_BROWSER_COMMAND = "*firefox"
 VIRTUALENV_PATH = "/var/lib/hudson/jobs/mycelium/workspace/ve"
 SELENIUM_TEST_SERVER_SETTINGS="selserver_jenkins"
-# SOUTH_TESTS_MIGRATE = False
+SOUTH_TESTS_MIGRATE = False

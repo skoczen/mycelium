@@ -1,6 +1,6 @@
 from django.template import RequestContext
 from django.conf import settings
-from django.shortcuts import render_to_response, get_object_or_404
+from accounts.managers import get_or_404_by_account
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -21,9 +21,6 @@ def list(request):
 def start(request):
     # TODO: this is obnoxious.  Fix it.
     section = "more"
-    people = Person.objects.order_by("?").all()
-    birthdates = [Factory.rand_date(start_year=1910, end_year=1992) for i in range(0,50)]
-    ages = [Factory.rand_int(18,102) for i in range(0,50)]
     return locals()
 
 @render_to("import/review.html")

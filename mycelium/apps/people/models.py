@@ -2,16 +2,19 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from taggit.managers import TaggableManager
+from accounts.models import AccountBasedModel
 
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
+
+
 
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING = _("No Name")
 from generic_tags.models import TagSet, Tag
 
-class OrganizationType(models.Model):
+class OrganizationType(AccountBasedModel, models.Model):
     internal_name = models.CharField(max_length=255)
     friendly_name = models.CharField(max_length=255)
 
@@ -55,7 +58,7 @@ class PhoneNumberBase(models.Model):
         abstract = True
 
 
-class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumberBase, EmailAddressBase):
+class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumberBase, EmailAddressBase):
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     
@@ -119,7 +122,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
 
     @property
     def tagsets(self):
-        return TagSet.objects.all()
+        return TagSet.objects_by_account(self.account).all()
 
     @property
     def search_result_row(self):
@@ -127,7 +130,7 @@ class Person(SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumbe
         return self.peopleandorganizationssearchproxy_set.all()[0].search_result_row
 
 
-class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
+class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
 
     search_fields = ["full_name","searchable_primary_phone_number"]
@@ -167,7 +170,7 @@ class Organization(SimpleSearchableModel, AddressBase, TimestampModelMixin):
     def __unicode__(self):
         return "%s" % (self.name,)
 
-class Employee(TimestampModelMixin):
+class Employee(AccountBasedModel, TimestampModelMixin):
     person = models.ForeignKey(Person, related_name="jobs")
     role = models.CharField(max_length=255, blank=True, null=True, verbose_name="Title")
     email = models.CharField(max_length=255, blank=True, null=True,verbose_name="Email")
@@ -219,9 +222,10 @@ class SearchableItemProxy(SimpleSearchableModel):
         put_in_cache_forever(self.cache_name, ss)
         super(SearchableItemProxy,self).save(*args,**kwargs)
 
+
 from django.template.loader import render_to_string
 from people.tasks import *
-class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
+class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
     SEARCH_GROUP_NAME = "people_and_orgs"
     person = models.ForeignKey(Person, blank=True, null=True)
     organization = models.ForeignKey(Organization, blank=True, null=True)
@@ -297,19 +301,19 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         
     @classmethod
     def people_record_changed(cls, sender, instance, created=None, *args, **kwargs):
-        proxy, nil = cls.objects.get_or_create(person=instance, search_group_name=cls.SEARCH_GROUP_NAME)
+        proxy, nil = cls.raw_objects.get_or_create(account=instance.account, person=instance, search_group_name=cls.SEARCH_GROUP_NAME)
         cache.delete(proxy.cache_name)
         proxy.save()
 
     @classmethod
     def organization_record_changed(cls, sender, instance, created=None, *args, **kwargs):
-        proxy, nil = cls.objects.get_or_create(organization=instance, search_group_name=cls.SEARCH_GROUP_NAME)
+        proxy, nil = cls.raw_objects.get_or_create(account=instance.account, organization=instance, search_group_name=cls.SEARCH_GROUP_NAME)
         cache.delete(proxy.cache_name)
         proxy.save()
 
     @classmethod
     def group_record_changed(cls, sender, instance, created=None, *args, **kwargs):
-        proxy, nil = cls.objects.get_or_create(group=instance, search_group_name=cls.SEARCH_GROUP_NAME)
+        proxy, nil = cls.raw_objects.get_or_create(account=instance.account, group=instance, search_group_name=cls.SEARCH_GROUP_NAME)
         cache.delete(proxy.cache_name)
         proxy.save()
 
@@ -329,16 +333,42 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     @classmethod
     def populate_cache(cls):
         from groups.models import Group
-        [cls.people_record_changed(Person,p) for p in Person.objects.all()]
-        [cls.organization_record_changed(Organization,o) for o in Organization.objects.all()]
-        [cls.group_record_changed(Group,g) for g in Group.objects.all()]
+        [cls.people_record_changed(Person,p) for p in Person.raw_objects.all()]
+        [cls.organization_record_changed(Organization,o) for o in Organization.raw_objects.all()]
+        [cls.group_record_changed(Group,g) for g in Group.raw_objects.all()]
 
     @classmethod
     def resave_all_people_and_organizations(cls):
         from groups.models import Group
-        [p.save() for p in Person.objects.all()]
-        [o.save() for o in Organization.objects.all()]
-        [g.save() for g in Group.objects.all()]
+        [p.save() for p in Person.raw_objects.all()]
+        [o.save() for o in Organization.raw_objects.all()]
+        [g.save() for g in Group.raw_objects.all()]
+
+
+    # overridden to trust accounts
+    @classmethod
+    def search(cls, account, query, delimiter=" ", ignorable_chars=None):
+        # Accept a list of ignorable characters to strip from the query (dashes in phone numbers, etc)
+        if ignorable_chars:
+            ignorable_re = re.compile("[%s]+"%("".join(ignorable_chars)))
+            query = ignorable_re.sub('',query)
+        
+        # Split the querystring by a given delimiter.
+        if delimiter and delimiter != "":
+            queries = query.split(delimiter)
+        else:
+            queries = [query]
+        
+        print account
+        print account
+        results = cls.objects_by_account(account).all()
+        for q in queries:
+            if q != "":
+                results = results.filter(qi_simple_searchable_search_field__icontains=q)
+
+        return results
+
+
 
     class Meta(SearchableItemProxy.Meta):
         verbose_name_plural = "PeopleAndOrganizationsSearchProxies"

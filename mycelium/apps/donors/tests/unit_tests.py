@@ -3,15 +3,18 @@ from nose.tools import istest
 import datetime
 from donors.models import Donation
 
+
 @istest
 def test_donations_by_year_returns_sanely():
-    person = Factory.person()
+    account = Factory.account()
+    person = Factory.person(account)
     today = datetime.date.today()
     
     
-    d1 = Donation.objects.create(donor=person.donor, amount=5, date=today)
-    d2 = Donation.objects.create(donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=1))
-    d3 = Donation.objects.create(donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=360))    
+        
+    d1 = Donation.raw_objects.create(account=account, donor=person.donor, amount=5, date=today)
+    d2 = Donation.raw_objects.create(account=account, donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=1))
+    d3 = Donation.raw_objects.create(account=account, donor=person.donor, amount=41, date=datetime.datetime.now()-datetime.timedelta(days=360))    
 
 
     target = [{'donations': [d1, d2],
@@ -28,7 +31,7 @@ def test_donations_by_year_returns_sanely():
 
 @istest
 def test_donations_by_year_for_non_donors_returns_properly():
-    person = Factory.person()
+    person = Factory.person(Factory.create_demo_site("test1", quick=True, delete_existing=True))
     target = []
 
     assert person.donor.donations_by_year == target

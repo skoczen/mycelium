@@ -8,7 +8,9 @@ from picklefield.fields import PickledObjectField
 from rules import NotYetImplemented, IncompleteRuleException
 from generic_tags.models import Tag
 
-class Operator(TimestampModelMixin):
+from accounts.models import AccountBasedModel
+
+class Operator(AccountBasedModel, TimestampModelMixin):
     display_name = models.CharField(max_length=255)
     query_string_partial = models.CharField(max_length=255)
     use_filter = models.BooleanField(default=True) # if False, use exclude
@@ -20,7 +22,7 @@ class Operator(TimestampModelMixin):
     def __unicode__(self):
         return "%s" % self.display_name
 
-class RightSideType(TimestampModelMixin):
+class RightSideType(AccountBasedModel, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
 
     def __unicode__(self):
@@ -40,7 +42,7 @@ class RightSideType(TimestampModelMixin):
 
 
 
-class LeftSide(TimestampModelMixin):
+class LeftSide(AccountBasedModel, TimestampModelMixin):
     display_name = models.CharField(max_length=255)
     query_string_partial = models.TextField()
     allowed_operators = models.ManyToManyField(Operator)
@@ -126,17 +128,17 @@ class Rule(TimestampModelMixin):
 
             return filter_str
 
-    @property
-    def queryset(self):
-        """Returns a working queryset of self.target_model's class, filtered/excluded 
-           as appropriate"""
-        if not self.target_model:
-            raise IncompleteRuleException, "No target model defined!"
-        else:
-            return eval("self.target_model.objects.%s" % self.queryset_filter_string)
+    # @property
+    # def queryset(self):
+    #     """Returns a working queryset of self.target_model's class, filtered/excluded 
+    #        as appropriate"""
+    #     if not self.target_model:
+    #         raise IncompleteRuleException, "No target model defined!"
+    #     else:
+    #         return eval("self.target_model.objects.%s" % self.queryset_filter_string)
 
-    def queryset_callable(self):
-        return self.queryset
+    # def queryset_callable(self):
+    #     return self.queryset
 
 
 class RuleGroup(models.Model):
@@ -164,48 +166,29 @@ class RuleGroup(models.Model):
         return self.rules_set.create()
 
     @property
-    def members(self):
+    def members(self, request=None):
         # TODO: cache/improve the speed.
+        if hasattr(self.target_model,"raw_objects"):
+            objects_str = "objects_by_account(self.account)"
+        else:
+            objects_str = "objects"
 
         results = ""
         if self.has_a_valid_rule:
             if self.rules_boolean:
-                results = "self.target_model.objects.all()"
+                results = "self.target_model.%s.all()" % objects_str
                 for r in self.rules:
                     if r.is_valid:
                         results = "%s.%s" % (results, r.queryset_filter_string)
             else:
-                results = "self.target_model.objects.none()"
+                results = "self.target_model.%s.none()" % objects_str
                 for r in self.rules:
                     if r.is_valid:
-                        results = "%s | %s.%s " % (results, "self.target_model.objects", r.queryset_filter_string)
+                        results = "%s | %s%s.%s " % (results, "self.target_model.", objects_str,  r.queryset_filter_string)
         else:
-            return self.target_model.objects.none()
+            return eval("self.target_model.%s.none()" % objects_str )
 
         qs = eval(results).distinct().all()
-
-        # results = None
-        # if self.has_a_valid_rule:
-        #     if self.rules_boolean:
-        #         for r in self.rules:
-        #             if r.is_valid:
-        #                 if not results:
-        #                     results = "%s" % r.queryset_filter_string
-        #                 else:
-        #                     results = "%s & %s" % (results, r.queryset_filter_string)
-                
-        #     else:
-        #         for r in self.rules:
-        #             if r.is_valid:
-        #                 if not results:
-        #                     results = "%s" % r.queryset_filter_string
-        #                 else:
-        #                     results = "%s | %s" % (results, r.queryset_filter_string)
-        # else:
-        #     return self.target_model.objects.none()
-        
-        # print results
-        # qs = eval("self.target_model.objects.filter(%s)" % results).distinct().all()
 
         return qs
 

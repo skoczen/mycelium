@@ -72,7 +72,7 @@ def field_value(field):
         if isinstance(field.field, FileField) and field.data is None: 
             val = field.form.initial.get(field.name, field.field.initial) 
         else: 
-            val = field.data 
+            val = field.data
     if val is None: 
         val = '' 
 

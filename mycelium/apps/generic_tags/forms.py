@@ -1,13 +1,14 @@
 from django.forms import ModelForm, RadioSelect
 from generic_tags.models import TagSet, Tag
+from accounts.forms import AccountBasedModelForm
 
-class TagSetForm(ModelForm):
+class TagSetForm(AccountBasedModelForm):
     class Meta:
         model = TagSet
-        fields = ("name", )
+        fields = ("account", "name", )
 
-class TagForm(ModelForm):
+class TagForm(AccountBasedModelForm):
     class Meta:
         model = Tag
-        fields = ("name", )
+        fields = ("account", "name", )
 

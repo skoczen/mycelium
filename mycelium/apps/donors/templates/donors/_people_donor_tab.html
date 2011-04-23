@@ -46,7 +46,7 @@
 		<tr class="year_overview">
 			<td class="year">{{year_of_donations.year}}</td>
 			<td class="total_number_of_donations">{{year_of_donations.total_number_of_donations|floatformat:"0"}} donation{{year_of_donations.total_number_of_donations|pluralize}}</td>
-			<td class="total_donations">totalling ${{year_of_donations.total_donations|floatformat:"2"}}</td>
+			<td class="total_donations">totalling ${{year_of_donations.total_donations|intcomma}}</td>
 			<td class="details_link"><a href="#" class="year_details_link">See details</a></td>
 		</tr>
 		<tr class="year_of_donations">

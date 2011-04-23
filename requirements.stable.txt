@@ -10,12 +10,12 @@ pyparsing==1.5.5
 django-xmlrpc==0.1.3
 akismet==0.2.0
 BeautifulSoup==3.2.0
--e git://github.com/skoczen/django-form-designer.git@b9d1716acbda950e440fb13e877d3836e7b0a124#egg=form_designer-dev
+-e git://github.com/skoczen/django-form-designer.git@b9d1716acbda950e440fb13e877d3836e7b0a124#egg=form_designer-3-py2.6-dev
 
 django-extensions==0.6
--e git://github.com/skoczen/qi-toolkit.git@8cac2a121ddd42247d4d654daaec7d2851c52a68#egg=qi_toolkit-dev
+-e git://github.com/skoczen/qi-toolkit.git@8cac2a121ddd42247d4d654daaec7d2851c52a68#egg=qi_toolkit-0.7-py2.6-dev
 python-crontab==0.9.5
--e git://github.com/clintecker/django-google-analytics.git@e835a1e1a0eb7d2ce3008daea65c64ad2b539f98#egg=google_analytics-dev
+-e git://github.com/clintecker/django-google-analytics.git@e835a1e1a0eb7d2ce3008daea65c64ad2b539f98#egg=google_analytics-0.2-py2.6-dev
 
 django-pagination==1.0.7
 sorl-thumbnail==11.01
@@ -26,14 +26,14 @@ ipython==0.10.1
 django-nose==0.1.2
 nose-exclude==0.1.5
 django-nose-selenium==0.6
--e git://github.com/Almad/django-sane-testing.git@ae820c77cfa5ef9715600046966b46c81f1ee249#egg=djangosanetesting-dev
+-e git://github.com/Almad/django-sane-testing.git@ae820c77cfa5ef9715600046966b46c81f1ee249#egg=djangosanetesting-0.5.10-py2.6-dev
 celery==2.2.2
 django-celery==2.2.2
--e git://github.com/kmmbvnr/django-jenkins.git@78c5716da67fe1c2270b5b6aa68391f44ac2387a#egg=django_jenkins-dev
+-e git://github.com/kmmbvnr/django-jenkins.git@78c5716da67fe1c2270b5b6aa68391f44ac2387a#egg=django_jenkins-0.10.0-py2.6-dev
 coverage==3.4
--e git://github.com/skoczen/nose-xcover.git@cccc0e83ce2ed117903768587177a937c144e152#egg=nosexcover-dev
+-e git://github.com/skoczen/nose-xcover.git@cccc0e83ce2ed117903768587177a937c144e152#egg=nosexcover-1.0.4-py2.6-dev
 
--e hg+https://django-dumpdb.googlecode.com/hg/django-dumpdb@701c65cd9690a7ab28db39397f489b5b966163bd#egg=django_dumpdb-dev
+-e hg+https://django-dumpdb.googlecode.com/hg/django-dumpdb@701c65cd9690a7ab28db39397f489b5b966163bd#egg=django_dumpdb-tip
 
 django-taggit==0.9.2
 django-taggit-templatetags==0.4.6dev
@@ -48,23 +48,15 @@ django-picklefield==0.1.9
 CherryPy==3.1.2
 Django==1.2.5
 Fabric==0.9.3
-GitPython
+GitPython==0.3.1
 MySQL-python==1.2.3
-
-#Numeric==24.2
-#distribute==0.6.12
-#psycopg2==2.3.2
-#pycurl==7.19.0
-#pysqlite==2.6.0
-
 South==0.7.3
 amqplib==0.6.1
 anyjson==0.3.1
 async==0.6.1
-
 django-classy-tags==0.3.3.1
 django-mailer==0.1.0
--e hg+https://bitbucket.org/david/django-storages@2b44d79635e6c65e917ef5fb3111c9ed2e9a86b7#egg=django_storages-dev
+-e hg+https://bitbucket.org/david/django-storages@2b44d79635e6c65e917ef5fb3111c9ed2e9a86b7#egg=django_storages-tip
 django-tagging==0.3.1
 django-templatetag-sugar==0.1
 docutils==0.6
@@ -76,12 +68,9 @@ logilab-astng==0.21.1
 logilab-common==0.55.0
 odict==1.4.1
 paramiko==1.7.6
-
 pyPdf==1.12
 pycrypto==2.3
-
 pylint==0.23.0
-
 pytz==2010h
 reportlab==2.4
 roman==1.4.0

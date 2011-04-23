@@ -1,0 +1,51 @@
+[
+    {
+        "pk": 1, 
+        "model": "accounts.plan", 
+        "fields": {
+            "name": "Monthly"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "accounts.plan", 
+        "fields": {
+            "name": "Yearly"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "accounts.plan", 
+        "fields": {
+            "name": "Early Partner, Monthly"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "accounts.plan", 
+        "fields": {
+            "name": "Early Partner, Yearly"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "accounts.accesslevel", 
+        "fields": {
+            "name": "Admin"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "accounts.accesslevel", 
+        "fields": {
+            "name": "Staff"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "accounts.accesslevel", 
+        "fields": {
+            "name": "Volunteer"
+        }
+    }
+]

@@ -2,56 +2,24 @@
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
 from test_factory import Factory
-from people.tests.selenium_tests import PeopleTestAbstractions
-from rules.tasks import populate_rule_components
+from people.tests.selenium_abstractions import PeopleTestAbstractions
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
+from groups.tests.selenium_abstractions import GroupTestAbstractions
+from rules.tasks import populate_rule_components_for_an_account
 
-class GroupTestAbstractions(object):
 
-    def create_person_and_go_to_donor_tab(self):
-        self.create_john_smith()
-        self.switch_to_donor_tab()
-    
-    def create_new_group(self, new_name="Test Group"):
-        sel = self.selenium
-        sel.open("/people")
-        sel.wait_for_page_to_load("30000")
-        self.click_and_wait("link=New Group")
-        sel.type("css=#basic_info_form #id_name",new_name)
-        time.sleep(4)
-        self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
-        sel.refresh()
-        sel.wait_for_page_to_load("30000")
-        sel.click("css=.edit_done_btn")
-        time.sleep(1)
-        self.assertEqual(new_name, sel.get_text("css=#container_id_name .view_field"))
 
-    def create_new_group_and_return_to_search(self, new_name="Test Group"):
-        self.create_new_group(new_name=new_name)
-        self.click_and_wait("link=Back to All People and Groups")
-    
-    def create_a_new_rule(self, left_side="have a General tag that", operator="is exactly", right_side="test tag"):
-        sel = self.selenium
-        time.sleep(1)
-        sel.click("css=.add_new_rule_btn")
-        time.sleep(0.25)
-        sel.select("css=rule:not(.empty):last left_side select", "label=%s" %left_side)
-        sel.select("css=rule:not(.empty):last operator select", "label=%s" %operator)
-        sel.type("css=rule:not(.empty):last right_side input", right_side)
-        time.sleep(2)
-
-    def create_new_group_with_one_rule(self):
-        sel = self.selenium
-        self.create_new_group()
-        sel.click("css=.start_edit_btn")
-        self.create_a_new_rule(left_side="have any tag that",operator="contains",right_side="a")
-        
-
-class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions):
-    selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
+class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
+    # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        populate_rule_components()
+        self.account = self.setup_for_logged_in_with_no_data()
+        populate_rule_components_for_an_account(self.account)
         self.verificationErrors = []
+
+    # def tearDown(self):
+    #     self.account.delete()
+
 
     def test_that_the_new_group_page_loads(self):
         sel = self.selenium
@@ -178,7 +146,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         self.create_a_new_rule(left_side="have a Donor tag that", right_side="major")
         self.create_a_new_rule(left_side="have a Volunteer tag that", right_side="weekly")
         sel.click("css=rule:nth(1) .remove_rule_btn")
-        time.sleep(1)
+        time.sleep(3)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         sel.refresh()
@@ -235,17 +203,21 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
     
     
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions):
-    selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
+    # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        populate_rule_components()
-        self.people = [Factory.volunteer_history() for i in range(1,Factory.rand_int(30,100))]
+        self.account = self.setup_for_logged_in()
+        populate_rule_components_for_an_account(self.account)
+        self.people = [Factory.volunteer_history(self.account) for i in range(1,Factory.rand_int(30,100))]
         self.verificationErrors = []
+
+    # def tearDown(self):
+    #     self.account.delete()
     
     def test_that_blank_groups_show_at_the_top_of_the_search(self):
         sel = self.selenium
-        sel.open("/people/")
+        self.open("/people/")
         assert not sel.is_text_present("No Name")
         sel.click("link=New Group")
         sel.wait_for_page_to_load("30000")
@@ -280,7 +252,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         sel = self.selenium
         self.create_new_group()
         sel.click("css=.start_edit_btn")
-
+        time.sleep(40)
         start_people_count = sel.get_text("css=fragment[name=group_member_count] .count")
         start_member_list = sel.do_command("getHTML",("css=fragment[name=group_member_list]",))
         self.create_a_new_rule(left_side="last volunteer shift", operator="is before", right_side="02/12/2011")

@@ -32,9 +32,11 @@
 		<a href="#">Donors</a>
 		{# <a href="#">Fund</a> #}
 		{# <a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports</a> #}
-		<a href="#">Communicate</a>
+		{# <a href="#">Communicate</a> #}
 		{# <a href="#">Events</a> #}
 		<a href="{% url core:more_menu %}" class="{% if section == "more" %}current{% endif %}">More</a>
+		<a href="{% url accounts:logout %}" >Logout <small>({{request.user.get_profile.denamespaced_username}})</small></a>
+		
 	{% endspaceless %}</main_nav>
 	{% endblock %}
 	

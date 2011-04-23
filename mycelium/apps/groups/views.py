@@ -1,5 +1,6 @@
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from accounts.managers import get_or_404_by_account
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
@@ -14,24 +15,25 @@ def _render_people_group_tab(context):
 
 
 
-def _basic_forms(group, request):
+def _basic_forms(group, request, no_data=False):
     data = None
-    if request and request.method == "POST":
+    if not no_data and request and request.method == "POST":
         data = request.POST
     
-    group_form = GroupForm(data, instance=group)
-    rule_formset = GroupRuleFormset(data, instance=group)
+    account = request.account
+    group_form = GroupForm(data, instance=group, account=account)
+    rule_formset = GroupRuleFormset(data, instance=group, account=account)
     return group_form, rule_formset
 
 @render_to("groups/group.html")
 def group(request, group_id):
-    group = Group.objects.get(pk=group_id)
+    group = get_or_404_by_account(Group, request.account, group_id)
     form, rule_formset = _basic_forms(group, request)
     return locals()
 
 @json_view
 def save_basic_info(request, group_id):
-    group = Group.objects.get(pk=group_id)
+    group = get_or_404_by_account(Group, request.account, group_id)
     form, rule_formset = _basic_forms(group, request)
     success = False
 
@@ -42,14 +44,14 @@ def save_basic_info(request, group_id):
         group = form.save()
         success = True
 
-    form, rule_formset = _basic_forms(group, None)
+    form, rule_formset = _basic_forms(group, request, no_data=True)
 
     return {"success":success}
 
 
 
 def new_group(request):
-    group = Group.objects.create()
+    group = Group.raw_objects.create(account=request.account)
     return HttpResponseRedirect("%s?edit=ON" %reverse("groups:group",args=(group.pk,)))
     
 
@@ -57,7 +59,7 @@ def delete_group(request):
     try:
         if request.method == "POST":
             pk = request.POST['group_pk']
-            group = Group.objects.get(pk=pk)
+            group = get_or_404_by_account(Group, request.account, pk)
             group.delete()
     except:
         pass
@@ -66,8 +68,7 @@ def delete_group(request):
 
 @json_view
 def group_members_partial(request, group_id):
-    group = Group.objects.get(pk=group_id)
-    group_members = group.members
+    group = get_or_404_by_account(Group, request.account, group_id)
     return {
     "fragments":{
         "group_member_count":render_to_string("groups/_group_member_count.html", locals()),

@@ -41,6 +41,7 @@ LANGUAGES = (
         ('en', gettext('English')),
 )
 SITE_ID = 1
+
 USE_I18N = True
 # USE_L10N = True
 
@@ -59,7 +60,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'accounts.middleware.AccountAuthMiddleware',
+        
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
     
@@ -67,7 +71,14 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.user.CurrentUserMiddleware',
     # 'cms.middleware.multilingual.MultilingualURLMiddleware',
     'cms.middleware.media.PlaceholderMediaMiddleware',
+
 )
+AUTHENTICATION_BACKENDS = (
+    'accounts.backends.AccountAuthBackend',
+    # 'django.contrib.auth.backends.ModelBackend',
+)
+
+
 
 SSL_ENABLED = True
 
@@ -88,7 +99,18 @@ DATE_INPUT_FORMATS = ('%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%b %d %Y',
 '%b %d, %Y', '%d %b %Y', '%d %b, %Y', '%B %d %Y',
 '%B %d, %Y', '%d %B %Y', '%d %B, %Y')
 
-ROOT_URLCONF = 'mycelium.urls'
+ROOT_URLCONF = 'mycelium.urls.mycelium'
+SUBDOMAIN_URLCONFS = {
+    # The format for these is 'subdomain': 'urlconf'
+    None: 'mycelium.urls.marketing',
+    'www': 'mycelium.urls.marketing',
+    # 'api': 'myproject.urls.api',
+}
+PUBLIC_SUBDOMAINS = [
+    None,
+    "www"
+]
+REMOVE_WWW_FROM_SUBDOMAIN = True
 
 
 INSTALLED_APPS = (
@@ -144,6 +166,7 @@ INSTALLED_APPS = (
     'generic_tags',
     'groups',
     'rules',
+    'accounts',
 
 
     'djangosanetesting',
@@ -154,6 +177,8 @@ TEMPLATE_DIRS = (
 )
 GOOGLE_ANALYTICS_MODEL = True
 
+LOGIN_REDIRECT_URL = "/people/"
+AUTH_PROFILE_MODULE = "accounts.UserAccount"
 
 CMS_TEMPLATES = (
     ('marketing_site/home.html', 'Home Page'),
@@ -170,6 +195,8 @@ GOOGLE_MAPS_KEY = "ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRHA9ICmOpg9-1g76S5BMdlTE0SKRRfI
 
 SESSION_COOKIE_AGE = 1209600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# SESSION_SAVE_EVERY_REQUEST = True
 
 ENV = None
 
@@ -223,7 +250,6 @@ CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 # get git commit
 from git import Repo
 GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
-
 
 
 # django-mediasync

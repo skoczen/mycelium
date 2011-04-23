@@ -1,30 +1,9 @@
 $(function(){
-    $("#new_completed_volunteer_shift input[name=duration]").live("change",round_volunteer_shift);
-    $(".year_details_link").live("click",toggle_year_details);
-    $("#new_completed_volunteer_shift .cancel_add_btn").live("click", cancel_add_shift);
-    $(".delete_shift_btn").live("click",delete_completed_volunteer_from_people_tab);
+    $(".people_volunteer_tab #new_completed_volunteer_shift input[name=duration]").live("change",volunteerTab.round_volunteer_shift);
+    $(".people_volunteer_tab .year_details_link").live("click",volunteerTab.toggle_year_details);
+    $(".people_volunteer_tab #new_completed_volunteer_shift .cancel_add_btn").live("click", volunteerTab.cancel_add_shift);
+    $(".people_volunteer_tab .delete_shift_btn").live("click",volunteerTab.delete_completed_volunteer_from_people_tab);
 });
-
-function round_volunteer_shift() {
-    input = $(this);
-    dur = input.val();
-    dur = Math.round(dur*4)/4;
-    input.val(dur);
-}
-function toggle_year_details() {
-    var link = $(this);
-    if (link.text() == "See details") {
-        link.html("Hide details");
-    } else {
-        link.html("See details");
-    }
-    link.parents(".year_overview").next(".year_of_shifts").toggle();
-    return false;
-}
-function cancel_add_shift() {
-    $("tabbed_box[name=add_a_volunteer_shift] tab_title").trigger("click");
-    return false;
-}
 
 function process_fragments_and_rebind_volunteer_shift_form(json) {
         $.Mycelium.fragments.process_fragments_from_json(json);
@@ -50,11 +29,33 @@ function bind_volunteer_tab_events() {
     $("#volunteer_status_and_skills").genericFieldForm();
     $(".people_volunteer_tab .status_and_skills .skills_tags").genericTags({'mode':'checkbox'});
     $.Mycelium.update_stripes(".year_of_shifts");
-    show_or_hide_datefield();
-    $(".status_and_skills input[name$=status]").change(show_or_hide_datefield);
+    volunteerTab.show_or_hide_datefield();
+    $(".status_and_skills input[name$=status]").change(volunteerTab.show_or_hide_datefield);
 }
 
-function show_or_hide_datefield(){
+var volunteerTab = new Object();
+volunteerTab.round_volunteer_shift = function() {
+    input = $(this);
+    dur = input.val();
+    dur = Math.round(dur*4)/4;
+    input.val(dur);
+}
+volunteerTab.toggle_year_details = function() {
+    var link = $(this);
+    if (link.text() == "See details") {
+        link.html("Hide details");
+    } else {
+        link.html("See details");
+    }
+    link.parents(".year_overview").next(".year_of_shifts").toggle();
+    return false;
+}
+volunteerTab.cancel_add_shift = function() {
+    $("tabbed_box[name=add_a_volunteer_shift] tab_title").trigger("click");
+    return false;
+}
+
+volunteerTab.show_or_hide_datefield = function(){
     if ($(".status_and_skills input[name$=status]:checked").val() == "temp_inactive") {
         $(".status_and_skills .reactivation_date").show();
     } else {
@@ -63,7 +64,7 @@ function show_or_hide_datefield(){
     }
 }
 
-function delete_completed_volunteer_from_people_tab() {
+volunteerTab.delete_completed_volunteer_from_people_tab = function() {
 	var row = $(this).parents(".completed_volunteer_shift_row");
 	row.addClass("pre_delete");
 	var confirm_response = confirm("Are you sure you want to remove this shift?\n\nPress OK to remove the shift.\nPress Cancel to leave things as-is.");

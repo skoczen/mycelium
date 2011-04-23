@@ -2,26 +2,21 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from taggit.managers import TaggableManager
+from accounts.models import AccountBasedModel
 
 from people.models import Person
 from django.db.models.signals import post_save
 import datetime
 from volunteers import VOLUNTEER_STATII
 
-class Volunteer(TimestampModelMixin):
+class Volunteer(AccountBasedModel, TimestampModelMixin):
     """A volunteer!"""
     person = models.OneToOneField(Person)
     status = models.CharField(max_length=50, default=VOLUNTEER_STATII[0][0], choices=VOLUNTEER_STATII)
     reactivation_date = models.DateField(blank=True, null=True)
 
-    skills = TaggableManager()
-
     def __unicode__(self):
         return "%s" % self.person
-
-    @property
-    def alphabetical_tags(self):
-        return self.skills.all().order_by("name")
 
     
     @property
@@ -31,12 +26,12 @@ class Volunteer(TimestampModelMixin):
     @classmethod
     def make_each_person_a_volunteer(cls, sender, instance, created=None, *args, **kwargs):
         if created:
-            v = Volunteer.objects.get_or_create(person=instance)[0]
+            v = Volunteer.raw_objects.get_or_create(account=instance.account, person=instance)[0]
             v.save()
     
     @classmethod
-    def make_volunteers_for_each_person(cls):
-        [cls.make_each_person_a_volunteer(Person,p,True) for p in Person.objects.all()]
+    def make_volunteers_for_each_person(cls, request):
+        [cls.make_each_person_a_volunteer(Person,p,True) for p in Person.raw_objects.all()]
 
     @property
     def completed_shifts_by_year(self):
@@ -62,9 +57,10 @@ class Volunteer(TimestampModelMixin):
                     'shifts':[],
                 }
 
-            cur_year_dict["shifts"].append(cs)
             shifts_this_year += 1
+            cur_year_dict['shifts'].append(cs)
             hours_this_year += cs.duration
+        
         
         if cur_year_dict != {}:
             cur_year_dict['total_shifts'] = shifts_this_year
@@ -72,7 +68,7 @@ class Volunteer(TimestampModelMixin):
             shifts_by_year.append(cur_year_dict)
         return shifts_by_year
 
-class Shift(TimestampModelMixin):
+class Shift(AccountBasedModel, TimestampModelMixin):
     """A future need for volunteers"""
     name = models.CharField(max_length=255, blank=True, null=True, verbose_name="Shift Name")
     start_datetime = models.DateTimeField()
@@ -83,7 +79,7 @@ class Shift(TimestampModelMixin):
     def __unicode__(self):
         return self.name
 
-class ScheduledShift(TimestampModelMixin):
+class ScheduledShift(AccountBasedModel, TimestampModelMixin):
     """A volunteer, scheduled to work a shift"""
     volunteer = models.ForeignKey(Volunteer, related_name="volunteer_shifts")
     shift = models.ForeignKey(Shift, blank=True, null=True,)
@@ -93,7 +89,7 @@ class ScheduledShift(TimestampModelMixin):
     # categories = TaggableManager()
     
 
-class CompletedShift(TimestampModelMixin):
+class CompletedShift(AccountBasedModel, TimestampModelMixin):
     """A work shift (possibly informal) completed by a volunteer"""
     volunteer = models.ForeignKey(Volunteer)
     shift = models.ForeignKey(Shift, blank=True, null=True,)
@@ -101,7 +97,7 @@ class CompletedShift(TimestampModelMixin):
     duration = models.DecimalField(default=2, max_digits=6, decimal_places=2, help_text="Length of shift, in hours")
     date = models.DateField(default=datetime.date.today,verbose_name="Shift date")
     
-    categories = TaggableManager()
+    # categories = TaggableManager()
 
     def __unicode__(self):
         return "%s worked on %s %s for %s hours" % (self.volunteer, self.shift_name, self.date, self.duration)

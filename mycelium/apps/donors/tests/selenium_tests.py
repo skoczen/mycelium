@@ -2,7 +2,8 @@
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
 from test_factory import Factory
-from people.tests.selenium_tests import PeopleTestAbstractions
+from people.tests.selenium_abstractions import PeopleTestAbstractions
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
 class DonorTestAbstractions(object):
 
@@ -35,8 +36,14 @@ class DonorTestAbstractions(object):
         time.sleep(2)
         return amount,date
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions):
+class TestAgainstNoData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in_with_no_data()
+
+    # def tearDown(self):
+    #     # self.account.delete()
+    #     pass
 
     def test_that_new_donations_can_be_added_and_display_properly(self):
         sel = self.selenium        
@@ -109,13 +116,12 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DonorTestAbstractions, P
         self.assertEqual("March 8, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
+        self.account = self.setup_for_logged_in()
+        self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
     
-
-
-
-
+    # def tearDown(self):
+    #     self.account.delete()

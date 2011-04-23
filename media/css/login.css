@@ -1,0 +1,104 @@
+.single_dialog {
+	display: block;
+	margin: 0% auto;
+	width: 45%;
+	border: 1px solid #DDD;
+	box-shadow: 		2px 2px 4px rgba(0,0,0,0.35);
+	-moz-box-shadow:	2px 2px 4px rgba(0,0,0,0.35);
+	-khtml-box-shadow: 	2px 2px 4px rgba(0,0,0,0.35);
+	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.35);
+	background-color: #FDFDFD;
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;	
+	min-width: 400px;
+	padding: 6px;
+	text-align: center;
+}
+.organization_and_domain {
+	display: block;
+	margin: 10% auto 6% auto;
+	width: 100%;
+}
+.organization_and_domain .organization_name {
+	display: block;
+	width: 100%;
+	text-align: center;
+	font-size: 60px;
+	color: #2B6004;	
+	background-color: rgba(29, 69, 5, 0.8);
+	-webkit-background-clip: text;
+	color: transparent;
+
+}
+.organization_and_domain .domain {
+	display: block;
+	width: 100%;
+	text-align: center;
+	font-size: 18px;
+	color: #3b8505;	
+	text-shadow:		 -1px -1px 0px rgba(36, 82, 3, 0.6);
+	-moz-text-shadow:    -1px -1px 0px rgba(36, 82, 3, 0.6);
+	-webkit-text-shadow: -1px -1px 0px rgba(36, 82, 3, 0.6);
+	
+}
+
+.single_dialog .welcome_message {
+	margin: 25px 0px 15px 0px;
+	font-size: 30px;
+}
+.single_dialog form {
+	display: block;
+	margin: 10px auto;
+}
+.single_dialog field {
+	display: block;
+	padding: 5px;
+	width: 330px;
+	margin: 0px auto;
+	overflow: auto;
+}
+field label {
+	display: block;
+	float: left;
+	width: 100px;
+	font-size: 18px;
+	color: #555;
+	margin: 4px 10px 0px 0px;
+	text-align: right;
+}
+field input {
+	font-size: 20px;
+	border: 1px solid #BBB;
+	padding: 4px;
+	width: 200px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	outline: none;
+	background-color: #F6F6F6;
+}
+field input:focus {
+	border-color: #3E9CFD;
+}
+.single_dialog actions {
+	display: block;
+	padding: 20px 0px;
+}
+.log_out_message {
+	font-size: 20px;
+	color: #555;
+	width: 80%;
+	display: block;
+	margin: 15px auto;
+}
+.log_back_in {
+	display: block;
+	padding: 10px;
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+.login_error {
+	color: red;
+	padding: 5px 0px;
+}

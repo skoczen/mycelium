@@ -51,3 +51,4 @@ slimmer
 gitpython
 django-debug-toolbar
 -e git://github.com/gintas/django-picklefield.git#egg=django-picklefield
+-e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains

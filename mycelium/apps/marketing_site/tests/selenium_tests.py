@@ -1,9 +1,18 @@
+import time
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase, QiSeleniumTestCase
 from email_list.models import EmailSubscription
 
 class TestMarketingSite(QiSeleniumTestCase):
-    selenium_fixtures = ["marketing_site.json",]
+    selenium_fixtures = ["marketing_site_localhost.json"]
     # fixtures = ["marketing_site.json",]
+
+    def setUp(self):
+        from django.contrib.sites.models import Site
+        s = Site.objects.get(pk=1)
+        s.id = 2
+        s.domain = "localhost"
+        s.name = "localhost"
+        s.save()
 
     def test_home_page_loads(self):
         sel = self.selenium

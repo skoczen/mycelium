@@ -8,7 +8,8 @@ from generic_tags import BLANK_TAGSET_NAME
 class TestTagSetModelFunctions(QiUnitTestMixin, TestCase):
 
     def test_saving_a_blank_group_gives_it_a_filler_name(self):
-        ts = TagSet.objects.create()
+        account = Factory.account()
+        ts = TagSet.raw_objects.create(account=account)
         self.assertEqual(ts.name,BLANK_TAGSET_NAME)
         ts.name = "foo"
         ts.save()

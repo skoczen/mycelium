@@ -1,0 +1,17 @@
+{% extends "mycelium_base.html" %}
+{% block title %}Log in to GoodCloud{% endblock %}
+{% block head %}{{block.super}}
+{% css "/css/login.css" %}
+{% endblock %}
+
+{% block nav %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block content %}
+{% include "accounts/_name_and_subdomain.html" %}
+<div class="single_dialog">
+{% block dialog_content %}
+
+	
+{% endblock dialog_content %}
+</div>
+{% endblock %}

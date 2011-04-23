@@ -12,8 +12,8 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
-        from rules.tasks import populate_rule_components
-        populate_rule_components()
+        from rules.tasks import populate_all_rule_components
+        populate_all_rule_components()
 
     def backwards(self, orm):
         "Write your backwards methods here."

@@ -1,5 +1,5 @@
 <table class="striped members_table">
-{% for p in group_members %}
+{% for p in group.members %}
 	{{p.search_result_row|safe}}
 {% endfor %}
 </table>

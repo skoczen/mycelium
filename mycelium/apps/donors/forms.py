@@ -1,8 +1,9 @@
 from django.forms import ModelForm
 from donors.models import Donation
+from accounts.forms import AccountBasedModelForm
 
-class NewDonationForm(ModelForm):
+class NewDonationForm(AccountBasedModelForm):
   
     class Meta:
         model = Donation
-        fields = ("amount", "date",)
+        fields = ("account", "amount", "date",)

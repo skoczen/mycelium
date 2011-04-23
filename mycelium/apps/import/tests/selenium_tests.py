@@ -1,15 +1,20 @@
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time 
 from test_factory import Factory
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
-
-class TestMockupPages(QiConservativeSeleniumTestCase):
+class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions):
     selenium_fixtures = []
-    
+
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in()
+
+    # def tearDown(self):
+    #     self.account.delete()
 
     def test_mockup_pages_load_and_links_work(self):
         sel = self.selenium        
-        sel.open("/reports/report/new")
+        self.open("/reports/report/new")
         sel.click("link=More")
         sel.wait_for_page_to_load("30000")
         self.assertEqual("Data Import", sel.get_text("css=.data_import_btn .button_title"))

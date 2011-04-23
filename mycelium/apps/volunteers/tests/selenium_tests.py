@@ -2,7 +2,8 @@
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time 
 from test_factory import Factory
-from people.tests.selenium_tests import PeopleTestAbstractions
+from people.tests.selenium_abstractions import PeopleTestAbstractions
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
 class VolunteerTestAbstractions(object):
 
@@ -50,7 +51,14 @@ class VolunteerTestAbstractions(object):
         sel.click("css=tabbed_box[name=add_a_volunteer_shift] .add_shift_btn")
         time.sleep(2)
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions):
+class TestAgainstNoData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions, AccountTestAbstractions):
+
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in_with_no_data()
+        self.verificationErrors = []
+
+    # def tearDown(self):
+    #     self.account.delete()
 
     def test_create_new_volunteer(self):
         self.create_new_volunteer()
@@ -283,12 +291,15 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions
 
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions):
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase,VolunteerTestAbstractions,PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.people = [Factory.person() for i in range(1,Factory.rand_int(30,300))]
+        self.account = self.setup_for_logged_in()
+        self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
 
+    # def tearDown(self):
+    #     self.account.delete()
 
     def test_create_new_volunteer(self):
         self.create_new_volunteer()

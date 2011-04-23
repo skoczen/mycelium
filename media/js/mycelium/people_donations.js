@@ -1,17 +1,19 @@
 $(function(){
-    $("#new_donation input[name=amount]").live("change",round_donation);
-    $(".year_details_link").live("click",toggle_year_details);
-    $("#new_donation .cancel_add_btn").live("click", cancel_add_donation);
-    $(".delete_donation_btn").live("click",delete_donor_from_people_tab);
+    $(".people_donor_tab #new_donation input[name=amount]").live("change",donorTab.round_donation);
+    $(".people_donor_tab .year_details_link").live("click",donorTab.toggle_year_details);
+    $(".people_donor_tab #new_donation .cancel_add_btn").live("click", donorTab.cancel_add_donation);
+    $(".people_donor_tab .delete_donation_btn").live("click",donorTab.delete_donor_from_people_tab);
 
 });
 
-function round_donation() {
+
+var donorTab = new Object();
+donorTab.round_donation = function() {
     input = $(this);
     dur = parseFloat(input.val()).toFixed(2);
     input.val(dur);
 }
-function toggle_year_details() {
+donorTab.toggle_year_details = function() {
     var link = $(this);
     if (link.text() == "See details") {
         link.html("Hide details");
@@ -21,18 +23,14 @@ function toggle_year_details() {
     link.parents(".year_overview").next(".year_of_donations").toggle();
     return false;
 }
-function cancel_add_donation() {
+donorTab.cancel_add_donation = function() {
     $("tabbed_box[name=add_a_donation] tab_title").trigger("click");
     return false;
 }
 
-function process_fragments_and_rebind_donation_form(json) {
-        $.Mycelium.fragments.process_fragments_from_json(json);
-        bind_donor_tab_events();
-}
 
 
-function delete_donor_from_people_tab() {
+donorTab.delete_donor_from_people_tab = function() {
 	var row = $(this).parents(".donation_row");
 	row.addClass("pre_delete");
 	var confirm_response = confirm("Are you sure you want to remove this donation?\n\nPress OK to remove the donation.\nPress Cancel to leave things as-is.");
@@ -63,7 +61,6 @@ function bind_donor_tab_events() {
         $("#new_donation input[name$=amount]").focus();
     });
     $.Mycelium.update_stripes(".year_of_donations");
-    show_or_hide_datefield();
     $(".people_donor_tab .tags_and_other_info").genericTags();
     $("#new_donation input[name=date]").datepicker({
         "numberOfMonths": 2,
@@ -71,4 +68,9 @@ function bind_donor_tab_events() {
         // "gotoCurrent": true,
         "showCurrentAtPos": 1            
     });    
+}
+
+function process_fragments_and_rebind_donation_form(json) {
+        $.Mycelium.fragments.process_fragments_from_json(json);
+        bind_donor_tab_events();
 }
