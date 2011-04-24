@@ -1,0 +1,24 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}GoodCloud Features - how GoodCloud can help your nonprofit.{% endblock %}
+{% block head %}
+{% css "/css/mycelium_elements.css" %}
+{{block.super}}
+
+{% js "/js/mycelium/signup.js" %}
+{% css "/css/login.css" %}
+{% css "/css/signup.css" %}
+{% endblock %}
+
+{% block page_content %}
+<div class="page_header">Love for GoodCloud</div>
+
+<div class="testimonial">
+	<quote>I Love GoodCloud!</quote>
+	<div class="person">Sara Tester</div>
+	<div class="organization"><a href="#">Awesome Nonprofit</a></div>
+</div>
+
+<div class="page_action">Discover what you love with a Free Trial!</div>
+
+{% endblock %}

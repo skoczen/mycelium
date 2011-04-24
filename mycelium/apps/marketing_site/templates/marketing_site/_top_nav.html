@@ -1,15 +1,15 @@
-{% load i18n %}{% load cache cms_tags menu_tags %}
+{% load i18n %}{% load cache cms_tags menu_tags current_page %}
 {% block nav %}
 <div id="nav_and_logo_container">
 	<a id="logo" href="{% page_url "marketing_site_home" %}">
 		GoodCloud
 	</a>
 <div id="main_nav">{% spaceless %}
-	<a href="{% url marketing_site:home %}" class="current">Home</a>
-	<a href="#" class="">Features</a>
-	<a href="#" class="">Tour</a>
-	<a href="#" class="">Praise</a>
-	<a href="{% url accounts:signup %}" class="">Free Trial</a>
+	<a {% current_page_link_and_class request "marketing_site:home" "" %} >Home</a>
+	<a {% current_page_link_and_class request "marketing_site:features" "" %} >Features</a>
+	<a {% current_page_link_and_class request "marketing_site:tour" "" %} >Tour</a>
+	<a {% current_page_link_and_class request "marketing_site:praise" "" %} >Praise</a>
+	<a {% current_page_link_and_class request "accounts:signup" "" %} >Free Trial</a>
 	
 {% endspaceless %}</div
 </div>

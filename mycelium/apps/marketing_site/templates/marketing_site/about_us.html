@@ -1,23 +1,50 @@
 {% extends "marketing_site/base.html" %}
-{% load i18n cache cms_tags menu_tags thumbnail %}
-{% block title %}GoodCloud: {% page_attribute page_title %}{% endblock %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}GoodCloud Features - how GoodCloud can help your nonprofit.{% endblock %}
+{% block head %}
+{% css "/css/mycelium_elements.css" %}
+{{block.super}}
+
+{% js "/js/mycelium/signup.js" %}
+{% css "/css/login.css" %}
+{% css "/css/signup.css" %}
+{% endblock %}
+
 {% block page_content %}
-<div id="page_content">
+<div class="page_header">About Us</div>
 
-{% placeholder about_us_header_text %}
 
-<div class="employees">
-{% for e in all_employees %}
-<div class="employee">
-	<div class="picture_frame">
-		<div class="picture" {% thumbnail e.picture "149x149" as t %}style="background-image:url('{{t.url}}');"{% empty %}{% endthumbnail %}></div>
-	</div>
-	<div class="bio">
-		<div class="name">{{e.full_name}}</div>
-		<div class="bio_text">{{e.bio|safe}}</div>
-	</div>
-</div>
-{% endfor %}
-</div>
-</div>
+
+Our Mission
+
+Nonprofits deserve the best software in the world.
+
+There, we said it. Not hand-me-downs, not corporate products that don't fit, but a real solution designed around your needs and how you work. We started GoodCloud after watching first-hand some of our favorite nonprofits struggle with a hodge-podge of programs. We heard stories of daily frustrations, and listened to organizations that were pouring hours into fighting with computers instead of their missions. We said, "Enough with that!", and we started GoodCloud to fix it.
+
+We ♥ nonprofits.
+We care deeply about you and your mission. You've made the decision to make the world a better place instead of making piles of money. We admire you. Nonprofits are doing the biggest things to make the world a better place. We're thankful to have you in the world, and we want to help you thrive.
+
+We get nonprofits.
+You're different. You're not a corporation. You're not a club. You're not a small business. We get that. Nobody else has to file Form 990's. Nobody else has to track volunteer hours. Nonprofits are unique, living organizations with different needs and ways of working.  We're building software just for you.
+
+We only serve nonprofits.
+We're building you the best software in the world. But the cool part is, it's just for you.  You can't use GoodCloud unless you're a nonprofit.  Run a big company, and want our cool people-tracking software? Tough. Colleague have a corporate web-site editor that's harder to use than GoodCloud's? Tell them we're sorry - maybe it'll get better in a few years. GoodCloud isn't the side project of a giant software maker, it's a small and nimble company that works exclusively with nonprofits.  We like it that way, and we think you will too.
+
+
+
+
+Our Team
+Steven Skoczen
+Steven started building web applications back in the 90's, and hasn't stopped since. He's run a successful web development company, and started SixLinks.org and Fluidtask. Over the years, he's also thrown his development behind a number of other organizations on a pro-bono basis. 
+
+When not typing into a glowing white screen, he facilitates writing workshops for Write Around Portland, spends time in his studio, or finds some space in the nearby Oregon woods for he and Tomo, the world's greatest dog.
+
+
+
+Tom Noble
+Tom has worked with nonprofit organizations of all sizes and functions in many different capacities: as a managing director, mentor, project manager, volunteer, advisory board member, and consultant. He’s still actively working with Teach for America after having served as a Corps Member and middle school teacher in Phoenix, AZ. 
+
+Originally from Upstate New York and a graduate of Cornell University, Tom also has a Master’s in Education from Arizona State University, and is currently working on his MBA. Tom is a huge basketball fan and loves to cook.
+
+
 {% endblock %}

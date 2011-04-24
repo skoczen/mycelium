@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     (r'^',              include('email_list.urls')),                                    
     (r'^',              include('accounts.urls.marketing',  app_name="accounts",        namespace="accounts")),    
     
-    (r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodcloud.posterous.com"}, 'blog_home'),
+    (r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodcloud.posterous.com"}, 'blog'),
     (r'^administration/', include(admin.site.urls)),
     (r'^', include('sorl.thumbnail.urls')),
     # url(r'^', include('qi_toolkit.urls')),

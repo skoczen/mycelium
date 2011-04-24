@@ -1,0 +1,22 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}GoodCloud Features - how GoodCloud can help your nonprofit.{% endblock %}
+{% block head %}
+{% css "/css/mycelium_elements.css" %}
+{{block.super}}
+
+{% js "/js/mycelium/signup.js" %}
+{% css "/css/login.css" %}
+{% css "/css/signup.css" %}
+{% endblock %}
+
+{% block page_content %}
+<div class="page_header">Say Hello!</div>
+We're here to help.  You can reach us any of the following ways:
+
+   Send an email to support@agoodcloud.org
+
+   Give us a call at (503) 308-1460
+
+   Send us a question or idea online!
+{% endblock %}

@@ -1,8 +1,8 @@
 {% load i18n cache cms_tags menu_tags %}<div id="footer">
 {# 	<div class="copyright">All content copyright GoodCloud, LLC, 2010-{% now "Y" %}</div> #}
 	{# <div class="footer_links">{% show_menu %}</div> #}
-	<a href="#">About us</a> | 
-	<a href="#">Blog</a> | 
-	<a href="#">Legal</a> | 
-	<a href="#">Contact us</a>
+	<a href="{% url marketing_site:about_us %}">About us</a> | 
+	<a href="{% url blog %}">Blog</a> | 
+	<a href="{% url marketing_site:legal %}">Legal</a> | 
+	<a href="{% url marketing_site:contact_us %}">Contact us</a>
 </div>

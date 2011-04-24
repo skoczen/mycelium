@@ -1,14 +1,15 @@
 body {
-	background-color: #006fd6;
-	background-image: url("../images/marketing-background-plain-1.jpg");	
-	background-repeat: repeat-x;
-	background-position: 0px 0px;
+	background-color: #0a5ab9;
+	background-image: url("../images/marketing-background-plain-4.jpg");	
+	background-repeat: no-repeat;
+	background-position: 50% 0px;
 	position: relative;
 }
 body.home_page {
-	background-image: url("../images/marketing-background-stripes-5.jpg");	
+	background-color: #0a5ab9;
+	background-image: url("../images/marketing-background-stripes-6.jpg");	
 	background-repeat: no-repeat;
-	background-position: 50% 5%;
+	background-position: 50% 0px;
 	position: relative;
 }
 
@@ -348,14 +349,16 @@ social_links {
 	width: 100%;
 }
 #home_boxes .home_box {
-	display: block;
-	width: 29%;
-	margin: 0px 2% 0px 2%;
-	float: left;
+	/*display: block;*/
+	/*width: 29%;*/
+	/*margin: 0px 2% 0px 2%;*/
+	/*float: left;*/
 	/*height: 140px;*/
+	/*padding: 0px;
+	margin: 0px;*/
 
 	background-color: #006bcf;
-	padding: 0px;
+
 	border-radius: 		6px;
 	-moz-border-radius: 6px;
 
@@ -364,9 +367,10 @@ social_links {
   	-khtml-box-shadow: 	2px 2px 4px rgba(0,0,0,0.35);
   	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.35);
   	background-color: #EEE;
+  	margin-bottom: 20px;
 }
 #home_boxes .home_box.loved_by {
-	width: 30%;
+/*	width: 30%;*/
 }
 #home_boxes .home_box .title {
 	background-color: #000486;
@@ -412,4 +416,94 @@ social_links {
 	background-repeat: no-repeat;
 	background-position: 10px 12px;	
 	padding-left: 70px;
+}
+
+.page_header {
+	font-size: 35px;
+	display: block;
+	margin: 5% auto 2% auto;
+	width: 100%;
+	font-family: 'Bevan', Arial, sans-serif;
+	color: #FFF;
+	text-shadow:		 1px 1px 2px #000486;
+	-moz-text-shadow:    1px 1px 2px #000486;
+	-webkit-text-shadow: 1px 1px 2px #000486;	
+	background-color: transparent;
+	text-align: center;
+}
+.features {
+	width: 98%;
+	margin: auto;
+}
+.features .feature {
+	display: block;
+	
+	width: 44%;
+	margin: 0px 3%;
+	float: left;
+
+	border-radius: 		4px;
+	-moz-border-radius: 4px;
+
+	/*box-shadow: 		2px 2px 4px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	2px 2px 4px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	2px 2px 4px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.35);
+  	background-color: #EEE;*/
+
+  	margin-bottom: 20px;
+}
+.features .feature:hover {
+	/*background-color: #006bcf;*/
+}
+.features .feature .title {
+	color: #000;
+	font-size: 18px;
+	padding: 10px 10px 0px 0px; 
+	margin-left: 0px;
+	color: #FFF;
+	border: 1px solid #0952a8;
+	border-width: 0px 0px 1px 0px;
+}
+
+.features .feature .description {
+	background-repeat: no-repeat;
+	background-position: 0px 6px;
+	padding: 5px 10px 10px 60px;
+	font-size: 15px;
+	color: #454545;
+	color: #FFF;
+	
+}
+.features .feature.find_fast 			.description { 	background-image: url("../images/icons/Zoom.png"); 				}
+.features .feature.full_contact 		.description { 	background-image: url("../images/icons/Contacts2.png");  		}
+.features .feature.groups 				.description { 	background-image: url("../images/icons/magic.png");  			}
+.features .feature.volunteer 			.description { 	background-image: url("../images/icons/Clipboard b.png");  			}
+.features .feature.donations 			.description { 	background-image: url("../images/icons/Cash.png");  			}
+.features .feature.thank_you_letters 	.description { 	background-image: url("../images/icons/Mail.png");  			}
+.features .feature.custom_tags 			.description { 	background-image: url("../images/icons/Tag.png");  			}
+.features .feature.spreadsheet 			.description { 	background-image: url("../images/icons/Calculator full.png");  			}
+.features .feature.data_import 			.description { 	background-image: url("../images/icons/Box.png");  			}
+.features .feature.support	 			.description { 	background-image: url("../images/icons/float.png");  			}
+.features .feature.cloud 				.description { 	background-image: url("../images/icons/Cloud.png");  			}
+.features .feature.more_to_come			.description { 	background-image: url("../images/icons/Lightbulb.png");  			}
+
+
+.page_action {
+	background: url("../images/marketing-action-ribbon.png");
+	background-repeat: no-repeat;
+	background-position: 0px 0px;	
+	
+	float: right;
+	right: 0px;
+	height: 80px;
+	padding: 18px 30px 18px 60px;
+	text-align: center;
+	color: #FFF;
+	font-size: 24px;
+	text-shadow:		 1px 1px 1px rgba(0,0,0,0.35);
+	-moz-text-shadow:    1px 1px 1px rgba(0,0,0,0.35);
+	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.35);
+	cursor: pointer;
+
 }
