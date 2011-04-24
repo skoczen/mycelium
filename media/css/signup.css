@@ -19,11 +19,12 @@
 	
 }
 #signup_form label {
-	width: 160px;
+	width: 150px;
 	padding-left: 10px;
 	text-align: left;
 	float: left;
 	padding-right: 20px;
+	min-height: 20px;
 }
 .editable_field {
 	display: block;
@@ -117,7 +118,36 @@
 	width: 160px;
 	font-size: 18px;
 }
+#container_id_subdomain .edit_field {
+	display: block;
+	padding-top: 22px;
+}
 .signup_page .address_boilerplate {
 	display: block;
 	padding-top: 0px;
+	color: #777;
+}
+#subdomain_verification {
+	font-size: 16px;
+}
+#subdomain_verification .subdomain_response {
+	text-align: left;
+	display: block;
+	overflow: auto;
+	padding-left: 20px;
+}
+#subdomain_verification .subdomain_response.pending {
+	background-image: url("../images/spinner-grey-16.gif");
+	background-position: 0px 2px;
+	background-repeat: no-repeat;
+}
+#subdomain_verification .subdomain_response.verified {
+	background-image: url("../images/icon-check-16.png");
+	background-position: 0px 2px;
+	background-repeat: no-repeat;
+}
+#subdomain_verification .subdomain_response.trouble {
+	background-image: url("../images/icon-exclam-16.png");
+	background-position: 0px 2px;
+	background-repeat: no-repeat;
 }

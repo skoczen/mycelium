@@ -21,9 +21,12 @@
 	<div class="section_title">About your nonprofit</div>
 	{% plain_editable_field account_form.name %}
 	<div class="editable_field" id="container_id_{{account_form.subdomain.html_name}}">
-			<label class="generic_field_label">Pick your Goodcloud Address:</label>
+			<label class="generic_field_label">Pick your custom <br/>Goodcloud address:</label>
 			<span class="edit_field"><span class="address_boilerplate">http://</span>{{account_form.subdomain}}<span class="address_boilerplate">.agoodcloud.com</span></span>
-			
+	</div>
+	<div class="editable_field" id="subdomain_verification" class="not_verified" verification_url="{% url accounts:verify_subdomain %}">
+			<label class="generic_field_label"></label>
+			<span class="edit_field subdomain_response"></span>
 	</div>
 </div>
 

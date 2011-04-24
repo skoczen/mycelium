@@ -10,7 +10,7 @@ from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
 from accounts.forms import NewAccountForm, NewUserForm
-from accounts.models import AccessLevel
+from accounts.models import AccessLevel, Account
 from django.contrib.sites.models import Site
 
 
@@ -36,3 +36,11 @@ def signup(request):
         user_form = NewUserForm()
 
     return locals()
+
+@json_view
+def verify_subdomain(request):
+    is_available = False
+    if request.method == "POST" and "subdomain" in request.POST:
+        is_available = Account.objects.filter(subdomain=request.POST["subdomain"]).count() == 0
+    
+    return {'success':True, 'is_available':is_available}

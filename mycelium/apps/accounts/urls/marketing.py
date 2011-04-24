@@ -9,4 +9,5 @@ url = parser.url
 
 urlpatterns = parser.patterns('',                      
     url(r'signup$',                             views.signup,                               name='signup'),    
+    url(r'verify-subdomain$',                   views.verify_subdomain,                     name='verify_subdomain'),    
 )
