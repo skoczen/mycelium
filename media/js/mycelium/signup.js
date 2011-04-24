@@ -95,7 +95,7 @@ function verify_subdomain() {
 				clearTimeout(verifying_message_timeout);
 				old_subdomain_value = $("#container_id_subdomain input").val();
 				if (json.is_available) {
-					subdomain_message.removeClass("trouble").removeClass("pending").addClass("verified").html("Looks good! " + requested_subdomain + ".agoodcloud.com is all yours.");
+					subdomain_message.removeClass("trouble").removeClass("pending").addClass("verified").html("Looks good! <span class='domain'>" + requested_subdomain + ".agoodcloud.com</span> is all yours.");
 					$("#subdomain_verification").removeClass("not_verified");
 					enable_disable_signup_button();
 				} else {

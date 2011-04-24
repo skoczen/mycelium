@@ -32,37 +32,6 @@
 	width: 100%;
 	padding: 8px 0px 2px 0px;
 }
-/*#signup_form .form_section {
-	background-color: #EEE;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	padding: 10px;	
-	margin: 60px 10px 10px 10px;
-	position: relative;
-	display: block;
-}
-#signup_form .section_title {
-	display: block;
-	float: left;
-	text-align: left;
-	position: absolute;
-	top: -40px;
-	left: 0px;
-	background-color: #EEE;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	padding: 10px 15px 10px 15px;
-	font-size: 24px;
-}*/
-/*#signup_form {
-	background-color: #EEE;
-	border-radius: 8px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-}
-*/
 #signup_form .form_section {
 	padding: 10px;	
 	margin: 10px 10px 0px 10px;
@@ -163,4 +132,8 @@
 #subdomain_verification {
 	display: none;
 	padding: 0px;
+}
+#subdomain_verification .subdomain_response .domain {
+	/*color: #000;*/
+	font-weight: bold;
 }
