@@ -5,11 +5,11 @@
 	GoodCloud
 </a>
 <div id="main_nav">{% spaceless %}
-	<a href="#" class="current">Home</a>
+	<a href="{% url marketing_site:home %}" class="current">Home</a>
 	<a href="#" class="">Features</a>
 	<a href="#" class="">Tour</a>
 	<a href="#" class="">Praise</a>
-	<a href="#" class="">Free Trial</a>
+	<a href="{% url accounts:signup %}" class="">Free Trial</a>
 	
 {% endspaceless %}</div
 </div>

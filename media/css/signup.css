@@ -1,3 +1,4 @@
+
 .signup_page .welcome_message {
 	margin: 0px;
 	padding: 10px 0px 10px 0px;
@@ -8,8 +9,16 @@
 }
 .signup_page .organization_and_domain {
 	display: block;
-	margin: 6% auto 2% auto;
+	margin: 5% auto 2% auto;
 	width: 100%;
+	font-family: 'Bevan', Arial, sans-serif;
+}
+.signup_page .organization_and_domain .organization_name {
+	color: #FFF;
+	text-shadow:		 1px 2px 2px #222;
+	-moz-text-shadow:    1px 2px 2px #222;
+	-webkit-text-shadow: 1px 2px 2px #222;	
+
 }
 
 #signup_form {
