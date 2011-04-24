@@ -18,7 +18,7 @@
 	text-shadow:		 1px 2px 2px #222;
 	-moz-text-shadow:    1px 2px 2px #222;
 	-webkit-text-shadow: 1px 2px 2px #222;	
-
+	background-color: transparent;
 }
 
 #signup_form {
@@ -63,7 +63,7 @@
 	font-size: 24px;
 }
 #signup_form #submit_button.disabled {
-	color: #FFF;
+	color: #EEE;
 	background-color: #CCC;
 	border-color: #DDD;
 	text-shadow: 0px 0px 0px;
