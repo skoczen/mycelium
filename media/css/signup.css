@@ -65,7 +65,7 @@
 */
 #signup_form .form_section {
 	padding: 10px;	
-	margin: 20px 10px 10px 10px;
+	margin: 10px 10px 0px 10px;
 	position: relative;
 	display: block;
 }
@@ -114,6 +114,9 @@
 	border: 1px solid #3E9CFD;
 	border-width: 0px 0px 1px 0px;	
 }
+#container_id_subdomain {
+	padding-bottom: 0px;
+}
 #container_id_subdomain input {
 	width: 160px;
 	font-size: 18px;
@@ -133,8 +136,14 @@
 #subdomain_verification .subdomain_response {
 	text-align: left;
 	display: block;
-	overflow: auto;
+	margin-left: 180px;
 	padding-left: 20px;
+}
+#subdomain_verification .generic_field_label {
+	height: 32px;
+}
+#container_id_subdomain .generic_field_label {
+	height: 60px;
 }
 #subdomain_verification .subdomain_response.pending {
 	background-image: url("../images/spinner-grey-16.gif");
@@ -150,4 +159,8 @@
 	background-image: url("../images/icon-exclam-16.png");
 	background-position: 0px 2px;
 	background-repeat: no-repeat;
+}
+#subdomain_verification {
+	display: none;
+	padding: 0px;
 }

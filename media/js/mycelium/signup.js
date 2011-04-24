@@ -63,8 +63,8 @@ function enable_disable_signup_button() {
 		$("#submit_button").attr("disabled", "disabled").addClass("disabled");
 	}
 }
-old_subdomain_value = "aksdljfli3";
-verify_timeout = false;
+var old_subdomain_value = "aksdljfli3";
+var verify_timeout = false;
 function subdomain_changed() {
 	if ($("#container_id_subdomain input").val() != old_subdomain_value) {
 		$("#container_id_subdomain input").val($.trim($("#container_id_subdomain input").val().replace(/[^a-zA-Z0-9-]+/g,'')).toLowerCase());
@@ -74,30 +74,36 @@ function subdomain_changed() {
 	}
 
 }
+var verifying_message_timeout = false;
 function verify_subdomain() {
+	$("#subdomain_verification").show();
 	requested_subdomain = $("#container_id_subdomain input").val();
 	subdomain_message = $("#subdomain_verification .subdomain_response");
 
 	if (requested_subdomain != "") {
-		subdomain_message.html("Checking availability for <br/> " + requested_subdomain + ".agoodcloud.com").addClass("pending").removeClass("verified").removeClass("trouble");
+		clearTimeout(verifying_message_timeout);
+		verifying_message_timeout = setTimeout(function(){
+			subdomain_message.html("Checking availability for <br/> " + requested_subdomain + ".agoodcloud.com").addClass("pending").removeClass("verified").removeClass("trouble");;
+		}, 300)
+		$.ajax({
+			url: $("#subdomain_verification").attr("verification_url"),
+			type: "POST",
+			dataType: "json",
+			data: {'subdomain':requested_subdomain},
+			mode: 'abort',
+			success: function(json) {
+				clearTimeout(verifying_message_timeout);
+				old_subdomain_value = $("#container_id_subdomain input").val();
+				if (json.is_available) {
+					subdomain_message.removeClass("trouble").removeClass("pending").addClass("verified").html("Looks good! " + requested_subdomain + ".agoodcloud.com is all yours.");
+					$("#subdomain_verification").removeClass("not_verified");
+					enable_disable_signup_button();
+				} else {
+					subdomain_message.addClass("trouble").removeClass("pending").html("Sorry, " + requested_subdomain + ".agoodcloud.com is already taken.<br/> Please try another name!");
+				}
+			}
+	     });	
 	} else {
 		subdomain_message.html("");
 	}
-	$.ajax({
-		url: $("#subdomain_verification").attr("verification_url"),
-		type: "POST",
-		dataType: "json",
-		data: {'subdomain':requested_subdomain},
-		mode: 'abort',
-		success: function(json) {
-			old_subdomain_value = $("#container_id_subdomain input").val();
-			if (json.is_available) {
-				subdomain_message.removeClass("trouble").removeClass("pending").addClass("verified").html("Looks good! " + requested_subdomain + ".agoodcloud.com is all yours.");
-				$("#subdomain_verification").removeClass("not_verified");
-				enable_disable_signup_button();
-			} else {
-				subdomain_message.addClass("trouble").removeClass("pending").html("Sorry, " + requested_subdomain + ".agoodcloud.com is already taken.<br/> Please try another name!");
-			}
-		}
-     });	
 }

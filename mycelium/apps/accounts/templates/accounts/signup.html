@@ -25,8 +25,7 @@
 			<span class="edit_field"><span class="address_boilerplate">http://</span>{{account_form.subdomain}}<span class="address_boilerplate">.agoodcloud.com</span></span>
 	</div>
 	<div class="editable_field" id="subdomain_verification" class="not_verified" verification_url="{% url accounts:verify_subdomain %}">
-			<label class="generic_field_label"></label>
-			<span class="edit_field subdomain_response"></span>
+			<div class="subdomain_response"></div>
 	</div>
 </div>
 
@@ -38,7 +37,7 @@
 	{% plain_editable_field user_form.password %}
 </div>
 
-<input type="submit" id="submit_button" class="mycelium_btn" value="Create our Account" />
+<input type="submit" id="submit_button" class="mycelium_btn" value="Create your Account" />
 
 </form>
 </div>
