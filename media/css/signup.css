@@ -1,0 +1,123 @@
+.signup_page .welcome_message {
+	margin: 0px;
+	padding: 10px 0px 10px 0px;
+}
+.signup_page .single_dialog {
+	width: 630px;
+	padding: 10px 10px;
+}
+.signup_page .organization_and_domain {
+	display: block;
+	margin: 6% auto 2% auto;
+	width: 100%;
+}
+
+#signup_form {
+	
+}
+#signup_form input {
+	
+}
+#signup_form label {
+	width: 160px;
+	padding-left: 10px;
+	text-align: left;
+	float: left;
+	padding-right: 20px;
+}
+.editable_field {
+	display: block;
+	overflow: auto;
+	width: 100%;
+	padding: 8px 0px 2px 0px;
+}
+/*#signup_form .form_section {
+	background-color: #EEE;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	padding: 10px;	
+	margin: 60px 10px 10px 10px;
+	position: relative;
+	display: block;
+}
+#signup_form .section_title {
+	display: block;
+	float: left;
+	text-align: left;
+	position: absolute;
+	top: -40px;
+	left: 0px;
+	background-color: #EEE;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	padding: 10px 15px 10px 15px;
+	font-size: 24px;
+}*/
+/*#signup_form {
+	background-color: #EEE;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+}
+*/
+#signup_form .form_section {
+	padding: 10px;	
+	margin: 20px 10px 10px 10px;
+	position: relative;
+	display: block;
+}
+#signup_form .section_title {
+	display: block;
+	width: 100%;
+	border: 1px solid #DDD;
+
+	border-width: 0px 0px 1px 0px;
+	font-size: 24px;
+	text-align: left;
+	padding-bottom: 0px;
+}
+
+#signup_form #submit_button {
+	margin: 10px 0px 4px 0px;
+	font-size: 24px;
+}
+#signup_form #submit_button.disabled {
+	color: #FFF;
+	background-color: #CCC;
+	border-color: #DDD;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+.signup_page .editable_field {
+	font-size: 18px;
+}
+.signup_page .edit_field span, .signup_page .edit_field input {
+	float: left;
+}
+.signup_page .edit_field input {
+	width: 200px;
+
+}
+.signup_page .edit_field input {
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+	border-width: 0px 0px 1px 0px;
+	border-bottom-color: #999;
+	padding-bottom: 0px;
+}
+.signup_page .edit_field input:focus {
+	outline-style:none;
+	border: 1px solid #3E9CFD;
+	border-width: 0px 0px 1px 0px;	
+}
+#container_id_subdomain input {
+	width: 160px;
+	font-size: 18px;
+}
+.signup_page .address_boilerplate {
+	display: block;
+	padding-top: 0px;
+}

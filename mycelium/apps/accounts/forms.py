@@ -82,7 +82,7 @@ class AccountBasedModelFormSet(BaseInlineFormSet):
         
 
 class AccountAuthenticationForm(AuthenticationForm):
-    def __init__(self, request=None, *args, **kwargs):
+    def __init__(self, request=None, auth_request=None, *args, **kwargs):
         """
         If request is passed in, the form will validate that cookies are
         enabled. Note that the request (a HttpRequest object) must have set a
@@ -90,16 +90,17 @@ class AccountAuthenticationForm(AuthenticationForm):
         running this validation.
         """
         self.request = request
+        self.auth_request = auth_request
         self.user_cache = None
         super(AccountAuthenticationForm, self).__init__(*args, **kwargs)
-        self.request = request
+        self.auth_request = auth_request
 
     def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 
         if username and password:
-            self.user_cache = authenticate(request=self.request, username=username, password=password)
+            self.user_cache = authenticate(auth_request=self.auth_request, username=username, password=password)
             if self.user_cache is None:
                 raise forms.ValidationError(_("Please enter a correct username and password. Note that both fields are case-sensitive."))
             elif not self.user_cache.is_active:

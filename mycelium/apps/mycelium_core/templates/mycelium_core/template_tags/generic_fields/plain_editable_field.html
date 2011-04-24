@@ -1,0 +1,6 @@
+{% load generic_fields %}{% spaceless %}
+<div class="editable_field" id="container_id_{{field.html_name}}">
+		<label class="generic_field_label">{% if label_override %}{{label_override}}{% else %}{{field.label}}:{% endif %}</label>
+		<span class="edit_field">{% if generic_editable_edit_override %}{{generic_editable_edit_override}}{% else %}{{field}}{% endif %}</span>
+</div>
+{% endspaceless %}

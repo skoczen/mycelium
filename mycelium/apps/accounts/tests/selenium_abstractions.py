@@ -13,7 +13,7 @@ class AccountTestAbstractions(object):
 
     def go_to_the_login_page(self, site="test"):
         sel = self.selenium
-        sel.open(_sitespaced_url("/accounts/login", site=site))
+        sel.open(_sitespaced_url("/login", site=site))
         sel.wait_for_page_to_load("30000")
 
     def log_in(self, ua=None, with_assert=True):

@@ -17,6 +17,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
 
     def process_request(self, request, *args, **kwargs):
         super(AccountAuthMiddleware,self).process_request(request, *args, **kwargs)
+        
         if request.is_secure():
             request.protocol = "https://"
         else:
@@ -24,8 +25,8 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
         
         subdomain = getattr(request, 'subdomain', False)
     
-        if subdomain is not False:
 
+        if subdomain is not False:
 
             # get the account
             poss_account = Account.objects.filter(subdomain=request.subdomain)
@@ -45,6 +46,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                 
                     # try get the useraccount
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
+
                 except:
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):

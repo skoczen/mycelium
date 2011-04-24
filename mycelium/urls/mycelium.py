@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     (r'^groups/',       include('groups.urls',              app_name="groups",          namespace="groups")),
     (r'^tags/',         include('generic_tags.urls',        app_name="generic_tags",    namespace="generic_tags")),
     (r'^rules/',        include('rules.urls',               app_name="rules",           namespace="rules")),
-    (r'^accounts/',     include('accounts.urls.mycelium',   app_name="accounts",        namespace="accounts")),    
+    (r'^',              include('accounts.urls.mycelium',   app_name="accounts",        namespace="accounts")),    
     
     # (r'^administration/doc/', include('django.contrib.admindocs.urls')),
     # (r'^administration/', include(admin.site.urls)),

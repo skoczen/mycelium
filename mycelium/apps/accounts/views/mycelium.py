@@ -22,7 +22,7 @@ def login(request, template_name='registration/login.html',
     redirect_to = request.REQUEST.get(redirect_field_name, '')
 
     if request.method == "POST":
-        form = authentication_form(request, data=request.POST)
+        form = authentication_form(data=request.POST, auth_request=request)
         if form.is_valid():
             # Light security check -- make sure redirect_to isn't garbage.
             if not redirect_to or ' ' in redirect_to:
