@@ -1,37 +1,45 @@
 body {
-	background: url("../images/marketing-background.png");	
-	background-repeat: repeat-x;
+	background-color: #0060b9;
+	background-image: url("../images/marketing-background-stripes-3.jpg");	
+	background-repeat: no-repeat;
+	background-position: 50% 6%;
 	position: relative;
 }
 
-#main_nav {
+#nav_and_logo_container {
+	width: 100%;
 	display: block;
+	/*background: #000486;*/
 	position: absolute;	
 	top: 0px;
-	right: 4%;
-	width: auto;
-	height: 40px;
-	background: #FFF;
-	padding: 0px 4px;
-	border-bottom-left-radius: 4px;
-	-moz-border-radius-bottomleft: 4px;
-	-webkit-border-bottom-left-radius: 4px;	
-	border-bottom-right-radius: 4px;
-	-moz-border-radius-bottomright: 4px;
-	-webkit-border-bottom-right-radius: 4px;	
-
+	right: 0px;
+	background: rgba(0, 4, 134, 0.9);
+}
+#main_nav {
+	display: block;
+	float: right;
+	
+	height: 60px;
+	
+	
+	padding: 20px 4px 0px 40%;
     overflow: hidden;
+    border: #000 1px solid;
+    border-width: 0px 0px 1px 0px;
 }
 #main_nav a {
 	text-decoration: none;
-	border-right: 1px solid #EEE;
+/*	border-right: 1px solid #EEE;
 	border-bottom: 4px solid #BBB;
 	border-top-width: 0px;
-	font-size: 23px;
-	padding: 6px 20px 4px 20px;
+*/
+	font-size: 20px;
+
+	padding: 4px 20px 4px 20px;
 	margin: 0px;
 	display: block;
 	float: left;
+	color: #cee0f1;
 
 }
 #main_nav a.first {
@@ -47,20 +55,27 @@ body {
 	-webkit-border-bottom-left-radius: 4px;	*/
 }
 #main_nav a.current {
-	border-bottom: 4px solid #3E9CFD;
+	color: #FFF;
+	background-color: #002dab;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	/*border-bottom: 4px solid #3E9CFD;*/
+}
+#main_nav a:hover {
+	color: #FFF;
 }
 
 
 #logo {
 	display: block;
 	position: absolute;	
-	top: 0px;
+	top: 4px;
 	left: 10px;
 	font-size: 50px;
 	color: #FFF;
-	text-shadow:		 1px 1px 1px #0054A4;
+/*	text-shadow:		 1px 1px 1px #0054A4;
 	-moz-text-shadow:    1px 1px 1px #0054A4;
-
+*/
 	height: 70px;
 	
 	padding-left: 110px;
@@ -73,6 +88,7 @@ body {
 	background-position: 5px 3px;
 	background-repeat: no-repeat;
 	text-decoration: none;
+	z-index: 100;
 }
 
 #home_layout_block {
@@ -316,10 +332,10 @@ input {
 	text-align: center;
 	clear: both;
 	font-size: 14px;
-	color: #888;
+	color: #0060b9;
 }
 #footer a {
-	color: #626A72;
+	color: #399df8;
 }
 #footer a:hover {
 	color: #3B5672;
@@ -329,4 +345,69 @@ social_links {
 	margin-top: 20px;
 	text-align: center;
 	display: block;
+}
+#home_boxes {
+	position: absolute;
+	top: 450px;
+	overflow: visible;
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+}
+#home_boxes .home_box {
+	display: block;
+	width: 29%;
+	margin: 0px 2% 0px 2%;
+	float: left;
+	/*height: 140px;*/
+
+	background-color: #006bcf;
+	padding: 0px;
+	border-radius: 		6px;
+	-moz-border-radius: 6px;
+
+	box-shadow: 		2px 2px 4px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	2px 2px 4px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	2px 2px 4px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.35);
+  	background-color: #EEE;
+}
+#home_boxes .home_box.loved_by {
+	width: 30%;
+}
+#home_boxes .home_box .title {
+	background-color: #000486;
+	color: #FFF;
+	padding: 6px 6px 6px 10px;
+	border-top-right-radius: 6px;
+  	-moz-border-radius-topright: 6px;
+  	border-top-left-radius: 6px;
+  	-moz-border-radius-topleft: 6px;
+  	font-size: 18px;
+}
+#home_boxes .home_box .description {
+	padding: 10px 10px 0px 10px;
+
+}
+#home_boxes .home_box .action {
+	text-align: right;
+	padding: 10px;
+}
+#home_boxes .home_box.built_for_nonprofits .description {
+	background: url("../images/chat-48.png");
+	background-repeat: no-repeat;
+	background-position: 10px 12px;	
+	padding-left: 70px;
+}
+#home_boxes .home_box.loved_by .description {
+	background: url("../images/heart-48.png");
+	background-repeat: no-repeat;
+	background-position: 10px 12px;	
+	padding-left: 70px;
+}
+#home_boxes .home_box.ready_to_go .description {
+	background: url("../images/magic-48.png");
+	background-repeat: no-repeat;
+	background-position: 10px 12px;	
+	padding-left: 70px;
 }
