@@ -159,6 +159,76 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assert_login_succeeded()
         assert sel.is_text_present("Update billing and account information")
 
+    def test_that_the_account_signup_page_loads(self):
+        sel = self.selenium
+        sel.open("/signup")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("About your nonprofit")
+
+    def test_that_valid_account_signup_works(self):
+        sel = self.selenium
+        self.test_that_the_account_signup_page_loads()
+        sel.type("css=#id_name","My Test Organization")
+        sel.type("css=#id_subdomain","test2")
+        sel.focus("css=#id_subdomain")
+
+        sel.type("css=#id_first_name","Joe Tester")
+        sel.type("css=#id_email", "joe@example.com")
+        sel.type("css=#id_username", "joe")
+        sel.type("css=#id_password", "password")
+        time.sleep(2)
+
+        sel.click("css=#submit_button")
+        sel.wait_for_page_to_load("30000")
+        self.go_to_the_login_page(site="test2")
+        self.log_in(username="joe", password="password")
+
+    
+    def test_autofill_on_the_signup_page(self):
+        sel = self.selenium
+        self.test_that_the_account_signup_page_loads()
+
+        # Basic check
+        sel.type("css=#id_name","My Test Organization")
+        sel.type("css=#id_first_name","Joe Tester")
+        time.sleep(1)
+        self.assertEqual(sel.get_value("css=#id_subdomain"),"mytestorganization")
+        self.assertEqual(sel.get_value("css=#id_username"), "joe")
+
+        # Make sure they keep updating
+        sel.type("css=#id_name","Another Great Org")
+        sel.type("css=#id_first_name","Tester Joe")
+        time.sleep(1)
+        self.assertEqual(sel.get_value("css=#id_subdomain"),"anothergreatorg")
+        self.assertEqual(sel.get_value("css=#id_username"), "tester")
+
+        # Manually changing one of the fields make them stop autofilling
+        sel.type("css=#id_subdomain","test3")
+        sel.type("css=#id_username", "william")
+        sel.type("css=#id_name","My Test Organization")
+        sel.type("css=#id_first_name","Joe Tester")
+        time.sleep(1)
+        self.assertEqual(sel.get_value("css=#id_subdomain"),"test3")
+        self.assertEqual(sel.get_value("css=#id_username"), "william")
+
+
+
+    def test_subdomain_verification(self):
+        sel = self.selenium
+        self.test_that_valid_account_signup_works()
+        self.test_that_the_account_signup_page_loads()
+        sel.type("css=#id_subdomain","test2")
+        sel.focus("css=#id_subdomain")
+        time.sleep(2)
+        assert sel.is_text_present("Sorry,")
+
+        sel.type("css=#id_subdomain","test20")
+        sel.focus("css=#id_subdomain")
+        time.sleep(2)
+        assert sel.is_text_present("Looks good!")
+
+
+
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 

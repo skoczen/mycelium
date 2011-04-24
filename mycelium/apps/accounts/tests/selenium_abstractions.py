@@ -16,15 +16,18 @@ class AccountTestAbstractions(object):
         sel.open(_sitespaced_url("/login", site=site))
         sel.wait_for_page_to_load("30000")
 
-    def log_in(self, ua=None, with_assert=True):
+    def log_in(self, ua=None, with_assert=True, username=None, password=None):
         sel = self.selenium
-        if not ua:
-            username = "admin"
-        else:
-            username = ua.denamespaced_username
+        if not username:
+            if not ua:
+                username = "admin"
+            else:
+                username = ua.denamespaced_username
+        if not password:
+            password = username
         
         sel.type("css=input[name=username]",username)
-        sel.type("css=input[name=password]",username)
+        sel.type("css=input[name=password]",password)
         sel.click("css=.login_btn")
         sel.wait_for_page_to_load("30000")
         if with_assert:
