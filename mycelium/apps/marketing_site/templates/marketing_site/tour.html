@@ -13,8 +13,12 @@
 {% block page_content %}
 <div class="page_header">Watch it in action</div>
 
-Video tour of GoodCloud
+<div class="tour_video">
+{# <iframe src="http://player.vimeo.com/video/VIDEO_ID" width="WIDTH" height="HEIGHT" frameborder="0"></iframe> #}
+<iframe src="http://player.vimeo.com/video/12650554?title=0&amp;byline=0&amp;portrait=0&amp;color=4f4f4f" width="660" height="400" frameborder="0"></iframe>
+</div>
 
-<div class="page_action">Don't let us click around for you, try it yourself!</div>
+<div class="clearfix"></div>
+<a href="{% url accounts:signup %}" class="page_action">Now, try it out yourself!</a>
 
 {% endblock %}

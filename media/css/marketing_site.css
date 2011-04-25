@@ -37,7 +37,7 @@ body.home_page {
 	height: 60px;
 	
 	
-	padding: 20px 4px 0px 0px;
+	padding: 24px 4px 0px 0px;
     overflow: hidden;
 }
 #main_nav a {
@@ -489,7 +489,9 @@ social_links {
 .features .feature.more_to_come			.description { 	background-image: url("../images/icons/Lightbulb.png");  			}
 
 
-.page_action {
+.page_action, a.page_action {
+	display: block;
+	text-decoration: none;
 	background: url("../images/marketing-action-ribbon.png");
 	background-repeat: no-repeat;
 	background-position: 0px 0px;	
@@ -506,4 +508,81 @@ social_links {
 	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.35);
 	cursor: pointer;
 
+
 }
+
+.tour_video {
+	display: block;
+	margin: 0px auto;
+	width: 90%;
+	text-align: center;
+	padding-bottom: 20px;
+}
+.page_header .the_cloud {
+	vertical-align: middle;
+	padding: 0px 0px 10px 4px;
+}
+.praise .testimonial quote {
+	display: block;
+	font-size: 20px;
+}
+.praise .testimonial .person {
+	text-align: right;
+}
+.praise .testimonial .organization {
+	text-align: right;
+}
+.praise .testimonial.style_3{
+	background-image: url("../images/speech3.png");	
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	width: 290px;
+	height: 204px; 
+
+	position: absolute;
+	top: 220px;
+	left: 7%;	
+
+	
+	padding: 20px 30px 40px 30px;
+}
+
+.praise .testimonial.style_1{
+	background-image: url("../images/speech1.png");	
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	width: 250px;
+	height: 210px; 
+	
+	float: right;
+	margin-top: 70px;
+	margin-right: 20%;
+
+	padding: 25px;
+}
+.praise .testimonial.style_1 quote {
+	font-size: 60px;
+	padding: 20px 0px;
+	text-align: center;
+}
+.praise .testimonial.style_2{
+	background-image: url("../images/speech2.png");	
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	width: 200px;
+	height: 177px; 
+
+	position: absolute;
+	top: 520px;
+	left: 18%;
+
+
+	padding: 50px;
+}
+.praise .testimonial.style_2 quote {
+	padding: 10px 0px 20px 0px;
+}
+.praise .clearfix.right_bubble_clear {
+	margin-bottom: 60px;
+}
+
