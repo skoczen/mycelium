@@ -1,6 +1,7 @@
 {% extends "marketing_site/base.html" %}
 {% load i18n generic_fields friendly_data_formatting  %}
 {% block title %}GoodCloud Features - how GoodCloud can help your nonprofit.{% endblock %}
+{% block extra_body %}class="contact_us"{% endblock %}
 {% block head %}
 {% css "/css/mycelium_elements.css" %}
 {{block.super}}
@@ -12,11 +13,24 @@
 
 {% block page_content %}
 <div class="page_header">Say Hello!</div>
-We're here to help.  You can reach us any of the following ways:
 
-   Send an email to support@agoodcloud.org
-
-   Give us a call at (503) 308-1460
-
-   Send us a question or idea online!
+<div class="page_subheader">We're here to help.  You can reach us any of the following ways:</div>
+<div class="contact_methods">
+<div class="container">
+<div class="row">
+	<a class="fourcol contact_button email" href="mailto:support@agoodcloud.com">
+		<div class="type">Email</div>
+		<div class="details identical_height_block">Send an email to support@agoodcloud.org</div>
+	</a>
+	<a class="fourcol contact_button online" href="#">
+		<div class="type">Online</div>
+		<div class="details identical_height_block">Send us a question or idea right from the website</div>
+	</a>
+	<div class="fourcol contact_button phone">
+		<div class="type">Phone</div>
+		<div class="details identical_height_block">Give us a call at (503) 308-1460</div>
+	</div>
+</div>
+</div>
+</div>
 {% endblock %}

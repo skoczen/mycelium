@@ -85,6 +85,7 @@ body.home_page {
 	margin-top: 4px;
 	margin-left: 10px;
 	font-size: 50px;
+	width: 320px;
 	color: #FFF;
 /*	text-shadow:		 1px 1px 1px #0054A4;
 	-moz-text-shadow:    1px 1px 1px #0054A4;
@@ -93,7 +94,8 @@ body.home_page {
 	
 	padding-left: 110px;
 	padding-top: 3px;
-	background: url("../images/goodcloud-logo-55.png");
+	/*background: url("../images/goodcloud-logo-55.png");*/
+	background: url("../images/marketing-full-logo-55h.png");
 
 
 /*	padding-left: 60px;*/
@@ -330,6 +332,13 @@ input {
 }
 #footer a {
 	color: #399df8;
+	text-decoration: none;
+	/*border: 1px solid #399df8;
+	border-width: 0px 0px 1px 0px;*/
+}
+#footer a.current, #footer a.current:hover {
+	border-color: #FFF;
+	color: #91cbff;
 }
 #footer a:hover {
 	color: #57afff;
@@ -586,3 +595,55 @@ social_links {
 	margin-bottom: 60px;
 }
 
+.contact_us .page_header {
+	font-size: 60px;
+}
+.contact_us .page_subheader {
+	color: #FFF;
+	display: block;
+	width: 100%;
+	text-align: center;
+	font-size: 30px;
+	padding: 10px 0px;
+}
+.contact_us .contact_methods {
+	display: block;
+	width: 90%;
+	margin: 20px auto;
+}
+.contact_us .contact_button, .contact_us a.contact_button {
+	display: block;
+	margin-bottom: 20px;
+	background-color: #000486;
+	color: #EEE;
+	text-decoration: none;
+
+	border-radius: 		4px;
+	-moz-border-radius: 4px;
+
+	box-shadow: 		2px 2px 4px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	2px 2px 4px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	2px 2px 4px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.35);
+}
+.contact_us .contact_button:hover, .contact_us a.contact_button:hover {
+	color: #FFF;
+	background-color: #0005ac;
+	cursor: pointer;
+}
+.contact_us .contact_button .type {
+	padding: 25px 10px 10px 10px;
+	font-size: 40px;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-position: 25% 23px;
+	padding-left: 30%;
+	height: 48px;
+}
+.contact_us .contact_button .details {
+	padding: 10px 20px 14px 20px;
+	text-align: center;
+}
+.contact_us .contact_button.phone  .type { background-image: url("../images/contact-phone-48.png");}
+.contact_us .contact_button.online .type { background-image: url("../images/contact-online-48.png");}
+.contact_us .contact_button.email  .type { background-image: url("../images/contact-email-48.png");}

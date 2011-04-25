@@ -1,3 +1,11 @@
+$(function(){
+    setupFooter();
+    $(window).bind("resize",setupFooter);
+	$(window).resize(make_sure_identical_height_block_boxes_are_equal_height);
+	make_sure_identical_height_block_boxes_are_equal_height();
+	$(".contact_button.online").click(open_uservoice);
+});
+
 function setupFooter(){
     footer = $("#footer");
     var footerHeight = footer.height();
@@ -7,26 +15,23 @@ function setupFooter(){
         footer.css("position","relative");
     }
 };
-$(function(){
-    setupFooter();
-    $(window).bind("resize",setupFooter);
-	$(window).resize(make_sure_home_boxes_are_equal_height);
-	make_sure_home_boxes_are_equal_height();
-});
 
-function make_sure_home_boxes_are_equal_height() {
+function make_sure_identical_height_block_boxes_are_equal_height() {
 	var max_height = 50;
-	$(".features .row").each(function() {
+	$(".row").each(function() {
 		row = $(this);
-		$(".feature .description",row).css({"height": ""});
+		$(".identical_height_block",row).css({"height": ""});
 
-		$(".feature .description",row).each(function(){
+		$(".identical_height_block",row).each(function(){
 			if ($(this).height()>max_height) {
 				max_height = $(this).height();
 			}
 		})
-		$(".feature .description",row).height(max_height);		
+		$(".identical_height_block",row).height(max_height);		
 
 	});
 
+}
+function open_uservoice() {
+	UserVoice.showPopupWidget();
 }
