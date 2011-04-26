@@ -61,6 +61,8 @@ def login(request, template_name='registration/login.html',
 from qi_toolkit.helpers import *
 from accounts.forms import UserAccountAccessFormset, NewUserAccountForm
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
+from accounts.models import UserAccount
 def _account_forms(request):
     data = None
     if request.method == "POST":
@@ -84,6 +86,24 @@ def save_account_access_info(request):
         user_access_formset.save()
     
     return {"success":success}
+
+@json_view
+def reset_account_password(request, ua_id):
+    success = False
+
+    ua = get_object_or_404(UserAccount,account=request.account, pk=ua_id)
+    user = ua.user
+    user.set_password("changeme!")
+    user.save()
+
+    return {"success":success}
+
+def delete_account(request, ua_id):
+    ua = get_object_or_404(UserAccount,account=request.account, pk=ua_id)
+    user = ua.user
+    user.delete()
+    ua.delete()
+    return HttpResponseRedirect(reverse("accounts:manage_users"))    
 
 # @json_view
 def save_new_account(request):

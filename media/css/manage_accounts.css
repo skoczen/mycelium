@@ -32,6 +32,9 @@ save_status_and_button .save_info {
 #user_access_table td {
 	padding: 4px;
 }
+#user_access_table .access_level {
+	white-space: nowrap;
+}
 #user_access_table .access_level ul {
 	list-indent: 0px;
 }

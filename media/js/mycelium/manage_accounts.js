@@ -9,6 +9,8 @@ $(function(){
 
 	$("tabbed_box.with_button").bind("mycelium.tabbed_box.opened",box_opened);
 	$(".cancel_add_btn").click(cancel_add_account);
+	$(".reset_password_btn").click(reset_password_clicked);
+	$(".delete_user_btn").click(delete_user_clicked);
 });
 
 username_has_been_focused = false;
@@ -28,7 +30,6 @@ function box_opened() {
 	enable_disable_add_button();
 }
 function form_is_valid() {
-	console.log("checking form..")
 	var is_valid = true;
 	$("#new_account input[type=text]").each(function(){
 		i = $(this);
@@ -39,7 +40,6 @@ function form_is_valid() {
 	if ($("#new_account input[type=radio]:checked").length == 0 ) {
 		is_valid = false;
 	}
-	console.log(is_valid)
 	return is_valid;
 }
 
@@ -54,4 +54,29 @@ function enable_disable_add_button() {
 }
 function cancel_add_account(){
 	$("tabbed_box tab_title").trigger("click");
+}
+
+function reset_password_clicked() {
+	row = $(this).parents("tr");
+	if ( confirm("Are you sure you want to reset the password for " + $(".full_name",row).html() + "?\n\nClick OK to reset their password.\nClick Cancel to leave it unchanged.\n") ) {
+			$.ajax({
+             url: $(this).attr("href"),
+             type: "GET",
+             dataType: "json",
+             success: function(json) {
+                alert("The password for " + $(".full_name",row).html() + " has been reset to 'changeme!'\n\nPlease do change it :)" );
+             }
+           });	
+	}
+	return false;
+}
+function delete_user_clicked () {
+	row = $(this).parents("tr");
+	row.addClass("pre_delete")
+	delete_it = confirm("Are you sure you want to delete the account for " + $(".full_name",row).html() + "?\n\nThis is permanent, but will not affect any data besides their account.\n\nClick OK to delete the account.\nClick Cancel to leave it alone.\n");
+	if (!delete_it) {
+		row.removeClass("pre_delete");
+	}
+	return delete_it
+	
 }

@@ -108,7 +108,7 @@ class UserAccount(TimestampModelMixin):
         ordering = ("account","access_level","user")
 
 
-class AccountBasedModel(TimestampModelMixin):
+class AccountBasedModel(models.Model):
     account = models.ForeignKey(Account, db_index=True)
 
     objects = AccountDataModelManager()
