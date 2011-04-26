@@ -100,6 +100,18 @@ class UserAccount(TimestampModelMixin):
     def email(self):
         return self.user.email
 
+    @property
+    def is_admin(self):
+        return self.access_level == AccessLevel.admin()
+
+    @property
+    def is_staff(self):
+        return self.access_level == AccessLevel.staff()
+
+    @property
+    def is_volunteer(self):
+        return self.access_level == AccessLevel.volunteer()
+
 
     def __unicode__(self):
         return "%s with %s" % (self.denamespaced_username, self.account)

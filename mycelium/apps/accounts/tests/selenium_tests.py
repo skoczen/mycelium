@@ -251,6 +251,33 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.go_to_the_login_page(site="tomsnonprofit")
         self.log_in(username="tom", password="Test123")
 
+    def test_creating_a_new_user(self, full_name="Joe Smith", username="jsmith", password="test"):
+        pass
+
+    def test_setting_access_levels_for_a_user_stays(self):
+        pass
+
+    def test_resetting_a_password_changes_it_appropriately(self):
+        pass
+
+    def test_that_deleting_your_account_logs_you_out_immediately(self):
+        pass
+
+    def test_deleting_a_user(self):
+        pass
+
+    def test_autofill_of_add_form(self):
+        pass
+
+    def test_disabling_of_add_button_until_the_form_is_valid(self):
+        pass
+
+    def test_that_staff_and_volunteers_can_not_see_the_account_link(self):
+        pass
+    
+    def test_that_staff_and_volunteers_who_try_to_go_to_the_account_link_are_redirected_to_more(self):
+        pass
+
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
