@@ -56,3 +56,51 @@ def login(request, template_name='registration/login.html',
         'site': current_site,
         'site_name': current_site.name,
     }, context_instance=RequestContext(request))
+
+
+from qi_toolkit.helpers import *
+from accounts.forms import UserAccountAccessFormset, NewUserAccountForm
+from django.core.urlresolvers import reverse
+def _account_forms(request):
+    data = None
+    if request.method == "POST":
+        data = request.POST
+
+    user_access_formset = UserAccountAccessFormset(data,instance=request.account)
+    new_user_form = NewUserAccountForm(data)
+    return user_access_formset, new_user_form
+
+@render_to("accounts/manage_users.html")
+def manage_users(request):
+    user_access_formset, new_user_form = _account_forms(request)
+    return locals()
+
+@json_view
+def save_account_access_info(request):
+    success = False
+
+    user_access_formset, new_user_form = _account_forms(request)
+    if user_access_formset.is_valid():
+        user_access_formset.save()
+    
+    return {"success":success}
+
+# @json_view
+def save_new_account(request):
+    success = False
+    if request.method == "POST":
+        new_user_form = NewUserAccountForm(request.POST)
+
+        if new_user_form.is_valid():
+            request.account.create_useraccount(
+                                       full_name=new_user_form.cleaned_data['first_name'], 
+                                       username=new_user_form.cleaned_data['username'], 
+                                       password=new_user_form.cleaned_data['password'], 
+                                       email=new_user_form.cleaned_data['email'], 
+                                       access_level=new_user_form.cleaned_data['access_level']
+                                       )
+    
+    # return {"success":success}
+    return HttpResponseRedirect(reverse("accounts:manage_users"))
+
+
