@@ -10,7 +10,7 @@
 
 {% js "/js/mycelium/manage_accounts.js" %}
 {% endblock %}
-{% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People and Groups</a>{% endblock %}
+{% block breadcrumb_links %}<a href="{% url core:more_menu %}" >Back to More</a>{% endblock %}
 
 {% block page_content %}
 <page_title>Accounts for {{request.account.name}}</page_title>

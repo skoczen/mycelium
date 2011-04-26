@@ -252,31 +252,177 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.log_in(username="tom", password="Test123")
 
     def test_creating_a_new_user(self, full_name="Joe Smith", username="jsmith", password="test"):
-        pass
+        self.setup_for_logged_in()
+        self.create_a_new_user_via_manage_accounts()
+
 
     def test_setting_access_levels_for_a_user_stays(self):
-        pass
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_manage_accounts_page()
+
+        # make everyone else admins
+        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(0) input:checked")
+        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(0) input:checked")
+        sel.click("css=.user_row:nth(2) .access_level input:nth(0)")
+        sel.click("css=.user_row:nth(3) .access_level input:nth(0)")
+        time.sleep(4)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(0) input:checked")
+        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(0) input:checked")
+
+        # make everyone else staff
+        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(1) input:checked")
+        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(1) input:checked")
+        sel.click("css=.user_row:nth(2) .access_level input:nth(1)")
+        sel.click("css=.user_row:nth(3) .access_level input:nth(1)")
+        time.sleep(4)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(1) input:checked")
+        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(1) input:checked")
+
+        # make everyone else a volunteer
+        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(2) input:checked")
+        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(2) input:checked")
+        sel.click("css=.user_row:nth(2) .access_level input:nth(2)")
+        sel.click("css=.user_row:nth(3) .access_level input:nth(2)")
+        time.sleep(4)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(2) input:checked")
+        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(2) input:checked")
 
     def test_resetting_a_password_changes_it_appropriately(self):
-        pass
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.create_a_new_user_via_manage_accounts()
+        assert sel.is_element_present("css=.user_row:nth(4)")
+        sel.choose_cancel_on_next_confirmation()
+        sel.click("css=.user_row:nth(2) .reset_password_btn")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to reset the password for Joe Smith?\n\nClick OK to reset their password.\nClick Cancel to leave it unchanged.\n")
+        sel.click("css=.user_row:nth(2) .reset_password_btn")
+        sel.get_confirmation()
+        time.sleep(2)
+        assert sel.is_alert_present()
+        self.assertEqual(sel.get_alert(), "The password for Joe Smith has been reset to 'changeme!'  Please do change it :)")
+        sel.click("css=.logout_btn")
+        sel.wait_for_page_to_load("30000")
+        sel.click("link=log back in")
+        self.log_in(username="jsmith", password="changeme!")
+
 
     def test_that_deleting_your_account_logs_you_out_immediately(self):
-        pass
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_manage_accounts_page()
+        sel.click("css=.user_row:nth(1) .delete_user_btn")
+        sel.get_confirmation()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Welcome to GoodCloud")
 
     def test_deleting_a_user(self):
-        pass
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.create_a_new_user_via_manage_accounts()
+        assert sel.is_element_present("css=.user_row:nth(4)")
+        sel.choose_cancel_on_next_confirmation()
+        sel.click("css=.user_row:nth(2) .delete_user_btn")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to delete the account for Joe Smith?\n\nThis is permanent, but will not affect any data besides their account.\n\nClick OK to delete the account.\nClick Cancel to leave it alone.\n")
+        sel.click("css=.user_row:nth(2) .delete_user_btn")
+        sel.get_confirmation()
+        sel.wait_for_page_to_load("30000")
+        assert not sel.is_element_present("css=.user_row:nth(4)")
+
 
     def test_autofill_of_add_form(self):
-        pass
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_manage_accounts_page()
+        sel.click("css=tab_title")
+        time.sleep(0.5)
+        sel.type("css=#id_first_name", "Will Billerton")
+        self.assertEqual(sel.get_value("css=#id_username"),"will")
+
 
     def test_disabling_of_add_button_until_the_form_is_valid(self):
-        pass
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_manage_accounts_page()
+        sel.click("css=tab_title")
+        time.sleep(0.5)
+        assert sel.is_element_present("css=.create_account_btn.disabled")
+        sel.click("css=.create_account_btn")
+        sel.type("css=#id_first_name", "Joe Smith")
+        assert sel.is_element_present("css=.create_account_btn.disabled")
+        sel.click("css=.create_account_btn")
+        sel.type("css=#id_username", "joe")
+        assert sel.is_element_present("css=.create_account_btn.disabled")
+        sel.click("css=.create_account_btn")
+        sel.type("css=#id_password", "pass")
+        assert sel.is_element_present("css=.create_account_btn.disabled")
+        sel.click("css=.create_account_btn")
+        sel.type("css=#id_email", "test@example.com")
+        assert sel.is_element_present("css=.create_account_btn.disabled")
+        sel.click("css=.create_account_btn")
+        sel.click("css=#id_access_level_0")
+        assert not sel.is_element_present("css=.create_account_btn.disabled")
+
+        # try the reverse
+        self.go_to_the_manage_accounts_page()
+        sel.click("css=tab_title")
+        time.sleep(0.5)
+        assert sel.is_element_present("css=.create_account_btn.disabled")
+        sel.click("css=.create_account_btn")
+        sel.click("css=#id_access_level_2")
+        assert sel.is_element_present("css=.create_account_btn.disabled")
+        sel.click("css=.create_account_btn")
+        sel.type("css=#id_email", "test@example.com")
+        assert sel.is_element_present("css=.create_account_btn.disabled")
+        sel.click("css=.create_account_btn")
+        sel.type("css=#id_password", "pass")
+        assert sel.is_element_present("css=.create_account_btn.disabled")
+        sel.click("css=.create_account_btn")
+        sel.type("css=#id_username", "joe")
+        assert sel.is_element_present("css=.create_account_btn.disabled")
+        sel.click("css=.create_account_btn")
+        sel.type("css=#id_first_name", "Joe Smith")
+        
+        assert not sel.is_element_present("css=.create_account_btn.disabled")
 
     def test_that_staff_and_volunteers_can_not_see_the_account_link(self):
-        pass
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_login_page()
+        self.log_in(username="staff", password="staff")
+        sel.click("link=More")
+        sel.wait_for_page_to_load("30000")
+        assert not sel.is_element_present("css=.users_button")
+        self.go_to_the_login_page()
+        self.log_in(username="volunteer", password="volunteer")
+        sel.click("link=More")
+        sel.wait_for_page_to_load("30000")
+        assert not sel.is_element_present("css=.users_button")
     
     def test_that_staff_and_volunteers_who_try_to_go_to_the_account_link_are_redirected_to_more(self):
-        pass
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_login_page()
+        self.log_in(username="staff", password="staff")
+        sel.click("link=More")
+        sel.wait_for_page_to_load("30000")
+        self.open(self.MANAGE_USERS_URL)
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("link=More")
+
+        self.go_to_the_login_page()
+        self.log_in(username="volunteer", password="volunteer")
+        sel.click("link=More")
+        sel.wait_for_page_to_load("30000")
+        self.open(self.MANAGE_USERS_URL)
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("link=More")
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):

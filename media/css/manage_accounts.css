@@ -1,6 +1,7 @@
 
 save_status_and_button {
-	padding-top: 8px;
+	padding: 8px 10px 0px 0px;
+	color: #999;
 }
 save_status_and_button a, save_status_and_button .save_info {
 	display: block;
