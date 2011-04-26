@@ -5,17 +5,20 @@ $(function(){
 	$("#container_id_name input").focus();
 	$("#container_id_name input").bind("change",populate_subdomain);
 	$("#container_id_name input").bind("keyup",populate_subdomain);
-	$("#container_id_subdomain input").focus(subdomain_focused);
+	$("#container_id_subdomain input").bind("focus",subdomain_focused);
+	$(".form_section.you input").bind("focus",bottom_field_focused);
 	$("#container_id_subdomain input").bind("change keyup",subdomain_changed);
 	
 	$("#container_id_first_name input").bind("change",populate_username);
 	$("#container_id_first_name input").bind("keyup",populate_username);
-	$("#container_id_username input").focus(username_focused);
+	$("#container_id_username input").bind("focus",username_focused);
+
 	enable_disable_signup_button();
 });
 
 subdomain_has_been_focused = false;
 username_has_been_focused = false;
+bottom_field_has_been_focused = false;
 function populate_subdomain() {
 	subdomain = $("#container_id_subdomain input");
 	if (!subdomain_has_been_focused) {
@@ -42,6 +45,14 @@ function subdomain_focused() {
 }
 function username_focused() {
 	username_has_been_focused = true;
+}
+function bottom_field_focused() {
+	if (!bottom_field_has_been_focused && $("#subdomain_verification").hasClass("not_verified")) {
+		if ($("#container_id_subdomain input").val() != "") {
+			verify_subdomain();
+			bottom_field_has_been_focused = true;
+		}
+	}
 }
 
 function form_is_valid() {
@@ -72,7 +83,6 @@ function subdomain_changed() {
 		clearTimeout(verify_timeout)
 		verify_timeout = setTimeout(verify_subdomain, 500);		
 	}
-
 }
 var verifying_message_timeout = false;
 function verify_subdomain() {

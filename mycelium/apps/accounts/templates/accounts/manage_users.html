@@ -1,0 +1,82 @@
+{% extends "mycelium_base.html" %}
+{% load i18n i18n generic_fields friendly_data_formatting generic_tag_tags %}
+{% block title %}More Tools - Data Import, Account Settings, and more{% endblock %}
+{% block css %}{{block.super}}
+{% generic_field_css %}
+
+{% css "/css/manage_accounts.css" %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+
+{% js "/js/mycelium/manage_accounts.js" %}
+{% endblock %}
+{% block breadcrumb_links %}<a href="{% url core:more_menu %}" >Back to More</a>{% endblock %}
+
+{% block page_content %}
+<page_title>Accounts for {{request.account.name}}</page_title>
+
+<form action="{% url accounts:save_account_access_info %}" class="edit_mode_on" id="basic_info_form" method="POST">{% csrf_token %}
+<save_status_and_button>
+<span class="save_info">
+	<span class="last_save_time"></span>
+</span>
+</save_status_and_button>
+
+
+
+<table id="user_access_table" class="striped record_table">
+	<tr class="user_row header" >
+		<th class="full_name">Name</th>
+		<th class="username">Username</th>
+		<th class="email">Email</th>
+		<th class="access_level">Account Level</th>
+		<th class="reset_pass"></th>
+		<th class="delete"></th>
+	</tr>
+{% for form in user_access_formset.forms %}{% with form.instance as ua %}
+	<tr class="user_row striped_row" user_pk="{{ua.pk}}">
+		<td class="full_name">{{ua.full_name}}</td>
+		<td class="username">{{ua.denamespaced_username}}</td>
+		<td class="email">{{ua.email}}</td>
+		<td class="access_level"><div class="fields">{{form.access_level}}{{form.id}}</div></td>
+		<td class="reset_pass"><a href="{% url accounts:reset_account_password ua.pk %}" class="mycelium_btn reset_password_btn mycelium_small_btn">Reset Password</a></td>
+		<td class="delete"><a href="{% url accounts:delete_account ua.pk %}" class="mycelium_btn mycelium_delete_btn mycelium_active_grey delete_user_btn mycelium_small_btn">Delete User</a></td>
+	</tr>
+{% endwith %}
+{% endfor %}
+</table>
+{{user_access_formset.management_form}}
+
+</form>
+	<tabbed_box class="with_button closed" name="add_a_user" id="add_a_user_box">
+		<tab_title_container>	
+		<tab_title>
+			<text>Add an Account</text>
+		</tab_title>
+		</tab_title_container>
+		<box_content>
+		<form id="new_account" action="{% url accounts:save_new_account %}" method="POST">{% csrf_token %}
+		<span class="edit_mode_on">
+			<div class="form_section basic_info">
+				<section_label>Account Information</section_label><div class="clearfix"></div>
+				{% generic_editable_field new_user_form.first_name %}
+				{% generic_editable_field new_user_form.username %}
+				{% generic_editable_field new_user_form.password %}
+				{% generic_editable_field new_user_form.email %}
+			</div>
+			<div class="form_section access_level">
+				<section_label>Account Level</section_label>{% generic_editable_field new_user_form.access_level %}
+			</div>
+			<form_actions>
+				<input type="submit" class="mycelium_btn create_account_btn" value="Create this Account">
+				<div class="all_fields_message">All fields are required.</div>
+			</form_actions>
+			<box_close>
+				<a href="#" class="mycelium_btn mycelium_grey cancel_add_btn">Cancel</a>
+			</box_close>
+
+		</form>
+		</box_content>
+	</tabbed_box>
+
+{% endblock %}

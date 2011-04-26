@@ -35,7 +35,7 @@
 		{# <a href="#">Communicate</a> #}
 		{# <a href="#">Events</a> #}
 		<a href="{% url core:more_menu %}" class="{% if section == "more" %}current{% endif %}">More</a>
-		<a href="{% url accounts:logout %}" >Logout <small>({{request.user.get_profile.denamespaced_username}})</small></a>
+		<a href="{% url accounts:logout %}" class="logout_btn" >Logout <small>({{request.user.get_profile.denamespaced_username}})</small></a>
 		
 	{% endspaceless %}</main_nav>
 	{% endblock %}

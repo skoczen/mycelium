@@ -2,9 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from managers import AccountDataModelManager, ExplicitAccountDataModelManager
+from qi_toolkit.models import TimestampModelMixin
 
-
-class Plan(models.Model):
+class Plan(TimestampModelMixin):
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
@@ -17,7 +17,7 @@ class Plan(models.Model):
     def monthly_plan(cls):
         return cls.objects.get_or_create(name="Monthly")[0]
 
-class Account(models.Model):
+class Account(TimestampModelMixin):
     name = models.CharField(max_length=255, verbose_name="Organization Name")
     subdomain = models.CharField(max_length=255, unique=True, db_index=True, verbose_name="GoodCloud address (myorganization.agodocloud.com)")
     is_active = models.BooleanField(default=True)
@@ -57,7 +57,7 @@ class Account(models.Model):
         for ua in instance.useraccount_set.all():
             ua.user.delete()
 
-class AccessLevel(models.Model):
+class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
@@ -78,7 +78,7 @@ class AccessLevel(models.Model):
         ordering = ("name",)
 
 
-class UserAccount(models.Model):
+class UserAccount(TimestampModelMixin):
     user = models.ForeignKey(User, db_index=True)
     account = models.ForeignKey(Account, db_index=True)
     access_level = models.ForeignKey(AccessLevel)
@@ -87,6 +87,31 @@ class UserAccount(models.Model):
     @property
     def denamespaced_username(self):
         return self.user.username[(2+len("%s"%self.account.pk)):]
+
+    @property
+    def full_name(self):
+        return self.user.first_name
+
+    @property
+    def username(self):
+        return self.user.username
+
+    @property
+    def email(self):
+        return self.user.email
+
+    @property
+    def is_admin(self):
+        return self.access_level == AccessLevel.admin()
+
+    @property
+    def is_staff(self):
+        return self.access_level == AccessLevel.staff()
+
+    @property
+    def is_volunteer(self):
+        return self.access_level == AccessLevel.volunteer()
+
 
     def __unicode__(self):
         return "%s with %s" % (self.denamespaced_username, self.account)

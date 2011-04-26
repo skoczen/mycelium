@@ -1,11 +1,12 @@
-from django.forms import ModelForm, ModelChoiceField
-from django.forms.models import BaseModelFormSet, BaseInlineFormSet
+from django.forms import ModelForm, ModelChoiceField, CharField, Form
+from django.forms.widgets import RadioSelect, PasswordInput
+from django.forms.models import BaseModelFormSet, BaseInlineFormSet, inlineformset_factory
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from accounts.models import Account, Plan, AccessLevel
+from accounts.models import Account, Plan, AccessLevel, UserAccount
 
 def adjust_queryset_for_account_based_models(f, *args, **kwargs):
     if hasattr(f,"queryset"):
@@ -133,9 +134,36 @@ class NewAccountForm(ModelForm):
         model = Account
         fields = ("name", "subdomain", "plan")
 
-class NewUserForm(ModelForm):
+   
+class NewUserForm( Form):
+    username    = CharField(max_length=100, required=True)
+    email       = CharField(max_length=255, required=True)
+    password    = CharField(max_length=255, required=True)
+    first_name  = CharField(max_length=255, required=True)
+
+
+class UserAccountAccessForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserAccountAccessForm, self).__init__(*args, **kwargs)
+        # Really, django?  This is necessary for a Non-null field??
+        self.fields["access_level"].choices = [c for c in self.fields["access_level"].choices][1:]
+
+
     class Meta:
-        model = User
-        fields = ("username", "email", "password", "first_name",)
-    
-    
+        model = UserAccount
+        fields = ("access_level",)
+        widgets = {
+            'access_level': RadioSelect
+        }
+
+class NewUserAccountForm(UserAccountAccessForm):
+    username    = CharField(max_length=100, required=True)
+    email       = CharField(max_length=255, required=True)
+    password    = CharField(max_length=255, required=True, widget=PasswordInput)
+    first_name  = CharField(max_length=255, required=True, label="Full Name")
+
+
+class UserAccountAccessFormsetBase(AccountBasedModelFormSet):
+    pass
+
+UserAccountAccessFormset = inlineformset_factory(Account, UserAccount, fields=("access_level",), can_delete=False, extra=0, form=UserAccountAccessForm,  )
