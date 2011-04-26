@@ -30,7 +30,9 @@ def signup(request):
                                        )
             site = Site.objects.get_current()
             return HttpResponseRedirect("%s%s.%s/" % (request.protocol, account.subdomain, site.domain))
-
+        else:
+            print account_form
+            print user_form
     else:
         account_form = NewAccountForm()
         user_form = NewUserForm()

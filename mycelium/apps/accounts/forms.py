@@ -1,4 +1,4 @@
-from django.forms import ModelForm, ModelChoiceField
+from django.forms import ModelForm, ModelChoiceField, CharField, Form
 from django.forms.models import BaseModelFormSet, BaseInlineFormSet
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
@@ -133,9 +133,14 @@ class NewAccountForm(ModelForm):
         model = Account
         fields = ("name", "subdomain", "plan")
 
-class NewUserForm(ModelForm):
-    class Meta:
-        model = User
-        fields = ("username", "email", "password", "first_name",)
+class NewUserForm(Form):
+    username    = CharField(max_length=100, required=True)
+    email       = CharField(max_length=255, required=True)
+    password    = CharField(max_length=255, required=True)
+    first_name  = CharField(max_length=255, required=True)
+   
+    # class Meta:
+    #     model = User
+    #     fields = ("username", "email", "password", "first_name",)
     
-    
+    # 

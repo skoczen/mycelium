@@ -227,6 +227,29 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         time.sleep(2)
         assert sel.is_text_present("Looks good!")
 
+    def test_how_tom_broke_signup_is_fixed(self):
+        sel = self.selenium
+
+        from django.contrib.auth.models import User
+        User.objects.create_user("tom", "tom@agoodcloud.com", "Test123")
+
+        self.test_that_the_account_signup_page_loads()
+        sel.click("css=#id_name")
+        sel.type("css=#id_name","Tom's Nonprofit")
+
+        sel.click("css=#id_first_name")
+        sel.type("css=#id_first_name","Tom Noble")
+        sel.click("css=#id_email")
+        sel.type("css=#id_email", "tom@agoodcloud.com")
+        sel.click("css=#id_password")
+        sel.type("css=#id_password", "Test123")
+        time.sleep(2)
+
+        sel.click("css=#submit_button")
+        sel.wait_for_page_to_load("30000")
+        assert not sel.is_element_present("css=#submit_button")
+        self.go_to_the_login_page(site="tomsnonprofit")
+        self.log_in(username="tom", password="Test123")
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
