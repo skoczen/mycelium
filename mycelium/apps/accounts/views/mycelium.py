@@ -127,3 +127,5 @@ def save_new_account(request):
     return HttpResponseRedirect(reverse("accounts:manage_users"))
 
 
+def dashboard(request):
+    return HttpResponseRedirect(reverse("people:search"))

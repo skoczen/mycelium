@@ -18,4 +18,6 @@ urlpatterns = parser.patterns('',
    url(r'^accounts/{ua_id:digits}/reset-password$',      views.reset_account_password                                                         , name="reset_account_password"    ),
    url(r'^accounts/{ua_id:digits}/delete-user$'   ,      views.delete_account                                                                 , name="delete_account"            ),
    
+   # Temporary redirect to people
+    url(r'^$',                                           views.dashboard                                                                      , name="dashboard"              ),
 )

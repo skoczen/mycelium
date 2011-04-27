@@ -359,8 +359,6 @@ class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
         else:
             queries = [query]
         
-        print account
-        print account
         results = cls.objects_by_account(account).all()
         for q in queries:
             if q != "":

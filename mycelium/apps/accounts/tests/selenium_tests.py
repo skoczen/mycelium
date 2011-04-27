@@ -81,6 +81,36 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         assert not sel.is_text_present("John Smith")
 
 
+    def test_that_a_new_person_in_account_1_does_not_show_in_account_2_org_people_search(self):
+        sel = self.selenium
+        self.go_to_the_login_page()
+        self.log_in()
+        self.assert_login_succeeded()
+        self.create_john_smith_and_verify()
+        self.create_new_organization()
+        sel.click("css=tabbed_box tab_title")
+        time.sleep(0.5)
+        sel.click("id_search_new_person")
+        sel.type("id_search_new_person", "john")
+        time.sleep(2)
+        assert sel.is_text_present('John Smith')
+        
+
+        a2 = self.create_demo_site("test2")
+        ua = Factory.useraccount(account=a2)
+        self.set_site("test2")
+        self.go_to_the_login_page("test2")
+        self.log_in(ua=ua)
+        self.assert_login_succeeded()        
+        
+        self.create_new_organization()
+        sel.click("css=tabbed_box tab_title")
+        time.sleep(0.5)
+        sel.click("id_search_new_person")
+        sel.type("id_search_new_person", "john")
+        time.sleep(2)
+        assert sel.is_text_present('No people found for search "john".')
+
     def test_that_requesting_an_invalid_person_404s(self):
         sel = self.selenium
         self.go_to_the_login_page()

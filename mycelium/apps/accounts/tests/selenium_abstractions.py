@@ -12,9 +12,9 @@ class AccountTestAbstractions(object):
     def create_demo_site(self, name="test", mostly_empty=False):
         return Factory.create_demo_site(name, quick=True, delete_existing=True, mostly_empty=mostly_empty)
 
-    def go_to_the_login_page(self, site="test"):
+    def go_to_the_login_page(self, site=None):
         sel = self.selenium
-        sel.open(_sitespaced_url("/login", site=site))
+        self.open("/login", site=site)
         sel.wait_for_page_to_load("30000")
 
     def log_in(self, ua=None, with_assert=True, username=None, password=None):
@@ -46,10 +46,18 @@ class AccountTestAbstractions(object):
         sel = self.selenium
         assert sel.is_text_present("Powered by")
 
-    def open(self, url, site="test"):
+    def open(self, url, site=None):
+        if not site:
+            if hasattr(self,"site") and self.site:
+                site = self.site
+            else:
+                site = "test"
         sel = self.selenium
         sel.open(_sitespaced_url(url, site=site))
         sel.wait_for_page_to_load("30000")
+
+    def set_site(self, site):
+        self.site = site
 
     def setup_for_logged_in(self, name="test", mostly_empty=False):
         self.account = self.create_demo_site(name=name, mostly_empty=mostly_empty)
