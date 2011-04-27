@@ -5,7 +5,7 @@
 {% css "/css/mycelium_elements.css" %}
 {{block.super}}
 
-{% js "/js/mycelium/signup.js" %}
+{% js "/js/mycelium/marketing_tabs.js" %}
 {% css "/css/login.css" %}
 {% css "/css/signup.css" %}
 {% endblock %}
@@ -13,38 +13,54 @@
 {% block page_content %}
 <div class="page_header">About Us</div>
 
+<div id="side_nav" class="tabs">
+	<ul>
+	 	<li><a href="#our_mission">Our Mission</a></li>
+	 	<li><a href="#the_team">Our Team</a></li>
+ 	</ul>
+	<div class="tab_content mission" id="our_mission">
+		{# <div class="tab_title">Our Mission</div> #}
+
+		<div class="tab_subheading nonprofits_deserve">Small nonprofits deserve the best software in the world.</div>
+
+		<p>There, we said it. Not hand-me-downs, not corporate products that don't fit, but a real solution designed around your needs and how you work. We started GoodCloud after watching first-hand some of our favorite nonprofits struggle with a hodge-podge of programs. We heard stories of daily frustrations, and listened to organizations that webre pouring hours into fighting with computers instead of their missions. We said, "Enough with that!", and we started GoodCloud to fix it.</p>
+
+		<div class="tab_subheading">We &hearts; nonprofits.</div>
+		<p>We care deeply about you and your mission. You've made the decision to make the world a better place instead of making piles of money. We admire you. Nonprofits are doing the biggest things to make the world a better place. We're thankful to have you in the world, and we want to help you thrive.</p>
+
+		<div class="tab_subheading">We get nonprofits.</div>
+		<p>You're different. You're not a corporation. You're not a club. You're not a small business. We get that. Nobody else has to file Form 990's. Nobody else has to track volunteer hours. Nonprofits are unique, living organizations with different needs and ways of working.  We're building software just for you.</p>
+
+		<div class="tab_subheading">We only serve nonprofits.</div>
+		<p>We're building you the best software in the world. But the cool part is, it's just for you.  You can't use GoodCloud unless you're a nonprofit.  Run a big company, and want our cool people-tracking software? Tough. Colleague have a corporate web-site editor that's harder to use than GoodCloud's? Tell them we're sorry - maybe it'll get better in a few years. GoodCloud isn't the side project of a giant software maker, it's a small and nimble company that works exclusively with nonprofits.  We like it that way, and we think you will too.</p>
+
+	</div>
+
+	<div class="tab_content team" id="the_team">
+
+		{# <div class="tab_title">Our Team</div> #}
+
+		<div class="tab_subheading">Steven Skoczen</div>
+		<div class="person_description">
+		<p>Steven started building web applications back in the 90's, and hasn't stopped since. He's run a <a href="http://www.quantumimagery.com" target="_blank">successful web development company</a>, and started <a href="http://www.sixlinks.org" target="_blank">SixLinks.org</a> and <a href="http://www.fluidtask.com" target="_blank">Fluidtask</a>.  Over the years, he's also thrown his development behind a number of other organizations on a pro-bono basis. </p>
+
+		<p>When not typing into a glowing white screen, he facilitates writing workshops for <a href="http://www.writearound.org" target="_blank">Write Around Portland</a>, spends time in his studio, or finds some space in the nearby Oregon woods for he and Tomo, the world's greatest dog</p>
+		</div>
 
 
-Our Mission
+		<div class="tab_subheading">Tom Noble</div>
+		<div class="person_description">
+		<div class="bio_text">
+		<p>Tom has worked with nonprofit organizations of all sizes and functions in many different capacities:  as a managing director, mentor, project manager, volunteer, advisory board member, and consultant.  He’s still actively working with <a href="http://www.teachforamerica.org" target="_blank">Teach for America</a> after having served as a Corps Member and middle school teacher in Phoenix, AZ.</p>
 
-Nonprofits deserve the best software in the world.
+		<p>Originally from Upstate New York and a graduate of Cornell University, Tom also has a Master’s in Education from Arizona State University, and is currently working on his MBA. Tom is a huge basketball fan and loves to cook.</p>
+		</div>
 
-There, we said it. Not hand-me-downs, not corporate products that don't fit, but a real solution designed around your needs and how you work. We started GoodCloud after watching first-hand some of our favorite nonprofits struggle with a hodge-podge of programs. We heard stories of daily frustrations, and listened to organizations that were pouring hours into fighting with computers instead of their missions. We said, "Enough with that!", and we started GoodCloud to fix it.
-
-We ♥ nonprofits.
-We care deeply about you and your mission. You've made the decision to make the world a better place instead of making piles of money. We admire you. Nonprofits are doing the biggest things to make the world a better place. We're thankful to have you in the world, and we want to help you thrive.
-
-We get nonprofits.
-You're different. You're not a corporation. You're not a club. You're not a small business. We get that. Nobody else has to file Form 990's. Nobody else has to track volunteer hours. Nonprofits are unique, living organizations with different needs and ways of working.  We're building software just for you.
-
-We only serve nonprofits.
-We're building you the best software in the world. But the cool part is, it's just for you.  You can't use GoodCloud unless you're a nonprofit.  Run a big company, and want our cool people-tracking software? Tough. Colleague have a corporate web-site editor that's harder to use than GoodCloud's? Tell them we're sorry - maybe it'll get better in a few years. GoodCloud isn't the side project of a giant software maker, it's a small and nimble company that works exclusively with nonprofits.  We like it that way, and we think you will too.
+	</div>
+	
+</div>
 
 
-
-
-Our Team
-Steven Skoczen
-Steven started building web applications back in the 90's, and hasn't stopped since. He's run a successful web development company, and started SixLinks.org and Fluidtask. Over the years, he's also thrown his development behind a number of other organizations on a pro-bono basis. 
-
-When not typing into a glowing white screen, he facilitates writing workshops for Write Around Portland, spends time in his studio, or finds some space in the nearby Oregon woods for he and Tomo, the world's greatest dog.
-
-
-
-Tom Noble
-Tom has worked with nonprofit organizations of all sizes and functions in many different capacities: as a managing director, mentor, project manager, volunteer, advisory board member, and consultant. He’s still actively working with Teach for America after having served as a Corps Member and middle school teacher in Phoenix, AZ. 
-
-Originally from Upstate New York and a graduate of Cornell University, Tom also has a Master’s in Education from Arizona State University, and is currently working on his MBA. Tom is a huge basketball fan and loves to cook.
 
 
 {% endblock %}

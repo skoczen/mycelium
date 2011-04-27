@@ -647,3 +647,64 @@ social_links {
 .contact_us .contact_button.phone  .type { background-image: url("../images/contact-phone-48.png");}
 .contact_us .contact_button.online .type { background-image: url("../images/contact-online-48.png");}
 .contact_us .contact_button.email  .type { background-image: url("../images/contact-email-48.png");}
+#side_nav {
+	padding: 0px;
+}
+.tabs {
+	border: 0px;
+}
+#side_nav ul {
+	display: block;
+	float: left;
+	margin-left: 0px;
+	width: 16%;
+	background: transparent;
+	border: 0px;
+	padding: 0px;
+}
+#side_nav li {
+	display: block;
+	width: 100%;
+	background: transparent;
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+#side_nav li a {
+	width: 100%;
+	background: transparent;
+	border: 0px;
+	padding: 0px;
+	background-color: #FFF;
+	padding: 6px 0px 6px 12px;
+}
+#side_nav .tab_content {
+	width: 76%;
+	margin-left: 18%;
+	background: #FFF;
+	border-radius: 		4px;
+	-moz-border-radius: 4px;
+	font-size: 16px;
+	color: #333;
+}
+#side_nav .tab_content a {
+	color: #000486;
+}
+.ui-widget-content  {
+	background: transparent;
+	border: 0px;
+}
+.tab_subheading {
+	font-size: 20px;
+	margin: 16px 0px 2px 0px;
+	color: #000;
+}
+.tab_title {
+	font-size: 30px;
+	font-weight: bold;
+}
+.nonprofits_deserve {
+	font-size: 30px;
+	text-align: center;
+	margin-bottom: 20px;
+}
