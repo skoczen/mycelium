@@ -44,7 +44,7 @@ django-mediasync==2.1.0
 slimmer==0.1.30
 django-debug-toolbar==0.8.4
 django-picklefield==0.1.9
-django-subdomains==1.1.1
+-e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
 gitpython
 ## The following requirements were added by pip --freeze:
 CherryPy==3.1.2
