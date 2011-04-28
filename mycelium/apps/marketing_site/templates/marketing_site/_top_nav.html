@@ -1,7 +1,7 @@
-{% load i18n %}{% load cache cms_tags menu_tags current_page %}
+{% load i18n %}{% load cache current_page %}
 {% block nav %}
 <div id="nav_and_logo_container">
-	<a id="logo" href="{% page_url "marketing_site_home" %}">
+	<a id="logo" href="{% url marketing_site:home %}">
 		
 	</a>
 <div id="main_nav">{% spaceless %}

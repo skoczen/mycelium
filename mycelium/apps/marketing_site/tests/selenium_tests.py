@@ -3,7 +3,7 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase, QiSele
 from email_list.models import EmailSubscription
 
 class TestMarketingSite(QiSeleniumTestCase):
-    selenium_fixtures = ["marketing_site_localhost.json"]
+    # selenium_fixtures = ["marketing_site_localhost.json"]
     # fixtures = ["marketing_site.json",]
 
     def setUp(self):
@@ -22,49 +22,53 @@ class TestMarketingSite(QiSeleniumTestCase):
     def test_each_page_loads(self):
         sel = self.selenium
         sel.open("/")
+        
+        # Home
         sel.click("link=Home")
         sel.wait_for_page_to_load("30000")
-        sel.click("link=Mission")
-        sel.wait_for_page_to_load("30000")
-        try: self.assertEqual("We get nonprofits.", sel.get_text("//div[@id='page_content']/h2[2]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Nonprofits deserve the best software in the world.", sel.get_text("//div[@id='page_content']/h1"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("All content copyright GoodCloud, LLC, 2010-2011", sel.get_text("//div[@id='footer']/div[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        sel.click("link=About Us")
-        sel.wait_for_page_to_load("30000")
-        try: self.assertEqual("Steven Skoczen", sel.get_text("//div[@id='page_content']/div/div[1]/div[2]/div[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Tom Noble", sel.get_text("//div[@id='page_content']/div/div[2]/div[2]/div[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        sel.click("link=Contact")
-        sel.wait_for_page_to_load("30000")
-        try: self.assertEqual("support@agoodcloud.org", sel.get_text("link=support@agoodcloud.org"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("Give us a call at (503) 308-1460", sel.get_text("//div[@id='page_content']/p[3]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        sel.click("link=Home")
-        sel.wait_for_page_to_load("30000")
-        try: self.assertEqual("Welcome to GoodCloud.", sel.get_text("//td[@id='home_right_content']/p[1]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
+        assert sel.is_text_present("People love using GoodCloud")
 
-        
-        
-    def test_users_can_submit_their_emails(self):
-        sel = self.selenium
-        sel.open("/")
-        sel.click("link=Home")
+        # Features
+        sel.click("link=Features")
         sel.wait_for_page_to_load("30000")
-        sel.type("id_email", "myemail@me.com")
-        try: self.assertEqual("Save Email", sel.get_value("id_submit"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        sel.click("id_email")
-        try: self.assertEqual("We hate spam, too. We'll only use your email to notify you of updates.", sel.get_text("//td[@id='home_right_content']/div[2]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        sel.click("id_submit")
+        assert sel.is_text_present("All the things you need, nothing you don't")
+
+        # Tour
+        sel.click("link=Tour")
         sel.wait_for_page_to_load("30000")
-        try: self.assertEqual("Thanks! We'll keep you posted!", sel.get_text("//td[@id='home_right_content']/div[2]"))
-        except AssertionError, e: self.verificationErrors.append(str(e))
-        email_sub = EmailSubscription.objects.filter(email="myemail@me.com")
-        assert email_sub.count() == 1
+        assert sel.is_text_present("Watch it in action")
+
+        # Praise
+        sel.click("link=Praise")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Love for ")
+
+        # Free Trial
+        sel.click("link=Free Trial")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("One-step easy.")
+        
+        # About Us
+        sel.click("link=About us")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Small nonprofits deserve the best software in the world.")
+
+        # Mission / About us
+        sel.click("link=Our Team")
+        time.sleep(1)
+        assert sel.is_text_present("GoodCloud is currently a team of")
+
+        # Legal
+        sel.click("link=Legal")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("This document (the \"User Agreement\")")
+
+        # Privacy Policy
+        sel.click("link=Privacy Policy")
+        time.sleep(1)
+        assert sel.is_text_present("Information Gathering and Usage")
+
+        # Contact us
+        sel.click("link=Contact us")
+        time.sleep(1)
+        assert sel.is_text_present("Say Hello!")

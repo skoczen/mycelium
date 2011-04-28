@@ -7,8 +7,10 @@
 {% css "/css/contrib/1140/1140.css" %}
 {% js "/js/contrib/css3-mediaqueries.js" %}
 	
-<!--[if lt IE 8]>
-{% css "/css/ie7_marketing_site.css" %}
+<!--[if !IE 9]>
+	<style type="text/css">
+		#footer {display:block; position: relative;}
+	</style>
 <![endif]-->
 {% endblock %}
 {% block javascript %}{{block.super}}
@@ -19,8 +21,11 @@
 {% block content %}
 	{% include "marketing_site/_top_nav.html" %}
 	<div class="clearfix"></div>
+	<div id="wrap">
 	{% block page_content %}
 	{% endblock %}
+	{# <div class="push"></div> #}
+	</div>
 	{% include "marketing_site/_footer.html" %}	
 	<script type="text/javascript">
 	  (function() {

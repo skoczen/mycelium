@@ -1,10 +1,8 @@
 {% extends "marketing_site/base.html" %}
-{% load i18n cache cms_tags menu_tags %}
+{% load i18n cache %}
 {% block title %}GoodCloud makes software for small nonprofits - Software that gives them Superpowers!{% endblock %}
 {% block extra_body %}class="home_page"{% endblock %}
-{% block head %}{{block.super}}
-{% js "/js/mycelium/marketing_home.js" %}
-{% endblock %}
+
 {% block page_content %}
 <div id="home_boxes">
 	<div class="container">
