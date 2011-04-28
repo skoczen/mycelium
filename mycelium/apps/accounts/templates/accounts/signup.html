@@ -1,21 +1,26 @@
-{% extends "accounts/base_login.html" %}
+{% extends "marketing_site/base.html" %}
 {% load i18n generic_fields friendly_data_formatting  %}
-{% block title %}Register for an account at GoodCloud{% endblock %}
-{% block head %}{{block.super}}
+{% block title %}Sign up for an account at GoodCloud{% endblock %}
+{% block head %}
+{% css "/css/mycelium_elements.css" %}
+{{block.super}}
+
 {% js "/js/mycelium/signup.js" %}
+{% css "/css/login.css" %}
 {% css "/css/signup.css" %}
 {% endblock %}
 
-{% block content %}
+{% block page_content %}
 <div class="signup_page">
 <div class="organization_and_domain">
 	<div class="organization_name">One-step easy.</div>
 	<div class="domain"></div>
 </div>
+<div class="clearfix"></div>
 <div class="single_dialog">
 <div class="welcome_message">Create a free account to see firsthand what GoodCloud can do for your organization.</div>
 
-<form action="" method="POST" id="signup_form" class="edit_mode_on" >{% csrf_token %}
+<form action="{% url accounts:signup %}" method="POST" id="signup_form" class="edit_mode_on" >{% csrf_token %}
 
 <div class="form_section nonprofit">
 	<div class="section_title">About your nonprofit</div>

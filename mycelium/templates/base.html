@@ -23,11 +23,9 @@
 
   {% js "/js/libs/modernizr-1.6.min.js"%}
 {% block javascript %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
-  
+  {% js "/js/libs/jquery-1.4.2.js" %}
   {% js "/js/contrib/jquery-ui.js" %}
   {% js "/js/contrib/jquery.django.csrf.js" %}
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/contrib/jquery.js"%3E%3C/script%3E'))</script>
   {% js "/js/plugins.js" %}
   {% js "/js/script.js" %}
   

@@ -1,0 +1,41 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}GoodCloud Testimonials - People love using GoodCloud!{% endblock %}
+{% block extra_body %}class="praise"{% endblock %}
+{% block head %}
+{% css "/css/mycelium_elements.css" %}
+{{block.super}}
+
+{% js "/js/mycelium/signup.js" %}
+{% css "/css/login.css" %}
+{% css "/css/signup.css" %}
+{% endblock %}
+
+{% block page_content %}
+<div class="page_header">Love for the <img class="the_cloud" src="{% media_url "images/goodcloud-logo-60-with-shadow.png" %}" /></div>
+
+<div class="testimonial style_3">
+	<quote>I have sliced bread many times, and eaten sliced bread on occasion after occasion. GoodCloud is easily better than both.</quote>
+	<div class="person">-William M. Tester</div>
+	<div class="organization"><a href="#" target="_blank">The Organization for Really Long Names</a></div>
+</div>
+
+<div class="testimonial style_1">
+	<quote>SO Easy!</quote>
+	<div class="person">-Sara Tester</div>
+	<div class="organization"><a href="#" target="_blank">Awesome Nonprofit</a></div>
+</div>
+
+
+<div class="clearfix right_bubble_clear"></div>
+
+<div class="testimonial style_2">
+	<quote>GoodCloud saves us hours a day over what we were doing before.</quote>
+	<div class="person">-Samantha J. Example</div>
+	<div class="organization"><a href="#" target="_blank">Association for Awesome</a></div>
+</div>
+
+
+<a href="{% url accounts:signup %}" class="page_action">Discover what you love with a Free Trial!</a>
+
+{% endblock %}

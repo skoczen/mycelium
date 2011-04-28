@@ -1,8 +1,16 @@
-{% extends "base.html" %}
+{% extends "mycelium_base.html" %}
 {% block css %}{{block.super}}
 {% css "/css/marketing_site.css" %}
-<!--[if lt IE 8]>
-{% css "/css/ie7_marketing_site.css" %}
+
+{# 1140 #}
+<!--[if lte IE 9]>{% css "/css/contrib/1140/ie.css" %}<![endif]-->
+{% css "/css/contrib/1140/1140.css" %}
+{% js "/js/contrib/css3-mediaqueries.js" %}
+	
+<!--[if !IE 9]>
+	<style type="text/css">
+		#footer {display:block; position: relative;}
+	</style>
 <![endif]-->
 {% endblock %}
 {% block javascript %}{{block.super}}
@@ -12,7 +20,18 @@
 {% endblock %}
 {% block content %}
 	{% include "marketing_site/_top_nav.html" %}
+	<div class="clearfix"></div>
+	<div id="wrap">
 	{% block page_content %}
 	{% endblock %}
+	{# <div class="push"></div> #}
+	</div>
 	{% include "marketing_site/_footer.html" %}	
+	<script type="text/javascript">
+	  (function() {
+	    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+	    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/AwQUXURGT97r7ts4zvEIaA.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+	  })();
+	</script>
 {% endblock %}
