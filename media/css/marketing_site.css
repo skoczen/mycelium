@@ -531,8 +531,9 @@ social_links {
 	-moz-text-shadow:    1px 1px 1px rgba(0,0,0,0.35);
 	-webkit-text-shadow: 1px 1px 1px rgba(0,0,0,0.35);
 	cursor: pointer;
-
-
+}
+.page_action:hover, a.page_action:hover {
+	background-image: url("../images/action-ribbon-hover.png");
 }
 
 .tour_video {
