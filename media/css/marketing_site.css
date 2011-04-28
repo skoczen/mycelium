@@ -87,19 +87,10 @@ body.home_page {
 	font-size: 50px;
 	width: 320px;
 	color: #FFF;
-/*	text-shadow:		 1px 1px 1px #0054A4;
-	-moz-text-shadow:    1px 1px 1px #0054A4;
-*/
 	height: 70px;
 	
-	padding-left: 110px;
 	padding-top: 3px;
-	/*background: url("../images/goodcloud-logo-55.png");*/
 	background: url("../images/marketing-full-logo-55h.png");
-
-
-/*	padding-left: 60px;*/
-/*	background: url("../images/goodcloud-logo2-40.png");	*/
 	background-position: 5px 3px;
 	background-repeat: no-repeat;
 	text-decoration: none;
@@ -802,4 +793,42 @@ social_links {
 .person_description p {
 	display: block;
 	margin-bottom: 1em;
+}
+
+.contrast_content_block {
+	/*background: #FFF;*/
+	border-radius: 		4px;
+	-moz-border-radius: 4px;
+	font-size: 16px;
+	color: #FFF;
+	display: block;
+	width: 60%;
+	margin: 5px auto 30px auto;
+	padding: 20px;
+
+/*	box-shadow: 		1px 1px 2px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	1px 1px 2px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);	*/
+}
+.pricing .the_price {
+	font-size: 30px;
+	margin: 20px 0px 6px 0px;
+	text-align: center;
+}
+.pricing .the_details {
+	font-size: 20px;
+	margin-bottom: 50px;
+	text-align: center;
+	color: #bfe1ff;
+}
+.pricing {
+
+}
+.pricing .subheading { 
+	margin: 30px 0px 4px 0px;
+	font-size: 18px;
+	
+	border: 1px solid #0952a8;
+	border-width: 0px 0px 1px 0px;
 }

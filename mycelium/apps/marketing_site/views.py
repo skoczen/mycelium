@@ -61,6 +61,11 @@ def tour(request):
 def praise(request):
     return locals()
 
+@render_to("marketing_site/pricing.html")
+def pricing(request):
+    return locals()
+
+
 @render_to("marketing_site/legal.html")
 def legal(request):
     return locals()

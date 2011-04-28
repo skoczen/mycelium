@@ -12,6 +12,7 @@ urlpatterns = parser.patterns('',
     url(r'^features$',           views.features,         name='features'),
     url(r'^tour$',               views.tour,             name='tour'),
     url(r'^praise$',             views.praise,           name='praise'),
+    url(r'^pricing$',            views.pricing,          name='pricing'),
     url(r'^legal$',              views.legal,            name='legal'),
     url(r'^contact_us$',         views.contact_us,       name='contact_us'),
 

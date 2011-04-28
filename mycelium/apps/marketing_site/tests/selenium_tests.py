@@ -38,10 +38,16 @@ class TestMarketingSite(QiSeleniumTestCase):
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Watch it in action")
 
-        # Praise
-        sel.click("link=Praise")
+        # Love
+        sel.click("link=Love")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Love for ")
+
+        # Pricing
+        sel.click("link=Pricing")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("We like to keep things simple.")
+
 
         # Free Trial
         sel.click("link=Free Trial")

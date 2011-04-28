@@ -1,0 +1,32 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}GoodCloud Pricing - one simple, affordable price.{% endblock %}
+{% block head %}
+{% css "/css/mycelium_elements.css" %}
+{{block.super}}
+
+{% js "/js/mycelium/signup.js" %}
+{% css "/css/login.css" %}
+{% css "/css/signup.css" %}
+{% endblock %}
+
+{% block page_content %}
+<div class="page_header">We like to keep things simple.</div>
+
+<div class="contrast_content_block pricing">
+
+<div class="the_price">GoodCloud is 50 dollars a month.</div>
+<div class="the_details">No strings, no contracts, no hidden fees. Everything included.</div>
+
+<div class="subheading">Why $50?</div>
+When we started GoodCloud, we interviewed small nonprofits to see what the were paying for their software needs.  Then we took the smallest number we heard, and cut it in half.  We believe that small nonprofits should have access to great software at a price they can afford. 
+
+<div class="subheading">Not sure if GoodCloud's a good fit for your organization?</div>
+The first 30 days are on us. Give it a try, and see for yourself.
+
+</div>
+
+<div class="clearfix"></div>
+<a href="{% url accounts:signup %}" class="page_action">Start your free trial now!</a>
+
+{% endblock %}
