@@ -440,6 +440,11 @@ social_links {
 	background-color: transparent;
 	text-align: center;
 }
+.page_header .subheading {
+	display: block;
+	font-size: 18px;
+	padding: 4px;
+}
 .features {
 	width: 98%;
 	margin: auto;
@@ -598,13 +603,14 @@ social_links {
 .contact_us .page_header {
 	font-size: 60px;
 }
+
 .contact_us .page_subheader {
 	color: #FFF;
 	display: block;
 	width: 100%;
 	text-align: center;
 	font-size: 30px;
-	padding: 10px 0px;
+	padding: 15px 0px;
 }
 .contact_us .contact_methods {
 	display: block;
@@ -653,11 +659,11 @@ social_links {
 .tabs {
 	border: 0px;
 }
-#side_nav ul {
+#side_nav ul.nav_links {
 	display: block;
 	float: left;
 	margin-left: 0px;
-	width: 13%;
+	width: 16%;
 	background: transparent;
 	border: 0px;
 	padding: 10px 2% 10px 0px;
@@ -677,7 +683,7 @@ social_links {
   	border: 1px solid #000486;
   	border-width: 1px 1px 1px 0px;
 }
-#side_nav li {
+#side_nav ul.nav_links li {
 	display: block;
 	width: 100%;
 	background: transparent;
@@ -685,7 +691,7 @@ social_links {
 	margin: 0px;
 	padding: 0px;
 }
-#side_nav li a {
+#side_nav ul.nav_links li a {
 	height: 30px;
 	display: block;
 	width: 100%;
@@ -699,10 +705,10 @@ social_links {
 	/*border-width: 1px 0px 1px 0px;*/
 	margin: 4px 0px;
 }
-#side_nav li a:hover {
+#side_nav ul.nav_links li a:hover {
 	background-color: #002dab;
 }
-#side_nav li.ui-tabs-selected a {
+#side_nav ul.nav_links li.ui-tabs-selected a {
 	background-color: transparent;
 	background-image: url("../images/sidenav-current.png");	
 	background-repeat: no-repeat;
@@ -724,6 +730,21 @@ social_links {
 }
 #side_nav .tab_content a {
 	color: #000486;
+}
+.tab_content ul {
+	padding: 5px 0px 5px 3em;
+}
+.legal .tab_content p {
+
+	padding: 3px 0px 3px 1em;
+}
+.legal .tab_content h3 {
+	font-size: 16px;
+	margin: 10px 0px 0px 0px;
+	padding: 0px;
+}
+.legal .tab_title {
+	margin: 10px 0px;
 }
 .ui-widget-content  {
 	background: transparent;
