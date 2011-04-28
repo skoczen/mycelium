@@ -657,10 +657,25 @@ social_links {
 	display: block;
 	float: left;
 	margin-left: 0px;
-	width: 16%;
+	width: 13%;
 	background: transparent;
 	border: 0px;
-	padding: 0px;
+	padding: 10px 2% 10px 0px;
+	background: #000486;
+	border-radius: 		4px;
+	-moz-border-radius: 4px;
+	border-right: 0px solid #EEE;		
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-top-left-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+
+	box-shadow: 		1px 1px 2px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	1px 1px 2px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);
+  	border: 1px solid #000486;
+  	border-width: 1px 1px 1px 0px;
 }
 #side_nav li {
 	display: block;
@@ -671,21 +686,41 @@ social_links {
 	padding: 0px;
 }
 #side_nav li a {
+	height: 30px;
+	display: block;
 	width: 100%;
 	background: transparent;
 	border: 0px;
 	padding: 0px;
-	background-color: #FFF;
-	padding: 6px 0px 6px 12px;
+	padding: 12px 3px 6px 20px;
+	font-size: 18px;
+	color: #EEE;
+	border: 0px solid #DDD;
+	/*border-width: 1px 0px 1px 0px;*/
+	margin: 4px 0px;
 }
+#side_nav li a:hover {
+	background-color: #002dab;
+}
+#side_nav li.ui-tabs-selected a {
+	background-color: transparent;
+	background-image: url("../images/sidenav-current.png");	
+	background-repeat: no-repeat;
+	background-position: right 0px;
+	color: #1D5987;
+	padding: 13px 22% 7px 20px;
+	border: 0px;
+}
+
 #side_nav .tab_content {
-	width: 76%;
-	margin-left: 18%;
+	width: 66%;
+	margin-left: 22%;
 	background: #FFF;
 	border-radius: 		4px;
 	-moz-border-radius: 4px;
 	font-size: 16px;
 	color: #333;
+	display: block;
 }
 #side_nav .tab_content a {
 	color: #000486;
@@ -707,4 +742,24 @@ social_links {
 	font-size: 30px;
 	text-align: center;
 	margin-bottom: 20px;
+}
+.team_description {
+	margin-bottom: 10px;
+}
+.tab_content .person {
+	display: block;
+	padding-left: 148px;
+	background-repeat: no-repeat;
+	background-position: 0px 6px;
+	margin: 20px 0px 30px 0px;
+}
+.person.tom {
+	background-image: url("../images/tom-picture.png");	
+}
+.person.steven {
+	background-image: url("../images/steven-picture.png");	
+}
+.person_description p {
+	display: block;
+	margin-bottom: 1em;
 }
