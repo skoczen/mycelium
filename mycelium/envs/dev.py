@@ -50,7 +50,7 @@ GOOGLE_KEY = 'ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRi_j0U6kJrkFvY4-OX2XYmEAa76BQkakI7eN
 
 MEDIA_URL = '/media'
 STATIC_URL = MEDIA_URL
-ADMIN_MEDIA_PREFIX = "%s/admin/" % (MEDIA_URL)
+ADMIN_MEDIA_PREFIX = "%s/_admin/" % (MEDIA_URL)
 FAVICON_URL = "%s/images/favicon.png" % MEDIA_URL
 
 # selenium settings

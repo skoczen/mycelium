@@ -9,7 +9,8 @@ setup_env_centos("mycelium","root",
                                         '50.17.149.171'
                                         ],
                     'production_db_hosts':['ext-mysql.digitalmycelium.com'],
-                    'staging_db_hosts':['ext-mysql.agoodcloud.com']
+                    'staging_db_hosts':['ext-mysql.agoodcloud.com'],
+                    'admin_symlink' : '_admin'
                 }, 
                 overrides={
                     'git_origin':"http://mycelium.skoczen.webfactional.com/mycelium.git",
