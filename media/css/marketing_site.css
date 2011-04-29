@@ -784,12 +784,15 @@ social_links {
 	background-repeat: no-repeat;
 	background-position: 0px 6px;
 	margin: 20px 0px 30px 0px;
+	clear: both;
 }
 .person.tom {
 	background-image: url("../images/tom-picture.png");	
 }
 .person.steven {
 	background-image: url("../images/steven-picture.png");	
+	
+
 }
 .person_description p {
 	display: block;
