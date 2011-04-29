@@ -28,16 +28,16 @@ if 'test' in sys.argv:
 if 'test' in sys.argv or 'selenium_tests' in sys.argv:
     CELERY_ALWAYS_EAGER = True
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        # 'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
-        'LOCATION': '127.0.0.1:11211',
-        'PREFIX':ENV,
-        'JOHNNY_CACHE':True,
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         # 'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
+#         'LOCATION': '127.0.0.1:11211',
+#         'PREFIX':ENV,
+#         'JOHNNY_CACHE':True,
 
-    }
-}
+#     }
+# }
 #CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
 

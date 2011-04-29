@@ -25,17 +25,18 @@ STATIC_ROOT = MEDIA_ROOT
 ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
-CACHES = {
-    'default': {
-        'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
-        'LOCATION': '127.0.0.1:11211',
-        'PREFIX':ENV,
-        'JOHNNY_CACHE':True,
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
+#         'LOCATION': '127.0.0.1:11211',
+#         'PREFIX':ENV,
+#         'JOHNNY_CACHE':True,
+#     }
+# }
 
 # CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-CACHE_BACKEND = 'johnny.backends.memcached.MemcachedCache://127.0.0.1:11211'
+CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
+
 EMAIL_BACKEND = 'django_ses.SESBackend'
 
 SESSION_COOKIE_DOMAIN = "agoodcloud.com"

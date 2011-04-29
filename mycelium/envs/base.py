@@ -59,6 +59,8 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'johnny.middleware.LocalStoreClearMiddleware',
     'johnny.middleware.QueryCacheMiddleware',
+    'johnny.middleware.CommittingTransactionMiddleware',
+    
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -199,7 +201,7 @@ GOOGLE_MAPS_KEY = "ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRHA9ICmOpg9-1g76S5BMdlTE0SKRRfI
 
 SESSION_COOKIE_AGE = 1209600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 # SESSION_SAVE_EVERY_REQUEST = True
 
 ENV = None
@@ -227,6 +229,7 @@ THUMBNAIL_COLORSPACE = None
 
 # jonny cache
 JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_mycelium'
+
 
 # celery / rabbitmq
 BROKER_HOST = "localhost"
