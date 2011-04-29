@@ -7,24 +7,28 @@ def _sitespaced_url(url, site="test"):
     return "http://%s.localhost:%s%s" % (site, settings.LIVE_SERVER_PORT, url)
 
 class AccountTestAbstractions(object):
+    MANAGE_USERS_URL = "/accounts/manage-users"
     
     def create_demo_site(self, name="test", mostly_empty=False):
         return Factory.create_demo_site(name, quick=True, delete_existing=True, mostly_empty=mostly_empty)
 
-    def go_to_the_login_page(self, site="test"):
+    def go_to_the_login_page(self, site=None):
         sel = self.selenium
-        sel.open(_sitespaced_url("/accounts/login", site=site))
+        self.open("/login", site=site)
         sel.wait_for_page_to_load("30000")
 
-    def log_in(self, ua=None, with_assert=True):
+    def log_in(self, ua=None, with_assert=True, username=None, password=None):
         sel = self.selenium
-        if not ua:
-            username = "admin"
-        else:
-            username = ua.denamespaced_username
+        if not username:
+            if not ua:
+                username = "admin"
+            else:
+                username = ua.denamespaced_username
+        if not password:
+            password = username
         
         sel.type("css=input[name=username]",username)
-        sel.type("css=input[name=password]",username)
+        sel.type("css=input[name=password]",password)
         sel.click("css=.login_btn")
         sel.wait_for_page_to_load("30000")
         if with_assert:
@@ -42,10 +46,18 @@ class AccountTestAbstractions(object):
         sel = self.selenium
         assert sel.is_text_present("Powered by")
 
-    def open(self, url, site="test"):
+    def open(self, url, site=None):
+        if not site:
+            if hasattr(self,"site") and self.site:
+                site = self.site
+            else:
+                site = "test"
         sel = self.selenium
         sel.open(_sitespaced_url(url, site=site))
         sel.wait_for_page_to_load("30000")
+
+    def set_site(self, site):
+        self.site = site
 
     def setup_for_logged_in(self, name="test", mostly_empty=False):
         self.account = self.create_demo_site(name=name, mostly_empty=mostly_empty)
@@ -56,3 +68,31 @@ class AccountTestAbstractions(object):
 
     def setup_for_logged_in_with_no_data(self, name="test", mostly_empty=True):
         return self.setup_for_logged_in(name=name, mostly_empty=mostly_empty)
+
+
+    def go_to_the_manage_accounts_page(self):
+        sel = self.selenium
+        sel.click("link=More")
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.users_button")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Account Level")
+
+
+    def create_a_new_user_via_manage_accounts(self, full_name="Joe Smith", username="jsmith", password="test", access_level=0):
+        sel = self.selenium
+        self.go_to_the_manage_accounts_page()
+        sel.click("css=tab_title")
+        time.sleep(0.5)
+        sel.type("css=#id_first_name", full_name)
+        sel.type("css=#id_username", username)
+        sel.type("css=#id_password", password)
+        sel.type("css=#id_email", "test_%s@example.com" % username)
+        sel.click("css=#id_access_level_%s" % access_level)
+        time.sleep(0.5)
+        sel.click("css=.create_account_btn")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present(full_name)
+        assert sel.is_text_present(username)
+        assert sel.is_text_present(password)
+        assert sel.is_text_present("test_%s@example.com" % username)

@@ -201,7 +201,8 @@ def add_person_via_organization_search_results(request):
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":
-            people = Person.search(q,ignorable_chars=["-","(",")"])
+            qs = Person.objects_by_account(request.account).all()
+            people = Person.search(q,queryset=qs,require_queryset=True, ignorable_chars=["-","(",")"])
 
     return {"fragments":{"new_person_search_results":render_to_string("people/_add_person_to_org_results.html", locals())}}
 

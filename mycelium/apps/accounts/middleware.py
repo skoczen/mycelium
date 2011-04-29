@@ -12,21 +12,21 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
     def redirect_to_public_home(self,request):
         from django.contrib.sites.models import Site
         site = Site.objects.get(pk=settings.SITE_ID)
-        if request.is_secure():
-            protocol = "https://"
-        else:
-            protocol = "http://"
-        return HttpResponseRedirect("%s%s" % (protocol, site.domain))
+        return HttpResponseRedirect("%s%s" % (request.protocol, site.domain))
             
 
     def process_request(self, request, *args, **kwargs):
         super(AccountAuthMiddleware,self).process_request(request, *args, **kwargs)
-
+        
+        if request.is_secure():
+            request.protocol = "https://"
+        else:
+            request.protocol = "http://"
         
         subdomain = getattr(request, 'subdomain', False)
     
-        if subdomain is not False:
 
+        if subdomain is not False:
 
             # get the account
             poss_account = Account.objects.filter(subdomain=request.subdomain)
@@ -46,12 +46,15 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                 
                     # try get the useraccount
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
+
                 except:
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                         # redirect to login page
-                        # return HttpResponseRedirect("%s?next=%s" % (reverse("accounts:login"),request.path))
-                        return HttpResponseRedirect(reverse("accounts:login"))
+                        if request.path != reverse("accounts:login") and request.path != "/":
+                            return HttpResponseRedirect("%s?next=%s" % (reverse("accounts:login"),request.path))
+                        else:
+                            return HttpResponseRedirect(reverse("accounts:login"))
         else:
             
             # if there's no subdomain, but tis wasn't handled by the SubdomainURLRoutingMiddleware, something weird is happening. Bail.

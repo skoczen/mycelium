@@ -1,10 +1,12 @@
-from django.forms import ModelForm, ModelChoiceField
-from django.forms.models import BaseModelFormSet, BaseInlineFormSet
+from django.forms import ModelForm, ModelChoiceField, CharField, Form
+from django.forms.widgets import RadioSelect, PasswordInput
+from django.forms.models import BaseModelFormSet, BaseInlineFormSet, inlineformset_factory
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from accounts.models import Account
+from accounts.models import Account, Plan, AccessLevel, UserAccount
 
 def adjust_queryset_for_account_based_models(f, *args, **kwargs):
     if hasattr(f,"queryset"):
@@ -81,7 +83,7 @@ class AccountBasedModelFormSet(BaseInlineFormSet):
         
 
 class AccountAuthenticationForm(AuthenticationForm):
-    def __init__(self, request=None, *args, **kwargs):
+    def __init__(self, request=None, auth_request=None, *args, **kwargs):
         """
         If request is passed in, the form will validate that cookies are
         enabled. Note that the request (a HttpRequest object) must have set a
@@ -89,16 +91,17 @@ class AccountAuthenticationForm(AuthenticationForm):
         running this validation.
         """
         self.request = request
+        self.auth_request = auth_request
         self.user_cache = None
         super(AccountAuthenticationForm, self).__init__(*args, **kwargs)
-        self.request = request
+        self.auth_request = auth_request
 
     def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 
         if username and password:
-            self.user_cache = authenticate(request=self.request, username=username, password=password)
+            self.user_cache = authenticate(auth_request=self.auth_request, username=username, password=password)
             if self.user_cache is None:
                 raise forms.ValidationError(_("Please enter a correct username and password. Note that both fields are case-sensitive."))
             elif not self.user_cache.is_active:
@@ -118,3 +121,49 @@ class AccountAuthenticationForm(AuthenticationForm):
 
     def get_user(self):
         return self.user_cache
+
+
+class NewAccountForm(ModelForm):
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        cleaned_data["plan"] = Plan.monthly_plan()
+        
+        return cleaned_data
+
+    class Meta:
+        model = Account
+        fields = ("name", "subdomain", "plan")
+
+   
+class NewUserForm( Form):
+    username    = CharField(max_length=100, required=True)
+    email       = CharField(max_length=255, required=True)
+    password    = CharField(max_length=255, required=True)
+    first_name  = CharField(max_length=255, required=True)
+
+
+class UserAccountAccessForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserAccountAccessForm, self).__init__(*args, **kwargs)
+        # Really, django?  This is necessary for a Non-null field??
+        self.fields["access_level"].choices = [c for c in self.fields["access_level"].choices][1:]
+
+
+    class Meta:
+        model = UserAccount
+        fields = ("access_level",)
+        widgets = {
+            'access_level': RadioSelect
+        }
+
+class NewUserAccountForm(UserAccountAccessForm):
+    username    = CharField(max_length=100, required=True)
+    email       = CharField(max_length=255, required=True)
+    password    = CharField(max_length=255, required=True, widget=PasswordInput)
+    first_name  = CharField(max_length=255, required=True, label="Full Name")
+
+
+class UserAccountAccessFormsetBase(AccountBasedModelFormSet):
+    pass
+
+UserAccountAccessFormset = inlineformset_factory(Account, UserAccount, fields=("access_level",), can_delete=False, extra=0, form=UserAccountAccessForm,  )

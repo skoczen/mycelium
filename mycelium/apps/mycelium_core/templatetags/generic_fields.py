@@ -18,6 +18,12 @@ def generic_field_javascript(include_context=True):
     return locals()
 
 
+@register.inclusion_tag('mycelium_core/template_tags/generic_fields/plain_editable_field.html')
+def plain_editable_field(field, label_override=None, field_type="input",include_context=True):
+    MEDIA_URL = settings.MEDIA_URL
+    return locals()
+
+
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
 def generic_editable_field(field, field_type="input",include_context=True):
     MEDIA_URL = settings.MEDIA_URL

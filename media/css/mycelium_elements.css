@@ -1,3 +1,12 @@
+/*
+Colors:
+Blue: #000486
+Light Blue: #006bcf;
+Grad: 0073de to ;
+Green: ;
+Orange: #ff6600;
+*/
+
 body {
 	/*background: url("../images/green_tweed_background.gif");*/
 	background: url("../images/background-noise-green.png");
@@ -240,6 +249,12 @@ new_object_buttons .new_label {
 	background-color: #0044A8;
 	color: #FFF;	
 }
+.mycelium_btn.disabled, .mycelium_btn.disabled:hover {
+	color: #FFF;
+	background-color: #CCC;
+	border-color: #DDD;
+	text-shadow: 0px 0px 0px;
+}
 .mycelium_small_btn, input.mycelium_small_btn {
 	font-size: 12px;
 	padding: 3px 6px;
@@ -325,7 +340,10 @@ table.record_table {
 }
 table.record_table th {
 	text-align: left;
-	background-color: #EEE;
+	background-color: #DDD;
+	padding: 3px 5px 2px 5px;
+	border: 1px solid #999;
+	border-width: 0px 0px 1px 0px;
 }
 table.record_table td {
 	padding: 2px;

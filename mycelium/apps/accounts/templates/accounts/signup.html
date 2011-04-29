@@ -1,0 +1,50 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}Sign up for an account at GoodCloud{% endblock %}
+{% block head %}
+{% css "/css/mycelium_elements.css" %}
+{{block.super}}
+
+{% js "/js/mycelium/signup.js" %}
+{% css "/css/login.css" %}
+{% css "/css/signup.css" %}
+{% endblock %}
+
+{% block page_content %}
+<div class="signup_page">
+<div class="organization_and_domain">
+	<div class="organization_name">One-step easy.</div>
+	<div class="domain"></div>
+</div>
+<div class="clearfix"></div>
+<div class="single_dialog">
+<div class="welcome_message">Create a free account to see firsthand what GoodCloud can do for your organization.</div>
+
+<form action="{% url accounts:signup %}" method="POST" id="signup_form" class="edit_mode_on" >{% csrf_token %}
+
+<div class="form_section nonprofit">
+	<div class="section_title">About your nonprofit</div>
+	{% plain_editable_field account_form.name %}
+	<div class="editable_field" id="container_id_{{account_form.subdomain.html_name}}">
+			<label class="generic_field_label">Pick your custom <br/>Goodcloud address:</label>
+			<span class="edit_field"><span class="address_boilerplate">http://</span>{{account_form.subdomain}}<span class="address_boilerplate">.agoodcloud.com</span></span>
+	</div>
+	<div id="subdomain_verification" class="editable_field not_verified" verification_url="{% url accounts:verify_subdomain %}">
+			<div class="subdomain_response"></div>
+	</div>
+</div>
+
+<div class="form_section you">
+	<div class="section_title">About you</div>
+	{% plain_editable_field user_form.first_name "Full name:" %}
+	{% plain_editable_field user_form.email %}
+	{% plain_editable_field user_form.username %}
+	{% plain_editable_field user_form.password %}
+</div>
+
+<input type="submit" id="submit_button" class="mycelium_btn" value="Create your Account" />
+
+</form>
+</div>
+</div>
+{% endblock %}

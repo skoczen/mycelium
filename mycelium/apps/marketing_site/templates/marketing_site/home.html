@@ -1,85 +1,34 @@
 {% extends "marketing_site/base.html" %}
-{% load i18n cache cms_tags menu_tags %}
-{% block title %}GoodCloud: {% page_attribute page_title %}{% endblock %}
-{% block css %}{{block.super}}
-<!--[if lt IE 8]>
-<style type="text/css" media="screen">
-	#footer {
-		display: none
-	}
-</style>
-<![endif]-->
-{% endblock %}
-{% block javascript %}{{block.super}}
-<script type="text/javascript" charset="utf-8">
-$(function(){
-	{% if posted %}
-		$("#hi_content").scrollTo(".welcome_text");
-	{% else %}
-	$("#question a").click(function(){
-		$("#hi_content").scrollTo(".welcome_text", 1000);
-		$("#question").animate({opacity:0},200)
-		return false;
-	});
-	$("#question").animate({opacity:0},0).show();
-	setTimeout(fade_in_question, 4000)
-	setTimeout(function(){	$("#hi_content").mousemove(fade_in_question)}, 400)
-	$('#id_email').toggleVal({populateFrom:"custom", text:"interested@great-nonprofit.org"}).addClass("prefilled");
-	{% endif %}
-	setTimeout(rotate_verbs, rotate_interval);
-});
-var fade_started = false;
-function fade_in_question(){
-	if (!fade_started) {
-		$("#question").animate({opacity:1},1000);
-		fade_started = true;
-	}
-}
-var num_verbs = 4;
-var current_verb = 1;
-var rotate_interval = 4000;
-var rotate_length = 500;
-function rotate_verbs() {
-	$(".verb_"+current_verb).fadeOut(rotate_length);
-	current_verb = (current_verb == num_verbs) ? 1 : current_verb+1;
-	$(".verb_"+current_verb).fadeIn(rotate_length);
-	setTimeout(rotate_verbs, rotate_interval);
-}
+{% load i18n cache %}
+{% block title %}GoodCloud makes software for small nonprofits - Software that gives them Superpowers!{% endblock %}
+{% block extra_body %}class="home_page"{% endblock %}
 
-</script>
-{% endblock %}
 {% block page_content %}
-<div id="home_layout_block">
-<table id="home_layout_columns">
-	<tr>
-		<td id="goodcloud_hearts_nonprofits">
-			<div class="goodcloud"><span class="we">We</span><span class="verbs">
-				<span class="verb verb_1 heart">&hearts;</span>
-				<span class="verb verb_2 get">get</span>
-				<span class="verb verb_3 serve">serve</span>
-				<span class="verb verb_4 heart">&hearts;</span>
-				</span>
+<div id="home_boxes">
+	<div class="container">
+	<div class="row">
+		<div class="fourcol home_box built_for_nonprofits">
+			<div class="title">Built for Small Nonprofits</div>
+			<div class="description identical_height_block">
+				GoodCloud was built in collaboration with small nonprofits, so it does the things you actually want.
 			</div>
-
-			<div class="nonprofits">nonprofits.</div>
-		</td>
-		<td id="home_right_content">
-			{% placeholder home_content %}
-			{% if request.GET.save_success == "True" %}
-				<div class="thanks_message">Thanks! We'll keep you posted!</div>
-			{% else %}
-			<form action="" method="POST">{% csrf_token %}
-				{{form.email}}
-				<input id="id_submit" type="submit" value="Save Email" />
-			</form>
-			<div class="email_terms">We hate spam, too. We'll only use your email to notify you of updates.</div>
-			{% endif %}
-			<social_links>
-			<iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2FAGoodCloud&amp;layout=standard&amp;show_faces=true&amp;width=200&amp;action=like&amp;font=lucida+grande&amp;colorscheme=light&amp;height=120" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:120px;" allowTransparency="true"></iframe>
-			<a href="http://www.twitter.com/agoodcloud"><img src="http://twitter-badges.s3.amazonaws.com/follow_us-b.png" alt="Follow GoodCloud on Twitter"/></a>
-			</social_links>
-		</td>
-	</tr>
-</table>
+			<div class="action"><a href="{% url marketing_site:features %}">Check out what it can do!</a></div>
+		</div>
+		<div class="fourcol home_box loved_by">
+			<div class="title">Loved by Nonprofits</div>
+			<div class="description identical_height_block">
+				People love using GoodCloud. Small nonprofit staff and volunteers alike rave about how easy it is to use.
+			</div>
+			<div class="action"><a href="{% url marketing_site:praise %}">See what they had to say!</a></div>
+		</div>
+		<div class="fourcol home_box ready_to_go">
+			<div class="title">Ready to Go Today</div>
+			<div class="description identical_height_block">
+				Sign up for a free trial account in less than 60 seconds. No strings, no hassle, no credit card.
+			</div>
+			<div class="action"><a href="{% url accounts:signup %}">Try GoodCloud now!</a></div>
+		</div>
+	</div>
+	</div>
 </div>
 {% endblock %}

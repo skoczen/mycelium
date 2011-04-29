@@ -5,6 +5,13 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: 'Bevan';
+	src: url('../fonts/Bevan-webfont.eot?') format('eot'), url('../fonts/Bevan-webfont.woff') format('woff'), url('../fonts/Bevan-webfont.ttf') format('truetype'), url('../fonts/Bevan-webfont.svg#webfont') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 
 
 html {

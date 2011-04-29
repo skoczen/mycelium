@@ -38,12 +38,38 @@ def home(request):
             
     return locals()
 
+    
+@render_to("marketing_site/ssl_page.html")
+def ssl_page(request):
+    return locals()
+
 
 @render_to("marketing_site/about_us.html")
 def about_us(request):
     all_employees = GoodCloudEmployee.objects.all()
     return locals()
-    
-@render_to("marketing_site/ssl_page.html")
-def ssl_page(request):
+
+@render_to("marketing_site/features.html")
+def features(request):
+    return locals()
+
+@render_to("marketing_site/tour.html")
+def tour(request):
+    return locals()
+
+@render_to("marketing_site/praise.html")
+def praise(request):
+    return locals()
+
+@render_to("marketing_site/pricing.html")
+def pricing(request):
+    return locals()
+
+
+@render_to("marketing_site/legal.html")
+def legal(request):
+    return locals()
+
+@render_to("marketing_site/contact_us.html")
+def contact_us(request):
     return locals()

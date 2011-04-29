@@ -253,9 +253,10 @@ class Factory(QiFactory):
             access_level = AccessLevel.objects.get(name__iexact="Staff")
         
         if not full_name:
-            full_name = "%s %s" % (cls.rand_name(), cls.rand_name())
+            first_name = cls.rand_name()
+            full_name = "%s %s" % (first_name, cls.rand_name())
         
-        return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=full_name))
+        return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=first_name))
 
     @classmethod
     def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False):
