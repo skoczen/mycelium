@@ -23,7 +23,7 @@ STATIC_URL = MEDIA_URL
 STATIC_ROOT = MEDIA_ROOT
 
 # ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
-ADMIN_MEDIA_PREFIX = "/admin-media/" % (MEDIA_URL)
+ADMIN_MEDIA_PREFIX = "/admin-media/"
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
 # CACHES = {
