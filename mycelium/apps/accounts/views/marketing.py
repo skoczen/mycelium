@@ -11,6 +11,7 @@ from django.views.decorators.cache import cache_page
 
 from accounts.forms import NewAccountForm, NewUserForm
 from accounts.models import AccessLevel, Account
+from accounts.tasks import send_welcome_emails
 from django.contrib.sites.models import Site
 
 
@@ -29,10 +30,15 @@ def signup(request):
                                        access_level=AccessLevel.admin()
                                        )
             site = Site.objects.get_current()
+
+            # Send off emails to us and them.
+            send_welcome_emails.delay(account, useraccount)
+
             return HttpResponseRedirect("%s%s.%s/" % (request.protocol, account.subdomain, site.domain))
         else:
-            print account_form
-            print user_form
+            # print account_form
+            # print user_form
+            pass
     else:
         account_form = NewAccountForm()
         user_form = NewUserForm()

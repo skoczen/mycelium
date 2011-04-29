@@ -21,15 +21,15 @@ EMAIL_PORT=25
 EMAIL_HOST_USER='robot@quantumimagery.com'
 EMAIL_HOST_PASSWORD='E3Kfgozz7iMyb38N7ohb'
 DEFAULT_FROM_EMAIL = 'GoodCloud'
-SERVER_EMAIL = 'robot@agoodcloud.com'
+SERVER_EMAIL = 'support@agoodcloud.com'
 SEND_BROKEN_LINK_EMAILS = True
 
 ADMINS = (
-     ('Steven Skoczen', 'steven@quantumimagery.com'),
+     'steven@quantumimagery.com',
 )
 MANAGERS = ADMINS
 MANAGERS += (
-    ('Tom Noble', 'tomnoble6@gmail.com'),
+    'tom@agoodcloud.com',
 )
 
 

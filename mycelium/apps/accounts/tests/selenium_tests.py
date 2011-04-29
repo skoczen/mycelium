@@ -6,6 +6,7 @@ from people.tests.selenium_abstractions import PeopleTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
 from django.conf import settings
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
+
     
 class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
@@ -453,6 +454,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.open(self.MANAGE_USERS_URL)
         sel.wait_for_page_to_load("30000")
         assert sel.is_element_present("link=More")
+
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):

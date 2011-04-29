@@ -1,0 +1,16 @@
+Hey Guys,
+
+We've got a new account!
+
+Here's the info:
+Person's Name: {{useraccount.full_name}}
+Email: {{useraccount.email}}
+
+Organization: {{account}}
+Website: {{account.subdomain}}.agoodcloud.com.
+
+They signed up at {% now  "F j Y h:i a" %}
+
+Hooray!
+
+-The Happy GoodCloud Robot

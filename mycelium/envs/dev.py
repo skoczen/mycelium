@@ -25,9 +25,11 @@ if 'test' in sys.argv:
             'PORT': '',
         },
     }
-if 'test' in sys.argv or 'selenium_tests' in sys.argv:
-    CELERY_ALWAYS_EAGER = True
 
+
+CELERY_ALWAYS_EAGER = True
+
+# if not 'test' in sys.argv and not 'selenium_tests' in sys.argv:
 # CACHES = {
 #     'default': {
 #         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',

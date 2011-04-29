@@ -9,6 +9,7 @@ from donors.models import Donor, Donation
 from accounts.models import Account
 from volunteers.models import Volunteer, CompletedShift
 from generic_tags.models import TagSet, Tag
+from django.core import mail
 
 class Dummy(object):
     pass
@@ -71,3 +72,23 @@ class TestAccountFactory(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase)
         self.test_objects_by_account_limits_to_account(Tag, Factory.tag)
         # self.test_objects_by_account_limits_to_account(CompletedShift, Factory.completed_volunteer_shift, person=Factory.person())
         # The two commented out behave properly in hand-testing, but were a beast to test via this method, and we *are* trying to ship.
+
+
+
+    def test_that_signing_up_generates_a_message_to_the_user_and_to_us(self):
+        from django.test.client import Client
+        c = Client()
+        response = c.post('/signup', {
+            'name': 'My Test Organization', 
+            'subdomain': 'mytestorganization',
+            'first_name': 'Joe Smith',
+            'email': 'joe@example.com',
+            'username': 'joe',
+            'password': 'test'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(mail.outbox[0].subject, 'Welcome to GoodCloud!')
+        assert "we hope you enjoy using GoodCloud" in mail.outbox[0].body
+        self.assertEqual(mail.outbox[1].subject, 'New Account: My Test Organization!')
+        assert "joe@example.com" in mail.outbox[1].body

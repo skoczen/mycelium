@@ -14,6 +14,7 @@ DATABASES = {
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+CACHE_BACKEND = 'locmem://'
 
 # turn on to test pre-deploy
 # MEDIASYNC['EMULATE_COMBO'] = True
