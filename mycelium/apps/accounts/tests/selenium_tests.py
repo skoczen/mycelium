@@ -456,6 +456,18 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         assert sel.is_element_present("link=More")
 
 
+    def test_that_editing_the_organization_name_works(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_account_page()
+        sel.click("css=.start_edit_btn")
+        time.sleep(1)
+        sel.type("css=#id_name", "A new test name")
+        time.sleep(4)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("A new test name")
+
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]

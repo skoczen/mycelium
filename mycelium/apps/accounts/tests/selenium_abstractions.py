@@ -78,6 +78,14 @@ class AccountTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Account Level")
 
+    def go_to_the_account_page(self):
+        sel = self.selenium
+        sel.click("link=More")
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.account_button")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Account Information")
+
 
     def create_a_new_user_via_manage_accounts(self, full_name="Joe Smith", username="jsmith", password="test", access_level=0):
         sel = self.selenium
