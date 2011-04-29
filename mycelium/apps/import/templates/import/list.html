@@ -17,14 +17,14 @@
 <table class="striped data_import_history_table record_table">
 	{% for i in all_imports %}
 	<tr {% if not i.complete %}class="in_progress"{% endif %}>
-		<td class="action">{% if i.complete %}<a href="{% url import:review i.pk %}">View Report</a>{% else %}<img src="{% media_url "images/spinner-grey-16.gif" %}>{% endif %}</td>
-		<td class="import_date">{% if i.complete %}{{i.start_date|date}}{% else %}<span class="right_now"><img src="{% media_url "images/spinner-grey-16.gif" %}>Right now</span>{% endif %}</td>
+		<td class="action">{% if i.complete %}<a href="{% url import:review i.pk %}">View Report</a>{% else %}<img src="{% media_url "images/spinner-grey-16.gif" %}" >{% endif %}</td>
+		<td class="import_date">{% if i.complete %}{{i.start_date|date}}{% else %}<span class="right_now"><img src="{% media_url "images/spinner-grey-16.gif" %}" >Right now</span>{% endif %}</td>
 		<td class="people_count">{% if i.complete %}importing{% else %}imported{% endif %} {{i.people|intcomma}} people</td>
 		<td class="other_fields">and 6 other fields.</td>
 	</tr>
 	{% endfor %}
 	<tr class="in_progress">
-		<td class="action"><img src="{% media_url "images/spinner-grey-16.gif" %}></td>
+		<td class="action"><img src="{% media_url "images/spinner-grey-16.gif" %}" ></td>
 		<td class="import_date"><span class="right_now">Right now</span></td>
 		<td class="people_count">importing 1,738 people </td>
 		<td class="other_fields">and 6 other fields.</td>

@@ -13,7 +13,7 @@ BeautifulSoup==3.2.0
 -e git://github.com/skoczen/django-form-designer.git@b9d1716acbda950e440fb13e877d3836e7b0a124#egg=form_designer-3-py2.6-dev
 
 django-extensions==0.6
--e git://github.com/skoczen/qi-toolkit.git@9d6858e5a384fd8b12de83e18210be9b0ba531b6#egg=qi_toolkit-0.7-py2.6-dev
+-e git://github.com/skoczen/qi-toolkit.git@2f392c9029232c5e496d3b010a0c34ac01f536b1#egg=qi_toolkit-0.7-py2.6-dev
 python-crontab==0.9.5
 -e git://github.com/clintecker/django-google-analytics.git@e835a1e1a0eb7d2ce3008daea65c64ad2b539f98#egg=google_analytics-0.2-py2.6-dev
 
@@ -46,11 +46,11 @@ django-debug-toolbar==0.8.4
 django-picklefield==0.1.9
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
 gitpython
+johnny-cache==0.3.1
 ## The following requirements were added by pip --freeze:
 CherryPy==3.1.2
 Django==1.2.5
 Fabric==0.9.3
-
 MySQL-python==1.2.3
 South==0.7.3
 amqplib==0.6.1
@@ -65,7 +65,6 @@ docutils==0.6
 ghettoq==0.4.5
 gitdb==0.5.2
 importlib==1.0.2
-johnny-cache==0.3.1
 kombu==1.1.2
 logilab-astng==0.21.1
 logilab-common==0.55.0
