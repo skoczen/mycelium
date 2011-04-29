@@ -59,7 +59,7 @@ def login(request, template_name='registration/login.html',
 
 
 from qi_toolkit.helpers import *
-from accounts.forms import UserAccountAccessFormset, NewUserAccountForm
+from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from accounts.models import UserAccount
@@ -129,3 +129,18 @@ def save_new_account(request):
 
 def dashboard(request):
     return HttpResponseRedirect(reverse("people:search"))
+
+@render_to("accounts/manage_account.html")
+def manage_account(request):
+    form = AccountForm(instance=request.account)
+    return locals()
+
+@json_view
+def save_account_info(request):
+    success = False
+    form = AccountForm(request.POST, instance=request.account)
+    if form.is_valid():
+        form.save()
+        success = True
+
+    return {"success":success}

@@ -106,3 +106,31 @@ tabbed_box box_content {
 #container_id_email input {
 	min-width: 120px;
 }
+.edit_mode_on.account_info_form .generic_field_label {
+	display: none;
+}
+.account_info_form label {
+	color: #333;
+	width: 200px;
+	display: block;
+	float: left;
+	clear: left;
+}
+.account_info_form {
+	
+}
+.account_info_form form_field {
+	display: block;
+	padding: 5px 10px;
+	font-size: 20px;	
+}
+.account_info_form form_field .edit_field input {
+	margin-top: -5px;
+	margin-left: -1px;
+}
+.coming_soon {
+	display: block;
+	padding: 20px 10px;
+	color: #999;
+	font-size: 20px;
+}

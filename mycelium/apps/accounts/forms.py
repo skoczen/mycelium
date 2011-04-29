@@ -134,7 +134,18 @@ class NewAccountForm(ModelForm):
         model = Account
         fields = ("name", "subdomain", "plan")
 
-   
+class AccountForm(ModelForm):
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        cleaned_data["plan"] = Plan.monthly_plan()
+        
+        return cleaned_data
+
+    class Meta:
+        model = Account
+        fields = ("name", "plan")
+
+
 class NewUserForm( Form):
     username    = CharField(max_length=100, required=True)
     email       = CharField(max_length=255, required=True)
