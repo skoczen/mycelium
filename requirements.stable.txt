@@ -15,7 +15,7 @@ BeautifulSoup==3.2.0
 django-extensions==0.6
 -e git://github.com/skoczen/qi-toolkit.git@2f392c9029232c5e496d3b010a0c34ac01f536b1#egg=qi_toolkit-0.7-py2.6-dev
 python-crontab==0.9.5
--e git://github.com/clintecker/django-google-analytics.git@e835a1e1a0eb7d2ce3008daea65c64ad2b539f98#egg=google_analytics-0.2-py2.6-dev
+django-analytical==0.8.1
 
 django-pagination==1.0.7
 sorl-thumbnail==11.01
@@ -45,7 +45,7 @@ slimmer==0.1.30
 django-debug-toolbar==0.8.4
 django-picklefield==0.1.9
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
-gitpython
+GitPython
 johnny-cache==0.3.1
 ## The following requirements were added by pip --freeze:
 CherryPy==3.1.2
@@ -64,6 +64,7 @@ django-templatetag-sugar==0.1
 docutils==0.6
 ghettoq==0.4.5
 gitdb==0.5.2
+-e git://github.com/clintecker/django-google-analytics.git@e835a1e1a0eb7d2ce3008daea65c64ad2b539f98#egg=google_analytics-0.2-py2.6-dev
 importlib==1.0.2
 kombu==1.1.2
 logilab-astng==0.21.1
