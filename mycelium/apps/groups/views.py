@@ -9,6 +9,7 @@ from django.views.decorators.cache import cache_page
 
 from groups.models import Group
 from groups.forms import GroupForm, GroupRuleFormset
+from people.models import PeopleAndOrganizationsSearchProxy
 
 def _render_people_group_tab(context):
     return render_to_string("groups/_people_group_tab.html", RequestContext(context["request"],context))
@@ -24,6 +25,29 @@ def _basic_forms(group, request, no_data=False):
     group_form = GroupForm(data, instance=group, account=account)
     rule_formset = GroupRuleFormset(data, instance=group, account=account)
     return group_form, rule_formset
+
+@render_to("people/search.html")
+def search(request):
+    section = "groups"
+    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).exclude(group__isnull=True).all()
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if q != "":
+            people_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"]).exclude(group__isnull=True)
+    return locals()
+
+@json_view
+def search_results(request):
+    section = "groups"
+    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).exclude(group__isnull=True).all()
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if q != "":
+            people_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"]).exclude(group__isnull=True)
+
+    return {"fragments":{"main_search_results":render_to_string("people/_search_results.html", locals())}}
+
+
 
 @render_to("groups/group.html")
 def group(request, group_id):
