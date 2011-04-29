@@ -130,7 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
 
     'qi_toolkit',
-    'google_analytics',
+    'analytical',
     'django_extensions',
     'pagination',
     'south',
@@ -181,7 +181,8 @@ INSTALLED_APPS = (
 TEMPLATE_DIRS = (
     "%stemplates" % (PROJECT_ROOT),
 )
-GOOGLE_ANALYTICS_MODEL = True
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-20296975-1'
+ANALYTICAL_INTERNAL_IPS = ['127.0.0.1', '192.168.2.164']
 
 LOGIN_REDIRECT_URL = "/people/"
 AUTH_PROFILE_MODULE = "accounts.UserAccount"
@@ -198,6 +199,7 @@ CMS_APPLICATIONS_URLS = (
 )
 CMS_USE_TINYMCE = True
 GOOGLE_MAPS_KEY = "ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRHA9ICmOpg9-1g76S5BMdlTE0SKRRfIwbO5xyH_2XiYLy9Wt8qQ9Ymz"
+
 
 SESSION_COOKIE_AGE = 1209600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
