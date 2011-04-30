@@ -791,8 +791,10 @@ social_links {
 }
 .person.steven {
 	background-image: url("../images/steven-picture.png");	
-	
-
+}
+.person .title {
+	font-style: italic;
+	color: #555;
 }
 .person_description p {
 	display: block;
