@@ -129,11 +129,16 @@
             return $(this).each(function(){
                 var $this = $(this),
                     data = $this.data('genericFieldForm');
+                   
+                
 
                 // if any fields have changed
                 var ser = $("input, select, textarea",data.form).serialize();
 
                 if (data.previous_serialized_str != ser) {
+                	// mark it as dirty
+	                data.target.addClass("dirty");
+
                 	data.save_queued = true;
                     data.previous_serialized_str = ser;
                     $(data.options.save_and_status_btn_class).html(data.options.save_now_text).addClass(data.options.save_now_class);
@@ -153,6 +158,7 @@
                 $(data.options.last_save_time_class).html(data.options.last_saved_saving_text).fadeIn(50);
                 $(data.options.save_and_status_btn_class).html(data.options.saving_text).removeClass(data.options.save_now_class);
                 var save_start_time = new Date();
+                data.target.removeClass("dirty");
                 $(data.form).ajaxSubmit({
                   url: data.save_url,
                   type: data.save_method,

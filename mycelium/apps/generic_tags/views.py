@@ -123,7 +123,7 @@ class TagViews(object):
     def create_tag(self, request, tag_set_id, target_id):
         success = False
         self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id), tag_set_id=tag_set_id)
-        new_tag = request.REQUEST['new_tag'].strip().lower()
+        new_tag = request.REQUEST['new_tag'].strip()
         if new_tag != "":
             ts = get_or_404_by_account(TagSet, request.account, tag_set_id)
             person = get_or_404_by_account(Person, request.account, target_id)
@@ -180,7 +180,7 @@ def _tab_or_manage_tags_redirect(context):
 
 
 
-
+@json_view
 def save_tags_and_tagsets(request):
     success = False
     if request.method == "POST":
@@ -200,7 +200,8 @@ def save_tags_and_tagsets(request):
                 f.save()
         
         success = True
-
+    
+    return {'success': success}
     return _tab_or_manage_tags_redirect(locals())
 
 

@@ -28,14 +28,39 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
     class Meta(object):
         ordering = ("id",)
 
+
+    @classmethod
+    def _tag_sorting_blank_on_bottom(cls, x, y):
+        x_name = x.name.lower()
+        y_name = y.name.lower()
+        if x_name == "":
+            if y_name == "":
+                return 0  # both blank
+            else:
+                return 1  # y has a value, x should be greater than
+        else:
+            if y_name == "":
+                return -1
+            else:
+                if x_name > y_name:
+                    return 1
+                else:
+                    return -1
+
+
     @property
     def all_tags(self):
         """Returns all tags possible in this set"""
         # Should be cached, most likely.
         if not hasattr(self, "cached_all_tags"):
-            self.cached_all_tags = self.tag_set.all()
+            at = [t for t in self.tag_set.all()]
+            at.sort(cmp=TagSet._tag_sorting_blank_on_bottom)
+            
+            print at
+            self.cached_all_tags = at
 
         return self.cached_all_tags
+
 
     @property
     def all_tags_and_counts_with_form(self):
@@ -47,7 +72,6 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
                     'tag':t,
                     'num_people': TaggedItem.objects_by_account(self.account).filter(tag=t.id).count(),
                 })
-
         return self.cached_all_tags_and_counts
 
     
@@ -99,8 +123,7 @@ class Tag(AccountBasedModel, models.Model):
         return TagForm(*args, **form_context)
 
     def save(self, *args, **kwargs):
-        self.name = self.name.lower()
-        self.slug = slugify(self.name)
+        self.slug = slugify(self.name.lower())
         return super(Tag, self).save(*args, **kwargs)
 
 
