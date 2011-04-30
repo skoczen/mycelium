@@ -55,8 +55,6 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
         if not hasattr(self, "cached_all_tags"):
             at = [t for t in self.tag_set.all()]
             at.sort(cmp=TagSet._tag_sorting_blank_on_bottom)
-            
-            print at
             self.cached_all_tags = at
 
         return self.cached_all_tags
