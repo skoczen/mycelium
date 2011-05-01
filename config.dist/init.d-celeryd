@@ -105,12 +105,13 @@ fi
 
 start_worker () {
     echo -n $"Starting celeryd: "
-    daemon --pidfile=$CELERYD_PID_FILE $CELERYD $CELERYD_OPTS 2>/dev/null &
+    daemon --pidfile=$CELERYD_PID_FILE $CELERYD $CELERYD_OPTS 
     RETVAL=$?
     sleep 3; echo
     if [ $RETVAL -eq 0 ]; then
     	touch /var/lock/subsys/celeryd
     fi
+    return $RETVAL
 }
 
 stop_worker () {
@@ -122,6 +123,7 @@ stop_worker () {
         rm -f /var/lock/subsys/celeryd
         rm -f $CELERYD_PID_FILE
     fi
+    return 0
 }
 
 case "$1" in
