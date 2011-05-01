@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Where to chdir at start.
-CELERYD_CHDIR="/var/www/mycelium.git/mycelium/"
+CELERYD_CHDIR="/var/www/mycelium.git/mycelium"
 
 CELERYD_OPTS="celeryd -B -E"
 
@@ -9,4 +9,4 @@ DJANGO_SETTINGS_MODULE="settings"
 
 CELERYD="/root/.virtualenvs/mycelium/bin/python2.6 $CELERYD_CHDIR/manage.py"
 
-
+VIRTUALENV="/root/.virtualenvs/mycelium"
