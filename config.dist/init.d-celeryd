@@ -1,4 +1,3 @@
-#!/bin/bash -e
 # chkconfig: 2345 20 80
 # description: The Celery start-stop-script
 # ============================================
