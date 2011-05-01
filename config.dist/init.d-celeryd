@@ -106,7 +106,7 @@ fi
 start_worker () {
     echo -n $"Starting celeryd: "
     daemon --pidfile=$CELERYD_PID_FILE --user=$CELERYD_USER \
-      PYTHONPATH=$PYTHONPATH:$CELERY_PYTHONPATH $CELERYD $CELERYD_OPTS 2>/dev/null &
+      PYTHONPATH=$PYTHONPATH:$CELERY_PYTHONPATH $CELERYD $CELERYD_OPTS  &
     RETVAL=$?
     sleep 3; echo
     if [ -n "$VIRTUALENV" ]; then
@@ -117,7 +117,7 @@ start_worker () {
 
 stop_worker () {
     echo -n $"Stopping celeryd: "
-    killproc -p $CELERYD_PID_FILE $CELERYD 2>/dev/null
+    killproc -p $CELERYD_PID_FILE $CELERYD 
     RETVAL=$?
     sleep 3; echo
     if [ $RETVAL -eq 0 ]; then
