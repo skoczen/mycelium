@@ -104,7 +104,7 @@ if [ -n "$DJANGO_SETTINGS_MODULE" ]; then
 fi
 
 start_worker () {
-    echo $"Starting celeryd: "
+    echo -n $"Starting celeryd: "
     daemon $CELERYD $CELERYD_OPTS --pidfile=$CELERYD_PID_FILE  2>/dev/null &
     RETVAL=$?
     sleep 3; echo
