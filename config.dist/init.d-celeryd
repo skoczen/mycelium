@@ -104,7 +104,7 @@ if [ -n "$DJANGO_SETTINGS_MODULE" ]; then
 fi
 
 start_worker () {
-    echo -n $"Starting deleryd: "
+    echo -n $"Starting celeryd: "
     daemon --pidfile=$CELERYD_PID_FILE --user=$CELERYD_USER \
       PYTHONPATH=$PYTHONPATH:$CELERY_PYTHONPATH $CELERYD $CELERYD_OPTS 2>/dev/null &
     RETVAL=$?
