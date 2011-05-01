@@ -76,8 +76,8 @@
 # Source function library.
 . /etc/init.d/functions
 
-if test -f /etc/sysconfig/celeryd; then
-    . /etc/sysconfig/celeryd
+if test -f /etc/default/celeryd; then
+    . /etc/default/celeryd
 fi
 
 RETVAL=0
