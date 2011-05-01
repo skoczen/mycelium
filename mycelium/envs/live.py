@@ -36,7 +36,7 @@ FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 # }
 
 # CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-CACHE_BACKEND = 'johnny.backends.memcached://10.202.150.67:11211'
+CACHE_BACKEND = 'johnny.backends.memcached://int-Memcached1010.agoodcloud.com:11211'
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
 
