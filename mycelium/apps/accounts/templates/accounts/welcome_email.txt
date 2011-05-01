@@ -2,7 +2,7 @@ Hi {{useraccount.full_name}},
 
 Welcome to GoodCloud! 
 
-We're excited to start helping your nonprofit save time and smile at the computer screen more often!  This email contains a reminder of the information you'll need to log in, some tips for getting started (and a way to get half a month free!), as well as the best way to contact us.  We'll follow up in a few days to see if there's anything we can do to help, and to begin to get to know you and your organization personally.
+We're excited to start helping your nonprofit save time and smile at the computer screen more often!  This email contains a reminder of the information you'll need to log in, some tips for getting started (and a way to get half a month free!), and the best way to contact us.  We'll follow up in a few days to see if there's anything we can do to help, and to begin to get to know you and your organization personally.
 
 
 Login Information
@@ -24,8 +24,7 @@ We're committed to helping you get the most out of GoodCloud. There are a few wa
 
 Online - within GoodCloud, there's a "feedback & support" link on the bottom right. Click that, type your message, and we get it right away!
 Email - you can also email support@agoodcloud.com, and we'll get right back to you.
-Phone - if a phone call is easiest, you can reach us at (503) 308-1460.  We're available 9-5 Monday-Friday, and sometimes a bit outside of that too.
-
+Phone - if a phone call is easiest, you can reach us at (503) 308-1460.  
 
 We're proud to serve small nonprofits like yours, and we hope you enjoy using GoodCloud!
 

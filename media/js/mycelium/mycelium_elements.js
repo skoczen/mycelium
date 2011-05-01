@@ -135,17 +135,18 @@ $(function(){
 	$(".auto_disable").live("click",function(){
 		var btn = $(this);
 		if (!btn.hasClass("disabled")) {
-			btn.addClass("disabled");
-			btn.attr("disabled","disabled");
+			setTimeout(function(){
+				btn.addClass("disabled");
+				btn.attr("disabled","disabled");
 
-			if (btn.is("a")) {
-				btn.attr("old_html", btn.html());
-				btn.html(btn.attr("disabled_text"));
-			} else {
-				btn.attr("old_val", btn.val());
-				btn.val(btn.attr("disabled_text"));
-			}
-			
+				if (btn.is("a")) {
+					btn.attr("old_html", btn.html());
+					btn.html(btn.attr("disabled_text"));
+				} else {
+					btn.attr("old_val", btn.val());
+					btn.val(btn.attr("disabled_text"));
+				}
+			}, 10);
 		} else {
 			return false;
 		}

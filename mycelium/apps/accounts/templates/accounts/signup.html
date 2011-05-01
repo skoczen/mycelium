@@ -42,6 +42,12 @@
 	{% plain_editable_field user_form.password %}
 </div>
 
+<div class="form_section terms">
+	<div class="checkbox_and_label">
+	<span class="agree_checkbox">{{account_form.agreed_to_terms}}</span> <label for="id_agreed_to_terms">I agree to the <a href="{% url marketing_site:legal %}" target="_blank">Terms of Use</a></label>
+	</div>
+</div>
+
 <input type="submit" id="submit_button" class="mycelium_btn" value="Create your Account" />
 
 </form>

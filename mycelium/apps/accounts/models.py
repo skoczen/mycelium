@@ -21,6 +21,7 @@ class Account(TimestampModelMixin):
     name = models.CharField(max_length=255, verbose_name="Organization Name")
     subdomain = models.CharField(max_length=255, unique=True, db_index=True, verbose_name="GoodCloud address (myorganization.agodocloud.com)")
     is_active = models.BooleanField(default=True)
+    agreed_to_terms = models.BooleanField()
     plan = models.ForeignKey(Plan, blank=True)
 
     def __unicode__(self):

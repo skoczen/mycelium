@@ -24,7 +24,7 @@ class TestMarketingSite(QiSeleniumTestCase):
         sel.open("/")
         
         # Home
-        sel.click("link=Home")
+        sel.click("css=#logo")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("People love using GoodCloud")
 

@@ -219,8 +219,8 @@ class SearchableItemProxy(SimpleSearchableModel):
         self.sorting_name = self.get_sorting_name()
         ss = self.render_result_row()
         self.cached_search_result = ss
-        put_in_cache_forever(self.cache_name, ss)
         super(SearchableItemProxy,self).save(*args,**kwargs)
+        put_in_cache_forever(self.cache_name, ss)
 
 
 from django.template.loader import render_to_string
@@ -304,6 +304,7 @@ class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
         proxy, nil = cls.raw_objects.get_or_create(account=instance.account, person=instance, search_group_name=cls.SEARCH_GROUP_NAME)
         cache.delete(proxy.cache_name)
         proxy.save()
+
 
     @classmethod
     def organization_record_changed(cls, sender, instance, created=None, *args, **kwargs):

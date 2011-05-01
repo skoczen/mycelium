@@ -207,6 +207,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.type("css=#id_email", "joe@example.com")
         sel.type("css=#id_username", "joe")
         sel.type("css=#id_password", "password")
+        sel.click("css=#id_agreed_to_terms")
         time.sleep(2)
 
         sel.click("css=#submit_button")
@@ -274,6 +275,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.type("css=#id_email", "tom@agoodcloud.com")
         sel.click("css=#id_password")
         sel.type("css=#id_password", "Test123")
+        sel.click("css=#id_agreed_to_terms")
         time.sleep(2)
 
         sel.click("css=#submit_button")

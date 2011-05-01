@@ -132,7 +132,7 @@ class NewAccountForm(ModelForm):
 
     class Meta:
         model = Account
-        fields = ("name", "subdomain", "plan")
+        fields = ("name", "subdomain", "plan", "agreed_to_terms")
 
 class AccountForm(ModelForm):
     def clean(self):

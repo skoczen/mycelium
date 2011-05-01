@@ -16,11 +16,12 @@ import os
 #     fh.close()
 
 # @periodic_task(run_every=crontab(hour="*", minute="*", day_of_week="*"))
-@periodic_task(run_every=crontab(hour="2", minute="1", day_of_week="*"))
-def offsite_backups():
-    opts = {
-        'backup_file': "/tmp/current_backup_%s.dump" % settings.ROLE,
-        'offsite_server_dir': settings.OFFSITE_BACKUP_DIR,
-        'env': settings.ROLE,
-    }
-    os.system("./manage.py dumpdb > %(backup_file)s;bzip2 -9q %(backup_file)s;scp %(backup_file)s.bz2 %(offsite_server_dir)sdaily_%(env)s_`date +%%F`.dump.bz2; rm %(backup_file)s.bz2" % opts)
+
+# @periodic_task(run_every=crontab(hour="2", minute="1", day_of_week="*"))
+# def offsite_backups():
+#     opts = {
+#         'backup_file': "/tmp/current_backup_%s.dump" % settings.ROLE,
+#         'offsite_server_dir': settings.OFFSITE_BACKUP_DIR,
+#         'env': settings.ROLE,
+#     }
+#     os.system("./manage.py dumpdb > %(backup_file)s;bzip2 -9q %(backup_file)s;scp %(backup_file)s.bz2 %(offsite_server_dir)sdaily_%(env)s_`date +%%F`.dump.bz2; rm %(backup_file)s.bz2" % opts)

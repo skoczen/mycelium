@@ -65,6 +65,9 @@ function form_is_valid() {
 	if ($("#subdomain_verification").hasClass("not_verified")) {
 		missing_val = true;
 	}
+	if ($("#id_agreed_to_terms:checked").length == 0) {
+		missing_val = true;
+	}
 	return !missing_val;
 }
 function enable_disable_signup_button() {
