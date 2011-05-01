@@ -105,7 +105,7 @@ fi
 
 start_worker () {
     echo $"Starting celeryd: "
-    daemon --pidfile=$CELERYD_PID_FILE $CELERYD $CELERYD_OPTS 2>/dev/null &
+    daemon --pidfile=$CELERYD_PID_FILE $CELERYD $CELERYD_OPTS 2>/dev/null
     RETVAL=$?
     sleep 3; echo
     if [ $RETVAL -eq 0 ]; then
