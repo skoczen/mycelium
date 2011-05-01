@@ -104,14 +104,14 @@ if [ -n "$DJANGO_SETTINGS_MODULE" ]; then
 fi
 
 start_worker () {
-    echo -n $"Starting celeryd: "
-    daemon --pidfile=$CELERYD_PID_FILE $CELERYD $CELERYD_OPTS &
+    echo  $"Starting celeryd: "
+    daemon --pidfile=$CELERYD_PID_FILE $CELERYD $CELERYD_OPTS 
     RETVAL=$?
     sleep 3; echo
     if [ $RETVAL -eq 0 ]; then
     	touch /var/lock/subsys/celeryd
     fi
-    return $RETVAL
+    return 0
 }
 
 stop_worker () {
