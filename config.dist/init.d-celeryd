@@ -108,10 +108,9 @@ start_worker () {
     daemon --pidfile=$CELERYD_PID_FILE $CELERYD $CELERYD_OPTS 2>/dev/null &
     RETVAL=$?
     sleep 3; echo
-    if [ -n "$VIRTUALENV" ]; then
-        source $VIRTUALENV/bin/activate
+    if [ $RETVAL -eq 0 ]; then
+    	touch /var/lock/subsys/celeryd
     fi
-    [ $RETVAL -eq 0 ] && touch /var/lock/subsys/celeryd
 }
 
 stop_worker () {
