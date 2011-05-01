@@ -1,4 +1,6 @@
 #!/bin/bash -e
+# chkconfig: 2345 20 80" > celeryd
+# description: The Celery start-stop-script" >> celeryd
 # ============================================
 #  celeryd - Starts the Celery worker daemon.
 # ============================================
