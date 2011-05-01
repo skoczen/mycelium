@@ -12,7 +12,7 @@ CELERYD_NODES="w1 w2 w3"
 # Where to chdir at start.
 CELERYD_CHDIR="/var/www/mycelium.git/mycelium"
 
-DJANGO_SETTINGS_MODULE="envs.live"
+DJANGO_SETTINGS_MODULE="settings"
 CELERYD_OPTS="-v 2 -B -s celery -E --concurrency=3"
 #CELERYD_LOG_FILE="/var/log/celery/celery.log"
 
