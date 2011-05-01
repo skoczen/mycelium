@@ -132,7 +132,7 @@ check_dev_null() {
         log_end_msg 1 || true
     fi
     if ! run_by_init; then
-        log_action_msg "/dev/null is not a character device!"
+        echo "/dev/null is not a character device!"
     fi
     exit 1
     fi
@@ -178,11 +178,11 @@ start_worker () {
 case "$1" in
   start)
     check_dev_null
-    log_daemon_msg "Starting celery task worker server" "celeryd"
+    echo "Starting celery task worker server" "celeryd"
     start_worker
     ;;
   stop)
-    log_daemon_msg "Stopping celery task worker server" "celeryd"
+    echo "Stopping celery task worker server" "celeryd"
     stop_worker --oknodo
     ;;
 
@@ -191,14 +191,14 @@ case "$1" in
     ;;
 
   restart)
-    log_daemon_msg "Restarting celery task worker server" "celeryd"
+    echo "Restarting celery task worker server" "celeryd"
     stop_worker --oknodo --retry 30
     check_dev_null log_end_msg
     start_worker
     ;;
 
   try-restart)
-    log_daemon_msg "Restarting celery task worker server" "celeryd"
+    echo "Restarting celery task worker server" "celeryd"
     set +e
     stop_worker --retry 30
     RET="$?"
@@ -211,12 +211,12 @@ case "$1" in
         ;;
         1)
         # daemon not running
-        log_progress_msg "(not running)"
+        echo "(not running)"
         log_end_msg 0
         ;;
         *)
         # failed to stop
-        log_progress_msg "(failed to stop)"
+        echo "(failed to stop)"
         log_end_msg 1
         ;;
     esac
@@ -227,7 +227,7 @@ case "$1" in
     ;;
 
   *)
-    log_action_msg "Usage: /etc/init.d/celeryd {start|stop|force-reload|restart|try-restart|status}"
+    echo "Usage: /etc/init.d/celeryd {start|stop|force-reload|restart|try-restart|status}"
     exit 1
 esac
 
