@@ -11,4 +11,4 @@ CELERYD="/root/.virtualenvs/mycelium/bin/python2.6 $CELERYD_CHDIR/manage.py"
 
 VIRTUALENV="/root/.virtualenvs/mycelium"
 
-CELERYD_USER = "root"
+CELERYD_USER="root"
