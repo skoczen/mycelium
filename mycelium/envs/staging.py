@@ -25,7 +25,7 @@ DATABASES = {
         'PORT': '3306',
     },
 }
-DATABASE_ROUTERS = ['envs.routers.MasterSlaveRouter']
+DATABASE_ROUTERS = ['envs.routers.MasterSlaveRouter',]
 
 
 MEDIA_URL = 'http://media.digitalmycelium.com/'
