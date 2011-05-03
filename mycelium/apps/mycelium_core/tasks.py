@@ -1,11 +1,12 @@
 from celery.schedules import crontab
-from celery.decorators import periodic_task
+from celery.decorators import periodic_task, task
 from django.conf import settings
 # from django.core.management import call_command
 import os
 
 # this will run every minute, see http://celeryproject.org/docs/reference/celery.task.schedules.html#celery.task.schedules.crontab
 # @periodic_task(run_every=crontab(hour="*", minute="*", day_of_week="*"))
+@task
 def test():    
     print "firing test task"
     if settings.ENV == "DEV":
