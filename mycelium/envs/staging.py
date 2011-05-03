@@ -16,8 +16,16 @@ DATABASES = {
         'HOST': DB_HOST,
         'PORT': '3306',
     },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mycelium',
+        'USER': 'root',
+        'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
+        'HOST': 'int-mysql-staging-slave',
+        'PORT': '3306',
+    },
 }
-
+DATABASE_ROUTERS = ['envs.routers.MasterSlaveRouter']
 
 
 MEDIA_URL = 'http://media.digitalmycelium.com/'
