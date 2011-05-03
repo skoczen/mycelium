@@ -5,6 +5,6 @@ CELERYD_CHDIR="/var/www/mycelium.git/mycelium"
 
 CELERYD_OPTS=" -B -E"
 
-CELERYD="/root/.virtualenvs/mycelium/bin/python2.6 /var/www/mycelium.git/mycelium/manage.py celeryd"
+CELERYD_MULTI="/root/.virtualenvs/mycelium/bin/python2.6 /var/www/mycelium.git/mycelium/manage.py celeryd_multi"
 
 CELERYD_USER="root"
