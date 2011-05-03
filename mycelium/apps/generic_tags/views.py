@@ -61,11 +61,11 @@ class TagViews(object):
 
     @property
     def _tags_for_target(self):
-        return self.target.tag_set
+        return self.target.tag_set.using('default')
    
     @property
     def _all_tags_for_tagset(self):
-        return self.tag_set.all_tags()
+        return self.tag_set.all_tags().using('default')
 
     @property
     def _target_tag_related_info(self):
@@ -166,7 +166,7 @@ tag_views = TagViews()
 #  Normal views
 def _tab_or_manage_tags_redirect(context):
     request = context["request"]
-    context["all_tagsets"] = TagSet.objects_by_account(request.account).all()
+    context["all_tagsets"] = TagSet.objects_by_account(request.account).using('default').all()
 
     if request.is_ajax():
         fragment_html = {"tagset_details" : render_to_string("generic_tags/_manage_tags_tagset_details.html", RequestContext(request,context)),}
