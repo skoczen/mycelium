@@ -167,6 +167,23 @@ class UserAccountAccessForm(ModelForm):
             'access_level': RadioSelect
         }
 
+
+class UserFormForUserAccount(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserFormForUserAccount, self).__init__(*args, **kwargs)
+        self.initial["username"] = self.instance.get_profile().denamespaced_username
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        cleaned_data["username"] = self.instance.get_profile().account.namespaced_username_for_username(cleaned_data["username"])
+       
+        return cleaned_data
+
+
+    class Meta:
+        model = User
+        fields = ("first_name", "username", "email",)
+
 class NewUserAccountForm(UserAccountAccessForm):
     username    = CharField(max_length=100, required=True)
     email       = CharField(max_length=255, required=True)

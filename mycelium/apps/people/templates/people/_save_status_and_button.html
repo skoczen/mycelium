@@ -3,6 +3,7 @@
 <a href="#" class="mycelium_btn edit_done_btn " >Done</a>
 <a href="#" class="mycelium_btn save_and_status_btn mycelium_grey" >Saved</a>
 <span class="save_info">
-	<span class="last_save_time">Last changed {{form.instance.modified_at|pretty_timesince}}.</span>
+	<span class="last_save_time">{% if form.instance.modified_at %}Last changed {{form.instance.modified_at|pretty_timesince}}.{% endif %}</span>
 </span>
+
 </save_status_and_button>

@@ -1,0 +1,11 @@
+{% load generic_fields %}{% spaceless %}
+<tr class="generic_editable_field_table_row generic_editable_field striped_row" id="container_id_{{field.html_name}}">
+	<td class="label_col">
+		<label>{% if label_override %}{{label_override}}{% else %}{{field.label}}:{% endif %}</label>
+	</td>
+    <td class="field_col">
+		{% if not hide_view %}<span class="view_field">{% if generic_editable_view_override %}{{generic_editable_view_override}}{% else %}{{field|field_value}}{% endif %}</span>{% endif %}
+		{% if not hide_edit %}<span class="edit_field">{% if generic_editable_edit_override %}{{generic_editable_edit_override}}{% else %}{{field}}{% endif %}</span>{% endif %}
+	</td>	
+</tr>
+{% endspaceless %}

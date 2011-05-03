@@ -59,7 +59,7 @@ def login(request, template_name='registration/login.html',
 
 
 from qi_toolkit.helpers import *
-from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm
+from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm, UserFormForUserAccount
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from accounts.models import UserAccount
@@ -142,5 +142,37 @@ def save_account_info(request):
     if form.is_valid():
         form.save()
         success = True
+
+    return {"success":success}
+
+
+@render_to("accounts/manage_my_account.html")
+def my_account(request):
+    form = UserFormForUserAccount(instance=request.useraccount.user)
+    return locals()
+
+@json_view
+def save_my_account_info(request):
+    success = False
+    form = UserFormForUserAccount(request.POST, instance=request.useraccount.user)
+    if form.is_valid():
+        form.save()
+        success = True
+    
+
+    return {"success":success}
+
+@json_view
+def change_my_password(request):
+    success = False
+    try:
+
+        me = request.useraccount.user
+        new_password = request.POST['new_password']
+        me.set_password(new_password)
+        me.save()
+        success=True
+    except:
+        pass
 
     return {"success":success}

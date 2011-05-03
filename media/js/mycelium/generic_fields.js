@@ -66,11 +66,11 @@
                 $("input").bind('keydown', 'ctrl+s', function(){data.target.genericFieldForm('save_and_status_btn_clicked');});
 
                 $(data.options.last_save_time_class,data.target).hide();
-                $("input", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save');});
-                $("input", data.target).live("keyup",  function(){data.target.genericFieldForm('queue_form_save');});
-                $("textarea", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save');});
-                $("textarea", data.target).live("keyup",  function(){data.target.genericFieldForm('queue_form_save');});
-                $("select", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save');});
+                $("input:not(.excluded_field)", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save');});
+                $("input:not(.excluded_field)", data.target).live("keyup",  function(){data.target.genericFieldForm('queue_form_save');});
+                $("textarea:not(.excluded_field)", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save');});
+                $("textarea:not(.excluded_field)", data.target).live("keyup",  function(){data.target.genericFieldForm('queue_form_save');});
+                $("select:not(.excluded_field)", data.target).live("change", function(){data.target.genericFieldForm('queue_form_save');});
                 $("input", data.target).autoGrowInput({comfortZone: 30, resizeNow:true});
 
                 $(data.options.save_and_status_btn_class, data.target).live("click", function(){data.target.genericFieldForm('save_and_status_btn_clicked');});

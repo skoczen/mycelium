@@ -302,6 +302,3 @@ MEDIASYNC = {
 }
 MEDIASYNC['SERVE_REMOTE'] = True
 
-
-# Temp to make things work.
-# CELERY_ALWAYS_EAGER = True
