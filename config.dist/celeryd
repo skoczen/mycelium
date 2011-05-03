@@ -3,8 +3,8 @@
 # Where to chdir at start.
 CELERYD_CHDIR="/var/www/mycelium.git/mycelium"
 
-CELERYD_OPTS="celeryd_detach -B -E"
+CELERYD_OPTS=" -B -E"
 
-CELERYD_COMMAND="/root/.virtualenvs/mycelium/bin/python2.6 /var/www/mycelium.git/mycelium/manage.py celeryd -B -E"
+CELERYD="/root/.virtualenvs/mycelium/bin/python2.6 /var/www/mycelium.git/mycelium/manage.py celeryd"
 
 CELERYD_USER="root"
