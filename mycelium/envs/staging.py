@@ -2,13 +2,18 @@ from base import *
 ENV = "LIVE"
 ROLE = "STAGING"
 
+if 'migrate' in sys.argv or 'syncdb' in sys.argv:
+    DB_HOST = 'int-mysql-staging-master.digitalmycelium.com'
+else:
+    DB_HOST = 'int-mysql.digitalmycelium.com'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mycelium',
         'USER': 'root',
         'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
-        'HOST': 'int-mysql.digitalmycelium.com',
+        'HOST': DB_HOST,
         'PORT': '3306',
     },
 }
