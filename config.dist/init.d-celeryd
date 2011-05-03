@@ -107,8 +107,8 @@ start_worker () {
     echo -n $"Starting celeryd: "
     $CELERY_COMMAND  2>/dev/null &
     PROCID=$!
-    echo $PROCID > $CELERYD_PID_FILE
     RETVAL=$?
+    echo $PROCID > $CELERYD_PID_FILE
     sleep 3; echo
     if [ $RETVAL -eq 0 ]; then
     	touch /var/lock/subsys/celeryd
