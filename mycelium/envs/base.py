@@ -244,7 +244,7 @@ import djcelery
 djcelery.setup_loader()
 
 # for initial sync
-CELERY_RESULT_BACKEND = "database"
+# CELERY_RESULT_BACKEND = "database"
 
 # sorl
 THUMBNAIL_PREFIX = "_cache/"
@@ -304,4 +304,4 @@ MEDIASYNC['SERVE_REMOTE'] = True
 
 
 # Temp to make things work.
-CELERY_ALWAYS_EAGER = True
+# CELERY_ALWAYS_EAGER = True
