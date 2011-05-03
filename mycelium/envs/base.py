@@ -33,7 +33,7 @@ MANAGERS += (
 )
 
 
-TIME_ZONE = None
+TIME_ZONE = "America/Los_Angeles"
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
         # ('fr', gettext('French')),
