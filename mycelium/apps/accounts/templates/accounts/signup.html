@@ -1,13 +1,15 @@
 {% extends "marketing_site/base.html" %}
 {% load i18n generic_fields friendly_data_formatting  %}
 {% block title %}Sign up for an account at GoodCloud{% endblock %}
-{% block head %}
+{% block css %}
 {% css "/css/mycelium_elements.css" %}
 {{block.super}}
-
-{% js "/js/mycelium/signup.js" %}
 {% css "/css/login.css" %}
 {% css "/css/signup.css" %}
+{% endblock %}
+{% block javascript %}
+{{block.super}}
+{% js "/js/mycelium/signup.js" %}
 {% endblock %}
 
 {% block page_content %}

@@ -6,7 +6,7 @@ $.fn.autoGrowInput = function(o) {
         maxWidth: 1000,
         minWidth: 0,
         comfortZone: 70,
-        resizeNow: false,
+        resizeNow: false
     }, o);
 
     this.filter('input:text').each(function(){
@@ -28,7 +28,7 @@ $.fn.autoGrowInput = function(o) {
             check = function(override) {
                 if (override!=true && val === input.val()) {return;}
 
-                val = input.val()
+                val = input.val();
                 // Enter new content into testSubject
                 var escaped = val.replace(/&/g, '&amp;').replace(/\s/g,' ').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(' ', '&nbsp;');
                 testSubject.html(escaped);

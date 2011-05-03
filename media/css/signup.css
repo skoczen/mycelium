@@ -153,8 +153,8 @@
 #signup_form .checkbox_and_label {
 	display: block;
 	margin: 0px auto;
-	overflow: auto;
-	width: 230px;
+	overflow: visible;
+	width: 250px;
 	text-align: center;
 	margin: 0px auto;
 }
