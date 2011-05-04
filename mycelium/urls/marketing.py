@@ -15,10 +15,8 @@ urlpatterns = patterns('',
     (r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodcloud.posterous.com"}, 'blog'),
     (r'^administration/', include(admin.site.urls)),
     (r'^', include('sorl.thumbnail.urls')),
-    # url(r'^', include('qi_toolkit.urls')),
-    # url(r'^', include('cms.urls')),
+    (r'^sentry/', include('sentry.urls')),
     url(r'^', include('django_ses.urls')),
-    # url(r'^tinymce/', include('tinymce.urls')),
     url(r'^', include('mediasync.urls')),
 )
 if settings.DEBUG:

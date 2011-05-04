@@ -144,6 +144,8 @@ INSTALLED_APPS = (
     'django_dumpdb',
     'django_ses',
     'mediasync',
+    'sentry',
+    'sentry.client',
 
     'cms',
     'mptt',

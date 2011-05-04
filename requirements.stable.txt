@@ -1,7 +1,6 @@
 mercurial==1.8.3
 #psycopg2
 python-dateutil==1.5
-
 PIL==1.1.7
 python-memcached==1.47
 gunicorn==0.12.0
@@ -12,12 +11,10 @@ django-xmlrpc==0.1.3
 akismet==0.2.0
 BeautifulSoup==3.2.0
 -e git://github.com/skoczen/django-form-designer.git@b9d1716acbda950e440fb13e877d3836e7b0a124#egg=form_designer-dev
-
 django-extensions==0.6
 -e git://github.com/skoczen/qi-toolkit.git@81c2a1e28f59191429850b42d20421504b4d1618#egg=qi_toolkit-dev
 python-crontab==0.9.5
 django-analytical==0.8.1
-
 django-pagination==1.0.7
 sorl-thumbnail==11.01
 tagging==0.2.1
@@ -33,9 +30,7 @@ django-celery==2.2.2
 -e git://github.com/kmmbvnr/django-jenkins.git@a302b8072d27a141ca38035c73828c21f4fbabd6#egg=django_jenkins-dev
 coverage==3.4
 -e git://github.com/skoczen/nose-xcover.git@cccc0e83ce2ed117903768587177a937c144e152#egg=nosexcover-dev
-
 -e hg+https://django-dumpdb.googlecode.com/hg/django-dumpdb@701c65cd9690a7ab28db39397f489b5b966163bd#egg=django_dumpdb-dev
-
 django-taggit==0.9.2
 django-taggit-templatetags==0.4.6dev
 boto==2.0b4
@@ -51,6 +46,7 @@ GitPython
 
 johnny-cache==0.3.1
 django-balancer==0.3
+django-sentry==1.7.4
 ## The following requirements were added by pip --freeze:
 CherryPy==3.1.2
 Django==1.2.5
@@ -61,7 +57,9 @@ amqplib==0.6.1
 anyjson==0.3.1
 async==0.6.1
 django-classy-tags==0.3.3.1
+django-indexer==0.3.0
 django-mailer==0.1.0
+django-paging==0.2.4
 -e hg+https://bitbucket.org/david/django-storages@704255ad8565fcbcb8c7a628e9204ae820cc6a1c#egg=django_storages-dev
 django-tagging==0.3.1
 django-templatetag-sugar==0.1
@@ -82,6 +80,7 @@ pytz==2010h
 reportlab==2.4
 roman==1.4.0
 unittest2==0.5.1
+uuid==1.30
 virtualenv==1.4.5
 virtualenvwrapper==1.20
 vobject==0.8.1c
