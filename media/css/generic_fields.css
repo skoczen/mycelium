@@ -24,7 +24,7 @@
 .generic_field_label {
 	position: absolute;
 	top: 100%;
-	font-size: 14px14px;
+	font-size: 14px;
 	text-align: center;
 	color: #AAA;
 	clear: none;
@@ -46,6 +46,8 @@
 	margin: 0px;
 	border-width: 0px 0px 1px 0px;
 	padding-bottom: 0px;
+}
+.edit_mode_on input[type=text] {
 	background-color: transparent;
 }
 .edit_mode_on input:focus {

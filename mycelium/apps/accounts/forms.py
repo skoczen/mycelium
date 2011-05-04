@@ -53,9 +53,10 @@ class AccountBasedModelForm(ModelForm):
         
 
     def clean(self):
-        cleaned_data = self.cleaned_data
-        cleaned_data["account"] = self.account
-        return cleaned_data
+        if hasattr(self, "cleaned_data"):
+            cleaned_data = self.cleaned_data
+            cleaned_data["account"] = self.account
+            return cleaned_data
     
 class AccountBasedModelFormSet(BaseInlineFormSet):
     account = ModelChoiceField(queryset=Account.objects.all(), required=False)
@@ -79,7 +80,8 @@ class AccountBasedModelFormSet(BaseInlineFormSet):
     def clean(self):
         super(AccountBasedModelFormSet, self).clean()
         for f in self.forms:
-            f.cleaned_data["account"] = self.account
+            if hasattr(f, "cleaned_data"):
+                f.cleaned_data["account"] = self.account
         
 
 class AccountAuthenticationForm(AuthenticationForm):

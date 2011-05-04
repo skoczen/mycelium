@@ -24,9 +24,9 @@ DEFAULT_FROM_EMAIL = 'GoodCloud'
 SERVER_EMAIL = 'support@agoodcloud.com'
 SEND_BROKEN_LINK_EMAILS = True
 
-ADMINS = (
+ADMINS = [
      'steven@quantumimagery.com',
-)
+]
 MANAGERS = ADMINS
 MANAGERS += (
     'tom@agoodcloud.com',

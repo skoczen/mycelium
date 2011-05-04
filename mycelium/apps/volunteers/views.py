@@ -33,7 +33,7 @@ def _return_fragments_or_redirect(request,context):
 
 
 def save_completed_volunteer_shift(request, volunteer_id):
-    volunteer = get_or_404_by_account(Volunteer, request.account, volunteer_id)
+    volunteer = get_or_404_by_account(Volunteer, request.account, volunteer_id, using='default')
     person = volunteer.person
     if request.method == "POST":
         form = NewShiftForm(request.POST, account=request.account)
@@ -48,7 +48,7 @@ def save_completed_volunteer_shift(request, volunteer_id):
 
 def delete_completed_volunteer_from_people_tab(request, volunteer_shift_id):
 
-    cs = get_or_404_by_account(CompletedShift, request.account, volunteer_shift_id)
+    cs = get_or_404_by_account(CompletedShift, request.account, volunteer_shift_id, using='default')
     volunteer = cs.volunteer
     person = volunteer.person
     cs.delete()
@@ -56,7 +56,7 @@ def delete_completed_volunteer_from_people_tab(request, volunteer_shift_id):
     return _return_fragments_or_redirect(request,locals())
     
 def save_status(request, volunteer_id):
-    volunteer = get_or_404_by_account(Volunteer, request.account, volunteer_id)
+    volunteer = get_or_404_by_account(Volunteer, request.account, volunteer_id, using='default')
     person = volunteer.person
     if request.method == "POST":
         status_form = VolunteerStatusForm(request.POST, prefix=VOLUNTEER_STATUS_PREFIX, instance=volunteer, account=request.account)

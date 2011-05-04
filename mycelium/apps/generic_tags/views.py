@@ -30,7 +30,7 @@ class TagViews(object):
             self.target = target
         if tag_set_id:
             self.tag_set_id = tag_set_id
-            self.tag_set = get_or_404_by_account(TagSet, target.account, tag_set_id)
+            self.tag_set = get_or_404_by_account(TagSet, target.account, tag_set_id, using='default')
             
 
     @property
@@ -122,7 +122,7 @@ class TagViews(object):
 
     def create_tag(self, request, tag_set_id, target_id):
         success = False
-        self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id), tag_set_id=tag_set_id)
+        self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id, using='default'), tag_set_id=tag_set_id)
         new_tag = request.REQUEST['new_tag'].strip()
         if new_tag != "":
             ts = get_or_404_by_account(TagSet, request.account, tag_set_id)
@@ -134,7 +134,7 @@ class TagViews(object):
         return self._return_fragments_or_redirect(request,locals())
 
     def add_tag(self, request, tag_set_id, tag_id, target_id):
-        self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id), tag_set_id=tag_set_id)
+        self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id, using='default'), tag_set_id=tag_set_id)
         success = False
         t = get_or_404_by_account(Tag, request.account, tag_id)
         person = get_or_404_by_account(Person, request.account, target_id)
@@ -143,7 +143,7 @@ class TagViews(object):
         return self._return_fragments_or_redirect(request,locals())
 
     def remove_tag(self, request, tag_set_id, tag_id, target_id):
-        self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id), tag_set_id=tag_set_id)
+        self.__init__(target=get_or_404_by_account(self.TargetModel, request.account, target_id, using='default'), tag_set_id=tag_set_id)
         success = False
         t = get_or_404_by_account(Tag, request.account, tag_id)
         person = get_or_404_by_account(Person, request.account, target_id)

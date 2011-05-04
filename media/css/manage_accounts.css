@@ -159,3 +159,9 @@ tabbed_box box_content {
 	font-size: 18px;
 	color: #777;
 }
+#new_account .generic_field_label {
+	top: 140%;
+}
+#new_account .generic_editable_field .edit_field input {
+	min-width: 100px;
+}

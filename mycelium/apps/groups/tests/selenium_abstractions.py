@@ -41,4 +41,4 @@ class GroupTestAbstractions(object):
         self.create_new_group()
         sel.click("css=.start_edit_btn")
         self.create_a_new_rule(left_side="have any tag that",operator="contains",right_side="a")
-        
+        time.sleep(3)
