@@ -1,0 +1,19 @@
+.dashboard_panel_table {
+	width: 100%;
+}
+.dashboard_panel_table .left_col {
+	width: 70%;
+}
+.dashboard_panel_table .right_col {
+	width: 30%;
+}
+
+challenge {
+	display: block;
+}
+challenge title_text {
+	display: block;
+}
+challenge description {
+	display: block;
+}
