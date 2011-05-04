@@ -10,11 +10,26 @@ DATABASES = {
         'NAME': 'mycelium',
         'USER': 'root',
         'PASSWORD': 'Q3lg8Af81tj6vr5PdcIs',        
-        'HOST': 'int-mysql.agoodcloud.com',
+        'HOST': 'int-mysql-master.agoodcloud.com',
+        'PORT': '3306',
+    },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mycelium',
+        'USER': 'root',
+        'PASSWORD': 'Q3lg8Af81tj6vr5PdcIs',        
+        'HOST': 'int-mysql-slave.agoodcloud.com',
         'PORT': '3306',
     },
 }
 
+DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
+
+DATABASE_POOL = {
+    'default': 1,
+    'slave': 1,
+}
+MASTER_DATABASE = 'default'
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = 'http://media.agoodcloud.com/'
@@ -36,7 +51,7 @@ FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 # }
 
 # CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-CACHE_BACKEND = 'johnny.backends.memcached://10.202.150.67:11211'
+CACHE_BACKEND = 'johnny.backends.memcached://int-Memcached1010.agoodcloud.com:11211'
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
 

@@ -8,11 +8,25 @@ DATABASES = {
         'NAME': 'mycelium',
         'USER': 'root',
         'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
-        'HOST': 'int-mysql.digitalmycelium.com',
+        'HOST': 'int-mysql-staging-master.digitalmycelium.com',
+        'PORT': '3306',
+    },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mycelium',
+        'USER': 'root',
+        'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
+        'HOST': 'int-mysql-staging-slave.digitalmycelium.com',
         'PORT': '3306',
     },
 }
+DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
 
+DATABASE_POOL = {
+    'default': 2,
+    'slave': 1,
+}
+MASTER_DATABASE = 'default'
 
 
 MEDIA_URL = 'http://media.digitalmycelium.com/'
@@ -33,8 +47,6 @@ FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_ACCESS_KEY_ID = 'AKIAJTNZWCZDOIDWFR4A'
-AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = "goodcloud-staging"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME

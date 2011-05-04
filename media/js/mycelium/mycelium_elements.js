@@ -129,7 +129,43 @@ $(function(){
             box.trigger("mycelium.tabbed_box.opened");
         }
     });
+
+
+// Auto-disabling input and html
+	$(".auto_disable").live("click",function(){
+		var btn = $(this);
+		if (!btn.hasClass("disabled")) {
+			setTimeout(function(){
+				btn.addClass("disabled");
+				btn.attr("disabled","disabled");
+
+				if (btn.is("a")) {
+					btn.attr("old_html", btn.html());
+					btn.html(btn.attr("disabled_text"));
+				} else {
+					btn.attr("old_val", btn.val());
+					btn.val(btn.attr("disabled_text"));
+				}
+			}, 10);
+		} else {
+			return false;
+		}
+	});
+
+	$.Mycelium.enable_disabled_btn = function(btn) {
+		if (btn.hasClass("disabled")) {
+			btn.removeClass("disabled");
+			btn.removeAttr("disabled");
+
+			if (btn.is("a")) {
+				btn.html(btn.attr("old_html"));
+			} else {
+				btn.val(btn.attr("old_val"));
+			}
+		} 		
+	};
 });
+
 
 //Support Placeholders
 $(document).ready(function() {

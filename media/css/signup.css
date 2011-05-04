@@ -64,8 +64,6 @@
 	font-size: 24px;
 }
 #signup_form #submit_button.disabled {
-	color: #EEE;
-	background-color: #CCC;
 	border-color: #DDD;
 	text-shadow: 0px 0px 0px;
 }
@@ -146,4 +144,26 @@
 #subdomain_verification .subdomain_response .domain {
 	/*color: #000;*/
 	font-weight: bold;
+}
+#signup_form .form_section.terms {
+	display: block;
+	overflow: auto;
+	text-align: center;
+}
+#signup_form .checkbox_and_label {
+	display: block;
+	margin: 0px auto;
+	overflow: visible;
+	width: 250px;
+	text-align: center;
+	margin: 0px auto;
+}
+#signup_form .terms label, #signup_form .terms .agree_checkbox {
+	display: block;
+	float: left;
+	
+}
+#signup_form .terms label {
+	padding-top: 2px;
+	width: auto;
 }

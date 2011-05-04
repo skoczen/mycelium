@@ -47,6 +47,9 @@
 	border-width: 0px 0px 1px 0px;
 	padding-bottom: 0px;
 }
+.edit_mode_on input[type=text] {
+	background-color: transparent;
+}
 .edit_mode_on input:focus {
 	outline-style:none;
 	border: 1px solid #3E9CFD;
@@ -69,4 +72,15 @@
 	display: block;
 	float: left;
 	padding-left: 15px;
+}
+.generic_editable_field_table_row .label_col, .generic_editable_field_table_row .label_col label  {
+	font-size: 20px;
+	color: #555;
+}
+.generic_editable_field_table_row .label_col, .generic_editable_field_table_row .field_col  {
+	padding: 6px;
+}
+.generic_editable_field_table_row .field_col .view_field {
+	font-size: 20px;
+	padding: 0px 0px 1px 1px;
 }

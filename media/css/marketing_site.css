@@ -3,7 +3,6 @@ body {
 	background-image: url("../images/marketing-background-plain-4.jpg");	
 	background-repeat: no-repeat;
 	background-position: 50% 0px;
-	position: relative;
 }
 body.home_page {
 	background-color: #0a5ab9;
@@ -16,10 +15,6 @@ body.home_page {
 #nav_and_logo_container {
 	width: 100%;
 	display: block;
-
-	/*background: #000486;*/
-
-	/*overflow: auto;*/
 	height: 80px;
 	/*background-color: rgba(0, 4, 134, 0.9);*/
 	background-image: url("../images/marketing-menubar.png");	
@@ -475,7 +470,7 @@ social_links {
   	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.35);
   	background-color: #EEE;*/
 
-  	margin-bottom: 20px;
+  	padding-bottom: 20px;
 }
 .features .feature:hover {
 	/*background-color: #006bcf;*/
@@ -547,7 +542,7 @@ social_links {
 	vertical-align: middle;
 	padding: 0px 0px 10px 4px;
 }
-.praise .testimonial quote {
+.praise .testimonial .quote {
 	display: block;
 	font-size: 20px;
 }
@@ -569,7 +564,11 @@ social_links {
 	left: 7%;	
 
 	
-	padding: 20px 30px 40px 30px;
+	padding: 25px 30px 40px 30px;
+}
+.praise .testimonial.style3 .quote {
+	font-size: 32px;
+	margin-bottom: 5px;
 }
 
 .praise .testimonial.style_1{
@@ -584,11 +583,15 @@ social_links {
 	margin-right: 20%;
 
 	padding: 25px;
+	
 }
-.praise .testimonial.style_1 quote {
-	font-size: 60px;
-	padding: 20px 0px;
+.praise .testimonial.style_1 .quote {
+	font-size: 40px;
+	padding: 5px 0px 20px 0px;
 	text-align: center;
+}
+.praise .testimonial.style_1 .person, .praise .testimonial.style_1 .organization {
+	margin-right: 15px;
 }
 .praise .testimonial.style_2{
 	background-image: url("../images/speech2.png");	
@@ -604,11 +607,23 @@ social_links {
 
 	padding: 50px;
 }
-.praise .testimonial.style_2 quote {
-	padding: 10px 0px 20px 0px;
+.praise .testimonial.style_2 .quote {
+	padding: 0px 0px 20px 0px;
+	text-align: center;
 }
 .praise .clearfix.right_bubble_clear {
 	margin-bottom: 60px;
+	width: 100%;
+	height: 2px;
+}
+
+.praise .page_action {
+	position: absolute;
+	top: 630px;
+	right: 0px;
+}
+.praise #footer {
+	padding-top: 300px;
 }
 
 .contact_us .page_header {
@@ -791,8 +806,10 @@ social_links {
 }
 .person.steven {
 	background-image: url("../images/steven-picture.png");	
-	
-
+}
+.person .title {
+	font-style: italic;
+	color: #555;
 }
 .person_description p {
 	display: block;
@@ -814,6 +831,22 @@ social_links {
   	-moz-box-shadow:	1px 1px 2px rgba(0,0,0,0.35);
   	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
   	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);	*/
+}
+.blog_post { 
+	background: #FFF;
+	border-radius: 		4px;
+	-moz-border-radius: 4px;
+	font-size: 16px;
+	color: #333;
+	display: block;
+	width: 80%;
+	margin: 5px auto 30px auto;
+	padding: 20px;
+
+	box-shadow: 		1px 1px 2px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	1px 1px 2px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);	
 }
 .pricing .the_price {
 	font-size: 30px;

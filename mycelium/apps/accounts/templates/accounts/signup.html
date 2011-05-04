@@ -1,13 +1,15 @@
 {% extends "marketing_site/base.html" %}
 {% load i18n generic_fields friendly_data_formatting  %}
 {% block title %}Sign up for an account at GoodCloud{% endblock %}
-{% block head %}
+{% block css %}
 {% css "/css/mycelium_elements.css" %}
 {{block.super}}
-
-{% js "/js/mycelium/signup.js" %}
 {% css "/css/login.css" %}
 {% css "/css/signup.css" %}
+{% endblock %}
+{% block javascript %}
+{{block.super}}
+{% js "/js/mycelium/signup.js" %}
 {% endblock %}
 
 {% block page_content %}
@@ -42,7 +44,13 @@
 	{% plain_editable_field user_form.password %}
 </div>
 
-<input type="submit" id="submit_button" class="mycelium_btn" value="Create your Account" />
+<div class="form_section terms">
+	<div class="checkbox_and_label">
+	<span class="agree_checkbox">{{account_form.agreed_to_terms}}</span> <label for="id_agreed_to_terms">I agree to the <a href="{% url marketing_site:legal %}" target="_blank">Terms of Use</a></label>
+	</div>
+</div>
+
+<input type="submit" id="submit_button" class="mycelium_btn auto_disable" value="Create your Account" disabled_text="Creating your Account..." />
 
 </form>
 </div>

@@ -1,4 +1,4 @@
-{% load i18n cache analytics %}<!doctype html> 
+{% load i18n cache analytical %}<!doctype html> 
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
@@ -6,6 +6,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
 {% block head %}
+  {% analytical_head_top %}
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>{% block title %}{% endblock %}</title>
@@ -33,20 +34,22 @@
     {% js "js/libs/dd_belatedpng.js" %}
     <script> DD_belatedPNG.fix('img, .png_bg');</script>
   <![endif]-->
+  {% analytical_head_bottom %}
 {% endblock %}
 {% endblock %}
 </head>
 {% block body %}<body {% block extra_body %}{% endblock %} env="{{ENV}}">
+	{% analytical_body_top %}
 	{% block content %}
 
 	{% endblock %}
 {% if ENV != "DEV" and not user.is_staff %}
-{% analytics %} 
 {# Start of HubSpot Tracking Code  #}
 <script type="text/javascript" language="javascript"> var hs_portalid=98343; var hs_salog_version = "2.00"; var hs_ppa = "agoodcloud.app9.hubspot.com"; document.write(unescape("%3Cscript src='" + document.location.protocol + "//" + hs_ppa + "/salog.js.aspx' type='text/javascript'%3E%3C/script%3E")); </script>
 {#  End of HubSpot Tracking Code  #}
 {# {% include "owa/_analytics.html" %} #}
 {% endif %} 
+	{% analytical_body_bottom %}
 </body>
 {% endblock %}
 </html>

@@ -24,16 +24,16 @@ DEFAULT_FROM_EMAIL = 'GoodCloud'
 SERVER_EMAIL = 'support@agoodcloud.com'
 SEND_BROKEN_LINK_EMAILS = True
 
-ADMINS = (
+ADMINS = [
      'steven@quantumimagery.com',
-)
+]
 MANAGERS = ADMINS
 MANAGERS += (
     'tom@agoodcloud.com',
 )
 
 
-TIME_ZONE = None
+TIME_ZONE = "America/Los_Angeles"
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
         # ('fr', gettext('French')),
@@ -130,7 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
 
     'qi_toolkit',
-    'google_analytics',
+    'analytical',
     'django_extensions',
     'pagination',
     'south',
@@ -144,6 +144,8 @@ INSTALLED_APPS = (
     'django_dumpdb',
     'django_ses',
     'mediasync',
+    'sentry',
+    'sentry.client',
 
     'cms',
     'mptt',
@@ -181,7 +183,8 @@ INSTALLED_APPS = (
 TEMPLATE_DIRS = (
     "%stemplates" % (PROJECT_ROOT),
 )
-GOOGLE_ANALYTICS_MODEL = True
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-20296975-1'
+ANALYTICAL_INTERNAL_IPS = ['127.0.0.1', '192.168.2.164']
 
 LOGIN_REDIRECT_URL = "/people/"
 AUTH_PROFILE_MODULE = "accounts.UserAccount"
@@ -198,6 +201,7 @@ CMS_APPLICATIONS_URLS = (
 )
 CMS_USE_TINYMCE = True
 GOOGLE_MAPS_KEY = "ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRHA9ICmOpg9-1g76S5BMdlTE0SKRRfIwbO5xyH_2XiYLy9Wt8qQ9Ymz"
+
 
 SESSION_COOKIE_AGE = 1209600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
@@ -242,7 +246,7 @@ import djcelery
 djcelery.setup_loader()
 
 # for initial sync
-CELERY_RESULT_BACKEND = "database"
+# CELERY_RESULT_BACKEND = "database"
 
 # sorl
 THUMBNAIL_PREFIX = "_cache/"
@@ -299,3 +303,4 @@ MEDIASYNC = {
 
 }
 MEDIASYNC['SERVE_REMOTE'] = True
+

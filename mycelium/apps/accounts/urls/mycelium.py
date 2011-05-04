@@ -19,6 +19,9 @@ urlpatterns = parser.patterns('',
    url(r'^accounts/{ua_id:digits}/delete-user$'   ,      views.delete_account                                                                 , name="delete_account"            ),
    url(r'^accounts/manage-account$',                     views.manage_account                                                                 , name="manage_account"            ),
    url(r'^accounts/save-account-info$',                  views.save_account_info                                                              , name="save_account_info"         ),
+   url(r'^accounts/my-account$',                         views.my_account                                                                     , name="my_account"                ),
+   url(r'^accounts/save-my-account-info$',               views.save_my_account_info                                                           , name="save_my_account_info"      ),
+   url(r'^accounts/change-my-password$',                 views.change_my_password                                                             , name="change_my_password"        ),
 
    # Temporary redirect to people
     url(r'^$',                                           views.dashboard                                                                      , name="dashboard"              ),

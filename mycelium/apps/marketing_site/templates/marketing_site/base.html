@@ -1,12 +1,11 @@
-{% extends "mycelium_base.html" %}
+{% extends "base.html" %}
 {% block css %}{{block.super}}
+{% css "/css/contrib/jquery-ui-1.8.10.custom.css" %}
 {% css "/css/marketing_site.css" %}
 
 {# 1140 #}
 <!--[if lte IE 9]>{% css "/css/contrib/1140/ie.css" %}<![endif]-->
 {% css "/css/contrib/1140/1140.css" %}
-{% js "/js/contrib/css3-mediaqueries.js" %}
-	
 <!--[if !IE 9]>
 	<style type="text/css">
 		#footer {display:block; position: relative;}
@@ -14,8 +13,9 @@
 <![endif]-->
 {% endblock %}
 {% block javascript %}{{block.super}}
-{% js "/js/contrib/jquery.scrollTo-min.js"%}
-{% js "/js/contrib/jquery.toggleval.js"	%}
+{% js "/js/contrib/jquery.autogrow.js" %}
+{% js "/js/contrib/jquery.ba-bbq.min.js" %}
+{# {% js "/js/contrib/css3-mediaqueries.js" %} #}
 {% js "/js/contrib/preloadCssImages.jQuery_v5.js"	%}
 {% js "/js/mycelium/marketing_site.js"	%}
 

@@ -48,6 +48,10 @@ body {
 .account_button {
 	background-image: url("../images/icon-account-100.png");
 }
+.my_account_button {
+	background-image: url("../images/icon-my-account-100.png");
+	background-position: 13px 7px;
+}
 .reports_btn {
 	background-image: url("../images/icon-spreadsheet-76.png");
 	background-position: 24px 10px;	

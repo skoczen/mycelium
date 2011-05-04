@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.sites.models import get_current_site
 
+
 @csrf_protect
 @never_cache
 def login(request, template_name='registration/login.html',
@@ -59,7 +60,7 @@ def login(request, template_name='registration/login.html',
 
 
 from qi_toolkit.helpers import *
-from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm
+from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm, UserFormForUserAccount
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from accounts.models import UserAccount
@@ -68,7 +69,7 @@ def _account_forms(request):
     if request.method == "POST":
         data = request.POST
 
-    user_access_formset = UserAccountAccessFormset(data,instance=request.account)
+    user_access_formset = UserAccountAccessFormset(data,instance=request.account_on_master)
     new_user_form = NewUserAccountForm(data)
     return user_access_formset, new_user_form
 
@@ -94,7 +95,7 @@ def save_account_access_info(request):
 def reset_account_password(request, ua_id):
     success = False
 
-    ua = get_object_or_404(UserAccount,account=request.account, pk=ua_id)
+    ua = UserAccount.objects.get(account=request.account, pk=ua_id)
     user = ua.user
     user.set_password("changeme!")
     user.save()
@@ -102,7 +103,7 @@ def reset_account_password(request, ua_id):
     return {"success":success}
 
 def delete_account(request, ua_id):
-    ua = get_object_or_404(UserAccount,account=request.account, pk=ua_id)
+    ua = UserAccount.objects.get(account=request.account, pk=ua_id)
     user = ua.user
     user.delete()
     ua.delete()
@@ -132,15 +133,47 @@ def dashboard(request):
 
 @render_to("accounts/manage_account.html")
 def manage_account(request):
-    form = AccountForm(instance=request.account)
+    form = AccountForm(instance=request.account_on_master)
     return locals()
 
 @json_view
 def save_account_info(request):
     success = False
-    form = AccountForm(request.POST, instance=request.account)
+    form = AccountForm(request.POST, instance=request.account_on_master)
     if form.is_valid():
         form.save()
         success = True
+
+    return {"success":success}
+
+
+@render_to("accounts/manage_my_account.html")
+def my_account(request):
+    form = UserFormForUserAccount(instance=request.useraccount.user)
+    return locals()
+
+@json_view
+def save_my_account_info(request):
+    success = False
+    form = UserFormForUserAccount(request.POST, instance=request.useraccount_on_master.user)
+    if form.is_valid():
+        form.save()
+        success = True
+    
+
+    return {"success":success}
+
+@json_view
+def change_my_password(request):
+    success = False
+    try:
+
+        me = request.useraccount_on_master.user
+        new_password = request.POST['new_password']
+        me.set_password(new_password)
+        me.save()
+        success=True
+    except:
+        pass
 
     return {"success":success}

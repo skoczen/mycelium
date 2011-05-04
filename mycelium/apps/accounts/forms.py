@@ -53,9 +53,10 @@ class AccountBasedModelForm(ModelForm):
         
 
     def clean(self):
-        cleaned_data = self.cleaned_data
-        cleaned_data["account"] = self.account
-        return cleaned_data
+        if hasattr(self, "cleaned_data"):
+            cleaned_data = self.cleaned_data
+            cleaned_data["account"] = self.account
+            return cleaned_data
     
 class AccountBasedModelFormSet(BaseInlineFormSet):
     account = ModelChoiceField(queryset=Account.objects.all(), required=False)
@@ -79,7 +80,8 @@ class AccountBasedModelFormSet(BaseInlineFormSet):
     def clean(self):
         super(AccountBasedModelFormSet, self).clean()
         for f in self.forms:
-            f.cleaned_data["account"] = self.account
+            if hasattr(f, "cleaned_data"):
+                f.cleaned_data["account"] = self.account
         
 
 class AccountAuthenticationForm(AuthenticationForm):
@@ -132,7 +134,7 @@ class NewAccountForm(ModelForm):
 
     class Meta:
         model = Account
-        fields = ("name", "subdomain", "plan")
+        fields = ("name", "subdomain", "plan", "agreed_to_terms")
 
 class AccountForm(ModelForm):
     def clean(self):
@@ -166,6 +168,23 @@ class UserAccountAccessForm(ModelForm):
         widgets = {
             'access_level': RadioSelect
         }
+
+
+class UserFormForUserAccount(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserFormForUserAccount, self).__init__(*args, **kwargs)
+        self.initial["username"] = self.instance.get_profile().denamespaced_username
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        cleaned_data["username"] = self.instance.get_profile().account.namespaced_username_for_username(cleaned_data["username"])
+       
+        return cleaned_data
+
+
+    class Meta:
+        model = User
+        fields = ("first_name", "username", "email",)
 
 class NewUserAccountForm(UserAccountAccessForm):
     username    = CharField(max_length=100, required=True)

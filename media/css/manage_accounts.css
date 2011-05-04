@@ -76,7 +76,7 @@ save_status_and_button .save_info {
 	/*border-color: #AAA;*/
 	background: transparent;
 }
-.edit_mode_on .form_section .generic_field_label {
+.account_info_form .edit_mode_on .form_section .generic_field_label {
 	margin-top: 8px;
 	color: #777;
 }
@@ -84,11 +84,11 @@ form_actions input.mycelium_btn {
 	padding: 6px 12px;
 	border: 0px;
 }
-.edit_mode_on .form_section .generic_editable_field {
-	min-width: 1002x;
+.account_info_form.edit_mode_on .form_section .generic_editable_field {
+	min-width: 100px;
 	margin-left: 10px;
 }
-.edit_mode_on .form_section .generic_editable_field input {
+.account_info_form.edit_mode_on .form_section .generic_editable_field input {
 	min-width: 80px;
 }
 .all_fields_message {
@@ -133,4 +133,35 @@ tabbed_box box_content {
 	padding: 20px 10px;
 	color: #999;
 	font-size: 20px;
+}
+.my_account_table {
+	margin: 10px 10px;
+	width: 60%;
+	min-width: 300px;
+	
+}
+.my_account_table .label_col {
+	width: 25%;
+}
+.my_account_table td {
+	padding: 10px 5px;
+}
+.my_account_table .password_row .field_col {
+
+}
+.my_account_table .password_row #id_new_password {
+	min-width: 150px;
+}
+.my_account_table .password_saved_message {
+	margin: 0px 8px 0px 0px;
+	display: block;
+	float: left;
+	font-size: 18px;
+	color: #777;
+}
+#new_account .generic_field_label {
+	top: 140%;
+}
+#new_account .generic_editable_field .edit_field input {
+	min-width: 100px;
 }

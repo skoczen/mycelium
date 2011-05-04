@@ -3,13 +3,19 @@ $(function() {
     bind_tags_events();
 });
 function bind_tags_events() {
-	$(".delete_tagset_btn").click(delete_category);
-	$(".delete_tag_btn").click(delete_tag);
-	$(".add_a_tag_btn").click(add_a_tag);
-	$(".add_a_category_btn").click(add_a_category);
+	$(".delete_tagset_btn").die("click").live("click",delete_category);
+	$(".delete_tag_btn").die("click").live("click",delete_tag);
+	$(".add_a_tag_btn").die("click").live("click",add_a_tag);
+	$(".add_a_category_btn").die("click").live("click",add_a_category);
 }
 
 function process_link_via_json(t) {
+	setTimeout(function(){
+	if ($("#basic_info_form").hasClass("dirty")) {
+		$("#basic_info_form").ajaxSubmit({
+			'async':false
+		});		
+	}
 	$.ajax({
 		url: $(t).attr("href"),
 		type: "POST",
@@ -18,6 +24,7 @@ function process_link_via_json(t) {
 			process_fragments_and_rebind_tags_form(json);
 		}
 	});
+	},10);
 }
 
 function delete_category() {

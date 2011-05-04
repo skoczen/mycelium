@@ -30,15 +30,14 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
 
             # get the account
             poss_account = Account.objects.filter(subdomain=request.subdomain)
-            
+
             if poss_account.count() == 1:
                 request.account = poss_account[0]
+                request.account_on_master = Account.objects.using('default').get(pk=request.account.id)
             else:
                 # if we don't have an account, and this isn't a public site (or in dev mode, serving media), bail. 
                 if not request.subdomain in settings.PUBLIC_SUBDOMAINS and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                     return self.redirect_to_public_home(request)
-            
-            # print "Account: %s " % request.account
 
             user = request.user
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
@@ -46,7 +45,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                 
                     # try get the useraccount
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
-
+                    request.useraccount_on_master = UserAccount.objects.using('default').get(pk=request.useraccount.id)
                 except:
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):

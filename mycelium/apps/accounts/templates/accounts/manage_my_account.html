@@ -1,0 +1,47 @@
+{% extends "mycelium_base.html" %}
+{% load i18n i18n generic_fields friendly_data_formatting generic_tag_tags %}
+{% block title %}More Tools - Data Import, Account Settings, and more{% endblock %}
+{% block css %}{{block.super}}
+{% generic_field_css %}
+
+{% css "/css/manage_accounts.css" %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+
+{% js "/js/mycelium/manage_accounts.js" %}
+{% endblock %}
+
+{% block breadcrumb_links %}<a href="{% url core:more_menu %}" >Back to More</a>{% endblock %}
+
+{% block page_content %}
+<page_title>Your GoodCloud Account</page_title>
+
+<form action="{% url accounts:save_my_account_info %}" class="edit_mode_off my_account_info_form" id="basic_info_form"  method="POST">{% csrf_token %}
+{% with "Edit Account" as edit_label %}
+	{% include "people/_save_status_and_button.html" %}
+{% endwith %}
+
+<table class="my_account_table ">
+{% generic_editable_field_table form.first_name "Full name:" %}
+{% generic_editable_field_table form.email %}
+{% generic_editable_field_table form.username %}
+<tr class="generic_editable_field_table_row striped_row password_row" >
+	<td class="label_col"><label>Password:</label></td>
+	<td class="field_col">
+	<span class="password_saved_message"></span>
+	<span class="view_field"><span class="password_spacer">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span></span>
+	<span class="edit_field">
+		<a href="#" class="mycelium_btn mycelium_small_btn change_password_btn">Change Password</a>
+			<div class="new_password_field hidden">
+				<input name="new_password" id="id_new_password" class="excluded_field" type="text" password_change_url="{% url accounts:change_my_password %}" />
+				<a href="#" id="save_new_password_btn" class="mycelium_btn" >Save New Password</a>
+				<a href="#" id="cancel_new_password_btn" class="mycelium_btn mycelium_grey mycelium_active_grey" >Cancel</a>
+			</div>
+	</span>
+
+	</td>
+</tr>
+</table>
+
+</form>
+{% endblock %}

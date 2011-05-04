@@ -1,5 +1,6 @@
 $(function(){
     $("#basic_info_form").genericFieldForm();
+
     $.Mycelium.update_stripes();
 	$("#new_account #container_id_first_name input").bind("change",populate_username);
 	$("#new_account #container_id_first_name input").bind("keyup",populate_username);
@@ -11,6 +12,11 @@ $(function(){
 	$(".cancel_add_btn").click(cancel_add_account);
 	$(".reset_password_btn").click(reset_password_clicked);
 	$(".delete_user_btn").click(delete_user_clicked);
+
+	$(".change_password_btn").click(show_change_password_field);
+	$("#save_new_password_btn").click(save_new_password);
+	$("#cancel_new_password_btn").click(cancel_new_password);
+
 });
 
 username_has_been_focused = false;
@@ -79,4 +85,32 @@ function delete_user_clicked () {
 	}
 	return delete_it
 	
+}
+
+function show_change_password_field() {
+	$(".password_saved_message").html("")
+	$(".password_spacer").hide();
+	$(".change_password_btn").hide();
+	$(".new_password_field").removeClass("hidden").show();
+	$("#id_new_password").focus();
+}
+function save_new_password(){
+	var new_pass = $("#id_new_password").val();
+	$.ajax({
+		url: $("#id_new_password").attr("password_change_url"),
+		type: "POST",
+		dataType: "json",
+		data: {'new_password':new_pass},
+		mode: 'abort',
+		success: function(json) {
+			cancel_new_password();
+			$(".password_saved_message").html("New password saved.");
+		}
+     });
+}
+function cancel_new_password() {
+	$(".new_password_field").hide();
+	$("#id_new_password").val("");
+	$(".password_spacer").show();
+	$(".change_password_btn").show();
 }

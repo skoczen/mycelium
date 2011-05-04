@@ -128,7 +128,7 @@ def organization(request, org_id):
 
 @json_view
 def save_organization_basic_info(request,  org_id):
-    org = get_or_404_by_account(Organization, request.account, org_id)
+    org = get_or_404_by_account(Organization, request.account, org_id, using='default')
     (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     success = False
     if form.is_valid():
@@ -138,8 +138,8 @@ def save_organization_basic_info(request,  org_id):
     return {"success":success}
 
 def remove_employee(request, org_id, emp_id):
-    org = get_or_404_by_account(Organization, request.account, org_id)
-    emp = get_or_404_by_account(Employee, request.account, emp_id)
+    org = get_or_404_by_account(Organization, request.account, org_id, using='default')
+    emp = get_or_404_by_account(Employee, request.account, emp_id, using='default')
     try:
         assert emp.organization == org
         emp.delete()
@@ -154,7 +154,7 @@ def remove_employee(request, org_id, emp_id):
 
 @json_view
 def save_organization_employees(request,  org_id):
-    org = get_or_404_by_account(Organization, request.account, org_id)
+    org = get_or_404_by_account(Organization, request.account, org_id, using='default')
     (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     success = False
     if employee_formset.is_valid():
@@ -165,10 +165,10 @@ def save_organization_employees(request,  org_id):
 
 
 def existing_person_via_organization(request, org_id):
-    org = get_or_404_by_account(Organization, request.account, org_id)
+    org = get_or_404_by_account(Organization, request.account, org_id, using='default')
     try: 
         person_id = int(request.POST['person_pk'])
-        person = get_or_404_by_account(Person, request.account, person_id)
+        person = get_or_404_by_account(Person, request.account, person_id, using='default')
         (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
         if form_employee.is_valid():
             employee = form_employee.save(commit=False)
@@ -181,7 +181,7 @@ def existing_person_via_organization(request, org_id):
 
 
 def new_person_via_organization(request, org_id):
-    org = get_or_404_by_account(Organization, request.account, org_id)
+    org = get_or_404_by_account(Organization, request.account, org_id, using='default')
     (form, form_new_person, form_employee, employee_formset) = _org_forms(org, request)
     if form_new_person.is_valid():
         person = form_new_person.save()

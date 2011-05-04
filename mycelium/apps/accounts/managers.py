@@ -1,10 +1,16 @@
 from django.db import models
 from django.shortcuts import get_object_or_404
 
-def get_or_404_by_account(cls, account, id):
+def get_or_404_by_account(cls, account, id, using=None):
     if hasattr(account,"account"):
         account = account.account
+
     return get_object_or_404(cls.objects_by_account(account),pk=id)
+    
+    # if not using:
+        # return get_object_or_404(cls.objects_by_account(account),pk=id)
+    # else:
+    #     return get_object_or_404(cls.objects_by_account(account).using(using),pk=id)
 
 class AccountDataModelManager(models.Manager):
     def __call__(self, *args, **kwargs):

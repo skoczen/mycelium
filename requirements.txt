@@ -1,4 +1,6 @@
+pip > 1.0
 fabric
+mercurial
 #psycopg2
 mysql-python
 python-dateutil <2.0
@@ -18,7 +20,7 @@ BeautifulSoup
 django-extensions
 -e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit  > 0.3.1
 python-crontab
--e git://github.com/clintecker/django-google-analytics.git#egg=google_analytics
+django-analytical
 
 django-pagination
 sorl-thumbnail
@@ -48,8 +50,11 @@ django-ses
 -e hg+https://bitbucket.org/david/django-storages#egg=storages
 django-mediasync
 slimmer
+
 gitpython
 django-debug-toolbar
 -e git://github.com/gintas/django-picklefield.git#egg=django-picklefield
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains
 johnny-cache
+django-balancer
+django-sentry

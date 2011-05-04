@@ -104,3 +104,12 @@ class AccountTestAbstractions(object):
         assert sel.is_text_present(username)
         assert sel.is_text_present(password)
         assert sel.is_text_present("test_%s@example.com" % username)
+
+
+    def go_to_my_account_page(self):
+        sel = self.selenium
+        sel.click("link=More")
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.my_account_button")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Your GoodCloud Account")

@@ -207,6 +207,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.type("css=#id_email", "joe@example.com")
         sel.type("css=#id_username", "joe")
         sel.type("css=#id_password", "password")
+        sel.click("css=#id_agreed_to_terms")
         time.sleep(2)
 
         sel.click("css=#submit_button")
@@ -274,6 +275,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.type("css=#id_email", "tom@agoodcloud.com")
         sel.click("css=#id_password")
         sel.type("css=#id_password", "Test123")
+        sel.click("css=#id_agreed_to_terms")
         time.sleep(2)
 
         sel.click("css=#submit_button")
@@ -467,6 +469,53 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("A new test name")
+
+    def test_that_editing_my_account_info_saves(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_my_account_page()
+        sel.click("css=.start_edit_btn")
+        time.sleep(1)
+        sel.type("css=#id_first_name", "John Williams")
+        sel.type("css=#id_email", "jwill@example.com")
+        sel.type("css=#id_username", "jwill")
+        time.sleep(4)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("John Williams")
+        assert sel.is_text_present("jwill@example.com")
+        assert sel.is_text_present("jwill")
+
+    def test_that_changing_my_username_works_on_login(self):
+        sel = self.selenium
+        self.test_that_editing_my_account_info_saves()
+        sel.click("css=.logout_btn")
+        sel.wait_for_page_to_load("30000")
+        sel.click("link=log back in")
+        sel.wait_for_page_to_load("30000")
+        self.log_in(username="jwill", password="admin")
+
+    def test_that_changing_my_password_works_on_login(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_my_account_page()
+        sel.click("css=.start_edit_btn")
+        time.sleep(1)
+        sel.click("css=.change_password_btn")
+        time.sleep(0.25)
+        sel.type("css=#id_new_password","test123")
+        sel.click("css=#cancel_new_password_btn")
+        sel.click("css=.change_password_btn")
+        time.sleep(0.25)
+        sel.type("css=#id_new_password","test123")
+        sel.click("css=#save_new_password_btn")
+        time.sleep(4)
+        assert sel.is_text_present("New password saved.")
+        sel.click("css=.logout_btn")
+        sel.wait_for_page_to_load("30000")
+        sel.click("link=log back in")
+        sel.wait_for_page_to_load("30000")
+        self.log_in(username="admin", password="test123")
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
