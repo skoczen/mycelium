@@ -20,7 +20,14 @@ DATABASES = {
         'PORT': '3306',
     },
 }
-DATABASE_ROUTERS = ['envs.routers.MasterSlaveRouter',]
+# DATABASE_ROUTERS = ['envs.routers.MasterSlaveRouter',]
+DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
+
+DATABASE_POOL = {
+    'default': 2,
+    'slave': 1,
+}
+MASTER_DATABASE = 'default'
 
 
 MEDIA_URL = 'http://media.digitalmycelium.com/'
