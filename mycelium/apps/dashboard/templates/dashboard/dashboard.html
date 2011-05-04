@@ -1,0 +1,71 @@
+{% extends "mycelium_base.html" %}
+{% load i18n %}
+{% block title %}Dashboard{% endblock %}
+{% block css %}{{block.super}}
+{% css "/css/dashboard.css" %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+{% block page_content %}
+<div class="dashboard_title">Welcome to GoodCloud</div>
+<salutation>Hello, {{request.useraccount.nickname_or_full_name}}</salutation>
+{% if not request.useraccount.nickname %}
+	<div class="nickname_question">
+	(Would it be ok if we called you {{request.useraccount.best_nickname_guess}}? 
+	<a href="#" class="yes_nickname_link">Yes</a>
+	<a href="#" class="no_nickname_link">No</a>)
+	</div>
+{% endif %}
+
+<table class="dashboard_panel">
+<tr>
+{% if not request.account.completed_goodcloud_quests %}
+	<td class="left_col">
+		<column_header>GoodCloud Challenges</column_header>
+		<challenge>
+			<title><a href="#">Import your contacts.</a></title>
+			<description>Got a system or spreadsheet that you currently keep your contacts in?  Get that contact list to .xls or .csv format and let’s import that thing to get you rolling!</description>
+		</challenge>
+
+		<challenge>
+			<title><a href="#">Set up your tags.</a></title>
+			<description>Create the tags that make the most sense for the way you categorize your volunteers, donors, and mission-based contacts. </description>
+		</challenge>
+		<challenge>
+			<title><a href="#">Add your board.</a></title>
+			<description>Make a tag for Board Members.  Then, make a new group for all the people with a Board Members tag.</description>
+		</challenge>
+		<challenge>
+			<title><a href="#">Share the love - Get everyone else onboard!</a></title>
+			<description>Make an account for one other staff member. If you’re the only staff member, send us a note, and we’ll check this one off for you.</description>
+		</challenge>
+		<challenge>
+			<title><a href="#">Download a spreadsheet.</a></title>
+			<description>Have your spreadsheet include all your board members with their first and last names, email addresses, and phone numbers.</description>
+		</challenge>
+		<challenge>
+			<title><a href="#">Say Hello!</a></title>
+			<description>We get to know our clients and want to make sure that using GoodCloud is easy like Sunday morning for you.  Click that blue “Feedback & Support” button in the corner, and submit a message with any questions you have, more info about you and your organization, or just a hello!</description>
+		</challenge>
+
+	</td>
+	<td class="right_col">
+		<column_header>By the Numbers</column_header>
+		{% include "dashboard/_the_numbers.html" %}
+	</td>
+{% else %}
+	<td class="left_col">
+		<column_header>By the Numbers</column_header>
+		{% include "dashboard/_the_numbers.html" %}
+	</td>
+	<td class="right_col">
+		<column_header>GoodCloud News</column_header>
+
+	</td>
+{% endif %}
+</tr>
+</table>
+
+{% endblock %}

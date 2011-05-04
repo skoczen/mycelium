@@ -1,0 +1,35 @@
+{% load humanize %}
+<div class="number_row total_donors">
+	<number>{{total_donors.donor__count|intcomma}}</number>
+	<description>Donors this year</description>
+</div>
+
+<div class="number_row total_donations">
+	<number>$ {{total_donations.amount__sum|intcomma}}</number>
+	<description>Donations this year</description>
+</div>
+
+<div class="number_row total_volunteer_hours">
+	<number>{{total_volunteer_hours.duration__sum|intcomma}}</number>
+	<description>Volunteer hours</description>
+</div>
+
+<div class="number_row total_people">
+	<number>{{total_people|intcomma}}</number>
+	<description>People in GoodCloud</description>
+</div>
+
+<div class="number_row total_orgs">
+	<number>{{total_orgs|intcomma}}</number>
+	<description>Organizations</description>
+</div>
+
+<div class="number_row total_groups">
+	<number>{{total_groups|intcomma}}</number>
+	<description>Groups</description>
+</div>
+
+<div class="number_row total_tags">
+	<number>{{total_tags|intcomma}}</number>
+	<description>Tags</description>
+</div>

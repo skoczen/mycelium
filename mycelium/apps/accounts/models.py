@@ -58,6 +58,11 @@ class Account(TimestampModelMixin):
         for ua in instance.useraccount_set.all():
             ua.user.delete()
 
+    @property
+    def completed_goodcloud_quests(self):
+        return False
+        raise Exception, "Not Implemented"
+
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)
 
@@ -83,7 +88,7 @@ class UserAccount(TimestampModelMixin):
     user = models.ForeignKey(User, db_index=True)
     account = models.ForeignKey(Account, db_index=True)
     access_level = models.ForeignKey(AccessLevel)
-    # nickname = models.CharField(max_length=255)
+    nickname = models.CharField(max_length=255, blank=True, null=True)
     
     @property
     def denamespaced_username(self):
@@ -113,6 +118,19 @@ class UserAccount(TimestampModelMixin):
     def is_volunteer(self):
         return self.access_level == AccessLevel.volunteer()
 
+    @property
+    def nickname_or_full_name(self):
+        if self.nickname:
+            return self.nickname
+        else:
+            return self.full_name
+    
+    @property
+    def best_nickname_guess(self):
+        if self.nickname:
+            return self.nickname
+        else:
+            return self.full_name[:self.full_name.find(" ")]
 
     def __unicode__(self):
         return "%s with %s" % (self.denamespaced_username, self.account)

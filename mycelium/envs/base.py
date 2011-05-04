@@ -175,7 +175,7 @@ INSTALLED_APPS = (
     'groups',
     'rules',
     'accounts',
-
+    'dashboard',
 
     'djangosanetesting',
 )

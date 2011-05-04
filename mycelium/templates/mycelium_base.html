@@ -27,9 +27,10 @@
 		GoodCloud
 	</logo>
 	<main_nav>{% spaceless %}
+		<a href="{% url dashboard:dashboard %}" class="{% if section == "dashboard" %}current{% endif %}">Dashboard</a>
 		<a href="{% url people:search %}" {% if not section %}class="current"{% endif %}>People</a>
 		<a href="{% url groups:search %}" class="{% if section == "groups" %}current{% endif %}">Groups</a>
-		<a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}">Spreadsheets</a>
+		{# <a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}">Spreadsheets</a> #}
 		{# <a href="{% url people:new_person %}" >New Person</a> #}
 		
 		{# <a href="#">Volunteers</a> #}
