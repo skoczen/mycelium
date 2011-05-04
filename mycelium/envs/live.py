@@ -10,11 +10,26 @@ DATABASES = {
         'NAME': 'mycelium',
         'USER': 'root',
         'PASSWORD': 'Q3lg8Af81tj6vr5PdcIs',        
-        'HOST': 'int-mysql.agoodcloud.com',
+        'HOST': 'int-mysql-master.agoodcloud.com',
+        'PORT': '3306',
+    },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mycelium',
+        'USER': 'root',
+        'PASSWORD': 'Q3lg8Af81tj6vr5PdcIs',        
+        'HOST': 'int-mysql-slave.agoodcloud.com',
         'PORT': '3306',
     },
 }
 
+DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
+
+DATABASE_POOL = {
+    'default': 1,
+    'slave': 1,
+}
+MASTER_DATABASE = 'default'
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = 'http://media.agoodcloud.com/'

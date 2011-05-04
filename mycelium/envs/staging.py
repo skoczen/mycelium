@@ -20,7 +20,6 @@ DATABASES = {
         'PORT': '3306',
     },
 }
-# DATABASE_ROUTERS = ['envs.routers.MasterSlaveRouter',]
 DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
 
 DATABASE_POOL = {
