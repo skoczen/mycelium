@@ -95,7 +95,7 @@ def save_account_access_info(request):
 def reset_account_password(request, ua_id):
     success = False
 
-    ua = UserAccount.objects.using("default").get(account=request.account, pk=ua_id)
+    ua = UserAccount.objects.get(account=request.account, pk=ua_id)
     user = ua.user
     user.set_password("changeme!")
     user.save()
@@ -103,7 +103,7 @@ def reset_account_password(request, ua_id):
     return {"success":success}
 
 def delete_account(request, ua_id):
-    ua = UserAccount.objects.using("default").get(account=request.account, pk=ua_id)
+    ua = UserAccount.objects.get(account=request.account, pk=ua_id)
     user = ua.user
     user.delete()
     ua.delete()
