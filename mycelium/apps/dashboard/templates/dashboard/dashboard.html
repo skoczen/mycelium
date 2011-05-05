@@ -13,7 +13,7 @@
 {% block page_content %}
 <dashboard>
 {# <div class="dashboard_title">Welcome to GoodCloud.</div> #}
-<salutation>{% if not request.useraccount.nickname %}Hello {{request.useraccount.full_name}},{% else %}Hi {{request.useraccount.nickname}},{% endif %}</salutation>
+<salutation>{% if not request.useraccount.nickname %}Hello <span class="full_name">{{request.useraccount.full_name}}</span>,{% else %}Hi {{request.useraccount.nickname}},{% endif %}</salutation>
 {% if not request.useraccount.nickname %}
 	<div class="nickname_question" save_url="{% url dashboard:save_nickname %}">
 		<div class="initial_question">
@@ -37,7 +37,7 @@
 			Looks like you haven't finished up the challenges quite yet - keep at it, and let us know if you have any questions!
 		{% endif %}
 	{% else %}
-		You made it! Welcome to your very own GoodCloud and your free 30-day trial. We're excited to have you on board. Check out the GoodCloud challenges below for a great way to get started and get half off your first month!
+		You made it! Welcome to your very own GoodCloud and your free 30-day trial. We're excited to have you on board. Check out the GoodCloud challenges below for a great way to get started!
 	{% endif %}
 </div>
 
@@ -46,6 +46,8 @@
 {% if not request.account.has_completed_all_challenges %}
 	<td class="full_col">
 		<column_header>GoodCloud Challenges</column_header>
+		<div class="challenge_description">Complete the six GoodCloud Challenges and receive a 50% discount on your first month of use. What's that you say? Half off just for setting things up and doing a quick tour? Are we crazy? Well, yes. But we really think GoodCloud is the best solution out there for small nonprofits, and we're ready to prove it.</div>
+
 		<challenge class="{% if request.account.challenge_has_imported_contacts %}complete{% endif %}">
 			<title_text>Import your contacts.</title_text>
 			<description>Got a system or spreadsheet that you currently keep your contacts in?  Get that contact list to an Excel or .csv file and let's import that thing to get you rolling! {% if not request.account.challenge_has_imported_contacts %}<a href="#">Get Started!</a>{% endif %}</description>
@@ -70,7 +72,6 @@
 			<title_text>Say Hello!</title_text>
 			<description>We get to know our clients and want to make sure that using GoodCloud is easy like Sunday morning for you.  Click that blue “Feedback &amp; Support” button in the corner, and submit a message with any questions you have, more info about you and your organization, or just a hello! {% if not request.account.challenge_has_submitted_support %}<a href="#">Get Started!</a>{% endif %}</description>
 		</challenge>
-		<div class="challenge_description">* Complete the six GoodCloud Challenges and receive a 50% discount on your first month of use. What's that you say? Half off just for setting things up and doing a quick tour? Are we crazy? Well, yes. But we really think GoodCloud is the best solution out there for small nonprofits, and we're ready to prove it.</div>
 
 	</td>
 {% else %}
