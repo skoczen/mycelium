@@ -24,5 +24,5 @@ urlpatterns = parser.patterns('',
    url(r'^accounts/change-my-password$',                 views.change_my_password                                                             , name="change_my_password"        ),
 
    # Redirect to dashboard
-    url(r'^$',                                           views.dashboard                                                                      , name="dashboard"              ),
+    url(r'^$',                                           views.dashboard                                                                      , name="dashboard"                 ),
 )

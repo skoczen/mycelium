@@ -30,7 +30,7 @@
 	</div>
 {% endif %}
 
-<div class="welcome_text">
+<div class="welcome_text plain_text">
 	{% if request.account.has_completed_any_challenges %}
 		Welcome back to GoodCloud!
 		{% if not request.account.has_completed_all_challenges %}
@@ -46,38 +46,38 @@
 {% if not request.account.has_completed_all_challenges %}
 	<td class="full_col">
 		<column_header>GoodCloud Challenges</column_header>
-		<div class="challenge_description">Complete the six GoodCloud Challenges and receive a 50% discount on your first month of use. What's that you say? Half off just for setting things up and doing a quick tour? Are we crazy? Well, yes. But we really think GoodCloud is the best solution out there for small nonprofits, and we're ready to prove it.</div>
+		<div class="challenge_description plain_text" >Complete the six GoodCloud Challenges and receive a 50% discount on your first month of use. What's that you say? Half off just for setting things up and doing a quick tour? Are we crazy? Well, yes. But we really think GoodCloud is the best solution out there for small nonprofits, and we're ready to prove it.</div>
 
 		<challenge class="{% if request.account.challenge_has_imported_contacts %}complete{% endif %}">
 			<title_text>Import your contacts.</title_text>
-			<description>Got a system or spreadsheet that you currently keep your contacts in?  Get that contact list to an Excel or .csv file and let's import that thing to get you rolling! {% if not request.account.challenge_has_imported_contacts %}<a href="#">Get Started!</a>{% endif %}</description>
+			<description class="plain_text">Got a system or spreadsheet that you currently keep your contacts in?  Get that contact list to an Excel or .csv file and let's import that thing to get you rolling! {% if not request.account.challenge_has_imported_contacts %}<a href="#">Get Started!</a>{% endif %}</description>
 		</challenge>
 		<challenge class="{% if request.account.challenge_has_set_up_tags %}complete{% endif %}">
 			<title_text>Set up your tags.</title_text>
-			<description>Create the tags that make the most sense for the way you categorize your volunteers, donors, and mission-based contacts.  {% if not request.account.challenge_has_set_up_tags %}<a href="#">Get Started!</a>{% endif %}</description>
+			<description class="plain_text">Create the tags that make the most sense for the way you categorize your volunteers, donors, and mission-based contacts.  {% if not request.account.challenge_has_set_up_tags %}<a href="#">Get Started!</a>{% endif %}</description>
 		</challenge>
 		<challenge class="{% if request.account.challenge_has_added_board %}complete{% endif %}">
 			<title_text>Add your board.</title_text>
-			<description>Make a tag for Board Members.  Then, tag each of your board members.  Finally, make a new group for everyone who has a Board Members tag. {% if not request.account.challenge_has_added_board %}<a href="#">Get Started!</a>{% endif %}</description>
+			<description class="plain_text">Make a tag for Board Members.  Then, tag each of your board members.  Finally, make a new group for everyone who has a Board Members tag. {% if not request.account.challenge_has_added_board %}<a href="#">Get Started!</a>{% endif %}</description>
 		</challenge>
 		<challenge class="{% if request.account.challenge_has_created_other_accounts %}complete{% endif %}">
 			<title_text>Share the love - Get everyone else onboard!</title_text>
-			<description>Make an account for other staff members. If you're the only staff member, send us a note, and we'll check this one off for you. {% if not request.account.challenge_has_created_other_accounts %}<a href="#">Get Started!</a>{% endif %}</description>
+			<description class="plain_text">Make an account for other staff members. If you're the only staff member, send us a note, and we'll check this one off for you. {% if not request.account.challenge_has_created_other_accounts %}<a href="#">Get Started!</a>{% endif %}</description>
 		</challenge>
 		<challenge class="{% if request.account.challenge_has_downloaded_spreadsheet %}complete{% endif %}">
 			<title_text>Download a spreadsheet.</title_text>
-			<description>Have your spreadsheet include all your board members with their first and last names, email addresses, and phone numbers. {% if not request.account.challenge_has_downloaded_spreadsheet %}<a href="#">Get Started!</a>{% endif %}</description>
+			<description class="plain_text">Have your spreadsheet include all your board members with their first and last names, email addresses, and phone numbers. {% if not request.account.challenge_has_downloaded_spreadsheet %}<a href="#">Get Started!</a>{% endif %}</description>
 		</challenge>
 		<challenge class="{% if request.account.challenge_has_submitted_support %}complete{% endif %}">
 			<title_text>Say Hello!</title_text>
-			<description>We get to know our clients and want to make sure that using GoodCloud is easy like Sunday morning for you.  Click that blue “Feedback &amp; Support” button in the corner, and submit a message with any questions you have, more info about you and your organization, or just a hello! {% if not request.account.challenge_has_submitted_support %}<a href="#">Get Started!</a>{% endif %}</description>
+			<description class="plain_text">We get to know our clients and want to make sure that using GoodCloud is easy like Sunday morning for you.  Click that blue “Feedback &amp; Support” button in the corner, and submit a message with any questions you have, more info about you and your organization, or just a hello! {% if not request.account.challenge_has_submitted_support %}<a href="#">Get Started!</a>{% endif %}</description>
 		</challenge>
 
 	</td>
 {% else %}
 	<td class="left_col">
 		<column_header>GoodCloud Challenges</column_header>
-		<column_content class="completed_goodcloud_challenges">
+		<column_content class="completed_goodcloud_challenges plain_text">
 		You've completed all of the GoodCloud challenges, and earned half off your first month!  <a href="#">Hide this section in the future.</a>
 		</column_content>
 		<column_header>GoodCloud News</column_header>

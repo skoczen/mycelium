@@ -22,13 +22,17 @@ body {
 	border: 0px;
 	padding: 0px;
 	margin: 0px;
-	font-family: 'ExpresswayRegular', Arial, sans-serif;
+	font-family: 'ExpresswayRegular', Helvetica, Arial, sans-serif;
 	font-size: 16px;	
 }
 table {
 	border-collapse: collapse;
 	padding: 0px;
 	margin: 0px;
+}
+.plain_text {
+	font-family: Helvetica, "Lucida Grande", Arial, sans-serif;
+	font-size: 0.95em;
 }
 
 a, a:active, a:visited {

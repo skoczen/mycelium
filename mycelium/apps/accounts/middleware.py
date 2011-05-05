@@ -46,6 +46,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                     # try get the useraccount
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
                     request.useraccount_on_master = UserAccount.objects.using('default').get(pk=request.useraccount.id)
+
                 except:
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):

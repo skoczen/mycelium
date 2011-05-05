@@ -76,6 +76,7 @@ challenge {
 }
 challenge.complete {
 	background-image: url("../images/checkbox-40-on.png");
+	color: #BBB;
 }
 challenge title_text {
 	display: block;

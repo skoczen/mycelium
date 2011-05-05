@@ -52,10 +52,6 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
     def test_that_the_dashboard_checks_off_appropriately(self):
         assert True == "Test written"
 
-    def test_that_the_by_the_numbers_numbers_are_accurate(self):
-        # compare shown numbers vs hand-cound.
-        assert True == "Test written"
-
     def test_the_nothing_done_on_the_checklist_welcome_text(self):
         assert True == "Test written"
 
