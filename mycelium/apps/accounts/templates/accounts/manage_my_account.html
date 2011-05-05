@@ -23,6 +23,7 @@
 
 <table class="my_account_table ">
 {% generic_editable_field_table form.first_name "Full name:" %}
+{% generic_editable_field_table useraccount_form.nickname "Preferred name:" %}
 {% generic_editable_field_table form.email %}
 {% generic_editable_field_table form.username %}
 <tr class="generic_editable_field_table_row striped_row password_row" >

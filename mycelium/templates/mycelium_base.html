@@ -23,24 +23,24 @@
 {% endblock %}
 {% block content %}
 	{% block nav %}
-	<logo>
-		GoodCloud
-	</logo>
+{# 	<logo>GoodCloud</logo> #}
 	<main_nav>{% spaceless %}
-		<a href="{% url dashboard:dashboard %}" class="{% if section == "dashboard" %}current{% endif %}">Dashboard</a>
-		<a href="{% url people:search %}" {% if not section %}class="current"{% endif %}>People</a>
-		<a href="{% url groups:search %}" class="{% if section == "groups" %}current{% endif %}">Groups</a>
-		{# <a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}">Spreadsheets</a> #}
-		{# <a href="{% url people:new_person %}" >New Person</a> #}
-		
-		{# <a href="#">Volunteers</a> #}
-		{# <a href="#">Donors</a> #}
-		{# <a href="#">Fund</a> #}
-		{# <a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports</a> #}
-		{# <a href="#">Communicate</a> #}
+		<a href="{% url dashboard:dashboard %}" class="logo"></a>
+		<input type="search" id="global_search" name="global_search" />
+		<a href="{% url accounts:logout %}" class="logout_btn" >Logout</a>
+		<a href="{% url core:more_menu %}" class="{% if section == "more" %}current{% endif %}">Admin</a>
 		{# <a href="#">Events</a> #}
-		<a href="{% url core:more_menu %}" class="{% if section == "more" %}current{% endif %}">More</a>
-		<a href="{% url accounts:logout %}" class="logout_btn" >Logout <small>({{request.user.get_profile.denamespaced_username}})</small></a>
+		{# <a href="#">Communicate</a> #}
+		{# <a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports</a> #}
+		{# <a href="#">Fund</a> #}
+		{# <a href="#">Donors</a> #}
+		{# <a href="#">Volunteers</a> #}
+		
+		{# <a href="{% url people:new_person %}" >New Person</a> #}
+		<a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}">Spreadsheets</a>
+		<a href="{% url groups:search %}" class="{% if section == "groups" %}current{% endif %}">Groups</a>
+		<a href="{% url people:search %}" class="first {% if not section %}current{% endif %}">People</a>
+		{# <a href="{% url dashboard:dashboard %}" class="{% if section == "dashboard" %}current{% endif %}">Dashboard</a> #}
 		
 	{% endspaceless %}</main_nav>
 	{% endblock %}

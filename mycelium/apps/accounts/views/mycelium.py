@@ -60,7 +60,7 @@ def login(request, template_name='registration/login.html',
 
 
 from qi_toolkit.helpers import *
-from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm, UserFormForUserAccount
+from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm, UserFormForUserAccount, UserAccountNicknameForm
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from accounts.models import UserAccount
@@ -147,17 +147,28 @@ def save_account_info(request):
     return {"success":success}
 
 
+def _my_forms(request):
+    data = None
+    if request.method == "POST":
+        data = request.POST
+
+    form = UserFormForUserAccount(data, instance=request.useraccount_on_master.user)
+    useraccount_form = UserAccountNicknameForm(data, instance=request.useraccount)
+
+    return form, useraccount_form
+
 @render_to("accounts/manage_my_account.html")
 def my_account(request):
-    form = UserFormForUserAccount(instance=request.useraccount.user)
+    form, useraccount_form = _my_forms(request)
     return locals()
 
 @json_view
 def save_my_account_info(request):
     success = False
-    form = UserFormForUserAccount(request.POST, instance=request.useraccount_on_master.user)
-    if form.is_valid():
+    form, useraccount_form = _my_forms(request)
+    if form.is_valid() and useraccount_form.is_valid():
         form.save()
+        useraccount_form.save()
         success = True
     
 

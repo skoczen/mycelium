@@ -8,11 +8,11 @@ $(function(){
 	$(".cancel_another_logo_btn").live("click",cancel_another_logo_btn_clicked);
 });
 function add_another_logo_btn_clicked() {
-	$(".add_another_form").slideDown();
+	$(".add_another_form").removeClass("hidden");
 	$(".add_another_logo_btn").hide();
 }
 function cancel_another_logo_btn_clicked() {
-	$(".add_another_form").slideUp();
+	$(".add_another_form").addClass("hidden");
 	$(".add_another_logo_btn").show();
 }
 </script>
@@ -45,7 +45,8 @@ function cancel_another_logo_btn_clicked() {
 {% endfor %}
 <add_another>
 <form class="hidden add_another_form" action="{% url logo_maker:list_logos %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-	{{form.as_p}}
+	{{form.name}}
+	{{form.image}}
 	<input type="submit" class="mycelium_btn" value="Add this logo"/>
 	<input type="reset" class="mycelium_btn mycelium_grey cancel_another_logo_btn" value="Cancel"/>
 </form>
