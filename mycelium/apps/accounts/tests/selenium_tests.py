@@ -479,12 +479,14 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.type("css=#id_first_name", "John Williams")
         sel.type("css=#id_email", "jwill@example.com")
         sel.type("css=#id_username", "jwill")
+        sel.type("css=#id_nickname", "j-dog")
         time.sleep(4)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("John Williams")
         assert sel.is_text_present("jwill@example.com")
         assert sel.is_text_present("jwill")
+        assert sel.is_text_present("j-dog")
 
     def test_that_changing_my_username_works_on_login(self):
         sel = self.selenium

@@ -26,7 +26,7 @@
 {# 	<logo>GoodCloud</logo> #}
 	<main_nav>{% spaceless %}
 		<a href="{% url dashboard:dashboard %}" class="logo"></a>
-		<input type="search" id="global_search" name="global_search" />
+		<input type="search" id="global_search" name="global_search" placeholder="Search anything..." />
 		<a href="{% url accounts:logout %}" class="logout_btn" >Logout</a>
 		<a href="{% url core:more_menu %}" class="{% if section == "more" %}current{% endif %}">Admin</a>
 		{# <a href="#">Events</a> #}
