@@ -20,9 +20,14 @@ import datetime
 @render_to("dashboard/dashboard.html")
 def dashboard(request):
     section = "dashboard"
+
+    if not request.account.has_completed_all_challenges:
+        request.account.check_challenge_progress()
+    
     start_of_this_year = datetime.date(month=1, day=1, year=datetime.date.today().year)
-    total_donors = Donation.objects_by_account(request.account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Count('donor'))
-    total_donations = Donation.objects_by_account(request.account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Sum('amount'))
+    total_donations = Donation.objects_by_account(request.account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Count('donor'))
+    total_donation_amount = Donation.objects_by_account(request.account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Sum('amount'))
+    average_donation = Donation.objects_by_account(request.account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Sum('amount'))
     total_volunteer_hours = CompletedShift.objects_by_account(request.account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Sum('duration'))
     total_people = Person.objects_by_account(request.account).count()
     total_orgs = Organization.objects_by_account(request.account).count()
@@ -30,3 +35,14 @@ def dashboard(request):
     total_tags = Tag.objects_by_account(request.account).count()
 
     return locals()
+
+@json_view
+def save_nickname(request):
+    success = False
+    if "nickname" in request.POST:
+        me = request.useraccount
+        me.nickname = request.POST["nickname"]
+        me.save()
+        success = True
+
+    return {'success':success}

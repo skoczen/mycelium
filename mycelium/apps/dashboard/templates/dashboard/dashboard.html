@@ -2,70 +2,93 @@
 {% load i18n %}
 {% block title %}Dashboard{% endblock %}
 {% block css %}{{block.super}}
+{% css "/css/generic_fields.css" %}
 {% css "/css/dashboard.css" %}
 {% endblock %}
 {% block javascript %}{{block.super}}
+{% js "/js/mycelium/dashboard.js" %}
 {% endblock %}
 
 {% block breadcrumb %}{% endblock %}
 {% block page_content %}
-<div class="dashboard_title">Welcome to GoodCloud</div>
-<salutation>Hello, {{request.useraccount.nickname_or_full_name}}</salutation>
+<dashboard>
+{# <div class="dashboard_title">Welcome to GoodCloud.</div> #}
+<salutation>{% if not request.useraccount.nickname %}Hello {{request.useraccount.full_name}},{% else %}Hi {{request.useraccount.nickname}},{% endif %}</salutation>
 {% if not request.useraccount.nickname %}
-	<div class="nickname_question">
-	(Would it be ok if we called you {{request.useraccount.best_nickname_guess}}? 
-	<a href="#" class="yes_nickname_link">Yes</a>
-	<a href="#" class="no_nickname_link">No</a>)
+	<div class="nickname_question" save_url="{% url dashboard:save_nickname %}">
+		<div class="initial_question">
+		(Would it be ok if we called you <span class="nickname_guess">{{request.useraccount.best_nickname_guess}}</span>? 
+		<a href="#" class="yes_to_nickname">Yes</a>
+		<a href="#" class="no_to_nickname">No</a>)
+		</div>
+		<div class="nickname_no_followup edit_mode_on">
+		<div class="followup_question">Got it. What would you prefer? </div>
+		<input id="id_new_nickname" name="new_nickname" value="{{request.useraccount.full_name}}" />
+		<a href="#" class="mycelium_btn save_new_nickname">Save</a>
+		</div>
+
 	</div>
 {% endif %}
 
+<div class="welcome_text">
+	{% if request.account.has_completed_any_challenges %}
+		Welcome back to GoodCloud!
+		{% if not request.account.has_completed_all_challenges %}
+			Looks like you haven't finished up the challenges quite yet - keep at it, and let us know if you have any questions!
+		{% endif %}
+	{% else %}
+		You made it! Welcome to your very own GoodCloud and your free 30-day trial. We're excited to have you on board. Check out the GoodCloud challenges below for a great way to get started and get half off your first month!
+	{% endif %}
+</div>
+
 <table class="dashboard_panel_table">
 <tr>
-{% if not request.account.completed_goodcloud_quests %}
-	<td class="left_col">
+{% if not request.account.has_completed_all_challenges %}
+	<td class="full_col">
 		<column_header>GoodCloud Challenges</column_header>
-		<challenge>
-			<title_text><a href="#">Import your contacts.</a></title_text>
-			<description>Got a system or spreadsheet that you currently keep your contacts in?  Get that contact list to an Excel or .csv file and let’s import that thing to get you rolling!</description>
+		<challenge class="{% if request.account.challenge_has_imported_contacts %}complete{% endif %}">
+			<title_text>Import your contacts.</title_text>
+			<description>Got a system or spreadsheet that you currently keep your contacts in?  Get that contact list to an Excel or .csv file and let's import that thing to get you rolling! {% if not request.account.challenge_has_imported_contacts %}<a href="#">Get Started!</a>{% endif %}</description>
 		</challenge>
+		<challenge class="{% if request.account.challenge_has_set_up_tags %}complete{% endif %}">
+			<title_text>Set up your tags.</title_text>
+			<description>Create the tags that make the most sense for the way you categorize your volunteers, donors, and mission-based contacts.  {% if not request.account.challenge_has_set_up_tags %}<a href="#">Get Started!</a>{% endif %}</description>
+		</challenge>
+		<challenge class="{% if request.account.challenge_has_added_board %}complete{% endif %}">
+			<title_text>Add your board.</title_text>
+			<description>Make a tag for Board Members.  Then, tag each of your board members.  Finally, make a new group for everyone who has a Board Members tag. {% if not request.account.challenge_has_added_board %}<a href="#">Get Started!</a>{% endif %}</description>
+		</challenge>
+		<challenge class="{% if request.account.challenge_has_created_other_accounts %}complete{% endif %}">
+			<title_text>Share the love - Get everyone else onboard!</title_text>
+			<description>Make an account for other staff members. If you're the only staff member, send us a note, and we'll check this one off for you. {% if not request.account.challenge_has_created_other_accounts %}<a href="#">Get Started!</a>{% endif %}</description>
+		</challenge>
+		<challenge class="{% if request.account.challenge_has_downloaded_spreadsheet %}complete{% endif %}">
+			<title_text>Download a spreadsheet.</title_text>
+			<description>Have your spreadsheet include all your board members with their first and last names, email addresses, and phone numbers. {% if not request.account.challenge_has_downloaded_spreadsheet %}<a href="#">Get Started!</a>{% endif %}</description>
+		</challenge>
+		<challenge class="{% if request.account.challenge_has_submitted_support %}complete{% endif %}">
+			<title_text>Say Hello!</title_text>
+			<description>We get to know our clients and want to make sure that using GoodCloud is easy like Sunday morning for you.  Click that blue “Feedback &amp; Support” button in the corner, and submit a message with any questions you have, more info about you and your organization, or just a hello! {% if not request.account.challenge_has_submitted_support %}<a href="#">Get Started!</a>{% endif %}</description>
+		</challenge>
+		<div class="challenge_description">* Complete the six GoodCloud Challenges and receive a 50% discount on your first month of use. What's that you say? Half off just for setting things up and doing a quick tour? Are we crazy? Well, yes. But we really think GoodCloud is the best solution out there for small nonprofits, and we're ready to prove it.</div>
 
-		<challenge>
-			<title_text><a href="#">Set up your tags.</a></title_text>
-			<description>Create the tags that make the most sense for the way you categorize your volunteers, donors, and mission-based contacts. </description>
-		</challenge>
-		<challenge>
-			<title_text><a href="#">Add your board.</a></title_text>
-			<description>Make a tag for Board Members.  Then, make a new group for all the people with a Board Members tag.</description>
-		</challenge>
-		<challenge>
-			<title_text><a href="#">Share the love - Get everyone else onboard!</a></title_text>
-			<description>Make an account for one other staff member. If you’re the only staff member, send us a note, and we’ll check this one off for you.</description>
-		</challenge>
-		<challenge>
-			<title_text><a href="#">Download a spreadsheet.</a></title_text>
-			<description>Have your spreadsheet include all your board members with their first and last names, email addresses, and phone numbers.</description>
-		</challenge>
-		<challenge>
-			<title_text><a href="#">Say Hello!</a></title_text>
-			<description>We get to know our clients and want to make sure that using GoodCloud is easy like Sunday morning for you.  Click that blue “Feedback & Support” button in the corner, and submit a message with any questions you have, more info about you and your organization, or just a hello!</description>
-		</challenge>
-
-	</td>
-	<td class="right_col">
-		<column_header>By the Numbers</column_header>
-		{% include "dashboard/_the_numbers.html" %}
 	</td>
 {% else %}
 	<td class="left_col">
+		<column_header>GoodCloud Challenges</column_header>
+		<column_content class="completed_goodcloud_challenges">
+		You've completed all of the GoodCloud challenges, and earned half off your first month!  <a href="#">Hide this section in the future.</a>
+		</column_content>
+		<column_header>GoodCloud News</column_header>
+		{% include "dashboard/_goodcloud_news.html" %}
+	</td>
+	<td class="right_col">
 		<column_header>By the Numbers</column_header>
 		{% include "dashboard/_the_numbers.html" %}
 	</td>
-	<td class="right_col">
-		<column_header>GoodCloud News</column_header>
 
-	</td>
 {% endif %}
 </tr>
 </table>
-
+</dashboard>
 {% endblock %}

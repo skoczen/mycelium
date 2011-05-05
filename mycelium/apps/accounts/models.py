@@ -24,6 +24,15 @@ class Account(TimestampModelMixin):
     agreed_to_terms = models.BooleanField()
     plan = models.ForeignKey(Plan, blank=True)
 
+    challenge_has_imported_contacts      = models.BooleanField(default=False)
+    challenge_has_set_up_tags            = models.BooleanField(default=False)
+    challenge_has_added_board            = models.BooleanField(default=False)
+    challenge_has_created_other_accounts = models.BooleanField(default=False)
+    challenge_has_downloaded_spreadsheet = models.BooleanField(default=False)
+    challenge_submitted_support          = models.BooleanField(default=False)
+    has_completed_all_challenges         = models.BooleanField(default=False)  # A separate field to support when the challenges change.
+    has_completed_any_challenges         = models.BooleanField(default=False)  
+    
     def __unicode__(self):
         return "%s" % self.name
 
@@ -58,10 +67,12 @@ class Account(TimestampModelMixin):
         for ua in instance.useraccount_set.all():
             ua.user.delete()
 
-    @property
-    def completed_goodcloud_quests(self):
-        return False
-        raise Exception, "Not Implemented"
+
+    def check_challenge_progress(self):
+        """This function checks each uncompleted challenge to see if it's been done,
+           and updates the boolean fields as needed"""
+        
+        pass
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)

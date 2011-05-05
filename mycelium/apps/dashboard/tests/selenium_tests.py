@@ -16,10 +16,23 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.verificationErrors = []
 
     def test_that_saying_yes_to_a_nickname_works(self):
-        pass
+        assert True == "Test written"
  
     def test_that_saying_no_and_providing_a_new_nickname_works(self):
-        pass
+        assert True == "Test written"
+
+    def test_that_the_dashboard_checks_off_appropriately(self):
+        assert True == "Test written"
+
+    def test_that_the_by_the_numbers_numbers_are_accurate(self):
+        # compare shown numbers vs hand-cound.
+        assert True == "Test written"
+
+    def test_the_nothing_done_on_the_checklist_welcome_text(self):
+        assert True == "Test written"
+
+    def test_the_something_done_on_the_checklist_welcome_text(self):
+        assert True == "Test written"
 
 
 
