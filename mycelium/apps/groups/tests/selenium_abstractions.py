@@ -25,7 +25,7 @@ class GroupTestAbstractions(object):
 
     def create_new_group_and_return_to_search(self, new_name="Test Group"):
         self.create_new_group(new_name=new_name)
-        self.click_and_wait("link=Back to All Groups")
+        self.click_and_wait("link=Back to Groups")
     
     def create_a_new_rule(self, left_side="have a General tag that", operator="is exactly", right_side="test tag"):
         sel = self.selenium
