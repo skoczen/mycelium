@@ -30,7 +30,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         sel = self.selenium
         self.create_new_group_and_return_to_search()
 
-        self.click_and_wait("link=People")
+        self.click_and_wait("link=Groups")
         sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Grou")
@@ -217,7 +217,8 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
     
     def test_that_blank_groups_show_at_the_top_of_the_search(self):
         sel = self.selenium
-        self.open("/people/")
+        self.open("/")
+        self.click_and_wait("link=Groups")
         assert not sel.is_text_present("No Name")
         sel.click("link=New Group")
         sel.wait_for_page_to_load("30000")

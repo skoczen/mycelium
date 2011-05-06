@@ -22,7 +22,6 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
     def setUp(self):
         pass
 
-    
     def test_challenge_has_imported_contacts(self):
         assert True == "Test written"
         
@@ -52,7 +51,7 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         # test against hand-counted queries
         from dashboard.views import _account_numbers_dict
         a1 = Factory.create_demo_site("test1", quick=True)
-        a2 = Factory.create_demo_site("test2", quick=True)
+        Factory.create_demo_site("test2", quick=True)
 
         nums = _account_numbers_dict(a1)
 

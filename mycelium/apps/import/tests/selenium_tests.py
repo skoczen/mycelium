@@ -15,7 +15,7 @@ class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions):
     def test_mockup_pages_load_and_links_work(self):
         sel = self.selenium        
         self.open("/reports/report/new")
-        sel.click("link=More")
+        sel.click("link=Admin")
         sel.wait_for_page_to_load("30000")
         self.assertEqual("Data Import", sel.get_text("css=.data_import_btn .button_title"))
         

@@ -76,7 +76,7 @@ def _account_forms(request):
 @render_to("accounts/manage_users.html")
 def manage_users(request):
     if not request.useraccount.is_admin:
-        return HttpResponseRedirect(reverse("core:more_menu"))
+        return HttpResponseRedirect(reverse("dashboard:dashboard"))
 
     user_access_formset, new_user_form = _account_forms(request)
     return locals()

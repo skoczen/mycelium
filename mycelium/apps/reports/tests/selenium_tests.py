@@ -5,9 +5,7 @@ class ReportsTests(QiConservativeSeleniumTestCase):
     def get_to_reports_page(self):
         sel = self.selenium
         self.open("/people/search")
-        sel.click("link=More")
-        sel.wait_for_page_to_load("30000")
-        sel.click("css=.reports_btn")
+        sel.click("link=Spreadsheets")
         sel.wait_for_page_to_load("30000")
 
 

@@ -23,10 +23,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, ConversationTestAbstract
     #     self.account.delete()
 
 
-    def test_conversation_tab_is_a_stub(self):
-        sel = self.selenium
-        self.create_person_and_go_to_conversations_tab()
-        assert sel.is_text_present("Conversations aren't done yet, but wait until you see them. I mean, wow.")
+    # def test_conversation_tab_is_a_stub(self):
+    #     sel = self.selenium
+    #     self.create_person_and_go_to_conversations_tab()
+    #     assert sel.is_text_present("Conversations aren't done yet, but wait until you see them. I mean, wow.")
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, ConversationTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 

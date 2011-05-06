@@ -10,8 +10,9 @@ class GroupTestAbstractions(object):
     
     def create_new_group(self, new_name="Test Group"):
         sel = self.selenium
-        self.open("/people")
+        self.open("/")
         sel.wait_for_page_to_load("30000")
+        self.click_and_wait("link=Groups")
         self.click_and_wait("link=New Group")
         sel.type("css=#basic_info_form #id_name",new_name)
         time.sleep(4)
@@ -24,7 +25,7 @@ class GroupTestAbstractions(object):
 
     def create_new_group_and_return_to_search(self, new_name="Test Group"):
         self.create_new_group(new_name=new_name)
-        self.click_and_wait("link=Back to All People and Groups")
+        self.click_and_wait("link=Back to All Groups")
     
     def create_a_new_rule(self, left_side="have a General tag that", operator="is exactly", right_side="test tag"):
         sel = self.selenium
