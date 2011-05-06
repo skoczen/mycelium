@@ -66,7 +66,7 @@ class GroupRule(AccountBasedModel, Rule):
         ordering = ("group","id",)
 
 
-class GroupSearchProxy(AccountBasedModel, SearchableItemProxy):
+class GroupSearchProxy(SearchableItemProxy):
     SEARCH_GROUP_NAME = "groups"
     group = models.ForeignKey('groups.Group', blank=True, null=True)
 

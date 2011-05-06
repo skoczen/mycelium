@@ -16,7 +16,12 @@
 	{% js "/js/contrib/autocolumn.min.js" %}
 	{% js "/js/mycelium/mycelium_elements.js" %}
 	{% js "/js/mycelium/generic_fields.js" %}
-	{% js "/js/mycelium/mycelium_search.js" %}	
+	{% js "/js/mycelium/mycelium_search.js" %}
+	{% js "/js/mycelium/mycelium_top_search.js" %}
+
+<script>
+var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
+</script>
 {# {% else %} #}
 {# 	{% js "/js/mycelium/mycelium_base_all.js" %} #}
 {# {% endif %} #}
@@ -26,7 +31,7 @@
 {# 	<logo>GoodCloud</logo> #}
 	<main_nav>{% spaceless %}
 		<a href="{% url dashboard:dashboard %}" class="logo"></a>
-		<input type="search" id="global_search" name="global_search" placeholder="Search for anything..." />
+		<input type="search" id="global_search" name="global_search" placeholder="Everything in GoodCloud..." />
 		<div class="username_and_logout">
 			<div class="username">{{request.useraccount.full_name}}</div>
 			<a href="{% url core:more_menu %}" class="admin_btn mycelium_btn mycelium_grey mycelium_active_grey" >Admin</a>
@@ -47,6 +52,7 @@
 		{# <a href="{% url dashboard:dashboard %}" class="nav_btn {% if section == "dashboard" %}current{% endif %}">Dashboard</a> #}
 		
 	{% endspaceless %}</main_nav>
+	<div id="global_search_results"><fragment name="global_search_results" action="replace"></fragment></div>
 	{% endblock %}
 	
 	{% block page %}

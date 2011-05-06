@@ -190,7 +190,7 @@ class Employee(AccountBasedModel, TimestampModelMixin):
 
 
 
-class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
+class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     SEARCH_GROUP_NAME = "people_and_orgs"
     person = models.ForeignKey(Person, blank=True, null=True)
     organization = models.ForeignKey(Organization, blank=True, null=True)

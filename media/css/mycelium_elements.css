@@ -137,6 +137,40 @@ footer a:hover {
 #global_search:focus {
 	background-color:#FFF;
 }
+#global_search_results {
+	position: absolute;
+	top: 43px;
+	left: 90px;
+	display: block;
+	overflow: auto;
+	min-width: 46%;
+	z-index: 10001;
+	padding: 0px 0px 3px 0px;
+
+}
+#global_search_results tr.odd {
+	background-color: #FFF;
+}
+#global_search_results .no_people_found.global_results_table {
+	background-color: #FFF;
+}
+#global_search_results td {
+	white-space: nowrap;
+	padding: 6px 8px;
+}
+#global_search_results .hide_in_global {
+	display: none;
+}
+#global_search_results .global_results_table {
+	margin: 0px;
+	border: 1px solid #999;
+	border-top-color: #CCC;
+	box-shadow: 		0px 2px 2px rgba(0,0,0,0.55);
+	-moz-box-shadow: 	0px 2px 2px rgba(0,0,0,0.55);
+	-khtml-box-shadow: 	0px 2px 2px rgba(0,0,0,0.55);
+
+}
+
 page_title {
 	display: block;
 	font-size: 30px;

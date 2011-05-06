@@ -1,9 +1,10 @@
 from django.db import models
 from qi_toolkit.models import SimpleSearchableModel
 from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
+from accounts.models import AccountBasedModel
 import re
 
-class SearchableItemProxy(SimpleSearchableModel):
+class SearchableItemProxy(SimpleSearchableModel, AccountBasedModel):
     # models = []
     search_group_name = models.CharField(max_length=255)
     sorting_name = models.CharField(max_length=255, blank=True, null=True)
@@ -27,15 +28,16 @@ class SearchableItemProxy(SimpleSearchableModel):
         return self.generate_search_string()
 
     class Meta(object):
-        # abstract = True
         ordering = ["sorting_name","-id"]
 
     @property
     def child_proxy(self):
-        try:
-            return self.peopleandorganizationssearchproxy_set.get()
-        except:
-            return self.groupproxy_set.get()
+        if hasattr(self,"peopleandorganizationssearchproxy"):
+            return self.peopleandorganizationssearchproxy
+        elif hasattr(self,"groupsearchproxy"):
+            return self.groupsearchproxy
+        else:
+            return None
     
     @property
     def obj(self):
