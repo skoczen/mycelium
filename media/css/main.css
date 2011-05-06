@@ -22,7 +22,7 @@ body {
 	border: 0px;
 	padding: 0px;
 	margin: 0px;
-	font-family: 'ExpresswayRegular', Helvetica, Arial, sans-serif;
+	font-family: 'ExpresswayRegular', "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 	font-size: 16px;	
 }
 table {
@@ -31,7 +31,7 @@ table {
 	margin: 0px;
 }
 .plain_text {
-	font-family: Helvetica, "Lucida Grande", Arial, sans-serif;
+	font-family: Helvetica, "Lucida Grande", "DejaVu Sans","Bitstream Vera Sans",Verdana, Arial, sans-serif;
 	font-size: 0.95em;
 }
 
