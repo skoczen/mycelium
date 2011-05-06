@@ -136,12 +136,13 @@ tabbed_box box_content {
 }
 .my_account_table {
 	margin: 10px 10px;
-	width: 60%;
+	width: 70%;
 	min-width: 300px;
 	
 }
 .my_account_table .label_col {
 	width: 25%;
+	white-space: nowrap;
 }
 .my_account_table td {
 	padding: 10px 5px;

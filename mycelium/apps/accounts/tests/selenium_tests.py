@@ -519,6 +519,17 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.wait_for_page_to_load("30000")
         self.log_in(username="admin", password="test123")
 
+    def staff_do_not_see_the_admin_link_and_see_an_account_link(self):
+        sel = self.selenium
+        assert True == "Test written"
+
+    def volunteers_do_not_see_the_admin_link_and_see_an_account_link(self):
+        sel = self.selenium
+        assert True == "Test written"
+
+    def admins_see_the_admin_link_and_not_an_account_link(self):
+        sel = self.selenium
+        assert True == "Test written"
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]

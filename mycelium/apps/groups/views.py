@@ -50,6 +50,7 @@ def search_results(request):
 
 @render_to("groups/group.html")
 def group(request, group_id):
+    section = "groups"
     group = get_or_404_by_account(Group, request.account, group_id)
     members = group.members
     form, rule_formset = _basic_forms(group, request)

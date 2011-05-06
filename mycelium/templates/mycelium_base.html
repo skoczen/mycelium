@@ -34,7 +34,12 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 		<input type="search" id="global_search" name="global_search" placeholder="Everything in GoodCloud..." />
 		<div class="username_and_logout">
 			<div class="username">{{request.useraccount.full_name}}</div>
-			<a href="{% url core:more_menu %}" class="admin_btn mycelium_btn mycelium_grey mycelium_active_grey" >Admin</a>
+			{% if request.useraccount.is_admin %}
+				<a href="{% url core:more_menu %}" class="admin_btn mycelium_btn mycelium_grey mycelium_active_grey" >Admin</a>				
+			{% else %}
+				<a href="{% url accounts:my_account %}" class="my_account_btn" >Account</a>
+			{% endif %}
+			
 			<a href="{% url accounts:logout %}" class="logout_btn" >Logout</a>
 		</div>
 		{# <a href="{% url core:more_menu %}" class="nav_btn {% if section == "more" %}current{% endif %}">Admin</a> #}

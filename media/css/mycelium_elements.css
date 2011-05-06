@@ -75,11 +75,14 @@ main_nav .username_and_logout {
 main_nav .username_and_logout .username {
 	font-size: 12px;
 }
-main_nav .username_and_logout a.logout_btn {
+main_nav .username_and_logout a.logout_btn, main_nav .username_and_logout a.my_account_btn {
 	color: #999;
 	font-size: 14px;
 }
-main_nav .username_and_logout a.logout_btn:hover {
+main_nav .username_and_logout a.my_account_btn {
+	margin-right: 6px;
+}
+main_nav .username_and_logout a.logout_btn:hover, main_nav .username_and_logout a.my_account_btn:hover {
 	color: #888;
 }
 main_nav .username_and_logout a.admin_btn {
@@ -168,6 +171,12 @@ footer a:hover {
 	box-shadow: 		0px 2px 2px rgba(0,0,0,0.55);
 	-moz-box-shadow: 	0px 2px 2px rgba(0,0,0,0.55);
 	-khtml-box-shadow: 	0px 2px 2px rgba(0,0,0,0.55);
+	font-size: 16px;
+}
+#global_search_results .global_results_table .name span {
+	margin-top: 4px;
+	display: block;
+	float: left;
 
 }
 
@@ -753,4 +762,126 @@ tab_contents actions {
 	width: 100%;
 	text-align: right;
 	padding: 4px 0px 0px 0px;
+}
+
+.result_row {
+	padding: 10px;
+}
+.result_row.even {
+	background-color: #F2F2F2;
+}
+.results_table {
+	width: 98%;
+	border-collapse: collapse;
+	padding: 0px;
+	margin: 3px 1%;
+	font-size: 20px;
+}
+.results_table th {
+	text-align: left;
+/*	background-color: #0355aa;
+	color: #FFF;*/
+}
+.results_table td {
+	padding: 5px;
+}
+search_results .results_table .name {
+	font-size: 22px;
+	width: 50%;
+	white-space: nowrap;
+}
+search_results .results_table .email {
+	width: 30%;
+	white-space: nowrap;
+}
+search_results .results_table .email a, search_results .results_table .email a:visited, search_results .results_table .email a:active {
+	color: #333;
+}
+search_results .results_table .phone_number {
+	width: 20%;
+	white-space: nowrap;	
+}
+search_results .results_table .best_contact {
+/*	color: #004486;*/
+/*	padding-left: 24px;
+	background-image: url("../images/icon-primary-contact-20.png");
+	background-position: 0px 7px;
+	background-repeat: no-repeat;
+*/
+}
+
+.person_row icon {
+	display: block;
+	float: left;
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	width: 28px;
+	height: 28px;
+	margin-right: 5px;
+}
+.person_row icon.person {
+/*	background-image: url("../images/icon-person-blue-22h.png");*/
+	background-image: url("../images/icon-person-grey-22h.png");
+	background-position: 0px 2px;
+	display: none;
+}
+.person_row icon.organization {
+/*	background-image: url("../images/icon-business-blue-22h.png");*/
+	background-image: url("../images/icon-business-grey-22h.png");	
+	background-position: 5px 2px;
+}
+.person_row icon.group {
+/*	background-image: url("../images/icon-business-blue-22h.png");*/
+	background-image: url("../images/icon-group-grey-22h.png");	
+	background-position: 0px 2px;
+	width: 36px;
+}
+save_status_and_button {
+	padding-top: 8px;
+}
+save_status_and_button a, save_status_and_button .save_info {
+	display: block;
+	float: right;
+	margin-left: 10px;
+}
+save_status_and_button .save_and_status_btn {
+	display: none;
+	width: 70px;
+	text-align: center;
+}
+save_status_and_button .edit_done_btn {
+	display: none;	
+}
+save_status_and_button .edit_contact_done_btn {
+	display: none;	
+}
+save_status_and_button .save_info {
+	padding-top: 10px;
+	margin-right: 10px;
+}
+#basic_info_form save_status_and_button a.mycelium_active_grey {
+	font-size: 17px;
+	padding: 7px 11px 5px 11px;
+}
+tabbed_box tab_title icon.home {
+	background-image: url("../images/icon-home-blue-20h.png");	
+}
+tabbed_box tab_title icon.company {
+	background-image: url("../images/icon-business-blue-20h.png");	
+}
+tabbed_box tab_title_container {
+	margin-top: 10px;
+}
+tabbed_box tab_title {
+	color: #004486;
+	text-shadow: 1px 1px 0px rgba(0,0,0,0);
+	background-color: #FAFAFA;
+	border: 1px solid #DDD;
+	border-bottom-color: #FAFAFA;
+	cursor: default;	
+}
+tabbed_box box_content {
+	border: 1px solid #DDD;
+	background-color: #FAFAFA;
+	width: 100%;
 }

@@ -159,6 +159,7 @@ def _my_forms(request):
 
 @render_to("accounts/manage_my_account.html")
 def my_account(request):
+    section = "more"
     form, useraccount_form = _my_forms(request)
     return locals()
 
