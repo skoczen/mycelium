@@ -27,8 +27,12 @@
 	<main_nav>{% spaceless %}
 		<a href="{% url dashboard:dashboard %}" class="logo"></a>
 		<input type="search" id="global_search" name="global_search" placeholder="Search for anything..." />
-		<a href="{% url accounts:logout %}" class="nav_btn logout_btn" >Logout</a>
-		<a href="{% url core:more_menu %}" class="nav_btn {% if section == "more" %}current{% endif %}">Admin</a>
+		<div class="username_and_logout">
+			<div class="username">{{request.useraccount.full_name}}</div>
+			<a href="{% url core:more_menu %}" class="admin_btn mycelium_btn mycelium_grey mycelium_active_grey" >Admin</a>
+			<a href="{% url accounts:logout %}" class="logout_btn" >Logout</a>
+		</div>
+		{# <a href="{% url core:more_menu %}" class="nav_btn {% if section == "more" %}current{% endif %}">Admin</a> #}
 		{# <a href="#">Events</a> #}
 		{# <a href="#">Communicate</a> #}
 		{# <a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports</a> #}
