@@ -26,9 +26,9 @@
 {# 	<logo>GoodCloud</logo> #}
 	<main_nav>{% spaceless %}
 		<a href="{% url dashboard:dashboard %}" class="logo"></a>
-		<input type="search" id="global_search" name="global_search" placeholder="Search anything..." />
-		<a href="{% url accounts:logout %}" class="logout_btn" >Logout</a>
-		<a href="{% url core:more_menu %}" class="{% if section == "more" %}current{% endif %}">Admin</a>
+		<input type="search" id="global_search" name="global_search" placeholder="Search for anything..." />
+		<a href="{% url accounts:logout %}" class="nav_btn logout_btn" >Logout</a>
+		<a href="{% url core:more_menu %}" class="nav_btn {% if section == "more" %}current{% endif %}">Admin</a>
 		{# <a href="#">Events</a> #}
 		{# <a href="#">Communicate</a> #}
 		{# <a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports</a> #}
@@ -37,10 +37,10 @@
 		{# <a href="#">Volunteers</a> #}
 		
 		{# <a href="{% url people:new_person %}" >New Person</a> #}
-		<a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}">Spreadsheets</a>
-		<a href="{% url groups:search %}" class="{% if section == "groups" %}current{% endif %}">Groups</a>
-		<a href="{% url people:search %}" class="first {% if not section %}current{% endif %}">People</a>
-		{# <a href="{% url dashboard:dashboard %}" class="{% if section == "dashboard" %}current{% endif %}">Dashboard</a> #}
+		<a href="{% url reports:search %}" class="nav_btn {% if section == "reports" %}current{% endif %}">Spreadsheets</a>
+		<a href="{% url groups:search %}" class="nav_btn {% if section == "groups" %}current{% endif %}">Groups</a>
+		<a href="{% url people:search %}" class="nav_btn first {% if not section %}current{% endif %}">People</a>
+		{# <a href="{% url dashboard:dashboard %}" class="nav_btn {% if section == "dashboard" %}current{% endif %}">Dashboard</a> #}
 		
 	{% endspaceless %}</main_nav>
 	{% endblock %}
