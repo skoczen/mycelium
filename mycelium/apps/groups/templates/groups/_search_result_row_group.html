@@ -1,10 +1,11 @@
-<tr class="result_row person_row striped_row">
-	<td class="name">
+{% load humanize %}
+<tr class="result_row person_row striped_row organization_row">
+	<td class="col_0 name ">
 		<a href="{% url groups:group obj.pk %}">
 			<icon class="{{obj.contact_type}}" ></icon>
 			<span class="highlightable">{{obj.full_name}}</span>
 		</a>
 	</td>
-	<td class="email"></td>
-	<td class="phone_number"></td>
+	<td class="col_1 num_members hide_in_global ">{{obj.num_members|intcomma}}</td>
+	<td class="col_2 hide_in_global"></td>
 </tr>

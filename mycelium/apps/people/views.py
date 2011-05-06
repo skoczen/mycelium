@@ -21,20 +21,20 @@ from generic_tags.views import _render_people_tag_tab
 
 @render_to("people/search.html")
 def search(request):
-    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).all()
+    search_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).all()
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":
-            people_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
+            search_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
     return locals()
 
 @json_view
 def search_results(request):
-    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).all()
+    search_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).all()
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":
-            people_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
+            search_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
 
     return {"fragments":{"main_search_results":render_to_string("people/_search_results.html", locals())}}
 

@@ -23,7 +23,7 @@ $(function(){
 
 {% endblock %}
 
-{% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People and Groups</a>{% endblock %}
+{% block breadcrumb_links %}<a href="{% url groups:search %}" >Back to Groups</a>{% endblock %}
 {% block page_content %}
 <form action="{% url groups:save_basic_info group.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
 {% with "Edit Group" as edit_label %}

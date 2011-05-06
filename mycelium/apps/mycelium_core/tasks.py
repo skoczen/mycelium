@@ -1,11 +1,8 @@
 from celery.schedules import crontab
 from celery.decorators import periodic_task, task
 from django.conf import settings
-# from django.core.management import call_command
-import os
+from django.core.cache import cache
 
-# this will run every minute, see http://celeryproject.org/docs/reference/celery.task.schedules.html#celery.task.schedules.crontab
-# @periodic_task(run_every=crontab(hour="*", minute="*", day_of_week="*"))
 @task
 def test():    
     print "firing test task"
@@ -16,13 +13,12 @@ def test():
     fh.write("Oh hi\n")
     fh.close()
 
-# @periodic_task(run_every=crontab(hour="*", minute="*", day_of_week="*"))
+@task
+def update_proxy_results_db_cache(cls, proxy_obj, new_result_string):
+    px = cls.objects.get(pk=proxy_obj.pk)
+    px.cached_search_result = new_result_string
+    px.save()
 
-# @periodic_task(run_every=crontab(hour="2", minute="1", day_of_week="*"))
-# def offsite_backups():
-#     opts = {
-#         'backup_file': "/tmp/current_backup_%s.dump" % settings.ROLE,
-#         'offsite_server_dir': settings.OFFSITE_BACKUP_DIR,
-#         'env': settings.ROLE,
-#     }
-#     os.system("./manage.py dumpdb > %(backup_file)s;bzip2 -9q %(backup_file)s;scp %(backup_file)s.bz2 %(offsite_server_dir)sdaily_%(env)s_`date +%%F`.dump.bz2; rm %(backup_file)s.bz2" % opts)
+@task
+def put_in_cache_forever(key, val):
+    cache.set(key, val, 0)

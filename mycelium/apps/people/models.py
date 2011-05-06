@@ -13,6 +13,11 @@ import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING = _("No Name")
 from generic_tags.models import TagSet, Tag
+from django.template.loader import render_to_string
+from django.db.models.signals import post_save
+from django.core.cache import cache
+from mycelium_core.models import SearchableItemProxy
+from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
 
 class OrganizationType(AccountBasedModel, models.Model):
     internal_name = models.CharField(max_length=255)
@@ -184,56 +189,15 @@ class Employee(AccountBasedModel, TimestampModelMixin):
         ordering = ("organization","person",)
 
 
-from django.core.cache import cache
-from django.db.models.signals import post_save
-#TODO: Abstract this into the qi_toolkit or something better
-class SearchableItemProxy(SimpleSearchableModel):
-    # models = []
-    search_group_name = models.CharField(max_length=255)
-    sorting_name = models.CharField(max_length=255, blank=True, null=True)
-    search_string = models.TextField(blank=True, null=True)
-    cached_search_result = models.TextField(blank=True, null=True)
 
-    @property
-    def cache_name(self):
-        # Define this on subclassing.
-        return "%s-%s" % (self.search_group_name, self.pk)
-    
-    def generate_search_string(self):
-        # Define this on subclassing.
-        return "%s" % (self.pk)
-
-    def get_sorting_name(self):
-        # Define this on subclassing.
-        return "%s" % (self.pk)
-        
-    def __unicode__(self):
-        return self.generate_search_string()
-
-    class Meta(object):
-        abstract = True
-        ordering = ["sorting_name","-id"]
-
-    def save(self,*args,**kwargs):
-        self.search_string = self.generate_search_string()
-        self.sorting_name = self.get_sorting_name()
-        ss = self.render_result_row()
-        self.cached_search_result = ss
-        super(SearchableItemProxy,self).save(*args,**kwargs)
-        put_in_cache_forever(self.cache_name, ss)
-
-
-from django.template.loader import render_to_string
-from people.tasks import *
 class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
     SEARCH_GROUP_NAME = "people_and_orgs"
     person = models.ForeignKey(Person, blank=True, null=True)
     organization = models.ForeignKey(Organization, blank=True, null=True)
-    group = models.ForeignKey('groups.Group', blank=True, null=True)
 
     @property
     def obj(self):
-        return self.person or self.organization or self.group or None
+        return self.person or self.organization or None
 
     @property
     def type(self):
@@ -241,8 +205,6 @@ class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
             return "person"
         elif self.organization_id != None:
             return "organization"
-        elif self.group_id != None:
-            return "group"
         return None
     
     @property
@@ -251,8 +213,6 @@ class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
             return self.person_id
         elif self.organization_id:
             return self.organization_id
-        elif self.group_id:
-            return self.group_id            
         else:
             return None
 
@@ -262,8 +222,6 @@ class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
             sn =  self.person.full_name
         elif self.organization_id:
             sn = self.organization.searchable_name
-        elif self.group_id:
-            sn = self.group.searchable_name
         if sn == NO_NAME_STRING:
             sn = ""
         return sn
@@ -294,8 +252,6 @@ class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
             return render_to_string("people/_search_result_row_person.html",{'obj':self.obj})
         elif self.organization_id:
             return render_to_string("people/_search_result_row_organization.html",{'obj':self.obj})
-        elif self.group_id:
-            return render_to_string("groups/_search_result_row_group.html",{'obj':self.obj})
         else:
             return ""
         
@@ -313,12 +269,6 @@ class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
         proxy.save()
 
     @classmethod
-    def group_record_changed(cls, sender, instance, created=None, *args, **kwargs):
-        proxy, nil = cls.raw_objects.get_or_create(account=instance.account, group=instance, search_group_name=cls.SEARCH_GROUP_NAME)
-        cache.delete(proxy.cache_name)
-        proxy.save()
-
-    @classmethod
     def related_people_record_changed(cls, sender, instance, created=None, *args, **kwargs):
         cls.people_record_changed(sender, instance.person, *args, **kwargs)
 
@@ -326,47 +276,16 @@ class PeopleAndOrganizationsSearchProxy(AccountBasedModel, SearchableItemProxy):
     def related_organization_record_changed(cls, sender, instance, created=None, *args, **kwargs):
         cls.organization_record_changed(sender, instance.organization, *args, **kwargs)
 
-    @classmethod
-    def related_group_record_changed(cls, sender, instance, created=None, *args, **kwargs):
-        cls.group_record_changed(sender, instance.group, *args, **kwargs)
-
 
     @classmethod
     def populate_cache(cls):
-        from groups.models import Group
         [cls.people_record_changed(Person,p) for p in Person.raw_objects.all()]
         [cls.organization_record_changed(Organization,o) for o in Organization.raw_objects.all()]
-        [cls.group_record_changed(Group,g) for g in Group.raw_objects.all()]
 
     @classmethod
     def resave_all_people_and_organizations(cls):
-        from groups.models import Group
         [p.save() for p in Person.raw_objects.all()]
         [o.save() for o in Organization.raw_objects.all()]
-        [g.save() for g in Group.raw_objects.all()]
-
-
-    # overridden to trust accounts
-    @classmethod
-    def search(cls, account, query, delimiter=" ", ignorable_chars=None):
-        # Accept a list of ignorable characters to strip from the query (dashes in phone numbers, etc)
-        if ignorable_chars:
-            ignorable_re = re.compile("[%s]+"%("".join(ignorable_chars)))
-            query = ignorable_re.sub('',query)
-        
-        # Split the querystring by a given delimiter.
-        if delimiter and delimiter != "":
-            queries = query.split(delimiter)
-        else:
-            queries = [query]
-        
-        results = cls.objects_by_account(account).all()
-        for q in queries:
-            if q != "":
-                results = results.filter(qi_simple_searchable_search_field__icontains=q)
-
-        return results
-
 
 
     class Meta(SearchableItemProxy.Meta):
