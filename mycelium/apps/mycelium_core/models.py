@@ -1,7 +1,5 @@
 from django.db import models
 from qi_toolkit.models import SimpleSearchableModel
-from django.core.cache import cache
-from django.db.models.signals import post_save
 from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
 import re
 
@@ -29,7 +27,7 @@ class SearchableItemProxy(SimpleSearchableModel):
         return self.generate_search_string()
 
     class Meta(object):
-        abstract = True
+        # abstract = True
         ordering = ["sorting_name","-id"]
 
     @property

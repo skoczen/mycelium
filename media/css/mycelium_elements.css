@@ -52,7 +52,7 @@ main_nav a.current {
 	color: #FFF;
 }
 main_nav a.first {
-	border-left: 1px solid #DDD;
+	border-left: 1px solid #EEE;
 }
 main_nav a.logo {
 	background-image: url("../images/goodcloud-logo-40.png");
