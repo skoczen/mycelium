@@ -12,5 +12,9 @@ urlpatterns = parser.patterns('',
     url(r'group/delete$',                                            views.delete_group,                            name='delete_group'),    
     url(r'group/{group_id:digits}/save-basic$',                      views.save_basic_info,                         name='save_basic_info'),
     url(r'group/{group_id:digits}/members-partial$',                 views.group_members_partial,                   name='group_members_partial'),
+
+    url(r'search$',                                                  views.search,                                  name='search'),
+    url(r'search-results$',                                          views.search_results,                          name='search_results'),
+
     
 )

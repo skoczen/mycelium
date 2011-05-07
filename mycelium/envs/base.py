@@ -175,7 +175,7 @@ INSTALLED_APPS = (
     'groups',
     'rules',
     'accounts',
-
+    'dashboard',
 
     'djangosanetesting',
 )
@@ -186,7 +186,7 @@ TEMPLATE_DIRS = (
 GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-20296975-1'
 ANALYTICAL_INTERNAL_IPS = ['127.0.0.1', '192.168.2.164']
 
-LOGIN_REDIRECT_URL = "/people/"
+LOGIN_REDIRECT_URL = "/dashboard/"
 AUTH_PROFILE_MODULE = "accounts.UserAccount"
 
 CMS_TEMPLATES = (

@@ -12,7 +12,7 @@ from django.views.decorators.cache import cache_page
 from people.models import Person, Organization, PeopleAndOrganizationsSearchProxy, Employee
 from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
 
-from volunteers.views import _render_people_volunteer_tab 
+from volunteers.views import _render_people_volunteer_tab, _people_volunteer_tab_context
 from conversations.views import _render_people_conversations_tab
 from donors.views import _render_people_donor_tab
 from recent_activity.views import _render_people_recent_activity_tab 
@@ -21,20 +21,20 @@ from generic_tags.views import _render_people_tag_tab
 
 @render_to("people/search.html")
 def search(request):
-    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).all()
+    search_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).all()
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":
-            people_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
+            search_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
     return locals()
 
 @json_view
 def search_results(request):
-    people_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).all()
+    search_proxies = PeopleAndOrganizationsSearchProxy.objects_by_account(request.account).all()
     if 'q' in request.GET:
         q = request.GET['q']
         if q != "":
-            people_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
+            search_proxies = PeopleAndOrganizationsSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
 
     return {"fragments":{"main_search_results":render_to_string("people/_search_results.html", locals())}}
 
@@ -54,7 +54,8 @@ def _basic_forms(person, request):
 def person(request, person_id):
     person = get_or_404_by_account(Person, request.account, person_id)
     (form, employee_formset) = _basic_forms(person, request)
-    return locals()
+    c = locals()
+    return _people_volunteer_tab_context(c)
 
 @json_view
 def save_person_basic_info(request, person_id):

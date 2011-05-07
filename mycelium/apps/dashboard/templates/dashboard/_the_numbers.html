@@ -1,0 +1,49 @@
+{% load humanize %}
+<column_content>
+<div class="number_row total_volunteer_hours">
+	<number>{{total_volunteer_hours|floatformat:0|intcomma}}</number>
+	<description>volunteer{{total_volunteer_hours|pluralize}} hours</description>
+</div>
+
+<div class="number_row total_donors">
+	<number>{{total_donations|floatformat:0|intcomma}}</number>
+	<description>donation{{total_donations|pluralize}} this year</description>
+</div>
+
+<div class="number_row total_donors">
+	<number>{{total_donors|floatformat:0|intcomma}}</number>
+	<description>donor{{total_donors|pluralize}} this year</description>
+</div>
+
+
+<div class="number_row total_donations">
+	<number>$ {{average_donation|floatformat:2|intcomma}}</number>
+	<description>average donation this year</description>
+</div>
+
+{# <div class="number_row total_donations"> #}
+{# 	<number>$ {{total_donation_amount|floatformat:0|intcomma}}</number> #}
+{# 	<description>donated this year</description> #}
+{# </div> #}
+
+
+<div class="number_row total_people">
+	<number>{{total_people|intcomma}}</number>
+	<description>{{total_people|pluralize:"person,people"}}</description>
+</div>
+
+<div class="number_row total_orgs">
+	<number>{{total_orgs|intcomma}}</number>
+	<description>organization{{total_orgs|pluralize}}</description>
+</div>
+
+<div class="number_row total_groups">
+	<number>{{total_groups|intcomma}}</number>
+	<description>group{{total_groups|pluralize}}</description>
+</div>
+
+<div class="number_row total_tags">
+	<number>{{total_taggeditems|intcomma}}</number>
+	<description>tag{{total_taggeditems|pluralize}}</description>
+</div>
+</column_content>

@@ -72,7 +72,7 @@ class AccountTestAbstractions(object):
 
     def go_to_the_manage_accounts_page(self):
         sel = self.selenium
-        sel.click("link=More")
+        sel.click("css=.admin_btn")
         sel.wait_for_page_to_load("30000")
         sel.click("css=.users_button")
         sel.wait_for_page_to_load("30000")
@@ -80,7 +80,7 @@ class AccountTestAbstractions(object):
 
     def go_to_the_account_page(self):
         sel = self.selenium
-        sel.click("link=More")
+        sel.click("css=.admin_btn")
         sel.wait_for_page_to_load("30000")
         sel.click("css=.account_button")
         sel.wait_for_page_to_load("30000")
@@ -108,7 +108,7 @@ class AccountTestAbstractions(object):
 
     def go_to_my_account_page(self):
         sel = self.selenium
-        sel.click("link=More")
+        sel.click("css=.admin_btn")
         sel.wait_for_page_to_load("30000")
         sel.click("css=.my_account_button")
         sel.wait_for_page_to_load("30000")

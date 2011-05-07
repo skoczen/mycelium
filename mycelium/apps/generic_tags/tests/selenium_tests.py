@@ -413,7 +413,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
     def test_that_the_manage_tags_link_works_from_the_more_page(self):
         sel = self.selenium
         self.open("/people")
-        self.click_and_wait("link=More")
+        self.click_and_wait("css=.admin_btn")
         self.click_and_wait("css=.tag_button")
         assert sel.is_text_present("Manage Tags")
 

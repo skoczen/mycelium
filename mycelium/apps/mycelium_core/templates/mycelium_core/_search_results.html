@@ -1,0 +1,15 @@
+{% if search_proxies %}
+<table class="results_table global_results_table striped results_found">
+{% for p in search_proxies %}{{p.search_result_row|safe}}{% endfor %}
+</table>
+{% else %}
+{% if q %}
+<table class="global_results_table no_people_found">
+<tr><td>
+	No results found for search "{{q}}".
+</td></tr>
+</table>
+{% else %}
+{# 	No search. #}
+{% endif %}
+{% endif %}

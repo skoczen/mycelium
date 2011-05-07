@@ -24,6 +24,15 @@ class Account(TimestampModelMixin):
     agreed_to_terms = models.BooleanField()
     plan = models.ForeignKey(Plan, blank=True)
 
+    challenge_has_imported_contacts      = models.BooleanField(default=False)
+    challenge_has_set_up_tags            = models.BooleanField(default=False)
+    challenge_has_added_board            = models.BooleanField(default=False)
+    challenge_has_created_other_accounts = models.BooleanField(default=False)
+    challenge_has_downloaded_spreadsheet = models.BooleanField(default=False)
+    challenge_submitted_support          = models.BooleanField(default=False)
+    has_completed_all_challenges         = models.BooleanField(default=False)  # A separate field to support when the challenges change.
+    has_completed_any_challenges         = models.BooleanField(default=False)  
+    
     def __unicode__(self):
         return "%s" % self.name
 
@@ -58,6 +67,13 @@ class Account(TimestampModelMixin):
         for ua in instance.useraccount_set.all():
             ua.user.delete()
 
+
+    def check_challenge_progress(self):
+        """This function checks each uncompleted challenge to see if it's been done,
+           and updates the boolean fields as needed"""
+        
+        pass
+
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)
 
@@ -83,7 +99,7 @@ class UserAccount(TimestampModelMixin):
     user = models.ForeignKey(User, db_index=True)
     account = models.ForeignKey(Account, db_index=True)
     access_level = models.ForeignKey(AccessLevel)
-    # nickname = models.CharField(max_length=255)
+    nickname = models.CharField(max_length=255, blank=True, null=True)
     
     @property
     def denamespaced_username(self):
@@ -113,6 +129,19 @@ class UserAccount(TimestampModelMixin):
     def is_volunteer(self):
         return self.access_level == AccessLevel.volunteer()
 
+    @property
+    def nickname_or_full_name(self):
+        if self.nickname:
+            return self.nickname
+        else:
+            return self.full_name
+    
+    @property
+    def best_nickname_guess(self):
+        if self.nickname:
+            return self.nickname
+        else:
+            return self.full_name[:self.full_name.find(" ")]
 
     def __unicode__(self):
         return "%s with %s" % (self.denamespaced_username, self.account)

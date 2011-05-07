@@ -15,7 +15,7 @@ import random
 @render_to("reports/search.html")
 def search(request):
     # TODO: this is obnoxious.  Fix it.
-    section = "more"
+    section = "reports"
     return locals()
 
 @render_to("reports/detail_volunteer.html")
@@ -23,14 +23,14 @@ def detail(request, report_id):
     # report = get_or_404_by_account(Report, request.account, report_id)
     if report_id == "new":
         new_report == True
-    section = "more"
+    section = "reports"
     people = Person.objects_by_account(request.account).order_by("?").all()
     hours = [random.randint(2,280) for i in range(0,50)]
     return locals()
 
 # TODO: clear this out
 def report_demo_page(request):
-    section = "more"
+    section = "reports"
     people = Person.objects_by_account(request.account).order_by("?").all()
     hours = [random.randint(2,280) for i in range(0,50)]
     return locals()

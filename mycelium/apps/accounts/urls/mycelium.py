@@ -23,6 +23,6 @@ urlpatterns = parser.patterns('',
    url(r'^accounts/save-my-account-info$',               views.save_my_account_info                                                           , name="save_my_account_info"      ),
    url(r'^accounts/change-my-password$',                 views.change_my_password                                                             , name="change_my_password"        ),
 
-   # Temporary redirect to people
-    url(r'^$',                                           views.dashboard                                                                      , name="dashboard"              ),
+   # Redirect to dashboard
+    url(r'^$',                                           views.dashboard                                                                      , name="dashboard"                 ),
 )

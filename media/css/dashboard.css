@@ -1,0 +1,125 @@
+dashboard {
+	display: block;
+	padding: 0px 20px 20px 20px;
+}
+.dashboard_title {
+	font-size: 48px;
+	text-align: center;
+	color: #BBB;
+	margin-top: -10px;
+	margin-bottom: 10px;
+	/*text-shadow: 1px 1px 1px rgba(0,0,0,0.2);*/
+}
+salutation {
+	font-size: 30px;
+}
+
+salutation, .welcome_text, .nickname_question {
+	display: block;
+	margin: 0px 10px;
+}
+.nickname_no_followup {
+	display: block;
+	padding: 6px 0px;
+	font-size: 18px;
+	display: none;
+}
+.nickname_no_followup .followup_question {
+	float: left;
+	padding: 2px 6px 0px 0px;
+	color: #454545;
+}
+.nickname_no_followup .save_new_nickname {
+	padding: 4px 10px;
+}
+.welcome_text {
+	font-size: 18px;
+}
+.nickname_question {
+	margin-top: 2px;
+	margin-bottom: 10px;
+	color: #888;
+}
+
+.dashboard_panel_table {
+	width: 100%;
+}
+.dashboard_panel_table .left_col {
+	width: 60%;
+	padding: 10px;
+	padding-right: 4%;
+}
+.dashboard_panel_table .right_col {
+	width: 40%;
+	padding: 10px;
+}
+.dashboard_panel_table .full_col {
+	padding: 0px 10px;
+}
+
+.dashboard_panel_table column_header {
+	font-size: 24px;
+	border: 1px solid #CCC;
+	border-width: 0px 0px 1px 0px;
+	display: block;
+	width: 100%;
+	padding-top: 20px;
+	color: #111;
+}
+
+challenge {
+	display: block;
+	padding: 10px 0px 10px 40px;
+	background-image: url("../images/checkbox-40-off.png");
+	background-repeat: no-repeat;
+	background-position: 0px 2px;
+}
+challenge.complete {
+	background-image: url("../images/checkbox-40-on.png");
+	color: #BBB;
+}
+challenge title_text {
+	display: block;
+	font-size: 24px;
+
+}
+challenge description {
+	display: block;
+}
+
+.challenge_description {
+	color: #777;
+	font-size: 15px;
+	margin-top: 5px;
+}
+.number_row {
+	clear: left;
+	position: relative;
+	display: block;
+}
+.number_row number {
+	display: block;
+	float: left;
+	font-size: 36px;
+	width: 130px;
+	text-align: right;
+	white-space: nowrap;
+}
+.number_row description {
+	font-size: 20px;
+	color: #AAA;
+	padding: 10px 0px 0px 0px;
+	margin-left: 140px;
+	display: block;
+}
+column_content {
+	display: block;
+	padding: 2px 6px;
+}
+column_content.completed_goodcloud_challenges {
+	padding: 4px 0px 2px 50px;
+	background-image: url("../images/checkbox-40-on.png");
+	background-repeat: no-repeat;
+	background-position: 6px 0px;
+	
+}

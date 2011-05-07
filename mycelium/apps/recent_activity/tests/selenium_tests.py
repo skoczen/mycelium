@@ -23,10 +23,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstra
     # def tearDown(self):
     #     self.account.delete()
 
-    def test_recent_activity_tab_is_a_stub(self):
-        sel = self.selenium
-        self.create_person_and_go_to_recent_activity_tab()
-        assert sel.is_text_present("Recent Activity's not done quite yet, but it's coming!")
+    # def test_recent_activity_tab_is_a_stub(self):
+    #     sel = self.selenium
+    #     self.create_person_and_go_to_recent_activity_tab()
+    #     assert sel.is_text_present("Recent Activity's not done quite yet, but it's coming!")
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 

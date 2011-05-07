@@ -30,7 +30,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         sel = self.selenium
         self.create_new_group_and_return_to_search()
 
-        self.click_and_wait("link=People")
+        self.click_and_wait("link=Groups")
         sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Grou")
@@ -201,7 +201,17 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         sel.select("css=rule:not(.empty):last left_side select", "have any tag that")
         assert sel.is_element_present("css=rule:nth(0) right_side input[type=text]")
     
-    
+
+    def test_that_people_do_not_show_in_group_search(self):
+        sel = self.selenium
+        self.create_john_smith_and_verify()
+        self.create_new_group_and_return_to_search(new_name="My New Group")
+
+        sel.type("css=#id_search_query", "john smit")
+        time.sleep(3)
+        assert not sel.is_text_present("John Smith")
+        assert sel.is_text_present("No groups found for search")
+            
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
@@ -217,7 +227,8 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
     
     def test_that_blank_groups_show_at_the_top_of_the_search(self):
         sel = self.selenium
-        self.open("/people/")
+        self.open("/")
+        self.click_and_wait("link=Groups")
         assert not sel.is_text_present("No Name")
         sel.click("link=New Group")
         sel.wait_for_page_to_load("30000")
@@ -252,7 +263,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         sel = self.selenium
         self.create_new_group()
         sel.click("css=.start_edit_btn")
-        time.sleep(40)
+        time.sleep(4)
         start_people_count = sel.get_text("css=fragment[name=group_member_count] .count")
         start_member_list = sel.do_command("getHTML",("css=fragment[name=group_member_list]",))
         self.create_a_new_rule(left_side="last volunteer shift", operator="is before", right_side="02/12/2011")
@@ -289,4 +300,3 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         time.sleep(5)        
         self.assertEqual(start_people_count,sel.get_text("css=fragment[name=group_member_count] .count"))
         self.assertEqual(start_member_list,sel.do_command("getHTML",("css=fragment[name=group_member_list]",)))
-

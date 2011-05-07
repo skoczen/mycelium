@@ -16,28 +16,48 @@
 	{% js "/js/contrib/autocolumn.min.js" %}
 	{% js "/js/mycelium/mycelium_elements.js" %}
 	{% js "/js/mycelium/generic_fields.js" %}
-	{% js "/js/mycelium/mycelium_search.js" %}	
+	{% js "/js/mycelium/mycelium_search.js" %}
+	{% js "/js/mycelium/mycelium_top_search.js" %}
+
+<script>
+var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
+</script>
 {# {% else %} #}
 {# 	{% js "/js/mycelium/mycelium_base_all.js" %} #}
 {# {% endif %} #}
 {% endblock %}
 {% block content %}
 	{% block nav %}
-	<logo>
-		GoodCloud
-	</logo>
+{# 	<logo>GoodCloud</logo> #}
 	<main_nav>{% spaceless %}
-		<a href="{% url people:search %}" {% if not section %}class="current"{% endif %}>People</a>
-		<a href="#">Volunteers</a>
-		<a href="#">Donors</a>
-		{# <a href="#">Fund</a> #}
-		{# <a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports</a> #}
-		{# <a href="#">Communicate</a> #}
+		<a href="{% url dashboard:dashboard %}" class="logo"></a>
+		<input type="search" id="global_search" name="global_search" placeholder="Everything in GoodCloud..." />
+		<div class="username_and_logout">
+			<div class="username">{{request.useraccount.full_name}}</div>
+			{% if request.useraccount.is_admin %}
+				<a href="{% url core:more_menu %}" class="admin_btn mycelium_btn mycelium_grey mycelium_active_grey" >Admin</a>				
+			{% else %}
+				<a href="{% url accounts:my_account %}" class="my_account_btn" >Account</a>
+			{% endif %}
+			
+			<a href="{% url accounts:logout %}" class="logout_btn" >Logout</a>
+		</div>
+		{# <a href="{% url core:more_menu %}" class="nav_btn {% if section == "more" %}current{% endif %}">Admin</a> #}
 		{# <a href="#">Events</a> #}
-		<a href="{% url core:more_menu %}" class="{% if section == "more" %}current{% endif %}">More</a>
-		<a href="{% url accounts:logout %}" class="logout_btn" >Logout <small>({{request.user.get_profile.denamespaced_username}})</small></a>
+		{# <a href="#">Communicate</a> #}
+		{# <a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports</a> #}
+		{# <a href="#">Fund</a> #}
+		{# <a href="#">Donors</a> #}
+		{# <a href="#">Volunteers</a> #}
+		
+		{# <a href="{% url people:new_person %}" >New Person</a> #}
+		<a href="{% url reports:search %}" class="nav_btn {% if section == "reports" %}current{% endif %}">Spreadsheets</a>
+		<a href="{% url groups:search %}" class="nav_btn {% if section == "groups" %}current{% endif %}">Groups</a>
+		<a href="{% url people:search %}" class="nav_btn first {% if not section %}current{% endif %}">People</a>
+		{# <a href="{% url dashboard:dashboard %}" class="nav_btn {% if section == "dashboard" %}current{% endif %}">Dashboard</a> #}
 		
 	{% endspaceless %}</main_nav>
+	<div id="global_search_results"><fragment name="global_search_results" action="replace"></fragment></div>
 	{% endblock %}
 	
 	{% block page %}

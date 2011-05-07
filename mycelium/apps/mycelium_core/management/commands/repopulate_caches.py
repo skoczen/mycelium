@@ -5,6 +5,7 @@ import subprocess
 from os.path import abspath, join
 
 from people.models import PeopleAndOrganizationsSearchProxy
+from groups.models import GroupSearchProxy
 
 class Command(BaseCommand):
     help = "Repopulate the search caches."
@@ -12,3 +13,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         PeopleAndOrganizationsSearchProxy.populate_cache()
+        GroupSearchProxy.populate_cache()

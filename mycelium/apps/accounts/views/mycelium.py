@@ -60,7 +60,7 @@ def login(request, template_name='registration/login.html',
 
 
 from qi_toolkit.helpers import *
-from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm, UserFormForUserAccount
+from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm, UserFormForUserAccount, UserAccountNicknameForm
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from accounts.models import UserAccount
@@ -76,7 +76,7 @@ def _account_forms(request):
 @render_to("accounts/manage_users.html")
 def manage_users(request):
     if not request.useraccount.is_admin:
-        return HttpResponseRedirect(reverse("core:more_menu"))
+        return HttpResponseRedirect(reverse("dashboard:dashboard"))
 
     user_access_formset, new_user_form = _account_forms(request)
     return locals()
@@ -129,7 +129,7 @@ def save_new_account(request):
 
 
 def dashboard(request):
-    return HttpResponseRedirect(reverse("people:search"))
+    return HttpResponseRedirect(reverse("dashboard:dashboard"))
 
 @render_to("accounts/manage_account.html")
 def manage_account(request):
@@ -147,17 +147,29 @@ def save_account_info(request):
     return {"success":success}
 
 
+def _my_forms(request):
+    data = None
+    if request.method == "POST":
+        data = request.POST
+
+    form = UserFormForUserAccount(data, instance=request.useraccount_on_master.user)
+    useraccount_form = UserAccountNicknameForm(data, instance=request.useraccount)
+
+    return form, useraccount_form
+
 @render_to("accounts/manage_my_account.html")
 def my_account(request):
-    form = UserFormForUserAccount(instance=request.useraccount.user)
+    section = "more"
+    form, useraccount_form = _my_forms(request)
     return locals()
 
 @json_view
 def save_my_account_info(request):
     success = False
-    form = UserFormForUserAccount(request.POST, instance=request.useraccount_on_master.user)
-    if form.is_valid():
+    form, useraccount_form = _my_forms(request)
+    if form.is_valid() and useraccount_form.is_valid():
         form.save()
+        useraccount_form.save()
         success = True
     
 

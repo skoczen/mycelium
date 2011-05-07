@@ -96,7 +96,10 @@
                 if (data.options.bind_to_change) {
                     data.search_element.live("change",data.queue_searching);
                 }
-                data.search_element.bind('keyup', 'return', function(){
+                data.search_element.bind('keyup', 'Return', function(){
+                    data.search_element.trigger("myceliumSearch.return_pressed");
+                });
+                data.search_element.bind('keyup', 'Enter', function(){
                     data.search_element.trigger("myceliumSearch.return_pressed");
                 });
 

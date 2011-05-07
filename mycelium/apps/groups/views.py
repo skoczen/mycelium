@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
-from groups.models import Group
+from groups.models import Group, GroupSearchProxy
 from groups.forms import GroupForm, GroupRuleFormset
 
 def _render_people_group_tab(context):
@@ -25,8 +25,32 @@ def _basic_forms(group, request, no_data=False):
     rule_formset = GroupRuleFormset(data, instance=group, account=account)
     return group_form, rule_formset
 
+@render_to("groups/search.html")
+def search(request):
+    section = "groups"
+    search_proxies = GroupSearchProxy.objects_by_account(request.account).all()
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if q != "":
+            search_proxies = GroupSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
+    return locals()
+
+@json_view
+def search_results(request):
+    section = "groups"
+    search_proxies = GroupSearchProxy.objects_by_account(request.account).all()
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if q != "":
+            search_proxies = GroupSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
+
+    return {"fragments":{"main_search_results":render_to_string("groups/_search_results.html", locals())}}
+
+
+
 @render_to("groups/group.html")
 def group(request, group_id):
+    section = "groups"
     group = get_or_404_by_account(Group, request.account, group_id)
     members = group.members
     form, rule_formset = _basic_forms(group, request)
@@ -65,7 +89,7 @@ def delete_group(request):
     except:
         pass
 
-    return HttpResponseRedirect(reverse("people:search"))
+    return HttpResponseRedirect(reverse("groups:search"))
 
 @json_view
 def group_members_partial(request, group_id):

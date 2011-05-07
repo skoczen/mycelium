@@ -186,6 +186,14 @@ class UserFormForUserAccount(ModelForm):
         model = User
         fields = ("first_name", "username", "email",)
 
+class UserAccountNicknameForm(ModelForm):
+
+    class Meta:
+        model = UserAccount
+        fields = ("nickname",)
+
+
+
 class NewUserAccountForm(UserAccountAccessForm):
     username    = CharField(max_length=100, required=True)
     email       = CharField(max_length=255, required=True)

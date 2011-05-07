@@ -71,8 +71,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         ua = Factory.useraccount(account=a2)
         self.go_to_the_login_page("test2")
         self.log_in(ua=ua)
-        # sel.open("/people")
 
+        sel.click("link=People")
+        sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "joh smith 555")
         sel.key_down("css=#id_search_query","5")
@@ -175,12 +176,12 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         time.sleep(30)
         assert sel.is_text_present("not found")
 
-    def test_that_logging_in_takes_you_to_the_people_page(self):
+    def test_that_logging_in_takes_you_to_the_dashboard(self):
         sel = self.selenium
         self.go_to_the_login_page()
         self.log_in()
         self.assert_login_succeeded()
-        assert sel.is_element_present("link=New Person")
+        assert sel.is_element_present("css=salutation")
 
     def test_that_logging_in_after_trying_to_reach_a_specific_page_takes_you_to_that_page(self):
         sel = self.selenium
@@ -429,33 +430,26 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.setup_for_logged_in()
         self.go_to_the_login_page()
         self.log_in(username="staff", password="staff")
-        sel.click("link=More")
-        sel.wait_for_page_to_load("30000")
-        assert not sel.is_element_present("css=.users_button")
+        assert not sel.is_element_present("css=.admin_btn")
         self.go_to_the_login_page()
         self.log_in(username="volunteer", password="volunteer")
-        sel.click("link=More")
-        sel.wait_for_page_to_load("30000")
-        assert not sel.is_element_present("css=.users_button")
+        assert not sel.is_element_present("css=.admin_btn")
     
-    def test_that_staff_and_volunteers_who_try_to_go_to_the_account_link_are_redirected_to_more(self):
+    def test_that_staff_and_volunteers_who_try_to_go_to_the_account_link_are_redirected_out(self):
         sel = self.selenium
         self.setup_for_logged_in()
         self.go_to_the_login_page()
         self.log_in(username="staff", password="staff")
-        sel.click("link=More")
-        sel.wait_for_page_to_load("30000")
         self.open(self.MANAGE_USERS_URL)
         sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("link=More")
+        time.sleep(40)
+        assert sel.is_element_present("css=salutation")
 
         self.go_to_the_login_page()
         self.log_in(username="volunteer", password="volunteer")
-        sel.click("link=More")
-        sel.wait_for_page_to_load("30000")
         self.open(self.MANAGE_USERS_URL)
         sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("link=More")
+        assert sel.is_element_present("css=salutation")
 
 
     def test_that_editing_the_organization_name_works(self):
@@ -479,12 +473,14 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.type("css=#id_first_name", "John Williams")
         sel.type("css=#id_email", "jwill@example.com")
         sel.type("css=#id_username", "jwill")
+        sel.type("css=#id_nickname", "j-dog")
         time.sleep(4)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("John Williams")
         assert sel.is_text_present("jwill@example.com")
         assert sel.is_text_present("jwill")
+        assert sel.is_text_present("j-dog")
 
     def test_that_changing_my_username_works_on_login(self):
         sel = self.selenium
@@ -517,6 +513,28 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.wait_for_page_to_load("30000")
         self.log_in(username="admin", password="test123")
 
+    def test_staff_see_an_account_link(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_login_page()
+        self.log_in(username="staff", password="staff")
+        assert sel.is_element_present("css=.my_account_btn")
+        assert not sel.is_element_present("css=.admin_btn")
+
+    def test_volunteers_see_an_account_link(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_login_page()
+        self.log_in(username="volunteer", password="volunteer")
+        assert sel.is_element_present("css=.my_account_btn")
+        assert not sel.is_element_present("css=.admin_btn")
+
+
+    def admins_see_the_admin_link_and_not_an_account_link(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        assert not sel.is_element_present("css=.my_account_btn")
+        assert sel.is_element_present("css=.admin_btn")
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
