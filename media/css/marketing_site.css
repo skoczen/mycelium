@@ -626,6 +626,10 @@ social_links {
 	padding-top: 300px;
 }
 
+.about_us .page_header {
+	font-size: 48px;
+}
+
 .contact_us .page_header {
 	font-size: 60px;
 }
