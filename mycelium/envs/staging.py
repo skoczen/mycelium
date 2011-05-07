@@ -1,6 +1,6 @@
 from base import *
-ENV = "LIVE"
-ROLE = "STAGING"
+ENV = "STAGING"
+ROLE = ENV
 
 DATABASES = {
     'default': {
