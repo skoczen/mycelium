@@ -21,10 +21,20 @@ def _account_numbers_dict(account):
     start_of_this_year = datetime.date(month=1, day=1, year=datetime.date.today().year)
     
     total_donations = Donation.objects_by_account(account).filter(date__gte=start_of_this_year).count()
+    if not total_donations:
+        total_donations = 0
     total_donors = Donation.objects_by_account(account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Count('donor', distinct=True))["donor__count"]
+    if not total_donors:
+        total_donors = 0
     total_donation_amount = Donation.objects_by_account(account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Sum('amount'))["amount__sum"]
+    if not total_donation_amount:
+        total_donation_amount = 0
     average_donation = Donation.objects_by_account(account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Avg('amount'))["amount__avg"]
+    if not average_donation:
+        average_donation = 0
     total_volunteer_hours = CompletedShift.objects_by_account(account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Sum('duration'))["duration__sum"]
+    if not total_volunteer_hours:
+        total_volunteer_hours = 0
     total_people = Person.objects_by_account(account).count()
     total_orgs = Organization.objects_by_account(account).count()
     total_groups = Group.objects_by_account(account).count()
