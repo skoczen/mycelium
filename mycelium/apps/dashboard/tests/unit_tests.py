@@ -20,38 +20,61 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
-        pass
+        self.a1 = Factory.create_demo_site("test1", quick=True, mostly_empty=True)
 
     def test_challenge_has_imported_contacts(self):
-        assert True == "Test written"
+    # Expected fail
+        self.a1.check_challenge_progress()
+        assert self.a1.challenge_has_imported_contacts == True
         
     def test_challenge_has_set_up_tags(self):
-        assert True == "Test written"
+        Factory.tag_person(self.a1)
+        self.a1.check_challenge_progress()
+        assert self.a1.challenge_has_set_up_tags == True
         
     def test_challenge_has_added_board(self):
-        assert True == "Test written"
+        Factory.tag(self.a1, name="Board of Directors")
+        bg = Factory.group(self.a1,"board of directors")
+        Factory.grouprule(self.a1, "have any tag that","contains","Board of Directors", group=bg)
+        self.a1.check_challenge_progress()
+        assert self.a1.challenge_has_added_board == True
         
     def test_challenge_has_created_other_accounts(self):
-        assert True == "Test written"
+        Factory.useraccount(self.a1)
+        self.a1.check_challenge_progress()
+        assert self.a1.challenge_has_created_other_accounts == True
         
     def test_challenge_has_downloaded_spreadsheet(self):
-        assert True == "Test written"
+    # Expected fail
+        self.a1.check_challenge_progress()
+        assert self.a1.challenge_has_downloaded_spreadsheet == True
         
     def test_challenge_has_submitted_support(self):
-        assert True == "Test written"
+        self.a1.challenge_has_submitted_support = True
+        self.a1.save()
+        self.a1.check_challenge_progress()
+        assert self.a1.challenge_has_submitted_support == True
         
     def test_has_completed_all_challenges(self):
-        assert True == "Test written"
+    # Expected fail until all others succeed.
+        self.test_challenge_has_imported_contacts()
+        self.test_challenge_has_set_up_tags()
+        self.test_challenge_has_added_board()
+        self.test_challenge_has_created_other_accounts()
+        self.test_challenge_has_downloaded_spreadsheet()
+        self.test_challenge_has_submitted_support()
+        self.a1.check_challenge_progress()
+        assert self.a1.has_completed_all_challenges == True
         
     def test_has_completed_any_challenges(self):
-        assert True == "Test written"
-        
+        self.test_challenge_has_created_other_accounts()
+        self.a1.check_challenge_progress()
+        assert self.a1.has_completed_any_challenges == True
 
     def test_by_the_numbers_numbers(self):
         # test against hand-counted queries
         from dashboard.views import _account_numbers_dict
-        a1 = Factory.create_demo_site("test1", quick=True)
-        Factory.create_demo_site("test2", quick=True)
+        a1 = Factory.create_demo_site("test2", quick=True)
 
         nums = _account_numbers_dict(a1)
 

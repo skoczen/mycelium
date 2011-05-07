@@ -90,10 +90,10 @@ class Factory(QiFactory):
         return Tag.raw_objects.get_or_create(account=account, name=name, tagset=tagset)[0]    
 
     @classmethod
-    def tag_person(cls, tag_name=None, tagset=None, person=None):
-        tag = cls.tag(name=tag_name, tagset=tagset)
+    def tag_person(cls, account, tag_name=None, tagset=None, person=None):
+        tag = cls.tag(account, name=tag_name, tagset=tagset)
         if not person:
-            person= cls.person()
+            person= cls.person(account)
 
         tag.add_tag_to_person(person)
 

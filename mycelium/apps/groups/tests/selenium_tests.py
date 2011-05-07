@@ -131,6 +131,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
 
         # two refreshes because of a race condition between the save and the read
         sel.refresh()
+        sel.refresh()
         sel.wait_for_page_to_load("30000")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side .view_field"), "have any tag that")
         self.assertEqual(sel.get_text("css=rule:nth(0) operator .view_field"), "contains")
@@ -234,7 +235,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         sel.wait_for_page_to_load("30000")
         # celery catch-up
         time.sleep(5)
-        self.click_and_wait("link=Back to All People and Groups")
+        self.click_and_wait("link=Back to Groups")
         
 
         self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
@@ -252,7 +253,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         time.sleep(1)
         sel.type("css=#basic_info_form #id_name","A Completely Different name!!")
         time.sleep(4)
-        self.click_and_wait("link=Back to All People and Groups")
+        self.click_and_wait("link=Back to Groups")
 
         sel.type("css=#id_search_query", "name!!")
         time.sleep(2)

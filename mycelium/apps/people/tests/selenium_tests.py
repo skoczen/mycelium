@@ -735,12 +735,12 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel = self.selenium
         self.create_john_smith()
         time.sleep(4)
-        assert not sel.is_text_present("Volunteer Shifts")
-        sel.click("css=.detail_tab[href=#volunteer]")
+        assert not sel.is_text_present("Add a Donation")
+        sel.click("css=.detail_tab[href=#donor]")
         time.sleep(2)
-        assert sel.is_text_present("Volunteer Shifts")
+        assert sel.is_text_present("Add a Donation")
         self.js_refresh()
-        assert sel.is_text_present("Volunteer Shifts")
+        assert sel.is_text_present("Add a Donation")
 
 
     def test_editing_an_email_or_phone_number_changes_the_search_result(self):
