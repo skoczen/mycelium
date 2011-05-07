@@ -23,7 +23,7 @@ def _account_numbers_dict(account):
     total_donations = int(Donation.objects_by_account(account).filter(date__gte=start_of_this_year).count())
     total_donors = int(Donation.objects_by_account(account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Count('donor', distinct=True))["donor__count"])
     total_donation_amount = Decimal(Donation.objects_by_account(account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Sum('amount'))["amount__sum"])
-    average_donation = Decimal(Donation.objects_by_account(account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Avg('amount'))["amount__avg"])
+    average_donation = float(Donation.objects_by_account(account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Avg('amount'))["amount__avg"])
     total_volunteer_hours = int(CompletedShift.objects_by_account(account).filter(date__gte=start_of_this_year).order_by().all().aggregate(Sum('duration'))["duration__sum"])
     total_people = Person.objects_by_account(account).count()
     total_orgs = Organization.objects_by_account(account).count()
