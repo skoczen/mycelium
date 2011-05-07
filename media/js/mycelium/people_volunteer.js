@@ -3,6 +3,7 @@ $(function(){
     $(".people_volunteer_tab .year_details_link").live("click",volunteerTab.toggle_year_details);
     $(".people_volunteer_tab #new_completed_volunteer_shift .cancel_add_btn").live("click", volunteerTab.cancel_add_shift);
     $(".people_volunteer_tab .delete_shift_btn").live("click",volunteerTab.delete_completed_volunteer_from_people_tab);
+    bind_volunteer_tab_events();
 });
 
 function process_fragments_and_rebind_volunteer_shift_form(json) {
