@@ -37,7 +37,7 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
     def test_challenge_has_downloaded_spreadsheet(self):
         assert True == "Test written"
         
-    def test_challenge_submitted_support(self):
+    def test_challenge_has_submitted_support(self):
         assert True == "Test written"
         
     def test_has_completed_all_challenges(self):
