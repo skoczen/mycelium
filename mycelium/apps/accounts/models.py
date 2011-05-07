@@ -71,8 +71,59 @@ class Account(TimestampModelMixin):
     def check_challenge_progress(self):
         """This function checks each uncompleted challenge to see if it's been done,
            and updates the boolean fields as needed"""
-        
-        pass
+
+        if not self.has_completed_all_challenges:
+            from generic_tags.models import Tag
+            from groups.models import Group
+
+            if not self.challenge_has_imported_contacts:
+                # Requires data import.
+                pass
+
+            if not self.challenge_has_set_up_tags:
+                # One non-standard tag.
+                if Tag.objects_by_account(self).count() > 0:
+                    self.challenge_has_set_up_tags = True
+                                
+            if not self.challenge_has_added_board:
+                # created a tag that contains "board"
+                if Tag.objects_by_account(self).filter(name__icontains="board").count() > 0:
+                    
+                    # and, created a board group with at least one rule on tag
+                    if Group.objects_by_account(self).filter(name__icontains="board").count() > 0:
+                        for g in Group.objects_by_account(self).filter(name__icontains="board").all():
+                            for r in g.rules.all():
+                                if r.is_valid and "board" in r.cleaned_right_side_value.lower():
+                                    self.challenge_has_added_board = True
+
+
+            if not self.challenge_has_created_other_accounts:
+                if self.useraccount_set.all().count() > 1:
+                    self.challenge_has_created_other_accounts = True
+
+            if not self.challenge_has_downloaded_spreadsheet:
+                # Requires data import
+                pass
+
+            if not self.challenge_submitted_support:
+
+                pass
+
+            if not self.has_completed_all_challenges:
+                if self.challenge_has_imported_contacts and self.challenge_has_set_up_tags or\
+                    self.challenge_has_added_board and self.challenge_has_created_other_accounts or\
+                    self.challenge_has_downloaded_spreadsheet and self.challenge_submitted_support:
+                    
+                    self.has_completed_all_challenges = True
+
+            if not self.has_completed_any_challenges:
+                if self.challenge_has_imported_contacts or self.challenge_has_set_up_tags or\
+                   self.challenge_has_added_board or self.challenge_has_created_other_accounts or\
+                   self.challenge_has_downloaded_spreadsheet or self.challenge_submitted_support:
+
+                    self.has_completed_any_challenges = True
+
+            self.save()
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)
