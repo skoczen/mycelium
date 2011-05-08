@@ -52,6 +52,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
     def test_that_the_dashboard_checks_off_appropriately(self):
         assert True == "Test written"
 
+    def test_that_hiding_challenges_complete_hides_them(self):
+        assert True == "Test written"        
+
     def test_the_nothing_done_on_the_checklist_welcome_text(self):
         assert True == "Test written"
 

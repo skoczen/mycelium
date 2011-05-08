@@ -65,3 +65,15 @@ def save_nickname(request):
         success = True
 
     return {'success':success}
+
+def hide_challenge_complete_notice(request):
+    success = False
+    me = request.useraccount
+    me.show_challenges_complete_section = False
+    me.save()
+    success = True
+
+    if request.is_ajax():
+        return HttpResponse(simplejson.dumps({'success':success}))
+    else:
+        return HttpResponseRedirect(reverse("dashboard:dashboard"))

@@ -34,7 +34,7 @@ class Account(TimestampModelMixin):
     challenge_has_logged_volunteer_hours = models.BooleanField(default=False)
     has_completed_all_challenges         = models.BooleanField(default=False)  # A separate field to support when the challenges change.
     has_completed_any_challenges         = models.BooleanField(default=False)  
-    
+
     def __unicode__(self):
         return "%s" % self.name
 
@@ -166,7 +166,9 @@ class UserAccount(TimestampModelMixin):
     account = models.ForeignKey(Account, db_index=True)
     access_level = models.ForeignKey(AccessLevel)
     nickname = models.CharField(max_length=255, blank=True, null=True)
-    
+
+    show_challenges_complete_section     = models.BooleanField(default=True)    
+
     @property
     def denamespaced_username(self):
         return self.user.username[(2+len("%s"%self.account.pk)):]

@@ -84,10 +84,14 @@
 	</td>
 {% else %}
 	<td class="left_col">
+		{% if request.useraccount.show_challenges_complete_section %}
+		<div class="challenges_complete_section">
 		<column_header>GoodCloud Challenges</column_header>
 		<column_content class="completed_goodcloud_challenges plain_text">
-		You've completed all of the GoodCloud challenges, and earned half off your first month!  <a href="#">Hide this section in the future.</a>
+		You've completed all of the GoodCloud challenges, and earned half off your first month!  <span class="challenge_complete_btn_area"><a href="{% url dashboard:hide_challenge_complete_notice %}" class="hide_challenge_complete_link" >Hide this section in the future.</a></span>
 		</column_content>
+		</div>
+		{% endif %}
 		<column_header>GoodCloud News</column_header>
 		{% include "dashboard/_goodcloud_news.html" %}
 	</td>

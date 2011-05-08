@@ -4,6 +4,7 @@ $(function(){
 	$(".save_new_nickname").click(save_new_nickname);
 	$("#id_new_nickname").bind('keydown', 'Enter' ,save_new_nickname);
 	$("#id_new_nickname").bind('keydown', 'Return' ,save_new_nickname);
+	$(".hide_challenge_complete_link").click(hide_challenge_complete);
 });
 
 var nickname = false;
@@ -36,3 +37,20 @@ function update_with_new_nickname(){
      });
 }
 
+function hide_challenge_complete(){
+	link = $(this);
+	$.ajax({
+          url: link.attr("href"),
+          type: "POST",
+          dataType: "json",
+          data: {},
+          mode: 'abort',
+          success: function(json) {
+			 $(".challenge_complete_btn_area").html("Got it!");
+			 setTimeout(function(){
+			 	$(".challenges_complete_section").fadeOut();
+			 },2000);
+          }
+     });
+     return false;
+}
