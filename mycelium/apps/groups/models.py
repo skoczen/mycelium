@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from mycelium_core.models import SearchableItemProxy
-from people.models import NO_NAME_STRING
 from accounts.models import AccountBasedModel
 
 from rules.models import Rule, RuleGroup
@@ -11,6 +10,8 @@ from django.db.models.signals import post_save
 from django.core.cache import cache
 from django.template.loader import render_to_string
 from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
+
+NO_NAME_STRING_GROUP = _("Unnamed Group")
 
 class Group(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, RuleGroup):
     name = models.CharField(max_length=255, blank=True, null=True)
@@ -52,7 +53,7 @@ class Group(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, RuleG
         if self.name and self.name != "":
             return "%s" % (self.name,)
         else:
-            return NO_NAME_STRING
+            return NO_NAME_STRING_GROUP
 
 class GroupRule(AccountBasedModel, Rule):
     group = models.ForeignKey(Group)
@@ -91,7 +92,7 @@ class GroupSearchProxy(SearchableItemProxy):
         sn = ""
         if self.group_id:
             sn = self.group.searchable_name
-        if sn == NO_NAME_STRING:
+        if sn == NO_NAME_STRING_GROUP:
             sn = ""
         return sn
         

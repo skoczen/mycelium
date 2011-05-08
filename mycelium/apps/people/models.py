@@ -11,7 +11,8 @@ add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
 import re
 DIGIT_REGEX = re.compile(r'[^\d]+')
-NO_NAME_STRING = _("No Name")
+NO_NAME_STRING_PERSON = _("Unnamed Person")
+NO_NAME_STRING_ORGANIZATION = _("Unnamed Organization")
 from generic_tags.models import TagSet, Tag
 from django.template.loader import render_to_string
 from django.db.models.signals import post_save
@@ -82,7 +83,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
         if self.first_name or self.last_name:
             return "%s %s" % (self.first_name, self.last_name)
         else:
-            return NO_NAME_STRING
+            return NO_NAME_STRING_PERSON
     
     @property
     def searchable_full_name(self):
@@ -155,7 +156,7 @@ class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, Timest
         if self.name:
             return self.name
         else:
-            return NO_NAME_STRING
+            return NO_NAME_STRING_ORGANIZATION
 
     @property
     def searchable_name(self):
@@ -222,7 +223,7 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
             sn =  self.person.full_name
         elif self.organization_id:
             sn = self.organization.searchable_name
-        if sn == NO_NAME_STRING:
+        if sn == NO_NAME_STRING_PERSON or sn == NO_NAME_STRING_ORGANIZATION:
             sn = ""
         return sn
         

@@ -2,12 +2,12 @@ from test_factory import Factory
 from nose.tools import istest
 from rules.models import LeftSide, Operator, RightSideType, Rule
 from rules.tasks import populate_rule_components_for_an_account
-from groups.models import GroupRule
+from groups.models import GroupRule, NO_NAME_STRING_GROUP
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
 from qi_toolkit.selenium_test_case import QiUnitTestMixin
 from django.db.models import Q
 from django.test import TestCase
-from people.models import Person, NO_NAME_STRING
+from people.models import Person
 from volunteers import VOLUNTEER_STATII
 import datetime
 from generic_tags.models import TagSet, Tag
@@ -55,7 +55,7 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
         group.name = None
         group.save()
         
-        self.assertEqual(NO_NAME_STRING, group.full_name)
+        self.assertEqual(NO_NAME_STRING_GROUP, group.full_name)
 
     def test_searchable_name(self):
         # create a new group rule
