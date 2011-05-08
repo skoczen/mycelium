@@ -28,6 +28,9 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         assert self.a1.challenge_has_imported_contacts == True
         
     def test_challenge_has_set_up_tags(self):
+        self.test_challenge_has_added_board()
+        self.a1.check_challenge_progress()
+        assert self.a1.challenge_has_set_up_tags == False
         Factory.tag_person(self.a1)
         self.a1.check_challenge_progress()
         assert self.a1.challenge_has_set_up_tags == True
@@ -55,6 +58,18 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         self.a1.check_challenge_progress()
         assert self.a1.challenge_has_submitted_support == True
         
+    def test_challenge_has_added_a_donation(self):
+
+        self.a1.check_challenge_progress()
+        assert self.a1.test_challenge_has_added_a_donation == True
+
+        
+    def test_challenge_has_logged_volunteer_hours(self):
+
+        self.a1.check_challenge_progress()
+        assert self.a1.test_challenge_has_logged_volunteer_hours == True
+
+
     def test_has_completed_all_challenges(self):
     # Expected fail until all others succeed.
         self.test_challenge_has_imported_contacts()
@@ -62,7 +77,9 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         self.test_challenge_has_added_board()
         self.test_challenge_has_created_other_accounts()
         self.test_challenge_has_downloaded_spreadsheet()
-        self.test_challenge_has_submitted_support()
+        # self.test_challenge_has_submitted_support()
+        self.test_challenge_has_added_a_donation()
+        self.test_challenge_has_logged_volunteer_hours()
         self.a1.check_challenge_progress()
         assert self.a1.has_completed_all_challenges == True
         

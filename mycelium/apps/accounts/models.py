@@ -30,6 +30,8 @@ class Account(TimestampModelMixin):
     challenge_has_created_other_accounts = models.BooleanField(default=False)
     challenge_has_downloaded_spreadsheet = models.BooleanField(default=False)
     challenge_has_submitted_support      = models.BooleanField(default=False)
+    challenge_has_added_a_donation       = models.BooleanField(default=False)
+    challenge_has_logged_volunteer_hours = models.BooleanField(default=False)
     has_completed_all_challenges         = models.BooleanField(default=False)  # A separate field to support when the challenges change.
     has_completed_any_challenges         = models.BooleanField(default=False)  
     
@@ -75,6 +77,8 @@ class Account(TimestampModelMixin):
         if not self.has_completed_all_challenges:
             from generic_tags.models import Tag
             from groups.models import Group
+            from donors.models import Donation
+            from volunteers.models import CompletedShift
 
             if not self.challenge_has_imported_contacts:
                 # Requires data import.
@@ -82,7 +86,7 @@ class Account(TimestampModelMixin):
 
             if not self.challenge_has_set_up_tags:
                 # One non-standard tag.
-                if Tag.objects_by_account(self).count() > 0:
+                if Tag.objects_by_account(self).count() > 1:
                     self.challenge_has_set_up_tags = True
                                 
             if not self.challenge_has_added_board:
@@ -106,20 +110,31 @@ class Account(TimestampModelMixin):
                 pass
 
             if not self.challenge_has_submitted_support:
-
                 pass
+            
+            if not self.challenge_has_added_a_donation:
+                if Donation.objects_by_account(self).count() > 0:
+                    self.challenge_has_added_a_donation = True
+                
+            if not self.challenge_has_logged_volunteer_hours:
+                if CompletedShift.objects_by_account(self).count() > 0:
+                    self.challenge_has_logged_volunteer_hours = True
 
             if not self.has_completed_all_challenges:
+                # self.challenge_has_submitted_support and \
                 if self.challenge_has_imported_contacts and self.challenge_has_set_up_tags and\
                     self.challenge_has_added_board and self.challenge_has_created_other_accounts and\
-                    self.challenge_has_downloaded_spreadsheet and self.challenge_has_submitted_support:
-                    
+                    self.challenge_has_downloaded_spreadsheet and \
+                    self.challenge_has_added_a_donation and self.challenge_has_logged_volunteer_hours:
+
                     self.has_completed_all_challenges = True
 
             if not self.has_completed_any_challenges:
+                #  self.challenge_has_submitted_support or\
                 if self.challenge_has_imported_contacts or self.challenge_has_set_up_tags or\
-                   self.challenge_has_added_board or self.challenge_has_created_other_accounts or\
-                   self.challenge_has_downloaded_spreadsheet or self.challenge_has_submitted_support:
+                    self.challenge_has_added_board or self.challenge_has_created_other_accounts or\
+                    self.challenge_has_downloaded_spreadsheet or\
+                    self.challenge_has_added_a_donation or self.challenge_has_logged_volunteer_hours:
 
                     self.has_completed_any_challenges = True
 

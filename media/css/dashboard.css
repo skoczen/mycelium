@@ -78,6 +78,9 @@ challenge.complete {
 	background-image: url("../images/checkbox-40-on.png");
 	color: #BBB;
 }
+challenge.complete a.get_started_link {
+	display: none;
+}
 challenge title_text {
 	display: block;
 	font-size: 24px;
