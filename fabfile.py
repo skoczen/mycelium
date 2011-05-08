@@ -5,9 +5,10 @@ setup_env_centos("mycelium","root",
                     'staging_hosts':['digitalmycelium.com'],
                     'production_hosts':[
                                         # '184.73.193.80', 
-                                        '50.17.219.15',
+                                        # '50.17.219.15',
                                         # '50.17.149.171'
                                         '50.17.173.47',
+                                        '50.19.62.192',
                                         ],
                     'production_db_hosts':['ext-mysql.agoodcloud.com'],
                     'staging_db_hosts':['ext-mysql.digitalmycelium.com'],
@@ -31,4 +32,4 @@ def repopulate_search_caches():
     magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py repopulate_search_caches")
 
 def backup_db():
-    magic_run("backup perform --trigger mycelium")
+    magic_run("backup perform --trigger %(project_name)s")

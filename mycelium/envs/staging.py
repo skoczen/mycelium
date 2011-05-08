@@ -8,7 +8,7 @@ DATABASES = {
         'NAME': 'mycelium',
         'USER': 'root',
         'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
-        'HOST': 'int-mysql-staging-master.digitalmycelium.com',
+        'HOST': 'int-mysql-master.digitalmycelium.com',
         'PORT': '3306',
     },
     'slave': {
@@ -16,7 +16,7 @@ DATABASES = {
         'NAME': 'mycelium',
         'USER': 'root',
         'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
-        'HOST': 'int-mysql-staging-slave.digitalmycelium.com',
+        'HOST': 'int-mysql-slave.digitalmycelium.com',
         'PORT': '3306',
     },
 }
