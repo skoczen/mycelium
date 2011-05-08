@@ -255,7 +255,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         sel = self.selenium
         self.open("/")
         self.click_and_wait("link=Groups")
-        assert not sel.is_text_present("No Name")
+        assert not sel.is_text_present("Unnamed Group")
         sel.click("link=New Group")
         sel.wait_for_page_to_load("30000")
         # celery catch-up
@@ -263,7 +263,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         self.click_and_wait("link=Back to Groups")
         
 
-        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        self.assertEqual("Unnamed Group", sel.get_text("css=search_results .result_row:nth(0) .name a"))
 
 
     def test_editing_and_searching_a_group(self):

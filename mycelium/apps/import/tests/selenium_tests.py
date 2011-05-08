@@ -46,7 +46,7 @@ class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions):
         
         self.assertEqual("Start Data Import", sel.get_text("//div[@id='page']/page_title"))
         
-        self.assertEqual("Choose a CSV Spreadsheet.", sel.get_text("css=step[number=1] instruction"))
+        assert sel.is_text_present("Choose a spreadsheet.")
         
         self.assertEqual("Start Import", sel.get_text("link=Start Import"))
         

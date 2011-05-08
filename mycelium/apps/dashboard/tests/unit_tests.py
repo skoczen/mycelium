@@ -59,15 +59,16 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         assert self.a1.challenge_has_submitted_support == True
         
     def test_challenge_has_added_a_donation(self):
-
+        Factory.donation(account=self.a1)
         self.a1.check_challenge_progress()
-        assert self.a1.test_challenge_has_added_a_donation == True
+        assert self.a1.challenge_has_added_a_donation == True
 
         
     def test_challenge_has_logged_volunteer_hours(self):
-
+        p = Factory.person(self.a1)
+        Factory.completed_volunteer_shift(p)
         self.a1.check_challenge_progress()
-        assert self.a1.test_challenge_has_logged_volunteer_hours == True
+        assert self.a1.challenge_has_logged_volunteer_hours == True
 
 
     def test_has_completed_all_challenges(self):

@@ -9,8 +9,8 @@ setup_env_centos("mycelium","root",
                                         # '50.17.149.171'
                                         '50.17.173.47',
                                         ],
-                    'production_db_hosts':['ext-mysql.digitalmycelium.com'],
-                    'staging_db_hosts':['ext-mysql.agoodcloud.com'],
+                    'production_db_hosts':['ext-mysql.agoodcloud.com'],
+                    'staging_db_hosts':['ext-mysql.digitalmycelium.com'],
                     'admin_symlink' : '_admin'
                 }, 
                 overrides={
@@ -29,3 +29,6 @@ def dump_marketing_fixture():
 
 def repopulate_search_caches():
     magic_run("%(work_on)s cd %(project_name)s; %(python)s manage.py repopulate_search_caches")
+
+def backup_db():
+    magic_run("backup perform --trigger mycelium")

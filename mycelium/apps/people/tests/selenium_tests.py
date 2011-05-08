@@ -615,13 +615,13 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.click("link=People")
         sel.wait_for_page_to_load("30000")
 
-        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        self.assertEqual("Unnamed Person", sel.get_text("css=search_results .result_row:nth(0) .name a"))
         sel.focus("css=#id_search_query")
-        sel.type("css=#id_search_query", "No Name")
+        sel.type("css=#id_search_query", "Unnamed Person")
         sel.key_down("css=#id_search_query","5")
         sel.key_up("css=#id_search_query","5")
         time.sleep(3)
-        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        self.assertEqual("Unnamed Person", sel.get_text("css=search_results .result_row:nth(0) .name a"))
         sel.click("css=search_results .result_row:nth(0) .name a")
         sel.wait_for_page_to_load("30000")
         
@@ -632,7 +632,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Person from the database? \n\nDeleting will remove this person, and all their data (contact info, job info, etc).  It cannot be undone.\n\nPress OK to delete Unnamed Person.\nPress Cancel to leave things unchanged.")
         sel.wait_for_page_to_load("30000")
         
-        assert not sel.is_text_present("No Name")
+        assert not sel.is_text_present("Unnamed Person")
     
     
     def test_creating_and_deleting_a_blank_organization(self):
@@ -643,13 +643,13 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.click("link=People")
         sel.wait_for_page_to_load("30000")
 
-        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        self.assertEqual("Unnamed Organization", sel.get_text("css=search_results .result_row:nth(0) .name a"))
         sel.focus("css=#id_search_query")
-        sel.type("css=#id_search_query", "No Name")
+        sel.type("css=#id_search_query", "Unnamed Organization")
         sel.key_down("css=#id_search_query","5")
         sel.key_up("css=#id_search_query","5")
         time.sleep(2)
-        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        self.assertEqual("Unnamed Organization", sel.get_text("css=search_results .result_row:nth(0) .name a"))
 
         sel.click("css=search_results .result_row:nth(0) .name a")
         sel.wait_for_page_to_load("30000")
@@ -661,7 +661,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Organization from the database? \n\nDeleting will remove this organization and all their data (contact info, employees, etc).  The people associated with this organization will not be removed.\n\nThis action cannot be undone.\n\nPress OK to delete Unnamed Organization.\nPress Cancel to leave things unchanged.")
 
         sel.wait_for_page_to_load("30000")
-        assert not sel.is_text_present("No Name")
+        assert not sel.is_text_present("Unnamed Organization")
 
     
     def test_creating_and_deleting_a_new_organization(self):
@@ -910,7 +910,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
     def test_that_blank_people_show_at_the_top_of_the_search(self):
         sel = self.selenium
         self.open("/people/")
-        assert not sel.is_text_present("No Name")
+        assert not sel.is_text_present("Unnamed Person")
         sel.click("link=New Person")
         sel.wait_for_page_to_load("30000")
         # celery catch-up
@@ -918,13 +918,13 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         sel.click("link=People")
         sel.wait_for_page_to_load("30000")
 
-        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        self.assertEqual("Unnamed Person", sel.get_text("css=search_results .result_row:nth(0) .name a"))
 
 
     def test_that_blank_organizations_show_at_the_top_of_the_search(self):
         sel = self.selenium
         self.open("/people/")
-        assert not sel.is_text_present("No Name")
+        assert not sel.is_text_present("Unnamed Organization")
         sel.click("link=New Organization")
         sel.wait_for_page_to_load("30000")
         # celery catch-up
@@ -932,7 +932,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         sel.click("link=Back to All People and Organizations")
         sel.wait_for_page_to_load("30000")
 
-        self.assertEqual("No Name", sel.get_text("css=search_results .result_row:nth(0) .name a"))
+        self.assertEqual("Unnamed Organization", sel.get_text("css=search_results .result_row:nth(0) .name a"))
 
     def test_that_clicking_next_on_the_search_results_works(self):
         sel = self.selenium

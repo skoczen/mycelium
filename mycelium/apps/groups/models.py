@@ -111,6 +111,7 @@ class GroupSearchProxy(SearchableItemProxy):
         # popping over to celery
         put_in_cache_forever(self.cache_name,ss)
         update_proxy_results_db_cache.delay(GroupSearchProxy, self,ss)
+        cache.set(self.cached_count_key, self.members.count())
         return ss
 
     @property
@@ -125,6 +126,10 @@ class GroupSearchProxy(SearchableItemProxy):
             return render_to_string("groups/_search_result_row_group.html",{'obj':self.obj})
         else:
             return ""
+
+    @property
+    def cached_count_key(self):
+        return "GROUPCOUNT-%s" % (self.id,)
 
     @classmethod
     def group_record_changed(cls, sender, instance, created=None, *args, **kwargs):
@@ -157,14 +162,14 @@ class GroupSearchProxy(SearchableItemProxy):
 
 post_save.connect(GroupSearchProxy.group_record_changed,sender=Group)
 
-from generic_tags.models import TaggedItem
-post_save.connect(GroupSearchProxy.group_results_may_have_changed,sender=TaggedItem)
-post_delete.connect(GroupSearchProxy.group_results_may_have_changed,sender=TaggedItem)
+# from generic_tags.models import TaggedItem
+# post_save.connect(GroupSearchProxy.group_results_may_have_changed,sender=TaggedItem)
+# post_delete.connect(GroupSearchProxy.group_results_may_have_changed,sender=TaggedItem)
 
-from donors.models import Donation
-post_save.connect(GroupSearchProxy.group_results_may_have_changed,sender=Donation)
-post_delete.connect(GroupSearchProxy.group_results_may_have_changed,sender=Donation)
+# from donors.models import Donation
+# post_save.connect(GroupSearchProxy.group_results_may_have_changed,sender=Donation)
+# post_delete.connect(GroupSearchProxy.group_results_may_have_changed,sender=Donation)
 
-from volunteers.models import CompletedShift
-post_save.connect(GroupSearchProxy.group_results_may_have_changed,sender=CompletedShift)
-post_delete.connect(GroupSearchProxy.group_results_may_have_changed,sender=CompletedShift)
+# from volunteers.models import CompletedShift
+# post_save.connect(GroupSearchProxy.group_results_may_have_changed,sender=CompletedShift)
+# post_delete.connect(GroupSearchProxy.group_results_may_have_changed,sender=CompletedShift)
