@@ -27,7 +27,7 @@ if 'test' in sys.argv:
     }
 
 
-CELERY_ALWAYS_EAGER = True
+CELERY_ALWAYS_EAGER = False
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 # if not 'test' in sys.argv and not 'selenium_tests' in sys.argv:
 # CACHES = {

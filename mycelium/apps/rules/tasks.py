@@ -3,6 +3,7 @@ from johnny import cache as johnny_cache
 class Dummy(object):
     pass
 
+
 def populate_all_rule_components(*args, **kwargs):
     from accounts.models import Account
     for account in Account.objects.all():

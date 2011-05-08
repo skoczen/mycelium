@@ -156,3 +156,4 @@ class TaggedItem(AccountBasedModel, models.Model):
 from rules.tasks import populate_rule_components_for_an_obj_with_an_account_signal_receiver, delete_rule_components_for_a_tagset
 post_save.connect(populate_rule_components_for_an_obj_with_an_account_signal_receiver,sender=TagSet)
 pre_delete.connect(delete_rule_components_for_a_tagset,sender=TagSet)
+

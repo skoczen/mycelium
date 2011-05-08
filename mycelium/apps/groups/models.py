@@ -6,7 +6,7 @@ from accounts.models import AccountBasedModel
 
 from rules.models import Rule, RuleGroup
 from people.models import Person
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.core.cache import cache
 from django.template.loader import render_to_string
 from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
@@ -104,11 +104,14 @@ class GroupSearchProxy(SearchableItemProxy):
             put_in_cache_forever(self.cache_name,self.cached_search_result)
             return self.cached_search_result
         else:
-            ss = self.render_result_row()
-            # popping over to celery
-            put_in_cache_forever(self.cache_name,ss)
-            update_proxy_results_db_cache.delay(self,ss)
-            return ss
+            return self.regenerate_and_cache_search_results()
+
+    def regenerate_and_cache_search_results(self):
+        ss = self.render_result_row()
+        # popping over to celery
+        put_in_cache_forever(self.cache_name,ss)
+        update_proxy_results_db_cache.delay(GroupSearchProxy, self,ss)
+        return ss
 
     @property
     def cache_name(self):
@@ -146,5 +149,22 @@ class GroupSearchProxy(SearchableItemProxy):
     class Meta(SearchableItemProxy.Meta):
         verbose_name_plural = "GroupSearchProxies"
 
+    @classmethod
+    def group_results_may_have_changed(cls, sender, instance, created=None, *args, **kwargs):
+        from groups.tasks import regnerate_all_rulegroup_search_results_for_account
+        regnerate_all_rulegroup_search_results_for_account.delay(cls, instance.account)
+
 
 post_save.connect(GroupSearchProxy.group_record_changed,sender=Group)
+
+from generic_tags.models import TaggedItem
+post_save.connect(GroupSearchProxy.group_results_may_have_changed,sender=TaggedItem)
+post_delete.connect(GroupSearchProxy.group_results_may_have_changed,sender=TaggedItem)
+
+from donors.models import Donation
+post_save.connect(GroupSearchProxy.group_results_may_have_changed,sender=Donation)
+post_delete.connect(GroupSearchProxy.group_results_may_have_changed,sender=Donation)
+
+from volunteers.models import CompletedShift
+post_save.connect(GroupSearchProxy.group_results_may_have_changed,sender=CompletedShift)
+post_delete.connect(GroupSearchProxy.group_results_may_have_changed,sender=CompletedShift)

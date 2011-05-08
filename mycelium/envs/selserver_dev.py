@@ -17,6 +17,7 @@ TEMPLATE_DEBUG = DEBUG
 CACHE_BACKEND = 'locmem://'
 
 SESSION_COOKIE_DOMAIN = "localhost"
+CELERY_ALWAYS_EAGER = True
 
 # turn on to test pre-deploy
 # MEDIASYNC['EMULATE_COMBO'] = True

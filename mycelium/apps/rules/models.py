@@ -191,5 +191,5 @@ class RuleGroup(models.Model):
         qs = eval(results).distinct().all()
 
         return qs
-
+        
 

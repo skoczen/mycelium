@@ -5,11 +5,12 @@ from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
+from generic_tags.tests.selenium_abstractions import TagTestAbstractions
 from rules.tasks import populate_rule_components_for_an_account
 
 
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions, TagTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
@@ -212,7 +213,31 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         time.sleep(3)
         assert not sel.is_text_present("John Smith")
         assert sel.is_text_present("No groups found for search")
-            
+
+
+    def test_search_results_number_changes_after_add_and_removing_tag(self):
+        sel = self.selenium
+        self.create_new_group("Test Tag Group")
+        sel.click("css=.start_edit_btn")
+        self.create_a_new_rule(left_side="have any tag that",operator="contains",right_side="Test Tag 1")
+        
+        sel.click("link=Groups")
+        sel.wait_for_page_to_load("30000")
+        sel.type("css=#id_search_query", "Test Tag Group")
+        time.sleep(1)
+        self.assertEqual(sel.get_text("css=.group_row:nth(0) .name"), "Test Tag Group")
+        self.assertEqual(sel.get_text("css=.group_row:nth(0) .num_members"), "0")
+
+        self.create_person_and_go_to_tag_tab()
+        self.add_a_new_tag()
+        
+        sel.click("link=Groups")
+        sel.wait_for_page_to_load("30000")
+        sel.type("css=#id_search_query", "Test Tag Group")
+        time.sleep(1)
+        self.assertEqual(sel.get_text("css=.group_row:nth(0) .name"), "Test Tag Group")
+        self.assertEqual(sel.get_text("css=.group_row:nth(0) .num_members"), "1")
+
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
