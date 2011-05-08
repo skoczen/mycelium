@@ -18,9 +18,9 @@ Backup::Model.new(:mycelium, 'Mycelium Staging Backup') do
 
   database MySQL do |db|
     db.name               = "mycelium"
-    db.username           = "root"
+    db.username           = "myceliumdb"
     db.password           = "pK9Xvt5Kv2dSH586cRrgJ"
-    db.host               = "int-mysql-staging-master.digitalmycelium.com"
+    db.host               = "int-mysql-master.digitalmycelium.com"
     db.port               = 3306
     db.socket             = "/tmp/mysql.sock"
    end

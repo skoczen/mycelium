@@ -8,7 +8,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mycelium',
-        'USER': 'root',
+        'USER': 'myceliumdb',
         'PASSWORD': 'Q3lg8Af81tj6vr5PdcIs',        
         'HOST': 'int-mysql-master.agoodcloud.com',
         'PORT': '3306',
@@ -16,7 +16,7 @@ DATABASES = {
     'slave': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mycelium',
-        'USER': 'root',
+        'USER': 'myceliumdb',
         'PASSWORD': 'Q3lg8Af81tj6vr5PdcIs',        
         'HOST': 'int-mysql-slave.agoodcloud.com',
         'PORT': '3306',
