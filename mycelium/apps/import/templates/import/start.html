@@ -20,12 +20,13 @@
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url import:list %}">Back to All Data Imports</a>{% endblock %}
 {% block page_content %}
+<coming_soon>We're not quite done with data import yet, but it'll be ready to go by June 1!</coming_soon>
 <page_title>Start Data Import</page_title>
 <div class="easy_header">Data import is a way for you to bring in data from your old system into GoodCloud.  You can import data as many times as you want - GoodCloud will match up with data you already have, and give you a clear report of what happened.</div>
 <div class="start_data_import">
 <step number="1" class="active">
 	<step_number>1</step_number>
-	<instruction>Choose a CSV Spreadsheet.</instruction>
+	<instruction>Choose a spreadsheet. (Excel and .CSV files are both fine.)</instruction>
 	<step_content>	
 	<form class="upload_form">
 		<input type="file" name="import_csv">
