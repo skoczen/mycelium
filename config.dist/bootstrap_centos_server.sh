@@ -32,7 +32,7 @@ cd /var/www
 git clone http://mycelium.skoczen.webfactional.com/mycelium.git mycelium.git
 cd mycelium.git;git checkout live
 cat /var/www/mycelium.git/config.dist/authorized_keys >> ~/.ssh/authorized_keys
-mkvirtualenv mycelium --no-site-packages
+mkvirtualenv --no-site-packages mycelium
 echo 'cd /var/www/mycelium.git' >> ~/.virtualenvs/mycelium/bin/postactivate
 workon mycelium
 pip install -r requirements.txt 
