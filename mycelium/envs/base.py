@@ -296,14 +296,14 @@ MEDIASYNC = {
     'AWS_BUCKET': AWS_STORAGE_BUCKET_NAME,
     # 'CACHE_BUSTER': GIT_CURRENT_SHA,
     'AWS_PREFIX': GIT_CURRENT_SHA, 
-    'PROCESSORS': (
-        'mediasync.processors.slim.css_minifier',
-        'mediasync.processors.slim.js_minifier',
-    ),
     # 'PROCESSORS': (
-    #     'mediasync.processors.yuicompressor.css_minifier',
-    #     'mediasync.processors.yuicompressor.js_minifier',
+    #     'mediasync.processors.slim.css_minifier',
+    #     'mediasync.processors.slim.js_minifier',
     # ),
+    'PROCESSORS': (
+        'mediasync.processors.yuicompressor.css_minifier',
+        'mediasync.processors.yuicompressor.js_minifier',
+    ),
     'YUI_COMPRESSOR_PATH': join(abspath(LIB_DIR), 'yuicompressor.jar'),
     'JOINED': {
         'base.js': BASE_JS,
