@@ -9,6 +9,7 @@ from django.views.decorators.cache import cache_page
 
 from groups.models import Group, GroupSearchProxy
 from groups.forms import GroupForm, GroupRuleFormset
+from johnny import cache as jcache
 
 def _render_people_group_tab(context):
     return render_to_string("groups/_people_group_tab.html", RequestContext(context["request"],context))
@@ -67,6 +68,8 @@ def save_basic_info(request, group_id):
 
     if form.is_valid():
         group = form.save()
+            
+        jcache.invalidate(GroupSearchProxy)
         success = True
 
     form, rule_formset = _basic_forms(group, request, no_data=True)

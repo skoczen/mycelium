@@ -40,8 +40,9 @@ function rules_saved(){
 	update_member_count();
 }
 function update_member_count(){
+	now = new Date().getTime();
 	$.ajax({
-          url: $(".group_members.group_detail_column").attr("members_update_url"),
+          url: $(".group_members.group_detail_column").attr("members_update_url") + "?" + now,
           type: "GET",
           dataType: "json",
           data: {},
