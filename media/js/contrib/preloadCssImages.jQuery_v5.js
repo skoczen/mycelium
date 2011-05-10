@@ -18,7 +18,7 @@
  * --------------------------------------------------------------------
  */
 
-;jQuery.preloadCssImages = function(settings){
+jQuery.preloadCssImages = function(settings){
 	settings = jQuery.extend({
 		statusTextEl: null,
 		statusBarEl: null,
