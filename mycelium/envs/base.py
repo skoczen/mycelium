@@ -284,19 +284,21 @@ MEDIASYNC = {
     ),    
     'YUI_COMPRESSOR_PATH': join(abspath(LIB_DIR), 'yuicompressor.jar'),
     'JOINED': {
-        'js/mycelium/mycelium_base_all.js': [   "/js/contrib/jquery.scrollTo-min.js", 
-                                                "/js/contrib/jquery.toggleval.js", 
-                                                "/js/contrib/jquery.hotkeys-0.7.9.min.js",
-                                                "/js/contrib/jquery.ajax.queue.js", 
-                                                "/js/contrib/jquery.autogrow.js", 
-                                                "/js/contrib/jquery.form.js", 
-                                                "/js/contrib/jquery.formset.min.js",
-                                                "/js/contrib/jquery.ba-bbq.min.js", 
-                                                "/js/contrib/autocolumn.min.js",
-                                                "/js/mycelium/mycelium_elements.js",
-                                                "/js/mycelium/generic_fields.js",
-                                                "/js/mycelium/mycelium_search.js",
-                                            ]
+        'mycelium_base_all.js': [   
+                                "/js/contrib/jquery.scrollTo-min.js",
+                                "/js/contrib/jquery.toggleval.js",
+                                "/js/contrib/jquery.hotkeys-0.7.9.min.js",
+                                "/js/contrib/jquery.ajax.queue.js",
+                                "/js/contrib/jquery.autogrow.js",
+                                "/js/contrib/jquery.form.js",
+                                "/js/contrib/jquery.ba-bbq.min.js",
+                                "/js/contrib/jquery.formset.min.js",
+                                "/js/contrib/autocolumn.min.js",
+                                "/js/mycelium/mycelium_elements.js",
+                                "/js/mycelium/generic_fields.js",
+                                "/js/mycelium/mycelium_search.js",
+                                "/js/mycelium/mycelium_top_search.js",
+                                ]
     }
 
 

@@ -35,9 +35,9 @@ cat /var/www/mycelium.git/config.dist/authorized_keys >> ~/.ssh/authorized_keys
 mkvirtualenv --no-site-packages mycelium
 echo 'cd /var/www/mycelium.git' >> ~/.virtualenvs/mycelium/bin/postactivate
 workon mycelium
-pip install -r requirements.txt 
+pip install -r requirements.stable.txt 
 echo 'mysql_config = /usr/bin/mysql_config' >> ~/.virtualenvs/mycelium/build/mysql-python/site.cfg
-pip install -r requirements.txt 
+pip install -r requirements.stable.txt 
 mkdir /var/log/celery
 mv /etc/default/celeryd /etc/default/celeryd.bak
 ln -s /var/www/mycelium.git/config.dist/celeryd /etc/default/celeryd;chmod +x /etc/default/celeryd
