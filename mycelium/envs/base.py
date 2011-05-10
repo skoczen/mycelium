@@ -57,6 +57,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'speedtracer.middleware.SpeedTracerMiddleware',
     'johnny.middleware.LocalStoreClearMiddleware',
     'johnny.middleware.QueryCacheMiddleware',
     'johnny.middleware.CommittingTransactionMiddleware',
@@ -146,6 +147,7 @@ INSTALLED_APPS = (
     'mediasync',
     'sentry',
     'sentry.client',
+    'speedtracer',
 
     'cms',
     'mptt',
