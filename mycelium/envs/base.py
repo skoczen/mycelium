@@ -287,6 +287,8 @@ BASE_JS = [
 BASE_CSS = [
     "css/style.css",
     "css/main.css",
+    "css/contrib/jquery-ui-1.8.10.custom.css",
+    "css/mycelium_elements.css",
 ]
 
 MEDIASYNC = {
@@ -321,8 +323,6 @@ MEDIASYNC = {
                 "js/mycelium/mycelium_top_search.js",
         ],
         'mycelium_base.css': BASE_CSS + [
-                "css/mycelium_elements.css",
-                "css/contrib/jquery-ui-1.8.10.custom.css",
         ],
         'marketing_base.js': BASE_JS + [
                 "js/contrib/preloadCssImages.jQuery_v5.js",
@@ -331,8 +331,6 @@ MEDIASYNC = {
                 "js/mycelium/marketing_tabs.js",
         ],
         'marketing_base.css': BASE_CSS + [
-                "css/contrib/jquery-ui-1.8.10.custom.css",
-                "css/mycelium_elements.css",
                 "css/marketing_site.css",
                 "css/contrib/1140/1140.css",
                 "css/login.css",
