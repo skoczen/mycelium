@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
-{% css "/css/mycelium_elements.css" %}
-{% css "/css/contrib/jquery-ui-1.8.10.custom.css" %}
+	{% css "mycelium_base.css" %}
 {% endblock %}
 {% block javascript %}{{block.super}}
-	{% js "mycelium_base_all.js" %}
+	{% js "mycelium_base.js" %}
 <script>
 var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 </script>

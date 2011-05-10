@@ -2,14 +2,6 @@
 {% load i18n generic_fields friendly_data_formatting  %}
 {% block title %}GoodCloud Testimonials - People love using GoodCloud!{% endblock %}
 {% block extra_body %}class="praise"{% endblock %}
-{% block head %}
-{% css "/css/mycelium_elements.css" %}
-{{block.super}}
-
-{% js "/js/mycelium/signup.js" %}
-{% css "/css/login.css" %}
-{% css "/css/signup.css" %}
-{% endblock %}
 
 {% block page_content %}
 <div class="page_header">Love for the <img class="the_cloud" src="{% media_url "images/goodcloud-logo-60-with-shadow.png" %}" /></div>

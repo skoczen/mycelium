@@ -267,6 +267,20 @@ GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
 
 
 # django-mediasync
+
+BASE_JS = [
+    "/js/libs/modernizr-1.6.min.js",
+    "/js/contrib/jquery-1.4.3.min.js",
+    "/js/contrib/jquery-ui.js",
+    "/js/contrib/jquery.django.csrf.js",
+    "/js/plugins.js",
+    "/js/script.js",
+]
+BASE_CSS = [
+    "/css/style.css",
+    "/css/main.css",
+]
+
 MEDIASYNC = {
     'BACKEND': 'mediasync.backends.s3',
     'AWS_KEY': AWS_ACCESS_KEY_ID,
@@ -284,24 +298,43 @@ MEDIASYNC = {
     ),    
     'YUI_COMPRESSOR_PATH': join(abspath(LIB_DIR), 'yuicompressor.jar'),
     'JOINED': {
-        'mycelium_base_all.js': [   
-                                "/js/contrib/jquery.scrollTo-min.js",
-                                "/js/contrib/jquery.toggleval.js",
-                                "/js/contrib/jquery.hotkeys-0.7.9.min.js",
-                                "/js/contrib/jquery.ajax.queue.js",
-                                "/js/contrib/jquery.autogrow.js",
-                                "/js/contrib/jquery.form.js",
-                                "/js/contrib/jquery.ba-bbq.min.js",
-                                "/js/contrib/jquery.formset.min.js",
-                                "/js/contrib/autocolumn.min.js",
-                                "/js/mycelium/mycelium_elements.js",
-                                "/js/mycelium/generic_fields.js",
-                                "/js/mycelium/mycelium_search.js",
-                                "/js/mycelium/mycelium_top_search.js",
-                                ]
+        'base.js': BASE_JS,
+        'mycelium_base.js': BASE_JS + [   
+                "/js/contrib/jquery.scrollTo-min.js",
+                "/js/contrib/jquery.toggleval.js",
+                "/js/contrib/jquery.hotkeys-0.7.9.min.js",
+                "/js/contrib/jquery.ajax.queue.js",
+                "/js/contrib/jquery.autogrow.js",
+                "/js/contrib/jquery.form.js",
+                "/js/contrib/jquery.ba-bbq.min.js",
+                "/js/contrib/jquery.formset.min.js",
+                "/js/contrib/autocolumn.min.js",
+                "/js/mycelium/mycelium_elements.js",
+                "/js/mycelium/generic_fields.js",
+                "/js/mycelium/mycelium_search.js",
+                "/js/mycelium/mycelium_top_search.js",
+        ],
+        'mycelium_base.css': BASE_CSS + [
+                "/css/mycelium_elements.css",
+                "/css/contrib/jquery-ui-1.8.10.custom.css",
+        ],
+        'marketing_base.js': BASE_JS + [
+                "/js/contrib/jquery.autogrow.js",
+                "/js/contrib/jquery.ba-bbq.min.js",
+                "/js/contrib/preloadCssImages.jQuery_v5.js",
+                "/js/mycelium/marketing_site.js",
+                "/js/mycelium/signup.js",
+                "/js/mycelium/marketing_tabs.js",
+        ],
+        'marketing_base.css': BASE_CSS + [
+                "/css/contrib/jquery-ui-1.8.10.custom.css",
+                "/css/mycelium_elements.css",
+                "/css/marketing_site.css",
+                "/css/contrib/1140/1140.css",
+                "/css/login.css",
+                "/css/signup.css",
+        ]
     }
-
-
 
 }
 MEDIASYNC['SERVE_REMOTE'] = True

@@ -12,24 +12,17 @@
   <title>{% block title %}{% endblock %}</title>
   <meta name="description" content="GoodCloud">
   <meta name="author" content="GoodCloud - Software for Nonprofits">
-  {# <!--  Mobile viewport optimized: j.mp/bplateviewport --> #}
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="{{FAVICON_URL}}">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  {% css "/css/style.css" %}
-  {% css "/css/main.css" %}
+
   {# <!--	Uncomment if you are specifically targeting less enabled mobile browsers   --> #}
   {# <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2"> #}
+
   {% block css %}{% endblock %}
 
-  {% js "/js/libs/modernizr-1.6.min.js"%}
 {% block javascript %}
-  {% js "/js/contrib/jquery-1.4.3.min.js" %}
-  {% js "/js/contrib/jquery-ui.js" %}
-  {% js "/js/contrib/jquery.django.csrf.js" %}
-  {% js "/js/plugins.js" %}
-  {% js "/js/script.js" %}
-  
   <!--[if lt IE 7 ]>
     {% js "js/libs/dd_belatedpng.js" %}
     <script> DD_belatedPNG.fix('img, .png_bg');</script>

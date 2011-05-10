@@ -2,15 +2,6 @@
 {% load i18n generic_fields friendly_data_formatting  %}
 {% block title %}GoodCloud - About us: who we are, why we're here.{% endblock %}
 {% block extra_body %}class="about_us"{% endblock %}
-{% block css %}
-{% css "/css/mycelium_elements.css" %}
-{{block.super}}
-{% css "/css/login.css" %}
-{% css "/css/signup.css" %}
-{% endblock %}
-{% block javascript %}{{block.super}}
-{% js "/js/mycelium/marketing_tabs.js" %}
-{% endblock %}
 
 {% block page_content %}
 <div class="page_header about_us">Do Good Things.</div>
