@@ -183,12 +183,17 @@ INSTALLED_APPS = (
 TEMPLATE_DIRS = (
     "%stemplates" % (PROJECT_ROOT),
 )
+# Django-analytical
 GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-20296975-1'
 ANALYTICAL_INTERNAL_IPS = ['127.0.0.1', '192.168.2.164']
+HUBSPOT_PORTAL_ID = '98343'
+HUBSPOT_DOMAIN = 'agoodcloud.app9.hubspot.com'
 
 LOGIN_REDIRECT_URL = "/dashboard/"
 AUTH_PROFILE_MODULE = "accounts.UserAccount"
 
+
+# django-cms
 CMS_TEMPLATES = (
     ('marketing_site/home.html', 'Home Page'),
     ('marketing_site/normal_page.html', 'Normal Page'),
