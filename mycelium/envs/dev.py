@@ -50,7 +50,7 @@ SEND_BROKEN_LINK_EMAILS = False
 INTERNAL_IPS = ('127.0.0.1')
 GOOGLE_KEY = 'ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRi_j0U6kJrkFvY4-OX2XYmEAa76BQkakI7eN4BbYehPxnhnOMnaAhOPw'
 
-MEDIA_URL = '/media'
+MEDIA_URL = '/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%s/_admin/" % (MEDIA_URL)
 FAVICON_URL = "%s/images/favicon.png" % MEDIA_URL
@@ -79,14 +79,13 @@ CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 
 
 # django-mediasync
-STATIC_URL = MEDIA_URL
 STATIC_ROOT = MEDIA_ROOT
 MEDIASYNC['SERVE_REMOTE'] = False
 MEDIASYNC['EMULATE_COMBO'] = False
 MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
 
 # turn on to test pre-deploy
-# MEDIASYNC['EMULATE_COMBO'] = True
+MEDIASYNC['EMULATE_COMBO'] = True
 
 # turn on to test postsync with live media
 # MEDIASYNC['SERVE_REMOTE'] = True
