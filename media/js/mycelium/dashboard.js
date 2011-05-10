@@ -1,4 +1,4 @@
-$(function(){
+(function($){
 	$(".yes_to_nickname").click(yes_to_nickname);	
 	$(".no_to_nickname").click(no_to_nickname);
 	$(".save_new_nickname").click(save_new_nickname);

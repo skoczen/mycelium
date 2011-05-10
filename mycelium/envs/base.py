@@ -280,6 +280,9 @@ BASE_JS = [
     "js/contrib/jquery.django.csrf.js",
     "js/plugins.js",
     "js/script.js",
+    "js/contrib/jquery.autogrow.js",
+    "js/contrib/jquery.ba-bbq.min.js",
+
 ]
 BASE_CSS = [
     "css/style.css",
@@ -293,25 +296,23 @@ MEDIASYNC = {
     'AWS_BUCKET': AWS_STORAGE_BUCKET_NAME,
     # 'CACHE_BUSTER': GIT_CURRENT_SHA,
     'AWS_PREFIX': GIT_CURRENT_SHA, 
-    # 'PROCESSORS': (
-    #     'mediasync.processors.slim.css_minifier',
-    #     'mediasync.processors.slim.js_minifier',
-    # ),
     'PROCESSORS': (
-        'mediasync.processors.yuicompressor.css_minifier',
-        'mediasync.processors.yuicompressor.js_minifier',
+        'mediasync.processors.slim.css_minifier',
+        'mediasync.processors.slim.js_minifier',
     ),
+    # 'PROCESSORS': (
+    #     'mediasync.processors.yuicompressor.css_minifier',
+    #     'mediasync.processors.yuicompressor.js_minifier',
+    # ),
     'YUI_COMPRESSOR_PATH': join(abspath(LIB_DIR), 'yuicompressor.jar'),
     'JOINED': {
         'base.js': BASE_JS,
-        'mycelium_base.js': BASE_JS + [   
+        'mycelium_base.js': BASE_JS +  [   
                 "js/contrib/jquery.scrollTo-min.js",
                 "js/contrib/jquery.toggleval.js",
                 "js/contrib/jquery.hotkeys-0.7.9.min.js",
                 "js/contrib/jquery.ajax.queue.js",
-                "js/contrib/jquery.autogrow.js",
                 "js/contrib/jquery.form.js",
-                "js/contrib/jquery.ba-bbq.min.js",
                 "js/contrib/jquery.formset.min.js",
                 "js/contrib/autocolumn.min.js",
                 "js/mycelium/mycelium_elements.js",
@@ -324,8 +325,6 @@ MEDIASYNC = {
                 "css/contrib/jquery-ui-1.8.10.custom.css",
         ],
         'marketing_base.js': BASE_JS + [
-                "js/contrib/jquery.autogrow.js",
-                "js/contrib/jquery.ba-bbq.min.js",
                 "js/contrib/preloadCssImages.jQuery_v5.js",
                 "js/mycelium/marketing_site.js",
                 "js/mycelium/signup.js",

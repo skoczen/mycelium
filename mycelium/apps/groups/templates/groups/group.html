@@ -13,7 +13,7 @@
 {% js "/js/mycelium/rules.js" %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "Unnamed Group"  %}
 <script type="text/javascript" charset="utf-8">
-$(function(){
+(function($){
     $("#basic_info_form").genericFieldForm('toggle_edit');
 	$("#id_name").focus();
 });

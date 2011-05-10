@@ -3,7 +3,7 @@
 {% block title %}Logo Maker - All Logos{% endblock %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
-$(function(){
+(function($){
 	$(".add_another_logo_btn").live("click",add_another_logo_btn_clicked);
 	$(".cancel_another_logo_btn").live("click",cancel_another_logo_btn_clicked);
 });

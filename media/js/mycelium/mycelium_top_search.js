@@ -1,4 +1,4 @@
-$(function(){
+(function($){
     if (!("placeholder" in document.createElement("input"))) {
         $('#global_search').toggleVal({populateFrom:"custom", text:"Search for anything..."}).addClass("prefilled");
     }

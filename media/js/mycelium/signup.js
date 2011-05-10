@@ -1,4 +1,4 @@
-$(function(){
+(function($){
 	
 		$("#signup_form input").autoGrowInput({'comfortZone': 30, 'resizeNow':true});	
 	

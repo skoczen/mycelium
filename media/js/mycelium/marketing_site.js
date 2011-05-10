@@ -1,4 +1,4 @@
-$(function(){
+(function($){
     setupFooter();
     $(window).bind("resize",setupFooter);
 	$(window).resize(make_sure_identical_height_block_boxes_are_equal_height);

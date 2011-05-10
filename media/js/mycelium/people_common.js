@@ -1,4 +1,4 @@
-$(function(){
+(function($){
     $("#basic_info_form").bind("genericFieldForm.toggle_off", do_some_intelligent_data_formatting);
     $("#basic_info_form").bind("genericFieldForm.toggle_on", function(e){$(".city_state_comma",e.target).show();});
     $("#basic_info_form").genericFieldForm();

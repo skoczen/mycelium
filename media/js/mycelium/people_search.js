@@ -1,4 +1,4 @@
-$(function(){
+(function($){
     if (!("placeholder" in document.createElement("input"))) {
         $('#id_search_query').toggleVal({populateFrom:"custom", text:"Type in a name, phone number, or email..."}).addClass("prefilled");
     }

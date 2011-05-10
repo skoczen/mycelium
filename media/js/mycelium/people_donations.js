@@ -1,4 +1,4 @@
-$(function(){
+(function($){
     $(".people_donor_tab #new_donation input[name=amount]").live("change",donorTab.round_donation);
     $(".people_donor_tab .year_details_link").live("click",donorTab.toggle_year_details);
     $(".people_donor_tab #new_donation .cancel_add_btn").live("click", donorTab.cancel_add_donation);
