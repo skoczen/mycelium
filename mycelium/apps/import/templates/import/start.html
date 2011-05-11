@@ -4,7 +4,7 @@
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 	var current_step = 1;
-	(function($){
+	$(function(){
 		$("step[number=2] step_content").hide();
 		$(".next_step_btn").live("click",next_step);
 		$("th.col_6 select").live("change",next_step)

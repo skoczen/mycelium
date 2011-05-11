@@ -1,4 +1,4 @@
-(function($){
+$(function(){
     $(".person_delete_btn").click(delete_person);
     $("detail_tabs a.detail_tab").live("click",detail_tab_clicked);
     $(".general_person_tags").genericTags();

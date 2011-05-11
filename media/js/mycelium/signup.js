@@ -1,8 +1,5 @@
-(function($){
-	
-		$("#signup_form input").autoGrowInput({'comfortZone': 30, 'resizeNow':true});	
-	
-	
+$(function(){
+	$("#signup_form input").autoGrowInput({'comfortZone': 30, 'resizeNow':true});	
 	$("#signup_form input").bind("change keyup blur",enable_disable_signup_button);
 
 	$("#container_id_name input").focus();

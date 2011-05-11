@@ -280,9 +280,10 @@ BASE_JS = [
     "js/contrib/jquery.django.csrf.js",
     "js/plugins.js",
     "js/script.js",
+]
+COMMON_JS = [
     "js/contrib/jquery.autogrow.js",
     "js/contrib/jquery.ba-bbq.min.js",
-
 ]
 BASE_CSS = [
     "css/style.css",
@@ -306,10 +307,19 @@ MEDIASYNC = {
         'mediasync.processors.yuicompressor.css_minifier',
         'mediasync.processors.yuicompressor.js_minifier',
     ),
+    # 'PROCESSORS': ('mediasync.processors.closurecompiler.compile',),
+
     'YUI_COMPRESSOR_PATH': join(abspath(LIB_DIR), 'yuicompressor.jar'),
     'JOINED': {
-        'base.js': BASE_JS,
-        'mycelium_base.js': BASE_JS +  [   
+        'js/base.js': BASE_JS,
+        
+        'js/mycelium_core.js': [
+                "js/mycelium/mycelium_elements.js",
+                "js/mycelium/generic_fields.js",
+                "js/mycelium/mycelium_search.js",
+                "js/mycelium/mycelium_top_search.js",
+        ],
+        'js/mycelium_base.js': BASE_JS + COMMON_JS + [   
                 "js/contrib/jquery.scrollTo-min.js",
                 "js/contrib/jquery.toggleval.js",
                 "js/contrib/jquery.hotkeys-0.7.9.min.js",
@@ -317,20 +327,21 @@ MEDIASYNC = {
                 "js/contrib/jquery.form.js",
                 "js/contrib/jquery.formset.min.js",
                 "js/contrib/autocolumn.min.js",
-                "js/mycelium/mycelium_elements.js",
-                "js/mycelium/generic_fields.js",
-                "js/mycelium/mycelium_search.js",
-                "js/mycelium/mycelium_top_search.js",
         ],
-        'mycelium_base.css': BASE_CSS + [
+
+        'css/mycelium_base.css': BASE_CSS + [
         ],
-        'marketing_base.js': BASE_JS + [
+
+        'js/marketing_base.js': BASE_JS + COMMON_JS + [
+                
+        ],
+        'js/marketing_core.js': [
                 "js/contrib/preloadCssImages.jQuery_v5.js",
                 "js/mycelium/marketing_site.js",
                 "js/mycelium/signup.js",
                 "js/mycelium/marketing_tabs.js",
         ],
-        'marketing_base.css': BASE_CSS + [
+        'css/marketing_base.css': BASE_CSS + [
                 "css/marketing_site.css",
                 "css/contrib/1140/1140.css",
                 "css/login.css",

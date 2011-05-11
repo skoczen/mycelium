@@ -1,4 +1,4 @@
-(function($){
+$(function(){
 	$("rule left_side select").live("change",left_side_changed);
 	$("rule left_side select").each(left_side_changed);
 });

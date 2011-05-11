@@ -4,7 +4,7 @@ var scroll_options = {
     offset: 0
 };
 
-(function($){
+$(function(){
     $("#id_search_new_person").myceliumSearch({
         search_element: $("#id_search_new_person"),
         search_url: $("#id_search_new_person").attr("results_url"),

@@ -1,4 +1,4 @@
-(function($){
+$(function(){
 // Set up Mycelium object
 	if ($.Mycelium === undefined) {
 		$.Mycelium = new Object();

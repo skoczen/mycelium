@@ -12,33 +12,29 @@
   <title>{% block title %}{% endblock %}</title>
   <meta name="description" content="GoodCloud">
   <meta name="author" content="GoodCloud - Software for Nonprofits">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="{{FAVICON_URL}}">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-  {# <!--	Uncomment if you are specifically targeting less enabled mobile browsers   --> #}
-  {# <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2"> #}
+  {# <!--	Uncomment if you are specifically targeting less enabled mobile browsers   --> #}  {# <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2"> #}
 
   {% block css %}{% endblock %}
-
-{% block javascript %}
-  <!--[if lt IE 7 ]>
-    {% js "js/libs/dd_belatedpng.js" %}
-    <script> DD_belatedPNG.fix('img, .png_bg');</script>
-  <![endif]-->
+  {% block base_js %}{% js "js/base.js" %}{% endblock %}
   {% analytical_head_bottom %}
-{% endblock %}
+
 {% endblock %}
 </head>
 {% block body %}<body {% block extra_body %}{% endblock %} env="{{ENV}}">
-	{% analytical_body_top %}
-	{% block content %}
+{% analytical_body_top %}
+{% block content %}
 
-	{% endblock %}
-{% if ENV != "DEV" and not user.is_staff %}
-{% endif %} 
-	{% analytical_body_bottom %}
+{% endblock %}
+{% analytical_body_bottom %}
+{% block javascript %}
+<!--[if lt IE 7 ]>
+  {% js "js/libs/dd_belatedpng.js" %}
+  <script>DD_belatedPNG.fix('img, .png_bg');</script>
+<![endif]-->
+{% endblock %}
 </body>
 {% endblock %}
 </html>

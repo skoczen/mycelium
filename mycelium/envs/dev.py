@@ -85,9 +85,9 @@ MEDIASYNC['EMULATE_COMBO'] = False
 MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
 
 # turn on to test pre-deploy
-MEDIASYNC['EMULATE_COMBO'] = True
+# MEDIASYNC['EMULATE_COMBO'] = True
 
 # turn on to test postsync with live media
-# MEDIASYNC['SERVE_REMOTE'] = True
-# MEDIA_URL = CDN_MEDIA_URL
+MEDIASYNC['SERVE_REMOTE'] = True
+MEDIA_URL = CDN_MEDIA_URL
 

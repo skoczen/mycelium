@@ -1,4 +1,4 @@
-(function($){
+$(function(){
     $(".people_volunteer_tab #new_completed_volunteer_shift input[name=duration]").live("change",volunteerTab.round_volunteer_shift);
     $(".people_volunteer_tab .year_details_link").live("click",volunteerTab.toggle_year_details);
     $(".people_volunteer_tab #new_completed_volunteer_shift .cancel_add_btn").live("click", volunteerTab.cancel_add_shift);

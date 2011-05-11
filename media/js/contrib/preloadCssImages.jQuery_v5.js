@@ -17,9 +17,7 @@
  *    10.31.2008 Version: 5.0 : Many feature and performance enhancements from trixta
  * --------------------------------------------------------------------
  */
-(function($){
-
-$.fn.preloadCssImages = function(settings){
+;jQuery.preloadCssImages = function(settings){
 	settings = jQuery.extend({
 		statusTextEl: null,
 		statusBarEl: null,
@@ -151,5 +149,3 @@ $.fn.preloadCssImages = function(settings){
 	parseCSS(document.styleSheets);
 	return imgUrls;
 };
-
-});

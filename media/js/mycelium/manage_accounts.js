@@ -1,4 +1,4 @@
-(function($){
+$(function(){
     $("#basic_info_form").genericFieldForm();
 
     $.Mycelium.update_stripes();

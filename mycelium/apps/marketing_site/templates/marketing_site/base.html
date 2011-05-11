@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
-{% css "marketing_base.css" %}
+{% css "css/marketing_base.css" %}
 {# 1140 #}
 <!--[if lte IE 9]>{% css "/css/contrib/1140/ie.css" %}
 <style type="text/css">
@@ -8,9 +8,9 @@
 </style>
 <![endif]-->
 {% endblock %}
-{% block javascript %}
-{% js "marketing_base.js" %}
-{{block.super}}
+{% block base_js %}{% js "js/marketing_base.js" %}{% endblock %}
+{% block javascript %}{{block.super}}
+{% js "js/marketing_core.js" %}
 {% endblock %}
 {% block content %}
 	{% include "marketing_site/_top_nav.html" %}

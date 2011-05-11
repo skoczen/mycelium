@@ -1,4 +1,4 @@
-// (function($){
+// $(function(){
 	
 // 	// $(".tab_content").hide()
 // 	// var biggest_content = 0;
@@ -9,7 +9,7 @@
 // 	// })
 // 	// $("#side_nav ul").height(biggest_content+20);
 // });
-(function($){
+$(function(){
   var tabs = $('.tabs'),
   tab_a_selector = 'ul.ui-tabs-nav a';
   tabs.tabs({ event: 'change' });

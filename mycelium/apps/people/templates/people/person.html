@@ -5,20 +5,18 @@
 {% generic_field_css %}
 {% css "/css/people_volunteer.css" %}
 {% css "/css/people_donor.css" %}
-{% css "/css/people_groups.css" %}
 {% css "/css/people_tags.css" %}
 {% endblock %}
 {% block javascript %}{{block.super}}
 {% js "/js/mycelium/people_volunteer.js" %}
 {% js "/js/mycelium/people_donations.js" %}
-{% js "/js/mycelium/people_groups.js" %}
 {% js "/js/mycelium/people_tags.js" %}
 {% js "/js/mycelium/people_common.js" %}
 {% js "/js/mycelium/people_person.js" %}
 {% generic_tags_js %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "Unnamed Person"  %}
 <script type="text/javascript" charset="utf-8">
-(function($){
+$(function(){
     $("#basic_info_form").genericFieldForm('toggle_edit');
 	$("#id_first_name").focus();
 });
