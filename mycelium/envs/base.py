@@ -334,7 +334,7 @@ MEDIASYNC = {
         ],
 
         'js/marketing_base.js': BASE_JS + COMMON_JS + [
-                "js/libs/preloadCssImages.jQuery.mycelium.js",
+                
         ],
         'js/marketing_core.js': [
                 "js/mycelium/marketing_site.js",
