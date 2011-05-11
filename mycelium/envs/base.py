@@ -312,13 +312,7 @@ MEDIASYNC = {
     'YUI_COMPRESSOR_PATH': join(abspath(LIB_DIR), 'yuicompressor.jar'),
     'JOINED': {
         'js/base.js': BASE_JS,
-        
-        'js/mycelium_core.js': [
-                "js/mycelium/mycelium_elements.js",
-                "js/mycelium/generic_fields.js",
-                "js/mycelium/mycelium_search.js",
-                "js/mycelium/mycelium_top_search.js",
-        ],
+
         'js/mycelium_base.js': BASE_JS + COMMON_JS + [   
                 "js/contrib/jquery.scrollTo-min.js",
                 "js/contrib/jquery.toggleval.js",
@@ -327,16 +321,22 @@ MEDIASYNC = {
                 "js/contrib/jquery.form.js",
                 "js/contrib/jquery.formset.min.js",
                 "js/contrib/autocolumn.min.js",
+                "js/mycelium/generic_fields.js",
+                "js/mycelium/mycelium_search.js",
+        ],        
+        'js/mycelium_core.js': [
+                "js/mycelium/mycelium_elements.js",
+                "js/mycelium/mycelium_top_search.js",
         ],
+
 
         'css/mycelium_base.css': BASE_CSS + [
         ],
 
         'js/marketing_base.js': BASE_JS + COMMON_JS + [
-                
+                "js/libs/preloadCssImages.jQuery.mycelium.js",
         ],
         'js/marketing_core.js': [
-                "js/contrib/preloadCssImages.jQuery_v5.js",
                 "js/mycelium/marketing_site.js",
                 "js/mycelium/signup.js",
                 "js/mycelium/marketing_tabs.js",
@@ -350,5 +350,4 @@ MEDIASYNC = {
     }
 
 }
-
 MEDIASYNC['SERVE_REMOTE'] = True

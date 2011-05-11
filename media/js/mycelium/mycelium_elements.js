@@ -1,7 +1,7 @@
 $(function(){
 // Set up Mycelium object
 	if ($.Mycelium === undefined) {
-		$.Mycelium = new Object();
+		$.Mycelium = {};
 	}
 	if (typeof(SEARCH_URL) == "undefined") {
 	    var SEARCH_URL = "";

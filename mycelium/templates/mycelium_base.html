@@ -4,7 +4,6 @@
 {% endblock %}
 {% block base_js %}{% js "js/mycelium_base.js" %}{% endblock %}
 {% block javascript %}{{block.super}}
-	{% js "js/mycelium/mycelium_elements.js" %}	
 	{% js "js/mycelium_core.js" %}
 <script>
 var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
