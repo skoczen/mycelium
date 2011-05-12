@@ -16,6 +16,30 @@
 		$("step[number="+current_step+"] pre_step_content").hide();
 		$("step[number="+current_step+"] .mycelium_btn").removeClass("mycelium_grey").removeClass("mycelium_gray");
 	}
+
+	var uploader = new qq.FileUploader( {
+	    action: "{% url import:ajax_upload %}",
+	    element: $('#file-uploader')[0],
+	    multiple: true,
+	    onComplete: function( id, fileName, responseJSON ) {
+	      if( responseJSON.success )
+	        alert( "success!" ) ;
+	      else
+	        alert( "upload failed!" ) ;
+	    },
+	    onAllComplete: function( uploads ) {
+	      // uploads is an array of maps
+	      // the maps look like this: { file: FileObject, response: JSONServerResponse }
+	      alert( "All complete!" ) ;
+	    },
+	    params: {
+	      'csrf_token': '{{ csrf_token }}',
+	      'csrf_name': 'csrfmiddlewaretoken',
+	      'csrf_xname': 'X-CSRFToken',
+	    },
+	  } ) ;
+	
+
 </script>
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url import:list %}">Back to All Data Imports</a>{% endblock %}
@@ -29,7 +53,11 @@
 	<instruction>Choose a spreadsheet. (Excel and .CSV files are both fine.)</instruction>
 	<step_content>	
 	<form class="upload_form">
-		<input type="file" name="import_csv">
+		<div id="file-uploader">       
+		    <noscript>          
+		        <p>Please enable JavaScript to use file uploader.</p>
+		    </noscript>         
+		</div>
 		<input type="button" class="mycelium_btn next_step_btn" value="Next Step">
 	</form>
 	</step_content>

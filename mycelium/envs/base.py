@@ -91,7 +91,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
-    'django.core.context_processors.auth',
+    'django.contrib.auth.context_processors.auth',
     
     "cms.context_processors.media",
     "qi_toolkit.context_processors.add_env_to_request",
@@ -320,17 +320,16 @@ MEDIASYNC = {
                 "js/contrib/jquery.ajax.queue.js",
                 "js/contrib/jquery.form.js",
                 "js/contrib/jquery.formset.min.js",
-                "js/contrib/autocolumn.min.js",
                 "js/mycelium/generic_fields.js",
                 "js/mycelium/mycelium_search.js",
+                "js/contrib/fileuploader.js",
         ],        
         'js/mycelium_core.js': [
                 "js/mycelium/mycelium_elements.js",
                 "js/mycelium/mycelium_top_search.js",
         ],
-
-
         'css/mycelium_base.css': BASE_CSS + [
+                "js/contrib/fileuploader.css",
         ],
 
         'js/marketing_base.js': BASE_JS + COMMON_JS + [

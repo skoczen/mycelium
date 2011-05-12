@@ -6,6 +6,8 @@ class AccountAuthBackend(object):
     
     Authenticate against the user table, using Account.namespaced_username_for_username for the username
     """
+    supports_anonymous_user = False
+    supports_object_permissions = False
 
     def authenticate(self, auth_request=None, username=None, password=None):
         try:

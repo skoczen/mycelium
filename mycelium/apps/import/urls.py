@@ -10,4 +10,6 @@ urlpatterns = parser.patterns('',
     url(r'$',                                   views.list,                             name='list'),
     url(r'start/$',                             views.start,                            name='start'),
     url(r'history/{import_id:digits}$',         views.review,                           name='review'),
+
+    url( r'start/upload/$',                     views.ajax_upload,                      name="ajax_upload" ),
 )

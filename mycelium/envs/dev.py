@@ -70,7 +70,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # AWS_SECRET_ACCESS_KEY = 'WT1wp3UQsFPdeXMxwUyvjF7IM8q/qkcm/EW6EKvy'
 
 # local file storage
-DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+# DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 
 # s3 info
 AWS_STORAGE_BUCKET_NAME = "goodcloud-dev"
