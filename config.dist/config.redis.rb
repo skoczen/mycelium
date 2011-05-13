@@ -17,13 +17,13 @@
 Backup::Model.new(:mycelium, 'Mycelium Redis Backup') do
 
   database Redis do |db|
-    db.name               = "dump.rdb"
-	db.path               = "/usr/local/var/db/redis"
-	db.password           = ""
-	db.host               = "localhost"
-	db.port               = 5432
-	db.socket             = "/tmp/redis.sock"
-	db.additional_options = []
+    db.name               = "dump"
+	db.path               = "/var/lib/redis/"
+#	db.password           = ""
+#	db.host               = "int-Redis.agoodcloud.com"
+#	db.port               = 6379
+#	db.socket             = ""
+#	db.additional_options = []
 	db.invoke_save        = true    
    end
 
