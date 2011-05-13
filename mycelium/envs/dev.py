@@ -43,6 +43,9 @@ CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 #CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
 
+
+BROKER_VHOST = "2"                       # Maps to database number.
+
 # SESSION_COOKIE_DOMAIN = "localhost"
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

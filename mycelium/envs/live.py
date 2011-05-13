@@ -41,6 +41,11 @@ STATIC_ROOT = MEDIA_ROOT
 ADMIN_MEDIA_PREFIX = "/admin-media/"
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
+
+BROKER_HOST = "int-Redis.agoodcloud.com"  # Maps to redis host.
+BROKER_VHOST = "0"                       # Maps to database number.
+
+
 # CACHES = {
 #     'default': {
 #         'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
@@ -54,7 +59,6 @@ FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 CACHE_BACKEND = 'johnny.backends.memcached://int-Memcached1010.agoodcloud.com:11211'
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
-
 SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 
 

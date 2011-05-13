@@ -22,7 +22,6 @@ urlpatterns = patterns('',
     
     # (r'^administration/doc/', include('django.contrib.admindocs.urls')),
     # (r'^administration/', include(admin.site.urls)),
-    (r'^', include('sorl.thumbnail.urls')),
     url(r'^', include('qi_toolkit.urls')),    
     url(r'^', include('django_ses.urls')),
     # url(r'^tinymce/', include('tinymce.urls')),

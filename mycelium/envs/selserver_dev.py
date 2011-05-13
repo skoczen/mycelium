@@ -18,6 +18,8 @@ CACHE_BACKEND = 'locmem://'
 
 SESSION_COOKIE_DOMAIN = "localhost"
 
+BROKER_VHOST = "3"                       # Maps to database number.
+
 # turn on to test pre-deploy
 # MEDIASYNC['EMULATE_COMBO'] = True
 
