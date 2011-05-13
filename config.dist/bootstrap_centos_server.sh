@@ -32,13 +32,9 @@ cat /var/www/mycelium.git/config.dist/authorized_keys >> ~/.ssh/authorized_keys
 mkvirtualenv --no-site-packages mycelium
 echo 'cd /var/www/mycelium.git' >> ~/.virtualenvs/mycelium/bin/postactivate
 workon mycelium
-<<<<<<< HEAD
-pip install -r requirements.stable.txt 
-=======
 pip install --upgrade pip 
 pip install --upgrade mercurial
-pip install -r requirements.txt 
->>>>>>> stable_master
+pip install -r requirements.stable.txt 
 echo 'mysql_config = /usr/bin/mysql_config' >> ~/.virtualenvs/mycelium/build/mysql-python/site.cfg
 pip install -r requirements.stable.txt 
 mkdir /var/log/celery
