@@ -141,7 +141,6 @@ INSTALLED_APPS = (
     'taggit',
     'taggit_templatetags',
     'django_jenkins',
-    'django_dumpdb',
     'django_ses',
     'mediasync',
     'sentry',
@@ -241,12 +240,21 @@ JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_mycelium'
 
 
 # celery / rabbitmq
-BROKER_HOST = "localhost"
-BROKER_PORT = 5672
-BROKER_USER = "mycelium"
-BROKER_PASSWORD = "68WXmV6K49r8veczVaUK"
-BROKER_VHOST = "digitalmycelium"
-CELERY_RESULT_BACKEND = "amqp"
+# BROKER_HOST = "localhost"
+# BROKER_PORT = 5672
+# BROKER_USER = "mycelium"
+# BROKER_PASSWORD = "68WXmV6K49r8veczVaUK"
+# BROKER_VHOST = "digitalmycelium"
+# CELERY_RESULT_BACKEND = "amqp"
+BROKER_BACKEND = "redis"
+BROKER_HOST = "localhost"  # Maps to redis host.
+BROKER_PORT = 6379         # Maps to redis port.
+BROKER_VHOST = "0"         # Maps to database number.
+CELERY_RESULT_BACKEND = "redis"
+REDIS_HOST = 6379
+REDIS_PORT = 6379
+REDIS_DB = 0
+CELERY_IGNORE_RESULT = True
 import djcelery
 djcelery.setup_loader()
 
