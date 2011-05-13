@@ -41,25 +41,36 @@ def save_upload( uploaded, filename, raw_data ):
                         submission and is a regular Django UploadedFile in request.FILES
     '''
     from django.core.files.storage import default_storage
-    filename = "import %s" % filename
+    filename = "import/%s" % (filename,)
     try:
-        from io import FileIO, BufferedWriter
-        f = default_storage.open(filename, 'w')
+        import boto
+        from StringIO import StringIO
+        import boto.s3
+        connection = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+        bucket = connection.lookup(settings.AWS_BUCKET_NAME)
+        mp = bucket.initiate_multipart_upload(filename)
+        BUFFER_SIZE = 32768
+        buffer = StringIO()
 
-        with  f as dest:
-            # if the "advanced" upload, read directly from the HTTP request 
-            # with the Django 1.3 functionality
-            if raw_data:
-                foo = uploaded.read( 1024 )
-                while foo:
-                    dest.write( foo )
-                    foo = uploaded.read( 1024 ) 
-            # if not raw, it was a form upload so read in the normal Django chunks fashion
-            else:
-                for c in uploaded.chunks( ):
-                    dest.write( c )
-                
-            return True
+        if raw_data:
+            counter = 0
+            chunk = uploaded.read(BUFFER_SIZE)
+            while chunk:
+                counter += 1
+                buffer.write(chunk)
+                mp.upload_part_from_file(buffer, counter)
+                buffer.close()
+                buffer = StringIO()
+                chunk = uploaded.read(BUFFER_SIZE)
+
+            mp.complete_upload()
+        # if not raw, it was a form upload so read in the normal Django chunks fashion
+        else:
+            for c in uploaded.chunks( ):
+                dest.write( c )
+
+
+        return True
 
     except IOError:
         # could not open the file most likely
