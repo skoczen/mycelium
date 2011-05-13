@@ -254,7 +254,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
         self.assertEqual(sel.get_confirmation(),"Hold on there.\n\nThis will delete the entire tag category, including all tags in it!\n\nThis action can not be undone.\n\nPress OK to delete this tag category.\nPress Cancel to leave it intact.")
         sel.click("css=.delete_tagset_btn:last")
         self.assertEqual(sel.get_confirmation(),"Hold on there.\n\nThis will delete the entire tag category, including all tags in it!\n\nThis action can not be undone.\n\nPress OK to delete this tag category.\nPress Cancel to leave it intact.")
-        time.sleep(0.1)
+        time.sleep(2)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         assert sel.is_element_present("css=.detail_header:last .view_field")

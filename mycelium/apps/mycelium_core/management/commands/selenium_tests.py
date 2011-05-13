@@ -27,7 +27,7 @@ class Command(BaseCommand):
         gunicorn_subprocess = subprocess.Popen(gun_command,shell=True, stderr=output, stdout=output)
         celery_subprocess = subprocess.Popen(cel_command,shell=True, stderr=output, stdout=output)
         try:
-            call_command('test', "--with-selenium", "--with-selenium-fixtures", *args, **options )
+            call_command('test', "--with-selenium", *args, **options )
             output.close()    
         except:
             print_exception()
