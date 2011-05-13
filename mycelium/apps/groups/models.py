@@ -98,13 +98,15 @@ class GroupSearchProxy(SearchableItemProxy):
         
     @property
     def search_result_row(self):
-        if cache.get(self.cache_name):
-            return cache.get(self.cache_name)
-        elif self.cached_search_result:
-            put_in_cache_forever(self.cache_name,self.cached_search_result)
-            return self.cached_search_result
-        else:
-            return self.regenerate_and_cache_search_results()
+        return self.render_result_row()
+        # TODO: re-enable this, with a way that's sustainable.
+        # if cache.get(self.cache_name):
+        #     return cache.get(self.cache_name)
+        # elif self.cached_search_result:
+        #     put_in_cache_forever(self.cache_name,self.cached_search_result)
+        #     return self.cached_search_result
+        # else:
+        #     return self.regenerate_and_cache_search_results()
 
     def regenerate_and_cache_search_results(self):
         ss = self.render_result_row()

@@ -1,4 +1,3 @@
-    
 // Generic tags
 (function($){
     var methods = {
