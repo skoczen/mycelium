@@ -1,6 +1,5 @@
-    
 // Generic tags
-$(function(){
+(function($){
     var methods = {
        init : function( options ) {
            var defaults = {

@@ -328,7 +328,6 @@ MEDIASYNC = {
                 "js/contrib/jquery.ajax.queue.js",
                 "js/contrib/jquery.form.js",
                 "js/contrib/jquery.formset.min.js",
-                "js/contrib/autocolumn.min.js",
                 "js/mycelium/generic_fields.js",
                 "js/mycelium/mycelium_search.js",
         ],        
