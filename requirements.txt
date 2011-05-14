@@ -15,7 +15,7 @@ pyparsing
 django-xmlrpc
 akismet
 BeautifulSoup
--e git://github.com/skoczen/django-form-designer.git#egg=form_designer
+# -e git://github.com/skoczen/django-form-designer.git#egg=form_designer
 -e git://github.com/GoodCloud/django-ajax-uploader.git#egg=ajaxuploader
 
 django-extensions

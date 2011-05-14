@@ -155,7 +155,7 @@ INSTALLED_APPS = (
     'cms.plugins.file',
     'cms.plugins.snippet',
     'cms.plugins.googlemap',
-    'form_designer',
+    # 'form_designer',
     'tinymce',
 
     'marketing_site',

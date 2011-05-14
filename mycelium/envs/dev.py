@@ -60,7 +60,7 @@ FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
 # selenium settings
 # SELENIUM_BROWSER_COMMAND = "*safari"
-VIRTUALENV_PATH = "~/.virtualenvs/mycelium"
+VIRTUALENV_PATH = "~/.virtualenvs/mycelium1.3"
 SELENIUM_TEST_SERVER_SETTINGS="selserver_dev"
 # FORCE_SELENIUM_TESTS = True
 
