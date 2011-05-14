@@ -331,7 +331,7 @@ MEDIASYNC = {
                 "js/mycelium/generic_fields.js",
                 "js/mycelium/mycelium_search.js",
                 "js/contrib/fileuploader.js",
-        ],        
+        ],
         'js/mycelium_core.js': [
                 "js/mycelium/mycelium_elements.js",
                 "js/mycelium/mycelium_top_search.js",

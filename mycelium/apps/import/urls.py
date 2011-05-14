@@ -11,5 +11,7 @@ urlpatterns = parser.patterns('',
     url(r'start/$',                             views.start,                            name='start'),
     url(r'history/{import_id:digits}$',         views.review,                           name='review'),
 
-    url( r'start/upload/$',                     views.ajax_upload,                      name="ajax_upload" ),
+    url( r'start/upload/$',                     views.data_import_uploader,             name="ajax_upload" ),
+
+
 )

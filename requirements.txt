@@ -16,6 +16,7 @@ django-xmlrpc
 akismet
 BeautifulSoup
 -e git://github.com/skoczen/django-form-designer.git#egg=form_designer
+-e git://github.com/GoodCloud/django-ajax-uploader.git#egg=ajaxuploader
 
 django-extensions
 -e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit  > 0.3.1
