@@ -14,7 +14,7 @@ from volunteers import VOLUNTEER_STATII
 import datetime
 
 import sys, os
-sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
+# sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 
 def print_if_verbose(verbose, string):
     if verbose:

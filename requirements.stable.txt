@@ -11,7 +11,8 @@ pyparsing==1.5.5
 django-xmlrpc==0.1.3
 akismet==0.2.0
 BeautifulSoup==3.2.0
--e git://github.com/skoczen/django-form-designer.git@b9d1716acbda950e440fb13e877d3836e7b0a124#egg=form_designer-dev
+# -e git://github.com/skoczen/django-form-designer.git#egg=form_designer
+-e git://github.com/GoodCloud/django-ajax-uploader.git@67d66d67598a23339944662a9bf54f68198c1234#egg=ajaxuploader-dev
 
 django-extensions==0.6
 -e git://github.com/skoczen/qi-toolkit.git@d1c8d2ebfacdd3ca4319583c6c957f7b73e98af7#egg=qi_toolkit-dev
@@ -27,7 +28,7 @@ ipython==0.10.2
 django-nose==0.1.3
 nose-exclude==0.1.5
 django-nose-selenium==0.7
--e git://github.com/Almad/django-sane-testing.git@771b5c0709061f7f0ccde1ac9d3fb63449290b48#egg=djangosanetesting-dev
+-e git://github.com/Almad/django-sane-testing.git@e2bf9652ee27222936a013445f31564bc90818c4#egg=djangosanetesting-dev
 celery==2.2.6
 django-celery==2.2.4
 -e git://github.com/kmmbvnr/django-jenkins.git@a302b8072d27a141ca38035c73828c21f4fbabd6#egg=django_jenkins-dev
@@ -47,16 +48,15 @@ django-picklefield==0.1.9
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
 GitPython
 
-
 johnny-cache==0.3.1
 django-balancer==0.3
 django-sentry==1.8.2
 redis==2.2.4
+xlwt==0.7.2
 ## The following requirements were added by pip --freeze:
 CherryPy==3.2.0
-Django==1.2.5
+Django==1.3
 Fabric==1.0.1
-GitPython==0.3.1
 MySQL-python==1.2.3
 South==0.7.3
 amqplib==0.6.1
@@ -68,7 +68,6 @@ django-paging==0.2.4
 -e hg+https://bitbucket.org/david/django-storages@c6c65d30e7b560cd19784aa9cfaef7f4fdf41a1d#egg=django_storages-dev
 django-templatetag-sugar==0.1
 gitdb==0.5.2
-importlib==1.0.2
 kombu==1.1.3
 logilab-astng==0.21.1
 logilab-common==0.55.2

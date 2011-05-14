@@ -68,6 +68,12 @@ class Account(TimestampModelMixin):
         # delete user accounts
         for ua in instance.useraccount_set.all():
             ua.user.delete()
+        # delete group rules
+        for gr in instance.grouprule_set.all():
+            gr.delete()
+        # delete employees
+        for e in instance.employee_set.all():
+            e.delete()
 
 
     def check_challenge_progress(self):
