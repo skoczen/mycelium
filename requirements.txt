@@ -7,7 +7,7 @@ python-dateutil <2.0
 
 PIL
 python-memcached
-django <1.3
+django >=1.3
 gunicorn
 django-cms >= 2.1.3
 django-tinymce
@@ -15,7 +15,8 @@ pyparsing
 django-xmlrpc
 akismet
 BeautifulSoup
--e git://github.com/skoczen/django-form-designer.git#egg=form_designer
+# -e git://github.com/skoczen/django-form-designer.git#egg=form_designer
+-e git://github.com/GoodCloud/django-ajax-uploader.git#egg=ajaxuploader
 
 django-extensions
 -e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit  > 0.3.1

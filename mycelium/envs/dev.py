@@ -56,7 +56,7 @@ GOOGLE_KEY = 'ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRi_j0U6kJrkFvY4-OX2XYmEAa76BQkakI7eN
 MEDIA_URL = '/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "%s/_admin/" % (MEDIA_URL)
-FAVICON_URL = "%s/images/favicon.png" % MEDIA_URL
+FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
 # selenium settings
 # SELENIUM_BROWSER_COMMAND = "*safari"
@@ -73,7 +73,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # AWS_SECRET_ACCESS_KEY = 'WT1wp3UQsFPdeXMxwUyvjF7IM8q/qkcm/EW6EKvy'
 
 # local file storage
-DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+# DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 
 # s3 info
 AWS_STORAGE_BUCKET_NAME = "goodcloud-dev"
