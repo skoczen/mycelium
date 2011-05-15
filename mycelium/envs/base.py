@@ -274,11 +274,13 @@ AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 
-import datetime
-right_now = datetime.datetime.now()
-RELEASE_TAG = "%04d%02d%02s.0" % (right_now.year, right_now.month, right_now.day)
+# get git commit
+from git import Repo
+GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
+
 
 # django-mediasync
+
 BASE_JS = [
     "js/libs/modernizr-1.6.min.js",
     "js/contrib/jquery-1.4.3.min.js",
@@ -304,7 +306,7 @@ MEDIASYNC = {
     'AWS_SECRET': AWS_SECRET_ACCESS_KEY,
     'AWS_BUCKET': AWS_STORAGE_BUCKET_NAME,
     # 'CACHE_BUSTER': GIT_CURRENT_SHA,
-    'AWS_PREFIX': RELEASE_TAG, 
+    'AWS_PREFIX': GIT_CURRENT_SHA, 
     # 'PROCESSORS': (
     #     'mediasync.processors.slim.css_minifier',
     #     'mediasync.processors.slim.js_minifier',
