@@ -1,6 +1,6 @@
+from base import *
 ENV = "DEV"
 ROLE = ENV
-from base import *
 SITE_ID = 2
 
 
@@ -88,9 +88,18 @@ MEDIASYNC['SERVE_REMOTE'] = False
 MEDIASYNC['EMULATE_COMBO'] = False
 MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
 
+# get git commit
+from git import Repo
+try:
+    GIT_CURRENT_SHA = Repo(PROJECT_ROOT).commit("%s_release" % ROLE.lower()).hexsha
+except:
+    GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
+MEDIASYNC["AWS_PREFIX"] = GIT_CURRENT_SHA
+
 # turn on to test pre-deploy
 # MEDIASYNC['EMULATE_COMBO'] = True
 
 # turn on to test postsync with live media
-MEDIASYNC['SERVE_REMOTE'] = True
-MEDIA_URL = CDN_MEDIA_URL
+# MEDIASYNC['SERVE_REMOTE'] = True
+# MEDIA_URL = CDN_MEDIA_URL
+

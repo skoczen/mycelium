@@ -1,8 +1,7 @@
-ENV = "STAGING"
-ROLE = ENV
 from base import *
 ENV = "STAGING"
 ROLE = ENV
+SITE_ID = 3
 
 DATABASES = {
     'default': {
@@ -64,5 +63,12 @@ MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = CDN_MEDIA_URL
 STATIC_URL = MEDIA_URL
 STATIC_ROOT = MEDIA_ROOT
-SITE_ID = 3
 
+
+ 
+from git import Repo
+try:
+    GIT_CURRENT_SHA = Repo(PROJECT_ROOT).commit("%s_release" % ROLE.lower()).hexsha
+except:
+    GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
+MEDIASYNC["AWS_PREFIX"] = GIT_CURRENT_SHA

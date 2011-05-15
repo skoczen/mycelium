@@ -272,14 +272,7 @@ AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 
-# get git commit
-from git import Repo
-r = Repo(PROJECT_ROOT)
-try:
-    GIT_CURRENT_SHA = r.commit("%s_release" % ROLE.lower()).hexsha
-except:
-    GIT_CURRENT_SHA = r.head.reference.commit.hexsha
-
+GIT_CURRENT_SHA = None
 # django-mediasync
 
 BASE_JS = [

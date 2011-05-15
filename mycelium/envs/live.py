@@ -1,5 +1,3 @@
-ENV = "LIVE"
-ROLE = ENV
 from base import *
 SSL_FORCE = True
 SESSION_COOKIE_SECURE = True
@@ -65,3 +63,9 @@ SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 # django-mediasync
 MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
 MEDIASYNC['USE_SSL'] = True
+from git import Repo
+try:
+    GIT_CURRENT_SHA = Repo(PROJECT_ROOT).commit("%s_release" % ROLE.lower()).hexsha
+except:
+    GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
+MEDIASYNC["AWS_PREFIX"] = GIT_CURRENT_SHA
