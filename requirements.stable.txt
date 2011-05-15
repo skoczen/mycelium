@@ -46,7 +46,6 @@ slimmer==0.1.30
 django-debug-toolbar==0.8.5
 django-picklefield==0.1.9
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
-GitPython
 
 johnny-cache==0.3.1
 django-balancer==0.3
