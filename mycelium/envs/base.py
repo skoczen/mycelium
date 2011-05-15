@@ -212,8 +212,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 # SESSION_SAVE_EVERY_REQUEST = True
 
-ENV = None
-
 # qi toolkit
 DEFAULT_SMOKE_TEST_OPTIONS = {
     'verbose'           : False,
@@ -275,9 +273,12 @@ AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 
 # get git commit
-import datetime
-right_now = datetime.datetime.now()
-RELEASE_TAG = "%04d%02d%02s.0" % (right_now.year, right_now.month, right_now.day)
+from git import Repo
+r = Repo(PROJECT_ROOT)
+try:
+    GIT_CURRENT_SHA = r.commit("%s_release" % ROLE.lower()).hexsha
+except:
+    GIT_CURRENT_SHA = r.head.reference.commit.hexsha
 
 # django-mediasync
 
@@ -306,7 +307,7 @@ MEDIASYNC = {
     'AWS_SECRET': AWS_SECRET_ACCESS_KEY,
     'AWS_BUCKET': AWS_STORAGE_BUCKET_NAME,
     # 'CACHE_BUSTER': GIT_CURRENT_SHA,
-    'AWS_PREFIX': RELEASE_TAG, 
+    'AWS_PREFIX': GIT_CURRENT_SHA, 
     # 'PROCESSORS': (
     #     'mediasync.processors.slim.css_minifier',
     #     'mediasync.processors.slim.js_minifier',

@@ -1,6 +1,6 @@
-from base import *
 ENV = "LIVE"
 ROLE = ENV
+from base import *
 SSL_FORCE = True
 SESSION_COOKIE_SECURE = True
 
@@ -65,4 +65,3 @@ SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 # django-mediasync
 MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
 MEDIASYNC['USE_SSL'] = True
-MEDIASYNC['RELEASE_TAG'] = "20110514.0"

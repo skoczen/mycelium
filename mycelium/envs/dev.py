@@ -1,7 +1,8 @@
-from base import *
 ENV = "DEV"
 ROLE = ENV
+from base import *
 SITE_ID = 2
+
 
 DATABASES = {
     'default': {
@@ -91,6 +92,5 @@ MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
 # MEDIASYNC['EMULATE_COMBO'] = True
 
 # turn on to test postsync with live media
-# MEDIASYNC['SERVE_REMOTE'] = True
-# MEDIA_URL = CDN_MEDIA_URL
-
+MEDIASYNC['SERVE_REMOTE'] = True
+MEDIA_URL = CDN_MEDIA_URL
