@@ -164,7 +164,7 @@ INSTALLED_APPS = (
     'people',
     'mycelium_core',
     'reports',
-    'import',
+    'data_import',
     'logo_maker',
     'volunteers',
     'conversations',

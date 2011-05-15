@@ -19,6 +19,7 @@ from django.db.models.signals import post_save
 from django.core.cache import cache
 from mycelium_core.models import SearchableItemProxy
 from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
+from data_import.models import PotentiallyImportedModel
 
 class OrganizationType(AccountBasedModel, models.Model):
     internal_name = models.CharField(max_length=255)
@@ -64,7 +65,7 @@ class PhoneNumberBase(models.Model):
         abstract = True
 
 
-class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumberBase, EmailAddressBase):
+class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumberBase, EmailAddressBase, PotentiallyImportedModel):
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     
@@ -136,7 +137,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
         return self.peopleandorganizationssearchproxy_set.all()[0].search_result_row
 
 
-class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, TimestampModelMixin):
+class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, TimestampModelMixin, PotentiallyImportedModel):
     name = models.CharField(max_length=255, blank=True, null=True)
 
     search_fields = ["full_name","searchable_primary_phone_number"]

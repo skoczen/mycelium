@@ -12,13 +12,13 @@
 <page_title>Data Import History</page_title>
 
 <record_list>
-<a href="{% url import:start %}" class="mycelium_btn">Start New Import</a>
+<a href="{% url data_import:start %}" class="mycelium_btn">Start New Import</a>
 
 
 <table class="striped data_import_history_table record_table">
 	{% for i in all_imports %}
 	<tr {% if not i.complete %}class="in_progress"{% endif %}>
-		<td class="action">{% if i.complete %}<a href="{% url import:review i.pk %}">View Report</a>{% else %}<img src="{% media_url "images/spinner-grey-16.gif" %}" >{% endif %}</td>
+		<td class="action">{% if i.complete %}<a href="{% url data_import:review i.pk %}">View Report</a>{% else %}<img src="{% media_url "images/spinner-grey-16.gif" %}" >{% endif %}</td>
 		<td class="import_date">{% if i.complete %}{{i.start_date|date}}{% else %}<span class="right_now"><img src="{% media_url "images/spinner-grey-16.gif" %}" >Right now</span>{% endif %}</td>
 		<td class="people_count">{% if i.complete %}importing{% else %}imported{% endif %} {{i.people|intcomma}} people</td>
 		<td class="other_fields">and 6 other fields.</td>
@@ -31,14 +31,14 @@
 		<td class="other_fields">and 6 other fields.</td>
 	</tr>
 	<tr>
-		<td class="action"><a href="{% url import:review 1 %}">View Results</a></td>
+		<td class="action"><a href="{% url data_import:review 1 %}">View Results</a></td>
 		<td class="import_date">Dec 29, 2010</td>
 		<td class="people_count">imported 428 people </td>
 		<td class="other_fields">and 28 other fields</td>
 
 	</tr>	
 	<tr>
-		<td class="action"><a href="{% url import:review 2 %}">View Results</a></td>
+		<td class="action"><a href="{% url data_import:review 2 %}">View Results</a></td>
 		<td class="import_date">Nov 15, 2010</td>
 		<td class="people_count">imported 1,627 people </td>
 		<td class="other_fields">and 6 other fields.</td>

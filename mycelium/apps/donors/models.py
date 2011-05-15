@@ -7,6 +7,7 @@ from people.models import Person
 
 from taggit.managers import TaggableManager
 from accounts.models import AccountBasedModel
+from data_import.models import PotentiallyImportedModel
 
 class Donor(AccountBasedModel,TimestampModelMixin):
     """A donor!"""
@@ -72,7 +73,7 @@ class Donor(AccountBasedModel,TimestampModelMixin):
         return donations_by_year
 
 
-class Donation(AccountBasedModel, TimestampModelMixin):
+class Donation(AccountBasedModel, TimestampModelMixin, PotentiallyImportedModel):
     """A specific donation"""
     donor = models.ForeignKey(Donor)
     date = models.DateField(default=datetime.date.today)
