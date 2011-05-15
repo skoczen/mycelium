@@ -300,7 +300,7 @@ MEDIASYNC = {
     'AWS_SECRET': AWS_SECRET_ACCESS_KEY,
     'AWS_BUCKET': AWS_STORAGE_BUCKET_NAME,
     # 'CACHE_BUSTER': GIT_CURRENT_SHA,
-    'AWS_PREFIX': GIT_CURRENT_SHA, 
+    # 'AWS_PREFIX': GIT_CURRENT_SHA, 
     # 'PROCESSORS': (
     #     'mediasync.processors.slim.css_minifier',
     #     'mediasync.processors.slim.js_minifier',
