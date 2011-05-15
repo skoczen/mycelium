@@ -1,6 +1,9 @@
 from base import *
 SSL_FORCE = True
 SESSION_COOKIE_SECURE = True
+ENV = "STAGING"
+ROLE = ENV
+
 
 DATABASES = {
     'default': {
