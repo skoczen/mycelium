@@ -21,6 +21,7 @@
 	    action: "{% url import:ajax_upload %}",
 	    element: $('#file-uploader')[0],
 	    multiple: true,
+	    allowedExtensions: ["csv","xls","xlsx"],
 	    onComplete: function( id, fileName, responseJSON ) {
 	      if( responseJSON.success )
 	        alert( "success!" ) ;
