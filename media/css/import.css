@@ -91,6 +91,14 @@ page_title {
 	background-color: #EEE;
 	color: #004486;
 }
+.start_data_import step.active.current step_number {
+	background-color: #004486;
+	color: #FFF;
+}
+.start_data_import step.active.current instruction {
+	background-color: #0058ae;
+	color: #FFF;
+}
 .start_data_import step step_content, .start_data_import step pre_step_content  {
 	display: block;
 	padding: 7px 15px 5px 25px;

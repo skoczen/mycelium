@@ -21,7 +21,8 @@
 	}
 	function next_step() {
 		current_step++;
-		$("step[number="+current_step+"]").addClass("active");
+		$("step").removeClass("current");
+		$("step[number="+current_step+"]").addClass("active").addClass("current");
 		$("step[number="+current_step+"] step_content").show();
 		$("step[number="+current_step+"] pre_step_content").hide();
 		$("step[number="+current_step+"] .mycelium_btn").removeClass("mycelium_grey").removeClass("mycelium_gray");
@@ -57,7 +58,7 @@
 <div class="easy_header">Data import is a way for you to bring in data from your old system into GoodCloud.  You can import data as many times as you want - GoodCloud will match up with data you already have, and give you a clear report of what happened.</div>
 <div class="start_data_import">
 <form class="upload_form" enctype="multipart/form-data">
-<step number="1" class="active choose_import_type">
+<step number="1" class="active current choose_import_type">
 	<step_number>1</step_number>
 	<instruction>Choose what you want to import</instruction>
 	<step_content>	
