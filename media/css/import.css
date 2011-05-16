@@ -101,7 +101,7 @@ page_title {
 }
 .start_data_import step step_content, .start_data_import step pre_step_content  {
 	display: block;
-	padding: 7px 15px 5px 25px;
+	padding: 7px 15px 5px 45px;
 }
 .start_data_import step pre_step_content {
 	font-size: 18px;

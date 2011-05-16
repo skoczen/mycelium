@@ -10,7 +10,7 @@
 		$("th.col_6 select").live("change",next_step)
 		$("step[number=1] input[name=import_type]").live("change",import_type_selected)
 		$(".qq-upload-button").addClass("mycelium_btn")
-
+		go_to_step(1);
 	});
 	function import_type_selected(){
 		$(".choose_import_type .import_option").removeClass("active").addClass("inactive");
@@ -21,11 +21,23 @@
 	}
 	function next_step() {
 		current_step++;
-		$("step").removeClass("current");
-		$("step[number="+current_step+"]").addClass("active").addClass("current");
-		$("step[number="+current_step+"] step_content").show();
-		$("step[number="+current_step+"] pre_step_content").hide();
-		$("step[number="+current_step+"] .mycelium_btn").removeClass("mycelium_grey").removeClass("mycelium_gray");
+		go_to_step(current_step)
+	}
+	function go_to_step(step_number) {
+		$("step").removeClass("current").removeClass("active");
+		
+		$("step step_content").hide();
+		$("step pre_step_content").show();
+		$("step .mycelium_btn").addClass("mycelium_grey");
+		
+		for (j=step_number; j>0; j--) {
+			$("step[number="+j+"]").addClass("active")	
+			$("step[number="+j+"] step_content").show();
+			$("step[number="+j+"] pre_step_content").hide();
+			
+		}
+		$("step[number="+step_number+"] .mycelium_btn").removeClass("mycelium_grey").removeClass("mycelium_gray");	
+		$("step[number="+step_number+"]").addClass("current");
 	}
 
 	var uploader = new qq.FileUploader( {
@@ -53,12 +65,11 @@
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url data_import:list %}">Back to All Data Imports</a>{% endblock %}
 {% block page_content %}
-<coming_soon>We're not quite done with data import yet, but it'll be ready to go by June 1!</coming_soon>
 <page_title>Start Data Import</page_title>
 <div class="easy_header">Data import is a way for you to bring in data from your old system into GoodCloud.  You can import data as many times as you want - GoodCloud will match up with data you already have, and give you a clear report of what happened.</div>
 <div class="start_data_import">
 <form class="upload_form" enctype="multipart/form-data">
-<step number="1" class="active current choose_import_type">
+<step number="1" class="active choose_import_type">
 	<step_number>1</step_number>
 	<instruction>Choose what you want to import</instruction>
 	<step_content>	
@@ -85,7 +96,7 @@
 <step number="2" >
 	<step_number>2</step_number>
 	<instruction>Choose a spreadsheet. </instruction>
-	<pre_step_content>Choose what sort of data you want to import, above.</pre_step_content>
+	<pre_step_content>Choose what sort of data you want to import above.</pre_step_content>
 	<step_content style="display: none;">
 		<step_instructions>Choose an Excel or .CSV files to upload, or drag one onto the button.</step_instructions>
 	{# <form class="upload_form" enctype="multipart/form-data"> #}
@@ -131,8 +142,9 @@
 
 <step number="4">
 	<step_number>4</step_number>
-	<instruction>Click Import, and give the GoodCloud robots a minute!</instruction>
-	<step_content>	
+	<instruction>Click Start Import, and give the GoodCloud robots a minute!</instruction>
+	<pre_step_content>Finish 1-3, then you're ready to go!</pre_step_content>
+	<step_content style="display: none;">	
 	<a href="{% url data_import:list %}" class="mycelium_btn mycelium_grey">Start Import</a>
 	</step_content>
 	</active_step_content>
