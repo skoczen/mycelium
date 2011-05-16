@@ -59,3 +59,5 @@ django-balancer
 django-sentry
 redis
 xlwt
+xlrd
+xlutils
