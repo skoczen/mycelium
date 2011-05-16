@@ -52,3 +52,16 @@ class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions):
         
         sel.click("link=Back to All Data Imports")
         sel.wait_for_page_to_load("30000")
+
+    # $sel->type('browseid', '/home/dir/filename');
+    # $sel->focus('uploadid');
+    # $sel->click('click');
+
+    def test_starting_a_new_import_takes_you_to_the_start_page(self):
+        assert True == "Test written"
+
+    def test_that_uploading_a_csv_file_displays_the_right_columns(self):
+        assert True == "Test written"
+
+    def test_that_uploading_an_excel_file_displays_the_right_columns(self):
+        assert True == "Test written"

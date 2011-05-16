@@ -276,7 +276,7 @@ GIT_CURRENT_SHA = None
 # django-mediasync
 
 BASE_JS = [
-    "js/libs/modernizr-1.6.min.js",
+    "js/lib/modernizr-1.6.min.js",
     "js/contrib/jquery-1.4.3.min.js",
     "js/contrib/jquery-ui.js",
     "js/contrib/jquery.django.csrf.js",
@@ -324,14 +324,14 @@ MEDIASYNC = {
                 "js/contrib/jquery.formset.min.js",
                 "js/mycelium/generic_fields.js",
                 "js/mycelium/mycelium_search.js",
-                "js/contrib/fileuploader.js",
+                "js/lib/fileuploader.mycelium.js",
         ],
         'js/mycelium_core.js': [
                 "js/mycelium/mycelium_elements.js",
                 "js/mycelium/mycelium_top_search.js",
         ],
         'css/mycelium_base.css': BASE_CSS + [
-                "js/contrib/fileuploader.css",
+                "css/contrib/fileuploader.css",
         ],
 
         'js/marketing_base.js': BASE_JS + COMMON_JS + [

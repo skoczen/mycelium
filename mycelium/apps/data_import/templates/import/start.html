@@ -5,10 +5,20 @@
 <script type="text/javascript" charset="utf-8">
 	var current_step = 1;
 	$(function(){
-		$("step[number=2] step_content").hide();
+		$("step[number=3] step_content").hide();
 		$(".next_step_btn").live("click",next_step);
 		$("th.col_6 select").live("change",next_step)
+		$("step[number=1] input[name=import_type]").live("change",import_type_selected)
+		$(".qq-upload-button").addClass("mycelium_btn")
+
 	});
+	function import_type_selected(){
+		$(".choose_import_type .import_option").removeClass("active").addClass("inactive");
+		var rad = $(".choose_import_type input[type=radio]:checked");
+		rad.parents(".import_option").addClass("active").removeClass("inactive");
+		current_step = 1;
+		next_step();
+	}
 	function next_step() {
 		current_step++;
 		$("step[number="+current_step+"]").addClass("active");
@@ -20,18 +30,15 @@
 	var uploader = new qq.FileUploader( {
 	    action: "{% url data_import:ajax_upload %}",
 	    element: $('#file-uploader')[0],
-	    multiple: true,
+	    multiple: false,
 	    allowedExtensions: ["csv","xls","xlsx"],
 	    onComplete: function( id, fileName, responseJSON ) {
-	      if( responseJSON.success )
-	        alert( "success!" ) ;
-	      else
-	        alert( "upload failed!" ) ;
-	    },
-	    onAllComplete: function( uploads ) {
-	      // uploads is an array of maps
-	      // the maps look like this: { file: FileObject, response: JSONServerResponse }
-	      alert( "All complete!" ) ;
+	      if( responseJSON.success ) {
+	        next_step();
+	        $(".qq-upload-button").addClass("mycelium_grey");	      	
+	      } else {
+	        alert( "Upload failed!" ) ;	      	
+	      }
 	    },
 	    params: {
 	      'csrf_token': '{{ csrf_token }}',
@@ -49,25 +56,51 @@
 <page_title>Start Data Import</page_title>
 <div class="easy_header">Data import is a way for you to bring in data from your old system into GoodCloud.  You can import data as many times as you want - GoodCloud will match up with data you already have, and give you a clear report of what happened.</div>
 <div class="start_data_import">
-<step number="1" class="active">
+<form class="upload_form" enctype="multipart/form-data">
+<step number="1" class="active choose_import_type">
 	<step_number>1</step_number>
-	<instruction>Choose a spreadsheet. (Excel and .CSV files are both fine.)</instruction>
+	<instruction>Choose what you want to import</instruction>
 	<step_content>	
-	<form class="upload_form" enctype="multipart/form-data">
+		<span class="import_option import_type_people">
+			<input type="radio" name="import_type" value="people" id="id_import_type_people"/>
+			<label for="id_import_type_people">People</label>
+		</span>
+		<span class="import_option import_type_organizations">
+			<input type="radio" name="import_type" value="organizations" id="id_import_type_organizations"/>
+			<label for="id_import_type_organizations">Companies or Organizations</label>
+		</span>
+		<span class="import_option import_type_volunteer_hours">
+			<input type="radio" name="import_type" value="volunteer_hours" id="id_import_type_volunteer_hours"/>
+			<label for="id_import_type_volunteer_hours">Volunteer Hours</label>
+		</span>
+		<span class="import_option import_type_donations">
+			<input type="radio" name="import_type" value="donations" id="id_import_type_donations"/>
+			<label for="id_import_type_donations">Donations</label>
+		</span>
+	</step_content>
+</step>
+
+
+<step number="2" >
+	<step_number>2</step_number>
+	<instruction>Choose a spreadsheet. </instruction>
+	<pre_step_content>Choose what sort of data you want to import, above.</pre_step_content>
+	<step_content style="display: none;">
+		<step_instructions>Choose an Excel or .CSV files to upload, or drag one onto the button.</step_instructions>
+	{# <form class="upload_form" enctype="multipart/form-data"> #}
 		<div id="file-uploader">       
 		    <noscript>          
 		        <p>Please enable JavaScript to use file uploader.</p>
 		    </noscript>         
 		</div>
-		<input type="button" class="mycelium_btn next_step_btn" value="Next Step">
-	</form>
+	{# </form> #}
 	</step_content>
 </step>
 
-<step number="2">
-	<step_number>2</step_number>
+<step number="3">
+	<step_number>3</step_number>
 	<instruction>Confirm the fields you want to import.</instruction>
-	<pre_step_content>Click "Next Step" above to see the import fields.</pre_step_content>
+	<pre_step_content>Upload a file above to see the import fields.</pre_step_content>
 	<step_content style="display: none;">
 	<table class="striped record_table import_fields_confirmation">
 		<tr>
@@ -95,13 +128,14 @@
 	</active_step_content>
 </step>
 
-<step number="3">
-	<step_number>3</step_number>
+<step number="4">
+	<step_number>4</step_number>
 	<instruction>Click Import, and give the GoodCloud robots a minute!</instruction>
 	<step_content>	
 	<a href="{% url data_import:list %}" class="mycelium_btn mycelium_grey">Start Import</a>
 	</step_content>
 	</active_step_content>
 </step>
+</form>
 </div>
 {% endblock %}
