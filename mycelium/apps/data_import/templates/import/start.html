@@ -16,14 +16,14 @@
 		$(".choose_import_type .import_option").removeClass("active").addClass("inactive");
 		var rad = $(".choose_import_type input[type=radio]:checked");
 		rad.parents(".import_option").addClass("active").removeClass("inactive");
-		current_step = 1;
-		next_step();
+		go_to_step(2);
 	}
 	function next_step() {
 		current_step++;
 		go_to_step(current_step)
 	}
 	function go_to_step(step_number) {
+		current_step = step_number;
 		$("step").removeClass("current").removeClass("active");
 		
 		$("step step_content").hide();
@@ -47,7 +47,7 @@
 	    allowedExtensions: ["csv","xls","xlsx"],
 	    onComplete: function( id, fileName, responseJSON ) {
 	      if( responseJSON.success ) {
-	        next_step();
+	        go_to_step(3);
 	        $(".qq-upload-button").addClass("mycelium_grey");	      	
 	      } else {
 	        alert( "Upload failed!" ) ;	      	
@@ -66,7 +66,7 @@
 {% block breadcrumb_links %}<a href="{% url data_import:list %}">Back to All Data Imports</a>{% endblock %}
 {% block page_content %}
 <page_title>Start Data Import</page_title>
-<div class="easy_header">Data import is a way for you to bring in data from your old system into GoodCloud.  You can import data as many times as you want - GoodCloud will match up with data you already have, and give you a clear report of what happened.</div>
+<div class="easy_header">Data import is a way for you to bring in data from your old system into GoodCloud.  You can import data as many times as you want - GoodCloud will match up with data you already have, and give you a clear report of what changed.</div>
 <div class="start_data_import">
 <form class="upload_form" enctype="multipart/form-data">
 <step number="1" class="active choose_import_type">
