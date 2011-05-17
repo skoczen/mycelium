@@ -7,7 +7,7 @@
 	$(function(){
 		$("step[number=3] step_content").hide();
 		$(".next_step_btn").live("click",next_step);
-		$("th.col_6 select").live("change",next_step)
+		$("select.import_column_type").live("change",column_header_changed)
 		$("step[number=1] input[name=import_type]").live("change",import_type_selected)
 		$(".qq-upload-button").addClass("mycelium_btn")
 		go_to_step(1);
@@ -21,6 +21,21 @@
 	function next_step() {
 		current_step++;
 		go_to_step(current_step)
+	}
+	function column_header_changed() {
+		var all_selected = true;
+		$("select.import_column_type").each(function(){
+			var sel = $(this);
+			if ($("option:selected", sel).val() == "") {
+				all_selected = false;
+			}
+		});
+		if (all_selected) {
+			go_to_step(4);
+		} else {
+			go_to_step(3);
+		}
+		return false;
 	}
 	function go_to_step(step_number) {
 		current_step = step_number;
@@ -48,7 +63,8 @@
 	    onComplete: function( id, fileName, responseJSON ) {
 	      if( responseJSON.success ) {
 	        go_to_step(3);
-	        $(".qq-upload-button").addClass("mycelium_grey");	      	
+	        $(".qq-upload-button").addClass("mycelium_grey");
+	        import_results_received(responseJSON);
 	      } else {
 	        alert( "Upload failed!" ) ;	      	
 	      }
@@ -60,6 +76,22 @@
 	    },
 	  } ) ;
 	
+	function import_results_received(json) {
+		$(".import_fields_confirmation thead").html("");
+		$(".import_fields_confirmation tbody").html("");
+		for (j=0; j<json.first_rows[0].length; j++) {
+			$(".import_fields_confirmation thead").append("<th class='col_"+j+"'>{% include "import/_dropdown_options.html" %}</th>");
+		}
+		for (j=0; j<json.first_rows.length; j++) {
+			$(".import_fields_confirmation tbody").append("<tr class='striped_row'></tr>");
+			for (k=0; k<json.first_rows[j].length; k++) {
+				$(".import_fields_confirmation tbody tr:last").append("<td>"+json.first_rows[j][k]+"&nbsp;</td>");	
+			}
+		}
+		$(".import_fields_confirmation tbody").append("<tr class='striped_row and_more_row'><td colspan="+json.first_rows[0].length+">and "+(json.num_rows - json.first_rows.length)+" more rows</td></tr>");	
+
+		$.Mycelium.update_stripes()
+	}
 
 </script>
 {% endblock %}
@@ -114,28 +146,14 @@
 	<instruction>Confirm the fields you want to import.</instruction>
 	<pre_step_content>Upload a file above to see the import fields.</pre_step_content>
 	<step_content style="display: none;">
+	<div class="import_fields_container">
 	<table class="striped record_table import_fields_confirmation">
-		<tr>
-			<th class="col_1">{% with "id" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
-			<th class="col_2">{% with "first_name" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
-			<th class="col_3">{% with "last_name" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
-			<th class="col_4">{% with "email" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
-			<th class="col_5">{% with "birthday" as opt  %}{% include "import/_dropdown_options.html" %}{% endwith %}</th>
-			<th class="col_6">{% include "import/_dropdown_options.html" %}</th>
-		</tr>
-		{% with people|slice:"5" as five_people %}
-		{% for p in five_people %}
-		<tr>
-			<td class="col_1">{{p.pk}}</td>
-			<td class="col_2">{{p.first_name}}</td>
-			<td class="col_3">{{p.last_name}}</td>
-			<td class="col_4">{{p.primary_email}}</td>
-			<td class="col_5">{{birthdates|random|date}}</td>
-			<td class="col_6">{{ages|random}}</td>
-		</tr>
-		{% endfor %}
-		{% endwith %}
+		<thead>
+		</thead>
+		<tbody>
+		</tbody>
 	</table>
+	</div>
 	</step_content>
 	</active_step_content>
 </step>

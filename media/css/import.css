@@ -157,3 +157,18 @@ step_instructions {
 	padding: 0px 10px 10px 10px;
 	color: #555;
 }
+.import_fields_container {
+	display: block;
+	width: 100%;
+	border: 1px solid #AAA;
+	overflow-x: auto;
+}
+.import_fields_confirmation tr.striped_row td {
+	border: 1px solid #DDD;
+}
+table.import_fields_confirmation.record_table {
+	margin: 0px;	
+}
+table.import_fields_confirmation .and_more_row td {
+	text-align: left;
+}

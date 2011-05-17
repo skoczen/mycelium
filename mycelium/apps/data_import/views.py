@@ -54,7 +54,7 @@ class DataImportAjaxFileUploader(AjaxFileUploader):
             header_row = s.header_row
         
         # get the first five columns
-        first_rows = s.get_rows(0,5)
+        first_rows = s.get_rows(0,8)
 
         return_dict = {
             'num_rows': num_rows,

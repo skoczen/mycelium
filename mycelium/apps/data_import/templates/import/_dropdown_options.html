@@ -1,11 +1,13 @@
-<select>
-<option {% if "unknown" = opt  %}selected{% endif %}>Please Select..</option>
-<option {% if "ignore" = opt  %}selected{% endif %}>Ignore this field </option>
-<option {% if "id" = opt  %}selected{% endif %}>Old Database ID</option>
-<option {% if "goodcloudid" = opt  %}selected{% endif %}>GoodCloud ID</option>
-<option {% if "first_name" = opt  %}selected{% endif %}>First Name</option>
-<option {% if "last_name" = opt  %}selected{% endif %}>Last Name</option>
-<option {% if "email" = opt  %}selected{% endif %}>Email Address</option>
-<option {% if "birthday" = opt  %}selected{% endif %}>Birthday</option>
-<option {% if "Age" = opt  %}selected{% endif %}>Age</option>
+{% spaceless %}
+<select class='import_column_type'>
+	<option value='' {% if 'unknown' = opt  %}selected{% endif %}>Please Select..</option>
+	<option value='ignore' {% if 'ignore' = opt  %}selected{% endif %}>Ignore this field </option>
+	<option value='old' {% if 'id' = opt  %}selected{% endif %}>Old Database ID</option>
+	<option value='6' {% if 'goodcloudid' = opt  %}selected{% endif %}>GoodCloud ID</option>
+	<option value='7' {% if 'first_name' = opt  %}selected{% endif %}>First Name</option>
+	<option value='8' {% if 'last_name' = opt  %}selected{% endif %}>Last Name</option>
+	<option value='9' {% if 'email' = opt  %}selected{% endif %}>Email Address</option>
+	<option value='5' {% if 'birthday' = opt  %}selected{% endif %}>Birthday</option>
+	<option value='3' {% if 'Age' = opt  %}selected{% endif %}>Age</option>
 </select>
+{% endspaceless %}
