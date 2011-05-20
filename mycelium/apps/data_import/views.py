@@ -41,7 +41,7 @@ class DataImportAjaxFileUploader(AjaxFileUploader):
         f = default_storage.open(filename, 'r')
 
         # parse the file.
-        s = Spreadsheet(f, filename=filename)
+        s = Spreadsheet(request.account, f, filename=filename)
         f.close()
         
         # get the number of rows

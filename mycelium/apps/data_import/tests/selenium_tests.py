@@ -53,15 +53,68 @@ class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions):
         sel.click("link=Back to All Data Imports")
         sel.wait_for_page_to_load("30000")
 
-    # $sel->type('browseid', '/home/dir/filename');
-    # $sel->focus('uploadid');
-    # $sel->click('click');
+
+class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions):
+    selenium_fixtures = []
+
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in()
+
 
     def test_starting_a_new_import_takes_you_to_the_start_page(self):
         assert True == "Test written"
 
     def test_that_uploading_a_csv_file_displays_the_right_columns(self):
+        # $sel->type('browseid', '/home/dir/filename');
+        # $sel->focus('uploadid');
+        # $sel->click('click');
         assert True == "Test written"
 
     def test_that_uploading_an_excel_file_displays_the_right_columns(self):
         assert True == "Test written"
+
+    def test_that_choosing_person_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
+        assert True == "Test written"
+
+    def test_that_choosing_organization_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
+        assert True == "Test written"
+
+    def test_that_choosing_donation_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
+        assert True == "Test written"
+    
+    def test_that_choosing_volunteer_hours_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
+        assert True == "Test written"
+    
+    def test_that_uploading_a_spreadsheet_displays_the_right_first_five_columns(self):
+        assert True == "Test written"
+
+    def test_that_submit_is_disabled_if_all_columns_have_not_been_selected(self):
+        assert True == "Test written"
+    
+    def test_that_selecting_all_columns_enables_submit(self):
+        assert True == "Test written"
+
+    def test_that_hitting_submit_on_a_valid_form_returns_to_the_list_and_says_in_progress(self):
+        assert True == "Test written"
+
+    def test_that_a_submitted_import_updates_the_list_as_it_progresses(self):
+        assert True == "Test written"
+    
+    def test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list(self):
+        assert True == "Test written"
+    
+    def test_that_a_successful_completed_import_shows_valid_results(self):
+        assert True == "Test written"
+    
+    def test_that_an_import_with_invalid_columns_displays_those_results_on_the_import_page(self):
+        assert True == "Test written"
+
+    def test_that_ignoring_a_column_actually_ignores_it(self):
+        assert True == "Test written"
+
+
+class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, AccountTestAbstractions):
+    selenium_fixtures = []
+
+    def setUp(self, *args, **kwargs):
+        self.account = self.setup_for_logged_in()
