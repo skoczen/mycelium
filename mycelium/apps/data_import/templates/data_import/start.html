@@ -1,21 +1,44 @@
-{% extends "import/base.html" %}
+{% extends "data_import/base.html" %}
 {% load humanize %}
 {% block title %}Data Import - Start a New Data Import{% endblock %}
 {% block javascript %}{{block.super}}
+<script src="{% url data_import:import_column_headers_js %}"></script>
 <script type="text/javascript" charset="utf-8">
 	var current_step = 1;
+	var import_type = false;
 	$(function(){
 		$("step[number=3] step_content").hide();
 		$(".next_step_btn").live("click",next_step);
 		$("select.import_column_type").live("change",column_header_changed)
 		$("step[number=1] input[name=import_type]").live("change",import_type_selected)
-		$(".qq-upload-button").addClass("mycelium_btn")
 		go_to_step(1);
 	});
 	function import_type_selected(){
 		$(".choose_import_type .import_option").removeClass("active").addClass("inactive");
 		var rad = $(".choose_import_type input[type=radio]:checked");
+		import_type = rad.val()
 		rad.parents(".import_option").addClass("active").removeClass("inactive");
+		uploader =  new qq.FileUploader( {
+		    action: $(".choose_import_type input[type=radio]:checked").attr("url"),
+		    element: $('#file-uploader')[0],
+		    multiple: false,
+		    allowedExtensions: ["csv","xls","xlsx"],
+		    onComplete: function( id, fileName, responseJSON ) {
+		      if( responseJSON.success ) {
+		        go_to_step(3);
+		        $(".qq-upload-button").addClass("mycelium_grey");
+		        import_results_received(responseJSON);
+		      } else {
+		        alert( "Upload failed!" ) ;
+		      }
+		    },
+		    params: {
+		      'csrf_token': '{{ csrf_token }}',
+		      'csrf_name': 'csrfmiddlewaretoken',
+		      'csrf_xname': 'X-CSRFToken',
+		    },
+		  } ) ;
+		$(".qq-upload-button").addClass("mycelium_btn")
 		go_to_step(2);
 	}
 	function next_step() {
@@ -55,33 +78,22 @@
 		$("step[number="+step_number+"]").addClass("current");
 	}
 
-	var uploader = new qq.FileUploader( {
-	    action: "{% url data_import:ajax_upload %}",
-	    element: $('#file-uploader')[0],
-	    multiple: false,
-	    allowedExtensions: ["csv","xls","xlsx"],
-	    onComplete: function( id, fileName, responseJSON ) {
-	      if( responseJSON.success ) {
-	        go_to_step(3);
-	        $(".qq-upload-button").addClass("mycelium_grey");
-	        import_results_received(responseJSON);
-	      } else {
-	        alert( "Upload failed!" ) ;	      	
-	      }
-	    },
-	    params: {
-	      'csrf_token': '{{ csrf_token }}',
-	      'csrf_name': 'csrfmiddlewaretoken',
-	      'csrf_xname': 'X-CSRFToken',
-	    },
-	  } ) ;
+	var uploader = false
 	
 	function import_results_received(json) {
 		$(".import_fields_confirmation thead").html("");
 		$(".import_fields_confirmation tbody").html("");
 		for (j=0; j<json.first_rows[0].length; j++) {
-			$(".import_fields_confirmation thead").append("<th class='col_"+j+"'>{% include "import/_dropdown_options.html" %}</th>");
+			// $(".import_fields_confirmation thead").append("<th class='col_"+j+"'>{% include "data_import/_dropdown_options.html" %}</th>");
+			$(".import_fields_confirmation thead").append("<th class='col_"+j+"'></th>");
 		}
+		col_count = 0;
+		$(".import_fields_confirmation thead th").each(function(){
+			th = $(this);
+			th.html('<td><select class="import_column_type" name="import_col_'+col_count+'">' + COLUMN_HEADERS.rendered_select_options[import_type] +'</select></td>');
+			col_count ++;
+		});
+
 		for (j=0; j<json.first_rows.length; j++) {
 			$(".import_fields_confirmation tbody").append("<tr class='striped_row'></tr>");
 			for (k=0; k<json.first_rows[j].length; k++) {
@@ -91,6 +103,8 @@
 		$(".import_fields_confirmation tbody").append("<tr class='striped_row and_more_row'><td colspan="+json.first_rows[0].length+">and "+(json.num_rows - json.first_rows.length)+" more rows</td></tr>");	
 
 		$.Mycelium.update_stripes()
+
+
 	}
 
 </script>
@@ -100,25 +114,25 @@
 <page_title>Start Data Import</page_title>
 <div class="easy_header">Data import is a way for you to bring in data from your old system into GoodCloud.  You can import data as many times as you want - GoodCloud will match up with data you already have, and give you a clear report of what changed.</div>
 <div class="start_data_import">
-<form class="upload_form" enctype="multipart/form-data">
+<form class="upload_form" enctype="multipart/form-data" action="">
 <step number="1" class="active choose_import_type">
 	<step_number>1</step_number>
 	<instruction>Choose what you want to import</instruction>
 	<step_content>	
 		<span class="import_option import_type_people">
-			<input type="radio" name="import_type" value="people" id="id_import_type_people"/>
+			<input type="radio" url="{% url data_import:ajax_upload 'people' %}" name="import_type" value="people" id="id_import_type_people"/>
 			<label for="id_import_type_people">People</label>
 		</span>
 		<span class="import_option import_type_organizations">
-			<input type="radio" name="import_type" value="organizations" id="id_import_type_organizations"/>
+			<input type="radio" url="{% url data_import:ajax_upload 'organizations' %}" name="import_type" value="organizations" id="id_import_type_organizations"/>
 			<label for="id_import_type_organizations">Companies or Organizations</label>
 		</span>
 		<span class="import_option import_type_volunteer_hours">
-			<input type="radio" name="import_type" value="volunteer_hours" id="id_import_type_volunteer_hours"/>
+			<input type="radio" url="{% url data_import:ajax_upload 'volunteer_hours' %}" name="import_type" value="volunteer_hours" id="id_import_type_volunteer_hours"/>
 			<label for="id_import_type_volunteer_hours">Volunteer Hours</label>
 		</span>
 		<span class="import_option import_type_donations">
-			<input type="radio" name="import_type" value="donations" id="id_import_type_donations"/>
+			<input type="radio" url="{% url data_import:ajax_upload 'donations' %}" name="import_type" value="donations" id="id_import_type_donations"/>
 			<label for="id_import_type_donations">Donations</label>
 		</span>
 	</step_content>

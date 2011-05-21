@@ -5,7 +5,8 @@ from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCas
 from qi_toolkit.selenium_test_case import QiUnitTestMixin
 from django.test import TestCase
 from groups.models import Group
-from data_import.models import DataImport, Spreadsheet, ImportSpreadsheet, EXCEL_TYPE, CSV_TYPE
+from data_import.models import DataImport, ImportSpreadsheet
+from data_import.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
 from data_import.tests.abstractions import GenerateSpreadsheetsMixin
 from people.models import Person
 

@@ -1,5 +1,5 @@
 from test_factory import Factory
-from data_import.models import Spreadsheet, EXCEL_TYPE, CSV_TYPE
+from data_import.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
 
 class GenerateSpreadsheetsMixin:
     def _person_dict(self, person):
