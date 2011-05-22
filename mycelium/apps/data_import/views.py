@@ -30,8 +30,6 @@ def start(request):
 
 def begin_import(request):
     if request.method == "POST":
-        print "starting import"
-        print request.POST
         import_type = request.POST["upload_type"]
         filename = request.POST["upload_filename"]
         fields = []
@@ -40,11 +38,9 @@ def begin_import(request):
             if "import_col_" in k:
                 fields.append(v)
         
-        print fields
         fh = default_storage.open(filename, 'r')
         s = Spreadsheet(request.account, fh, import_type, filename=filename)
         s.do_import(fields=fields)
-
 
         return HttpResponseRedirect(reverse("data_import:list",))
     else:

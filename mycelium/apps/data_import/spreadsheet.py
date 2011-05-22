@@ -168,7 +168,6 @@ class PeopleImportRow(ImportRow):
                     q = q.filter(last_name=self.data["last_name"])
                 if q.count() == 1:
                     return q[0]
-            
         return Person.raw_objects.create(account=self.account)
 
 
@@ -341,15 +340,12 @@ class Spreadsheet:
         row = self.parsed_spreadsheet[row_number]
         i = 0
         for f in fields:
-            # print f, i
-            # print (f != "" and f != IGNORE_FIELD_STRING)
             if f != "" and f != IGNORE_FIELD_STRING:
                 try:
                     d[f] = unicode(row[i], errors='replace')
                 except:
                     d[f] = None
             i += 1
-        print d
         return d
     
     def get_rows(self, start_number, end_number):
