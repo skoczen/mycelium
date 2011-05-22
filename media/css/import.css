@@ -41,7 +41,7 @@ page_title {
 	text-decoration: underline;
 }
 .result_data {
-	padding: 0px 0px 4px 10px;
+	padding: 6px 0px 4px 10px;
 }
 .result_data .result_data_line {
 	padding: 2px;
@@ -177,4 +177,16 @@ table.import_fields_confirmation .and_more_row td {
 	color: #AAA;
 	font-size: 18px;
 	padding: 20px;
+}
+.results_detail_table {
+	width: 100%;
+}
+.result_data_line .import_fields_container {
+	height: 200px;
+	margin-left: 1%;
+	width: 99%;
+	display: none;
+}
+.result_data_line .import_fields_container td {
+	padding: 2px 8px;
 }

@@ -132,11 +132,11 @@ class PeopleImportRow(ImportRow):
         if self.has_sufficient_fields_for_identity:
             # find the matching row
             # print self.data
-            if "first_name" in self.data and "last_name" in self.data:
+            if "first_name" in self.data and "last_name" in self.data and ( self.data["first_name"] != "" or self.data["last_name"] != ""):
                 q = Person.objects_by_account(self.account).all()
-                if "first_name" in self.data and self.data["first_name"] != "":
+                if "first_name" in self.data:
                     q = q.filter(first_name=self.data["first_name"])
-                if "last_name" in self.data and self.data["last_name"] != "":
+                if "last_name" in self.data:
                     q = q.filter(last_name=self.data["last_name"])
 
                 if q.count() == 1:
@@ -151,14 +151,14 @@ class PeopleImportRow(ImportRow):
                 if q.count() == 1:
                     return q[0], False
                 elif q.count() > 1:
-                    if "first_name" in self.data and self.data["first_name"] != "":
+                    if "first_name" in self.data:
                         q = q.filter(first_name=self.data["first_name"])
-                    if "last_name" in self.data and self.data["first_name"] != "":
+                    if "last_name" in self.data:
                         q = q.filter(last_name=self.data["last_name"])
                     if q.count() == 1:
                         return q[0], False
                     elif q.count() > 1:
-                        if "phone_number" in self.data and self.data["phone_number"] != "":
+                        if "phone_number" in self.data:
                             q = q.filter(phone_number=self.data["phone_number"])
                         if q.count() == 1:
                             return q[0], False
@@ -171,9 +171,9 @@ class PeopleImportRow(ImportRow):
                 if q.count() == 1:
                     return q[0], False
                 elif q.count() > 1:
-                    if "first_name" in self.data and self.data["first_name"] != "":
+                    if "first_name" in self.data:
                         q = q.filter(first_name=self.data["first_name"])
-                    if "last_name" in self.data and self.data["last_name"] != "":
+                    if "last_name" in self.data:
                         q = q.filter(last_name=self.data["last_name"])
                     if q.count() == 1:
                         return q[0], False

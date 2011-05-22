@@ -1,11 +1,7 @@
 {% extends "data_import/base.html" %}
 {% load humanize %}
-{% block title %}Data Import - Review Import #5 on Dec 29, 2010{% endblock %}
-{% block javascript %}{{block.super}}
-<script type="text/javascript" charset="utf-8">
+{% block title %}Data Import - Review Import on {{data_import.start_time|date}} at {{data_import.start_time|time}}{% endblock %}
 
-</script>
-{% endblock %}
 {% block breadcrumb_links %}<a href="{% url data_import:list %}">Back to All Data Imports</a>{% endblock %}
 {% block page_content %}
 <page_title>Data Import on {{data_import.start_time|date}} at {{data_import.start_time|time}}</page_title>
@@ -14,16 +10,40 @@
 	<div class="success">
 		<div class="result_header success_header">We added:</div>
 		<div class="result_data">
-		<div class="result_data_line match">{{data_import.num_matches|intcomma}} matched people who were already in GoodCloud, and were updated. <a href="#">See who</a></div>
-		<div class="result_data_line added">{{data_import.num_new_records|intcomma}} people were new, and were added <a href="#">See who</a></div>
+		<div class="result_data_line match">{{data_import.num_matches|intcomma}} matched {{data_import.import_type}} who were already in GoodCloud, and were updated. <a href="#" class="toggle_result_line_detail">See who</a>
+			<div class="import_fields_container">
+			<table class="results_detail_table matching_records striped">
+				{% for rrow in data_import.matching_records %}
+					<tr class="striped_row">
+						<td>{% if not rrow.primary_target %}Imported record has been deleted{% else %}<a href="{{rrow.primary_target.get_absolute_url}}">{{rrow.primary_target}}</a>{% endif %}</td>
+					</tr>
+				{% endfor %}
+			</table>
+			</div>
+		</div>
+		<div class="result_data_line added">{{data_import.num_new_records|intcomma}} {{data_import.import_type}} were new, and were added <a href="#" class="toggle_result_line_detail">See who</a>
+			<div class="import_fields_container">
+			<table class="results_detail_table new_records striped">
+				{% for rrow in data_import.new_records %}
+					<tr class="striped_row">
+						<td>{% if not rrow.primary_target %}Imported record has been deleted{% else %}<a href="{{rrow.primary_target.get_absolute_url}}">{{rrow.primary_target}}</a>{% endif %}</td>
+					</tr>
+				{% endfor %}
+			</table>
+			</div>
+		</div>
 		</div>
 	</div>
+	{% if data_import.num_errors > 0 %}
 	<div class="error">
 		<div class="result_header error_header">We did not add:</div>
 		<div class="result_data">
-		<div class="result_data_line not_people">{{data_import.num_errors|intcomma}} rows did not appear to be {{data_import.import_type}}, or had errors. <a href="#">See rows</a></div>
+		<div class="result_data_line error_rows">{{data_import.num_errors|intcomma}} rows did not appear to be {{data_import.import_type}}, or had errors. 
+			{# <a href="#">See rows</a> #}
+		</div>
 		</div>
 	</div>
+	{% endif %}
 	{# <div class="fields_report"> #}
 	{# 	<div class="result_header fields_header">We added data in these fields:</div> #}
 	{# 	<div class="result_data"> #}

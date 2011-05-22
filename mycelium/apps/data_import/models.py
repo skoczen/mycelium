@@ -20,6 +20,7 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
     finish_time     = models.DateTimeField(blank=True, null=True)
     import_type     = models.CharField(choices=IMPORT_ROW_TYPE_TUPLES, max_length=50)
     num_source_rows = models.IntegerField(blank=True, null=True)
+    failed          = models.BooleanField(default=False)
 
     source_filename = models.TextField()
     fields          = PickledObjectField(blank=True, null=True)
@@ -67,7 +68,7 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
     
     @property
     def is_finished(self):
-        return self.finish_time != None
+        return self.finish_time != None or self.failed
     
     @property
     def percent_imported(self):
@@ -92,16 +93,28 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
         return self.resultsrow_set.count()
 
     @property
+    def new_records(self):
+        return self.resultsrow_set.filter(new_record_created=True)
+
+    @property
+    def matching_records(self):
+        return self.resultsrow_set.filter(new_record_created=False)
+
+    @property
     def num_new_records(self):
-        return self.resultsrow_set.filter(new_record_created=True).count()
+        return self.new_records.count()
     
     @property
     def num_matches(self):
-        return self.resultsrow_set.filter(new_record_created=False).count()
+        return self.matching_records.count()
+
+    @property
+    def error_rows(self):
+        return self.resultsrow_set.filter(successfully_imported=False)
 
     @property
     def num_errors(self):
-        return self.resultsrow_set.filter(successfully_imported=False).count()        
+        return self.error_rows.count()        
 
 class ResultsRow(AccountBasedModel, TimestampModelMixin):
     data_import           = models.ForeignKey(DataImport)
@@ -111,6 +124,6 @@ class ResultsRow(AccountBasedModel, TimestampModelMixin):
     primary_target_id     = models.IntegerField(blank=True, null=True)
 
     def primary_target(self):
-        return self.data_import.import_row_class_instance.objects_by_account(self.account).get(pk=self.primary_target_id)
+        return self.data_import.import_row_class_instance.get_object_for_primary_target_from_id(self.primary_target_id)
     
 
