@@ -11,13 +11,15 @@ from ajaxuploader.views import AjaxFileUploader
 from django.core.files.storage import default_storage
 
 from data_import.spreadsheet import IMPORT_ROW_TYPES, IGNORE_FIELD_STRING
-from data_import.models import Spreadsheet
+from data_import.models import Spreadsheet, DataImport
+from data_import.tasks import queue_data_import
 
+import datetime
 
 @render_to("data_import/list.html")
 def list(request):
-    # TODO: this is obnoxious.  Fix it.
     section = "more"
+    all_imports = DataImport.objects_by_account(request.account).all()
     return locals()
 
 @render_to("data_import/start.html")
@@ -33,23 +35,49 @@ def begin_import(request):
         import_type = request.POST["upload_type"]
         filename = request.POST["upload_filename"]
         fields = []
+        has_header = False
 
         for k,v in sorted(request.POST.iteritems()):
             if "import_col_" in k:
                 fields.append(v)
-        
-        fh = default_storage.open(filename, 'r')
-        s = Spreadsheet(request.account, fh, import_type, filename=filename)
-        s.do_import(fields=fields)
 
+        import_record = DataImport.objects.create(
+            account=request.account,
+            importer=request.useraccount,
+            start_time=datetime.datetime.now(),
+            import_type=import_type,
+            source_filename=filename,
+            fields=fields,
+            has_header=has_header,
+        )
+        import_record.save()
+        queue_data_import.delay(request.account, import_record=import_record)
         return HttpResponseRedirect(reverse("data_import:list",))
     else:
         return HttpResponseRedirect(reverse("data_import:start",))
+
+@json_view
+def import_status(request):
+    try:
+        import_id = request.POST["import_id"]
+        percent_imported = "%s" % DataImport.cache_based_percent_imported_for_import_id(import_id)
+        print percent_imported
+        return {
+            'success':True,
+            'percent_imported': percent_imported,
+            'is_finished': percent_imported == "100.0",
+            'import_id':import_id,
+        }
+
+    except Exception, e:
+        print e
+        return {'success': False}
 
 @render_to("data_import/review.html")
 def review(request, import_id):
     # TODO: this is obnoxious.  Fix it.
     section = "more"
+    data_import = DataImport.objects_by_account(request.account).get(pk=import_id)
     return locals()
 
 @render_to("data_import/column_headers.js")

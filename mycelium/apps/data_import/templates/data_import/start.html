@@ -41,6 +41,7 @@
 		$(".qq-upload-button").addClass("mycelium_btn")
 		$("#id_upload_type").val(import_type);
 		go_to_step(2);
+		$("select.import_column_type:first").focus();
 	}
 	function next_step() {
 		current_step++;

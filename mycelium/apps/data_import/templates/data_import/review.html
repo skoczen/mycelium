@@ -8,14 +8,14 @@
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url data_import:list %}">Back to All Data Imports</a>{% endblock %}
 {% block page_content %}
-<page_title>Data Import #5 on Dec 29, 2010 at 3:55pm</page_title>
+<page_title>Data Import on {{data_import.start_time|date}} at {{data_import.start_time|time}}</page_title>
 <div class="report_summary">
-	<div class="total">We found 2,937 people.</div>
+	<div class="total">We found {{data_import.num_rows|intcomma}} {{data_import.import_type}}.</div>
 	<div class="success">
 		<div class="result_header success_header">We added:</div>
 		<div class="result_data">
-		<div class="result_data_line match">2,741 matched people who were already in GoodCloud, and were updated. <a href="#">See who</a></div>
-		<div class="result_data_line added">195 people were new, and were added <a href="#">See who</a></div>
+		<div class="result_data_line match">{{data_import.num_matches|intcomma}} matched people who were already in GoodCloud, and were updated. <a href="#">See who</a></div>
+		<div class="result_data_line added">{{data_import.num_new_records|intcomma}} people were new, and were added <a href="#">See who</a></div>
 		</div>
 	</div>
 	<div class="error">

@@ -3,13 +3,7 @@ import csv
 import xlwt
 import xlrd
 from collections import OrderedDict
-
-IMPORT_TYPE = [
-    (0, "People"),
-    (10, "Companies/Organizations"),
-    (20, "Volunteer Hours"),
-    (30, "Donations"),
-]
+from django.core.cache import cache
 
 CSV_TYPE = "CSV"
 EXCEL_TYPE = "EXCEL"
@@ -51,8 +45,8 @@ class ImportRow:
         targets = {}
         for k,field in self.importable_fields.iteritems():
             if not field.model_key in targets:
-                targets[field.model_key] = getattr(self,"get_target_object_%s" % field.model_key)()
-        return targets
+                targets[field.model_key], created = getattr(self,"get_target_object_%s" % field.model_key)()
+        return targets, created
 
     @property
     def identity_sets(self):
@@ -77,7 +71,7 @@ class ImportRow:
 
     def do_row_import(self):
         if self.has_sufficient_fields_for_identity():
-            targets = self.get_target_objects()
+            targets, created = self.get_target_objects()
             for k,v in self.data.iteritems():
                 # get the ImportField obj
                 f = self.importable_fields[k]
@@ -87,9 +81,9 @@ class ImportRow:
             for k,target in targets.iteritems():
                 target.save()
             
-            return True
+            return True, created
         else:
-            return False
+            return False, False
 
 
 class ImportField:
@@ -135,49 +129,50 @@ class PeopleImportRow(ImportRow):
                 q = q.filter(last_name=self.data["last_name"])
 
             if q.count() == 1:
-                return q[0]
+                return q[0], False
 
             q = Person.objects_by_account(self.account).all()
             if "email" in self.data:
                 q = q.filter(email=self.data["email"])
             if q.count() == 1:
-                return q[0]
+                return q[0], False
             elif q.count() > 1:
                 if "first_name" in self.data:
                     q = q.filter(first_name=self.data["first_name"])
                 if "last_name" in self.data:
                     q = q.filter(last_name=self.data["last_name"])
                 if q.count() == 1:
-                    return q[0]
+                    return q[0], False
                 elif q.count() > 1:
                     if "phone_number" in self.data:
                         q = q.filter(phone_number=self.data["phone_number"])
                     if q.count() == 1:
-                        return q[0]
+                        return q[0], False
 
 
             q = Person.objects_by_account(self.account).all()
             if "phone_number" in self.data:
                 q = q.filter(phone_number=self.data["phone_number"])
             if q.count() == 1:
-                return q[0]
+                return q[0], False
             elif q.count() > 1:
                 if "first_name" in self.data:
                     q = q.filter(first_name=self.data["first_name"])
                 if "last_name" in self.data:
                     q = q.filter(last_name=self.data["last_name"])
                 if q.count() == 1:
-                    return q[0]
-        return Person.raw_objects.create(account=self.account)
+                    return q[0], False
+        return Person.raw_objects.create(account=self.account), True
 
 
 IMPORT_ROW_TYPES = {
     'people':PeopleImportRow,
 }
+IMPORT_ROW_TYPE_TUPLES = [(k,v) for k,v in IMPORT_ROW_TYPES.iteritems()]
 
 
 class Spreadsheet:
-    def __init__(self, account, fh, import_type, filename=None):
+    def __init__(self, account, fh, import_type, filename=None, cache_key_pct_complete=""):
         # fh is a file handler-like object
         self.account = account
         self.file = fh
@@ -186,6 +181,7 @@ class Spreadsheet:
         self.has_header = False
         self._parse_file()
         self.import_row_class = IMPORT_ROW_TYPES[import_type]
+        self.cache_key_pct_complete = cache_key_pct_complete
 
     # Functions to read and save a spreadsheet to the db
     def _parse_file(self):
@@ -362,8 +358,12 @@ class Spreadsheet:
 
     def _import_row(self, row):
         c = self.import_row_class(self.account, row)
-        worked = c.do_row_import()
-        return worked
+        worked, created = c.do_row_import()
+
+        return {
+            'success':worked,
+            'created':created,
+        }
 
 
     def do_import(self, fields):
@@ -372,6 +372,14 @@ class Spreadsheet:
             for i in range(0,self.num_rows):
                 row = self.get_row_dict(fields, i)
                 results.append(self._import_row(row))
+                try:
+                    cache.set(self.cache_key_pct_complete, round(float((100*float(i))/float(self.num_rows)),1))
+                except:
+                    pass
+            try:
+                cache.set(self.cache_key_pct_complete, "100.0")
+            except:
+                pass
             return results
         else:
             raise Exception, "Invalid spreadsheet!"

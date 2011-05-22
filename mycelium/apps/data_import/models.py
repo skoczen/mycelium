@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from picklefield.fields import PickledObjectField
-from data_import.spreadsheet import Spreadsheet, IMPORT_TYPE, SPREADSHEET_SOURCE_TYPES
+from data_import.spreadsheet import Spreadsheet, IMPORT_ROW_TYPES, SPREADSHEET_SOURCE_TYPES, IMPORT_ROW_TYPE_TUPLES
 
 from accounts.models import AccountBasedModel, UserAccount
 from django.core.cache import cache
@@ -14,20 +14,24 @@ class PotentiallyImportedModel(models.Model):
     class Meta:
         abstract = True
 
-class ImportSpreadsheet(AccountBasedModel, TimestampModelMixin, Spreadsheet):
-    source_file       = models.FileField(upload_to="import", blank=True, null=True)
-    source_type       = models.IntegerField(choices=SPREADSHEET_SOURCE_TYPES, blank=True, null=True)
-    columns           = PickledObjectField(blank=True, null=True)
-    has_header        = models.BooleanField(default=False)
-
-
 class DataImport(AccountBasedModel, TimestampModelMixin):
     importer        = models.ForeignKey(UserAccount)
     start_time      = models.DateTimeField(blank=True)
     finish_time     = models.DateTimeField(blank=True, null=True)
-    import_type     = models.IntegerField(choices=IMPORT_TYPE)
+    import_type     = models.CharField(choices=IMPORT_ROW_TYPE_TUPLES, max_length=50)
     num_source_rows = models.IntegerField(blank=True, null=True)
-    spreadsheet     = models.ForeignKey(ImportSpreadsheet)
+
+    source_filename = models.TextField()
+    fields          = PickledObjectField(blank=True, null=True)
+    has_header      = models.BooleanField(default=False)
+    results         = PickledObjectField(blank=True, null=True)
+
+
+    def __unicode__(self):
+        return "%s on %s" % (self.import_type, self. start_time)
+
+    class Meta:
+        ordering = ("-start_time",)
 
     @property
     def cache_key_prefix(self):
@@ -37,9 +41,21 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
     def cache_key_num_imported(self):
         return "%s-numimported" % (self.cache_key_prefix,)
 
+    @classmethod
+    def cache_key_for_import_id_num_imported(self, import_id):
+        return "DataImport-%s-numimported" % (import_id)
+    
+    @classmethod
+    def cache_key_for_import_id_percent_imported(self, import_id):
+        return "DataImport-%s-pctimported" % (import_id)
+
+    @classmethod
+    def cache_based_percent_imported_for_import_id(cls, import_id):
+        return cache.get(cls.cache_key_for_import_id_percent_imported(import_id))
+
     @property
     def is_started(self):
-        return True
+        return self.start_time != None
     
     @property
     def is_finished(self):
@@ -50,8 +66,7 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
         if self.is_finished:
             return 100
         else:
-            num_imported = cache.get(self.cache_key_num_imported, 1)
-            return num_imported / self.spreadsheet.num_rows
+            return cache.get(DataImport.cache_key_for_import_id_percent_imported(self.pk))
 
     @property
     def import_time(self):
@@ -60,14 +75,19 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
         else:
             return None
 
-    @classmethod
-    def import_result_dict(cls, success, number, obj, source_row, error_message=""):
-        # potentially do some smart things here, instead of just **kwargs.
-        return {
-            'success': success,
-            'error_message': error_message,
-            'number': number,
-            'obj': obj,
-            'source_row': source_row
-        }
 
+    @property
+    def num_columns(self):
+        return len(self.fields)
+
+    @property
+    def num_new_records(self):
+        pass
+    
+    @property
+    def num_matches(self):
+        pass
+
+    @property
+    def num_errors(self):
+        pass
