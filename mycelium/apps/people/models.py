@@ -79,6 +79,11 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     def __unicode__(self):
         return u"%s" % (self.full_name)
 
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('people:person', [str(self.id)])
+
     @property
     def full_name(self):
         if self.first_name or self.last_name:
@@ -176,6 +181,10 @@ class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, Timest
             
     def __unicode__(self):
         return "%s" % (self.name,)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('people:organization', [str(self.id)])
 
 class Employee(AccountBasedModel, TimestampModelMixin):
     person = models.ForeignKey(Person, related_name="jobs")

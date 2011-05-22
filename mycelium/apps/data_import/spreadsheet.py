@@ -82,9 +82,9 @@ class ImportRow:
             for k,target in targets.iteritems():
                 target.save()
             
-            return True, created
+            return True, created, targets
         else:
-            return False, False
+            return False, False, []
 
 
 class ImportField:
@@ -118,6 +118,14 @@ class PeopleImportRow(ImportRow):
             ('state',        ImportField("State/Province",   "people", "Person", "state",        identity_set=[],)  ),
             ('postal_code',  ImportField("Zip Code",         "people", "Person", "postal_code",  identity_set=[],)  ),
     ])
+
+    def get_primary_target_model(self):
+        from people.models import Person
+        return Person
+    
+    def get_object_for_primary_target_from_id(self, id):
+        from people.models import Person
+        return Person.raw_objects.get(pk=id)
 
     def get_target_object_people_Person(self):
         from people.models import Person
@@ -365,11 +373,12 @@ class Spreadsheet:
 
     def _import_row(self, row):
         c = self.import_row_class(self.account, row)
-        worked, created = c.do_row_import()
+        worked, created, targets = c.do_row_import()
 
         return {
             'success':worked,
             'created':created,
+            'targets':targets,
         }
 
 

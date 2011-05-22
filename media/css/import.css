@@ -172,3 +172,9 @@ table.import_fields_confirmation.record_table {
 table.import_fields_confirmation .and_more_row td {
 	text-align: left;
 }
+.no_imports_message td {
+	text-align: center;
+	color: #AAA;
+	font-size: 18px;
+	padding: 20px;
+}

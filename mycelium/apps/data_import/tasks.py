@@ -1,5 +1,5 @@
 from celery.task import task
-from data_import.models import DataImport
+from data_import.models import DataImport, ResultsRow
 from data_import.spreadsheet import Spreadsheet
 from accounts.models import Account
 from django.core.files.storage import default_storage
@@ -31,10 +31,21 @@ def queue_data_import(acct, import_record):
     # print "Done, saving results."
 
     # Save the results
-    r.results = results
+    for row in results:
+        model_key = [v.model_key for k,v in s.import_row_class.importable_fields.items()][0]
+        ResultsRow.objects.create(
+            account=account,
+            data_import=r,
+            successfully_imported=row["success"],
+            new_record_created=row["created"],
+            targets=row["targets"],
+            primary_target_id=row["targets"][model_key].id,  # TODO: this breaks when we go to multiple models
+        )
+
     r.finish_time = datetime.datetime.now()
     r.save()
 
-    for m in s.import_row_class(account, {}).get_target_models():
+
+    for m in r.import_row_class_instance.get_target_models():
         jcache.invalidate(m)
     # print "Results saved."

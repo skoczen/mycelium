@@ -13,7 +13,7 @@ class PotentiallyImportedModel(models.Model):
 
     class Meta:
         abstract = True
-
+    
 class DataImport(AccountBasedModel, TimestampModelMixin):
     importer        = models.ForeignKey(UserAccount)
     start_time      = models.DateTimeField(blank=True)
@@ -24,7 +24,7 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
     source_filename = models.TextField()
     fields          = PickledObjectField(blank=True, null=True)
     has_header      = models.BooleanField(default=False)
-    results         = PickledObjectField(blank=True, null=True)
+    
 
 
     def __unicode__(self):
@@ -32,6 +32,14 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
 
     class Meta:
         ordering = ("-start_time",)
+
+    @property
+    def import_row_class(self):
+        return IMPORT_ROW_TYPES[self.import_type]
+
+    @property
+    def import_row_class_instance(self):
+        return IMPORT_ROW_TYPES[self.import_type](self.account,{})
 
     @property
     def cache_key_prefix(self):
@@ -75,19 +83,34 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
         else:
             return None
 
-
     @property
     def num_columns(self):
         return len(self.fields)
 
     @property
+    def num_rows(self):
+        return self.resultsrow_set.count()
+
+    @property
     def num_new_records(self):
-        pass
+        return self.resultsrow_set.filter(new_record_created=True).count()
     
     @property
     def num_matches(self):
-        pass
+        return self.resultsrow_set.filter(new_record_created=False).count()
 
     @property
     def num_errors(self):
-        pass
+        return self.resultsrow_set.filter(successfully_imported=False).count()        
+
+class ResultsRow(AccountBasedModel, TimestampModelMixin):
+    data_import           = models.ForeignKey(DataImport)
+    successfully_imported = models.BooleanField(default=False)
+    new_record_created    = models.BooleanField(default=False)
+    targets               = PickledObjectField(blank=True, null=True)
+    primary_target_id     = models.IntegerField(blank=True, null=True)
+
+    def primary_target(self):
+        return self.data_import.import_row_class_instance.objects_by_account(self.account).get(pk=self.primary_target_id)
+    
+
