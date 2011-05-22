@@ -2,8 +2,10 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time 
 from test_factory import Factory
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
+from data_import.tests.selenium_abstractions import DataImportTestAbstractions
 
-class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions):
+
+class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions, DataImportTestAbstractions):
     selenium_fixtures = []
 
     def setUp(self, *args, **kwargs):
@@ -54,7 +56,7 @@ class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions):
         sel.wait_for_page_to_load("30000")
 
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions):
+class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions, DataImportTestAbstractions):
     selenium_fixtures = []
 
     def setUp(self, *args, **kwargs):
@@ -62,13 +64,31 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions)
 
 
     def test_starting_a_new_import_takes_you_to_the_start_page(self):
-        assert True == "Test written"
+        self.get_to_start_import_page()
+        
+    def test_that_choosing_a_person_displays_the_upload_area(self):
+        sel = self.selenium
+        self.get_to_start_import_page()
+        assert not sel.is_element_present("css=.qq-upload-button")
+        sel.click("css=.import_type_people input")
+        time.sleep(0.25)
+        assert sel.is_element_present("css=.qq-upload-button")
 
     def test_that_uploading_a_csv_file_displays_the_right_columns(self):
-        # $sel->type('browseid', '/home/dir/filename');
-        # $sel->focus('uploadid');
-        # $sel->click('click');
-        assert True == "Test written"
+        sel = self.selenium
+        self.test_that_choosing_a_person_displays_the_upload_area()
+        self.set_upload_file("johnsmith.csv")
+        # this click effectively stalls the test until the upload is complete.
+        sel.click("css=.qq-upload-success")
+
+        assert sel.is_element_present("css.import_fields_confirmation th.col_0")
+        assert sel.is_element_present("css.import_fields_confirmation th.col_1")
+        assert sel.is_element_present("css.import_fields_confirmation th.col_2")
+        assert sel.is_element_present("css.import_fields_confirmation th.col_3")
+        assert not sel.is_element_present("css.import_fields_confirmation th.col_4")
+
+        
+        
 
     def test_that_uploading_an_excel_file_displays_the_right_columns(self):
         assert True == "Test written"
@@ -86,6 +106,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions)
         assert True == "Test written"
     
     def test_that_uploading_a_spreadsheet_displays_the_right_first_five_columns(self):
+        assert True == "Test written"
+
+    def test_that_uploading_an_excel_displays_the_right_first_five_columns(self):
         assert True == "Test written"
 
     def test_that_submit_is_disabled_if_all_columns_have_not_been_selected(self):

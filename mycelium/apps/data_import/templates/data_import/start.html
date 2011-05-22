@@ -6,6 +6,7 @@
 <script type="text/javascript" charset="utf-8">
 	var current_step = 1;
 	var import_type = false;
+	var uploader;
 	$(function(){
 		$("step[number=3] step_content").hide();
 		$(".next_step_btn").live("click",next_step);
@@ -102,7 +103,10 @@
 				$(".import_fields_confirmation tbody tr:last").append("<td>"+json.first_rows[j][k]+"&nbsp;</td>");	
 			}
 		}
-		$(".import_fields_confirmation tbody").append("<tr class='striped_row and_more_row'><td colspan="+json.first_rows[0].length+">and "+(json.num_rows - json.first_rows.length)+" more rows</td></tr>");
+		if (json.num_rows - json.first_rows.length > 0) {
+			$(".import_fields_confirmation tbody").append("<tr class='striped_row and_more_row'><td colspan="+json.first_rows[0].length+">and "+(json.num_rows - json.first_rows.length)+" more rows</td></tr>");	
+		}
+		
 		$("#id_upload_filename").val(json.filename);
 
 		$.Mycelium.update_stripes()

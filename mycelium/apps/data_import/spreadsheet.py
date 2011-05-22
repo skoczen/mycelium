@@ -363,7 +363,11 @@ class Spreadsheet:
         if self.has_header:
             start_number += 1
             end_number += 1
-        return [self.get_row(i) for i in range(start_number, end_number+1)]
+        
+        if end_number > self.num_rows:
+            end_number = self.num_rows
+
+        return [self.get_row(i) for i in range(start_number, end_number)]
 
     @property
     def header_row(self):
