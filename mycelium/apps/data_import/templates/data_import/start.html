@@ -39,6 +39,7 @@
 		    },
 		  } ) ;
 		$(".qq-upload-button").addClass("mycelium_btn")
+		$("#id_upload_type").val(import_type);
 		go_to_step(2);
 	}
 	function next_step() {
@@ -100,7 +101,8 @@
 				$(".import_fields_confirmation tbody tr:last").append("<td>"+json.first_rows[j][k]+"&nbsp;</td>");	
 			}
 		}
-		$(".import_fields_confirmation tbody").append("<tr class='striped_row and_more_row'><td colspan="+json.first_rows[0].length+">and "+(json.num_rows - json.first_rows.length)+" more rows</td></tr>");	
+		$(".import_fields_confirmation tbody").append("<tr class='striped_row and_more_row'><td colspan="+json.first_rows[0].length+">and "+(json.num_rows - json.first_rows.length)+" more rows</td></tr>");
+		$("#id_upload_filename").val(json.filename);
 
 		$.Mycelium.update_stripes()
 
@@ -154,7 +156,10 @@
 	{# </form> #}
 	</step_content>
 </step>
-
+</form>
+<form class="submit_form" method="POST" enctype="multipart/form-data" action="{% url data_import:begin_import %}" >{% csrf_token %}
+<input type="hidden" name="upload_filename" id="id_upload_filename" />
+<input type="hidden" name="upload_type" id="id_upload_type" />
 <step number="3">
 	<step_number>3</step_number>
 	<instruction>Confirm the fields you want to import.</instruction>
@@ -177,7 +182,7 @@
 	<instruction>Click Start Import, and give the GoodCloud robots a minute!</instruction>
 	<pre_step_content>Finish 1-3, then you're ready to go!</pre_step_content>
 	<step_content style="display: none;">	
-	<a href="{% url data_import:list %}" class="mycelium_btn mycelium_grey">Start Import</a>
+	<input type="submit"  class="mycelium_btn mycelium_grey" value="Start Import" />
 	</step_content>
 	</active_step_content>
 </step>

@@ -9,9 +9,12 @@ url = parser.url
 urlpatterns = parser.patterns('',                      
     url(r'$',                                   views.list,                             name='list'),
     url(r'start/$',                             views.start,                            name='start'),
+    url(r'begin-import/$',                      views.begin_import,                     name='begin_import'),
+    
     url(r'history/{import_id:digits}$',         views.review,                           name='review'),
 
     url( r'start/upload/{import_type:word}/$',  views.data_import_uploader,             name="ajax_upload" ),
+
     url( r'columnHeaders.js$',                  views.import_column_headers_js,         name="import_column_headers_js" ),
 
 

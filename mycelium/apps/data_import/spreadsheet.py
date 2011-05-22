@@ -19,6 +19,7 @@ SPREADSHEET_SOURCE_TYPES = [
 ]
 CSV_EXTENSIONS = ["csv",]
 EXCEL_EXTENSIONS = ["xls","xlsx"]
+IGNORE_FIELD_STRING = "ignore"
 
 class ImportRow:
     name = None
@@ -340,8 +341,15 @@ class Spreadsheet:
         row = self.parsed_spreadsheet[row_number]
         i = 0
         for f in fields:
-            d[f] = row[i]
+            # print f, i
+            # print (f != "" and f != IGNORE_FIELD_STRING)
+            if f != "" and f != IGNORE_FIELD_STRING:
+                try:
+                    d[f] = unicode(row[i], errors='replace')
+                except:
+                    d[f] = None
             i += 1
+        print d
         return d
     
     def get_rows(self, start_number, end_number):

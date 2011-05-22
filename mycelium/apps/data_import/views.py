@@ -1,4 +1,5 @@
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
 from django.conf import settings
 from accounts.managers import get_or_404_by_account
 from django.template.loader import render_to_string
@@ -9,8 +10,9 @@ from django.middleware.csrf import get_token
 from ajaxuploader.views import AjaxFileUploader
 from django.core.files.storage import default_storage
 
+from data_import.spreadsheet import IMPORT_ROW_TYPES, IGNORE_FIELD_STRING
 from data_import.models import Spreadsheet
-from data_import.spreadsheet import IMPORT_ROW_TYPES
+
 
 @render_to("data_import/list.html")
 def list(request):
@@ -24,8 +26,29 @@ def start(request):
     section = "more"
     csrf_token = get_token( request )
 
-
     return locals()
+
+def begin_import(request):
+    if request.method == "POST":
+        print "starting import"
+        print request.POST
+        import_type = request.POST["upload_type"]
+        filename = request.POST["upload_filename"]
+        fields = []
+
+        for k,v in sorted(request.POST.iteritems()):
+            if "import_col_" in k:
+                fields.append(v)
+        
+        print fields
+        fh = default_storage.open(filename, 'r')
+        s = Spreadsheet(request.account, fh, import_type, filename=filename)
+        s.do_import(fields=fields)
+
+
+        return HttpResponseRedirect(reverse("data_import:list",))
+    else:
+        return HttpResponseRedirect(reverse("data_import:start",))
 
 @render_to("data_import/review.html")
 def review(request, import_id):
@@ -35,6 +58,7 @@ def review(request, import_id):
 
 @render_to("data_import/column_headers.js")
 def import_column_headers_js(request):
+    ignore_string = IGNORE_FIELD_STRING
     import_row_types = { k: v(request.account,{}) for k,v in IMPORT_ROW_TYPES.items() }
     return locals()
 
@@ -71,7 +95,8 @@ class DataImportAjaxFileUploader(AjaxFileUploader):
             'num_rows': num_rows,
             'first_rows': first_rows,
             'header_row': header_row,
-            'has_header': has_header
+            'has_header': has_header,
+            'filename':filename,
         }
 
         return return_dict
