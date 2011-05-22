@@ -43,6 +43,7 @@ class ImportRow:
     
     def get_target_objects(self):
         targets = {}
+        created = False
         for k,field in self.importable_fields.iteritems():
             if not field.model_key in targets:
                 targets[field.model_key], created = getattr(self,"get_target_object_%s" % field.model_key)()
@@ -122,46 +123,54 @@ class PeopleImportRow(ImportRow):
         from people.models import Person
         if self.has_sufficient_fields_for_identity:
             # find the matching row
-            q = Person.objects_by_account(self.account).all()
-            if "first_name" in self.data:
-                q = q.filter(first_name=self.data["first_name"])
-            if "last_name" in self.data:
-                q = q.filter(last_name=self.data["last_name"])
-
-            if q.count() == 1:
-                return q[0], False
-
-            q = Person.objects_by_account(self.account).all()
-            if "email" in self.data:
-                q = q.filter(email=self.data["email"])
-            if q.count() == 1:
-                return q[0], False
-            elif q.count() > 1:
-                if "first_name" in self.data:
+            # print self.data
+            if "first_name" in self.data and "last_name" in self.data:
+                q = Person.objects_by_account(self.account).all()
+                if "first_name" in self.data and self.data["first_name"] != "":
                     q = q.filter(first_name=self.data["first_name"])
-                if "last_name" in self.data:
+                if "last_name" in self.data and self.data["last_name"] != "":
                     q = q.filter(last_name=self.data["last_name"])
+
+                if q.count() == 1:
+                    return q[0], False
+
+            # print "first and last name were not enough"
+
+            q = Person.objects_by_account(self.account).all()
+            if "email" in self.data and self.data["email"] != "":
+                q = q.filter(email=self.data["email"])
+                
                 if q.count() == 1:
                     return q[0], False
                 elif q.count() > 1:
-                    if "phone_number" in self.data:
-                        q = q.filter(phone_number=self.data["phone_number"])
+                    if "first_name" in self.data and self.data["first_name"] != "":
+                        q = q.filter(first_name=self.data["first_name"])
+                    if "last_name" in self.data and self.data["first_name"] != "":
+                        q = q.filter(last_name=self.data["last_name"])
                     if q.count() == 1:
                         return q[0], False
+                    elif q.count() > 1:
+                        if "phone_number" in self.data and self.data["phone_number"] != "":
+                            q = q.filter(phone_number=self.data["phone_number"])
+                        if q.count() == 1:
+                            return q[0], False
 
+            # print "email based search wasn't enough"
 
             q = Person.objects_by_account(self.account).all()
-            if "phone_number" in self.data:
+            if "phone_number" in self.data and self.data["phone_number"] != "":
                 q = q.filter(phone_number=self.data["phone_number"])
-            if q.count() == 1:
-                return q[0], False
-            elif q.count() > 1:
-                if "first_name" in self.data:
-                    q = q.filter(first_name=self.data["first_name"])
-                if "last_name" in self.data:
-                    q = q.filter(last_name=self.data["last_name"])
                 if q.count() == 1:
                     return q[0], False
+                elif q.count() > 1:
+                    if "first_name" in self.data and self.data["first_name"] != "":
+                        q = q.filter(first_name=self.data["first_name"])
+                    if "last_name" in self.data and self.data["last_name"] != "":
+                        q = q.filter(last_name=self.data["last_name"])
+                    if q.count() == 1:
+                        return q[0], False
+            
+            # print "phone based search wasn't enough."
         return Person.raw_objects.create(account=self.account), True
 
 
@@ -269,9 +278,6 @@ class Spreadsheet:
             self.cached_type = self._detect_type()
         return self.cached_type
 
-    def _save_parsed_row(self):
-        pass
-
 
     # Functions to generate a spreadsheet from the db
     @classmethod
@@ -338,8 +344,9 @@ class Spreadsheet:
         for f in fields:
             if f != "" and f != IGNORE_FIELD_STRING:
                 try:
-                    d[f] = unicode(row[i], errors='replace')
-                except:
+                    d[f] = row[i].encode('utf-8','replace')
+                except Exception, e:
+                    print e
                     d[f] = None
             i += 1
         return d
@@ -373,11 +380,11 @@ class Spreadsheet:
                 row = self.get_row_dict(fields, i)
                 results.append(self._import_row(row))
                 try:
-                    cache.set(self.cache_key_pct_complete, round(float((100*float(i))/float(self.num_rows)),1))
+                    cache.set(self.cache_key_pct_complete, int(round((100*float(i))/float(self.num_rows))))
                 except:
                     pass
             try:
-                cache.set(self.cache_key_pct_complete, "100.0")
+                cache.set(self.cache_key_pct_complete, "100")
             except:
                 pass
             return results

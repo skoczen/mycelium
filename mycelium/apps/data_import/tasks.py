@@ -12,7 +12,7 @@ def queue_data_import(acct, import_record):
     account = Account.objects.get(pk=acct.pk)
     r = DataImport.objects.get(pk=import_record.pk)
 
-    print "Starting data import for %s" % import_record
+    # print "Starting data import for %s" % import_record
 
     # Grab the spreadsheet, parse it, prep for import.
     fh = default_storage.open(r.source_filename, 'r')
@@ -23,12 +23,12 @@ def queue_data_import(acct, import_record):
     # invalidate johnny cache
     # jcache.invalidate(DataImport)
 
-    print "Parsing complete. Starting import.."
+    # print "Parsing complete. Starting import.."
 
     # Do the import
     results = s.do_import(fields=r.fields)
 
-    print "Done, saving results."
+    # print "Done, saving results."
 
     # Save the results
     r.results = results
@@ -37,4 +37,4 @@ def queue_data_import(acct, import_record):
 
     for m in s.import_row_class(account, {}).get_target_models():
         jcache.invalidate(m)
-    print "Results saved."
+    # print "Results saved."

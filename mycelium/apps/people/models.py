@@ -82,7 +82,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     @property
     def full_name(self):
         if self.first_name or self.last_name:
-            return "%s %s" % (self.first_name, self.last_name)
+            return "%s %s" % (self.first_name or "", self.last_name or "")
         else:
             return NO_NAME_STRING_PERSON
     

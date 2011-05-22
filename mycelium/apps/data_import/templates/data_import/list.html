@@ -1,6 +1,7 @@
 {% extends "data_import/base.html" %}
-{% load humanize %}
+{% load humanize pagination_tags %}
 {% block title %}Data Import - History{% endblock %}
+{% autopaginate all_imports 10 %}
 {% block javascript %}{{block.super}}
 <script type="text/javascript" charset="utf-8">
 var IMPORT_TIMEOUT = 1000;
@@ -56,5 +57,6 @@ $(function(){
 	</tr>
 	{% endfor %}
 </table>
+{% paginate %}
 </record_list>
 {% endblock %}
