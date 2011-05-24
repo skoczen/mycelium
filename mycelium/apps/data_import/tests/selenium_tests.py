@@ -77,7 +77,6 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         sel = self.selenium
         self.test_that_choosing_a_person_displays_the_upload_area()
         self.set_upload_file("johnsmith.csv")
-        # this click effectively stalls the test until the upload is complete.
         sel.wait_for_element_present("css=.qq-upload-success")
 
         assert sel.is_element_present("css=.import_fields_confirmation th.col_0")
@@ -85,12 +84,19 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         assert sel.is_element_present("css=.import_fields_confirmation th.col_2")
         assert sel.is_element_present("css=.import_fields_confirmation th.col_3")
         assert not sel.is_element_present("css=.import_fields_confirmation th.col_4")
-
-        
         
 
     def test_that_uploading_an_excel_file_displays_the_right_columns(self):
-        assert True == "Test written"
+        sel = self.selenium
+        self.test_that_choosing_a_person_displays_the_upload_area()
+        self.set_upload_file("johnsmith.xls")
+        sel.wait_for_element_present("css=.qq-upload-success")
+
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_0")
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_1")
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_2")
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_3")
+        assert not sel.is_element_present("css=.import_fields_confirmation th.col_4")
 
     def test_that_choosing_person_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
         assert True == "Test written"
