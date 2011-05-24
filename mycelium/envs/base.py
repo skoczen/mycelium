@@ -31,7 +31,7 @@ MANAGERS = ADMINS
 MANAGERS += (
     'tom@agoodcloud.com',
 )
-
+SENTRY_ADMINS = ADMINS
 
 TIME_ZONE = "America/Los_Angeles"
 LANGUAGE_CODE = 'en'
@@ -225,7 +225,8 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--where=apps', '-s']
 
 FORCE_SELENIUM_TESTS = False
-SELENIUM_BROWSER_COMMAND = "*safari"
+# SELENIUM_BROWSER_COMMAND = "*safari"
+SELENIUM_BROWSER_COMMAND = "*chrome"
 LIVE_SERVER_PORT = 8099
 SELENIUM_PORT = 64444
 

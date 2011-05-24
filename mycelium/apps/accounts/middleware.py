@@ -33,21 +33,26 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
 
             if poss_account.count() == 1:
                 request.account = poss_account[0]
-                request.account_on_master = Account.objects.using('default').get(pk=request.account.id)
             else:
                 # if we don't have an account, and this isn't a public site (or in dev mode, serving media), bail. 
                 if not request.subdomain in settings.PUBLIC_SUBDOMAINS and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                     return self.redirect_to_public_home(request)
 
             user = request.user
+            # print user
+            # print request.subdomain
+
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
                 try:
                 
                     # try get the useraccount
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
-                    request.useraccount_on_master = UserAccount.objects.using('default').get(pk=request.useraccount.id)
+                    # print request.useraccount
 
                 except:
+                    # from qi_toolkit.helpers import print_exception
+                    # print_exception()
+
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                         # redirect to login page
@@ -61,4 +66,5 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
                 self.redirect_to_public_home(request)
 
+        # print "exiting safely"
         return None

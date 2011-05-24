@@ -16,7 +16,7 @@ TEMPLATE_DEBUG = DEBUG
 CACHE_BACKEND = 'locmem://'
 
 
-SESSION_COOKIE_DOMAIN = "localhost"
+
 
 BROKER_VHOST = "3"                       # Maps to database number.
 

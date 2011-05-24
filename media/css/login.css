@@ -26,9 +26,9 @@
 	text-align: center;
 	font-size: 60px;
 	color: #2B6004;	
-	background-color: rgba(29, 69, 5, 0.8);
+	/*background-color: rgba(29, 69, 5, 0.8);
 	-webkit-background-clip: text;
-	color: transparent;
+	color: transparent;*/
 
 }
 .organization_and_domain .domain {

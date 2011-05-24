@@ -71,21 +71,20 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         self.get_to_start_import_page()
         assert not sel.is_element_present("css=.qq-upload-button")
         sel.click("css=.import_type_people input")
-        time.sleep(0.25)
-        assert sel.is_element_present("css=.qq-upload-button")
+        sel.wait_for_element_present("css=.qq-upload-button")
 
     def test_that_uploading_a_csv_file_displays_the_right_columns(self):
         sel = self.selenium
         self.test_that_choosing_a_person_displays_the_upload_area()
         self.set_upload_file("johnsmith.csv")
         # this click effectively stalls the test until the upload is complete.
-        sel.click("css=.qq-upload-success")
+        sel.wait_for_element_present("css=.qq-upload-success")
 
-        assert sel.is_element_present("css.import_fields_confirmation th.col_0")
-        assert sel.is_element_present("css.import_fields_confirmation th.col_1")
-        assert sel.is_element_present("css.import_fields_confirmation th.col_2")
-        assert sel.is_element_present("css.import_fields_confirmation th.col_3")
-        assert not sel.is_element_present("css.import_fields_confirmation th.col_4")
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_0")
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_1")
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_2")
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_3")
+        assert not sel.is_element_present("css=.import_fields_confirmation th.col_4")
 
         
         

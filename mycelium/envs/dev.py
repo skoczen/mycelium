@@ -47,7 +47,8 @@ CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
 
 BROKER_VHOST = "2"                       # Maps to database number.
 
-# SESSION_COOKIE_DOMAIN = "localhost"
+SESSION_COOKIE_DOMAIN = None
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 SEND_BROKEN_LINK_EMAILS = False

@@ -15,5 +15,4 @@ urlpatterns = parser.patterns('',
     url( r'start/upload/{import_type:word}/$',  views.data_import_uploader,             name="ajax_upload" ),
     url( r'columnHeaders.js$',                  views.import_column_headers_js,         name="import_column_headers_js" ),
 
-
 )

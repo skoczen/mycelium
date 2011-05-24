@@ -38,6 +38,10 @@ def login(request, template_name='registration/login.html',
 
             # Okay, security checks complete. Log the user in.
             auth_login(request, form.get_user())
+            print "logged in"
+            print form.get_user()
+            print request.user
+            print redirect_to
 
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
@@ -69,7 +73,7 @@ def _account_forms(request):
     if request.method == "POST":
         data = request.POST
 
-    user_access_formset = UserAccountAccessFormset(data,instance=request.account_on_master)
+    user_access_formset = UserAccountAccessFormset(data,instance=request.account)
     new_user_form = NewUserAccountForm(data)
     return user_access_formset, new_user_form
 
@@ -133,13 +137,13 @@ def dashboard(request):
 
 @render_to("accounts/manage_account.html")
 def manage_account(request):
-    form = AccountForm(instance=request.account_on_master)
+    form = AccountForm(instance=request.account)
     return locals()
 
 @json_view
 def save_account_info(request):
     success = False
-    form = AccountForm(request.POST, instance=request.account_on_master)
+    form = AccountForm(request.POST, instance=request.account)
     if form.is_valid():
         form.save()
         success = True
@@ -152,7 +156,7 @@ def _my_forms(request):
     if request.method == "POST":
         data = request.POST
 
-    form = UserFormForUserAccount(data, instance=request.useraccount_on_master.user)
+    form = UserFormForUserAccount(data, instance=request.useraccount.user)
     useraccount_form = UserAccountNicknameForm(data, instance=request.useraccount)
 
     return form, useraccount_form
@@ -180,7 +184,7 @@ def change_my_password(request):
     success = False
     try:
 
-        me = request.useraccount_on_master.user
+        me = request.useraccount.user
         new_password = request.POST['new_password']
         me.set_password(new_password)
         me.save()

@@ -3,6 +3,7 @@ import time
 from test_factory import Factory
 from django.conf import settings
 import os
+from accounts.tests.selenium_abstractions import _sitespaced_url
 
 class DataImportTestAbstractions(object):
     
@@ -25,15 +26,4 @@ class DataImportTestAbstractions(object):
 
     def set_upload_file(self, filename):
         sel = self.selenium
-        # sel.focus("css=.qq-uploader input[name=file]")
-        sel.attach_file("css=.qq-uploader input[name=file]","file://%s" % os.path.join(settings.PROJECT_ROOT,"apps","data_import","tests","test_spreadsheets",filename))
-        # sel.focus("css=.import_type_people input")
-        # sel.click("css=.qq-uploader")
-
-        # sel.get_eval("this.browserbot.getUserWindow().document.uploader._handler.add("foo.xls");");
-
-
-        # GetEval("this.browserbot.getUserWindow().functionUnderTest().isNaN();"
-        # $sel->type('browseid', '/home/dir/filename');
-        # $sel->focus('uploadid');
-        # $sel->click('click');
+        sel.attach_file("css=.qq-uploader input[name=file]", "http://127.0.0.1:8199/%s" % (filename, ))

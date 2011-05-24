@@ -27,6 +27,8 @@ urlpatterns = patterns('',
     # url(r'^tinymce/', include('tinymce.urls')),
     url(r'^', include('mediasync.urls')),
 )
+
+import os
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
