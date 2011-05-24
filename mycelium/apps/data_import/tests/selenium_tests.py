@@ -122,6 +122,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         self.test_that_uploading_a_csv_file_displays_the_right_columns()
 
         sel.click("css=.submit_and_start_import_btn")
+        time.sleep(2)
         assert sel.is_text_present("Choose what you want to import")
 
     
