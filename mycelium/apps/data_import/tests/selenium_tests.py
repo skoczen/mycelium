@@ -99,25 +99,31 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         assert not sel.is_element_present("css=.import_fields_confirmation th.col_4")
 
     def test_that_choosing_person_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
-        assert True == "Test written"
+        # This is covered by the two above tests.
+        assert True == True
 
-    def test_that_choosing_organization_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
-        assert True == "Test written"
 
-    def test_that_choosing_donation_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
-        assert True == "Test written"
-    
-    def test_that_choosing_volunteer_hours_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
-        assert True == "Test written"
-    
-    def test_that_uploading_a_spreadsheet_displays_the_right_first_five_columns(self):
-        assert True == "Test written"
+    def test_uploading_a_second_file_replaces_the_first_one_and_shows_the_right_columns(self):
+        sel = self.selenium
+        self.test_that_uploading_a_csv_file_displays_the_right_columns()
 
-    def test_that_uploading_an_excel_displays_the_right_first_five_columns(self):
-        assert True == "Test written"
+        self.set_upload_file("nameemail.csv")
+        sel.wait_for_element_present("css=.qq-upload-success")
+
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_0")
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_1")
+        assert sel.is_element_present("css=.import_fields_confirmation th.col_2")
+        assert not sel.is_element_present("css=.import_fields_confirmation th.col_3")
+        
+
 
     def test_that_submit_is_disabled_if_all_columns_have_not_been_selected(self):
-        assert True == "Test written"
+        sel = self.selenium
+        self.test_that_uploading_a_csv_file_displays_the_right_columns()
+
+        sel.click("css=.submit_and_start_import_btn")
+        assert sel.is_text_present("Choose what you want to import")
+
     
     def test_that_selecting_all_columns_enables_submit(self):
         assert True == "Test written"
@@ -139,6 +145,18 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
 
     def test_that_ignoring_a_column_actually_ignores_it(self):
         assert True == "Test written"
+
+
+
+    def test_that_choosing_organization_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
+        assert True == "Test written"
+
+    def test_that_choosing_donation_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
+        assert True == "Test written"
+    
+    def test_that_choosing_volunteer_hours_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
+        assert True == "Test written"
+
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, AccountTestAbstractions):
