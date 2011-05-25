@@ -79,6 +79,11 @@
 		}
 		$("step[number="+step_number+"] .mycelium_btn").removeClass("mycelium_grey").removeClass("mycelium_gray");	
 		$("step[number="+step_number+"]").addClass("current");
+		if (step_number == 4) {
+			$(".submit_and_start_import_btn").removeClass("disabled").removeAttr("disabled");
+		} else {
+			$(".submit_and_start_import_btn").attr("disabled","disabled").addClass("disabled");
+		}
 	}
 
 	var uploader = false

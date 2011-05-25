@@ -127,14 +127,37 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
 
     
     def test_that_selecting_all_columns_enables_submit(self):
-        assert True == "Test written"
+        sel = self.selenium
+        self.test_that_uploading_a_csv_file_displays_the_right_columns()
+
+
+        assert sel.is_element_present("css=.submit_and_start_import_btn.disabled")
+        sel.select("css=.import_fields_confirmation th.col_0 select", "First Name")
+        sel.select("css=.import_fields_confirmation th.col_1 select", "Last Name")
+        sel.select("css=.import_fields_confirmation th.col_2 select", "Email")
+        sel.select("css=.import_fields_confirmation th.col_3 select", "Phone")
+
+        assert not sel.is_element_present("css=.submit_and_start_import_btn.disabled")
+        assert sel.is_element_present("css=.submit_and_start_import_btn")
+        assert sel.is_text_present("Choose what you want to import")
 
     def test_that_hitting_submit_on_a_valid_form_returns_to_the_list_and_says_in_progress(self):
-        assert True == "Test written"
+        sel = self.selenium
+        self.test_that_selecting_all_columns_enables_submit()
+        sel.click("css=.submit_and_start_import_btn")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Right now")
 
     def test_that_a_submitted_import_updates_the_list_as_it_progresses(self):
-        assert True == "Test written"
-    
+        sel = self.selenium
+        self.test_that_hitting_submit_on_a_valid_form_returns_to_the_list_and_says_in_progress()
+
+        first_pct = int(sel.get_text(".percent_imported:nth(0)"))
+        time.sleep(2)
+        next_pct = int(sel.get_text(".percent_imported:nth(0)"))
+        assert first_pct < next_pct
+
+        
     def test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list(self):
         assert True == "Test written"
     
