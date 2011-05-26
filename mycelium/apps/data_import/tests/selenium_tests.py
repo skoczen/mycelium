@@ -159,10 +159,30 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
 
         
     def test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list(self):
-        assert True == "Test written"
-    
+        sel = self.selenium
+        filename = self.create_and_save_200_person_spreadsheet()
+                
+        self.test_that_choosing_a_person_displays_the_upload_area()
+        self.set_upload_file(filename)
+        sel.wait_for_element_present("css=.qq-upload-success")
+        sel.select("css=.import_fields_confirmation th.col_0 select", "First Name")
+        sel.select("css=.import_fields_confirmation th.col_1 select", "Last Name")
+        sel.select("css=.import_fields_confirmation th.col_2 select", "Email")
+        sel.select("css=.import_fields_confirmation th.col_3 select", "Phone")
+        time.sleep(0.2)
+        sel.click("css=.submit_and_start_import_btn")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Right now")
+        time.sleep(120)
+        assert sel.is_text_present("View Results")
+
+
     def test_that_a_successful_completed_import_shows_valid_results(self):
-        assert True == "Test written"
+        sel = self.selenium
+        self.test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list()
+        sel.click("css=.view_results_btn")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("We found 200 people.")
     
     def test_that_an_import_with_invalid_columns_displays_those_results_on_the_import_page(self):
         assert True == "Test written"

@@ -60,7 +60,7 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
 
     @classmethod
     def cache_based_percent_imported_for_import_id(cls, import_id):
-        return cache.get(cls.cache_key_for_import_id_percent_imported(import_id))
+        return cache.get(cls.cache_key_for_import_id_percent_imported(import_id)) or 0
 
     @property
     def is_started(self):
@@ -70,12 +70,17 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
     def is_finished(self):
         return self.finish_time != None or self.failed
     
-    @property
-    def percent_imported(self):
-        if self.is_finished:
+    @classmethod
+    def percent_imported_for_import_id(self, finished, import_id):
+        i = DataImport.raw_objects.get(pk=int(import_id))
+        if i.is_finished:
             return 100
         else:
-            return cache.get(DataImport.cache_key_for_import_id_percent_imported(self.pk))
+            return cache.get(DataImport.cache_key_for_import_id_percent_imported(import_id))
+
+    @property
+    def percent_imported(self):
+        return DataImport.percent_imported_for_import_id(self.pk)
 
     @property
     def import_time(self):

@@ -60,7 +60,7 @@ def begin_import(request):
 def import_status(request):
     try:
         import_id = request.POST["import_id"]
-        percent_imported = "%s" % DataImport.cache_based_percent_imported_for_import_id(import_id)
+        percent_imported = "%s" % DataImport.percent_imported(import_id)
         return {
             'success':True,
             'percent_imported': percent_imported,

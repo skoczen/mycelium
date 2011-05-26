@@ -4,6 +4,9 @@ from test_factory import Factory
 from django.conf import settings
 import os
 from accounts.tests.selenium_abstractions import _sitespaced_url
+from data_import.spreadsheet import EXCEL_TYPE, CSV_TYPE
+from data_import.models import Spreadsheet
+from people.models import Person
 
 class DataImportTestAbstractions(object):
     
@@ -27,3 +30,24 @@ class DataImportTestAbstractions(object):
     def set_upload_file(self, filename):
         sel = self.selenium
         sel.attach_file("css=.qq-uploader input[name=file]", "http://127.0.0.1:8199/%s" % (filename, ))
+
+    def create_and_save_200_person_spreadsheet(self, fields=["first_name","last_name","email","phone_number"], spreadsheet_filename=None):
+        if not spreadsheet_filename:
+            spreadsheet_filename = "test.xls"
+        
+        full_filename = os.path.join(settings.PROJECT_ROOT, "apps/data_import/tests/test_spreadsheets", spreadsheet_filename)
+        
+        
+
+        if not os.path.exists(full_filename):
+            [Factory.person(self.account) for f in range(0,200)]
+            fh = open(full_filename, 'w')
+            q = Person.objects_by_account(self.account).all()
+
+            Spreadsheet.create_spreadsheet(q, fields, EXCEL_TYPE, file_handler=fh)
+            fh.flush()
+            fh.close()
+        
+        Person.objects_by_account(self.account).all().delete()
+
+        return spreadsheet_filename

@@ -38,10 +38,6 @@ def login(request, template_name='registration/login.html',
 
             # Okay, security checks complete. Log the user in.
             auth_login(request, form.get_user())
-            print "logged in"
-            print form.get_user()
-            print request.user
-            print redirect_to
 
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()

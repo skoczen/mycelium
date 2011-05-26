@@ -24,10 +24,10 @@ class Command(BaseCommand):
         gun_command =  "%(ve_path)s/bin/python manage.py run_gunicorn -w 2 -b 0.0.0.0:%(http_port)s --settings=envs.%(test_server_settings)s" % lots_of_options_dict
         cel_command =  "%(ve_path)s/bin/python manage.py celeryd --settings=envs.%(test_server_settings)s" % lots_of_options_dict
         spreadsheet_command = "cd apps/data_import/tests/test_spreadsheets; %(ve_path)s/bin/python -m SimpleHTTPServer 8199" % lots_of_options_dict
-        selenium_subprocess = subprocess.Popen(sel_command,shell=True,              )
-        gunicorn_subprocess = subprocess.Popen(gun_command,shell=True,              )
-        celery_subprocess = subprocess.Popen(cel_command,shell=True,                )
-        spreadsheet_subprocess = subprocess.Popen(spreadsheet_command,shell=True,   )
+        selenium_subprocess = subprocess.Popen(sel_command,shell=True,              stderr=output, stdout=output )
+        gunicorn_subprocess = subprocess.Popen(gun_command,shell=True,              stderr=output, stdout=output )
+        celery_subprocess = subprocess.Popen(cel_command,shell=True,                stderr=output, stdout=output )
+        spreadsheet_subprocess = subprocess.Popen(spreadsheet_command,shell=True,   stderr=output, stdout=output )
         try:
             call_command('test', "--with-selenium", *args, **options )
             output.close()    
