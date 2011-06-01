@@ -188,8 +188,26 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         assert True == "Test written"
 
     def test_that_ignoring_a_column_actually_ignores_it(self):
-        assert True == "Test written"
+        sel = self.selenium
+        self.test_that_uploading_a_csv_file_displays_the_right_columns()
 
+
+        assert sel.is_element_present("css=.submit_and_start_import_btn.disabled")
+        sel.select("css=.import_fields_confirmation th.col_0 select", "First Name")
+        sel.select("css=.import_fields_confirmation th.col_1 select", "Last Name")
+        sel.select("css=.import_fields_confirmation th.col_2 select", "Email")
+        sel.select("css=.import_fields_confirmation th.col_3 select", "Ignore this field")
+
+        sel.click("css=.submit_and_start_import_btn")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Right now")
+        time.sleep(120)
+        assert sel.is_text_present("View Results")
+
+        sel.click("css=.toggle_result_line_detail .striped_row:nth(0) a")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("John Smith")        
+        assert not sel.is_text_present("503 555-1234")        
 
 
     def test_that_choosing_organization_and_uploading_a_file_populates_the_right_options_for_field_choices(self):

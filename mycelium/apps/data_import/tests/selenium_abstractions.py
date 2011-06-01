@@ -6,7 +6,9 @@ import os
 from accounts.tests.selenium_abstractions import _sitespaced_url
 from data_import.spreadsheet import EXCEL_TYPE, CSV_TYPE
 from data_import.models import Spreadsheet
+from data_import.tests.abstraction import TEST_SPREADSHEET_PATH
 from people.models import Person
+
 
 class DataImportTestAbstractions(object):
     
@@ -35,7 +37,7 @@ class DataImportTestAbstractions(object):
         if not spreadsheet_filename:
             spreadsheet_filename = "test.xls"
         
-        full_filename = os.path.join(settings.PROJECT_ROOT, "apps/data_import/tests/test_spreadsheets", spreadsheet_filename)
+        full_filename = os.path.join(settings.PROJECT_ROOT, TEST_SPREADSHEET_PATH, spreadsheet_filename)
         
         
 

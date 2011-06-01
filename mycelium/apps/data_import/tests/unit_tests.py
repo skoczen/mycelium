@@ -1,13 +1,16 @@
 import time
 import datetime
+import unittest
+import os
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
 from qi_toolkit.selenium_test_case import QiUnitTestMixin
 from django.test import TestCase
+from django.conf import settings
 from groups.models import Group
-from data_import.models import DataImport, ImportSpreadsheet
+from data_import.models import DataImport
 from data_import.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
-from data_import.tests.abstractions import GenerateSpreadsheetsMixin
+from data_import.tests.abstractions import GenerateSpreadsheetsMixin, TEST_SPREADSHEET_PATH
 from people.models import Person
 
 
@@ -51,7 +54,7 @@ class TestModels(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Generat
         p3 = Person.objects_by_account(self.a1).all()[2]
         people = [p1, p2, p3]
 
-        self.assertEqual(s.get_rows(0,2), [[p.last_name, p.phone_number, p.first_name,] for p in people ])
+        self.assertEqual(s.get_rows(0,3), [[p.last_name, p.phone_number, p.first_name,] for p in people ])
         
 
 
@@ -75,10 +78,14 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         self.a1 = Factory.create_demo_site("test1", quick=True)
         pass
    
-    def _that_importing_a_person_spreadsheet_refills_an_emptied_database(self, file_type, extension):
-        # create a bunch of people
-        # store their info in a dict
-        people_info = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
+
+    def _create_a_person_spreadsheet_and_clear_the_data(self, file_type=CSV_TYPE, extension=None,):
+        
+        if not extension:
+            if file_type == CSV_TYPE:
+                extension = "csv"
+            elif file_type == EXCEL_TYPE:
+                extension = "xls"
 
         # create a person spreadsheet
         fh = Factory.people_spreadsheet(self.a1, file_type=file_type)
@@ -91,7 +98,17 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
 
         # import the spreadsheet
         s = Spreadsheet(self.a1, fh, "people", filename="test.%s" % (extension,))
-        s.do_import(fields=["first_name","last_name","email","phone_number"])
+        return s
+
+    
+    def _that_importing_a_person_spreadsheet_refills_an_emptied_database(self, file_type=None, extension=None, fields=["first_name","last_name","email","phone_number"]):
+        # create a bunch of people, store their info in a dict
+        people_info = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
+
+        # make a spreadsheet of them.
+        s =self._create_a_person_spreadsheet_and_clear_the_data(file_type, extension)
+
+        s.do_import(fields=fields)
 
         # assert that they're back.
         people_info2 = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
@@ -100,35 +117,40 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
 
 
     def test_that_importing_a_person_csv_refills_an_emptied_database(self):
-        return self._that_importing_a_person_spreadsheet_refills_an_emptied_database(CSV_TYPE,"csv")
+        return self._that_importing_a_person_spreadsheet_refills_an_emptied_database(CSV_TYPE)
 
     def test_that_importing_an_person_excel_refills_an_emptied_database(self):
-        return self._that_importing_a_person_spreadsheet_refills_an_emptied_database(EXCEL_TYPE,"xls")
+        return self._that_importing_a_person_spreadsheet_refills_an_emptied_database(EXCEL_TYPE)
 
 
+    # def test_that_importing_a_organization_csv_works(self):
+    #     assert True == "Test Written"
 
-    def test_that_importing_a_organization_csv_works(self):
-        assert True == "Test Written"
-
-    def test_that_importing_a_organization_excel_works(self):
-        assert True == "Test Written"
+    # def test_that_importing_a_organization_excel_works(self):
+    #     assert True == "Test Written"
 
 
-    def test_that_importing_a_donations_csv_works(self):
-        assert True == "Test Written"
+    # def test_that_importing_a_donations_csv_works(self):
+    #     assert True == "Test Written"
 
-    def test_that_importing_a_donations_excel_works(self):
-        assert True == "Test Written"
+    # def test_that_importing_a_donations_excel_works(self):
+    #     assert True == "Test Written"
 
-    def test_that_importing_a_volunteers_csv_works(self):
-        assert True == "Test Written"
+    # def test_that_importing_a_volunteers_csv_works(self):
+    #     assert True == "Test Written"
 
-    def test_that_importing_a_volunteers_excel_works(self):
-        assert True == "Test Written"
+    # def test_that_importing_a_volunteers_excel_works(self):
+    #     assert True == "Test Written"
     
     
     def test_ignoring_a_column_actually_ignores_it(self):
-        assert True == "Test Written"
+        fields = ["first_name","last_name","email",]
+        s = self._create_a_person_spreadsheet_and_clear_the_data()
+        s.do_import(fields=fields)
+
+        # assert that they're back without names
+        assert all(p.phone_number == None for p in Person.objects_by_account(self.a1))
+
 
     def test_that_a_blank_row_is_ignored(self):
         assert True == "Test Written"
@@ -137,40 +159,103 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         assert True == "Test Written"
 
     def test_that_importing_a_csv_and_an_excel_file_with_identical_data_produce_an_identical_spreadsheet_object(self):
-        assert True == "Test Written"
+        csv_filename = "nameemail.csv"
+        excel_filename = "nameemail.xls"
+        
+        fh1 = open(os.path.join(settings.PROJECT_ROOT, TEST_SPREADSHEET_PATH, csv_filename ), 'r')
+        s = Spreadsheet(self.a1, fh1, "people", filename=csv_filename)
+        csv_data = s.get_rows(0,s.num_rows)
+        fh1.close()
+
+        fh2 = open(os.path.join(settings.PROJECT_ROOT, TEST_SPREADSHEET_PATH, excel_filename ), 'r')
+        s = Spreadsheet(self.a1, fh2, "people", filename=excel_filename)
+        excel_data = s.get_rows(0,s.num_rows)
+        fh2.close()
+
+        self.assertEqual(csv_data, excel_data)
+
     
     def test_importing_a_first_name_works(self):
-        assert True == "Test Written"
+        fields = ["first_name",]
+        s = self._create_a_person_spreadsheet_and_clear_the_data()
+        s.do_import(fields=fields)
+
+        # assert that they're back without names
+        assert all(p.first_name != None for p in Person.objects_by_account(self.a1))
 
     def test_importing_a_full_name_works(self):
         assert True == "Test Written"
 
     def test_importing_a_last_name_works(self):
-        assert True == "Test Written"
+        fields = ["last_name",]
+        s = self._create_a_person_spreadsheet_and_clear_the_data()
+        s.do_import(fields=fields)
+
+        # assert that they're back without names
+        assert all(p.last_name != None for p in Person.objects_by_account(self.a1))
+
 
     def test_importing_an_email_works(self):
-        assert True == "Test Written"
+        fields = ["email",]
+        s = self._create_a_person_spreadsheet_and_clear_the_data()
+        s.do_import(fields=fields)
+
+        # assert that they're back without names
+        assert all(p.email != None for p in Person.objects_by_account(self.a1))
+
 
     def test_importing_a_phone_number_works(self):
-        assert True == "Test Written"
+        fields = ["phone_number",]
+        s = self._create_a_person_spreadsheet_and_clear_the_data()
+        s.do_import(fields=fields)
+
+        # assert that they're back without names
+        assert all(p.phone_number != None for p in Person.objects_by_account(self.a1))
+
 
     def test_importing_a_full_block_address_works(self):
         assert True == "Test Written"
     
     def test_importing_an_address_line_one_works(self):
-        assert True == "Test Written"
+        fields = ["address_line_1",]
+        s = self._create_a_person_spreadsheet_and_clear_the_data()
+        s.do_import(fields=fields)
+
+        # assert that they're back without names
+        assert all(p.address_line_1 != None for p in Person.objects_by_account(self.a1))
+
 
     def test_importing_an_address_line_two_works(self):
-        assert True == "Test Written"
+        fields = ["address_line_2",]
+        s = self._create_a_person_spreadsheet_and_clear_the_data()
+        s.do_import(fields=fields)
+
+        # assert that they're back without names
+        assert all(p.address_line_2 != None for p in Person.objects_by_account(self.a1))
 
     def test_importing_a_city_works(self):
-        assert True == "Test Written"
+        fields = ["city",]
+        s = self._create_a_person_spreadsheet_and_clear_the_data()
+        s.do_import(fields=fields)
+
+        # assert that they're back without names
+        assert all(p.city != None for p in Person.objects_by_account(self.a1))
 
     def test_importing_a_state_works(self):
-        assert True == "Test Written"
+        fields = ["state",]
+        s = self._create_a_person_spreadsheet_and_clear_the_data()
+        s.do_import(fields=fields)
+
+        # assert that they're back without names
+        assert all(p.state != None for p in Person.objects_by_account(self.a1))
 
     def test_importing_a_zip_works(self):
-        assert True == "Test Written"
+        fields = ["zip",]
+        s = self._create_a_person_spreadsheet_and_clear_the_data()
+        s.do_import(fields=fields)
+
+        # assert that they're back without names
+        assert all(p.zip != None for p in Person.objects_by_account(self.a1))
 
 
     def test_importing_a_work_company_name_works(self):
@@ -229,13 +314,58 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
 
 
     def test_that_importing_the_same_spreadsheet_multiple_times_is_idempotent(self):
-        assert True == "Test Written"
+        people_info = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
+
+        # make a spreadsheet of them.
+        s =self._create_a_person_spreadsheet_and_clear_the_data()
+
+        s.do_import(fields=["first_name","last_name","email","phone_number"])
+
+        # assert that they're back.
+        people_info2 = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
+
+        self.assertEqual(people_info, people_info2)
+
+        s.do_import(fields=["first_name","last_name","email","phone_number"])
+        people_info2 = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
+        self.assertEqual(people_info, people_info2)
+
+
 
     def test_that_importing_a_spreadsheet_over_modified_fields_overwrites_them(self):
         """Test with first name, email, phone number, address two, 
            (if appropriate) donation amount, donation date, vol shift hours, and vol shift date"""
+
+        # import a spreadsheet
+        people_info = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
+
+        # make a spreadsheet of them.
+        s =self._create_a_person_spreadsheet_and_clear_the_data()
+
+        s.do_import(fields=["first_name","last_name","email","phone_number"])
+
+        # assert that they're back.
+        people_info2 = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
+
+        self.assertEqual(people_info, people_info2)
+
+
+        # change a value.  Assert that they're not equal
+
+
+
+        # import again.  Assert that we're back to where we started.
+        s.do_import(fields=["first_name","last_name","email","phone_number"])
+
+        # assert that they're back.
+        people_info2 = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
+
+        self.assertEqual(people_info, people_info2)
+
+
         assert True == "Test Written"
 
+    
     def test_that_importing_a_modified_spreadsheet_over_existing_fields_overwrites_them(self):
         """Test with first name, email, phone number, address two, 
            (if appropriate) donation amount, donation date, vol shift hours, and vol shift date"""
@@ -246,13 +376,15 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
     def test_identity_tests_written(self):
         assert True == "Test Written"
 
-
+    @unittest.skip("Not written yet.")
     def test_write_around_style_file_works(self):
         assert True == "Test Written"
-
+    
+    @unittest.skip("Not written yet.")
     def test_tom_style_file_works(self):
         assert True == "Test Written"
     
+    @unittest.skip("Not written yet.")    
     def test_st_gerard_style_file_works(self):
         assert True == "Test Written"
 
