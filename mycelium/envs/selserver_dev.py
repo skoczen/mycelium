@@ -19,6 +19,7 @@ TEMPLATE_DEBUG = DEBUG
 
 
 BROKER_VHOST = "3"                       # Maps to database number.
+CACHES['default']['PREFIX'] = "%s-selenium"
 
 # turn on to test pre-deploy
 # MEDIASYNC['EMULATE_COMBO'] = True

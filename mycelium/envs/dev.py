@@ -30,18 +30,16 @@ if 'test' in sys.argv:
 CELERY_ALWAYS_EAGER = False
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 # if not 'test' in sys.argv and not 'selenium_tests' in sys.argv:
-# CACHES = {
-#     'default': {
-#         # 'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#         'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
-#         'LOCATION': '127.0.0.1:11211',
-#         'PREFIX':ENV,
-#         'JOHNNY_CACHE':True,
-
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND' : 'johnny.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'PREFIX':ENV,
+        'JOHNNY_CACHE':True,
+    }
+}
 #CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
+# CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
 
 
 BROKER_VHOST = "2"                       # Maps to database number.
@@ -66,7 +64,7 @@ SELENIUM_TEST_SERVER_SETTINGS="selserver_dev"
 # FORCE_SELENIUM_TESTS = True
 if 'selenium_tests' in sys.argv:
     BROKER_VHOST = "3"                       # Maps to database number.
-
+    CACHES['default']['PREFIX'] = "%s-selenium"
 
 SOUTH_TESTS_MIGRATE = False
 

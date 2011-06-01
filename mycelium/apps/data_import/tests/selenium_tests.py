@@ -135,8 +135,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         assert sel.is_element_present("css=.submit_and_start_import_btn.disabled")
         sel.select("css=.import_fields_confirmation th.col_0 select", "First Name")
         sel.select("css=.import_fields_confirmation th.col_1 select", "Last Name")
-        sel.select("css=.import_fields_confirmation th.col_2 select", "Email")
-        sel.select("css=.import_fields_confirmation th.col_3 select", "Phone")
+        sel.select("css=.import_fields_confirmation th.col_2 select", "Phone")
+        sel.select("css=.import_fields_confirmation th.col_3 select", "Email")
 
         assert not sel.is_element_present("css=.submit_and_start_import_btn.disabled")
         assert sel.is_element_present("css=.submit_and_start_import_btn")
@@ -159,8 +159,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         sel.wait_for_element_present("css=.qq-upload-success")
         sel.select("css=.import_fields_confirmation th.col_0 select", "First Name")
         sel.select("css=.import_fields_confirmation th.col_1 select", "Last Name")
-        sel.select("css=.import_fields_confirmation th.col_2 select", "Email")
-        sel.select("css=.import_fields_confirmation th.col_3 select", "Phone")
+        sel.select("css=.import_fields_confirmation th.col_2 select", "Phone")
+        sel.select("css=.import_fields_confirmation th.col_3 select", "Email")
         time.sleep(0.2)
         sel.click("css=.submit_and_start_import_btn")
         sel.wait_for_page_to_load("30000")
@@ -196,18 +196,20 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         assert sel.is_element_present("css=.submit_and_start_import_btn.disabled")
         sel.select("css=.import_fields_confirmation th.col_0 select", "First Name")
         sel.select("css=.import_fields_confirmation th.col_1 select", "Last Name")
-        sel.select("css=.import_fields_confirmation th.col_2 select", "Email")
-        sel.select("css=.import_fields_confirmation th.col_3 select", "Ignore this column")
+        sel.select("css=.import_fields_confirmation th.col_2 select", "Ignore this column")
+        sel.select("css=.import_fields_confirmation th.col_3 select", "Email")
 
         sel.click("css=.submit_and_start_import_btn")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Right now")
 
         sel.click("link=View Results")
-
-        sel.click("css=.toggle_result_line_detail .striped_row:nth(0) a")
         sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present("John Smith")        
+
+        sel.click("link=John Smith")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("John")
+        assert sel.is_text_present("Smith")        
         assert not sel.is_text_present("503 555-1234")        
 
 
