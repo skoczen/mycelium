@@ -1,5 +1,6 @@
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time 
+import unittest
 from test_factory import Factory
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from data_import.tests.selenium_abstractions import DataImportTestAbstractions
@@ -148,17 +149,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Right now")
 
+    
     def test_that_a_submitted_import_updates_the_list_as_it_progresses(self):
-        sel = self.selenium
-        self.test_that_hitting_submit_on_a_valid_form_returns_to_the_list_and_says_in_progress()
-
-        first_pct = int(sel.get_text(".percent_imported:nth(0)"))
-        time.sleep(2)
-        next_pct = int(sel.get_text(".percent_imported:nth(0)"))
-        assert first_pct < next_pct
-
-        
-    def test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list(self):
         sel = self.selenium
         filename = self.create_and_save_200_person_spreadsheet()
                 
@@ -173,6 +165,16 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         sel.click("css=.submit_and_start_import_btn")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Right now")
+
+        first_pct = int(sel.get_text("css=.percent_imported:nth(0)"))
+        time.sleep(4)
+        next_pct = int(sel.get_text("css=.percent_imported:nth(0)"))
+        assert first_pct < next_pct
+
+        
+    def test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list(self):
+        sel = self.selenium
+        self.test_that_a_submitted_import_updates_the_list_as_it_progresses()
         time.sleep(120)
         assert sel.is_text_present("View Results")
 
@@ -191,18 +193,17 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         sel = self.selenium
         self.test_that_uploading_a_csv_file_displays_the_right_columns()
 
-
         assert sel.is_element_present("css=.submit_and_start_import_btn.disabled")
         sel.select("css=.import_fields_confirmation th.col_0 select", "First Name")
         sel.select("css=.import_fields_confirmation th.col_1 select", "Last Name")
         sel.select("css=.import_fields_confirmation th.col_2 select", "Email")
-        sel.select("css=.import_fields_confirmation th.col_3 select", "Ignore this field")
+        sel.select("css=.import_fields_confirmation th.col_3 select", "Ignore this column")
 
         sel.click("css=.submit_and_start_import_btn")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Right now")
-        time.sleep(120)
-        assert sel.is_text_present("View Results")
+
+        sel.click("link=View Results")
 
         sel.click("css=.toggle_result_line_detail .striped_row:nth(0) a")
         sel.wait_for_page_to_load("30000")

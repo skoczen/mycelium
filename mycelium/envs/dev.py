@@ -27,14 +27,13 @@ if 'test' in sys.argv:
         },
     }
 
-
 CELERY_ALWAYS_EAGER = False
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 # if not 'test' in sys.argv and not 'selenium_tests' in sys.argv:
 # CACHES = {
 #     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#         # 'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
+#         # 'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
 #         'LOCATION': '127.0.0.1:11211',
 #         'PREFIX':ENV,
 #         'JOHNNY_CACHE':True,
@@ -65,6 +64,8 @@ FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 VIRTUALENV_PATH = "~/.virtualenvs/mycelium"
 SELENIUM_TEST_SERVER_SETTINGS="selserver_dev"
 # FORCE_SELENIUM_TESTS = True
+if 'selenium_tests' in sys.argv:
+    BROKER_VHOST = "3"                       # Maps to database number.
 
 
 SOUTH_TESTS_MIGRATE = False

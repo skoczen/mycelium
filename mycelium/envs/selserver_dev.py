@@ -13,7 +13,7 @@ DATABASES = {
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-CACHE_BACKEND = 'locmem://'
+# CACHE_BACKEND = 'locmem://'
 
 
 

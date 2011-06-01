@@ -12,6 +12,17 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         output = file('/dev/null', 'a+')
+        VERBOSE = False
+        if VERBOSE:
+            outputs={}
+        else:
+            outputs = {
+                "stderr":output,
+                "stdout":output,
+            }
+            
+        
+
         lots_of_options_dict = {
             've_path':              settings.VIRTUALENV_PATH, 
             'http_port':            settings.LIVE_SERVER_PORT, 
@@ -24,10 +35,12 @@ class Command(BaseCommand):
         gun_command =  "%(ve_path)s/bin/python manage.py run_gunicorn -w 2 -b 0.0.0.0:%(http_port)s --settings=envs.%(test_server_settings)s" % lots_of_options_dict
         cel_command =  "%(ve_path)s/bin/python manage.py celeryd --settings=envs.%(test_server_settings)s" % lots_of_options_dict
         spreadsheet_command = "cd apps/data_import/tests/test_spreadsheets; %(ve_path)s/bin/python -m SimpleHTTPServer 8199" % lots_of_options_dict
-        selenium_subprocess = subprocess.Popen(sel_command,shell=True,              stderr=output, stdout=output )
-        gunicorn_subprocess = subprocess.Popen(gun_command,shell=True,              stderr=output, stdout=output )
-        celery_subprocess = subprocess.Popen(cel_command,shell=True,                stderr=output, stdout=output )
-        spreadsheet_subprocess = subprocess.Popen(spreadsheet_command,shell=True,   stderr=output, stdout=output )
+        selenium_subprocess = subprocess.Popen(sel_command,shell=True,              **outputs )
+        gunicorn_subprocess = subprocess.Popen(gun_command,shell=True,              **outputs )
+        celery_subprocess = subprocess.Popen(cel_command,shell=True,                **outputs )
+        spreadsheet_subprocess = subprocess.Popen(spreadsheet_command,shell=True,   **outputs )
+
+
         try:
             call_command('test', "--with-selenium", *args, **options )
             output.close()    

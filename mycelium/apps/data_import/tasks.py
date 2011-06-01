@@ -8,9 +8,9 @@ import datetime
 from johnny import cache as jcache
 
 @task
-def queue_data_import(acct, import_record):
-    account = Account.objects.get(pk=acct.pk)
-    r = DataImport.objects.get(pk=import_record.pk)
+def queue_data_import(acct_id, import_record):
+    account = Account.objects.get(pk=acct_id)
+    r = DataImport.raw_objects.get(pk=import_record.pk)
 
     # print "Starting data import for %s" % import_record
 

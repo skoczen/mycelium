@@ -6,7 +6,7 @@ import os
 from accounts.tests.selenium_abstractions import _sitespaced_url
 from data_import.spreadsheet import EXCEL_TYPE, CSV_TYPE
 from data_import.models import Spreadsheet
-from data_import.tests.abstraction import TEST_SPREADSHEET_PATH
+from data_import.tests.abstractions import TEST_SPREADSHEET_PATH
 from people.models import Person
 
 

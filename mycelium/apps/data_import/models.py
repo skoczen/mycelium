@@ -51,16 +51,16 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
         return "%s-numimported" % (self.cache_key_prefix,)
 
     @classmethod
-    def cache_key_for_import_id_num_imported(self, import_id):
+    def cache_key_for_import_id_num_imported(cls, import_id):
         return "DataImport-%s-numimported" % (import_id)
     
     @classmethod
-    def cache_key_for_import_id_percent_imported(self, import_id):
+    def cache_key_for_import_id_percent_imported(cls, import_id):
         return "DataImport-%s-pctimported" % (import_id)
 
     @classmethod
     def cache_based_percent_imported_for_import_id(cls, import_id):
-        return cache.get(cls.cache_key_for_import_id_percent_imported(import_id)) or 0
+        return cache.get(cls.cache_key_for_import_id_percent_imported(import_id), 0)
 
     @property
     def is_started(self):
@@ -71,12 +71,15 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
         return self.finish_time != None or self.failed
     
     @classmethod
-    def percent_imported_for_import_id(self, finished, import_id):
-        i = DataImport.raw_objects.get(pk=int(import_id))
-        if i.is_finished:
-            return 100
-        else:
-            return cache.get(DataImport.cache_key_for_import_id_percent_imported(import_id))
+    def percent_imported_for_import_id(cls, import_id):
+        pct = cache.get(cls.cache_key_for_import_id_percent_imported(import_id), False)
+        if not pct:
+            i = cls.raw_objects.get(pk=int(import_id))
+            if i.is_finished:
+                pct = 100
+            else:
+                pct = 0
+        return pct
 
     @property
     def percent_imported(self):

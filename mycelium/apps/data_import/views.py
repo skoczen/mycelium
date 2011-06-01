@@ -51,7 +51,7 @@ def begin_import(request):
             has_header=has_header,
         )
         import_record.save()
-        queue_data_import.delay(request.account, import_record=import_record)
+        queue_data_import.delay(request.account.pk, import_record=import_record)
         return HttpResponseRedirect(reverse("data_import:list",))
     else:
         return HttpResponseRedirect(reverse("data_import:start",))
@@ -60,7 +60,7 @@ def begin_import(request):
 def import_status(request):
     try:
         import_id = request.POST["import_id"]
-        percent_imported = "%s" % DataImport.percent_imported(import_id)
+        percent_imported = "%s" % DataImport.percent_imported_for_import_id(import_id)
         return {
             'success':True,
             'percent_imported': percent_imported,
