@@ -82,7 +82,11 @@ def review(request, import_id):
 @render_to("data_import/column_headers.js")
 def import_column_headers_js(request):
     ignore_string = IGNORE_FIELD_STRING
-    import_row_types = { k: v(request.account,{}) for k,v in IMPORT_ROW_TYPES.items() }
+
+    import_row_types = {}
+    for k,v in IMPORT_ROW_TYPES.items():
+        import_row_types[k] = v(request.account,{})
+    
     return locals()
 
 class DataImportAjaxFileUploader(AjaxFileUploader):
