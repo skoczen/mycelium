@@ -9,7 +9,7 @@ setup_env_centos("mycelium","root",
                                        ],
                     'production_db_hosts':['ext-mysql.agoodcloud.com'],
                     'staging_db_hosts':['ext-mysql.digitalmycelium.com'],
-                    'admin_symlink' : '_admin'
+                    'admin_symlink' : '_admin',
                     'python_version': '2.6',
                 }, 
                 overrides={
