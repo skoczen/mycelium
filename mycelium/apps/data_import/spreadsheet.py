@@ -2,7 +2,7 @@ from django.db.models import get_model
 import csv
 import xlwt
 import xlrd
-from python_backports import OrderedDict
+from collections import OrderedDict
 from django.core.cache import cache
 
 CSV_TYPE = "CSV"
