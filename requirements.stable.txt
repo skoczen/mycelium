@@ -1,21 +1,21 @@
-mercurial==1.8.3
+mercurial==1.8.4
 #psycopg2
 python-dateutil==1.5
 
 PIL==1.1.7
 python-memcached==1.47
-gunicorn==0.12.1
-django-cms==2.1.3
-django-tinymce==1.5.1a2
+gunicorn==0.12.2
+#django-cms >= 2.1.3
+#django-tinymce
 pyparsing==1.5.5
 django-xmlrpc==0.1.3
 akismet==0.2.0
 BeautifulSoup==3.2.0
 # -e git://github.com/skoczen/django-form-designer.git#egg=form_designer
--e git://github.com/GoodCloud/django-ajax-uploader.git@67d66d67598a23339944662a9bf54f68198c1234#egg=ajaxuploader-dev
+-e git://github.com/GoodCloud/django-ajax-uploader.git@f9eaf5c694692176b4e47d707356f25b495e1e71#egg=ajaxuploader-dev
 
 django-extensions==0.6
--e git://github.com/skoczen/qi-toolkit.git@c4dd8c98d32486c4e6de51a5ff304302cfd7a181#egg=qi_toolkit-dev
+-e git://github.com/skoczen/qi-toolkit.git@ecf47373d70293483d0f533240e3a204d5ef5ac0#egg=qi_toolkit-dev
 python-crontab==0.9.6
 django-analytical==0.8.1
 
@@ -31,13 +31,13 @@ django-nose-selenium==0.7
 -e git://github.com/Almad/django-sane-testing.git@e2bf9652ee27222936a013445f31564bc90818c4#egg=djangosanetesting-dev
 celery==2.2.6
 django-celery==2.2.4
--e git://github.com/kmmbvnr/django-jenkins.git@a302b8072d27a141ca38035c73828c21f4fbabd6#egg=django_jenkins-dev
-coverage==3.4
+-e git://github.com/kmmbvnr/django-jenkins.git@3c142bd4082a1e3f2a513ecedd15a412790d9b24#egg=django_jenkins-dev
+coverage==3.5b1
 -e git://github.com/skoczen/nose-xcover.git@cccc0e83ce2ed117903768587177a937c144e152#egg=nosexcover-dev
 
 django-taggit==0.9.3
 django-taggit-templatetags==0.4.6dev
-boto==2.0b4
+boto==2.0rc1
 django-ses==0.2
 #django-storages
 django-mediasync==2.1.0
@@ -46,32 +46,37 @@ slimmer==0.1.30
 django-debug-toolbar==0.8.5
 django-picklefield==0.1.9
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
-gitpython
-
 johnny-cache==0.3.1
 django-balancer==0.3
-django-sentry==1.8.2
-redis==2.2.4
+django-sentry==1.8.5
+redis==2.4.1
 xlwt==0.7.2
+xlrd==0.7.1
+xlutils==1.4.1
 ## The following requirements were added by pip --freeze:
 CherryPy==3.2.0
 Django==1.3
 Fabric==1.0.1
+GitPython
 MySQL-python==1.2.3
 South==0.7.3
 amqplib==0.6.1
 anyjson==0.3.1
 async==0.6.1
 django-classy-tags==0.3.3.1
+django-cms==2.1.3
 django-indexer==0.3.0
 django-paging==0.2.4
 -e hg+https://bitbucket.org/david/django-storages@c6c65d30e7b560cd19784aa9cfaef7f4fdf41a1d#egg=django_storages-dev
 django-templatetag-sugar==0.1
+django-tinymce==1.5.1a2
+errorhandler==1.1.1
 gitdb==0.5.2
+importlib==1.0.2
 kombu==1.1.3
 logilab-astng==0.21.1
 logilab-common==0.55.2
-paramiko==1.7.6
+paramiko==1.7.7.1
 pycrypto==2.3
 pylint==0.23.0
 unittest2==0.5.1
