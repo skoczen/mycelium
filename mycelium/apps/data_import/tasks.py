@@ -6,6 +6,7 @@ from django.core.files.storage import default_storage
 import datetime
 
 from johnny import cache as jcache
+from django.core.cache import cache
 
 @task
 def queue_data_import(acct_id, import_record):
@@ -29,7 +30,7 @@ def queue_data_import(acct_id, import_record):
 
         # Do the import
         results = s.do_import(fields=r.fields)
-
+        cache.set(DataImport.cache_key_for_import_id_percent_imported(r.pk),99)
         # print "Done, saving results."
 
         # Save the results
@@ -45,6 +46,7 @@ def queue_data_import(acct_id, import_record):
             )
 
         r.finish_time = datetime.datetime.now()
+        cache.delete(DataImport.cache_key_for_import_id_percent_imported(r.pk))
         r.save()
 
 

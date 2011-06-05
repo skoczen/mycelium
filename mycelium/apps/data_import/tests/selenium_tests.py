@@ -15,47 +15,6 @@ class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions, D
     # def tearDown(self):
     #     self.account.delete()
 
-    def test_mockup_pages_load_and_links_work(self):
-        sel = self.selenium        
-        self.open("/reports/report/new")
-        sel.click("link=Admin")
-        sel.wait_for_page_to_load("30000")
-        self.assertEqual("Data Import", sel.get_text("css=.data_import_btn .button_title"))
-        
-        sel.click("css=.data_import_btn")
-        sel.wait_for_page_to_load("30000")
-        self.assertEqual("Data Import History", sel.get_text("//div[@id='page']/page_title"))
-        self.assertEqual("Start New Import", sel.get_text("link=Start New Import"))
-  
-        self.assertEqual("View Results", sel.get_text("link=View Results"))
-        
-        self.assertEqual("Right now", sel.get_text("css=.in_progress .right_now"))
-        
-        sel.click("link=View Results")
-        sel.wait_for_page_to_load("30000")
-        self.assertEqual("Data Import #5 on Dec 29, 2010 at 3:55pm", sel.get_text("//div[@id='page']/page_title"))
-        
-        self.assertEqual("We found 2,937 people.", sel.get_text("css=.report_summary .total"))
-        
-        self.assertEqual("Back to All Data Imports", sel.get_text("link=Back to All Data Imports"))
-        
-        sel.click("link=Back to All Data Imports")
-        sel.wait_for_page_to_load("30000")
-        self.assertEqual("Start New Import", sel.get_text("link=Start New Import"))
-        
-        sel.click("link=Start New Import")
-        sel.wait_for_page_to_load("30000")
-        self.assertEqual("Back to All Data Imports", sel.get_text("link=Back to All Data Imports"))
-        
-        self.assertEqual("Start Data Import", sel.get_text("//div[@id='page']/page_title"))
-        
-        assert sel.is_text_present("Choose a spreadsheet.")
-        
-        self.assertEqual("Start Import", sel.get_text("link=Start Import"))
-        
-        sel.click("link=Back to All Data Imports")
-        sel.wait_for_page_to_load("30000")
-
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions, DataImportTestAbstractions):
     selenium_fixtures = []
@@ -166,28 +125,41 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Right now")
 
+        time.sleep(2)
         first_pct = int(sel.get_text("css=.percent_imported:nth(0)"))
         time.sleep(4)
         next_pct = int(sel.get_text("css=.percent_imported:nth(0)"))
+
         assert first_pct < next_pct
 
         
     def test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list(self):
         sel = self.selenium
         self.test_that_a_submitted_import_updates_the_list_as_it_progresses()
-        time.sleep(120)
-        assert sel.is_text_present("View Results")
+        
+        start_time = time.time()
+        success = False
+        while time.time() - start_time < 120  and not success:
+            if sel.is_text_present("View Results"):
+                success = True
+            else:
+                time.sleep(5)
+        
+        assert success == True
 
 
     def test_that_a_successful_completed_import_shows_valid_results(self):
         sel = self.selenium
         self.test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list()
+        time.sleep(4)
         sel.click("css=.view_results_btn")
         sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present("We found 200 people.")
-    
+        time.sleep(30)
+        assert sel.is_text_present("We found 204 people.")
+
+    @unittest.skip("Not written yet.")
     def test_that_an_import_with_invalid_columns_displays_those_results_on_the_import_page(self):
-        assert True == "Test written"
+        pass
 
     def test_that_ignoring_a_column_actually_ignores_it(self):
         sel = self.selenium
@@ -212,15 +184,18 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         assert sel.is_text_present("Smith")        
         assert not sel.is_text_present("503 555-1234")        
 
-
+    @unittest.skip("Not written yet.")
     def test_that_choosing_organization_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
-        assert True == "Test written"
+        pass
 
+    @unittest.skip("Not written yet.")
     def test_that_choosing_donation_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
-        assert True == "Test written"
-    
+        pass
+
+    @unittest.skip("Not written yet.")
     def test_that_choosing_volunteer_hours_and_uploading_a_file_populates_the_right_options_for_field_choices(self):
-        assert True == "Test written"
+        pass
+
 
 
 

@@ -378,7 +378,13 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
 
 
         # change a value.  Assert that they're not equal
+        p = Person.objects_by_account(self.a1).all()[0]
+        p.first_name = "foo"
+        p.save()
 
+        people_info2 = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
+
+        self.assertNotEqual(people_info, people_info2)
 
 
         # import again.  Assert that we're back to where we started.
@@ -388,14 +394,8 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         people_info2 = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
 
         self.assertEqual(people_info, people_info2)
-    
-    @unittest.skip("Not written yet.")
-    def test_that_importing_a_modified_spreadsheet_over_existing_fields_overwrites_them(self):
-        """Test with first name, email, phone number, address two, 
-           (if appropriate) donation amount, donation date, vol shift hours, and vol shift date"""
-        pass
-    
 
+    
     
     @unittest.skip("Not written yet.")
     def test_identity_tests_written(self):

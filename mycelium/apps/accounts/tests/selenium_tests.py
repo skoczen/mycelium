@@ -6,13 +6,14 @@ from people.tests.selenium_abstractions import PeopleTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
 from django.conf import settings
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
-
+from django.core.cache import cache
     
 class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.create_demo_site()
+        cache.clear()
         self.verificationErrors = []
 
     def test_that_logging_in_works(self):
@@ -69,6 +70,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
         a2 = self.create_demo_site("test2")
         ua = Factory.useraccount(account=a2)
+        cache.clear()
         self.go_to_the_login_page("test2")
         self.log_in(ua=ua)
 

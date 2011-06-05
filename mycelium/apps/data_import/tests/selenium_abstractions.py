@@ -9,9 +9,8 @@ from data_import.models import Spreadsheet
 from data_import.tests.abstractions import TEST_SPREADSHEET_PATH
 from people.models import Person
 
-
 class DataImportTestAbstractions(object):
-    
+
     def get_to_import_list(self):
         sel = self.selenium
         self.open("/")
@@ -42,6 +41,7 @@ class DataImportTestAbstractions(object):
         
 
         if not os.path.exists(full_filename):
+            Person.objects_by_account(self.account).all().delete()
             [Factory.person(self.account) for f in range(0,200)]
             fh = open(full_filename, 'w')
             q = Person.objects_by_account(self.account).all()
