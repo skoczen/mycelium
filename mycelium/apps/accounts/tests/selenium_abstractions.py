@@ -1,6 +1,7 @@
 # encoding: utf-8
 import time
 from test_factory import Factory
+from django.core.cache import cache
 
 def _sitespaced_url(url, site="test"):
     from django.conf import settings
@@ -60,6 +61,7 @@ class AccountTestAbstractions(object):
         self.site = site
 
     def setup_for_logged_in(self, name="test", mostly_empty=False):
+        cache.clear()
         self.account = self.create_demo_site(name=name, mostly_empty=mostly_empty)
         self.go_to_the_login_page(site=name)
         self.log_in()

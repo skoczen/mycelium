@@ -9,8 +9,8 @@ PIL
 python-memcached
 django >=1.3
 gunicorn
-django-cms >= 2.1.3
-django-tinymce
+#django-cms >= 2.1.3
+#django-tinymce
 pyparsing
 django-xmlrpc
 akismet
@@ -59,3 +59,5 @@ django-balancer
 django-sentry
 redis
 xlwt
+xlrd
+xlutils

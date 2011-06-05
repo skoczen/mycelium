@@ -31,7 +31,7 @@ MANAGERS = ADMINS
 MANAGERS += (
     'tom@agoodcloud.com',
 )
-
+SENTRY_ADMINS = ADMINS
 
 TIME_ZONE = "America/Los_Angeles"
 LANGUAGE_CODE = 'en'
@@ -71,16 +71,17 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
     
-    'cms.middleware.page.CurrentPageMiddleware',
-    'cms.middleware.user.CurrentUserMiddleware',
+    # 'cms.middleware.page.CurrentPageMiddleware',
+    # 'cms.middleware.user.CurrentUserMiddleware',
     # 'cms.middleware.multilingual.MultilingualURLMiddleware',
-    'cms.middleware.media.PlaceholderMediaMiddleware',
+    # 'cms.middleware.media.PlaceholderMediaMiddleware',
 
 )
 AUTHENTICATION_BACKENDS = (
     'accounts.backends.AccountAuthBackend',
     # 'django.contrib.auth.backends.ModelBackend',
 )
+
 
 
 
@@ -93,7 +94,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     "django.core.context_processors.request",
     'django.contrib.auth.context_processors.auth',
     
-    "cms.context_processors.media",
+    # "cms.context_processors.media",
     "qi_toolkit.context_processors.add_env_to_request",
     "qi_toolkit.context_processors.add_favicon_to_request",    
     "mycelium_core.context_processors.cdn_media_url",
@@ -146,17 +147,17 @@ INSTALLED_APPS = (
     'sentry',
     'sentry.client',
 
-    'cms',
-    'mptt',
-    'menus',
-    'cms.plugins.text',
-    'cms.plugins.picture',
-    'cms.plugins.link',
-    'cms.plugins.file',
-    'cms.plugins.snippet',
-    'cms.plugins.googlemap',
+    #'cms',
+    #'mptt',
+    #'menus',
+    #'cms.plugins.text',
+    #'cms.plugins.picture',
+    #'cms.plugins.link',
+    #'cms.plugins.file',
+    #'cms.plugins.snippet',
+    #'cms.plugins.googlemap',
     # 'form_designer',
-    'tinymce',
+    #'tinymce',
 
     'marketing_site',
     'email_list',
@@ -164,7 +165,7 @@ INSTALLED_APPS = (
     'people',
     'mycelium_core',
     'reports',
-    'import',
+    'data_import',
     'logo_maker',
     'volunteers',
     'conversations',
@@ -193,17 +194,18 @@ AUTH_PROFILE_MODULE = "accounts.UserAccount"
 
 
 # django-cms
-CMS_TEMPLATES = (
-    ('marketing_site/home.html', 'Home Page'),
-    ('marketing_site/normal_page.html', 'Normal Page'),
-    ('marketing_site/about_us.html', 'About Us'),    
-)
-CMS_MENU_TITLE_OVERWRITE = True
-CMS_SEO_FIELDS = True
-CMS_APPLICATIONS_URLS = (
-    ('marketing_site.urls', 'Marketing Site'),
-)
-CMS_USE_TINYMCE = True
+# CMS_TEMPLATES = (
+#     ('marketing_site/home.html', 'Home Page'),
+#     ('marketing_site/normal_page.html', 'Normal Page'),
+#     ('marketing_site/about_us.html', 'About Us'),    
+# )
+# CMS_MENU_TITLE_OVERWRITE = True
+# CMS_SEO_FIELDS = True
+# CMS_APPLICATIONS_URLS = (
+#     ('marketing_site.urls', 'Marketing Site'),
+# )
+# CMS_USE_TINYMCE = True
+
 GOOGLE_MAPS_KEY = "ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRHA9ICmOpg9-1g76S5BMdlTE0SKRRfIwbO5xyH_2XiYLy9Wt8qQ9Ymz"
 
 
@@ -223,7 +225,8 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--where=apps', '-s']
 
 FORCE_SELENIUM_TESTS = False
-SELENIUM_BROWSER_COMMAND = "*safari"
+# SELENIUM_BROWSER_COMMAND = "safari"
+SELENIUM_BROWSER_COMMAND = "*chrome"
 LIVE_SERVER_PORT = 8099
 SELENIUM_PORT = 64444
 
@@ -235,7 +238,7 @@ THUMBNAIL_COLORSPACE = None
 
 # jonny cache
 JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_mycelium'
-
+MAN_IN_BLACKLIST = ["data_import_dataimport",]
 
 # celery / rabbitmq
 # BROKER_HOST = "localhost"
@@ -276,7 +279,7 @@ GIT_CURRENT_SHA = None
 # django-mediasync
 
 BASE_JS = [
-    "js/libs/modernizr-1.6.min.js",
+    "js/lib/modernizr-1.6.min.js",
     "js/contrib/jquery-1.4.3.min.js",
     "js/contrib/jquery-ui.js",
     "js/contrib/jquery.django.csrf.js",
@@ -324,14 +327,14 @@ MEDIASYNC = {
                 "js/contrib/jquery.formset.min.js",
                 "js/mycelium/generic_fields.js",
                 "js/mycelium/mycelium_search.js",
-                "js/contrib/fileuploader.js",
+                "js/lib/fileuploader.mycelium.js",
         ],
         'js/mycelium_core.js': [
                 "js/mycelium/mycelium_elements.js",
                 "js/mycelium/mycelium_top_search.js",
         ],
         'css/mycelium_base.css': BASE_CSS + [
-                "js/contrib/fileuploader.css",
+                "css/contrib/fileuploader.css",
         ],
 
         'js/marketing_base.js': BASE_JS + COMMON_JS + [

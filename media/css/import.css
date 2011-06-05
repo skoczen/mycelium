@@ -41,7 +41,7 @@ page_title {
 	text-decoration: underline;
 }
 .result_data {
-	padding: 0px 0px 4px 10px;
+	padding: 6px 0px 4px 10px;
 }
 .result_data .result_data_line {
 	padding: 2px;
@@ -91,9 +91,17 @@ page_title {
 	background-color: #EEE;
 	color: #004486;
 }
+.start_data_import step.active.current step_number {
+	background-color: #004486;
+	color: #FFF;
+}
+.start_data_import step.active.current instruction {
+	background-color: #0058ae;
+	color: #FFF;
+}
 .start_data_import step step_content, .start_data_import step pre_step_content  {
 	display: block;
-	padding: 7px 15px 5px 25px;
+	padding: 7px 15px 5px 45px;
 }
 .start_data_import step pre_step_content {
 	font-size: 18px;
@@ -105,4 +113,83 @@ page_title {
 }
 table.import_fields_confirmation td, table.import_fields_confirmation  th {
 	text-align: center;
+}
+
+.choose_import_type step_content {
+	font-size: 18px;
+}
+.choose_import_type .import_type_people label {
+	background: url("../images/icon-person-grey-22h.png") no-repeat 0px 0px;
+	padding: 0px 20px 4px 30px;
+}
+.choose_import_type .import_type_organizations label {
+	background: url("../images/icon-business-grey-22h.png") no-repeat 0px 0px;
+	padding: 0px 20px 4px 30px;
+}
+.choose_import_type .import_type_volunteer_hours label {
+	background: url("../images/icon-volunteer-hours-grey-22h.png") no-repeat 0px 0px;
+	padding: 0px 20px 4px 30px;
+}
+.choose_import_type .import_type_donations label {
+	background: url("../images/icon-donation-grey-22h.png") no-repeat 0px 0px;
+	padding: 0px 20px 4px 30px;
+}
+.choose_import_type .import_option.inactive label {
+	color: #CCC;
+}
+.choose_import_type .import_option.active label {
+	/*color: #000486;*/
+}
+.choose_import_type .import_type_people.active label {
+	background-image: url("../images/icon-person-blue-22h.png");
+}
+.choose_import_type .import_type_organizations.active label {
+	background-image: url("../images/icon-business-blue-22h.png");
+}
+.choose_import_type .import_type_volunteer_hours.active label {
+	background-image: url("../images/icon-volunteer-hours-blue-22h.png");
+}
+.choose_import_type .import_type_donations.active label {
+	background-image: url("../images/icon-donation-blue-22h.png");
+}
+step_instructions {
+	display: block;
+	padding: 0px 10px 10px 10px;
+	color: #555;
+}
+.import_fields_container {
+	display: block;
+	width: 100%;
+	border: 1px solid #AAA;
+	overflow-x: auto;
+}
+.import_fields_confirmation tr.striped_row td {
+	border: 1px solid #DDD;
+}
+table.import_fields_confirmation.record_table {
+	margin: 0px;	
+}
+table.import_fields_confirmation .and_more_row td {
+	text-align: left;
+}
+.no_imports_message td {
+	text-align: center;
+	color: #AAA;
+	font-size: 18px;
+	padding: 20px;
+}
+.results_detail_table {
+	width: 100%;
+}
+.result_data_line .import_fields_container {
+	height: 200px;
+	margin-left: 1%;
+	width: 99%;
+	display: none;
+}
+.result_data_line .import_fields_container td {
+	padding: 2px 8px;
+}
+.more_rows_info {
+	padding: 5px;
 }

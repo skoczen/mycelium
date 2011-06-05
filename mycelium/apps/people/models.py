@@ -19,6 +19,7 @@ from django.db.models.signals import post_save
 from django.core.cache import cache
 from mycelium_core.models import SearchableItemProxy
 from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
+from data_import.models import PotentiallyImportedModel
 
 class OrganizationType(AccountBasedModel, models.Model):
     internal_name = models.CharField(max_length=255)
@@ -64,7 +65,7 @@ class PhoneNumberBase(models.Model):
         abstract = True
 
 
-class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumberBase, EmailAddressBase):
+class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumberBase, EmailAddressBase, PotentiallyImportedModel):
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     
@@ -78,10 +79,15 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     def __unicode__(self):
         return u"%s" % (self.full_name)
 
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('people:person', [str(self.id)])
+
     @property
     def full_name(self):
         if self.first_name or self.last_name:
-            return "%s %s" % (self.first_name, self.last_name)
+            return "%s %s" % (self.first_name or "", self.last_name or "")
         else:
             return NO_NAME_STRING_PERSON
     
@@ -136,7 +142,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
         return self.peopleandorganizationssearchproxy_set.all()[0].search_result_row
 
 
-class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, TimestampModelMixin):
+class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, TimestampModelMixin, PotentiallyImportedModel):
     name = models.CharField(max_length=255, blank=True, null=True)
 
     search_fields = ["full_name","searchable_primary_phone_number"]
@@ -175,6 +181,10 @@ class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, Timest
             
     def __unicode__(self):
         return "%s" % (self.name,)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('people:organization', [str(self.id)])
 
 class Employee(AccountBasedModel, TimestampModelMixin):
     person = models.ForeignKey(Person, related_name="jobs")

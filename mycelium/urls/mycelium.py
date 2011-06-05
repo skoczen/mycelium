@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     (r'^people/',       include('people.urls',              app_name="people",          namespace="people")),
     (r'^donors/',       include('donors.urls',              app_name="donors",          namespace="donors")),
     (r'^reports/',      include('reports.urls',             app_name="reports",         namespace="reports")),
-    (r'^import/',       include('import.urls',              app_name="import",          namespace="import")),
+    (r'^import/',       include('data_import.urls',         app_name="data_import",     namespace="data_import")),
     (r'^logo/',         include('logo_maker.urls',          app_name="logo_maker",      namespace="logo_maker")),
     (r'^groups/',       include('groups.urls',              app_name="groups",          namespace="groups")),
     (r'^tags/',         include('generic_tags.urls',        app_name="generic_tags",    namespace="generic_tags")),
@@ -27,6 +27,8 @@ urlpatterns = patterns('',
     # url(r'^tinymce/', include('tinymce.urls')),
     url(r'^', include('mediasync.urls')),
 )
+
+import os
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),

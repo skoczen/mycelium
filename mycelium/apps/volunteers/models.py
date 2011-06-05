@@ -8,6 +8,7 @@ from people.models import Person
 from django.db.models.signals import post_save
 import datetime
 from volunteers import VOLUNTEER_STATII
+from data_import.models import PotentiallyImportedModel
 
 class Volunteer(AccountBasedModel, TimestampModelMixin):
     """A volunteer!"""
@@ -89,7 +90,7 @@ class ScheduledShift(AccountBasedModel, TimestampModelMixin):
     # categories = TaggableManager()
     
 
-class CompletedShift(AccountBasedModel, TimestampModelMixin):
+class CompletedShift(AccountBasedModel, TimestampModelMixin, PotentiallyImportedModel):
     """A work shift (possibly informal) completed by a volunteer"""
     volunteer = models.ForeignKey(Volunteer)
     shift = models.ForeignKey(Shift, blank=True, null=True,)

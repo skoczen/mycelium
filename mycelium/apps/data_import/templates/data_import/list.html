@@ -1,0 +1,64 @@
+{% extends "data_import/base.html" %}
+{% load humanize pagination_tags %}
+{% block title %}Data Import - History{% endblock %}
+{% autopaginate all_imports 10 %}
+{% block javascript %}{{block.super}}
+<script type="text/javascript" charset="utf-8">
+var IMPORT_TIMEOUT = 1000;
+var active_imports = [];
+
+function check_import_status(import_id) {
+	$.ajax({
+          url: "{% url data_import:import_status %}",
+          type: "POST",
+          dataType: "json",
+          data: {"import_id":import_id},
+          mode: 'abort',
+          success: function(json) {
+          	if (!json.is_finished) {
+          		$("tr[import_id="+import_id+"] .percent_imported").html(json.percent_imported);	
+          		active_imports[import_id] = setTimeout(function(){check_import_status(import_id)}, IMPORT_TIMEOUT);
+	          } else {
+	          	window.location.reload();
+	          }
+			 
+          }
+     });
+}
+
+$(function(){
+{% for i in all_imports %}
+	{% if not i.is_finished %}
+	active_imports[{{i.pk}}] = setTimeout(function(){check_import_status({{i.pk}})}, IMPORT_TIMEOUT);
+	{% endif %}
+{% endfor %}	
+});
+
+</script>
+
+{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block page_content %}
+<page_title>Data Import History</page_title>
+
+<record_list>
+<a href="{% url data_import:start %}" class="mycelium_btn start_import_btn">Start New Import</a>
+
+
+<table class="striped data_import_history_table record_table">
+	{% for i in all_imports %}
+	<tr class="{% if not i.is_finished %}in_progress{% endif %} {% if i.failed %} failed {% endif %} %} striped_row" import_id="{{i.pk}}">
+		<td class="action">{% if i.failed %}Failed{% else %}{% if i.is_finished %}<a href="{% url data_import:review i.pk %}" class="view_results_btn">View Results</a>{% else %}<img src="{% media_url "images/spinner-grey-16.gif" %}" > <span class="percent_imported">{{i.percent_imported|floatformat:0}}</span>% {% endif %}{% endif %}</td>
+		<td class="import_date">{% if i.is_finished %}{{i.start_time|date}} at {{i.start_time|time}}{% else %}<span class="right_now">Right now</span>{% endif %}</td>
+		<td class="people_count">{% if i.is_finished %}imported{% else %}importing{% endif %} {% if i.num_source_rows %}{{i.num_source_rows|intcomma}}{% endif %} {{i.import_type}}</td>
+		<td class="other_fields">with {{i.num_columns}}  columns.</td>
+	</tr>
+	{% empty %}
+	<tr class="no_imports_message"><td>
+		No data imports yet - click the button above to get started!
+	</td></tr>
+	{% endfor %}
+</table>
+{% paginate %}
+</record_list>
+{% endblock %}

@@ -11,9 +11,12 @@ from accounts.models import Plan, Account, UserAccount, AccessLevel
 from django.contrib.sites.models import Site
 from django.template.defaultfilters import slugify
 from volunteers import VOLUNTEER_STATII
-import datetime
+from data_import.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
 
-import sys, os
+import datetime
+import cStringIO
+import sys
+# import os
 # sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 
 def print_if_verbose(verbose, string):
@@ -348,7 +351,7 @@ class Factory(QiFactory):
 
             # create a bunch of people
             people_created = []
-            num = cls.rand_int(2,max_num_people)
+            num = cls.rand_int(3,max_num_people)
             print_if_verbose(verbose, "Creating %s people" % num,)
             for i in range(0, num):
                 p = cls.person(account)
@@ -438,3 +441,11 @@ class Factory(QiFactory):
         print_if_verbose(verbose, "Setup complete.")
         return account
 
+
+    @classmethod
+    def people_spreadsheet(cls, account, file_type=None, fields=["first_name","last_name","email","phone_number"]):
+        f_write = cStringIO.StringIO()
+        q = Person.objects_by_account(account).all()
+        Spreadsheet.create_spreadsheet(q, fields, file_type, file_handler=f_write)
+        f_read = cStringIO.StringIO(f_write.getvalue())
+        return f_read

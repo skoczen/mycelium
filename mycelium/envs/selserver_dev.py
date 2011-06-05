@@ -13,12 +13,13 @@ DATABASES = {
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-CACHE_BACKEND = 'locmem://'
+# CACHE_BACKEND = 'locmem://'
 
 
-SESSION_COOKIE_DOMAIN = "localhost"
+
 
 BROKER_VHOST = "3"                       # Maps to database number.
+CACHES['default']['PREFIX'] = "%s-selenium"
 
 # turn on to test pre-deploy
 # MEDIASYNC['EMULATE_COMBO'] = True
