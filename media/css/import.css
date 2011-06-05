@@ -190,3 +190,6 @@ table.import_fields_confirmation .and_more_row td {
 .result_data_line .import_fields_container td {
 	padding: 2px 8px;
 }
+.more_rows_info {
+	padding: 5px;
+}

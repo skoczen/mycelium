@@ -108,7 +108,7 @@
 			}
 		}
 		if (json.num_rows - json.first_rows.length > 0) {
-			$(".import_fields_confirmation tbody").append("<tr class='striped_row and_more_row'><td colspan="+json.first_rows[0].length+">and "+(json.num_rows - json.first_rows.length)+" more rows</td></tr>");	
+			$(".more_rows_info").html("The import will include the rows above, and "+(json.num_rows - json.first_rows.length)+" more rows.");	
 		}
 		
 		$("#id_upload_filename").val(json.filename);
@@ -176,6 +176,7 @@
 	<instruction>Confirm the fields you want to import.</instruction>
 	<pre_step_content>Upload a file above to see the import fields.</pre_step_content>
 	<step_content style="display: none;">
+	<step_instructions>Select a field for each column below.</step_instructions>
 	<div class="import_fields_container">
 	<table class="striped record_table import_fields_confirmation">
 		<thead>
@@ -184,6 +185,7 @@
 		</tbody>
 	</table>
 	</div>
+	<div class="more_rows_info"></div>
 	</step_content>
 	</active_step_content>
 </step>
