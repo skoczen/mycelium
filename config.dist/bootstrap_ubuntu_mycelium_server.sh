@@ -1,6 +1,5 @@
 #!/bin/bash
-aptitude remove -y apache2
-aptitude install -y git python2.7 nginx hg libjpeg62 libjpeg62-dev zlib upstart chkconfig python-setuptools python2.7-dev libmysql++-dev
+aptitude install -y git python2.7 nginx mercurial libjpeg62 libjpeg62-dev lib-zlib upstart chkconfig python-setuptools python2.7-dev libmysql++-dev
 
 easy_install-2.7 pip
 echo 'VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7' >> ~/.bashrc
@@ -18,6 +17,7 @@ cd /var/www
 git clone http://mycelium.skoczen.webfactional.com/mycelium.git mycelium.git
 cd mycelium.git;git checkout live
 cat /var/www/mycelium.git/config.dist/authorized_keys >> ~/.ssh/authorized_keys
+
 mkvirtualenv --no-site-packages --python=/usr/bin/python2.7 mycelium
 echo 'cd /var/www/mycelium.git' >> ~/.virtualenvs/mycelium/bin/postactivate
 workon mycelium
@@ -43,9 +43,9 @@ groupadd nginx
 useradd -g nginx -s /usr/sbin/nologin -m -d /home/nginx nginx
 mkdir /usr/local/nginx
 
-#chkconfig --add celeryd
-#chkconfig --add nginx
-#chkconfig --add mycelium
+chkconfig --add celeryd
+# chkconfig --add nginx
+chkconfig --add mycelium
 service celeryd start
 service mycelium start
 service nginx start
