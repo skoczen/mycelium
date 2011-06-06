@@ -23,7 +23,7 @@ cat celeryd.tmp >> celeryd
 rm celeryd.tmp
 easy_install-2.6 pip
 # echo 'alias python=python26' >> ~/.bashrc
-echo 'VIRTUALENVWRAPPER_PYTHON=/opt/python27/bin/python26' >> ~/.bashrc
+echo 'VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7' >> ~/.bashrc
 source ~/.bashrc
 mkdir /var/www
 mkdir /var/backups

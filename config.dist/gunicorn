@@ -28,7 +28,7 @@ start()
 {
     echo "Starting $NAME."
     export PYTHONPATH=$CONFDIR;
-    /root/.virtualenvs/mycelium/bin/python2.6 /var/www/mycelium.git/mycelium/manage.py $GUNICORN_RUN  -w $WORKERS -p $PID --daemon && echo "OK" || echo "failed";
+    /root/.virtualenvs/mycelium/bin/python /var/www/mycelium.git/mycelium/manage.py $GUNICORN_RUN  -w $WORKERS -p $PID --daemon && echo "OK" || echo "failed";
 }
 
 stop()

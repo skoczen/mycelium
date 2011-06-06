@@ -36,7 +36,7 @@ ADMIN_MEDIA_PREFIX = "/admin-media/"
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
 
-BROKER_HOST = "int-Redis.agoodcloud.com"  # Maps to redis host.
+BROKER_HOST = "int-Redis.digitalmycelium.com"  # Maps to redis host.
 BROKER_VHOST = "1"                       # Maps to database number.
 
 
