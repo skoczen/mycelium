@@ -1,15 +1,15 @@
 #!/bin/sh
-# chkconfig: 2345 20 80
-# description: Gunicorn processes for mycelium
+
 ### BEGIN INIT INFO
-# Provides:       mycelium
-# Required-Start: $local_fs $syslog
-# Required-Stop:  $local_fs $syslog
-# Default-Start:  2 3 4 5
-# Default-Stop:   0 1 6
+# Provides:          mycelium
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
 # Short-Description: Gunicorn processes for mycelium
-#
+# Description:       Gunicorn processes for mycelium
 ### END INIT INFO
+
 
 CONFDIR="/var/www/mycelium.git/mycelium"
 NAME="mycelium"
