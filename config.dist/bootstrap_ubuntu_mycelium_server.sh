@@ -1,5 +1,5 @@
 #!/bin/bash
-aptitude install -y git python2.7 nginx mercurial libjpeg62 libjpeg62-dev lib-zlib upstart chkconfig python-setuptools python2.7-dev libmysql++-dev
+aptitude install -y git python2.7 nginx mercurial libjpeg62 libjpeg62-dev lib-zlib upstart chkconfig python-setuptools python2.7-dev libmysql++-dev htop
 
 easy_install-2.7 pip
 echo 'VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7' >> ~/.bashrc

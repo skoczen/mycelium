@@ -37,9 +37,9 @@ FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
 
 
 BROKER_HOST = "int-Redis.digitalmycelium.com"  # Maps to redis host.
-BROKER_VHOST = "1"                       # Maps to database number.
+BROKER_VHOST = 1                       # Maps to database number.
 REDIS_HOST = BROKER_HOST
-
+REDIS_DB = BROKER_VHOST
 
 # CACHES = {
 #     'default': {
