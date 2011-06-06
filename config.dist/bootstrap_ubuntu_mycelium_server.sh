@@ -1,4 +1,5 @@
 #!/bin/bash
+aptitude remove apache2
 aptitude install git python2.7 nginx hg libjpeg62 libjpeg62-dev zlib upstart chkconfig python-setuptools python2.7-dev libmysql++-dev
 easy_install-2.7 pip
 echo 'VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7' >> ~/.bashrc
@@ -10,7 +11,6 @@ cd ~;mkdir .virtualenvs
 chmod +x /root
 echo 'source /usr/local/bin/virtualenvwrapper.sh' >> .bashrc
 source ~/.bashrc
-
 cd /var/www
 git clone http://mycelium.skoczen.webfactional.com/mycelium.git mycelium.git
 cd mycelium.git;git checkout live
@@ -23,12 +23,23 @@ pip install --upgrade mercurial
 pip install -r requirements.stable.txt
  
 mkdir /var/log/celery
+cd /etc/init.d; wget https://github.com/ask/celery/raw/master/contrib/generic-init.d/celeryd --no-check-certificate; chmod +x celeryd
+sed '1d' celeryd > celeryd.tmp
+echo "# chkconfig: 2345 20 80" > celeryd
+echo "# description: The Celery start-stop-script" >> celeryd
+cat celeryd.tmp >> celeryd
+rm celeryd.tmp
+chmod +x celeryd
 
 ln -s /var/www/mycelium.git/config.dist/celeryd /etc/init.d/celeryd;chmod +x /etc/init.d/celeryd
 ln -s  /var/www/mycelium.git/config.dist/gunicorn /etc/init.d/mycelium; chmod +x /etc/init.d/mycelium
 mv /etc/nginx/nginx.conf /etc/default/nginx.conf.bak
 ln -s /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf
 echo "from envs.dev import *" > /var/www/mycelium.git/mycelium/settings.py
+groupadd nginx
+useradd -g nginx -s /usr/sbin/nologin -m -d /home/nginx nginx
+mkdir /usr/local/nginx
+
 chkconfig --add celeryd
 chkconfig --add nginx
 chkconfig --add mycelium
