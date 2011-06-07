@@ -57,7 +57,7 @@ django-debug-toolbar
 johnny-cache
 django-balancer
 django-sentry
-redis
+redis==2.2.4
 xlwt
 xlrd
 xlutils

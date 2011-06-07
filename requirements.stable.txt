@@ -50,7 +50,7 @@ django-picklefield==0.1.9
 johnny-cache==0.3.1
 django-balancer==0.3
 django-sentry==1.8.5
-redis==2.4.1
+redis==2.2.4
 xlwt==0.7.2
 xlrd==0.7.1
 xlutils==1.4.1

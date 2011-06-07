@@ -41,7 +41,6 @@ BROKER_VHOST = "1"                       # Maps to database number.
 REDIS_HOST = BROKER_HOST
 REDIS_DB = BROKER_VHOST
 
-djcelery.setup_loader()
 
 # CACHES = {
 #     'default': {
