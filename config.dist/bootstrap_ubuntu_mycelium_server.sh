@@ -36,9 +36,9 @@ chmod +x celeryd
 #ln -s /var/www/mycelium.git/config.dist/celeryd /etc/default/celeryd;chmod +x /etc/default/celeryd
 #ln -s  /var/www/mycelium.git/config.dist/gunicorn /etc/init.d/mycelium; chmod +x /etc/init.d/mycelium
 mv /etc/init/celeryd.conf /etc/init/celeryd.conf.bak
-ln -s /var/www/mycelium.git/config.dist/celeryd-upstart /etc/init/celeryd.conf
-mv /etc/init.d/mycelium.conf /etc/init.d/mycelium.conf.bak
-ln -s  /var/www/mycelium.git/config.dist/gunicorn-upstart /etc/init.d/mycelium.conf
+mv /etc/init/mycelium.conf /etc/init/mycelium.conf.bak
+cp /var/www/mycelium.git/config.dist/celery-upstart /etc/init/celeryd.conf
+cp  /var/www/mycelium.git/config.dist/gunicorn-upstart /etc/init/mycelium.conf
 mv /etc/nginx/nginx.conf /etc/default/nginx.conf.bak
 ln -s /var/www/mycelium.git/config.dist/nginx.conf /etc/nginx/nginx.conf
 echo "from envs.dev import *" > /var/www/mycelium.git/mycelium/settings.py
