@@ -4,8 +4,8 @@ setup_env_centos("mycelium","root",
                 initial_settings={
                     'staging_hosts':['digitalmycelium.com'],
                     'production_hosts':[
-                                '50.16.214.46',
-                                '50.16.32.186',
+                                '50.16.217.71',
+                                '50.16.206.163',
                                        ],
                     'production_db_hosts':['ext-mysql.agoodcloud.com'],
                     'staging_db_hosts':['ext-mysql.digitalmycelium.com'],
