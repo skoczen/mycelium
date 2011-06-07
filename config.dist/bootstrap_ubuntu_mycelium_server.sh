@@ -2,16 +2,16 @@
 aptitude install -y git python2.7 nginx mercurial libjpeg62 libjpeg62-dev lib-zlib upstart chkconfig python-setuptools python2.7-dev libmysql++-dev htop
 
 easy_install-2.7 pip
-echo 'VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7' >> ~/.bashrc
-source ~/.bashrc
+echo 'VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7' >> ~/.profile
+source ~/.profile
 mkdir /var/www
 rm -rf /var/www/*
 pip install --upgrade pip virtualenv virtualenvwrapper
 
 cd ~;mkdir .virtualenvs
 chmod +x /root
-echo 'source /usr/local/bin/virtualenvwrapper.sh' >> .bashrc
-source ~/.bashrc
+echo 'source /usr/local/bin/virtualenvwrapper.sh' >> .profile
+source ~/.profile
 
 cd /var/www
 git clone http://mycelium.skoczen.webfactional.com/mycelium.git mycelium.git
