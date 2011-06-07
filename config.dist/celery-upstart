@@ -1,0 +1,12 @@
+description "Celery for Mycelium"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+#Send KILL after 20 seconds
+kill timeout 20
+
+script
+exec /root/.virtualenvs/mycelium/bin/python /var/www/mycelium.git/mycelium/manage.py celeryd -f /var/log/celeryd.log -c 2 -B
+end script
+
+respawn
