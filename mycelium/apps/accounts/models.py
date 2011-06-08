@@ -85,10 +85,11 @@ class Account(TimestampModelMixin):
             from groups.models import Group
             from donors.models import Donation
             from volunteers.models import CompletedShift
+            from data_import.models import DataImport
 
             if not self.challenge_has_imported_contacts:
-                # Requires data import.
-                pass
+                if DataImport.objects_by_account(self).count() > 0:
+                    self.challenge_has_imported_contacts = True
 
             if not self.challenge_has_set_up_tags:
                 # One non-standard tag.

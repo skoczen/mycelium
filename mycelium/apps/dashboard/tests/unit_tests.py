@@ -10,6 +10,7 @@ from donors.models import Donor, Donation
 from accounts.models import Account
 from volunteers.models import Volunteer, CompletedShift
 from generic_tags.models import TagSet, Tag, TaggedItem
+from data_import.models import DataImport
 from django.core import mail
 from decimal import Decimal
 
@@ -23,7 +24,16 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         self.a1 = Factory.create_demo_site("test1", quick=True, mostly_empty=True)
 
     def test_challenge_has_imported_contacts(self):
-    # Expected fail
+        user_account = Factory.useraccount(self.a1)
+        DataImport.objects.create(
+            account=self.a1,
+            importer=user_account,
+            start_time=datetime.datetime.now(),
+            import_type="people",
+            source_filename="test.csv",
+            fields=["first_name","last_name","email","phone_number"],
+            has_header=False,
+        )
         self.a1.check_challenge_progress()
         assert self.a1.challenge_has_imported_contacts == True
         

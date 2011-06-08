@@ -449,3 +449,4 @@ class Factory(QiFactory):
         Spreadsheet.create_spreadsheet(q, fields, file_type, file_handler=f_write)
         f_read = cStringIO.StringIO(f_write.getvalue())
         return f_read
+
