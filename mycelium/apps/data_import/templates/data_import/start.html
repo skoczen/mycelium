@@ -64,26 +64,32 @@
 		return false;
 	}
 	function go_to_step(step_number) {
-		current_step = step_number;
-		$("step").removeClass("current").removeClass("active");
-		
-		$("step step_content").hide();
-		$("step pre_step_content").show();
-		$("step .mycelium_btn").addClass("mycelium_grey");
-		
-		for (j=step_number; j>0; j--) {
-			$("step[number="+j+"]").addClass("active")	
-			$("step[number="+j+"] step_content").show();
-			$("step[number="+j+"] pre_step_content").hide();
+		if (current_step != step_number) {
+			current_step = step_number;
+			$("step").removeClass("current").removeClass("active");
+			
+			$("step step_content").hide();
+			$("step pre_step_content").show();
+			$("step .mycelium_btn").addClass("mycelium_grey");
+			
+			for (j=step_number; j>0; j--) {
+				$("step[number="+j+"]").addClass("active")	
+				$("step[number="+j+"] step_content").show();
+				$("step[number="+j+"] pre_step_content").hide();
+				
+			}
+			$("step[number="+step_number+"] .mycelium_btn").removeClass("mycelium_grey").removeClass("mycelium_gray");	
+			$("step[number="+step_number+"]").addClass("current");
+			if (step_number == 4) {
+				$(".submit_and_start_import_btn").removeClass("disabled").removeAttr("disabled");
+				$("body").scrollTo("step[number="+step_number+"] step_content", 0, {'over':0.5,});	
+			} else {
+				$(".submit_and_start_import_btn").attr("disabled","disabled").addClass("disabled");
+			}
+
 			
 		}
-		$("step[number="+step_number+"] .mycelium_btn").removeClass("mycelium_grey").removeClass("mycelium_gray");	
-		$("step[number="+step_number+"]").addClass("current");
-		if (step_number == 4) {
-			$(".submit_and_start_import_btn").removeClass("disabled").removeAttr("disabled");
-		} else {
-			$(".submit_and_start_import_btn").attr("disabled","disabled").addClass("disabled");
-		}
+		
 	}
 
 	var uploader = false
@@ -191,7 +197,7 @@
 		{# </ul> #}
 	</div>
 	</step_content>
-	</active_step_content>
+	
 </step>
 
 <step number="4">
@@ -201,7 +207,7 @@
 	<step_content style="display: none;">	
 	<input type="submit"  class="mycelium_btn mycelium_grey submit_and_start_import_btn" value="Start Import" />
 	</step_content>
-	</active_step_content>
+	
 </step>
 </form>
 </div>
