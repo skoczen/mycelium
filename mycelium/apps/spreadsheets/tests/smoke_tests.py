@@ -17,22 +17,22 @@
 
     
 #     def smoke_test_the_detail_page(self):
-#         r = Factory.report()
-#         smoke_test('spreadsheets:report_detail', reverse_args=(r.pk,), check_title=True)
+#         r = Factory.spreadsheet()
+#         smoke_test('spreadsheets:spreadsheet_detail', reverse_args=(r.pk,), check_title=True)
 
     
-#     def smoke_test_the_new_report_page(self):
-#         smoke_test('spreadsheets:new_report', check_title=True)
+#     def smoke_test_the_new_spreadsheet_page(self):
+#         smoke_test('spreadsheets:new_spreadsheet', check_title=True)
 
 
     
-#     def smoke_test_demo_report_1(self):
-#         smoke_test('spreadsheets:report_detail', reverse_args=(1,), check_title=True)
+#     def smoke_test_demo_spreadsheet_1(self):
+#         smoke_test('spreadsheets:spreadsheet_detail', reverse_args=(1,), check_title=True)
         
     
-#     def smoke_test_demo_report_2(self):
-#         smoke_test('spreadsheets:report_detail', reverse_args=(2,), check_title=True)
+#     def smoke_test_demo_spreadsheet_2(self):
+#         smoke_test('spreadsheets:spreadsheet_detail', reverse_args=(2,), check_title=True)
 
     
-#     def smoke_test_demo_report_3(self):
-#         smoke_test('spreadsheets:report_detail', reverse_args=(3,), check_title=True)
+#     def smoke_test_demo_spreadsheet_3(self):
+#         smoke_test('spreadsheets:spreadsheet_detail', reverse_args=(3,), check_title=True)

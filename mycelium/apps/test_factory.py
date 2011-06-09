@@ -192,7 +192,7 @@ class Factory(QiFactory):
                                         date=date)
          
     @classmethod
-    def report(cls):
+    def spreadsheet(cls):
         o = DummyObj()
         o.pk = 1
         return o

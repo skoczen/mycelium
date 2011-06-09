@@ -19,17 +19,17 @@ def search(request):
     return locals()
 
 @render_to("spreadsheets/detail_volunteer.html")
-def detail(request, report_id):
-    # report = get_or_404_by_account(Report, request.account, report_id)
-    if report_id == "new":
-        new_report == True
+def detail(request, spreadsheet_id):
+    # spreadsheet = get_or_404_by_account(Report, request.account, spreadsheet_id)
+    if spreadsheet_id == "new":
+        new_spreadsheet == True
     section = "spreadsheets"
     people = Person.objects_by_account(request.account).order_by("?").all()
     hours = [random.randint(2,280) for i in range(0,50)]
     return locals()
 
 # TODO: clear this out
-def report_demo_page(request):
+def spreadsheet_demo_page(request):
     section = "spreadsheets"
     people = Person.objects_by_account(request.account).order_by("?").all()
     hours = [random.randint(2,280) for i in range(0,50)]
@@ -38,19 +38,19 @@ def report_demo_page(request):
 
 @render_to("spreadsheets/detail_volunteer.html")
 def detail_volunteer(request):
-    return report_demo_page(request)
+    return spreadsheet_demo_page(request)
 
 @render_to("spreadsheets/detail_donors.html")
 def detail_donors(request):
-    return report_demo_page(request)
+    return spreadsheet_demo_page(request)
     
 @render_to("spreadsheets/detail_email.html")
 def detail_email(request):
-    return report_demo_page(request)
+    return spreadsheet_demo_page(request)
 
     
 @render_to("spreadsheets/new.html")
-def new(request, report_id):
+def new(request, spreadsheet_id):
     # Eventually, this should go away. It's just for test.
     section = "spreadsheets"
     people = Person.objects_by_account(request.account).order_by("?").all()
