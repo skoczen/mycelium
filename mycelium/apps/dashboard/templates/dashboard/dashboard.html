@@ -54,11 +54,14 @@
 		</challenge>
 		<challenge class="{% if request.account.challenge_has_logged_volunteer_hours %}complete{% endif %}">
 			<title_text>Track volunteer hours.</title_text>
-			<description class="plain_text">Got a spreadsheet with all your volunteers' hours?  If so, import that baby in.  If not, go ahead and log the hours of the last person that volunteered for your organization. <a href="{% url data_import:start %}" class="get_started_link">Get Started!</a></description>
+			<description class="plain_text">{# Got a spreadsheet with all your volunteers' hours?  If so, import that baby in.  If not, go ahead and  #}
+			Easy as pie - just log the hours of the last person that volunteered for your organization. Just go to that person, click the volunteer tab, and enter the hours!<a href="{% url data_import:start %}" class="get_started_link">Get Started!</a></description>
 		</challenge>
 		<challenge class="{% if request.account.challenge_has_added_a_donation %}complete{% endif %}">
 			<title_text>Add your donations.</title_text>
-			<description class="plain_text">If you have a spreadsheet with all of this year's donations, let's import that!  If not, input the last donation that your organization handled.  Just go to that contact, find the donation tab, and add away. <a href="{% url data_import:start %}" class="get_started_link">Get Started!</a></description>
+			<description class="plain_text">
+			{# If you have a spreadsheet with all of this year's donations, let's import that!  If not, input #} 
+			Enter the last donation that your organization handled.  Just go to that contact, find the donation tab, and add away. <a href="{% url data_import:start %}" class="get_started_link">Get Started!</a></description>
 		</challenge>
 		<challenge class="{% if request.account.challenge_has_added_board %}complete{% endif %}">
 			<title_text>Add your board.</title_text>
@@ -82,6 +85,7 @@
 {# 		</challenge> #}
 
 	</td>
+
 {% else %}
 	<td class="left_col">
 		{% if request.useraccount.show_challenges_complete_section %}
