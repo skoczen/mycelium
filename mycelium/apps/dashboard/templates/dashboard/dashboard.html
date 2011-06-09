@@ -70,7 +70,7 @@
 		</challenge>
 		<challenge class="{% if request.account.challenge_has_downloaded_spreadsheet %}complete{% endif %}">
 			<title_text>Download a spreadsheet.</title_text>
-			<description class="plain_text">Have your spreadsheet include all your board members with their first and last names, email addresses, and phone numbers. <a href="{% url reports:search %}" class="get_started_link">Get Started!</a></description>
+			<description class="plain_text">Have your spreadsheet include all your board members with their first and last names, email addresses, and phone numbers. <a href="{% url spreadsheets:search %}" class="get_started_link">Get Started!</a></description>
 		</challenge>
 		<challenge class="{% if request.account.challenge_has_created_other_accounts %}complete{% endif %}">
 			<title_text>Share the love - Get everyone else onboard!</title_text>

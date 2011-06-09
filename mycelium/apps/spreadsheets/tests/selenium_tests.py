@@ -2,7 +2,7 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
 class ReportsTests(QiConservativeSeleniumTestCase):
-    def get_to_reports_page(self):
+    def get_to_spreadsheets_page(self):
         sel = self.selenium
         self.open("/people/search")
         sel.click("link=Spreadsheets")
@@ -22,7 +22,7 @@ class TestSelenium(ReportsTests, AccountTestAbstractions):
     
     def test_all_pages_load(self):
         sel = self.selenium
-        self.get_to_reports_page()
+        self.get_to_spreadsheets_page()
         sel.wait_for_page_to_load("30000")
         sel.click("link=Thursday Volunteer List")
         sel.wait_for_page_to_load("30000")

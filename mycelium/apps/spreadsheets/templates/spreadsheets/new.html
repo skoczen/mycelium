@@ -1,30 +1,25 @@
-{% extends "reports/base.html" %}
+{% extends "spreadsheets/base.html" %}
 {% block title %}Reports - Unsaved Report{% endblock %}
 {% load humanize %}
-{% block breadcrumb_links %}<a href="{% url reports:search %}">Back to All Spreadsheets</a>{% endblock %}
+{% block breadcrumb_links %}<a href="{% url spreadsheets:search %}">Back to All Spreadsheets</a>{% endblock %}
 {% block page_content %}
+
 <div class="right_actions">
-	<a href="#" class="mycelium_btn mycelium_grey">Saved</a>
+	<a href="#" class="mycelium_btn">Save Spreadsheet</a>
 </div>
-<div class="title"><img src="{% media_url "images/icon-spreadsheet-32.png" %}"/>Thursday Volunteer List</div>
+<div class="title"><img src="{% media_url "images/icon-spreadsheet-32.png" %}"/>Unsaved Spreadsheet</div>
 
 <div class="setup_phrase">Include people who match <select><option selected>all</option><option>any</option></select> of the following rules:</div>
 <div class="criteria_list">
 	<div class="rule">
-		<select><option>has any tag that</option><option>has a general tag that</option><option>has a volunteer tag that</option><option>has a donor tag that</option><option>volunteer status</option><option selected>last volunteer shift</option><option>last donation</option></select>
+		<select><option>has any tag that</option><option>has a general tag that</option><option>has a volunteer tag that</option><option>has a donor tag that</option><option>volunteer status</option><option>last volunteer shift</option><option >last donation</option></select>
 
-		<select><option>is</option><option>is before</option><option selected>is after</option></select>
+		<select><option>is</option><option>is before</option><option>is after</option></select>
 
-		<input type="text" class="datepicker" value="10/31/2010" />
+		<input type="text" class="datepicker" value="" />
 	</div>
 			
-	<div class="rule">
-		<select><option>has any tag that</option><option>has a general tag that</option><option selected>has a volunteer tag that</option><option>has a donor tag that</option><option>volunteer status</option><option>last volunteer shift</option><option>last donation</option></select>
 
-		<select><option selected>is</option><option>is before</option><option>is after</option></select>
-
-		<input type="text" class="" value="thursday night" />
-	</div>
 	<div class="new_criterium">
 		<a href="#" class="mycelium_btn mycelium_grey mycelium_small_btn">Add new criteria</a>
 	</div>
@@ -67,7 +62,7 @@
 	{% if remainder > 0 %}
 	<tr>
 		<td colspan="9999" class="remainder_count">
-			and {{48|intcomma}} more people.
+			and {{remainder|intcomma}} more people.
 		</td>
 	</tr>
 	{% endif %}
@@ -77,6 +72,7 @@
 <div class="actions">
 	<a href="#" class="mycelium_btn">View All Results</a>
 	<a href="#" class="mycelium_btn">Download Spreadsheet</a>
+
 </div>
 
 {% endblock %}
