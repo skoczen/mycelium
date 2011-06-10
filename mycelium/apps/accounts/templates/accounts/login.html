@@ -14,7 +14,7 @@
 		{% if form.errors %}
 		<div class="login_error">Your username and password didn't match. Please try again.</div>
 		{% endif %}
-		<input type="submit" value="Log In" class="mycelium_btn login_btn"/>
+		<input type="submit" value="Log In" class="mycelium_btn login_btn auto_disable" disabled_text="Logging in.." />
 	</actions>
 	<input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{% endif %}" />
 	</form>
