@@ -144,8 +144,8 @@ INSTALLED_APPS = (
     'django_jenkins',
     'django_ses',
     'mediasync',
-    'sentry',
-    'sentry.client',
+    # 'sentry',
+    # 'sentry.client',
 
     #'cms',
     #'mptt',
