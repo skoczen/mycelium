@@ -9,7 +9,7 @@ CSV_TYPE = "CSV"
 EXCEL_TYPE = "EXCEL"
 SPREADSHEET_SOURCE_TYPES = [
     (CSV_TYPE,   "CSV"),
-    (EXCEL_TYPE, "Excel"),
+    (EXCEL_TYPE, "Microsoft Excel"),
 ]
 CSV_EXTENSIONS = ["csv",]
 EXCEL_EXTENSIONS = ["xls","xlsx"]

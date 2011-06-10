@@ -10,13 +10,14 @@ from django.db.models.signals import post_save, post_delete
 
 from groups.models import Group
 from spreadsheets import SPREADSHEET_TEMPLATE_CHOICES, NO_NAME_STRING_SPREADSHEET
-
+from data_import.spreadsheet import SPREADSHEET_SOURCE_TYPES, CSV_TYPE, EXCEL_TYPE
 
 
 class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin):
     name                    = models.CharField(max_length=255, blank=True, null=True)
     group                   = models.ForeignKey(Group, blank=True, null=True)
     spreadsheet_template    = models.CharField(max_length=255, blank=True, null=True, choices=SPREADSHEET_TEMPLATE_CHOICES)
+    default_filetype        = models.CharField(max_length=255, default=CSV_TYPE[0], choices=SPREADSHEET_SOURCE_TYPES)
 
     def __unicode__(self):
         return "%s" % self.name

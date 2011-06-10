@@ -21,7 +21,7 @@ $(function(){
 
 {% endblock %}
 
-{% block breadcrumb_links %}<a href="{% url spreadsheets:search %}" >Back to Spreadsheets</a>{% endblock %}
+{% block breadcrumb_links %}<a href="{% url spreadsheets:search %}"  >Back to Spreadsheets</a>{% endblock %}
 {% block page_content %}
 <form action="{% url spreadsheets:save_basic_info spreadsheet.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
 {% with "Edit Spreadsheet" as edit_label %}
@@ -32,7 +32,11 @@ $(function(){
 	{% generic_editable_field form.name %}
 	{% generic_editable_field form.group %}
 	{% generic_editable_field form.spreadsheet_template %}
+	{% generic_editable_field form.default_filetype %}
 
+</div>
+<div>
+	<a href="#" class="mycelium_btn">Download Spreadsheet</a>
 </div>
 </form>
 

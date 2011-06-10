@@ -12,5 +12,5 @@ class SpreadsheetTestAbstractions(object):
 
     def assert_on_spreadsheet_search_page(self):
         sel = self.selenium
-        assert sel.is_element_present("css=.title")
+        assert sel.is_element_present("css=#id_search_query")
         assert sel.is_element_present("link=New Spreadsheet")
