@@ -7,14 +7,14 @@ parser = dselector.Parser()
 url = parser.url
 
 urlpatterns = parser.patterns('',                      
-    # for testing
-    url(r'spreadsheet/1$',                       views.detail_volunteer,                    name='spreadsheet_detail_volunteer'),
-    url(r'spreadsheet/2$',                       views.detail_donors,                       name='spreadsheet_detail_donors'),
-    url(r'spreadsheet/3$',                       views.detail_email,                        name='spreadsheet_detail_email'),
+    url(r'$',                                                   views.search,                                   name='search'),
+    url(r'search-results$',                                     views.search_results,                           name='search_results'),
+    url(r'spreadsheet/{spreadsheet_id:digits}$',                views.spreadsheet,                              name='spreadsheet'),
+    url(r'spreadsheet/{type:word}/{spreadsheet_id:digits}$',    views.download,                                 name='download'),
+    url(r'spreadsheet/{spreadsheet_id:digits}/save-basic$',     views.save_basic_info,                          name='save_basic_info'),
+    url(r'spreadsheet/delete$',                                 views.delete,                                   name='delete'),
 
-
-    url(r'$',                               views.search,                              name='search'),
-    url(r'spreadsheet/{spreadsheet_id:digits}$',      views.detail,                              name='spreadsheet_detail'),
-    url(r'spreadsheet/new$',                     views.new,    kwargs={'spreadsheet_id':"new"},  name='new_spreadsheet'),
+    url(r'new$',                                                views.new,                                      name='new_spreadsheet'),
+    
     
 )

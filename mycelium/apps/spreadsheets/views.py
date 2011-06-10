@@ -8,51 +8,95 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
+from spreadsheets.models import Spreadsheet, SpreadsheetSearchProxy
+from spreadsheets.forms import SpreadsheetForm
+from johnny import cache as jcache
 
-from people.models import Person
-import random
+def _basic_forms(spreadsheet, request, no_data=False):
+    data = None
+    if not no_data and request and request.method == "POST":
+        data = request.POST
+    
+    account = request.account
+    spreadsheet_form = SpreadsheetForm(data, instance=spreadsheet, account=account)
+    
+    return spreadsheet_form
+
+
 
 @render_to("spreadsheets/search.html")
 def search(request):
-    # TODO: this is obnoxious.  Fix it.
     section = "spreadsheets"
+    search_proxies = SpreadsheetSearchProxy.objects_by_account(request.account).all()
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if q != "":
+            search_proxies = SpreadsheetSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
     return locals()
 
-@render_to("spreadsheets/detail_volunteer.html")
-def detail(request, spreadsheet_id):
-    # spreadsheet = get_or_404_by_account(Report, request.account, spreadsheet_id)
+@json_view
+def search_results(request):
+    section = "spreadsheets"
+    search_proxies = SpreadsheetSearchProxy.objects_by_account(request.account).all()
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if q != "":
+            search_proxies = SpreadsheetSearchProxy.search(request.account, q,ignorable_chars=["-","(",")"])
+
+    return {"fragments":{"main_search_results":render_to_string("spreadsheets/_search_results.html", locals())}}
+
+
+@render_to("spreadsheets/spreadsheet.html")
+def spreadsheet(request, spreadsheet_id):
+    spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
+    form = _basic_forms(spreadsheet, request, no_data=True)
     if spreadsheet_id == "new":
         new_spreadsheet == True
     section = "spreadsheets"
-    people = Person.objects_by_account(request.account).order_by("?").all()
-    hours = [random.randint(2,280) for i in range(0,50)]
     return locals()
 
-# TODO: clear this out
-def spreadsheet_demo_page(request):
+
+@json_view
+def save_basic_info(request, spreadsheet_id):
+    spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id, using='default')
+    form = _basic_forms(spreadsheet, request)
+    success = False
+
+    if form.is_valid():
+        spreadsheet = form.save()
+            
+        jcache.invalidate(SpreadsheetSearchProxy)
+        success = True
+
+    form = _basic_forms(spreadsheet, request, no_data=True)
+
+    return {"success":success}
+
+
+
+# @render_to("spreadsheets/detail_volunteer.html")
+def download(request, type, spreadsheet_id):
+    spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
+    if spreadsheet_id == "new":
+        new_spreadsheet == True
     section = "spreadsheets"
-    people = Person.objects_by_account(request.account).order_by("?").all()
-    hours = [random.randint(2,280) for i in range(0,50)]
     return locals()
-    
-
-@render_to("spreadsheets/detail_volunteer.html")
-def detail_volunteer(request):
-    return spreadsheet_demo_page(request)
-
-@render_to("spreadsheets/detail_donors.html")
-def detail_donors(request):
-    return spreadsheet_demo_page(request)
-    
-@render_to("spreadsheets/detail_email.html")
-def detail_email(request):
-    return spreadsheet_demo_page(request)
 
     
 @render_to("spreadsheets/new.html")
-def new(request, spreadsheet_id):
-    # Eventually, this should go away. It's just for test.
-    section = "spreadsheets"
-    people = Person.objects_by_account(request.account).order_by("?").all()
-    hours = [random.randint(2,280) for i in range(0,50)]
-    return locals()
+def new(request):
+    spreadsheet = Spreadsheet.raw_objects.using('default').create(account=request.account)
+    return HttpResponseRedirect("%s?edit=ON" %reverse("spreadsheets:spreadsheet",args=(spreadsheet.pk,)))
+
+    
+
+def delete(request):
+    try:
+        if request.method == "POST":
+            pk = request.POST['spreadsheet_pk']
+            spreadsheet = get_or_404_by_account(Spreadsheet, request.account, pk, using='default')
+            spreadsheet.delete()
+    except:
+        pass
+
+    return HttpResponseRedirect(reverse("spreadsheets:search"))

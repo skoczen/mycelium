@@ -1,0 +1,5 @@
+<tr>
+	<td class="name"		><a href="{% url spreadsheets:spreadsheet obj.pk %}" >{{obj.name}}</a></td>
+	<td class="count"		>{{obj.num_rows}} people</td>
+	<td class="download"	><a href="{% url spreadsheets:download "csv" obj.pk %}" class="mycelium_btn mycelium_small_btn">Download CSV</a></td>
+</tr>

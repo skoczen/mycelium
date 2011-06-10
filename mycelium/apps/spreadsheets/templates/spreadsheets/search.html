@@ -1,36 +1,21 @@
 {% extends "spreadsheets/base.html" %}
-{% block title %}Reports - View Saved Reports{% endblock %}
-{% load humanize %}
+{% block title %}Spreadsheets - Create, View and Download Spreadsheets{% endblock %}
 {% block breadcrumb %}{% endblock %}
+{% block javascript %}{{block.super}}
+<script type="text/javascript" charset="utf-8">
+	var SEARCH_URL = "{% url spreadsheets:search_results %}";
+</script>
+{% js "/js/mycelium/people_search.js" %}
+{% endblock %}
 {% block page_content %}
-<div class="title"><img src="{% media_url "images/icon-spreadsheet-32.png" %}" />Spreadsheets</div>
-
-<div class="spreadsheet_list">
-	<a href="{% url spreadsheets:new_spreadsheet %}" class="mycelium_btn">New Spreadsheet</a>
-	<table class="spreadsheet_results">
-		{% for r in all_spreadsheets %}
-		<tr>
-		</tr>
-		{% endfor %}
-		<tr>
-			<td class="name"		><a href="{% url spreadsheets:spreadsheet_detail 1 %}" >Thursday Volunteer List</a></td>
-			<td class="count"		>53 people</td>
-			<td class="view_results"><a href="#" class="mycelium_btn mycelium_small_btn">View Results</a></td>
-			<td class="download_csv"><a href="#" class="mycelium_btn mycelium_small_btn">Download</a></td>
-		</tr>
-		<tr>
-			<td class="name"		><a href="{% url spreadsheets:spreadsheet_detail 2 %}" >2010 Monthly Donors</a></td>
-			<td class="count"		class="name"		>162 people</td>
-			<td class="view_results"class="name"		><a href="#" class="mycelium_btn mycelium_small_btn">View Results</a></td>
-			<td class="download_csv"class="name"		><a href="#" class="mycelium_btn mycelium_small_btn">Download</a></td>
-		</tr>
-		<tr>
-			<td class="name"		><a href="{% url spreadsheets:spreadsheet_detail 3 %}" >Active Email Subscriptions</a></td>
-			<td class="count"		class="name"		>1,354 people</td>
-			<td class="view_results"class="name"		><a href="#" class="mycelium_btn mycelium_small_btn">View Results</a></td>
-			<td class="download_csv"class="name"		><a href="#" class="mycelium_btn mycelium_small_btn">Download</a></td>
-		</tr>		
-	</table>
+<div class="main_search_box">
+	<input type="search" name="search_query" id="id_search_query" placeholder="Type in a spreadsheet name..." autofocus />
 </div>
-
+<new_object_buttons>
+	<a href="{% url spreadsheets:new_spreadsheet %}" class="new_spreadsheet_btn mycelium_btn mycelium_new_btn">New Spreadsheet</a>
+</new_object_buttons>
+<search_results><fragment name="main_search_results" action="replace">
+	{% include "spreadsheets/_search_results.html" %}
+</fragment>
+</search_results>
 {% endblock %}
