@@ -9,9 +9,7 @@
 {% js "/js/mycelium/people_common.js" %}
 {% js "/js/mycelium/spreadsheets.js" %}
 
-<script src="{% url rules:rules_logic_js %}"></script>
-{% js "/js/mycelium/rules.js" %}
-{% if request.GET.edit == "ON" or form.instance.full_name == "Unnamed spreadsheet"  %}
+{% if request.GET.edit == "ON" or form.instance.full_name == "Unnamed Spreadsheet"  %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
     $("#basic_info_form").genericFieldForm('toggle_edit');
@@ -36,11 +34,12 @@ $(function(){
 	{% generic_editable_field form.spreadsheet_template %}
 
 </div>
+</form>
 
 <div class="clearfix"></div>
 <delete_object_block>
 	<form action="{% url spreadsheets:delete %}" method="POST" id="delete_spreadsheet_form">{% csrf_token %}
-	<input type="hidden" name="spreadsheet_pk" value="{{form.instance.pk}}">
+	<input type="hidden" name="spreadsheet_pk" value="{{spreadsheet.pk}}">
 	<a href="#" class="mycelium_btn mycelium_active_grey mycelium_delete_btn spreadsheet_delete_btn" >Delete this spreadsheet</a>
 	</form>
 </delete_object_block>
