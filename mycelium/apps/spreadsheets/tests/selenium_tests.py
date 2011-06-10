@@ -18,3 +18,19 @@ class TestSelenium(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractions, 
         sel.click("link=New Spreadsheet")
         sel.wait_for_page_to_load("30000")
         self.assert_on_edit_spreadsheet_page()
+
+
+    def test_creating_a_new_spreadsheet_saves(self):
+        pass
+    
+    def test_changing_the_name_group_and_type_of_a_spreadsheet_works(self):
+        pass
+    
+    def test_that_all_and_only_all_of_the_groups_are_listed(self):
+        pass
+    
+    def test_that_searching_for_a_spreasheet_works(self):
+        pass
+    
+    def test_that_deleting_a_spreadsheet_works(self):
+        pass
