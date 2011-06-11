@@ -7,30 +7,8 @@ input:focus {
 	outline-style:none;
 	border: 1px solid #3E9CFD;
 }
-.title {
+#container_id_name, #container_id_name input {
 	font-size: 30px;
-}
-.title img {
-	vertical-align: text-top;
-	margin-right: 8px;
-}
-.setup_phrase {
-	font-size: 20px;
-	color: #004486;
-	margin-top: 10px;
-}
-.criteria_list {
-	padding-left: 20px;
-}
-.criterium {
-	margin: 2px 0px;
-}
-.criterium .additive {
-	padding-left: 6px;
-/*	padding-left: 18px;*/
-/*	background: url("../images/bullet-grey-8.png");*/
-/*	background-position: 5px 6px;*/
-/*	background-repeat: no-repeat;*/
 }
 
 .new_criterium {
@@ -124,3 +102,12 @@ td.remainder_count {
 .criteria_list {
 	padding: 6px;
 }
+.basic_info .section {
+	display: block;
+	float: left;
+	margin: 0px 10px 0px 0px;
+}
+.basic_info .group_and_template .generic_field_label {
+	display: none;
+}
+
