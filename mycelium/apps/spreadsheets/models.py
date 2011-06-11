@@ -17,7 +17,7 @@ class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin)
     name                    = models.CharField(max_length=255, blank=True, null=True)
     group                   = models.ForeignKey(Group, blank=True, null=True)
     spreadsheet_template    = models.CharField(max_length=255, blank=True, null=True, choices=SPREADSHEET_TEMPLATE_CHOICES)
-    default_filetype        = models.CharField(max_length=255, default=CSV_TYPE[0], choices=SPREADSHEET_SOURCE_TYPES)
+    default_filetype        = models.CharField(max_length=255, default=SPREADSHEET_SOURCE_TYPES[0][0], choices=SPREADSHEET_SOURCE_TYPES)
 
     def __unicode__(self):
         return "%s" % self.name
@@ -111,7 +111,11 @@ class SpreadsheetSearchProxy(SearchableItemProxy):
 
     @classmethod
     def spreadsheet_record_changed(cls, sender, instance, created=None, *args, **kwargs):
+        print "spreadsheet_record_changed"
         proxy, nil = cls.raw_objects.get_or_create(account=instance.account, spreadsheet=instance, search_group_name=cls.SEARCH_GROUP_NAME)
+        print proxy
+        print proxy.cache_name
+        print proxy.render_result_row()
         cache.delete(proxy.cache_name)
         proxy.save()
 

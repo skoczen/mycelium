@@ -64,11 +64,10 @@ def save_basic_info(request, spreadsheet_id):
 
     if form.is_valid():
         spreadsheet = form.save()
-            
         jcache.invalidate(SpreadsheetSearchProxy)
         success = True
 
-    form = _basic_forms(spreadsheet, request, no_data=True)
+    # form = _basic_forms(spreadsheet, request, no_data=True)
 
     return {"success":success}
 
