@@ -143,7 +143,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
             if sel.is_text_present("View Results"):
                 success = True
             else:
-                time.sleep(5)
+                time.sleep(10)
         
         assert success == True
 
