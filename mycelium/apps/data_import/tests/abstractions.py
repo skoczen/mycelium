@@ -1,5 +1,5 @@
 from test_factory import Factory
-from data_import.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
+from spreadsheets.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
 TEST_SPREADSHEET_PATH = "apps/data_import/tests/test_spreadsheets"
 
 class GenerateSpreadsheetsMixin:

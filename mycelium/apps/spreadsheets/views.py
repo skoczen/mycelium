@@ -10,6 +10,7 @@ from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 from spreadsheets.models import Spreadsheet, SpreadsheetSearchProxy
 from spreadsheets.forms import SpreadsheetForm
+from spreadsheets.export_templates import SPREADSHEET_TEMPLATES
 from johnny import cache as jcache
 
 def _basic_forms(spreadsheet, request, no_data=False):

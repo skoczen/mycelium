@@ -1,6 +1,6 @@
 from celery.task import task
 from data_import.models import DataImport, ResultsRow
-from data_import.spreadsheet import Spreadsheet
+from spreadsheets.spreadsheet import Spreadsheet
 from accounts.models import Account
 from django.core.files.storage import default_storage
 import datetime

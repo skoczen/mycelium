@@ -9,7 +9,7 @@ from django.test import TestCase
 from django.conf import settings
 from groups.models import Group
 from data_import.models import DataImport
-from data_import.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
+from spreadsheets.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
 from data_import.tests.abstractions import GenerateSpreadsheetsMixin, TEST_SPREADSHEET_PATH
 from people.models import Person
 

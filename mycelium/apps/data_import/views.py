@@ -10,7 +10,7 @@ from django.middleware.csrf import get_token
 from ajaxuploader.views import AjaxFileUploader
 from django.core.files.storage import default_storage
 
-from data_import.spreadsheet import IMPORT_ROW_TYPES, IGNORE_FIELD_STRING
+from spreadsheets.spreadsheet import IMPORT_ROW_TYPES, IGNORE_FIELD_STRING
 from data_import.models import Spreadsheet, DataImport
 from data_import.tasks import queue_data_import
 

@@ -11,7 +11,7 @@ from accounts.models import Plan, Account, UserAccount, AccessLevel
 from django.contrib.sites.models import Site
 from django.template.defaultfilters import slugify
 from volunteers import VOLUNTEER_STATII
-from data_import.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
+from spreadsheets.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
 
 import datetime
 import cStringIO

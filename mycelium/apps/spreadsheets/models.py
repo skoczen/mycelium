@@ -10,7 +10,7 @@ from django.db.models.signals import post_save, post_delete
 
 from groups.models import Group
 from spreadsheets import SPREADSHEET_TEMPLATE_CHOICES, NO_NAME_STRING_SPREADSHEET
-from data_import.spreadsheet import SPREADSHEET_SOURCE_TYPES, CSV_TYPE, EXCEL_TYPE
+from spreadsheets.spreadsheet import SPREADSHEET_SOURCE_TYPES, CSV_TYPE, EXCEL_TYPE
 
 
 class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin):

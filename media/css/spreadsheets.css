@@ -107,6 +107,10 @@ td.remainder_count {
 	float: left;
 	margin: 0px 10px 0px 0px;
 }
+.basic_info .group_and_template {
+	display: block;
+	padding: 10px 10px 10px 13px;
+}
 .basic_info .group_and_template .generic_field_label {
 	display: none;
 }
@@ -131,7 +135,7 @@ td.remainder_count {
 	overflow: auto;
 
 }
-.file_type_option input {
+.file_type_option input, .edit_mode_on .file_type_option input {
 	float: left;
 	display: block;
 	margin: 5px;

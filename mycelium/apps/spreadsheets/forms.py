@@ -10,4 +10,7 @@ class SpreadsheetForm(AccountBasedModelForm):
             'default_filetype': RadioSelect,
             'spreadsheet_template': RadioSelect
         }
-    
+
+    def __init__(self, *args, **kwargs):
+        super(SpreadsheetForm, self).__init__(*args, **kwargs)
+        self.fields["group"].empty_label = "All Contacts"
