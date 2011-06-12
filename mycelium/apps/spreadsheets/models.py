@@ -1,23 +1,23 @@
 from django.db import models
-from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from mycelium_core.models import SearchableItemProxy
 from accounts.models import AccountBasedModel
 from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
 from django.core.cache import cache
 from django.template.loader import render_to_string
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save
 
 from groups.models import Group
+from people.models import Person
 from spreadsheets import SPREADSHEET_TEMPLATE_CHOICES, NO_NAME_STRING_SPREADSHEET
-from spreadsheets.spreadsheet import SPREADSHEET_SOURCE_TYPES, CSV_TYPE, EXCEL_TYPE
+from spreadsheets.spreadsheet import SPREADSHEET_SOURCE_TYPES
 
 
 class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin):
     name                    = models.CharField(max_length=255, blank=True, null=True)
     group                   = models.ForeignKey(Group, blank=True, null=True)
-    spreadsheet_template    = models.CharField(max_length=255, blank=True, null=True, choices=SPREADSHEET_TEMPLATE_CHOICES)
-    default_filetype        = models.CharField(max_length=255, default=SPREADSHEET_SOURCE_TYPES[0][0], choices=SPREADSHEET_SOURCE_TYPES)
+    spreadsheet_template    = models.CharField(max_length=255, choices=SPREADSHEET_TEMPLATE_CHOICES, default=SPREADSHEET_TEMPLATE_CHOICES[0][0])
+    default_filetype        = models.CharField(max_length=255, choices=SPREADSHEET_SOURCE_TYPES, default=SPREADSHEET_SOURCE_TYPES[0][0])
 
     def __unicode__(self):
         return "%s" % self.name
@@ -46,10 +46,14 @@ class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin)
 
     @property
     def num_rows(self):
+        return self.members.count()
+    
+    @property
+    def members(self):
         if self.group:
-            return self.group.num_members
+            return self.group.members
         else:
-            return 0
+            return Person.objects_by_account(self.account).all()
 
 class SpreadsheetSearchProxy(SearchableItemProxy):
     SEARCH_GROUP_NAME = "spreadsheets"

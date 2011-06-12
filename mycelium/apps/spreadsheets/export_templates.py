@@ -9,6 +9,8 @@ class SpreadSheetTemplate(object):
         self.name = name
         self.description = description
 
+    def __unicode__(self):
+        return self.name
 
 
 full_contact_list = SpreadSheetTemplate(
@@ -159,6 +161,12 @@ volunteer_hour_summary = SpreadSheetTemplate(
                             # ImportField("2011 Jan",           "people",       "Person",       "donation_current_year",   ),
                         ]
 )
+custom_template = SpreadSheetTemplate(
+                    "custom_template",
+                        name="Custom Template",
+                        description="Pick your own columns and ordering.",
+                        fields = []
+                )
 
 
 
@@ -170,4 +178,5 @@ SPREADSHEET_TEMPLATES = [
     # donation_summary,
     volunteer_hours,
     # volunteer_hour_summary,
+    # custom_template,
 ]
