@@ -189,3 +189,11 @@ td.remainder_count {
 	padding: 4px 5px 6px 5px;
 	color: #777;
 }
+#container_id_spreadsheet_template .edit_field {
+	
+	clear: both;
+}
+#container_id_spreadsheet_template .view_field.file_type_option {
+	margin: 0px;
+	padding: 0px;
+}

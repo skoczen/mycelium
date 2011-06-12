@@ -55,6 +55,15 @@ class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin)
         else:
             return Person.objects_by_account(self.account).all()
 
+    @property
+    def spreadsheet_template_obj(self):
+        obj = None
+        for c in SPREADSHEET_TEMPLATE_CHOICES:
+            if c[0] == self.spreadsheet_template:
+                obj = c[1]
+                break
+        return obj
+
 class SpreadsheetSearchProxy(SearchableItemProxy):
     SEARCH_GROUP_NAME = "spreadsheets"
     spreadsheet = models.ForeignKey('spreadsheets.Spreadsheet', blank=True, null=True)

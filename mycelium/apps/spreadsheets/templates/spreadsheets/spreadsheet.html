@@ -34,24 +34,28 @@ $(function(){
 	<span class="group_and_template">
 	<label class="section">Group:</label>
 	{% generic_editable_field form.group %}
-	<label class="section">Template:</label>
+	
 
-	<span class="generic_editable_field selects_with_descriptions" id="container_id_spreadsheet_template">
-		<span class="view_field">{{form.instance.get_spreadsheet_template_display}}</span>
-		<span class="edit_field">
-			{% for t in spreadsheet_templates  %}
-			<div class="file_type_option {% if t.template_type == form.instance.spreadsheet_template %}selected{% endif %}">
-				<input type="radio" id="id_spreadsheet_template_{{forloop.counter}}" value="{{t.template_type}}" name="spreadsheet_template" {% if t.template_type == form.instance.spreadsheet_template %}checked="checked"{% endif %} />
-				<label for="id_spreadsheet_template_{{forloop.counter}}">
-					<span class="option_name">{{t.name}}</span>
-					<span class="option_description">{{t.description}}</span>
-				</label>
-			</div>
-			{% endfor %}
+		<span class="generic_editable_field selects_with_descriptions" id="container_id_spreadsheet_template">
+			<label class="section">Template:</label>
+			<span class="view_field file_type_option">
+				<span class="option_name">{{form.instance.spreadsheet_template_obj.name}}</span>
+				<span class="option_description">{{form.instance.spreadsheet_template_obj.description}}</span>
+			</span>
+			<span class="edit_field">
+				{% for t in spreadsheet_templates  %}
+				<div class="file_type_option {% if t.template_type == form.instance.spreadsheet_template %}selected{% endif %}">
+					<input type="radio" id="id_spreadsheet_template_{{forloop.counter}}" value="{{t.template_type}}" name="spreadsheet_template" {% if t.template_type == form.instance.spreadsheet_template %}checked="checked"{% endif %} />
+					<label for="id_spreadsheet_template_{{forloop.counter}}">
+						<span class="option_name">{{t.name}}</span>
+						<span class="option_description">{{t.description}}</span>
+					</label>
+				</div>
+				{% endfor %}
 
+			</span>
 		</span>
 	</span>
-
 	<div class="email_quick_copy {% if form.instance.spreadsheet_template != "email_list" %}hidden{% endif %}" >
 		<div class="detail_header">Email Quick-copy</div>
 		<div class="detail_description">Need to send a quick email? Just copy the list below, and and paste into your email program!</div>
