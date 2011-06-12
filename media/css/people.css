@@ -329,6 +329,7 @@ detail_tab_contents fragment.detail_tab {
 	border: 1px solid #BBB;
 	border-width: 0px 0px 1px 0px;
 	padding-top: 4px;
+	clear: both;
 }
 .volunteer_shift_table {
 	width: 100%;

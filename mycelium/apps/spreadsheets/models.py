@@ -111,11 +111,7 @@ class SpreadsheetSearchProxy(SearchableItemProxy):
 
     @classmethod
     def spreadsheet_record_changed(cls, sender, instance, created=None, *args, **kwargs):
-        print "spreadsheet_record_changed"
         proxy, nil = cls.raw_objects.get_or_create(account=instance.account, spreadsheet=instance, search_group_name=cls.SEARCH_GROUP_NAME)
-        print proxy
-        print proxy.cache_name
-        print proxy.render_result_row()
         cache.delete(proxy.cache_name)
         proxy.save()
 

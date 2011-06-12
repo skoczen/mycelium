@@ -75,6 +75,9 @@ def save_basic_info(request, spreadsheet_id):
 
 # @render_to("spreadsheets/detail_volunteer.html")
 def download(request, type, spreadsheet_id):
+    file_type = request.GET['type']
+    spreadsheet_id = request.GET['spreadsheet_id']
+
     spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
     if spreadsheet_id == "new":
         new_spreadsheet == True

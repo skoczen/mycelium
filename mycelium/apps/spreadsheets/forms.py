@@ -7,6 +7,7 @@ class SpreadsheetForm(AccountBasedModelForm):
         model = Spreadsheet
         fields = ("account", "name", "group", "spreadsheet_template", "default_filetype")
         widgets = {
-            'default_filetype': RadioSelect
+            'default_filetype': RadioSelect,
+            'spreadsheet_template': RadioSelect
         }
     

@@ -111,3 +111,44 @@ td.remainder_count {
 	display: none;
 }
 
+.download_spreadsheet_button_block {
+	display: block;
+	text-align: center;
+	padding: 20px;
+}
+.download_spreadsheet_button_block .download_spreadsheet_btn {
+	/*font-size: 30px;*/
+}
+.detail_header {
+	padding-top: 10px;
+	width: 90%;
+}
+.file_type_option {
+	display: block;
+	padding: 8px;
+	clear: both;
+	width: 60%;
+	overflow: auto;
+
+}
+.file_type_option input {
+	float: left;
+	display: block;
+	margin: 5px;
+
+}
+.file_type_option label {
+	display: block;
+	float: left;
+	width: 80%;
+}
+.file_type_option .option_name {
+	font-size: 20px;
+	color: #222;
+	display: block;
+}
+.file_type_option .option_description {
+	color: #888;
+	display: block;	
+	font-size: 14px;
+}

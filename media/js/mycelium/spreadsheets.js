@@ -1,6 +1,8 @@
 $(function(){
 	$(".spreadsheet_delete_btn").click(delete_spreadsheet);	
 	$("#basic_info_form").submit(function(){return false;});
+	$("#basic_info_form input").change(enable_disable_download_button);
+	$("#basic_info_form select").change(enable_disable_download_button);
 });
 
 
@@ -16,3 +18,12 @@ function delete_spreadsheet(e) {
     return false;
 }
 
+function form_changed() {
+	// copy the values to the hidden submit fields.. ?
+	enable_disable_download_button();
+}
+function enable_disable_download_button() {
+	if ($("input[name=default_filetype]").val() != "" && $("input[name=spreadsheet_template]").val() != "" && $("input[name=group]").val() != "" )	{
+		$(".do")
+	}
+}
