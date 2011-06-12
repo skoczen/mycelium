@@ -32,26 +32,43 @@ $(function(){
 	{% generic_editable_field form.name %}
 	<div class="detail_header">Spreadsheet Contents</div>
 	<span class="group_and_template">
-	<label class="section">Group</label>
+	<label class="section">Group:</label>
 	{% generic_editable_field form.group %}
-	<label class="section">Template</label>
-	{% generic_editable_field form.spreadsheet_template %}
-	</span>
-	<div class="email_quick_copy">
+	<label class="section">Template:</label>
 
+	<span class="generic_editable_field selects_with_descriptions" id="container_id_spreadsheet_template">
+		<span class="view_field">{{form.instance.get_spreadsheet_template_display}}</span>
+		<span class="edit_field">
+			{% for t in spreadsheet_templates  %}
+			<div class="file_type_option {% if t.template_type == form.instance.spreadsheet_template %}selected{% endif %}">
+				<input type="radio" id="id_spreadsheet_template_{{forloop.counter}}" value="{{t.template_type}}" name="spreadsheet_template" {% if t.template_type == form.instance.spreadsheet_template %}checked="checked"{% endif %} />
+				<label for="id_spreadsheet_template_{{forloop.counter}}">
+					<span class="option_name">{{t.name}}</span>
+					<span class="option_description">{{t.description}}</span>
+				</label>
+			</div>
+			{% endfor %}
+
+		</span>
+	</span>
+
+	<div class="email_quick_copy {% if form.instance.spreadsheet_template != "email_list" %}hidden{% endif %}" >
+		<div class="detail_header">Email Quick-copy</div>
+		<div class="detail_description">Need to send a quick email? Just copy the list below, and and paste into your email program!</div>
+		<textarea id="email_list_area">{% if form.instance.spreadsheet_template == "email_list" %}{% include "spreadsheets/_email_list.html" %}{% endif %}</textarea>
 	</div>
-	<div class="file_type">
+	<div class="file_type selects_with_descriptions">
 		<div class="detail_header">File Type</div>
-		<div class="file_type_option">
-			<input type="radio" id="id_default_filetype_0" value="CSV" name="default_filetype" />
+		<div class="file_type_option {% if "CSV" == form.instance.default_filetype %}selected{% endif %}">
+			<input type="radio" id="id_default_filetype_0" value="CSV" name="default_filetype" {% if "CSV" == form.instance.default_filetype %}checked="checked"{% endif %} />
 			<label for="id_default_filetype_0">
 				<span class="option_name">CSV</span>
 				<span class="option_description">CSV (comma separated value) files can be opened in nearly all spreadsheet programs, and imported by virtually all databases. If you're not sure, choose CSV.</span>
 			</label>
 		</div>
 		
-		<div class="file_type_option">
-			<input checked="checked" type="radio" id="id_default_filetype_1" value="EXCEL" name="default_filetype" />
+		<div class="file_type_option {% if "EXCEL" == form.instance.default_filetype %}selected{% endif %}">
+			<input type="radio" id="id_default_filetype_1" value="EXCEL" name="default_filetype" {% if "EXCEL" == form.instance.default_filetype %}checked="checked"{% endif %} />
 			<label for="id_default_filetype_1">
 				<span class="option_name">Excel</span>
 				<span class="option_description">Microsoft Excel files can be opened by a number of spreadsheet programs (like Excel and OpenOffice), and many databases.  If you're using Microsoft Excel, go ahead and choose this option.</span>

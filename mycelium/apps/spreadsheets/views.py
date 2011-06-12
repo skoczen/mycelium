@@ -53,6 +53,7 @@ def spreadsheet(request, spreadsheet_id):
     form = _basic_forms(spreadsheet, request, no_data=True)
     if spreadsheet_id == "new":
         new_spreadsheet == True
+    spreadsheet_templates = SPREADSHEET_TEMPLATES
     section = "spreadsheets"
     return locals()
 

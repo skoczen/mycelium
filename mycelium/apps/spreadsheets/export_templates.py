@@ -43,7 +43,7 @@ full_contact_list = SpreadSheetTemplate(
 mailing_list = SpreadSheetTemplate(
                         "mailing_list",
                         name="Home Mailing List",
-                        description="Home addresses, plain and simple. Great for a mail merge",
+                        description="Home addresses, plain and simple. Great for mail merges.",
                         fields=[
                             ImportField("First Name",           "people",       "Person",       "first_name",   ),
                             ImportField("Last Name",            "people",       "Person",       "last_name",    ),
