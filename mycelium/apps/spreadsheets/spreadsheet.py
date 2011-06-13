@@ -287,18 +287,20 @@ class SpreadsheetAbstraction:
         return self.cached_type
 
     @classmethod
-    def _value_rows_from_queryset(cls, query_set, fields, with_header=True):
+    def _value_rows_from_queryset(cls, query_set, fields, with_header=False):
         rows = []
         if with_header:
             rows.append([f.name for f in fields])
         for r in query_set:
+            row = []
             for f in fields:
-                rows.append(r.__dict__[f])
+                row.append(r.__dict__[f])
+            rows.append(row)
         return rows
 
     # Functions to generate a spreadsheet from the db
     @classmethod
-    def _create_spreadsheet_excel(cls, query_set, fields, file_handler=None, file_name=None):
+    def _create_spreadsheet_excel(cls, query_set, fields, file_handler=None, file_name=None, with_header=None):
         if not file_handler and not file_name:
             raise Exception, "Missing file handler and file name!"
         
@@ -322,7 +324,7 @@ class SpreadsheetAbstraction:
         return file_handler
 
     @classmethod
-    def _create_spreadsheet_csv(cls, query_set, fields, file_handler=None, file_name=None):
+    def _create_spreadsheet_csv(cls, query_set, fields, file_handler=None, file_name=None, with_header=None):
         if not file_handler and not file_name:
             raise Exception, "Missing file handler and file name!"
         
@@ -331,16 +333,16 @@ class SpreadsheetAbstraction:
             file_handler = open(file_name, "wb")
 
         csv_writer = csv.writer(file_handler)
-        csv_writer.writerows([c for c in r] for r in cls._value_rows_from_queryset(query_set, fields))
+        csv_writer.writerows([c for c in r] for r in cls._value_rows_from_queryset(query_set, fields, with_header=with_header))
         file_handler.flush()
         return file_handler
 
     @classmethod
-    def create_spreadsheet(cls, query_set, fields, file_type=CSV_TYPE, file_handler=None, file_name=None):
+    def create_spreadsheet(cls, query_set, fields, file_type=CSV_TYPE, file_handler=None, file_name=None, with_header=None):
         if file_type == CSV_TYPE:
-            return cls._create_spreadsheet_csv(query_set, fields, file_handler=file_handler, file_name=file_name)
+            return cls._create_spreadsheet_csv(query_set, fields, file_handler=file_handler, file_name=file_name, with_header=with_header)
         elif file_type == EXCEL_TYPE:
-            return cls._create_spreadsheet_excel(query_set, fields, file_handler=file_handler, file_name=file_name)
+            return cls._create_spreadsheet_excel(query_set, fields, file_handler=file_handler, file_name=file_name, with_header=with_header)
         else:
             return False
 

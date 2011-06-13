@@ -11,7 +11,8 @@ from ajaxuploader.views import AjaxFileUploader
 from django.core.files.storage import default_storage
 
 from spreadsheets.spreadsheet import IMPORT_ROW_TYPES, IGNORE_FIELD_STRING
-from data_import.models import Spreadsheet, DataImport
+from data_import.models import DataImport
+from spreadsheets.models import Spreadsheet
 from data_import.tasks import queue_data_import
 
 import datetime

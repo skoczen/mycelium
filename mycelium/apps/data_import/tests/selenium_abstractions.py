@@ -5,7 +5,7 @@ from django.conf import settings
 import os
 from accounts.tests.selenium_abstractions import _sitespaced_url
 from spreadsheets.spreadsheet import EXCEL_TYPE, CSV_TYPE
-from data_import.models import Spreadsheet
+from spreadsheets.spreadsheet import SpreadsheetAbstraction
 from data_import.tests.abstractions import TEST_SPREADSHEET_PATH
 from people.models import Person
 
@@ -46,7 +46,7 @@ class DataImportTestAbstractions(object):
             fh = open(full_filename, 'w')
             q = Person.objects_by_account(self.account).all()
 
-            Spreadsheet.create_spreadsheet(q, fields, EXCEL_TYPE, file_handler=fh)
+            SpreadsheetAbstraction.create_spreadsheet(q, fields, EXCEL_TYPE, file_handler=fh)
             fh.flush()
             fh.close()
         
