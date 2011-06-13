@@ -286,10 +286,19 @@ class SpreadsheetAbstraction:
             self.cached_type = self._detect_type()
         return self.cached_type
 
+    @classmethod
+    def _value_rows_from_queryset(cls, query_set, fields, with_header=True):
+        rows = []
+        if with_header:
+            rows.append([f.name for f in fields])
+        for r in query_set:
+            for f in fields:
+                rows.append(r.__dict__[f])
+        return rows
 
     # Functions to generate a spreadsheet from the db
     @classmethod
-    def _create_spreadsheet_excel(self, query_set, fields, file_handler=None, file_name=None):
+    def _create_spreadsheet_excel(cls, query_set, fields, file_handler=None, file_name=None):
         if not file_handler and not file_name:
             raise Exception, "Missing file handler and file name!"
         
@@ -301,10 +310,10 @@ class SpreadsheetAbstraction:
         sheet1= book.add_sheet('Sheet 1')
 
         row = 0
-        for r in query_set:
+        for r in cls._value_rows_from_queryset(query_set, fields):
             col = 0
-            for f in fields:
-                sheet1.write(row, col, r.__dict__[f])
+            for c in r:
+                sheet1.write(row, col, c)
                 col += 1
             row += 1
         
@@ -313,7 +322,7 @@ class SpreadsheetAbstraction:
         return file_handler
 
     @classmethod
-    def _create_spreadsheet_csv(self, query_set, fields, file_handler=None, file_name=None):
+    def _create_spreadsheet_csv(cls, query_set, fields, file_handler=None, file_name=None):
         if not file_handler and not file_name:
             raise Exception, "Missing file handler and file name!"
         
@@ -322,7 +331,7 @@ class SpreadsheetAbstraction:
             file_handler = open(file_name, "wb")
 
         csv_writer = csv.writer(file_handler)
-        csv_writer.writerows([r.__dict__[f] for f in fields] for r in query_set)
+        csv_writer.writerows([c for c in r] for r in cls._value_rows_from_queryset(query_set, fields))
         file_handler.flush()
         return file_handler
 
