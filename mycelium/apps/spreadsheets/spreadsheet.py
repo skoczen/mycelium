@@ -15,15 +15,20 @@ CSV_EXTENSIONS = ["csv",]
 EXCEL_EXTENSIONS = ["xls","xlsx"]
 IGNORE_FIELD_STRING = "ignore"
 
-class ImportRow:
+class SpreadsheetRow:
     name = None
     model = None
-    importable_fields = {}
+    fields = {}
 
-    def __init__(self, account, row_data_dict):
+    def __init__(self, account, row_data_dict=None, *args, **kwargs):
         self.account = account
         self.data = row_data_dict
         self.target_models = self.get_target_models()
+        super(SpreadsheetRow, self).__init__(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.name
+    
 
     def has_sufficient_fields_for_identity(self):
         has_fields = False
@@ -35,7 +40,7 @@ class ImportRow:
     
     def get_target_models(self):
         targets = {}
-        for k,v in self.importable_fields.iteritems():
+        for k,v in self.fields.iteritems():
             if not v.model_key in targets:
                 targets[v.model_key] = get_model(v.app, v.model)
         
@@ -44,7 +49,7 @@ class ImportRow:
     def get_target_objects(self):
         targets = {}
         created = False
-        for k,field in self.importable_fields.iteritems():
+        for k,field in self.fields.iteritems():
             if not field.model_key in targets:
                 targets[field.model_key], created = getattr(self,"get_target_object_%s" % field.model_key)()
         return targets, created
@@ -60,7 +65,7 @@ class ImportRow:
         """
         if not hasattr(self,"_identity_sets"):
             sets = {}
-            for k,field in self.importable_fields.iteritems():
+            for k,field in self.fields.iteritems():
                 for i in field.identity_set:
                     if not i in sets:
                         sets[i] = []
@@ -75,7 +80,7 @@ class ImportRow:
             targets, created = self.get_target_objects()
             for k,v in self.data.iteritems():
                 # get the ImportField obj
-                f = self.importable_fields[k]
+                f = self.fields[k]
                 # set the field on the target model to the value.
                 targets[f.model_key].__dict__[k] = v
 
@@ -101,13 +106,13 @@ class ImportField:
     
         
 
-class PeopleImportRow(ImportRow):
+class PeopleImportRow(SpreadsheetRow):
     NAME_IDENTITY = "NAMES"
     EMAIL_IDENTITY = "EMAIL"
     PHONE_IDENTITY = "PHONE"
 
 
-    importable_fields =  OrderedDict([
+    fields =  OrderedDict([
             ('first_name',   ImportField("First Name",       "people", "Person", "first_name",   identity_set=[NAME_IDENTITY,],)    ),
             ('last_name',    ImportField("Last Name",        "people", "Person", "last_name",    identity_set=[NAME_IDENTITY,],)    ),
             ('email',        ImportField("Email",            "people", "Person", "email",        identity_set=[EMAIL_IDENTITY,],)   ),
@@ -287,20 +292,34 @@ class SpreadsheetAbstraction:
         return self.cached_type
 
     @classmethod
-    def _value_rows_from_queryset(cls, query_set, fields, with_header=False):
+    def _value_rows_from_queryset(cls, query_set, template, with_header=True,**kwargs):
+        from spreadsheets.models import Spreadsheet
         rows = []
+
         if with_header:
-            rows.append([f.name for f in fields])
+            rows.append([f[1].name for f in template.fields.iteritems()])
+
         for r in query_set:
             row = []
-            for f in fields:
-                row.append(r.__dict__[f])
+            target_id = r.pk
+            template_instance = Spreadsheet.spreadsheet_template_instance_class(template.template_type)()
+            template_instance.get_primary_target(r.account, target_id)
+            target_objects,created = template_instance.get_target_objects()
+
+            for k,f in template.fields.iteritems():
+                if target_objects[f.model_key]:
+                    # try:
+                    row.append(target_objects[f.model_key].__dict__[f.field])
+                    # except:
+                    #     row.append("")    
+                else:
+                    row.append("")
             rows.append(row)
         return rows
 
     # Functions to generate a spreadsheet from the db
     @classmethod
-    def _create_spreadsheet_excel(cls, query_set, fields, file_handler=None, file_name=None, with_header=None):
+    def _create_spreadsheet_excel(cls, query_set, template, file_handler=None, file_name=None, **kwargs):
         if not file_handler and not file_name:
             raise Exception, "Missing file handler and file name!"
         
@@ -312,7 +331,7 @@ class SpreadsheetAbstraction:
         sheet1= book.add_sheet('Sheet 1')
 
         row = 0
-        for r in cls._value_rows_from_queryset(query_set, fields):
+        for r in cls._value_rows_from_queryset(query_set, template, **kwargs):
             col = 0
             for c in r:
                 sheet1.write(row, col, c)
@@ -324,7 +343,7 @@ class SpreadsheetAbstraction:
         return file_handler
 
     @classmethod
-    def _create_spreadsheet_csv(cls, query_set, fields, file_handler=None, file_name=None, with_header=None):
+    def _create_spreadsheet_csv(cls, query_set, template, file_handler=None, file_name=None,**kwargs):
         if not file_handler and not file_name:
             raise Exception, "Missing file handler and file name!"
         
@@ -333,16 +352,16 @@ class SpreadsheetAbstraction:
             file_handler = open(file_name, "wb")
 
         csv_writer = csv.writer(file_handler)
-        csv_writer.writerows([c for c in r] for r in cls._value_rows_from_queryset(query_set, fields, with_header=with_header))
+        csv_writer.writerows([c for c in r] for r in cls._value_rows_from_queryset(query_set, template, **kwargs))
         file_handler.flush()
         return file_handler
 
     @classmethod
-    def create_spreadsheet(cls, query_set, fields, file_type=CSV_TYPE, file_handler=None, file_name=None, with_header=None):
+    def create_spreadsheet(cls, query_set, template, file_type=CSV_TYPE, file_handler=None, file_name=None,  **kwargs):
         if file_type == CSV_TYPE:
-            return cls._create_spreadsheet_csv(query_set, fields, file_handler=file_handler, file_name=file_name, with_header=with_header)
+            return cls._create_spreadsheet_csv(query_set, template, file_handler=file_handler, file_name=file_name,  **kwargs)
         elif file_type == EXCEL_TYPE:
-            return cls._create_spreadsheet_excel(query_set, fields, file_handler=file_handler, file_name=file_name, with_header=with_header)
+            return cls._create_spreadsheet_excel(query_set, template, file_handler=file_handler, file_name=file_name,  **kwargs)
         else:
             return False
 

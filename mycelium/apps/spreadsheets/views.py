@@ -92,10 +92,8 @@ def download(request):
         new_spreadsheet == True
 
     f_write = cStringIO.StringIO()
-    q = spreadsheet.members
-    fields = [f.field for f in spreadsheet.spreadsheet_template_obj.fields]
 
-    SpreadsheetAbstraction.create_spreadsheet(q, fields, file_type, file_handler=f_write)
+    SpreadsheetAbstraction.create_spreadsheet(spreadsheet.members, spreadsheet.template_obj, file_type, file_handler=f_write)
     mime_type = SpreadsheetAbstraction.mime_type_from_file_type(file_type)
     extension = SpreadsheetAbstraction.extension_from_file_type(file_type)
 

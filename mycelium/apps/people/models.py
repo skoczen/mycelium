@@ -141,6 +141,17 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
         # Ugh.
         return self.peopleandorganizationssearchproxy_set.all()[0].search_result_row
 
+    @property
+    def employed(self):
+        return self.jobs.count() > 0
+
+    @property
+    def primary_job(self):
+        if self.employed:
+            return self.jobs.all()[0]
+        else:
+            return None
+
 
 class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, TimestampModelMixin, PotentiallyImportedModel):
     name = models.CharField(max_length=255, blank=True, null=True)

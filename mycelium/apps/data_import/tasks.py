@@ -35,7 +35,7 @@ def queue_data_import(acct_id, import_record):
 
         # Save the results
         for row in results:
-            model_key = [v.model_key for k,v in s.import_row_class.importable_fields.items()][0]
+            model_key = [v.model_key for k,v in s.import_row_class.fields.items()][0]
             ResultsRow.objects.create(
                 account=account,
                 data_import=r,
