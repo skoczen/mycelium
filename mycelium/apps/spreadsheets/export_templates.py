@@ -14,6 +14,12 @@ class TargetObjectBasedTemplate(object):
         
         return self.primary_target
 
+    def post_init_setup(self):
+        # TODO: Write me!
+        """ This is a place for a hook for objects to modify their own fields, based on the account they're in.
+            can also just plug directly into __init__
+        """
+        pass
 
 class PersonBasedTemplate(TargetObjectBasedTemplate):
     model = Person
@@ -152,11 +158,6 @@ class DonationSummaryListTemplate (PersonBasedTemplate):
     name = "Donation Summary List"
     description = "Summary of donations, per person. Includes monthly and yearly totals for all donations in GoodCloud, with the contact information of the donor."
     fields = OrderedDict([
-        # ("date",                ImportField("Date",                 "donors",    "Donation",     "date",         )),
-        # ("amount",              ImportField("Amount",               "donors",    "Donation",     "amount",       )),
-        # ("category",            ImportField("Category",             "donors",    "Donation",     "category",     )),
-        # ("campaign",            ImportField("Campaign",             "donors",    "Donation",     "campaign",     )),
-        
         ("first_name",          ImportField("First Name",           "people",       "Person",       "first_name",   )),
         ("last_name",           ImportField("Last Name",            "people",       "Person",       "last_name",    )),
         ("email",               ImportField("Email",                "people",       "Person",       "email",        )),
@@ -168,6 +169,7 @@ class DonationSummaryListTemplate (PersonBasedTemplate):
         ("postal_code",         ImportField("Zip Code",             "people",       "Person",       "postal_code",  )),
         ("name",                ImportField("Organization Name",    "people",       "Organization", "name",         )),
 
+        # fill these out with post_init_setup
         # ("donation_current_year",            ImportField("2011 Total",           "people",       "Person",       "donation_current_year",   )),
         # ("donation_current_year",            ImportField("2011 Jan",           "people",       "Person",       "donation_current_year",   )),
     ])
@@ -219,8 +221,8 @@ class VolunteerHoursSummaryTemplate (PersonBasedTemplate):
         ("postal_code",         ImportField("Zip Code",             "people",       "Person",       "postal_code",  )),
         ("name",                ImportField("Organization Name",    "people",       "Organization", "name",         )),
 
-        # ("donation_current_year",            ImportField("2011 Total",           "people",       "Person",       "donation_current_year",   )),
-        # ("donation_current_year",            ImportField("2011 Jan",           "people",       "Person",       "donation_current_year",   )),
+        # ("hours_current_year",            ImportField("2011 Total",         "people",       "Person",       "hours_current_year",   )),
+        # ("hours_current_year",            ImportField("2011 Jan",           "people",       "Person",       "hours_current_year",   )),
     ])
 
 class VolunteerHoursSummaryTemplateInstance(VolunteerHoursSummaryTemplate,SpreadsheetRow):
@@ -254,7 +256,7 @@ SPREADSHEET_TEMPLATE_INSTANCES = {
     "mailing_list"           : MailingListTemplateInstance,
     "email_list"             : EmailListTemplateInstance,
     "donations"              : DonationListTemplateInstance,
-    # "donation_summary"       : DonationSummaryListTemplateInstance,
+    # "donation_summary"       : DonationSummaryListTemplateInstance,   # see post_init_setup
     "volunteer_hours"        : VolunteerHoursTemplateInstance,
     # "volunteer_hour_summary" : VolunteerHoursSummaryTemplateInstance,
     # "custom_template"        : CustomTemplateInstance,
