@@ -9,7 +9,7 @@ from django.test import TestCase
 from django.conf import settings
 from groups.models import Group
 from data_import.models import DataImport
-from spreadsheets.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
+from spreadsheets.spreadsheet import SpreadsheetAbstraction, EXCEL_TYPE, CSV_TYPE
 from data_import.tests.abstractions import GenerateSpreadsheetsMixin, TEST_SPREADSHEET_PATH
 from people.models import Person
 
@@ -60,13 +60,13 @@ class TestModels(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Generat
 
     def test__detect_type(self):
         fh = Factory.people_spreadsheet(self.a1, file_type=CSV_TYPE)
-        s = Spreadsheet(self.a1, fh, "people", filename="test.foo")
+        s = SpreadsheetAbstraction(self.a1, fh, "people", filename="test.foo")
         self.assertEqual(s.type, CSV_TYPE)
         self.assertEqual(s.is_valid,True)
         
 
         fh = Factory.people_spreadsheet(self.a1, file_type=EXCEL_TYPE)
-        s = Spreadsheet(self.a1, fh, "people", filename="test.bar")
+        s = SpreadsheetAbstraction(self.a1, fh, "people", filename="test.bar")
         self.assertEqual(s.type, EXCEL_TYPE)
         self.assertEqual(s.is_valid,True)
 
@@ -97,7 +97,7 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         self.assertEqual(Person.objects_by_account(self.a1).count(), 0)
 
         # import the spreadsheet
-        s = Spreadsheet(self.a1, fh, "people", filename="test.%s" % (extension,))
+        s = SpreadsheetAbstraction(self.a1, fh, "people", filename="test.%s" % (extension,))
         return s
 
     
@@ -171,12 +171,12 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         excel_filename = "nameemail.xls"
         
         fh1 = open(os.path.join(settings.PROJECT_ROOT, TEST_SPREADSHEET_PATH, csv_filename ), 'r')
-        s = Spreadsheet(self.a1, fh1, "people", filename=csv_filename)
+        s = SpreadsheetAbstraction(self.a1, fh1, "people", filename=csv_filename)
         csv_data = s.get_rows(0,s.num_rows)
         fh1.close()
 
         fh2 = open(os.path.join(settings.PROJECT_ROOT, TEST_SPREADSHEET_PATH, excel_filename ), 'r')
-        s = Spreadsheet(self.a1, fh2, "people", filename=excel_filename)
+        s = SpreadsheetAbstraction(self.a1, fh2, "people", filename=excel_filename)
         excel_data = s.get_rows(0,s.num_rows)
         fh2.close()
 

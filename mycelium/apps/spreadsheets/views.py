@@ -3,18 +3,20 @@ from django.conf import settings
 from django.shortcuts import render_to_response
 from accounts.managers import get_or_404_by_account
 from django.template.loader import render_to_string
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 from spreadsheets.models import Spreadsheet, SpreadsheetSearchProxy
 from spreadsheets.forms import SpreadsheetForm
+from spreadsheets.spreadsheet import SpreadsheetAbstraction
 from spreadsheets.export_templates import SPREADSHEET_TEMPLATES
 from groups.models import Group
 from people.models import Person
 
 from johnny import cache as jcache
+import cStringIO
 
 def _basic_forms(spreadsheet, request, no_data=False):
     data = None
@@ -81,8 +83,6 @@ def save_basic_info(request, spreadsheet_id):
     return {"success":success}
 
 
-
-# @render_to("spreadsheets/detail_volunteer.html")
 def download(request):
     file_type = request.GET['type']
     spreadsheet_id = request.GET['spreadsheet_id']
@@ -90,8 +90,19 @@ def download(request):
     spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
     if spreadsheet_id == "new":
         new_spreadsheet == True
-    section = "spreadsheets"
-    return locals()
+
+    f_write = cStringIO.StringIO()
+    q = spreadsheet.members
+    fields = [f.field for f in spreadsheet.spreadsheet_template_obj.fields]
+
+    SpreadsheetAbstraction.create_spreadsheet(q, fields, file_type, file_handler=f_write)
+    mime_type = SpreadsheetAbstraction.mime_type_from_file_type(file_type)
+    extension = SpreadsheetAbstraction.extension_from_file_type(file_type)
+
+    response = HttpResponse(f_write.getvalue(), mime_type)
+    response['Content-Disposition'] = 'attachment; filename=%s.%s' % (spreadsheet.name, extension)
+
+    return response
 
     
 @render_to("spreadsheets/new.html")

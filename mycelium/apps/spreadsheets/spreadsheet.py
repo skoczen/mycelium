@@ -188,7 +188,7 @@ IMPORT_ROW_TYPES = {
 IMPORT_ROW_TYPE_TUPLES = [(k,v) for k,v in IMPORT_ROW_TYPES.iteritems()]
 
 
-class Spreadsheet:
+class SpreadsheetAbstraction:
     def __init__(self, account, fh, import_type, filename=None, cache_key_pct_complete=""):
         # fh is a file handler-like object
         self.account = account
@@ -334,6 +334,24 @@ class Spreadsheet:
             return cls._create_spreadsheet_excel(query_set, fields, file_handler=file_handler, file_name=file_name)
         else:
             return False
+
+    @classmethod
+    def mime_type_from_file_type(cls, file_type):
+        if file_type == CSV_TYPE:
+            return "text/csv"
+        elif file_type == EXCEL_TYPE:
+            return "application/vnd.ms-excel"
+        else:
+            return None
+    
+    @classmethod
+    def extension_from_file_type(cls, file_type):
+        if file_type == CSV_TYPE:
+            return CSV_EXTENSIONS[0]
+        elif file_type == EXCEL_TYPE:
+            return EXCEL_EXTENSIONS[0]
+        else:
+            return ""
 
     def _write_generated_row(self):
         pass

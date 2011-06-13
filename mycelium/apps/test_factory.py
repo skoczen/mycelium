@@ -11,7 +11,7 @@ from accounts.models import Plan, Account, UserAccount, AccessLevel
 from django.contrib.sites.models import Site
 from django.template.defaultfilters import slugify
 from volunteers import VOLUNTEER_STATII
-from spreadsheets.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
+from spreadsheets.spreadsheet import SpreadsheetAbstraction, EXCEL_TYPE, CSV_TYPE
 
 import datetime
 import cStringIO
@@ -446,7 +446,7 @@ class Factory(QiFactory):
     def people_spreadsheet(cls, account, file_type=None, fields=["first_name","last_name","email","phone_number"]):
         f_write = cStringIO.StringIO()
         q = Person.objects_by_account(account).all()
-        Spreadsheet.create_spreadsheet(q, fields, file_type, file_handler=f_write)
+        SpreadsheetAbstraction.create_spreadsheet(q, fields, file_type, file_handler=f_write)
         f_read = cStringIO.StringIO(f_write.getvalue())
         return f_read
 

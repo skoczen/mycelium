@@ -1,6 +1,6 @@
 from celery.task import task
 from data_import.models import DataImport, ResultsRow
-from spreadsheets.spreadsheet import Spreadsheet
+from spreadsheets.spreadsheet import SpreadsheetAbstraction
 from accounts.models import Account
 from django.core.files.storage import default_storage
 import datetime
@@ -19,7 +19,7 @@ def queue_data_import(acct_id, import_record):
 
         # Grab the spreadsheet, parse it, prep for import.
         fh = default_storage.open(r.source_filename, 'r')
-        s = Spreadsheet(account, fh, r.import_type, filename=r.source_filename, cache_key_pct_complete=DataImport.cache_key_for_import_id_percent_imported(r.pk))
+        s = SpreadsheetAbstraction(account, fh, r.import_type, filename=r.source_filename, cache_key_pct_complete=DataImport.cache_key_for_import_id_percent_imported(r.pk))
         r.num_source_rows = s.num_rows
         r.save()
         

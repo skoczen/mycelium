@@ -1,5 +1,5 @@
 from test_factory import Factory
-from spreadsheets.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
+from spreadsheets.spreadsheet import SpreadsheetAbstraction, EXCEL_TYPE, CSV_TYPE
 TEST_SPREADSHEET_PATH = "apps/data_import/tests/test_spreadsheets"
 
 class GenerateSpreadsheetsMixin:
@@ -54,7 +54,7 @@ class GenerateSpreadsheetsMixin:
 
         # import it
         fh.seek(0)
-        s = Spreadsheet(self.a1, fh, "people", filename="test.csv")
+        s = SpreadsheetAbstraction(self.a1, fh, "people", filename="test.csv")
         self.assertEqual(s.is_valid,True)
         return s
 
@@ -63,6 +63,6 @@ class GenerateSpreadsheetsMixin:
 
         # import it
         fh.seek(0)
-        s = Spreadsheet(self.a1, fh, "people", filename="test.xls")
+        s = SpreadsheetAbstraction(self.a1, fh, "people", filename="test.xls")
         self.assertEqual(s.is_valid,True)
         return s
