@@ -34,6 +34,7 @@ $(function(){
 	<span class="group_and_template">
 	<label class="section">Group:</label>
 	{% generic_editable_field form.group %}
+	<fragment name="group_count" id="id_group_count" action="replace" url="{% url spreadsheets:group_count %}" >{% include "spreadsheets/_group_count.html" %}</fragment>
 	
 
 		<span class="generic_editable_field selects_with_descriptions" id="container_id_spreadsheet_template">
@@ -59,7 +60,9 @@ $(function(){
 	<div class="email_quick_copy {% if form.instance.spreadsheet_template != "email_list" %}hidden{% endif %}" >
 		<div class="detail_header">Email Quick-copy</div>
 		<div class="detail_description">Need to send a quick email? Just copy the list below, and and paste into your email program!</div>
-		<textarea id="email_list_area">{% if form.instance.spreadsheet_template == "email_list" %}{% include "spreadsheets/_email_list.html" %}{% endif %}</textarea>
+		<fragment name="email_quick_copy" action="replace" url="{% url spreadsheets:email_list form.instance.pk %}" >
+		{% if form.instance.spreadsheet_template == "email_list" %}{% include "spreadsheets/_email_list.html" %}{% endif %}
+		</fragment>
 	</div>
 	<div class="file_type selects_with_descriptions">
 		<div class="detail_header">File Type</div>
@@ -82,12 +85,12 @@ $(function(){
 </div>
 </form>
 
-<form id="download_spreadsheet_form" action="{% url spreadsheets:download %}" method="GET" />
+<form id="download_spreadsheet_form" action="{% url spreadsheets:download %}" method="GET" >
 <div class="download_spreadsheet_button_block">
 	<input type="hidden" name="group"/>
 	<a href="#" class="mycelium_btn download_spreadsheet_btn">Download Spreadsheet</a>
 </div>
-
+</form>
 
 <div class="clearfix"></div>
 <delete_object_block>

@@ -106,6 +106,7 @@ td.remainder_count {
 	display: block;
 	float: left;
 	margin: 0px 10px 0px 0px;
+	width: 100px;
 }
 .basic_info .group_and_template {
 	display: block;
@@ -114,7 +115,9 @@ td.remainder_count {
 .basic_info .group_and_template .generic_field_label {
 	display: none;
 }
-
+.edit_mode_on .basic_info .group_and_template .edit_field {
+	margin-bottom: 4px;
+}
 .download_spreadsheet_button_block {
 	display: block;
 	text-align: center;
@@ -136,7 +139,7 @@ td.remainder_count {
 	display: block;
 	padding: 8px;
 	width: 40%;
-	margin: 4px 2% 4px 2%;
+	margin: 4px 2% 4px 0px;
 	overflow: auto;
 	float: left;
 	min-height: 3em;
@@ -172,7 +175,7 @@ td.remainder_count {
 	font-size: 14px;
 }
 
-#email_list_area {
+#email_list_area, fragment[name=email_quick_copy] textarea {
 	width: 90%;
 	height: 6em;
 	border: 1px solid #DDD;
@@ -191,9 +194,21 @@ td.remainder_count {
 }
 #container_id_spreadsheet_template .edit_field {
 	
-	clear: both;
+	overflow: auto;
+	
 }
 #container_id_spreadsheet_template .view_field.file_type_option {
 	margin: 0px;
 	padding: 0px;
+}
+
+#id_group_count {
+	display: block;
+	margin-top: 0px;
+	font-size: 14px;
+	
+	padding: 0px 0px 10px 56px;
+	color: #777;
+}	
+
 }

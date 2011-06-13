@@ -13,6 +13,8 @@ urlpatterns = parser.patterns('',
     url(r'spreadsheet/download$',                               views.download,                                 name='download'),
     url(r'spreadsheet/{spreadsheet_id:digits}/save-basic$',     views.save_basic_info,                          name='save_basic_info'),
     url(r'spreadsheet/delete$',                                 views.delete,                                   name='delete'),
+    url(r'spreadsheet/{spreadsheet_id:digits}/email-list$',     views.email_list,                               name='email_list'),
+    url(r'spreadsheet/group-count$',                            views.group_count,                              name='group_count'),
 
     url(r'new$',                                                views.new,                                      name='new_spreadsheet'),
     

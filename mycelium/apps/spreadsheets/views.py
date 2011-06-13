@@ -11,6 +11,9 @@ from django.views.decorators.cache import cache_page
 from spreadsheets.models import Spreadsheet, SpreadsheetSearchProxy
 from spreadsheets.forms import SpreadsheetForm
 from spreadsheets.export_templates import SPREADSHEET_TEMPLATES
+from groups.models import Group
+from people.models import Person
+
 from johnny import cache as jcache
 
 def _basic_forms(spreadsheet, request, no_data=False):
@@ -53,8 +56,12 @@ def spreadsheet(request, spreadsheet_id):
     form = _basic_forms(spreadsheet, request, no_data=True)
     if spreadsheet_id == "new":
         new_spreadsheet == True
+
+    members = spreadsheet.members
+
     spreadsheet_templates = SPREADSHEET_TEMPLATES
     section = "spreadsheets"
+
     return locals()
 
 
@@ -104,3 +111,18 @@ def delete(request):
         pass
 
     return HttpResponseRedirect(reverse("spreadsheets:search"))
+
+@json_view
+def email_list(request, spreadsheet_id):
+    spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
+    return {"fragments":{"email_quick_copy":render_to_string("spreadsheets/_email_list.html", locals())}}
+
+@json_view
+def group_count(request):
+    group_id = request.GET['group_id']
+    if group_id:
+        group = get_or_404_by_account(Group, request.account, group_id)
+        members = group.members
+    else:
+        members = Person.objects_by_account(request.account).all()
+    return {"fragments":{"group_count":render_to_string("spreadsheets/_group_count.html", locals())}}
