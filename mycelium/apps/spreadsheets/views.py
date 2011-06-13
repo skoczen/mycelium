@@ -83,7 +83,7 @@ def save_basic_info(request, spreadsheet_id):
 
 
 # @render_to("spreadsheets/detail_volunteer.html")
-def download(request, type, spreadsheet_id):
+def download(request):
     file_type = request.GET['type']
     spreadsheet_id = request.GET['spreadsheet_id']
 

@@ -6,6 +6,9 @@ $(function(){
 	$(".file_type_option input").change(file_type_option_clicked);
 	$("#container_id_spreadsheet_template input").change(template_type_changed);
 	$("#basic_info_form").bind("genericFieldForm.save_form_success",form_saved);
+	update_spreadsheet_download_link();
+	group_id = get_group_id();
+	template_type = get_template_type();
 });
 
 var group_id = false;
@@ -23,13 +26,24 @@ function delete_spreadsheet(e) {
     return false;
 }
 
-function form_changed() {
-	// copy the values to the hidden submit fields.. ?
-	
-	var new_group_id = $("#id_group").val();
-	var new_template_type = $(".file_type_option input:checked").val()
-	
+function get_group_id() {
+	return $("#id_group").val();
+}
+function get_template_type() {
+	return $(".file_type_option input:checked").val()
+}
+function get_spreadsheet_id() {
+	return $("input[name=spreadsheet_pk]").val();
+}
+function get_file_type() {
+	return $(".file_type.selects_with_descriptions input:checked").val()
+}
 
+function form_changed() {
+	var new_group_id = get_group_id();
+	var new_template_type = get_template_type();
+	
+	update_spreadsheet_download_link();
 
 	if (group_id != new_group_id) {
 		update_group_count();
@@ -45,7 +59,10 @@ function form_changed() {
 }
 
 function form_saved() {
-	update_email_list();
+	if (get_template_type() == "email_list") {
+		update_email_list();
+	}
+	
 }
 
 function file_type_option_clicked() {
@@ -97,4 +114,10 @@ function update_group_count(){
              }
           }
      });
+}
+function update_spreadsheet_download_link() {
+	var new_link = $(".download_spreadsheet_btn").attr("base_url");
+	
+	new_link = new_link + "?type=" + get_file_type() + "&spreadsheet_id=" + get_spreadsheet_id();
+	$(".download_spreadsheet_btn").attr("href",new_link);
 }

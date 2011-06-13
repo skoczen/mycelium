@@ -85,12 +85,10 @@ $(function(){
 </div>
 </form>
 
-<form id="download_spreadsheet_form" action="{% url spreadsheets:download %}" method="GET" >
 <div class="download_spreadsheet_button_block">
-	<input type="hidden" name="group"/>
-	<a href="#" class="mycelium_btn download_spreadsheet_btn">Download Spreadsheet</a>
+	<a href="{% url spreadsheets:download %}" base_url="{% url spreadsheets:download %}" class="mycelium_btn download_spreadsheet_btn">Download Spreadsheet</a>
 </div>
-</form>
+
 
 <div class="clearfix"></div>
 <delete_object_block>
