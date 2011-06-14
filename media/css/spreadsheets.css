@@ -203,7 +203,7 @@ fragment[name=email_quick_copy] {
 	padding: 0px;
 }
 
-#id_group_count {
+#id_group_count_with_label, #id_group_count {
 	display: block;
 	margin-top: 0px;
 	font-size: 14px;
