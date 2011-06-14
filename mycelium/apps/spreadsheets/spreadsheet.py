@@ -15,7 +15,7 @@ CSV_EXTENSIONS = ["csv",]
 EXCEL_EXTENSIONS = ["xls","xlsx"]
 IGNORE_FIELD_STRING = "ignore"
 
-class SpreadsheetRow:
+class SpreadsheetRow(object):
     name = None
     model = None
     fields = {}
@@ -296,20 +296,23 @@ class SpreadsheetAbstraction:
         from spreadsheets.models import Spreadsheet
         rows = []
 
+        template_instance = Spreadsheet.spreadsheet_template_instance_class(template.template_type)(query_set[0].account)
         if with_header:
-            rows.append([f[1].name for f in template.fields.iteritems()])
+            rows.append([f[1].name for f in template_instance.fields.iteritems()])
 
         for r in query_set:
             row = []
             target_id = r.pk
-            template_instance = Spreadsheet.spreadsheet_template_instance_class(template.template_type)()
-            template_instance.get_primary_target(r.account, target_id)
+            template_instance.get_primary_target(r.account, target_id, force_refresh=True)
             target_objects,created = template_instance.get_target_objects()
 
             for k,f in template.fields.iteritems():
                 if target_objects[f.model_key]:
                     # try:
-                    row.append(target_objects[f.model_key].__dict__[f.field])
+                    if f.field in target_objects[f.model_key].__dict__:
+                        row.append(target_objects[f.model_key].__dict__[f.field])
+                    else:
+                        row.append(eval("target_objects[f.model_key].%s" % f.field))
                     # except:
                     #     row.append("")    
                 else:

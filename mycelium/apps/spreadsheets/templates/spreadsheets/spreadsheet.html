@@ -86,7 +86,7 @@ $(function(){
 </form>
 
 <div class="download_spreadsheet_button_block">
-	<a href="{% url spreadsheets:download %}" base_url="{% url spreadsheets:download %}" class="mycelium_btn download_spreadsheet_btn">Download Spreadsheet</a>
+	<a href="{% url spreadsheets:download %}" base_url="{% url spreadsheets:download %}" class="mycelium_btn download_spreadsheet_btn auto_disable" disabled_text="Downloading...">Download Spreadsheet</a>
 </div>
 
 

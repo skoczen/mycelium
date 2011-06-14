@@ -4,22 +4,16 @@ from people.models import Person
 from volunteers.models import CompletedShift
 from donors.models import Donation
 from collections import OrderedDict
+import datetime
 
 
 class TargetObjectBasedTemplate(object):
 
-    def get_primary_target(self, account=None, target_id=None):
-        if not hasattr(self,"primary_target"):
+    def get_primary_target(self, account=None, target_id=None, force_refresh=False):
+        if not hasattr(self,"primary_target") or force_refresh:
             self.primary_target = get_or_404_by_account(self.model, account, target_id)
         
         return self.primary_target
-
-    def post_init_setup(self):
-        # TODO: Write me!
-        """ This is a place for a hook for objects to modify their own fields, based on the account they're in.
-            can also just plug directly into __init__
-        """
-        pass
 
 class PersonBasedTemplate(TargetObjectBasedTemplate):
     model = Person
@@ -94,6 +88,7 @@ class FullContactListTemplate(PersonBasedTemplate):
         ("org_city",            ImportField("Organization City",             "people",       "Organization", "city",         )),
         ("org_state",           ImportField("Organization State",            "people",       "Organization", "state",        )),
         ("org_postal_code",     ImportField("Organization Zip",              "people",       "Organization", "postal_code",  )),
+        ("goodcloud_id",        ImportField("GoodCloud ID",         "people",       "Person",       "id",           )),
     ])
 
 class FullContactListTemplateInstance(FullContactListTemplate,SpreadsheetRow):
@@ -111,6 +106,7 @@ class MailingListTemplate (PersonBasedTemplate):
         ("city",                ImportField("City",                 "people",       "Person",       "city",         )),
         ("state",               ImportField("State",                "people",       "Person",       "state",        )),
         ("postal_code",         ImportField("Zip Code",             "people",       "Person",       "postal_code",  )),
+        ("goodcloud_id",        ImportField("GoodCloud ID",         "people",       "Person",       "id",           )),
     ])
 
 class MailingListTemplateInstance(MailingListTemplate,SpreadsheetRow):
@@ -134,11 +130,10 @@ class DonationListTemplate (DonationBasedTemplate):
     name = "Donation List"
     description = "All donations entered into GoodCloud, with the contact information of the donor."
     fields = OrderedDict([
-        ("date",                ImportField("Date",                 "donors",    "Donation",     "date",         )),
-        ("amount",              ImportField("Amount",               "donors",    "Donation",     "amount",       )),
+        ("date",                ImportField("Date",                 "donors",    "Donation",        "date",         )),
+        ("amount",              ImportField("Amount",               "donors",    "Donation",        "amount",       )),
         # ("category",            ImportField("Category",             "donors",    "Donation",     "category",     )),
         # ("campaign",            ImportField("Campaign",             "donors",    "Donation",     "campaign",     )),
-        ("name",                ImportField("Organization Name",    "people",       "Organization", "name",         )),
         ("first_name",          ImportField("First Name",           "people",       "Person",       "first_name",   )),
         ("last_name",           ImportField("Last Name",            "people",       "Person",       "last_name",    )),
         ("email",               ImportField("Email",                "people",       "Person",       "email",        )),
@@ -148,6 +143,8 @@ class DonationListTemplate (DonationBasedTemplate):
         ("city",                ImportField("City",                 "people",       "Person",       "city",         )),
         ("state",               ImportField("State",                "people",       "Person",       "state",        )),
         ("postal_code",         ImportField("Zip Code",             "people",       "Person",       "postal_code",  )),
+        ("org_name",            ImportField("Organization Name",    "people",       "Organization", "name",         )),
+        ("goodcloud_id",        ImportField("GoodCloud Donation ID","donors",    "Donation",        "id",           )),
     ])
 
 class DonationListTemplateInstance(DonationListTemplate,SpreadsheetRow):
@@ -155,9 +152,10 @@ class DonationListTemplateInstance(DonationListTemplate,SpreadsheetRow):
 
 class DonationSummaryListTemplate (PersonBasedTemplate):
     template_type = "donation_summary"
-    name = "Donation Summary List"
-    description = "Summary of donations, per person. Includes monthly and yearly totals for all donations in GoodCloud, with the contact information of the donor."
+    name = "Donation Summary"
+    description = "Summary of donations, per person, including yearly totals, total all-time, and the contact information of the donor."
     fields = OrderedDict([
+        ("goodcloud_id",        ImportField("GoodCloud ID",         "people",       "Person",       "id",           )),
         ("first_name",          ImportField("First Name",           "people",       "Person",       "first_name",   )),
         ("last_name",           ImportField("Last Name",            "people",       "Person",       "last_name",    )),
         ("email",               ImportField("Email",                "people",       "Person",       "email",        )),
@@ -175,7 +173,15 @@ class DonationSummaryListTemplate (PersonBasedTemplate):
     ])
 
 class DonationSummaryListTemplateInstance(DonationSummaryListTemplate,SpreadsheetRow):
-    pass
+    def __init__(self, *args, **kwargs):
+        super(DonationSummaryListTemplateInstance, self).__init__(*args, **kwargs)
+        
+        self.fields["donations_all_time"] = ImportField("Total Donations all-time",           "people",       "Person",       "donation_totals_all_time")
+        oldest = Donation.objects_by_account(self.account).order_by("date")[0].date
+        this_year = datetime.date.today().year
+        for y in range(oldest.year, this_year+1):
+            self.fields["donation_%s" % y] = ImportField("%s Total" % y,           "people",       "Person",       "donation_total_for_year(%s)" % y)
+
 
 class VolunteerHoursTemplate (CompletedShiftBasedTemplate):
     template_type = "volunteer_hours"
@@ -204,12 +210,9 @@ class VolunteerHoursTemplateInstance(VolunteerHoursTemplate,SpreadsheetRow):
 class VolunteerHoursSummaryTemplate (PersonBasedTemplate):
     template_type = "volunteer_hour_summary"
     name = "Volunteer Hour Summary"
-    description = "Total of volunteer hours, per person. Includes monthly and yearly totals for all shifts in GoodCloud, with the contact information of the volunteer."
+    description = "Total of volunteer hours, per person, including yearly totals, total all-time, and the contact information of the volunteer."
     fields = OrderedDict([
-        ("date",                ImportField("Date",                 "volunteers",    "CompletedShift",     "date",       )),
-        ("duration",            ImportField("Hours",                "volunteers",    "CompletedShift",     "duration",   )),
-        # ("shift",               ImportField("Category",            "event",         "CompletedShift",     "shift",      )),
-       
+        
         ("first_name",          ImportField("First Name",           "people",       "Person",       "first_name",   )),
         ("last_name",           ImportField("Last Name",            "people",       "Person",       "last_name",    )),
         ("email",               ImportField("Email",                "people",       "Person",       "email",        )),
@@ -220,13 +223,23 @@ class VolunteerHoursSummaryTemplate (PersonBasedTemplate):
         ("state",               ImportField("State",                "people",       "Person",       "state",        )),
         ("postal_code",         ImportField("Zip Code",             "people",       "Person",       "postal_code",  )),
         ("name",                ImportField("Organization Name",    "people",       "Organization", "name",         )),
+        ("goodcloud_id",        ImportField("GoodCloud ID",         "people",       "Person",       "id",           )),
 
         # ("hours_current_year",            ImportField("2011 Total",         "people",       "Person",       "hours_current_year",   )),
         # ("hours_current_year",            ImportField("2011 Jan",           "people",       "Person",       "hours_current_year",   )),
     ])
 
+
 class VolunteerHoursSummaryTemplateInstance(VolunteerHoursSummaryTemplate,SpreadsheetRow):
-    pass
+    def __init__(self, *args, **kwargs):
+        super(VolunteerHoursSummaryTemplateInstance, self).__init__(*args, **kwargs)
+        
+        self.fields["hours_all_time"] = ImportField("Total Hours all-time",           "people",       "Person",       "volunteer_hours_all_time")
+        oldest = CompletedShift.objects_by_account(self.account).order_by("date")[0].date
+        this_year = datetime.date.today().year
+        for y in range(oldest.year, this_year+1):
+            self.fields["hours_%s" % y] = ImportField("%s Total Hours" % y,           "people",       "Person",       "volunteer_hours_for_year(%s)" % y)
+        
 
 class CustomTemplate (object):
     template_type = "custom_template"
@@ -246,9 +259,9 @@ SPREADSHEET_TEMPLATES = [
     MailingListTemplate(),
     EmailListTemplate(),
     DonationListTemplate(),
-    # DonationSummaryListTemplate(),
+    DonationSummaryListTemplate(),
     VolunteerHoursTemplate(),
-    # VolunteerHoursSummaryTemplate(),
+    VolunteerHoursSummaryTemplate(),
     # CustomTemplate(),
 ]
 SPREADSHEET_TEMPLATE_INSTANCES = {
@@ -256,8 +269,8 @@ SPREADSHEET_TEMPLATE_INSTANCES = {
     "mailing_list"           : MailingListTemplateInstance,
     "email_list"             : EmailListTemplateInstance,
     "donations"              : DonationListTemplateInstance,
-    # "donation_summary"       : DonationSummaryListTemplateInstance,   # see post_init_setup
+    "donation_summary"       : DonationSummaryListTemplateInstance,   # see post_init_setup
     "volunteer_hours"        : VolunteerHoursTemplateInstance,
-    # "volunteer_hour_summary" : VolunteerHoursSummaryTemplateInstance,
+    "volunteer_hour_summary" : VolunteerHoursSummaryTemplateInstance,
     # "custom_template"        : CustomTemplateInstance,
 }
