@@ -6,6 +6,7 @@ $(function(){
 	$(".file_type_option input").change(file_type_option_clicked);
 	$("#container_id_spreadsheet_template input").change(template_type_changed);
 	$("#basic_info_form").bind("genericFieldForm.save_form_success",form_saved);
+	$(".download_spreadsheet_btn").click(download_button_clicked);
 	update_spreadsheet_download_link();
 	group_id = get_group_id();
 	template_type = get_template_type();
@@ -56,15 +57,28 @@ function form_changed() {
 	if (changed && new_template_type == "email_list") {
 		$("fragment[name=email_quick_copy] textarea").html("Loading...");
 	}
+	disable_download_button();
 }
 
 function form_saved() {
+	enable_download_button();
 	if (get_template_type() == "email_list") {
 		update_email_list();
 	}
-	
 }
 
+function disable_download_button() {
+	$(".download_spreadsheet_btn").addClass("disabled").html("Preparing Spreadsheet...");
+}
+function enable_download_button() {
+	$(".download_spreadsheet_btn").removeClass("disabled").html("Download Spreadsheet");
+}
+
+function download_button_clicked() {
+	if ($(".download_spreadsheet_btn").hasClass("disabled")) {
+		return false
+	}
+}
 function file_type_option_clicked() {
 	var selected = $(this);
 	var container = selected.parents(".selects_with_descriptions");

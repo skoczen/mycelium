@@ -181,16 +181,17 @@ td.remainder_count {
 	border: 1px solid #DDD;
 	font-size: 14px;
 	color: 999;
-	margin: 2px 0px 0px 5px;
+	margin: 2px 0px 0px 0px;
 }
-.email_quick_copy {
-	
+fragment[name=email_quick_copy] {
+	margin: 0px 0px 0px 1%;
 }
 .detail_description {
 	font-size: 14px;
 	display: block;
-	padding: 4px 5px 6px 5px;
+	padding: 4px 5px 6px 0px;
 	color: #777;
+	margin: 0px 0px 0px 1%;
 }
 #container_id_spreadsheet_template .edit_field {
 	
@@ -211,4 +212,6 @@ td.remainder_count {
 	color: #777;
 }	
 
+.file_type.selects_with_descriptions .file_type_option {
+	margin: 4px 1% 4px 1%;
 }
