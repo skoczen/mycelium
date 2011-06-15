@@ -1,8 +1,7 @@
 from django.db import models
-from django.utils.translation import ugettext as _
-from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
+from qi_toolkit.models import TimestampModelMixin
 from picklefield.fields import PickledObjectField
-from spreadsheets.spreadsheet import SpreadsheetAbstraction, IMPORT_ROW_TYPES, SPREADSHEET_SOURCE_TYPES, IMPORT_ROW_TYPE_TUPLES
+from spreadsheets.spreadsheet import IMPORT_ROW_TYPES, IMPORT_ROW_TYPE_TUPLES
 
 from accounts.models import AccountBasedModel, UserAccount
 from django.core.cache import cache

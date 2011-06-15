@@ -58,13 +58,13 @@ class TestModels(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Generat
 
 
     def test__detect_type(self):
-        fh = Factory.people_spreadsheet(self.a1, file_type=CSV_TYPE)
+        fh = Factory.people_mailing_list_spreadsheet_file(self.a1, file_type=CSV_TYPE)
         s = SpreadsheetAbstraction(self.a1, fh, "people", filename="test.foo")
         self.assertEqual(s.type, CSV_TYPE)
         self.assertEqual(s.is_valid,True)
         
 
-        fh = Factory.people_spreadsheet(self.a1, file_type=EXCEL_TYPE)
+        fh = Factory.people_mailing_list_spreadsheet_file(self.a1, file_type=EXCEL_TYPE)
         s = SpreadsheetAbstraction(self.a1, fh, "people", filename="test.bar")
         self.assertEqual(s.type, EXCEL_TYPE)
         self.assertEqual(s.is_valid,True)
@@ -87,7 +87,7 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
                 extension = "xls"
 
         # create a person spreadsheet
-        fh = Factory.people_spreadsheet(self.a1, file_type=file_type)
+        fh = Factory.people_mailing_list_spreadsheet_file(self.a1, file_type=file_type)
 
         # delete all the people
         Person.objects_by_account(self.a1).all().delete()

@@ -64,7 +64,7 @@ class GenerateSpreadsheetsMixin:
 
 
     def created_and_imported_csv_spreadsheet(self, **kwargs):
-        fh = Factory.people_spreadsheet(self.a1, file_type=CSV_TYPE, **kwargs)
+        fh = Factory.people_mailing_list_spreadsheet_file(self.a1, file_type=CSV_TYPE, **kwargs)
 
         # import it
         fh.seek(0)
@@ -73,7 +73,7 @@ class GenerateSpreadsheetsMixin:
         return s
 
     def created_and_imported_excel_spreadsheet(self, **kwargs):
-        fh = Factory.people_spreadsheet(self.a1, file_type=EXCEL_TYPE, **kwargs)
+        fh = Factory.people_mailing_list_spreadsheet_file(self.a1, file_type=EXCEL_TYPE, **kwargs)
 
         # import it
         fh.seek(0)

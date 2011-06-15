@@ -10,9 +10,8 @@ from django.middleware.csrf import get_token
 from ajaxuploader.views import AjaxFileUploader
 from django.core.files.storage import default_storage
 
-from spreadsheets.spreadsheet import IMPORT_ROW_TYPES, IGNORE_FIELD_STRING
+from spreadsheets.spreadsheet import IMPORT_ROW_TYPES, IGNORE_FIELD_STRING, SpreadsheetAbstraction
 from data_import.models import DataImport
-from spreadsheets.models import Spreadsheet
 from data_import.tasks import queue_data_import
 
 import datetime
@@ -41,7 +40,7 @@ def begin_import(request):
         for k,v in sorted(request.POST.iteritems()):
             if "import_col_" in k:
                 fields.append(v)
-
+        
         import_record = DataImport.objects.create(
             account=request.account,
             importer=request.useraccount,
@@ -102,7 +101,7 @@ class DataImportAjaxFileUploader(AjaxFileUploader):
         f = default_storage.open(filename, 'r')
 
         # parse the file.
-        s = Spreadsheet(request.account, f, self.import_type, filename=filename)
+        s = SpreadsheetAbstraction(request.account, f, self.import_type, filename=filename)
         f.close()
         
         # get the number of rows

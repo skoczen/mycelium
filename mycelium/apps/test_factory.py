@@ -13,7 +13,7 @@ from django.template.defaultfilters import slugify
 from volunteers import VOLUNTEER_STATII
 from spreadsheets import SPREADSHEET_TEMPLATE_CHOICES
 from spreadsheets.models import Spreadsheet
-from spreadsheets.spreadsheet import SpreadsheetAbstraction, EXCEL_TYPE, CSV_TYPE
+from spreadsheets.spreadsheet import SpreadsheetAbstraction, SPREADSHEET_SOURCE_TYPES
 
 
 
@@ -442,17 +442,17 @@ class Factory(QiFactory):
 
 
     @classmethod
-    def people_spreadsheet(cls, account, file_type=None, fields=["first_name","last_name","email","phone_number"]):
+    def people_mailing_list_spreadsheet_file(cls, account, file_type=None, template=SPREADSHEET_TEMPLATE_CHOICES[0][0]):
         f_write = cStringIO.StringIO()
-        q = Person.objects_by_account(account).all()
-        SpreadsheetAbstraction.create_spreadsheet(q, fields, file_type, file_handler=f_write)
+        s = cls.spreadsheet(account, template, file_type)
+        SpreadsheetAbstraction.create_spreadsheet(s.members, s.template_obj, s.default_filetype, file_handler=f_write)
         f_read = cStringIO.StringIO(f_write.getvalue())
         return f_read
 
     @classmethod
     def spreadsheet(cls, account, spreadsheet_template, file_type=None, group=None, name=None):
         if not file_type:
-            file_type = SPREADSHEET_TEMPLATE_CHOICES[0][0]
+            file_type = SPREADSHEET_SOURCE_TYPES[0][0]
         
         if not name:
             name = cls.rand_str()

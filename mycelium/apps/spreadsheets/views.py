@@ -56,8 +56,6 @@ def search_results(request):
 def spreadsheet(request, spreadsheet_id):
     spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
     form = _basic_forms(spreadsheet, request, no_data=True)
-    if spreadsheet_id == "new":
-        new_spreadsheet == True
 
     members = spreadsheet.members
 
@@ -86,13 +84,9 @@ def save_basic_info(request, spreadsheet_id):
 def download(request):
     file_type = request.GET['type']
     spreadsheet_id = request.GET['spreadsheet_id']
-
     spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
-    if spreadsheet_id == "new":
-        new_spreadsheet == True
 
     f_write = cStringIO.StringIO()
-
     SpreadsheetAbstraction.create_spreadsheet(spreadsheet.members, spreadsheet.template_obj, file_type, file_handler=f_write)
     mime_type = SpreadsheetAbstraction.mime_type_from_file_type(file_type)
     extension = SpreadsheetAbstraction.extension_from_file_type(file_type)
