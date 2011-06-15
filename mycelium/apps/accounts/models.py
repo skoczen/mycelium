@@ -86,6 +86,7 @@ class Account(TimestampModelMixin):
             from donors.models import Donation
             from volunteers.models import CompletedShift
             from data_import.models import DataImport
+            from spreadsheets.models import Spreadsheet
 
             if not self.challenge_has_imported_contacts:
                 if DataImport.objects_by_account(self).count() > 0:
@@ -113,8 +114,8 @@ class Account(TimestampModelMixin):
                     self.challenge_has_created_other_accounts = True
 
             if not self.challenge_has_downloaded_spreadsheet:
-                # Requires data import
-                pass
+                if Spreadsheet.objects_by_account(self).count() > 0:
+                    self.challenge_has_downloaded_spreadsheet = True
 
             if not self.challenge_has_submitted_support:
                 pass

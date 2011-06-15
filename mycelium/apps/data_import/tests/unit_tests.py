@@ -13,7 +13,6 @@ from spreadsheets.spreadsheet import SpreadsheetAbstraction, EXCEL_TYPE, CSV_TYP
 from data_import.tests.abstractions import GenerateSpreadsheetsMixin, TEST_SPREADSHEET_PATH
 from people.models import Person
 
-
 class Dummy(object):
     pass
 
@@ -123,30 +122,6 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         return self._that_importing_a_person_spreadsheet_refills_an_emptied_database(EXCEL_TYPE)
 
     
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_organization_csv_works(self):
-    #     pass
-    
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_organization_excel_works(self):
-    #     pass
-
-    
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_donations_csv_works(self):
-    #     pass
-    
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_donations_excel_works(self):
-    #     pass
-    
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_volunteers_csv_works(self):
-    #     pass
-    
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_volunteers_excel_works(self):
-    #     pass
     
     
     def test_ignoring_a_column_actually_ignores_it(self):
@@ -415,79 +390,3 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
     def test_st_gerard_style_file_works(self):
         pass
 
-
-class TestSpreadsheetGenerations(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, GenerateSpreadsheetsMixin):
-        
-
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_person_csv_succeeds(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_person_excel_succeeds(self):
-        pass
-
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_organization_csv_succeeds(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_organization_excel_succeeds(self):
-        pass
-
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_donations_csv_succeeds(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_donations_excel_succeeds(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_volunteers_csv_succeeds(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_volunteers_excel_succeeds(self):
-        pass
-
-
-class TestSpreadSheetGenerationLoop(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, GenerateSpreadsheetsMixin):
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_person_csv_then_importing_it_leaves_the_same_data(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_person_excel_then_importing_it_leaves_the_same_data(self):
-        pass
-
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_organization_csv_then_importing_it_leaves_the_same_data(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_organization_excel_then_importing_it_leaves_the_same_data(self):
-        pass
-
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_donations_csv_then_importing_it_leaves_the_same_data(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_donations_excel_then_importing_it_leaves_the_same_data(self):
-        pass
-
-
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_volunteers_csv_then_importing_it_leaves_the_same_data(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_volunteers_excel_then_importing_it_leaves_the_same_data(self):
-        pass

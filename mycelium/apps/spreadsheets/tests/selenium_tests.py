@@ -214,3 +214,25 @@ class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractio
         sel.click("css=.start_edit_btn")
         time.sleep(0.5)
         self.assertEqual(sel.get_text("css=#container_id_spreadsheet_template .file_type_option.selected .option_name"), "Volunteer Hour Summary")
+
+    def test_that_the_quick_download_link_works(self):
+        sel = self.selenium
+        self.test_creating_a_new_spreadsheet_saves()
+        sel.click("css=.back_to_search_btn")
+        sel.wait_for_page_to_load("30000")
+        self.assert_on_spreadsheet_search_page()
+        sel.click("css=.quick_download_btn")
+        time.sleep(5)
+        self.assert_on_spreadsheet_search_page()
+
+    def test_that_the_download_button_disables_during_save(self):
+        sel = self.selenium
+        self.test_clicking_the_new_spreadsheet_button_takes_you_to_a_new_spreadsheet()
+        assert sel.is_element_present("css=.download_spreadsheet_btn")
+        assert not sel.is_element_present("css=.download_spreadsheet_btn.disabled")
+        sel.type("css=#id_name", "test")
+        time.sleep(0.1)
+        assert sel.is_element_present("css=.download_spreadsheet_btn.disabled")
+        time.sleep(5.9)
+        assert sel.is_element_present("css=.download_spreadsheet_btn")
+        assert not sel.is_element_present("css=.download_spreadsheet_btn.disabled")

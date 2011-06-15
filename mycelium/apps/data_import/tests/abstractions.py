@@ -11,6 +11,20 @@ class GenerateSpreadsheetsMixin:
             'phone_number': person.phone_number,
         }
 
+    def _donation_dict(self, donation):
+        return {
+            'date': donation.date,
+            'amount': donation.amount,
+            'donor': donation.donor,
+        }
+
+    def _shift_dict(self, shift):
+        return {
+            'date': shift.date,
+            'duration': shift.duration,
+            'volunteer': shift.volunteer,
+        }
+
 
     def create_people_csv_file(self, account, num_people=200):
         assert True == "Implemented"

@@ -1,5 +1,5 @@
 <tr class="result_row person_row striped_row spreadsheet_row">
 	<td class="name		"	><a href="{% url spreadsheets:spreadsheet obj.pk %}" ><span class="highlightable">{{obj.full_name}}</span></a></td>
 	<td class="count	"	>{{obj.num_rows}} people</td>
-	<td class="Download "	><a href="{% url spreadsheets:download %}?file_type={{obj.default_filetype}}&spreadsheet_id={{obj.pk}}" class="mycelium_btn mycelium_small_btn">Download {{obj.get_default_filetype_display}}</a></td>
+	<td class="download "	><a href="{% url spreadsheets:download %}?type={{obj.default_filetype}}&spreadsheet_id={{obj.pk}}" class="mycelium_btn mycelium_small_btn quick_download_btn">Download {{obj.get_default_filetype_display}}</a></td>
 </tr>
