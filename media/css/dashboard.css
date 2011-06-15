@@ -129,3 +129,6 @@ column_content.completed_goodcloud_challenges {
 	background-position: 6px 0px;
 	
 }
+column_content.news .date {
+	font-weight: bold;
+}
