@@ -44,7 +44,7 @@ class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractio
         time.sleep(0.5)
         sel.type("css=#id_name", "Actually, I decided on a new name.")
         sel.select("css=#id_group", "Board of Directors")
-        sel.select("css=#id_spreadsheet_template", "Mailing List")
+        sel.click("css=label[for=id_spreadsheet_template_2]")
         sel.click("css=label[for=id_default_filetype_1]")
         sel.click("css=.save_and_status_btn")
         time.sleep(2)
@@ -75,7 +75,7 @@ class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractio
         sel.wait_for_page_to_load("30000")
 
         # get groups
-        self.assertEqual(o0,"---------")
+        self.assertEqual(o0,"All Contacts")
         self.assertEqual(o1,sel.get_text("css=.group_row:nth(0) .name"))
         self.assertEqual(o2,sel.get_text("css=.group_row:nth(1) .name"))
         self.assertEqual(o3,sel.get_text("css=.group_row:nth(2) .name"))

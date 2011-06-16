@@ -40,6 +40,8 @@ class Command(BaseCommand):
         celery_subprocess = subprocess.Popen(cel_command,shell=True,                **outputs )
         spreadsheet_subprocess = subprocess.Popen(spreadsheet_command,shell=True, cwd=join(settings.PROJECT_ROOT,"apps/data_import/tests/test_spreadsheets"), **outputs )
 
+        from django.core.cache import cache
+        cache.clear()
 
         try:
             call_command('test', "--with-selenium", *args, **options )
@@ -67,5 +69,8 @@ class Command(BaseCommand):
             spreadsheet_subprocess.kill()
         except:
             pass
+
+        cache.clear()
+        
         print "Stopping..."
         time.sleep(6)

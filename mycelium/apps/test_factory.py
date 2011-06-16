@@ -442,10 +442,10 @@ class Factory(QiFactory):
 
 
     @classmethod
-    def people_mailing_list_spreadsheet_file(cls, account, file_type=None, template=SPREADSHEET_TEMPLATE_CHOICES[0][0]):
+    def people_mailing_list_spreadsheet_file(cls, account, file_type=None, template=SPREADSHEET_TEMPLATE_CHOICES[0][0], **kwargs):
         f_write = cStringIO.StringIO()
         s = cls.spreadsheet(account, template, file_type)
-        SpreadsheetAbstraction.create_spreadsheet(s.members, s.template_obj, s.default_filetype, file_handler=f_write)
+        SpreadsheetAbstraction.create_spreadsheet(s.members, s.template_obj, s.default_filetype, file_handler=f_write, with_header=False)
         f_read = cStringIO.StringIO(f_write.getvalue())
         return f_read
 

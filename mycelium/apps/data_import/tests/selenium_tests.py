@@ -178,7 +178,15 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         sel.click("link=View Results")
         sel.wait_for_page_to_load("30000")
 
-        sel.click("link=John Smith")
+        sel.click("link=People")
+        sel.wait_for_page_to_load("30000")
+
+        sel.type("css=#id_search_query", "john smith")
+        sel.key_down("css=#id_search_query","5")
+        sel.key_up("css=#id_search_query","5")
+        time.sleep(2)
+        sel.click("css=search_results .result_row .name a")
+
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("John")
         assert sel.is_text_present("Smith")        

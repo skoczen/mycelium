@@ -105,7 +105,7 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         people_info = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
 
         # make a spreadsheet of them.
-        s =self._create_a_person_spreadsheet_and_clear_the_data(file_type, extension)
+        s = self._create_a_person_spreadsheet_and_clear_the_data(file_type, extension)
 
         s.do_import(fields=fields)
 
@@ -127,6 +127,7 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
     def test_ignoring_a_column_actually_ignores_it(self):
         fields = ["first_name","last_name","email",]
         s = self._create_a_person_spreadsheet_and_clear_the_data()
+        
         s.do_import(fields=fields)
 
         # assert that they're back without names
