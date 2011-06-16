@@ -25,12 +25,9 @@ SERVER_EMAIL = 'support@agoodcloud.com'
 SEND_BROKEN_LINK_EMAILS = True
 
 ADMINS = [
-     'steven@quantumimagery.com',
+     ('Steven Skoczen', 'steven@quantumimagery.com'),
 ]
 MANAGERS = ADMINS
-MANAGERS += (
-    'tom@agoodcloud.com',
-)
 SENTRY_ADMINS = ADMINS
 
 TIME_ZONE = "America/Los_Angeles"
@@ -144,8 +141,8 @@ INSTALLED_APPS = (
     'django_jenkins',
     'django_ses',
     'mediasync',
-    # 'sentry',
-    # 'sentry.client',
+    'sentry',
+    'sentry.client',
 
     #'cms',
     #'mptt',

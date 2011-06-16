@@ -3,6 +3,8 @@ from celery.decorators import periodic_task, task
 from django.conf import settings
 from django.core.cache import cache
 from johnny import cache as johnny_cache
+from johnny import middleware
+jc = middleware.QueryCacheMiddleware()
 
 @task
 def test():    

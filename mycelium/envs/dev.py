@@ -38,9 +38,6 @@ CACHES = {
         'JOHNNY_CACHE':True,
     }
 }
-#CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-# CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
-
 
 BROKER_VHOST = "2"                       # Maps to database number.
 
@@ -100,4 +97,3 @@ MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
 # except:
 #     GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
 # MEDIASYNC["AWS_PREFIX"] = GIT_CURRENT_SHA
-

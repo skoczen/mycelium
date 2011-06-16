@@ -15,7 +15,7 @@ BeautifulSoup==3.2.0
 -e git://github.com/GoodCloud/django-ajax-uploader.git@f9eaf5c694692176b4e47d707356f25b495e1e71#egg=ajaxuploader-dev
 
 django-extensions==0.6
--e git://github.com/skoczen/qi-toolkit.git@262f6a7b294b97270da7776503fc4ffa3c38747c#egg=qi_toolkit-dev
+-e git://github.com/skoczen/qi-toolkit.git@de8a44d893559582b4a90776f1384cb98f14d579#egg=qi_toolkit-dev
 python-crontab==0.9.6
 django-analytical==0.8.1
 
@@ -31,7 +31,7 @@ django-nose-selenium==0.7
 -e git://github.com/Almad/django-sane-testing.git@e2bf9652ee27222936a013445f31564bc90818c4#egg=djangosanetesting-dev
 celery==2.2.6
 django-celery==2.2.4
--e git://github.com/kmmbvnr/django-jenkins.git@3c142bd4082a1e3f2a513ecedd15a412790d9b24#egg=django_jenkins-dev
+-e git://github.com/kmmbvnr/django-jenkins.git@e5031e9254e172aff1dee1e92b5e2609235612f9#egg=django_jenkins-dev
 coverage==3.5b1
 -e git://github.com/skoczen/nose-xcover.git@cccc0e83ce2ed117903768587177a937c144e152#egg=nosexcover-dev
 
@@ -46,7 +46,6 @@ slimmer==0.1.30
 django-debug-toolbar==0.8.5
 django-picklefield==0.1.9
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
-
 johnny-cache==0.3.1
 django-balancer==0.3
 django-sentry==1.8.5

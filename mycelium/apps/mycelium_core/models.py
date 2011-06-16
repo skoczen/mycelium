@@ -75,4 +75,4 @@ class SearchableItemProxy(SimpleSearchableModel, AccountBasedModel):
         ss = self.render_result_row()
         self.cached_search_result = ss
         super(SearchableItemProxy,self).save(*args,**kwargs)
-        put_in_cache_forever(self.cache_name, ss)
+        put_in_cache_forever.delay(self.cache_name, ss)

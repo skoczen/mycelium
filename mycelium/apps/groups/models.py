@@ -103,7 +103,7 @@ class GroupSearchProxy(SearchableItemProxy):
         # if cache.get(self.cache_name):
         #     return cache.get(self.cache_name)
         # elif self.cached_search_result:
-        #     put_in_cache_forever(self.cache_name,self.cached_search_result)
+        #     put_in_cache_forever.delay(self.cache_name,self.cached_search_result)
         #     return self.cached_search_result
         # else:
         #     return self.regenerate_and_cache_search_results()
@@ -111,7 +111,7 @@ class GroupSearchProxy(SearchableItemProxy):
     def regenerate_and_cache_search_results(self):
         ss = self.render_result_row()
         # popping over to celery
-        put_in_cache_forever(self.cache_name,ss)
+        put_in_cache_forever.delay(self.cache_name,ss)
         update_proxy_results_db_cache.delay(GroupSearchProxy, self,ss)
         cache.set(self.cached_count_key, self.members.count())
         return ss
