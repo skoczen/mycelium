@@ -29,9 +29,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
     def test_that_choosing_a_person_displays_the_upload_area(self):
         sel = self.selenium
         self.get_to_start_import_page()
-        assert not sel.is_element_present("css=.qq-upload-button")
-        sel.click("css=.import_type_people input")
-        sel.wait_for_element_present("css=.qq-upload-button")
+        self.choose_person_as_import_type()
 
     def test_that_uploading_a_csv_file_displays_the_right_columns(self):
         sel = self.selenium
@@ -111,19 +109,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
     
     def test_that_a_submitted_import_updates_the_list_as_it_progresses(self):
         sel = self.selenium
-        filename = self.create_and_save_200_person_spreadsheet()
-                
-        self.test_that_choosing_a_person_displays_the_upload_area()
-        self.set_upload_file(filename)
-        sel.wait_for_element_present("css=.qq-upload-success")
-        sel.select("css=.import_fields_confirmation th.col_0 select", "First Name")
-        sel.select("css=.import_fields_confirmation th.col_1 select", "Last Name")
-        sel.select("css=.import_fields_confirmation th.col_2 select", "Phone")
-        sel.select("css=.import_fields_confirmation th.col_3 select", "Email")
-        time.sleep(0.2)
-        sel.click("css=.submit_and_start_import_btn")
-        sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present("Right now")
+        self.start_person_spreadsheet_upload()
 
         time.sleep(2)
         first_pct = int(sel.get_text("css=.percent_imported:nth(0)"))
@@ -134,23 +120,12 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
 
         
     def test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list(self):
-        sel = self.selenium
-        self.test_that_a_submitted_import_updates_the_list_as_it_progresses()
+        self.upload_person_spreadsheet_successfully()
         
-        start_time = time.time()
-        success = False
-        while time.time() - start_time < 120  and not success:
-            if sel.is_text_present("View Results"):
-                success = True
-            else:
-                time.sleep(10)
-        
-        assert success == True
-
 
     def test_that_a_successful_completed_import_shows_valid_results(self):
         sel = self.selenium
-        self.test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list()
+        self.upload_person_spreadsheet_successfully()
         time.sleep(4)
         sel.click("css=.view_results_btn")
         sel.wait_for_page_to_load("30000")

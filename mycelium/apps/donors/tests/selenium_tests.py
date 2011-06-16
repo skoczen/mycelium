@@ -4,37 +4,8 @@ import time
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
+from donors.tests.selenium_abstractions import DonorTestAbstractions
 
-class DonorTestAbstractions(object):
-
-    def create_person_and_go_to_donor_tab(self):
-        self.create_john_smith()
-        self.switch_to_donor_tab()
-    
-    def create_person_with_one_donation(self):
-        self.create_person_and_go_to_donor_tab()
-        return self.add_a_donation()
-
-    def switch_to_donor_tab(self):
-        sel = self.selenium
-        sel.click("css=.detail_tab[href=#donor]")
-        time.sleep(1)
-
-
-    def add_a_donation(self, amount=None, date=None):
-        sel = self.selenium
-        self.switch_to_donor_tab()
-        if not amount:
-            amount = "%.2f" % (Factory.rand_currency())
-        if not date:
-            d = Factory.rand_date()
-            date = "%.2f/%.2f/%.2f" % (d.month, d.day, d.year)
-        sel.click("css=tabbed_box[name=add_a_donation] tab_title")
-        sel.type("css=#id_amount", amount)
-        sel.type("css=#id_date", date)
-        sel.click("css=tabbed_box[name=add_a_donation] .add_donation_btn")
-        time.sleep(2)
-        return amount,date
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 

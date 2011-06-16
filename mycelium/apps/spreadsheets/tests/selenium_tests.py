@@ -14,28 +14,11 @@ class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractio
         self.assert_on_spreadsheet_search_page()
 
     def test_clicking_the_new_spreadsheet_button_takes_you_to_a_new_spreadsheet(self):
-        sel = self.selenium
-        self.get_to_spreadsheets_page()
-        sel.click("link=New Spreadsheet")
-        sel.wait_for_page_to_load("30000")
-        self.assert_on_edit_spreadsheet_page()
-
+        self.start_a_new_spreadsheet()
 
     def test_creating_a_new_spreadsheet_saves(self, spreadsheet_name="My test spreadsheet"):
         sel = self.selenium
-        self.test_clicking_the_new_spreadsheet_button_takes_you_to_a_new_spreadsheet()
-        sel.type("css=#id_name", spreadsheet_name)
-        time.sleep(6)
-        sel.refresh()
-        sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present(spreadsheet_name)
-        sel.click("css=.back_to_search_btn")
-        sel.wait_for_page_to_load("30000")
-        self.assert_on_spreadsheet_search_page()
-        assert sel.is_text_present(spreadsheet_name)
-        sel.click("link=%s" % spreadsheet_name)
-        sel.wait_for_page_to_load("30000")
-        
+        self.create_a_spreadsheet(spreadsheet_name)
     
     def test_changing_the_name_group_and_type_of_a_spreadsheet_works(self):
         sel = self.selenium

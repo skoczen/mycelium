@@ -94,7 +94,7 @@ class Account(TimestampModelMixin):
 
             if not self.challenge_has_set_up_tags:
                 # One non-standard tag.
-                if Tag.objects_by_account(self).count() > 1:
+                if Tag.objects_by_account(self).count() > 0:
                     self.challenge_has_set_up_tags = True
                                 
             if not self.challenge_has_added_board:
@@ -103,7 +103,7 @@ class Account(TimestampModelMixin):
                     
                     # and, created a board group with at least one rule on tag
                     if Group.objects_by_account(self).filter(name__icontains="board").count() > 0:
-                        for g in Group.objects_by_account(self).filter(name__icontains="board").all():
+                        for g in Group.objects_by_account(self).all():
                             for r in g.rules.all():
                                 if r.is_valid and "board" in r.cleaned_right_side_value.lower():
                                     self.challenge_has_added_board = True
