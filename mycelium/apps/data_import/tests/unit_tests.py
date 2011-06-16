@@ -32,28 +32,30 @@ class TestModels(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Generat
         # assert that the num_rows function returns what I thought it should
         self.assertEqual(s2.num_rows, Person.objects_by_account(self.a1).count())
 
-   
+    def _mailing_list_row_dict(self, p):
+        return [ p.first_name, p.last_name, p.line_1, p.line_2, p.city, p.state, p.postal_code, p.pk ]
+
     def test_get_row(self):
-        s = self.created_and_imported_csv_spreadsheet(fields=["first_name","email"])
-        # assert that the num_rows function returns what I thought it should
+        s = self.created_and_imported_csv_spreadsheet()
+        # assert that the get_row function returns what I thought it should
         
         p1 = Person.objects_by_account(self.a1).all()[0]
         p2 = Person.objects_by_account(self.a1).all()[2]
 
-        self.assertEqual(s.get_row(0), [p1.first_name, p1.email])
-        self.assertEqual(s.get_row(2), [p2.first_name, p2.email])
+        self.assertEqual(s.get_row(0), self._mailing_list_row_dict(p1))
+        self.assertEqual(s.get_row(2), self._mailing_list_row_dict(p2))
         
     
     def test_get_rows(self):
-        s = self.created_and_imported_csv_spreadsheet(fields=["last_name","phone_number", "first_name"])
-        # assert that the num_rows function returns what I thought it should
+        s = self.created_and_imported_csv_spreadsheet()
+        # assert that the get_rows function returns what I thought it should
         
         p1 = Person.objects_by_account(self.a1).all()[0]
         p2 = Person.objects_by_account(self.a1).all()[1]
         p3 = Person.objects_by_account(self.a1).all()[2]
         people = [p1, p2, p3]
 
-        self.assertEqual(s.get_rows(0,3), [[p.last_name, p.phone_number, p.first_name,] for p in people ])
+        self.assertEqual(s.get_rows(0,3), [self._mailing_list_row_dict(p) for p in people ])
         
 
 

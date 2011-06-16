@@ -302,8 +302,7 @@ class SpreadsheetAbstraction:
 
         for r in query_set:
             row = []
-            target_id = r.pk
-            template_instance.get_primary_target(r.account, target_id, force_refresh=True)
+            template_instance.get_primary_target(r.account, r.pk, force_refresh=True)
             target_objects,created = template_instance.get_target_objects()
 
             for k,f in template.fields.iteritems():

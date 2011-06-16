@@ -177,10 +177,11 @@ class DonationSummaryListTemplateInstance(DonationSummaryListTemplate,Spreadshee
         super(DonationSummaryListTemplateInstance, self).__init__(*args, **kwargs)
         
         self.fields["donations_all_time"] = ImportField("Total Donations all-time",           "people",       "Person",       "donation_totals_all_time")
-        oldest = Donation.objects_by_account(self.account).order_by("date")[0].date
-        this_year = datetime.date.today().year
-        for y in range(oldest.year, this_year+1):
-            self.fields["donation_%s" % y] = ImportField("%s Total" % y,           "people",       "Person",       "donation_total_for_year(%s)" % y)
+        if Donation.objects_by_account(self.account).count() > 0:
+            oldest = Donation.objects_by_account(self.account).order_by("date")[0].date
+            this_year = datetime.date.today().year
+            for y in range(oldest.year, this_year+1):
+                self.fields["donation_%s" % y] = ImportField("%s Total" % y,           "people",       "Person",       "donation_total_for_year(%s)" % y)
 
 
 class VolunteerHoursTemplate (CompletedShiftBasedTemplate):
@@ -235,10 +236,11 @@ class VolunteerHoursSummaryTemplateInstance(VolunteerHoursSummaryTemplate,Spread
         super(VolunteerHoursSummaryTemplateInstance, self).__init__(*args, **kwargs)
         
         self.fields["hours_all_time"] = ImportField("Total Hours all-time",           "people",       "Person",       "volunteer_hours_all_time")
-        oldest = CompletedShift.objects_by_account(self.account).order_by("date")[0].date
-        this_year = datetime.date.today().year
-        for y in range(oldest.year, this_year+1):
-            self.fields["hours_%s" % y] = ImportField("%s Total Hours" % y,           "people",       "Person",       "volunteer_hours_for_year(%s)" % y)
+        if CompletedShift.objects_by_account(self.account).count() > 0:
+            oldest = CompletedShift.objects_by_account(self.account).order_by("date")[0].date
+            this_year = datetime.date.today().year
+            for y in range(oldest.year, this_year+1):
+                self.fields["hours_%s" % y] = ImportField("%s Total Hours" % y,           "people",       "Person",       "volunteer_hours_for_year(%s)" % y)
         
 
 class CustomTemplate (object):

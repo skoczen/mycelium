@@ -27,7 +27,6 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
         self.get_to_start_import_page()
         
     def test_that_choosing_a_person_displays_the_upload_area(self):
-        sel = self.selenium
         self.get_to_start_import_page()
         self.choose_person_as_import_type()
 
@@ -109,6 +108,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
     
     def test_that_a_submitted_import_updates_the_list_as_it_progresses(self):
         sel = self.selenium
+        self.get_to_start_import_page()
         self.start_person_spreadsheet_upload()
 
         time.sleep(2)
@@ -120,11 +120,13 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
 
         
     def test_that_a_submitted_import_of_200_finishes_importing_within_two_minutes_and_updates_the_import_list(self):
+        self.get_to_start_import_page()
         self.upload_person_spreadsheet_successfully()
         
 
     def test_that_a_successful_completed_import_shows_valid_results(self):
         sel = self.selenium
+        self.get_to_start_import_page()
         self.upload_person_spreadsheet_successfully()
         time.sleep(4)
         sel.click("css=.view_results_btn")
