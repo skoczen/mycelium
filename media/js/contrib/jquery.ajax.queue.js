@@ -19,7 +19,7 @@ $(function(){
 	});
 	jQuery.ajaxSync({
 		url: "test.php",
-		success: function(html){ jQuery("ulhttps://github.com/acdha/django-speedtracer").append("<b>"+html+"</b>"); }
+		success: function(html){ jQuery("ul").append("<b>"+html+"</b>"); }
 	});
 	jQuery.ajaxSync({
 		url: "test.php",

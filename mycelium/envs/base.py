@@ -164,7 +164,7 @@ INSTALLED_APPS = (
     'rewrite',
     'people',
     'mycelium_core',
-    'reports',
+    'spreadsheets',
     'data_import',
     'logo_maker',
     'volunteers',

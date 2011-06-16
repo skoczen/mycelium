@@ -9,10 +9,9 @@ from django.test import TestCase
 from django.conf import settings
 from groups.models import Group
 from data_import.models import DataImport
-from data_import.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
+from spreadsheets.spreadsheet import SpreadsheetAbstraction, EXCEL_TYPE, CSV_TYPE
 from data_import.tests.abstractions import GenerateSpreadsheetsMixin, TEST_SPREADSHEET_PATH
 from people.models import Person
-
 
 class Dummy(object):
     pass
@@ -33,40 +32,42 @@ class TestModels(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Generat
         # assert that the num_rows function returns what I thought it should
         self.assertEqual(s2.num_rows, Person.objects_by_account(self.a1).count())
 
-   
+    def _mailing_list_row_dict(self, p):
+        return [ p.first_name, p.last_name, p.line_1, p.line_2, p.city, p.state, p.postal_code, p.pk ]
+
     def test_get_row(self):
-        s = self.created_and_imported_csv_spreadsheet(fields=["first_name","email"])
-        # assert that the num_rows function returns what I thought it should
+        s = self.created_and_imported_csv_spreadsheet()
+        # assert that the get_row function returns what I thought it should
         
         p1 = Person.objects_by_account(self.a1).all()[0]
         p2 = Person.objects_by_account(self.a1).all()[2]
 
-        self.assertEqual(s.get_row(0), [p1.first_name, p1.email])
-        self.assertEqual(s.get_row(2), [p2.first_name, p2.email])
+        self.assertEqual(s.get_row(0), self._mailing_list_row_dict(p1))
+        self.assertEqual(s.get_row(2), self._mailing_list_row_dict(p2))
         
     
     def test_get_rows(self):
-        s = self.created_and_imported_csv_spreadsheet(fields=["last_name","phone_number", "first_name"])
-        # assert that the num_rows function returns what I thought it should
+        s = self.created_and_imported_csv_spreadsheet()
+        # assert that the get_rows function returns what I thought it should
         
         p1 = Person.objects_by_account(self.a1).all()[0]
         p2 = Person.objects_by_account(self.a1).all()[1]
         p3 = Person.objects_by_account(self.a1).all()[2]
         people = [p1, p2, p3]
 
-        self.assertEqual(s.get_rows(0,3), [[p.last_name, p.phone_number, p.first_name,] for p in people ])
+        self.assertEqual(s.get_rows(0,3), [self._mailing_list_row_dict(p) for p in people ])
         
 
 
     def test__detect_type(self):
-        fh = Factory.people_spreadsheet(self.a1, file_type=CSV_TYPE)
-        s = Spreadsheet(self.a1, fh, "people", filename="test.foo")
+        fh = Factory.people_mailing_list_spreadsheet_file(self.a1, file_type=CSV_TYPE)
+        s = SpreadsheetAbstraction(self.a1, fh, "people", filename="test.foo")
         self.assertEqual(s.type, CSV_TYPE)
         self.assertEqual(s.is_valid,True)
         
 
-        fh = Factory.people_spreadsheet(self.a1, file_type=EXCEL_TYPE)
-        s = Spreadsheet(self.a1, fh, "people", filename="test.bar")
+        fh = Factory.people_mailing_list_spreadsheet_file(self.a1, file_type=EXCEL_TYPE)
+        s = SpreadsheetAbstraction(self.a1, fh, "people", filename="test.bar")
         self.assertEqual(s.type, EXCEL_TYPE)
         self.assertEqual(s.is_valid,True)
 
@@ -88,7 +89,7 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
                 extension = "xls"
 
         # create a person spreadsheet
-        fh = Factory.people_spreadsheet(self.a1, file_type=file_type)
+        fh = Factory.people_mailing_list_spreadsheet_file(self.a1, file_type=file_type)
 
         # delete all the people
         Person.objects_by_account(self.a1).all().delete()
@@ -97,7 +98,7 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         self.assertEqual(Person.objects_by_account(self.a1).count(), 0)
 
         # import the spreadsheet
-        s = Spreadsheet(self.a1, fh, "people", filename="test.%s" % (extension,))
+        s = SpreadsheetAbstraction(self.a1, fh, "people", filename="test.%s" % (extension,))
         return s
 
     
@@ -106,7 +107,7 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         people_info = [self._person_dict(p) for p in Person.objects_by_account(self.a1)]
 
         # make a spreadsheet of them.
-        s =self._create_a_person_spreadsheet_and_clear_the_data(file_type, extension)
+        s = self._create_a_person_spreadsheet_and_clear_the_data(file_type, extension)
 
         s.do_import(fields=fields)
 
@@ -123,35 +124,12 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         return self._that_importing_a_person_spreadsheet_refills_an_emptied_database(EXCEL_TYPE)
 
     
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_organization_csv_works(self):
-    #     pass
-    
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_organization_excel_works(self):
-    #     pass
-
-    
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_donations_csv_works(self):
-    #     pass
-    
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_donations_excel_works(self):
-    #     pass
-    
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_volunteers_csv_works(self):
-    #     pass
-    
-    @unittest.skip("Not written yet.")
-    # def test_that_importing_a_volunteers_excel_works(self):
-    #     pass
     
     
     def test_ignoring_a_column_actually_ignores_it(self):
         fields = ["first_name","last_name","email",]
         s = self._create_a_person_spreadsheet_and_clear_the_data()
+        
         s.do_import(fields=fields)
 
         # assert that they're back without names
@@ -171,12 +149,12 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
         excel_filename = "nameemail.xls"
         
         fh1 = open(os.path.join(settings.PROJECT_ROOT, TEST_SPREADSHEET_PATH, csv_filename ), 'r')
-        s = Spreadsheet(self.a1, fh1, "people", filename=csv_filename)
+        s = SpreadsheetAbstraction(self.a1, fh1, "people", filename=csv_filename)
         csv_data = s.get_rows(0,s.num_rows)
         fh1.close()
 
         fh2 = open(os.path.join(settings.PROJECT_ROOT, TEST_SPREADSHEET_PATH, excel_filename ), 'r')
-        s = Spreadsheet(self.a1, fh2, "people", filename=excel_filename)
+        s = SpreadsheetAbstraction(self.a1, fh2, "people", filename=excel_filename)
         excel_data = s.get_rows(0,s.num_rows)
         fh2.close()
 
@@ -415,79 +393,3 @@ class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Gen
     def test_st_gerard_style_file_works(self):
         pass
 
-
-class TestSpreadsheetGenerations(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, GenerateSpreadsheetsMixin):
-        
-
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_person_csv_succeeds(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_person_excel_succeeds(self):
-        pass
-
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_organization_csv_succeeds(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_organization_excel_succeeds(self):
-        pass
-
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_donations_csv_succeeds(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_donations_excel_succeeds(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_volunteers_csv_succeeds(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_volunteers_excel_succeeds(self):
-        pass
-
-
-class TestSpreadSheetGenerationLoop(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, GenerateSpreadsheetsMixin):
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_person_csv_then_importing_it_leaves_the_same_data(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_person_excel_then_importing_it_leaves_the_same_data(self):
-        pass
-
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_organization_csv_then_importing_it_leaves_the_same_data(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_organization_excel_then_importing_it_leaves_the_same_data(self):
-        pass
-
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_donations_csv_then_importing_it_leaves_the_same_data(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_donations_excel_then_importing_it_leaves_the_same_data(self):
-        pass
-
-
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_volunteers_csv_then_importing_it_leaves_the_same_data(self):
-        pass
-    
-    @unittest.skip("Not written yet.")
-    def test_that_creating_a_volunteers_excel_then_importing_it_leaves_the_same_data(self):
-        pass

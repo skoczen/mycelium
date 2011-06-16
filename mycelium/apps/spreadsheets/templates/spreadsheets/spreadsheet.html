@@ -1,0 +1,100 @@
+{% extends "spreadsheets/base.html" %}
+{% load i18n generic_fields friendly_data_formatting generic_tag_tags %}
+{% block title %}Spreadsheets - {{spreadsheet.name}}{% endblock %}
+{% block css %}{{block.super}}
+{% generic_field_css %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+{% generic_tags_js %}
+{% js "/js/mycelium/people_common.js" %}
+{% js "/js/mycelium/spreadsheets.js" %}
+
+{% if request.GET.edit == "ON" or form.instance.full_name == "Unnamed Spreadsheet"  %}
+<script type="text/javascript" charset="utf-8">
+$(function(){
+    $("#basic_info_form").genericFieldForm('toggle_edit');
+	$("#id_name").focus();
+});
+</script>
+
+{% endif %}
+
+{% endblock %}
+
+{% block breadcrumb_links %}<a href="{% url spreadsheets:search %}" class="back_to_search_btn" >Back to Spreadsheets</a>{% endblock %}
+{% block page_content %}
+<form action="{% url spreadsheets:save_basic_info spreadsheet.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
+{% with "Edit Spreadsheet" as edit_label %}
+	{% include "people/_save_status_and_button.html" %}
+{% endwith %}
+
+<div class="basic_info">
+	{% generic_editable_field form.name %}
+	<div class="detail_header">Spreadsheet Contents</div>
+	<span class="group_and_template">
+	<label class="section">Group:</label>
+	{% generic_editable_field form.group %}
+	<fragment name="group_count" id="id_group_count" action="replace" url="{% url spreadsheets:group_count %}" >{% include "spreadsheets/_group_count.html" %}</fragment>
+	
+
+		<span class="generic_editable_field selects_with_descriptions" id="container_id_spreadsheet_template">
+			<label class="section">Template:</label>
+			<span class="view_field file_type_option">
+				<span class="option_name">{{form.instance.template_obj.name}}</span>
+				<span class="option_description">{{form.instance.template_obj.description}}</span>
+			</span>
+			<span class="edit_field">
+				{% for t in spreadsheet_templates  %}
+				<div class="file_type_option {% if t.template_type == form.instance.spreadsheet_template %}selected{% endif %}">
+					<input type="radio" id="id_spreadsheet_template_{{forloop.counter}}" value="{{t.template_type}}" name="spreadsheet_template" {% if t.template_type == form.instance.spreadsheet_template %}checked="checked"{% endif %} />
+					<label for="id_spreadsheet_template_{{forloop.counter}}">
+						<span class="option_name">{{t.name}}</span>
+						<span class="option_description">{{t.description}}</span>
+					</label>
+				</div>
+				{% endfor %}
+
+			</span>
+		</span>
+	</span>
+	<div class="email_quick_copy {% if form.instance.spreadsheet_template != "email_list" %}hidden{% endif %}" >
+		<div class="detail_header">Email Quick-copy</div>
+		<div class="detail_description">Need to send a quick email? Just copy the list below, and and paste into your email program!</div>
+		<fragment name="email_quick_copy" action="replace" url="{% url spreadsheets:email_list form.instance.pk %}" >
+		{% if form.instance.spreadsheet_template == "email_list" %}{% include "spreadsheets/_email_list.html" %}{% endif %}
+		</fragment>
+	</div>
+	<div class="file_type selects_with_descriptions">
+		<div class="detail_header">File Type</div>
+		<div class="file_type_option {% if "CSV" == form.instance.default_filetype %}selected{% endif %}">
+			<input type="radio" id="id_default_filetype_0" value="CSV" name="default_filetype" {% if "CSV" == form.instance.default_filetype %}checked="checked"{% endif %} />
+			<label for="id_default_filetype_0">
+				<span class="option_name">CSV</span>
+				<span class="option_description">CSV (comma separated value) files can be opened in nearly all spreadsheet programs, and imported by virtually all databases. If you're not sure, choose CSV.</span>
+			</label>
+		</div>
+		
+		<div class="file_type_option {% if "EXCEL" == form.instance.default_filetype %}selected{% endif %}">
+			<input type="radio" id="id_default_filetype_1" value="EXCEL" name="default_filetype" {% if "EXCEL" == form.instance.default_filetype %}checked="checked"{% endif %} />
+			<label for="id_default_filetype_1">
+				<span class="option_name">Excel</span>
+				<span class="option_description">Microsoft Excel files can be opened by a number of spreadsheet programs (like Excel and OpenOffice), and many databases.  If you're using Microsoft Excel, go ahead and choose this option.</span>
+			</label>
+		</div>
+	</div>
+</div>
+</form>
+
+<div class="download_spreadsheet_button_block">
+	<a href="{% url spreadsheets:download %}" base_url="{% url spreadsheets:download %}" class="mycelium_btn download_spreadsheet_btn auto_disable" disabled_text="Downloading...">Download Spreadsheet</a>
+</div>
+
+
+<div class="clearfix"></div>
+<delete_object_block>
+	<form action="{% url spreadsheets:delete %}" method="POST" id="delete_spreadsheet_form">{% csrf_token %}
+	<input type="hidden" name="spreadsheet_pk" value="{{spreadsheet.pk}}">
+	<a href="#" class="mycelium_btn mycelium_active_grey mycelium_delete_btn spreadsheet_delete_btn" >Delete this spreadsheet</a>
+	</form>
+</delete_object_block>
+{% endblock %}

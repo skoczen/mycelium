@@ -11,7 +11,11 @@ from accounts.models import Plan, Account, UserAccount, AccessLevel
 from django.contrib.sites.models import Site
 from django.template.defaultfilters import slugify
 from volunteers import VOLUNTEER_STATII
-from data_import.spreadsheet import Spreadsheet, EXCEL_TYPE, CSV_TYPE
+from spreadsheets import SPREADSHEET_TEMPLATE_CHOICES
+from spreadsheets.models import Spreadsheet
+from spreadsheets.spreadsheet import SpreadsheetAbstraction, SPREADSHEET_SOURCE_TYPES
+
+
 
 import datetime
 import cStringIO
@@ -191,11 +195,6 @@ class Factory(QiFactory):
                                         amount=amount,
                                         date=date)
          
-    @classmethod
-    def report(cls):
-        o = DummyObj()
-        o.pk = 1
-        return o
 
     @classmethod
     def data_import(cls):
@@ -294,11 +293,13 @@ class Factory(QiFactory):
         # create admin user (admin / admin)
         cls.useraccount(account=account, username="admin", password="admin", access_level=admin_accesslevel)
 
-        # create staff user (staff / staff)
-        cls.useraccount(account=account, username="staff", password="staff", access_level=staff_accesslevel)
+        if not mostly_empty:
+            # create staff user (staff / staff)
+            cls.useraccount(account=account, username="staff", password="staff", access_level=staff_accesslevel)
 
-        # create volunteer user ( volunteer / volunteer )
-        cls.useraccount(account=account, username="volunteer", password="volunteer", access_level=volunteer_accesslevel)
+            # create volunteer user ( volunteer / volunteer )
+            cls.useraccount(account=account, username="volunteer", password="volunteer", access_level=volunteer_accesslevel)
+        
         print_if_verbose(verbose, "Users created.")
 
         # create a bunch of reasonable tags, including the favorite color category
@@ -443,10 +444,24 @@ class Factory(QiFactory):
 
 
     @classmethod
-    def people_spreadsheet(cls, account, file_type=None, fields=["first_name","last_name","email","phone_number"]):
+    def people_mailing_list_spreadsheet_file(cls, account, file_type=None, template=SPREADSHEET_TEMPLATE_CHOICES[0][0], **kwargs):
         f_write = cStringIO.StringIO()
-        q = Person.objects_by_account(account).all()
-        Spreadsheet.create_spreadsheet(q, fields, file_type, file_handler=f_write)
+        s = cls.spreadsheet(account, template, file_type)
+        SpreadsheetAbstraction.create_spreadsheet(s.members, s.template_obj, s.default_filetype, file_handler=f_write, with_header=False)
         f_read = cStringIO.StringIO(f_write.getvalue())
         return f_read
 
+    @classmethod
+    def spreadsheet(cls, account, spreadsheet_template, file_type=None, group=None, name=None):
+        if not file_type:
+            file_type = SPREADSHEET_SOURCE_TYPES[0][0]
+        
+        if not name:
+            name = cls.rand_str()
+
+        return Spreadsheet.raw_objects.get_or_create(account=account,
+                                name=name,
+                                group=group,
+                                default_filetype=file_type,
+                                spreadsheet_template=spreadsheet_template
+            )[0]

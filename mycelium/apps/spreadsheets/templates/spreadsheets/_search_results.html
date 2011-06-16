@@ -1,0 +1,24 @@
+{% load pagination_tags %}
+{% if search_proxies %}
+{% autopaginate search_proxies 11 %}
+<table class="results_table striped">
+	<tr class="person_row header">
+		<th class="name">Name</th>
+		<th class="count"># of Rows</th>
+		<th class="download"></th>
+	</tr>
+{% for p in search_proxies %}{{p.search_result_row|safe}}{% endfor %}
+	<tr><td colspan="5" class="pagination_row">
+		{% paginate %}
+	</td></tr>
+</table>
+{% else %}
+<div class="no_people_found">
+{% if q %}
+	No spreadsheets found for search "{{q}}".
+{% else %}
+	No search entered.
+{% endif %}
+	
+</div>
+{% endif %}

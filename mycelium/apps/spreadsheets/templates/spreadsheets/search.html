@@ -1,0 +1,21 @@
+{% extends "spreadsheets/base.html" %}
+{% block title %}Spreadsheets - Create, View and Download Spreadsheets{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block javascript %}{{block.super}}
+<script type="text/javascript" charset="utf-8">
+	var SEARCH_URL = "{% url spreadsheets:search_results %}";
+</script>
+{% js "/js/mycelium/people_search.js" %}
+{% endblock %}
+{% block page_content %}
+<div class="main_search_box">
+	<input type="search" name="search_query" id="id_search_query" placeholder="Type in a spreadsheet name..." autofocus />
+</div>
+<new_object_buttons>
+	<a href="{% url spreadsheets:new_spreadsheet %}" class="new_spreadsheet_btn mycelium_btn mycelium_new_btn">New Spreadsheet</a>
+</new_object_buttons>
+<search_results><fragment name="main_search_results" action="replace">
+	{% include "spreadsheets/_search_results.html" %}
+</fragment>
+</search_results>
+{% endblock %}

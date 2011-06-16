@@ -13,6 +13,7 @@ from generic_tags.models import TagSet, Tag, TaggedItem
 from data_import.models import DataImport
 from django.core import mail
 from decimal import Decimal
+from spreadsheets import SPREADSHEET_TEMPLATE_CHOICES
 
 class Dummy(object):
     pass
@@ -38,7 +39,9 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         assert self.a1.challenge_has_imported_contacts == True
         
     def test_challenge_has_set_up_tags(self):
-        self.test_challenge_has_added_board()
+        # needed since the setup creates some and I don't want to add it to all the other tests.
+        Tag.objects_by_account(self.a1).delete()
+
         self.a1.check_challenge_progress()
         assert self.a1.challenge_has_set_up_tags == False
         Factory.tag_person(self.a1)
@@ -49,6 +52,7 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         Factory.tag(self.a1, name="Board of Directors")
         bg = Factory.group(self.a1,"board of directors")
         Factory.grouprule(self.a1, "have any tag that","contains","Board of Directors", group=bg)
+        Factory.tag_person(self.a1, tag_name="Board of Directors")
         self.a1.check_challenge_progress()
         assert self.a1.challenge_has_added_board == True
         
@@ -58,7 +62,7 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         assert self.a1.challenge_has_created_other_accounts == True
         
     def test_challenge_has_downloaded_spreadsheet(self):
-    # Expected fail
+        Factory.spreadsheet(self.a1, SPREADSHEET_TEMPLATE_CHOICES[0][0])
         self.a1.check_challenge_progress()
         assert self.a1.challenge_has_downloaded_spreadsheet == True
         
@@ -82,7 +86,6 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
 
 
     def test_has_completed_all_challenges(self):
-    # Expected fail until all others succeed.
         self.test_challenge_has_imported_contacts()
         self.test_challenge_has_set_up_tags()
         self.test_challenge_has_added_board()
@@ -113,7 +116,7 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         for d in Donation.objects.all():
             if d.account == a1 and d.date >= start_of_this_year:
                 total_donations_hand_count += 1
-        self.assertEqual(nums["total_donations"], total_donations_hand_count)
+        self.assertEqual(Decimal(nums["total_donations"]), Decimal(total_donations_hand_count))
         
 
         # total_donors

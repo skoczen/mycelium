@@ -4,7 +4,7 @@ COLUMN_HEADERS = {
 		{% for k,row_type in import_row_types.items %}	
 		"{{k}}": 
 			[
-				{% for k,f in row_type.importable_fields.items %}
+				{% for k,f in row_type.fields.items %}
 				{
 					'name':  "{{f.name}}",
 					'value': "{{f.field}}"
@@ -15,7 +15,7 @@ COLUMN_HEADERS = {
 	},
 	"rendered_select_options": {
 		{% for k,row_type in import_row_types.items %}	
-		"{{k}}": '<option value="">Choose a field...</option><option value="{{ignore_string}}">Ignore this column</option>{% for k,f in row_type.importable_fields.items %}<option value="{{f.field}}">{{f.name}}</option></option>{% endfor %}'{% if not forloop.last %},{% endif %}
+		"{{k}}": '<option value="">Choose a field...</option><option value="{{ignore_string}}">Ignore this column</option>{% for k,f in row_type.fields.items %}<option value="{{f.field}}">{{f.name}}</option></option>{% endfor %}'{% if not forloop.last %},{% endif %}
 		{% endfor %}
 	},
 	"identity_sets": {

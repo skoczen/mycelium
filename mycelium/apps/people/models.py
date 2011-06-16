@@ -3,6 +3,7 @@ from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from taggit.managers import TaggableManager
 from accounts.models import AccountBasedModel
+from django.db.models import Sum
 
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
@@ -10,6 +11,7 @@ add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
 
 import re
+import datetime
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING_PERSON = _("Unnamed Person")
 NO_NAME_STRING_ORGANIZATION = _("Unnamed Organization")
@@ -141,6 +143,37 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
         # Ugh.
         return self.peopleandorganizationssearchproxy_set.all()[0].search_result_row
 
+    @property
+    def employed(self):
+        return self.jobs.count() > 0
+
+    @property
+    def primary_job(self):
+        if self.employed:
+            return self.jobs.all()[0]
+        else:
+            return None
+
+
+    def volunteer_hours_for_year(self, year):
+        this_year_start = datetime.date(year,1,1)
+        next_year = datetime.date(year+1,1,1)
+        return self.volunteer.completedshift_set.filter(date__gte=this_year_start).filter(date__lt=next_year).distinct().aggregate(Sum('duration'))["duration__sum"] or 0
+
+    def donation_total_for_year(self, year):
+        this_year_start = datetime.date(year,1,1)
+        next_year = datetime.date(year+1,1,1)
+        return self.donor.donation_set.filter(date__gte=this_year_start).filter(date__lt=next_year).distinct().aggregate(Sum('amount'))["amount__sum"] or 0
+
+    @property
+    def volunteer_hours_all_time(self):
+        return self.volunteer.completedshift_set.distinct().aggregate(Sum('duration'))["duration__sum"] or 0
+
+    @property
+    def donation_totals_all_time(self):
+        return self.donor.donation_set.distinct().aggregate(Sum('amount'))["amount__sum"] or 0
+    
+    
 
 class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, TimestampModelMixin, PotentiallyImportedModel):
     name = models.CharField(max_length=255, blank=True, null=True)

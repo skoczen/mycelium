@@ -28,13 +28,13 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 		{# <a href="{% url core:more_menu %}" class="nav_btn {% if section == "more" %}current{% endif %}">Admin</a> #}
 		{# <a href="#">Events</a> #}
 		{# <a href="#">Communicate</a> #}
-		{# <a href="{% url reports:search %}" class="{% if section == "reports" %}current{% endif %}" >Reports</a> #}
+		{# <a href="{% url spreadsheets:search %}" class="{% if section == "spreadsheets" %}current{% endif %}" >Reports</a> #}
 		{# <a href="#">Fund</a> #}
 		{# <a href="#">Donors</a> #}
 		{# <a href="#">Volunteers</a> #}
 		
 		{# <a href="{% url people:new_person %}" >New Person</a> #}
-		<a href="{% url reports:search %}" class="nav_btn {% if section == "reports" %}current{% endif %}">Spreadsheets</a>
+		<a href="{% url spreadsheets:search %}" class="nav_btn {% if section == "spreadsheets" %}current{% endif %}">Spreadsheets</a>
 		<a href="{% url groups:search %}" class="nav_btn {% if section == "groups" %}current{% endif %}">Groups</a>
 		<a href="{% url people:search %}" class="nav_btn first {% if not section %}current{% endif %}">People</a>
 		{# <a href="{% url dashboard:dashboard %}" class="nav_btn {% if section == "dashboard" %}current{% endif %}">Dashboard</a> #}

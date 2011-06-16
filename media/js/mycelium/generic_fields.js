@@ -171,7 +171,12 @@
                 			if ($(".edit_field select",field).length > 0) {
                 				$(".view_field",field).html($(".edit_field select option:selected",field).text());	
                 			} else {
-                				$(".view_field",field).html($(".edit_field input, .edit_field textarea",field).val());	
+                				if ($(".edit_field input[type=radio]:checked",field).length > 0 ) {
+                					$(".view_field",field).html($(".edit_field label[for="+$(".edit_field input[type=radio]:checked").attr("id")+"]").html());
+                				} else {
+                					$(".view_field",field).html($(".edit_field input, .edit_field textarea",field).val());		
+                				}
+                				
                 			}
                 			
                 		});
