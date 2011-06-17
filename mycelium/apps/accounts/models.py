@@ -157,6 +157,7 @@ class AccessLevel(TimestampModelMixin):
     @classmethod
     def admin(cls):
         return cls.objects.get(name__iexact="Admin")
+
     @classmethod
     def staff(cls):
         return cls.objects.get(name__iexact="Staff")

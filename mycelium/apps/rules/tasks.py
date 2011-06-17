@@ -188,8 +188,12 @@ def populate_rule_components_for_an_account(account):
     def left_side_for_choices(**kwargs):
         if not "display_name" in kwargs or not "query_string_partial" in kwargs:
             raise Exception, "display_name and query_string_partial not passed!"
-
+        choices = kwargs["choices"]
+        del kwargs["choices"]
         ls = LeftSide.raw_objects.using('default').get_or_create(**kwargs)[0]
+        if not ls.choices == choices:
+            ls.choices = choices
+            ls.save()
         _add_operators_and_right_side_choices(ls)
         _add_to_all_left_sides(ls)
         return ls

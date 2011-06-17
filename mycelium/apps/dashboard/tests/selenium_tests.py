@@ -6,6 +6,7 @@ from people.tests.selenium_abstractions import PeopleTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
 from django.conf import settings
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
+from accounts.models import UserAccount
 from dashboard.tests.selenium_abstractions import DashboardTestAbstractions
     
 class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
@@ -13,6 +14,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
 
     def setUp(self, *args, **kwargs):
         self.setup_for_logged_in_with_no_data()
+        
         self.verificationErrors = []
 
     def test_that_logging_in_goes_to_the_dashboard(self):
@@ -48,7 +50,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
 
     def test_that_the_dashboard_checks_off_appropriately(self):
         sel = self.selenium
-
+#        UserAccount.objects.filter(account=self.account, access_level__name="Staff").delete()
+#        UserAccount.objects.filter(account=self.account, access_level__name="Volunteer").delete()
+        
         self.import_contacts()
         self.get_to_the_dashboard()
         self.assert_challenge_checked("import")

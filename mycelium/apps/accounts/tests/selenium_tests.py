@@ -9,6 +9,7 @@ from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from django.core.cache import cache
     
 class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
+    # selenium_fixtures = []
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
