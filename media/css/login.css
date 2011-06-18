@@ -51,14 +51,14 @@
 	display: block;
 	margin: 10px auto;
 }
-.single_dialog field {
+.single_dialog .field {
 	display: block;
 	padding: 5px;
 	width: 330px;
 	margin: 0px auto;
 	overflow: auto;
 }
-field label {
+.field label {
 	display: block;
 	float: left;
 	width: 100px;
@@ -67,7 +67,7 @@ field label {
 	margin: 4px 10px 0px 0px;
 	text-align: right;
 }
-field input {
+.field input {
 	font-size: 20px;
 	border: 1px solid #BBB;
 	padding: 4px;
@@ -78,10 +78,10 @@ field input {
 	outline: none;
 	background-color: #F6F6F6;
 }
-field input:focus {
+.field input:focus {
 	border-color: #3E9CFD;
 }
-.single_dialog actions {
+.single_dialog .actions {
 	display: block;
 	padding: 20px 0px;
 }

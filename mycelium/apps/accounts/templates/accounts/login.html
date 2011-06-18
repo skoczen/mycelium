@@ -15,12 +15,12 @@
 	<div class="welcome_message">Welcome to GoodCloud!</div>
 	<form method="post" action="{% url accounts:login %}">
 	{% csrf_token %}
-	<field>
+	<div class="field">
 	<label>Username:</label><input type="text" name="username" placeholder="Username" maxlength="25" autofocus>
-	</field>
-	<field>
+	</div>
+	<div class="field">
 	<label>Password:</label><input type="password" name="password" placeholder="Password">
-	</field>
+	</div>
 	<div class="unsupported_browser hidden">
 		<div class="warning_title">Hang on there!</div>
 		<div class="warning_body">You're using an unsupported browser.  GoodCloud was built on next-generation tech to make it faster and more secure. To use GoodCloud, you'll need one of these:</div>
@@ -39,7 +39,7 @@
 			</a>
 		</div>
 	</div>
-	<actions>
+	<div class="actions">
 		{% if form.errors %}
 		<div class="login_error">Your username and password didn't match. Please try again.</div>
 		{% endif %}
