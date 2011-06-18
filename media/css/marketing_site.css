@@ -257,35 +257,6 @@ input {
 	z-index: 999;
 }
 
-.picture_frame {
-	display: block;
-	width: 30%;
-	height: 200px;
-	left: 0%;
-	top: 20px;
-	position: absolute;
-	background: url("../images/bio-picture-bubble.png");
-	background-repeat: no-repeat;
-	background-position: 0px 0px;
-	z-index: 1001;
-	clear: none;
-	
-}
-.picture_frame .picture {
-	width: 149px;
-	height: 149px;	
-	margin: 6px;
-	border-radius: 75px;
-	-moz-border-radius: 75px;
-	overflow: hidden;
-	background-clip: border-box;
-  	-moz-box-sizing: border-box;
-    -opera-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -khtml-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
 .bio {
 	font-size: 18px;
 	clear: none;
