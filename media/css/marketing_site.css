@@ -500,6 +500,7 @@ social_links {
 }
 .page_action:hover, a.page_action:hover {
 	background-image: url("../images/action-ribbon-hover.png");
+	color: #FFF;
 }
 
 .tour_video {
