@@ -173,3 +173,6 @@
 .unsupported_browser .browser_option.ie {
 	background-image: url("../images/logo-ie-64.png");
 }
+.unsupported_browser .browser_name {
+	white-space: nowrap;
+}
