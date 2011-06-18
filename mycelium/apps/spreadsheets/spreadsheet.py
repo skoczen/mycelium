@@ -336,7 +336,7 @@ class SpreadsheetAbstraction:
         for r in cls._value_rows_from_queryset(query_set, template, **kwargs):
             col = 0
             for c in r:
-                sheet1.write(row, col, c)
+                sheet1.write(row, col, "%s" % c)
                 col += 1
             row += 1
         
