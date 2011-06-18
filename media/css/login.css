@@ -159,6 +159,7 @@
 .unsupported_browser .browser_option:hover {
 	background-color: #333;
 	border: 1px solid  #606060;
+	color: #FFF;
 }
 .unsupported_browser .browser_option.chrome {
 	background-image: url("../images/logo-chrome-64.png");

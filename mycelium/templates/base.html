@@ -31,8 +31,12 @@
 {% analytical_body_bottom %}
 {% block javascript %}
 <!--[if lt IE 7 ]>
-  {% js "js/lib/dd_belatedpng.js" %}
-  <script>DD_belatedPNG.fix('img, .png_bg');</script>
+  {% js "js/contrib/jquery.pngFix.js" %}
+  <script type="text/javascript">
+  	$(document).ready(function(){ 
+        $(document).pngFix(); 
+    });
+   </script>
 <![endif]-->
 {% endblock %}
 </body>
