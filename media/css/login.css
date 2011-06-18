@@ -66,6 +66,7 @@
 	color: #555;
 	margin: 4px 10px 0px 0px;
 	text-align: right;
+	clear: left;
 }
 .field input {
 	font-size: 20px;
@@ -130,7 +131,7 @@
 .unsupported_browser .browser_option {
 	display: block;
 	width: 19%;
-	margin: 0px 3%;
+	margin: 0px 2%;
 	float: left;
 	text-align: center;
 	color: #FFF;
@@ -151,8 +152,9 @@
 	font-size: 14px;
 	background-repeat: no-repeat;
 	background-position: 50% 5px;
-
-	
+}
+.unsupported_browser .browser_option.first {
+	margin-left: 6%;
 }
 .unsupported_browser .browser_option:hover {
 	background-color: #333;
