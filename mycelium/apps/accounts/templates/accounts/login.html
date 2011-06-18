@@ -5,10 +5,20 @@
 		$(function(){
 			var version = parseInt($.browser.version, 10);
 			if ( ($.browser.msie && version < 9) || ($.browser.mozila && version < 3) || ($.browser.webkit && version < 200) ) {
-				$(".unsupported_browser").removeClass("hidden").show();
+				$(".unsupported_browser").show();
 			}
 		});
 	</script>
+{% endblock %}
+{% block css %}{{block.super}}
+<!--[if lt IE 9 ]>
+	<style type="text/css">
+		.unsupported_browser {
+			display: block;
+		}
+	</style>
+<![endif]-->
+
 {% endblock %}
 
 {% block dialog_content %}
@@ -21,7 +31,7 @@
 	<div class="field">
 	<label>Password:</label><input type="password" name="password" placeholder="Password">
 	</div>
-	<div class="unsupported_browser hidden">
+	<div class="unsupported_browser">
 		<div class="warning_title">Hang on there!</div>
 		<div class="warning_body">You're using an unsupported browser.  GoodCloud was built on next-generation tech to make it faster and more secure. To use GoodCloud, you'll need one of these:</div>
 		<div class="browser_options">
