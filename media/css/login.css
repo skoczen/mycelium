@@ -135,7 +135,7 @@
 	float: left;
 	text-align: center;
 	color: #FFF;
-	height: 100px;
+	
 	text-decoration: none;
 	border-radius: 			8px;
 	-moz-border-radius: 	8px;
@@ -148,7 +148,7 @@
 	box-sizing: border-box;
 	
 	border: 1px solid  #777;
-	padding: 75px 0px 25px 0px;
+	padding: 75px 0px 5px 0px;
 	font-size: 14px;
 	background-repeat: no-repeat;
 	background-position: 50% 5px;
