@@ -2,7 +2,7 @@
 	display: block;
 	margin: 0% auto;
 	width: 45%;
-	border: 1px solid #DDD;
+	border: 0px solid #DDD;
 	box-shadow: 		2px 2px 4px rgba(0,0,0,0.35);
 	-moz-box-shadow:	2px 2px 4px rgba(0,0,0,0.35);
 	-khtml-box-shadow: 	2px 2px 4px rgba(0,0,0,0.35);
@@ -12,7 +12,7 @@
 	-moz-border-radius: 12px;
 	-webkit-border-radius: 12px;	
 	min-width: 400px;
-	padding: 6px;
+	padding: 0px;
 	text-align: center;
 }
 .organization_and_domain {
@@ -44,7 +44,7 @@
 }
 
 .single_dialog .welcome_message {
-	margin: 25px 0px 15px 0px;
+	padding: 25px 0px 15px 0px;
 	font-size: 30px;
 }
 .single_dialog form {
@@ -101,4 +101,72 @@ field input:focus {
 .login_error {
 	color: red;
 	padding: 5px 0px;
+}
+.unsupported_browser {
+	display: block;
+	width: 100%;
+	margin: 10px 0px 5px 0px;
+	background-color: #fc6606;
+	color: #FFF;
+	display: none;
+}
+.unsupported_browser .warning_title {
+	font-size: 40px;
+	padding: 3px 0px 2px 0px;
+}
+.unsupported_browser .warning_body {
+	width: 80%;
+	text-align: left;
+	margin: 0px auto 10px auto;
+}
+.unsupported_browser .browser_options {
+	background-color: #656565;
+	overflow: auto;
+	width: 100%;
+	padding: 10px 0px;
+	background-image: url("../images/unsupported-browser-background.png");
+	background-repeat: repeat-x;
+}
+.unsupported_browser .browser_option {
+	display: block;
+	width: 19%;
+	margin: 0px 3%;
+	float: left;
+	text-align: center;
+	color: #FFF;
+	height: 100px;
+	text-decoration: none;
+	border-radius: 			8px;
+	-moz-border-radius: 	8px;
+	-webkit-border-radius: 	8px;
+
+	-moz-box-sizing: border-box;
+	-opera-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-khtml-box-sizing: border-box;
+	box-sizing: border-box;
+	
+	border: 1px solid  #777;
+	padding: 75px 0px 25px 0px;
+	font-size: 14px;
+	background-repeat: no-repeat;
+	background-position: 50% 5px;
+
+	
+}
+.unsupported_browser .browser_option:hover {
+	background-color: #333;
+	border: 1px solid  #606060;
+}
+.unsupported_browser .browser_option.chrome {
+	background-image: url("../images/logo-chrome-64.png");
+}
+.unsupported_browser .browser_option.firefox {
+	background-image: url("../images/logo-firefox-64.png");
+}
+.unsupported_browser .browser_option.safari {
+	background-image: url("../images/logo-safari-64.png");
+}
+.unsupported_browser .browser_option.ie {
+	background-image: url("../images/logo-ie-64.png");
 }

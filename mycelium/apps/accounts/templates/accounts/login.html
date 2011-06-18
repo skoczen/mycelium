@@ -1,5 +1,16 @@
 {% extends "accounts/base_login.html" %}
 
+{% block javascript %}
+	<script type="text/javascript">
+		$(function(){
+			var version = parseInt($.browser.version, 10);
+			if ( ($.browser.msie && version < 9) || ($.browser.mozila && version < 3) || ($.browser.webkit && version < 200) ) {
+				$(".unsupported_browser").removeClass("hidden").show();
+			}
+		});
+	</script>
+{% endblock %}
+
 {% block dialog_content %}
 	<div class="welcome_message">Welcome to GoodCloud!</div>
 	<form method="post" action="{% url accounts:login %}">
@@ -10,6 +21,24 @@
 	<field>
 	<label>Password:</label><input type="password" name="password" placeholder="Password">
 	</field>
+	<div class="unsupported_browser hidden">
+		<div class="warning_title">Hang on there!</div>
+		<div class="warning_body">You're using an unsupported browser.  GoodCloud was built on next-generation tech to make it faster and more secure. To use GoodCloud, you'll need one of these:</div>
+		<div class="browser_options">
+			<a href="http://www.google.com/chrome/intl/en/make/download-mac.html?brand=CHKZ" target="_blank" class="browser_option chrome">
+				<div class="browser_name">Google Chrome</div>
+			</a>
+			<a href="http://www.firefox.com" target="_blank" class="browser_option firefox">
+				<div class="browser_name">Mozilla Firefox</div>
+			</a>
+			<a href="http://www.apple.com/safari/" target="_blank" class="browser_option safari">
+				<div class="browser_name">Apple Safari</div>
+			</a>
+			<a href="http://www.microsoft.com/IE9" target="_blank" class="browser_option ie">
+				<div class="browser_name">Microsoft IE 9+</div>
+			</a>
+		</div>
+	</div>
 	<actions>
 		{% if form.errors %}
 		<div class="login_error">Your username and password didn't match. Please try again.</div>

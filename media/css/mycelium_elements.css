@@ -8,6 +8,7 @@ Orange: #ff6600;
 
 body {
 	background: url("../images/background-pattern-green.png");
+	background: url("../images/background-noise-green.png");
 }
 main_nav {
 	display: block;
