@@ -1,6 +1,6 @@
 {% extends "accounts/base_login.html" %}
 
-{% block javascript %}
+{% block javascript %}{{block.super}}
 	<script type="text/javascript">
 		$(function(){
 			var version = parseInt($.browser.version, 10);
