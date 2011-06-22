@@ -1,8 +1,8 @@
 body {
-	background-color: #0a5ab9;
-	background-image: url("../images/marketing-background-plain-4.jpg");	
+	background: #0a5ab9;
 	background-repeat: no-repeat;
 	background-position: 50% 0px;
+	
 }
 body.home_page {
 	background-color: #0a5ab9;
@@ -10,21 +10,109 @@ body.home_page {
 	background-repeat: no-repeat;
 	background-position: 50% 0px;
 	position: relative;
+
+}
+.page_content_body {
+	position: relative;
+	display: block;
+	background-color: #dbefff;
+	background-image: url("../images/marketing-text-back-background.jpg");
+	min-height: 800px;
+	padding: 20px 0px 100px 0px;
+
+}
+body.home_page .page_content_body {
+	background: transparent;
+}
+body.home_page .page_header {
+	display: none;
+}
+
+.page_header {
+	font-size: 35px;
+	display: block;
+	margin: 0px;
+	height: 100px;
+	width: 95%;
+	padding: 60px 0px 0px 5%;
+	font-family: 'Bevan', Arial, sans-serif;
+	color: #FFF;
+	text-shadow:		 1px 1px 2px #000486;
+	-moz-text-shadow:    1px 1px 2px #000486;
+	-webkit-text-shadow: 1px 1px 2px #000486;	
+
+	text-align: left;
+
+	border: 1px solid #000;
+	border-width: 0px 0px 1px 0px;
+	
+	background-color: #0060b9;
+	background-image: url("../images/marketing-page-header-background.jpg");
+	background-repeat: no-repeat;
+
+	
+}
+
+.page_header .subheading {
+	display: block;
+	font-size: 18px;
+	padding: 4px;
 }
 
 #nav_and_logo_container {
 	width: 100%;
 	display: block;
 	height: 80px;
-	/*background-color: rgba(0, 4, 134, 0.9);*/
+	
 	background-image: url("../images/marketing-menubar.png");	
+	/*background-image: url("../images/marketing-nav-bar-2.png");	*/
+	/*background-image: url("../images/marketing-page-header.jpg");*/
+	/*background: #0864d1;*/
 	background-repeat: repeat-x;
 	background-position: 0px 0px;
-	border: #000 1px solid;
+	
+	border: 1px solid #0a2a89;
     border-width: 0px 0px 1px 0px;
     clear: both;
 
+	margin-top: 0px;
+
 }
+
+
+#side_nav .tab_content {
+	width: 66%;
+	margin-left: 22%;
+	background: rgba(255,255,255,0.8);
+	background: transparent;
+	
+	border: 0px solid #CCC;
+	/*border-width: 0px 1px;*/
+	border-radius: 0px;
+	font-size: 18px;
+	color: #4e585e;
+	display: block;
+}
+#side_nav .tab_content a {
+	color: #000486;
+}
+.tab_subheading {
+	font-size: 30px;
+	color: #0085d1;
+	margin: 30px 0px 6px 0px;
+}
+.tab_title {
+	font-size: 30px;
+	font-weight: bold;
+}
+.page_top_hook {
+	font-size: 25px;	
+	text-align: center;
+	width: 92%;
+	margin: 10px 0px 40px 2%;
+
+}
+
 #main_nav {
 	display: block;
 	float: right;
@@ -246,9 +334,6 @@ input {
 #page_content p {
 	margin-top: 0px;
 }
-.page_content_body {
-/*	background-color: rgba(255,255,255,0.95);*/
-}
 
 .employee {
 	display: block;
@@ -294,10 +379,11 @@ input {
 }
 */
 #footer {
-	position: relative;
-
+	position: absolute;
+	bottom: 10px;
+	display: block;
 	clear:both;
-	padding: 20px 0px 10px 0px;
+	padding: 10px 0px 10px 0px;
 
 	width: 100%;
 	display: block;
@@ -405,27 +491,8 @@ social_links {
 	padding-left: 70px;
 }
 
-.page_header {
-	font-size: 35px;
-	display: block;
-	margin: 5% auto 2% auto;
-	width: 100%;
-	font-family: 'Bevan', Arial, sans-serif;
-	color: #FFF;
-	text-shadow:		 1px 1px 2px #000486;
-	-moz-text-shadow:    1px 1px 2px #000486;
-	-webkit-text-shadow: 1px 1px 2px #000486;	
-	background-color: transparent;
-	text-align: center;
-}
-.page_header .subheading {
-	display: block;
-	font-size: 18px;
-	padding: 4px;
-}
 .features {
-	width: 98%;
-	margin: auto;
+
 }
 .features .feature {
 	display: block;
@@ -453,7 +520,7 @@ social_links {
 	font-size: 18px;
 	padding: 10px 10px 0px 0px; 
 	margin-left: 0px;
-	color: #FFF;
+	
 	border: 1px solid #0952a8;
 	border-width: 0px 0px 1px 0px;
 }
@@ -464,7 +531,7 @@ social_links {
 	padding: 5px 10px 10px 60px;
 	font-size: 15px;
 	color: #454545;
-	color: #FFF;
+
 	
 }
 .features .feature.find_fast 			.description { 	background-image: url("../images/icons/Zoom.png"); 				}
@@ -600,16 +667,9 @@ social_links {
 	margin-top: 300px;
 }
 
-.about_us .page_header {
-	font-size: 48px;
-}
 
-.contact_us .page_header {
-	font-size: 60px;
-}
 
 .contact_us .page_subheader {
-	color: #FFF;
 	display: block;
 	width: 100%;
 	text-align: center;
@@ -666,26 +726,12 @@ social_links {
 #side_nav ul.nav_links {
 	display: block;
 	float: left;
-	margin-left: 0px;
-	width: 16%;
+	
+	width: 18%;
 	background: transparent;
 	border: 0px;
 	padding: 10px 2% 10px 0px;
-	background: #000486;
-	border-radius: 		4px;
-	-moz-border-radius: 4px;
-	border-right: 0px solid #EEE;		
-	border-bottom-left-radius: 0px;
-	-moz-border-radius-bottomleft: 0px;
-	border-top-left-radius: 0px;
-	-moz-border-radius-topleft: 0px;
-
-	box-shadow: 		1px 1px 2px rgba(0,0,0,0.35);
-  	-moz-box-shadow:	1px 1px 2px rgba(0,0,0,0.35);
-  	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
-  	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);
-  	border: 1px solid #000486;
-  	border-width: 1px 1px 1px 0px;
+	margin: 10px 0px 0px 0px;
 }
 #side_nav ul.nav_links li {
 	display: block;
@@ -698,43 +744,30 @@ social_links {
 #side_nav ul.nav_links li a {
 	height: 30px;
 	display: block;
+	float: left;
 	width: 100%;
 	background: transparent;
 	border: 0px;
 	padding: 0px;
-	padding: 12px 3px 6px 20px;
+	padding: 14px 3px 8px 20px;
 	font-size: 18px;
-	color: #EEE;
+
 	border: 0px solid #DDD;
-	/*border-width: 1px 0px 1px 0px;*/
+	font-weight: normal;
 	margin: 4px 0px;
+	text-decoration: none;
 }
 #side_nav ul.nav_links li a:hover {
-	background-color: #002dab;
+/*	background-color: #002dab;*/
 }
 #side_nav ul.nav_links li.ui-tabs-selected a {
 	background-color: transparent;
-	background-image: url("../images/sidenav-current.png");	
 	background-repeat: no-repeat;
+	background-image: url("../images/sidenav-selected.jpg");	
 	background-position: right 0px;
-	color: #1D5987;
-	padding: 13px 22% 7px 20px;
-	border: 0px;
+	color: #0085d1;
 }
 
-#side_nav .tab_content {
-	width: 66%;
-	margin-left: 22%;
-	background: #FFF;
-	border-radius: 		4px;
-	-moz-border-radius: 4px;
-	font-size: 16px;
-	color: #333;
-	display: block;
-}
-#side_nav .tab_content a {
-	color: #000486;
-}
 .tab_content ul {
 	padding: 5px 0px 5px 3em;
 }
@@ -754,15 +787,7 @@ social_links {
 	background: transparent;
 	border: 0px;
 }
-.tab_subheading {
-	font-size: 20px;
-	margin: 16px 0px 2px 0px;
-	color: #000;
-}
-.tab_title {
-	font-size: 30px;
-	font-weight: bold;
-}
+
 .nonprofits_deserve {
 	font-size: 30px;
 	text-align: center;
@@ -849,4 +874,7 @@ social_links {
 }
 .video_box {
 	border: 1px solid #57a3ff;	
+}
+.heart_red {
+	color: red;
 }

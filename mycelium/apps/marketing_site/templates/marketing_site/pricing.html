@@ -11,19 +11,52 @@
 {% css "/css/signup.css" %}
 {% endblock %}
 
+{% block page_header %}Priced for small nonprofits.{% endblock %}
+
 {% block page_content %}
-<div class="page_header">We like to keep things simple.</div>
+<div id="side_nav" class="tabs features">
+	<ul class="nav_links png_bg">
+	 	<li><a href="#price">One simple price</a></li>
+	 	<li><a href="#everything_included">Everything included</a></li>
+	 	<li><a href="#free_tour">Free for 30 days</a></li>
+ 	</ul>
 
-<div class="contrast_content_block pricing">
+	<div class="tab_content" id="price">
+			<div class="page_top_hook">We like to keep things simple.</div>
 
-<div class="the_price">GoodCloud is 50 dollars a month.</div>
-<div class="the_details">No strings, no contracts, no hidden fees. Everything included.</div>
+			
+			<div class="the_price">GoodCloud is 50 dollars a month.</div>
+			<div class="the_details">No strings, no contracts, no hidden fees. Everything included.</div>
 
-<div class="subheading">Why $50?</div>
-When we started GoodCloud, we interviewed small nonprofits to see what they were paying for their software needs.  Then we took the smallest number we heard, and cut it in half.  We believe that small nonprofits should have access to great software at a price they can afford. 
+			<div class="subheading">Why $50?</div>
+			When we started GoodCloud, we interviewed small nonprofits to see what they were paying for their software needs.  Then we took the smallest number we heard, and cut it in half.  We believe that small nonprofits should have access to great software at a price they can afford. 
 
-<div class="subheading">Not sure if GoodCloud's a good fit for your organization?</div>
-The first 30 days are on us. Give it a try, and see for yourself.
+			<div class="subheading">Not sure if GoodCloud's a good fit for your organization?</div>
+			The first 30 days are on us. Give it a try, and see for yourself.
+	</div>
+
+	<div class="tab_content" id="everything_included">
+			<div class="page_top_hook">Batteries included.</div>
+
+			
+			Here's a case where what's different is the things we don't do. (Hint: it's make you pay more.)
+			<ul>
+				<li>No per-user charges</li>
+				<li>No limit to the number of contacts</li>
+				<li>No charge for support</li>
+				<li>No call center halfway across the world</li>
+				<li>No sudden price changes</li>
+				<li>No treating you like a dollar sign.</li>
+			</ul>
+	</div>
+
+	<div class="tab_content" id="free_tour">
+			<div class="page_top_hook">See for yourself.</div>
+
+			
+			When you sign up for a GoodCloud account, your first 30 days are free.  We'll be in touch throughout those 30 days to see if you have questions, and to learn a bit more about you and your organization.  You know, like people do.
+	</div>
+
 
 </div>
 

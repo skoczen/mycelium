@@ -4,10 +4,9 @@
 {% block description %}Small nonprofits deserve the best software in the world. We're on a mission to give it to them.{% endblock %}
 {% block extra_body %}class="about_us"{% endblock %}
 
-{% block page_content %}
-<div class="page_header about_us">Do Good Things.</div>
+{% block page_header %}Do Good Things.{% endblock %}
 
-<div class="page_content_body">
+{% block page_content %}
 <div id="side_nav" class="tabs">
 	<ul class="nav_links png_bg">
 	 	<li><a href="#our_company">Our Company</a></li>
@@ -16,15 +15,13 @@
  	</ul>
 	<div class="tab_content company" id="our_company">
 
-		<div class="tab_subheading nonprofits_deserve">Do Good Things.</div>
-
-		<p>When we started GoodCloud, we set out to create the sort of company we'd be inspired by and hope to work for. So, we do things a bit differently.</p>
+		<div class="page_top_hook">We started GoodCloud to create the sort of company we'd be inspired by and hope to work for. So, we do things a bit differently.</div>
 
 		<div class="tab_subheading">We share our profits with the organizations we serve.</div>
 		<p>Each year, we set financial targets, goals to grow and sustain GoodCloud. When we hit those targets, the organizations that got us there share in our profits.</p>
 
 		<div class="tab_subheading">We volunteer.</div>
-		<p>GoodCloud employees are required to volunteer at least 10 hours a month with nonprofits, and that time is paid. {# TODO: Want to see if we've been slacking? See our donation log! #}</p>
+		<p>Maybe even at your organization! GoodCloud employees are required to volunteer at least 10 hours a month with nonprofits, and that time is paid. {# TODO: Want to see if we've been slacking? See our donation log! #}</p>
 
 		<div class="tab_subheading">We donate.</div>
 		<p>GoodCloud employees also recieve stipends to donate to the nonprofits they love.</p>
@@ -37,15 +34,15 @@
 	<div class="tab_content mission" id="our_mission">
 		{# <div class="tab_title">Our Mission</div> #}
 
-		<div class="tab_subheading nonprofits_deserve">Small nonprofits deserve the best software in the world.</div>
+		<div class="page_top_hook">Small nonprofits deserve the best software in the world.</div>
 
 		<p>There, we said it. Not hand-me-downs, not corporate products that don't fit, but a real solution designed around your needs and how you work.
-		Big nonprofits and companies can afford expensive solutions or a tech staff.  But small nonprofits have always gotten the short straw - until now.</p>
+		Big nonprofits and companies can afford expensive solutions or a tech staff.  But small nonprofits have always gotten the short straw - until now.</p><br/>
 		
 		
 		 <p>We started GoodCloud after watching our favorite nonprofits struggle with a hodge-podge of programs. We saw daily frustrations, and listened to organizations that were pouring hours into fighting with computers instead of their missions. We said, "Enough with that!", and we started GoodCloud to fix it.</p>
 
-		<div class="tab_subheading">We &hearts; small nonprofits.</div>
+		<div class="tab_subheading">We <span class="heart_red">&hearts;</span> small nonprofits.</div>
 		<p>We care deeply about you and your mission. You've made the decision to make the world a better place instead of making piles of money. We admire you. Nonprofits are doing the biggest things to make the world a better place. We're thankful to have you in the world, and we want to help you thrive.</p>
 
 		<div class="tab_subheading">We get small nonprofits.</div>
@@ -58,7 +55,7 @@
 
 
 	<div class="tab_content team" id="the_team">
-		<div class="tab_subheading team_description">GoodCloud is currently a team of two people. We're the ones who answer your calls, add new features, and talk with you about your needs.  Sounds a lot better than a call center halfway across the world, doesn't it? </div>
+		<div class="page_top_hook team_description">GoodCloud is currently a team of two people. We're the ones who answer your calls, add new features, and talk with you about your needs.  Sounds a lot better than a call center halfway across the world, doesn't it? </div>
 		{# <div class="tab_title">Our Team</div> #}
 
 		<div class="person tom png_bg">
@@ -88,8 +85,4 @@
 	</div>
 	
 </div>
-
-</div>
-
-
 {% endblock %}

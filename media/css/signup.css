@@ -4,9 +4,16 @@
 	padding: 10px 0px 10px 0px;
 	line-height: 1.1em;
 }
-.signup_page .single_dialog {
-	width: 630px;
+.signup_page.single_dialog {
+	width: 60%;
+	margin-left: 20%;
 	padding: 10px 10px;
+	/*background-color: transparent;
+	box-shadow: 		none;
+	-moz-box-shadow:	none;
+	-khtml-box-shadow: 	none;
+	-webkit-box-shadow: none;*/
+
 }
 .signup_page .organization_and_domain {
 	display: block;
@@ -18,7 +25,7 @@
 	color: #FFF;
 	text-shadow:		 1px 2px 2px #222;
 	-moz-text-shadow:    1px 2px 2px #222;
-	-webkit-text-shadow: 1px 2px 2px #222;	
+	-webkit-text-shadow: 1px 2px 2px #222;
 	background-color: transparent;
 }
 

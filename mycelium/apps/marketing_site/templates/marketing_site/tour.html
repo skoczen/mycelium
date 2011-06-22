@@ -3,14 +3,56 @@
 {% block title %}Tour - watch GoodCloud in action, and hear what motivates our team!{% endblock %}
 {% block description %}Watch a video interview with GoodCloud's CEO, and see how it helps nonprofits organize and run more easily!{% endblock %}
 
-{% block page_content %}
-<div class="page_header">Watch it in action</div>
+{% block page_header %}Watch it in action.{% endblock %}
 
-<div class="tour_video">
-<iframe class="video_box" src="http://player.vimeo.com/video/23807297?title=0&amp;byline=0&amp;portrait=0" width="640" height="360" frameborder="0"></iframe>
-{# <iframe class="video_box" width="640" height="390" src="https://www.youtube.com/embed/PvTsZfx2zZs?rel=0" frameborder="0" allowfullscreen></iframe> #}
-{# <img src="{% media_url "images/video-coming-soon.png" %}"/> #}
-</div>
+{% block page_content %}
+
+<div id="side_nav" class="tabs features">
+	<ul class="nav_links png_bg">
+	 	<li><a href="#video_tour">Video Tour</a></li>
+	 	<li><a href="#pictures_and_words">Pictures and Words</a></li>
+ 	</ul>
+
+	<div class="tab_content" id="video_tour">
+			<div class="page_top_hook">What motivates us, and a quick look around.</div>
+
+			<div class="tour_video">
+			<iframe class="video_box" src="http://player.vimeo.com/video/23807297?title=0&amp;byline=0&amp;portrait=0" width="640" height="360" frameborder="0"></iframe>
+			{# <iframe class="video_box" width="640" height="390" src="https://www.youtube.com/embed/PvTsZfx2zZs?rel=0" frameborder="0" allowfullscreen></iframe> #}
+			{# <img src="{% media_url "images/video-coming-soon.png" %}"/> #}
+			</div>
+
+	</div>
+	<div class="tab_content company" id="pictures_and_words">
+		<div class="page_top_hook">More than just some pretty screenshots.</div>
+		<div class="row">
+			{# GoodCloud is a database and operations suite for small nonprofits.  #}		
+				<div class="feature find_fast">
+					<div class="title">Find people fast</div>
+					<div class="description png_bg identical_height_block">The fastest, easiest contact lookup on this side of the galaxy.
+			Nonprofits told us that looking up a phone number, email or address is something they do hundreds of times a day. We optimized GoodCloud to make finding a contact super-fast.</div>
+				</div>
+				
+				<div class="feature full_contact">
+					<div class="title">Full contact information </div>
+					<div class="description png_bg identical_height_block">It’s all here - home and work addresses, organizations, employees, and email. We’ve even got support for the next generation of contact info, like twitter. You'll never lose an address again.</div>
+				</div>
+				</div>
+				<div class="row">
+				
+				<div class="feature groups">
+					<div class="title">Organize people the way you work</div>
+					<div class="description png_bg identical_height_block">Intuitively create groups of people that fit your mission, and have them automatically stay up to date. Use your groups to contact people, send letters, and more. </div>
+				</div>
+				
+				<div class="feature volunteer">
+					<div class="title">Track volunteer hours</div>
+					<div class="description png_bg identical_height_block">The year-end volunteer hours report just turned into one click. GoodCloud quickly and easily lets you log volunteer hours, automatically doing the math for you.</div>
+				</div>
+		</div>
+	</div>
+</div>	
+
 
 <div class="clearfix"></div>
 <a href="{% url accounts:signup %}" class="page_action png_bg">Now, try it out yourself!</a>
