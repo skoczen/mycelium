@@ -6,8 +6,9 @@
 {% block page_header %}One-step easy.{% endblock %}
 
 {% block page_content %}
+<div class="page_top_hook full">See what we can can do for your organization. Free.</div>
 <div class="single_dialog signup_page">
-	<div class="welcome_message">Sign up for a free account to see firsthand what GoodCloud can do for your organization.</div>
+{# 	<div class="welcome_message">Sign up for a free account:</div> #}
 
 	<form action="{% url accounts:signup %}" method="POST" id="signup_form" class="edit_mode_on" >{% csrf_token %}
 

@@ -1,8 +1,11 @@
 
 .signup_page .welcome_message {
 	margin: 0px;
-	padding: 10px 0px 10px 0px;
+	padding: 10px 0px 10px 20px;
 	line-height: 1.1em;
+	text-align: left;
+	font-size: 20;
+	color: #AAA;
 }
 .signup_page.single_dialog {
 	width: 60%;

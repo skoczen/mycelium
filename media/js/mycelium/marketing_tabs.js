@@ -32,5 +32,5 @@ $(function(){
   })
   $(window).trigger( 'hashchange' );
 
-  setupFooter();
+  // setupFooter();
 });

@@ -18,7 +18,7 @@ body.home_page {
 	background-color: #dbefff;
 	background-image: url("../images/marketing-text-back-background.jpg");
 	min-height: 800px;
-	padding: 20px 0px 100px 0px;
+	padding: 20px 0px 150px 0px;
 
 }
 body.home_page .page_content_body {
@@ -107,7 +107,13 @@ body.home_page .page_header {
 	text-align: center;
 	width: 92%;
 	margin: 10px 0px 40px 2%;
-
+}
+.page_top_hook.full {
+	width: 100%;
+	margin: 10px 0px 40px 0px;
+}
+.page_content_body a {
+	color: #2c8bbd;
 }
 
 #main_nav {
