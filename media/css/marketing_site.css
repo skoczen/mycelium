@@ -838,7 +838,10 @@ social_links {
 .heart_red {
 	color: red;
 }
-
+.home_page #footer {
+	background: none;
+	display: none;
+}
 #footer {
 	position: absolute;
 	bottom: 0px;
@@ -861,7 +864,7 @@ social_links {
 	text-decoration: none;
 	display: block;
 	color: #8fa1aa;
-	white-space: nobreak;
+	white-space: nowrap;
 }
 #footer a:hover {
 	color: #566478;
