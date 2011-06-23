@@ -67,7 +67,8 @@ body.home_page .page_header {
 	background-image: url("../images/marketing-menubar.png");	
 	/*background-image: url("../images/marketing-nav-bar-2.png");	*/
 	/*background-image: url("../images/marketing-page-header.jpg");*/
-	/*background: #0864d1;*/
+	/*background: #0864d1;
+	border: 1px solid #004089;*/
 	background-repeat: repeat-x;
 	background-position: 0px 0px;
 	
