@@ -93,9 +93,6 @@ body.home_page .page_header {
 	color: #4e585e;
 	display: block;
 }
-#side_nav .tab_content a {
-	color: #000486;
-}
 .tab_subheading {
 	font-size: 30px;
 	color: #0085d1;
@@ -344,68 +341,6 @@ input {
 	z-index: 999;
 }
 
-.bio {
-	font-size: 18px;
-	clear: none;
-	position: relative;
-	display: block;
-	top: 0px;
-	left: 25%;
-	margin-left: -4px;
-	width: 80%;
-	padding: 7px 20px 10px 20px;
-	background-color: #FFF;
-	border-radius: 12px;
-	-moz-border-radius: 12px;
-	border: 4px solid #60C6FD;
-	z-index: 1000;	
-}
-.bio .name {
-	margin: 0px;
-	font-size: 24px;
-	color: #004486;
-}
-
-/* Footer fix */
-/*html, body {height: 100%;}
-#wrap {
-	min-height: 85%;
-	height: auto !important;
-	height: 100%;
-	margin: 0px auto -30px 0px; 
-}
-#footer, .push {
-	height: 30px; 
-}
-*/
-#footer {
-	position: absolute;
-	bottom: 10px;
-	display: block;
-	clear:both;
-	padding: 10px 0px 10px 0px;
-
-	width: 100%;
-	display: block;
-
-	text-align: center;
-
-	font-size: 14px;
-	color: #0060b9;
-}
-#footer a {
-	color: #399df8;
-	text-decoration: none;
-	/*border: 1px solid #399df8;
-	border-width: 0px 0px 1px 0px;*/
-}
-#footer a.current, #footer a.current:hover {
-	border-color: #FFF;
-	color: #91cbff;
-}
-#footer a:hover {
-	color: #57afff;
-}
 social_links {
 	padding: 10px;
 	margin-top: 20px;
@@ -798,25 +733,50 @@ social_links {
 }
 .tab_content .person {
 	display: block;
-	padding-left: 148px;
+	padding-top: 208px;
 	background-repeat: no-repeat;
-	background-position: 0px 6px;
-	margin: 20px 0px 30px 0px;
-	clear: both;
+	background-position: 50% 6px;
+	margin: 20px 5% 30px 5%;
+	width: 40%;
+	float: left;
+	text-align: center;
+}
+#the_team .people_pics_and_bios {
+	display: block;
+	width: 76%;
+	padding: 0px 12%;
+	overflow: auto;
 }
 .person.tom {
-	background-image: url("../images/tom-picture.png");	
+	background-image: url("../images/tom-picture-2.png");	
 }
 .person.steven {
-	background-image: url("../images/steven-picture.png");	
+	background-image: url("../images/steven-picture-2.png");	
 }
 .person .title {
 	font-style: italic;
-	color: #555;
+	color: #777;
+	font-size: 14px;
+}
+.person .person_name {
+	font-size: 30px;
+	padding-top: 20px;
 }
 .person_description p {
 	display: block;
 	margin-bottom: 1em;
+}
+.person .bio_text {
+	display: none;
+}
+.person .contact_info a {
+	font-size: 14px;
+	color: #888;
+}
+#the_team .team_description {
+	display: block;
+	width: 76%;
+	margin: 0px auto;
 }
 
 .contrast_content_block {
@@ -877,4 +837,48 @@ social_links {
 }
 .heart_red {
 	color: red;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0px;
+	display: block;
+	clear:both;
+	padding: 10px 0px 10px 0px;
+
+	width: 100%;
+	display: block;
+
+	text-align: center;
+
+	font-size: 14px;
+	color: #8fa1aa;
+	border: 1px solid #88abbe;
+	border-width: 1px 0px 0px 0px;
+	background: url("../images/marketing-footer-back.jpg")
+}
+#footer a {
+	text-decoration: none;
+	display: block;
+	color: #8fa1aa;
+	white-space: nobreak;
+}
+#footer a:hover {
+	color: #566478;
+}
+.footer_table {
+	width: 80%;
+	margin: 0px auto;
+}
+.footer_table td {
+	padding: 0px 5%;
+	width: 20%;
+}
+#footer .footer_table a.top_link {
+	color: #7b8f99;
+	border: 1px solid #aab6c7;
+	border-width: 0px 0px 1px 0px;
+}
+#footer .footer_table a.top_link:hover {
+	color: #566478;
 }
