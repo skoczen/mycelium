@@ -97,6 +97,7 @@ body.home_page .page_header {
 .tab_subheading {
 	font-size: 30px;
 	color: #0085d1;
+	/*color: #6eb3d6;*/
 	margin: 30px 0px 6px 0px;
 }
 .tab_title {
@@ -108,6 +109,7 @@ body.home_page .page_header {
 	text-align: center;
 	width: 92%;
 	margin: 10px 0px 40px 2%;
+	
 }
 .page_top_hook.full {
 	width: 100%;
@@ -713,9 +715,9 @@ social_links {
 .tab_content ul {
 	padding: 5px 0px 5px 3em;
 }
-.legal .tab_content p {
-
-	padding: 3px 0px 3px 1em;
+.tab_content p {
+	display: block;
+	padding: 3px 0px 0.6em 0px;
 }
 .legal .tab_content h3 {
 	font-size: 16px;
@@ -891,4 +893,80 @@ social_links {
 }
 #footer .footer_table a.top_link:hover {
 	color: #566478;
+}
+.right_image {
+	float: right;
+	margin: 20px 0px 20px 30px;
+}
+.center_image {
+	text-align: center;
+	margin: 20px auto;
+}
+.centered_block {
+	text-align: center;
+	margin: 0px auto 20px auto;
+}
+
+#example_people {
+	display: block;
+}
+#example_people .example_people_navigation, #example_people .ui-widget-header {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	border: 0px solid #222;
+	background: url("../images/marketing-footer-back.jpg")
+}
+
+#example_people .example_people_navigation li, #example_people .ui-state-active, #example_people .ui-widget-content #example_people .ui-state-active, #example_people .ui-widget-header .ui-state-active {
+	width: 33%;
+	display: block;
+	float: left;
+	margin: 0px;
+	background: none;
+	border: 0px;
+	border-radius: 		0px;
+	-moz-border-radius: 0px;
+}
+#example_people .example_person_link {
+	background: none;
+	background-repeat: no-repeat;
+	padding-left: 80px;
+	
+	height: 50px;
+}
+#example_people .person_detail {
+	width: 100%;
+	overflow: auto;
+}
+#example_people .name_and_role  {
+	background-repeat: no-repeat;	
+	padding-top: 130px;
+	width: 120px;
+	float: left;
+	margin: 0px 40px 20px 0px;
+	text-align: center;
+}
+#example_people .name_and_role .name {
+	font-size: 28px;
+}
+
+#example_people .example_person_link.john {
+	background-image: url("../images/marketing-john-70.jpg");
+}
+#example_people .example_person_link.cindy {
+	background-image: url("../images/marketing-cindy-70.jpg");
+}
+#example_people .example_person_link.will {
+	background-image: url("../images/marketing-will-70.jpg");
+}
+
+#example_people #john .name_and_role {
+	background-image: url("../images/marketing-john-120.jpg");
+}
+#example_people #cindy .name_and_role {
+	background-image: url("../images/marketing-cindy-120.jpg");
+}
+#example_people #will .name_and_role {
+	background-image: url("../images/marketing-will-120.jpg");
 }
