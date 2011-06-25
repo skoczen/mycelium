@@ -11,19 +11,81 @@
 {% css "/css/signup.css" %}
 {% endblock %}
 
+{% block page_header %}Priced for small nonprofits.{% endblock %}
+
 {% block page_content %}
-<div class="page_header">We like to keep things simple.</div>
+<div id="side_nav" class="tabs features">
+	<ul class="nav_links png_bg">
+	 	<li><a href="#price">One simple price</a></li>
+	 	<li><a href="#everything_included">Everything included</a></li>
+	 	<li><a href="#free_tour">Free for 30 days</a></li>
+ 	</ul>
 
-<div class="contrast_content_block pricing">
+	<div class="tab_content" id="price">
+			<div class="page_top_hook">We like to keep things simple.</div>
 
-<div class="the_price">GoodCloud is 50 dollars a month.</div>
-<div class="the_details">No strings, no contracts, no hidden fees. Everything included.</div>
+			<div class="feature no_icon">
+				<div class="title">One simple price.</div>
+				<div class="description png_bg identical_height_block">
+				GoodCloud is just 50 dollars a month.  
+			<br/>
+			<br/>No strings, no contracts, no hidden fees. Everything included.
 
-<div class="subheading">Why $50?</div>
-When we started GoodCloud, we interviewed small nonprofits to see what they were paying for their software needs.  Then we took the smallest number we heard, and cut it in half.  We believe that small nonprofits should have access to great software at a price they can afford. 
+				</div>
+			</div>
 
-<div class="subheading">Not sure if GoodCloud's a good fit for your organization?</div>
-The first 30 days are on us. Give it a try, and see for yourself.
+			<div class="feature no_icon">
+				<div class="title">One radical concept.</div>
+				<div class="description png_bg identical_height_block">
+					<p>Our pricing is based on a radical concept: <i>we want to help you grow</i>.  </p>
+
+					<p>Other companies watch you bringing in a new staff member and see dollar signs.  We see you succeeding, and cheer. </p>
+
+					<p>Other services see you reaching more donors and volunteers, and see dollar signs. We say, "Add some more!" </p>
+					
+					<p> We've built a sustainable business <a href="{% url marketing_site:about_us %}">that we love</a> on those $50 a month - and we're happy with that.  What we really want is a better world, and you're the key to making that happen.  You have our full support.</p>
+
+
+				</div>
+			</div>
+
+			
+	</div>
+
+	<div class="tab_content" id="everything_included">
+			<div class="page_top_hook">Batteries included.</div>
+			<p>We believe you should have a simple, consistent cost you can count on. We know nonprofit budgets are usually fixed, and always tight. That's why you won't find extra fees or hidden charges here.  Just easy, unlimited use.</p>
+
+			<p>Here's some of the unlimited you get at GoodCloud:
+			<ul>
+				<li>Unlimited number of users</li>
+				<li>Unlimited number of contacts</li>
+				<li>Unlimited number of donations</li>
+				<li>Unlimited donation history</li>
+				<li>Unlimited volunteer history</li>
+				<li>Unlimited number of tags</li>
+				<li>Unlimited imports and exports</li>
+			</ul>
+			</p>
+
+			<p>
+			Here's what we won't do:
+			<ul>
+				<li>We won't charge for support</li>
+				<li>We won't have a call center halfway across the world</li>
+				<li>We won't change the price suddenly</li>
+				<li>We won't treat you like a dollar sign.</li>
+			</ul>
+			</p>
+			You're real people, doing real good in the world. We promise to treat you that way.
+	</div>
+
+	<div class="tab_content" id="free_tour">
+			<div class="page_top_hook">See for yourself.</div>
+
+			<p>When you sign up for a GoodCloud account, your first 30 days are on us.  We'll be in touch throughout those 30 days to see if you have questions, and to learn a bit more about you and your organization. You know, like real people do.</p>
+	</div>
+
 
 </div>
 

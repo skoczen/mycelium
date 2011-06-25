@@ -3,13 +3,15 @@
 {% block title %}The legal formalities, as human as we could make them: GoodCloud{% endblock %}
 {% block description %}Our user agreement and privacy policy, put as friendly as we could make them.{% endblock %}
 
+{% block page_header %}The Legal Stuff<div class="subheading">(as human as we could make it)</div>{% endblock %}
+
 {% block page_content %}
-<div class="page_header">The Legal Stuff<div class="subheading">(as human as we could make it)</div></div>
 
 <div id="side_nav" class="tabs legal">
 	<ul class="nav_links">
 	 	<li><a href="#user_agreement">User Agreement</a></li>
 	 	<li><a href="#privacy_policy">Privacy Policy</a></li>
+	 	<li><a href="#copyright">Copyright</a></li>
  	</ul>
 	<div class="tab_content" id="user_agreement">
 		<div class="tab_title">User Agreement</div>
@@ -166,9 +168,11 @@
 		</p>
 
 	</div>
-	
+	<div class="tab_content" id="copyright">
+		<div class="tab_title">Please ask before borrowing.</div>
+		All content is copyright GoodCloud, LLC, 2010-{% now "Y" %}.  All rights are reserved.
+	</div>
 </div>
-
 
 
 

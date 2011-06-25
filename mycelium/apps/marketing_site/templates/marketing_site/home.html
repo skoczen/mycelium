@@ -4,10 +4,20 @@
 {% block description %}GoodCloud makes it easier to run your small nonprofit. Track people, donations, volunteers and more - it's superpowers for small nonprofits!{% endblock %}
 {% block extra_body %}class="home_page"{% endblock %}
 
+{% block page_header %}{% endblock %}
+
 {% block page_content %}
 <div id="home_boxes">
 	<div class="container">
 	<div class="row">
+		<div class="fourcol home_box loved_by">
+
+			<div class="title">We &hearts; nonprofits.</div>
+			<div class="description png_bg identical_height_block">
+				We've been staff, volunteers, and donors. We care deeply about your mission, and we're here to help you flourish.
+			</div>
+			<div class="action"><a href="{% url marketing_site:about_us %}">Learn about our mission!</a></div>
+		</div>
 		<div class="fourcol home_box built_for_nonprofits">
 			<div class="title">Built for Small Nonprofits</div>
 			<div class="description png_bg identical_height_block">
@@ -15,6 +25,7 @@
 			</div>
 			<div class="action"><a href="{% url marketing_site:features %}">Check out what it can do!</a></div>
 		</div>
+<!--
 		<div class="fourcol home_box loved_by">
 			<div class="title">Loved by Nonprofits</div>
 			<div class="description png_bg identical_height_block">
@@ -22,6 +33,7 @@
 			</div>
 			<div class="action"><a href="{% url marketing_site:praise %}">See what they had to say!</a></div>
 		</div>
+-->
 		<div class="fourcol home_box ready_to_go">
 			<div class="title">Ready to Go Today</div>
 			<div class="description png_bg identical_height_block">

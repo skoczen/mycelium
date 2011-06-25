@@ -1,23 +1,23 @@
 $(function(){
-    setupFooter();
-    $(window).bind("resize",setupFooter);
+    // setupFooter();
+    // $(window).bind("resize",setupFooter);
 	$(window).resize(make_sure_identical_height_block_boxes_are_equal_height);
 	make_sure_identical_height_block_boxes_are_equal_height();
 	$(".contact_button.online").click(open_uservoice);
 	$("html").preloadCssImages();
 });
 
-function setupFooter(){
-	if (!$.browser.msie) {
-	    var footer = $("#footer");
-	    var footerHeight = footer.height()+20;
-	    if ($(document.body).height()+footerHeight < $(window).height()) {
-	        footer.css("position","fixed").css("bottom",0);
-	    } else {
-	        footer.css("position","relative");
-	    }
-	}
-};
+// function setupFooter(){
+// 	if (!$.browser.msie) {
+// 	    var footer = $("#footer");
+// 	    var footerHeight = footer.height()+20;
+// 	    if ($(document.body).height()+footerHeight < $(window).height()) {
+// 	        footer.css("position","fixed").css("bottom",0);
+// 	    } else {
+// 	        footer.css("position","relative");
+// 	    }
+// 	}
+// };
 
 function make_sure_identical_height_block_boxes_are_equal_height() {
 	var max_height = 50;

@@ -1,8 +1,43 @@
 {% load i18n cache current_page  %}<div id="footer">
-{# 	<div class="copyright">All content copyright GoodCloud, LLC, 2010-{% now "Y" %}</div> #}
-	{# <div class="footer_links">{% show_menu %}</div> #}
-	<a {% current_page_link_and_class request "marketing_site:about_us" "" %}	>About us</a> | 
-	<a {% current_page_link_and_class request "blog" "" %} 						>Blog</a> | 
-	<a {% current_page_link_and_class request "marketing_site:legal" "" %} 		>Legal</a> | 
-	<a {% current_page_link_and_class request "marketing_site:contact_us" "" %} >Contact us</a>
+<table class="footer_table">
+<tr>
+	<td>
+		<a href="{% url marketing_site:about_us %}" class="top_link" >About Us</a>
+		<a href="{% url marketing_site:about_us %}#our_company">Our Company</a>
+		<a href="{% url marketing_site:about_us %}#our_mission">Our Mission</a>
+		<a href="{% url marketing_site:about_us %}#our_team">Our Team</a>
+	</td>
+	<td>
+		<a href="{% url marketing_site:features %}" class="top_link" >Features</a>
+		<a href="{% url marketing_site:features %}#everything_in_one_place">Full CRM for Nonprofits</a>
+		<a href="{% url marketing_site:features %}#know_every_person">Know every person</a>
+		<a href="{% url marketing_site:features %}#save_money">Save your money</a>
+		<a href="{% url marketing_site:features %}#save_time">Save your time</a>
+		<a href="{% url marketing_site:features %}#gets_younger">Cloud-based</a>
+		<a href="{% url marketing_site:features %}#secure">Secure</a>
+	</td>
+	<td>
+		<a href="{% url marketing_site:tour %}" class="top_link" >Tour</a>
+		<a href="{% url marketing_site:tour %}#video_tour">Video Tour</a>
+		<a href="{% url marketing_site:tour %}#pictures_and_words">Screenshots</a>
+	</td>
+	<td>
+		<a href="{% url marketing_site:legal %}" class="top_link" >Legal</a>
+		<a href="{% url marketing_site:legal %}#user_agreement">User Agreement</a>
+		<a href="{% url marketing_site:legal %}#privacy_policy">Privacy Policy</a>
+		<a href="{% url marketing_site:legal %}#copyright">Copyright</a>
+	</td>
+	<td>
+		<a href="{% url marketing_site:contact_us %}" class="top_link" >Contact Us</a>
+		<a href="#" class="contact_button online">Online Support</a>
+		<a href="{% url marketing_site:contact_us %}">Send an Email</a>
+		<a href="{% url marketing_site:contact_us %}">Phone Call</a>
+		<a href="http://www.facebook.com/AGoodCloud" target="_blank">Facebook</a>
+		<a href="http://www.twitter.com/agoodcloud" target="_blank">Twitter</a>
+		<a href="{% url blog %}">Blog</a>
+	</td>
+
+</tr>
+</table>
+
 </div>
