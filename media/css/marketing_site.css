@@ -441,7 +441,7 @@ social_links {
 .features .feature {
 	display: block;
 	
-	width: 44%;
+	width: 93%;
 	margin: 0px 3%;
 	float: left;
 
@@ -460,12 +460,12 @@ social_links {
 	/*background-color: #006bcf;*/
 }
 .features .feature .title {
-	color: #000;
-	font-size: 18px;
+	color: #0085d1;
+	font-size: 20px;
 	padding: 10px 10px 0px 0px; 
 	margin-left: 0px;
 	
-	border: 1px solid #0952a8;
+	border: 1px solid #88abbe;
 	border-width: 0px 0px 1px 0px;
 }
 
@@ -473,7 +473,7 @@ social_links {
 	background-repeat: no-repeat;
 	background-position: 0px 6px;
 	padding: 5px 10px 10px 60px;
-	font-size: 15px;
+	
 	color: #454545;
 
 	
@@ -489,7 +489,10 @@ social_links {
 .features .feature.data_import 			.description { 	background-image: url("../images/icons/Box.png");  			}
 .features .feature.support	 			.description { 	background-image: url("../images/icons/float.png");  			}
 .features .feature.cloud 				.description { 	background-image: url("../images/icons/Cloud.png");  			}
-.features .feature.more_to_come			.description { 	background-image: url("../images/icons/Lightbulb.png");  			}
+.features .feature.more_to_come			.description { 	background-image: url("../images/icons/Lightbulb.png");  		}
+.features .feature.keychain				.description { 	background-image: url("../images/icons/Keychain.png");  		}
+.features .feature.shield				.description { 	background-image: url("../images/icons/Shield.png");  			}
+.features .feature.glasses				.description { 	background-image: url("../images/icons/Glasses.png");  			}
 
 
 .page_action, a.page_action {
