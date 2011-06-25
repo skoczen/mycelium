@@ -81,6 +81,10 @@ p {
 
 html { overflow-y: auto; }
 
+.hidden {
+	display: none;
+}
+
 input.prefilled.tv-focused, input.prefilled.tv-changed {
 	color: #222;
 }

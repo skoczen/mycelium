@@ -1033,8 +1033,19 @@ social_links {
 #example_people #will .name_and_role {
 	background-image: url("../images/marketing-will-120.png");
 }
+#screenshot_gallery {
+	margin-bottom: 20px;
+}
 .galleria-container {
-	background: transparent;
+	width: 100% !important;
+	padding: 20px;
+	background: url("../images/marketing-text-back-contrast-highlight-background.jpg");
+	border-radius: 		8px;
+	-moz-border-radius: 8px;
+	box-shadow: 		1px 1px 2px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	1px 1px 2px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);	
 }
 .galleria-info-text {
 	display: block !important;
@@ -1048,15 +1059,36 @@ social_links {
 	padding: 0px;
 }
 .galleria-info-link {
-	display: none;
+	display: none !important;
 }
 .galleria-stage {
-	padding-top: 90px;
+	padding-top: 70px;
+	width: 98% !important;
 }
 .galleria-image img {
-	border: 1px solid #555;
-	box-shadow: 		1px 1px 2px rgba(0,0,0,0.35);
-  	-moz-box-shadow:	1px 1px 2px rgba(0,0,0,0.35);
-  	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
-  	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);	
+	border: 1px solid #766b43;
+	box-shadow: 		2px 2px 2px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	2px 2px 2px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	2px 2px 2px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 2px 2px 2px rgba(0,0,0,0.35);	
+
+}
+.galleria-thumbnails-list {
+	background: url("../images/marketing-text-back-contrast-background.jpg");	
+
+}
+.galleria-info-title {
+	font-size: 18px;
+	font-family: inherit;
+	color: #524a2e;
+	font-weight: normal;
+}
+
+.galleria-info-description {
+	font-size: 16px;	
+	font-weight: normal;
+	font-style: normal;
+	font-family: inherit;
+	color: #766b43;
+
 }

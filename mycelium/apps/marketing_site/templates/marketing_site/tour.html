@@ -6,8 +6,9 @@
 {% js "js/contrib/galleria/themes/classic/galleria.classic.min.js" %}
 <script>
     $('#screenshot_gallery').galleria({
-        width:600,
-        height:500
+        width: "70%",
+        height: 600,
+        imageMargin: 40,
     });
 </script>
 {% endblock  %}
@@ -37,24 +38,72 @@
 
 		<div id="screenshot_gallery">
 			<img src="{% media_url "images/screenshots/top_search.jpg" %}" 				title="Quick-search from anywhere in GoodCloud"	alt="The search bar looks in your people, organizations, groups, and spreadsheets. And it's fast - updating instantaneously as you type!" />
+			<span class="hidden">
+				<caption>Quick-search from anywhere in GoodCloud: The search bar looks in your people, organizations, groups, and spreadsheets. And it's fast - updating instantaneously as you type!"</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/person_view.jpg" %}" 			title="Viewing a person"	alt="No rows and columns here. We've laid out the screens to look like the things you'd expect - addresses actually look like addresses." />
+			<span class="hidden">
+				<caption>Viewing a person: No rows and columns here. We've laid out the screens to look like the things you'd expect - addresses actually look like addresses."</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/person_edit.jpg" %}" 			title="Edit an address"	alt="We've tried to make everything as simple as possible.  Simply make your changes - GoodCloud saves them automatically in the background." />
-			<img src="{% media_url "images/screenshots/add_donation.jpg" %}" 			title="Adding a donation"	alt="Simple and easy to add donations/" />
+			<span class="hidden">
+				<caption>Edit an address: We've tried to make everything as simple as possible.  Simply make your changes - GoodCloud saves them automatically in the background."</caption>
+			</span>
+			<img src="{% media_url "images/screenshots/add_donation.jpg" %}" 			title="Adding a donation"	alt="Simple and easy to add donations." />
+			<span class="hidden">
+				<caption>Adding a donation: Simple and easy to add donations."</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/add_volunteer_hours.jpg" %}" 	title="Adding volunteer hours" alt="Adding hours for volunteers couldn't get much simpler." />
+			<span class="hidden">
+				<caption>Adding volunteer hours" alt="Adding hours for volunteers couldn't get much simpler."</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/add_volunteer_hours_with_calendar.jpg" %}" 	title="Built-in calendars"	alt="No more glancing for the calendar - it's built into all of the dates in GoodCloud." />
+			<span class="hidden">
+				<caption>Built-in calendars: No more glancing for the calendar - it's built into all of the dates in GoodCloud."</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/person_tags.jpg" %}" 			title="Tags for a person"	alt="One-click to categorize your people in GoodCloud, using the tags that make sense for your nonprofit." />
+			<span class="hidden">
+				<caption>Tags for a person: One-click to categorize your people in GoodCloud, using the tags that make sense for your nonprofit."</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/manage_tags_view.jpg" %}" 		title="Manage Tags"	alt="Tags have been built to be fast, easy, and flexible - to match your organization's needs." />
+			<span class="hidden">
+				<caption>Manage Tags: Tags have been built to be fast, easy, and flexible - to match your organization's needs."</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/manage_tags_edit.jpg" %}" 		title="Manage Tags"	alt="Easily create the categories and tags that fit your mission" />
+			<span class="hidden">
+				<caption>Manage Tags: Easily create the categories and tags that fit your mission"</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/groups_search.jpg" %}" 			title="Groups list"	alt="Your groups are saved and continually updated - ready when you need them." />
+			<span class="hidden">
+				<caption>Groups list: Your groups are saved and continually updated - ready when you need them."</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/group_view.jpg" %}" 				title="Viewing a group"	alt="Groups keep themselves up-to-date, automatically." />
+			<span class="hidden">
+				<caption>Viewing a group: Groups keep themselves up-to-date, automatically."</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/group_edit.jpg" %}" 				title="Editing a group"	alt="It's easy to make groups of people from any criteria in GoodCloud" />
+			<span class="hidden">
+				<caption>Editing a group: It's easy to make groups of people from any criteria in GoodCloud"</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/spreadsheet_view.jpg" %}" 		title="View and download a spreadsheet"	alt="Downloading the latest mailing list is one click. Simple." />
+			<span class="hidden">
+				<caption>View and download a spreadsheet: Downloading the latest mailing list is one click. Simple."</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/spreadsheet_edit.jpg" %}" 		title="Editing a spreadsheet"	alt="We've built-in the most commmon templates for spreadsheets - setting up a spreadsheet is a few quick clicks." />
+			<span class="hidden">
+				<caption>Editing a spreadsheet: We've built-in the most commmon templates for spreadsheets - setting up a spreadsheet is a few quick clicks."</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/spreadsheet_email.jpg" %}" 		title="Email lists made easy"	alt="For the email template, we included a quick-copy box, so you can just copy and paste into your mailing list software, email program, or anything else!" />
+			<span class="hidden">
+				<caption>Email lists made easy: For the email template, we included a quick-copy box, so you can just copy and paste into your mailing list software, email program, or anything else!"</caption>
+			</span>
 			<img src="{% media_url "images/screenshots/accounts.jpg" %}" 				title="Accounts" alt="Add an unlimited number of staff and volunteer accounts." />
+			<span class="hidden">
+				<caption>Accounts: Add an unlimited number of staff and volunteer accounts."</caption>
+			</span>
 		</div>
 
-		<p>Here's a few pages from within GoodCloud. Of course, the best way to experience them is to <a href="{% url accounts:signup %}">sign up for a free trial!</a>  No risk, no credit card, nada.  We invite you to see these screens with your own donors and volunteers, and see if GoodCloud really isn't the easiest solution you've used.</p>
+		<p>Here's a few pages from within GoodCloud. Of course, the best way to experience them is to <a href="{% url accounts:signup %}">sign up for a free trial!</a>  No risk, no credit card.  We invite you to see these screens with your own donors and volunteers, and see if GoodCloud really isn't the easiest solution you've used.</p>
 
 
 	</div>
