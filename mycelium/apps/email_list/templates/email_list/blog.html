@@ -1,0 +1,49 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}Blog: Updates and News from Around the Nonprofit World.{% endblock %}
+{% block description %}Here's our story, every day as we build the world's best software for small nonprofits. We keep you up-to-date with news around the nonprofit world as well!{% endblock %}
+
+
+{% block page_header %}Real people, real voices.{% endblock %}
+
+{% block page_content %}
+
+<div class="newsletter_signup"></div>
+<div class="blog_area">
+
+
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 4,
+  interval: 6000,
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#0060b9',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#d8eef9',
+      color: '#454545',
+      links: '#2c8abd'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: true,
+    hashtags: true,
+    timestamp: true,
+    avatars: true,
+    behavior: 'all'
+  }
+}).render().setUser('agoodcloud').start();
+</script>
+
+</div>
+
+{% endblock %}

@@ -1033,3 +1033,30 @@ social_links {
 #example_people #will .name_and_role {
 	background-image: url("../images/marketing-will-120.png");
 }
+.galleria-container {
+	background: transparent;
+}
+.galleria-info-text {
+	display: block !important;
+	width: 90%;
+	margin: 0px;
+	background: transparent;
+}
+.galleria-info {
+	display: block;
+	width: 100%;
+	padding: 0px;
+}
+.galleria-info-link {
+	display: none;
+}
+.galleria-stage {
+	padding-top: 90px;
+}
+.galleria-image img {
+	border: 1px solid #555;
+	box-shadow: 		1px 1px 2px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	1px 1px 2px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);	
+}
