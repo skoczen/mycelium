@@ -57,6 +57,11 @@ def features(request):
 def tour(request):
     return locals()
 
+@render_to("marketing_site/screenshots.html")
+def screenshots(request):
+    return locals()
+
+
 @render_to("marketing_site/praise.html")
 def praise(request):
     return locals()

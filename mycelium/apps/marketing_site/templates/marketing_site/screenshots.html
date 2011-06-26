@@ -1,0 +1,108 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}Tour - watch GoodCloud in action, and hear what motivates our team!{% endblock %}
+{% block description %}Watch a video interview with GoodCloud's CEO, and see how it helps nonprofits organize and run more easily!{% endblock %}
+{% block base_js %}{{block.super}}
+<script src="{{MANUAL_MEDIA_URL}}js/contrib/galleria/galleria-1.2.4.js" />
+<script src="{{MANUAL_MEDIA_URL}}js/contrib/galleria/themes/classic/galleria.classic.min.js" />
+<script>
+$(function(){
+    $('#screenshot_gallery').galleria({
+        width: $(document).width() * 0.7 * 0.66,
+        height: 600,
+        imageMargin: 40,
+    });
+ });
+</script>
+{% endblock  %}
+{% block page_header %}Watch it in action.{% endblock %}
+
+{% block page_content %}
+
+<div id="side_nav" class="features">
+	<ul class="nav_links png_bg">
+	 	<li><a href="{% url marketing_site:tour %}">Video Tour</a></li>
+	 	<li class="ui-tabs-selected ui-state-active"><a href="{% url marketing_site:screenshots %}">Screenshots</a></li>
+ 	</ul>
+
+	<div class="tab_content company" id="pictures_and_words">
+		<div class="page_top_hook">More than just some pretty screenshots.</div>
+
+		<div id="screenshot_gallery">
+			<img src="{% media_url "images/screenshots/top_search.jpg" %}" 				title="Quick-search from anywhere in GoodCloud"	alt="The search bar looks in your people, organizations, groups, and spreadsheets. And it's fast - updating instantaneously as you type!" />
+			<span class="hidden">
+				<span class="caption">Quick-search from anywhere in GoodCloud: The search bar looks in your people, organizations, groups, and spreadsheets. And it's fast - updating instantaneously as you type!"</span>
+			</span>
+			<img src="{% media_url "images/screenshots/person_view.jpg" %}" 			title="Viewing a person"	alt="No rows and columns here. We've laid out the screens to look like the things you'd expect - addresses actually look like addresses." />
+			<span class="hidden">
+				<span class="caption">Viewing a person: No rows and columns here. We've laid out the screens to look like the things you'd expect - addresses actually look like addresses."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/person_edit.jpg" %}" 			title="Edit an address"	alt="We've tried to make everything as simple as possible.  Simply make your changes - GoodCloud saves them automatically in the background." />
+			<span class="hidden">
+				<span class="caption">Edit an address: We've tried to make everything as simple as possible.  Simply make your changes - GoodCloud saves them automatically in the background."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/add_donation.jpg" %}" 			title="Adding a donation"	alt="Simple and easy to add donations." />
+			<span class="hidden">
+				<span class="caption">Adding a donation: Simple and easy to add donations."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/add_volunteer_hours.jpg" %}" 	title="Adding volunteer hours" alt="Adding hours for volunteers couldn't get much simpler." />
+			<span class="hidden">
+				<span class="caption">Adding volunteer hours" alt="Adding hours for volunteers couldn't get much simpler."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/add_volunteer_hours_with_calendar.jpg" %}" 	title="Built-in calendars"	alt="No more glancing for the calendar - it's built into all of the dates in GoodCloud." />
+			<span class="hidden">
+				<span class="caption">Built-in calendars: No more glancing for the calendar - it's built into all of the dates in GoodCloud."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/person_tags.jpg" %}" 			title="Tags for a person"	alt="One-click to categorize your people in GoodCloud, using the tags that make sense for your nonprofit." />
+			<span class="hidden">
+				<span class="caption">Tags for a person: One-click to categorize your people in GoodCloud, using the tags that make sense for your nonprofit."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/manage_tags_view.jpg" %}" 		title="Manage Tags"	alt="Tags have been built to be fast, easy, and flexible - to match your organization's needs." />
+			<span class="hidden">
+				<span class="caption">Manage Tags: Tags have been built to be fast, easy, and flexible - to match your organization's needs."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/manage_tags_edit.jpg" %}" 		title="Manage Tags"	alt="Easily create the categories and tags that fit your mission." />
+			<span class="hidden">
+				<span class="caption">Manage Tags: Easily create the categories and tags that fit your mission."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/groups_search.jpg" %}" 			title="Groups list"	alt="Your groups are saved and continually updated - ready when you need them." />
+			<span class="hidden">
+				<span class="caption">Groups list: Your groups are saved and continually updated - ready when you need them."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/group_view.jpg" %}" 				title="Viewing a group"	alt="Groups keep themselves up-to-date, automatically." />
+			<span class="hidden">
+				<span class="caption">Viewing a group: Groups keep themselves up-to-date, automatically."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/group_edit.jpg" %}" 				title="Editing a group"	alt="It's easy to make groups of people from any criteria in GoodCloud" />
+			<span class="hidden">
+				<span class="caption">Editing a group: It's easy to make groups of people from any criteria in GoodCloud"</span>
+			</span>
+			<img src="{% media_url "images/screenshots/spreadsheet_view.jpg" %}" 		title="View and download a spreadsheet"	alt="Downloading the latest mailing list is one click. Simple." />
+			<span class="hidden">
+				<span class="caption">View and download a spreadsheet: Downloading the latest mailing list is one click. Simple."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/spreadsheet_edit.jpg" %}" 		title="Editing a spreadsheet"	alt="We've built-in the most commmon templates for spreadsheets - setting up a spreadsheet is a few quick clicks." />
+			<span class="hidden">
+				<span class="caption">Editing a spreadsheet: We've built-in the most commmon templates for spreadsheets - setting up a spreadsheet is a few quick clicks."</span>
+			</span>
+			<img src="{% media_url "images/screenshots/spreadsheet_email.jpg" %}" 		title="Email lists made easy"	alt="For the email template, we included a quick-copy box, so you can just copy and paste into your mailing list software, email program, or anything else!" />
+			<span class="hidden">
+				<span class="caption">Email lists made easy: For the email template, we included a quick-copy box, so you can just copy and paste into your mailing list software, email program, or anything else!"</span>
+			</span>
+			<img src="{% media_url "images/screenshots/accounts.jpg" %}" 				title="Accounts" alt="Add an unlimited number of staff and volunteer accounts." />
+			<span class="hidden">
+				<span class="caption">Accounts: Add an unlimited number of staff and volunteer accounts."</span>
+			</span>
+		</div>
+
+		<p>Here's a few pages from within GoodCloud. Of course, the best way to experience them is to <a href="{% url accounts:signup %}">sign up for a free trial!</a>  No risk, no credit card.  We invite you to see these screens with your own donors and volunteers, and see if GoodCloud really isn't the easiest solution you've used.</p>
+
+
+	</div>
+</div>	
+
+
+<div class="clearfix"></div>
+<a href="{% url accounts:signup %}" class="page_action png_bg">Now, try it out yourself!</a>
+
+{% endblock %}
