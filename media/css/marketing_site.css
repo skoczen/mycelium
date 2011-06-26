@@ -1035,6 +1035,8 @@ social_links {
 }
 #screenshot_gallery {
 	margin-bottom: 20px;
+	height: 600px;
+	width: 100%;
 }
 .galleria-container {
 	width: 100% !important;
