@@ -30,7 +30,8 @@ DATABASE_POOL = {
 MASTER_DATABASE = 'default'
 
 
-MANUAL_MEDIA_URL = 'http://media.digitalmycelium.com/'
+MEDIA_URL = 'http://media.digitalmycelium.com/'
+MANUAL_MEDIA_URL = MEDIA_URL
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "/admin-media/"
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
