@@ -5,13 +5,14 @@
 {% block javascript %}{{block.super}}
 {% js "js/contrib/galleria/galleria-1.2.4.js" %}
 {% js "js/contrib/galleria/themes/classic/galleria.classic.min.js" %}
-
 <script>
+$(function(){
     $('#screenshot_gallery').galleria({
         width: "70%",
         height: 600,
         imageMargin: 40,
     });
+ });
 </script>
 {% endblock  %}
 {% block page_header %}Watch it in action.{% endblock %}
