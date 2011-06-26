@@ -2,9 +2,9 @@
 {% load i18n generic_fields friendly_data_formatting  %}
 {% block title %}Tour - watch GoodCloud in action, and hear what motivates our team!{% endblock %}
 {% block description %}Watch a video interview with GoodCloud's CEO, and see how it helps nonprofits organize and run more easily!{% endblock %}
-{% block base_js %}{{block.super}}
-<script src="{{MANUAL_MEDIA_URL}}js/contrib/galleria/galleria-1.2.4.js" />
-<script src="{{MANUAL_MEDIA_URL}}js/contrib/galleria/themes/classic/galleria.classic.min.js" />
+{% block javascript %}{{block.super}}
+<script src="{{MANUAL_MEDIA_URL}}js/contrib/galleria/galleria-1.2.4.js" > </script>
+<script src="{{MANUAL_MEDIA_URL}}js/contrib/galleria/themes/classic/galleria.classic.min.js" ></script>
 <script>
 $(function(){
     $('#screenshot_gallery').galleria({
