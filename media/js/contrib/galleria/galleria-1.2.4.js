@@ -4429,10 +4429,12 @@ Galleria.Picture.prototype = {
 
                 // force chrome to reload the image in case of cache bug
                 // set a limit just in case
+
                 if ( ( !this.width || !this.height ) && i < 1000 ) {
                     i++;
                     $( image ).load( onload ).attr( 'src', src+'?'+new Date().getTime() );
                 }
+                
 
                 self.original = {
                     height: this.height,
