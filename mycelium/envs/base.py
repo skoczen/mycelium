@@ -95,6 +95,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     "qi_toolkit.context_processors.add_env_to_request",
     "qi_toolkit.context_processors.add_favicon_to_request",    
     "mycelium_core.context_processors.cdn_media_url",
+    "mycelium_core.context_processors.manual_media_url",
 )
 
 DATE_INPUT_FORMATS = ('%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%b %d %Y',
@@ -271,6 +272,7 @@ AWS_STORAGE_BUCKET_NAME = "goodcloud1"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
+
 
 GIT_CURRENT_SHA = None
 # django-mediasync
