@@ -1038,9 +1038,10 @@ social_links {
 	height: 600px;
 	width: 100%;
 }
-.galleria-container {
+#screenshot_gallery .tn3-gallery {
 	width: 100% !important;
 	padding: 20px;
+	background-color: transparent;
 	background: url("../images/marketing-text-back-contrast-highlight-background.jpg");
 	border-radius: 		8px;
 	-moz-border-radius: 8px;
@@ -1049,7 +1050,7 @@ social_links {
   	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
   	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);	
 }
-.galleria-info-text {
+#screenshot_gallery .tn3-image {
 	display: block !important;
 	width: 90%;
 	margin: 0px;
@@ -1063,11 +1064,19 @@ social_links {
 .galleria-info-link {
 	display: none !important;
 }
-.galleria-stage {
-	padding-top: 70px;
-	width: 98% !important;
+
+#screenshot_gallery .tn3-full-image {
+	position: relative !important;
+	width: 90% !important;
+	height: auto !important;
+	top: 0px !important;
+	margin: 0px auto;
+	left: 0px !important;
 }
-.galleria-image img {
+#screenshot_gallery .tn3-full-image img {
+	top: 0px !important;
+	width: auto !important;
+	height: auto !important;
 	border: 1px solid #766b43;
 	box-shadow: 		2px 2px 2px rgba(0,0,0,0.35);
   	-moz-box-shadow:	2px 2px 2px rgba(0,0,0,0.35);
@@ -1079,18 +1088,87 @@ social_links {
 	background: url("../images/marketing-text-back-contrast-background.jpg");	
 
 }
-.galleria-info-title {
+
+
+#screenshot_gallery .tn3-text-bg {
+	top: 0px;
+}
+#screenshot_gallery .tn3-image {
+	width: 100% !important;
+	height: 600px !important;
+}
+#screenshot_gallery .tn3-in-image {
+	top: 0px !important;
+	padding-top: 90px;
+	width: 100% !important;
+	height: 510px !important;
+
+}
+#screenshot_gallery .tn3-image-in {
+	margin: 90px auto 0px auto;
+	width: 98% !important;
+	left: 0px;
+}
+#screenshot_gallery .tn3-text-bg {
+	background: none;
+	padding: 0px;
+}
+#screenshot_gallery .tn3-in-image .tn3-image-title {
+	padding: 0px 5px;
 	font-size: 18px;
 	font-family: inherit;
 	color: #524a2e;
 	font-weight: normal;
+	line-height: 1.4em;
 }
 
-.galleria-info-description {
+#screenshot_gallery .tn3-in-image .tn3-image-description {
 	font-size: 16px;	
 	font-weight: normal;
 	font-style: normal;
 	font-family: inherit;
 	color: #766b43;
+	padding: 5px 0px 0px 5px;
+	line-height: 1.4em;
+}
+.t3n-show-albums {
+	display: none;
+}
+#screenshot_gallery .tn3-controls-bg {
+	background: none;
+	display: none;
+}
+#screenshot_gallery .tn3-thumbs {
+	background: none;
+	width: 100% !important;
+	left: 0px;
+	height: 50px;
+	display: none;
+}
+#screenshot_gallery .tn3-fullscreen, #screenshot_gallery .tn3-play, #screenshot_gallery .tn3-count, #screenshot_gallery .tn3-prev-page, #screenshot_gallery .tn3-next-page {
+	display: none;
+}
+#screenshot_gallery ul {
+	width: 100% !important;
+	left: 0px !important;
+	height: 40px;
+}
+#screenshot_gallery .tn3_v {
+	top: 40% !important; 
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+#screenshot_gallery .tn3-prev  {
+	left: 0px;
+	background-image: url("../images/marketing-gallery-left-arrow.png");
+	height: 50px;
+}
+#screenshot_gallery .tn3-next  {
+	background-image: url("../images/marketing-gallery-right-arrow.png");
+	height: 50px;
+}
 
+#screenshot_gallery li {
+	list-style-type: none;
+	padding: 20px;
 }
