@@ -2,11 +2,7 @@
 {% block css %}{{block.super}}
 {% css "css/marketing_base.css" %}
 {# 1140 #}
-<!--[if lte IE 9]>{% css "/css/contrib/1140/ie.css" %}
-<style type="text/css">
-	#footer {display:block; position: relative;}
-</style>
-<![endif]-->
+<!--[if lte IE 9]>{% css "/css/contrib/1140/ie.css" %}<![endif]-->
 {% endblock %}
 {% block base_js %}{% js "js/marketing_base.js" %}{% endblock %}
 {% block javascript %}{{block.super}}
