@@ -4,7 +4,7 @@ $(function(){
 	$(window).resize(make_sure_identical_height_block_boxes_are_equal_height);
 	make_sure_identical_height_block_boxes_are_equal_height();
 	$(".contact_button.online").click(open_uservoice);
-	$("html").preloadCssImages();
+	// $("html").preloadCssImages();
 });
 
 // function setupFooter(){
