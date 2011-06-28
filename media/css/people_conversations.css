@@ -17,3 +17,31 @@ tab_contents.people_conversations_tab .delete_conversation {
 tab_contents.people_conversations_tab .recent_conversations_header.detail_header {
 	padding-top: 20px;
 }
+tab_contents.people_conversations_tab .datetime_date {
+	display: block;
+	float: left;
+	position: relative;
+	overflow: auto;
+	margin-right: 20px;
+}
+tab_contents.people_conversations_tab .datetime_time {
+	display: block;
+	float: left;
+	overflow: auto;
+	position: relative;
+}
+tab_contents.people_conversations_tab .datetime_date input {
+	width: 100px;	
+}
+tab_contents.people_conversations_tab .datetime_time input {
+	width: 1.5em;
+	text-align: center;
+}
+tab_contents.people_conversations_tab .date label {
+	padding: 3px 1px 0px 0px;
+	display: block;
+	float: left;
+}
+tab_contents.people_conversations_tab form_actions input {
+	padding: 5px 11px;
+}

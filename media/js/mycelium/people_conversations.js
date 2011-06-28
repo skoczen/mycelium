@@ -44,12 +44,13 @@ function bind_conversation_tab_events() {
         $("#new_conversation textarea[name$=body]").focus();
     });
     
-    $("#new_conversation input[name=date]").datepicker({
+    $("#new_conversation .datepicker").datepicker({
         "numberOfMonths": 2,
         "showButtonPanel": true,
         // "gotoCurrent": true,
         "showCurrentAtPos": 1            
-    });    
+    });  
+    // $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd-yy' });
 }
 
 function process_fragments_and_rebind_conversation_form(json) {
