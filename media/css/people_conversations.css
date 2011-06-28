@@ -45,3 +45,13 @@ tab_contents.people_conversations_tab .date label {
 tab_contents.people_conversations_tab form_actions input {
 	padding: 5px 11px;
 }
+tab_contents.people_conversations_tab textarea {
+	width: 100%;
+	height: 80px;
+}
+tab_contents.people_conversations_tab .full_body {
+	white-space: pre;	
+}
+tab_contents.people_conversations_tab .delete_conversation_btn {
+	float: right;
+}

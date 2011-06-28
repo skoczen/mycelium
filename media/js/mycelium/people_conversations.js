@@ -1,6 +1,8 @@
 $(function(){
     $(".people_conversations_tab #new_conversation .cancel_add_btn").live("click", conversationTab.cancel_add_conversation);
     $(".people_conversations_tab .delete_conversation_btn").live("click",conversationTab.delete_conversation_from_people_tab);
+    $(".read_all_link").live("click",conversationTab.show_full_conversation_text);
+    $(".read_less_link").live("click",conversationTab.hide_full_conversation_text);
 	bind_conversation_tab_events();
 });
 
@@ -33,6 +35,20 @@ conversationTab.cancel_add_conversation = function() {
     return false;
 }
 
+conversationTab.show_full_conversation_text = function () {
+	var parent = $(this).parents(".conversation_body");
+	$(".full_body",parent).removeClass("hidden").show();
+	$(".gist",parent).hide();
+	$(".read_all_link",parent).hide();
+	return false
+}
+conversationTab.hide_full_conversation_text = function () {
+	var parent = $(this).parents(".conversation_body");
+	$(".full_body",parent).hide();
+	$(".gist",parent).show();
+	$(".read_all_link",parent).show();
+	return false
+}
 
 
 function bind_conversation_tab_events() {
@@ -49,7 +65,8 @@ function bind_conversation_tab_events() {
         "showButtonPanel": true,
         // "gotoCurrent": true,
         "showCurrentAtPos": 1            
-    });  
+    });
+
     // $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd-yy' });
 }
 

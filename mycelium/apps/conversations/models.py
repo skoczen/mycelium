@@ -4,8 +4,10 @@ from accounts.models import AccountBasedModel
 from django.core.cache import cache
 
 from people.models import Person
-from conversations import CONVERSATION_TYPES
+from conversations import CONVERSATION_TYPES, GIST_LENGTH
 import datetime
+
+
 
 class Conversation(AccountBasedModel, TimestampModelMixin):
     conversation_type        = models.CharField(max_length=50, choices=CONVERSATION_TYPES, default=CONVERSATION_TYPES[0][0] )
@@ -19,3 +21,11 @@ class Conversation(AccountBasedModel, TimestampModelMixin):
     
     class Meta:
         ordering = ("-date",)
+
+    @property
+    def bigger_than_the_gist(self):
+        return len(self.body) > GIST_LENGTH
+
+    @property
+    def gist(self):
+        return "%s..." % self.body[:GIST_LENGTH]

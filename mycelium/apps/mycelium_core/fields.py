@@ -29,7 +29,7 @@ class JqSplitDateTimeField(fields.MultiValueField):
         if data_list:
             if not (data_list[0] and data_list[1] and data_list[2] and data_list[3]):
                 raise forms.ValidationError("Field is missing data.")
-            input_time = strptime("%s:%s %s"%(data_list[1], data_list[2], data_list[3]), "%I:%M %p")
-            datetime_string = "%s %s" % (data_list[0], strftime('%H:%M', input_time))
-            return datetime_string
+            input_time = strptime("%s %s:%s %s"%(data_list[0], data_list[1], data_list[2], data_list[3]), "%m/%d/%Y %I:%M %p")
+            # datetime_string = "%s %s" % (data_list[0], strftime('%H:%M', input_time))
+            return strftime("%Y-%m-%d %H:%M", input_time)
         return None

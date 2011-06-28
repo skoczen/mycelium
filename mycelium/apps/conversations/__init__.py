@@ -5,3 +5,5 @@ CONVERSATION_TYPES = [
     ("mail", "Postal Mail"),
     ("online", "Online"),
 ]
+
+GIST_LENGTH = 300
