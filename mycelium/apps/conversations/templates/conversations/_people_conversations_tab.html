@@ -10,9 +10,16 @@
 		<box_content>
 		<form id="new_conversation" action="{% url conversations:save_new_conversation person.pk %}" method="POST">{% csrf_token %}
 		<span class="edit_mode_on">
-			<span class="conversation_type">{{conversation_form.conversation_type}}</span>
-			<span class="body">{{conversation_form.body}}</span>
-			<span class="date">{{conversation_form.date}}</span>
+			<div class="conversation_type">
+				
+				{% for ct in CONVERSATION_TYPES  %}
+					<label for="id_conversation_type_{{forloop.counter}}" class="{{ct|first}}" >
+					<input type="radio" name="conversation_type" value="{{ct|first}}" id="id_conversation_type_{{forloop.counter}}" />{{ct|last}}
+					</label>
+				{% endfor %}
+			</div>
+			<div class="body">{{conversation_form.body}}</div>
+			<div class="date">{{conversation_form.date}}</div>
 
 		
 			<form_actions>
@@ -26,8 +33,7 @@
 		</box_content>
 	</tabbed_box>
 		
-	{% if person.conversations|length > 0 %}
-	<div class="detail_header recent_donor_header">Recent Conversations</div>
+	<div class="detail_header recent_conversations_header">Recent Conversations</div>
 	<div class="conversation_table striped">
 		{% for c in person.conversations|slice:":3" %}
 			{% include "conversations/_conversation_summary.html" %}
@@ -35,6 +41,5 @@
 			<div class="no_records_message">No conversations yet!</div>
 		{% endfor %}
 	</div>
-	{% endif %}
 </tab_contents>
 

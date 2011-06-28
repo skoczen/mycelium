@@ -1,7 +1,7 @@
 {% load i18n generic_fields friendly_data_formatting humanize %}
 <div class="conversation_row">
-{{c.date}}
-{{c.conversation_type}}
-{{c.body}}
-<a href="{% url conversations:delete_conversation_from_people_tab c.pk %}" class="delete_conversation_btn mycelium_delete_btn mycelium_active_grey mycelium_small_btn mycelium_btn">Delete Conversation</a>
+	<div class="conversation_type">{{c.conversation_type}}</div>
+	<div class="conversation_date">{{c.date}}</div>
+	<div class="conversation_body">{{c.body}}</div>
+	<a href="{% url conversations:delete_conversation_from_people_tab c.pk %}" class="delete_conversation_btn mycelium_delete_btn mycelium_active_grey mycelium_small_btn mycelium_btn">Delete Conversation</a>
 </div>

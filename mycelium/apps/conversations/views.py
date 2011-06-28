@@ -13,10 +13,11 @@ from django.views.decorators.cache import cache_page
 from conversations.models import Conversation
 from conversations.forms import NewConversationForm
 from people.models import Person
+from conversations import CONVERSATION_TYPES
 
 def _people_conversations_tab_context(context):
     conversation_form = NewConversationForm(account=context["request"].account)
-    context.update({"conversation_form":conversation_form,})
+    context.update({"conversation_form":conversation_form,'CONVERSATION_TYPES':CONVERSATION_TYPES,})
 
     return context
 
