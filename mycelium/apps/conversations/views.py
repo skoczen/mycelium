@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 
+from conversations.models import Conversation
 from conversations.forms import NewConversationForm
 from people.models import Person
 
@@ -23,9 +24,9 @@ def _render_people_conversations_tab(context):
     return render_to_string("conversations/_people_conversations_tab.html", RequestContext(context["request"],_people_conversations_tab_context(context)))
 
 
-def _return_fragments_or_redirect(request,context):
+def _return_fragments_or_redirect(request, context):
     if request.is_ajax():
-        return HttpResponse(simplejson.dumps( {"fragments":{"detail_tab":_render_people_conversation_tab(context)}}))
+        return HttpResponse(simplejson.dumps( {"fragments":{"detail_tab":_render_people_conversations_tab(context)}}))
     else:
         return HttpResponseRedirect(reverse("people:person",args=(context["person"].pk,)))    
 

@@ -1,0 +1,75 @@
+tab_contents.people_conversation_tab #new_conversation .sentence {
+	margin-top: 5px;
+}
+tab_contents.people_conversation_tab #new_conversation .sentence input {
+	background: transparent;
+	text-align: center;
+}
+tab_contents.people_conversation_tab #new_conversation .sentence select {
+	margin-left: 0.5em;
+}
+tab_contents.people_conversation_tab #new_conversation .duration input {
+/*	min-width: 50px;*/
+}
+tab_contents.people_conversation_tab #new_conversation .sentence_fragment {
+	font-size: 18px;
+	bottom: -3px;
+	position: relative;
+	display: inline-block;	
+}
+tab_contents.people_conversation_tab .conversation_conversation_table {
+	width: 100%;
+}
+tab_contents.people_conversation_tab .conversation_conversation_table .year {
+	text-align: left;
+	width: 3em;
+	padding-left: 10px;
+}
+tab_contents.people_conversation_tab .conversation_conversation_table .year_of_conversations {
+	display: none;
+}
+tab_contents.people_conversation_tab .conversation_conversation_table tr.conversation_row td {
+	padding-left: 10px;
+}
+tab_contents.people_conversation_tab .year_of_conversation_conversations_table {
+	margin: 6px 1%;
+	width: 98%;
+	border: 1px solid #DDD;
+	border-width: 0px 1px 1px 1px;
+}
+tab_contents.people_conversation_tab .year_overview td {
+	text-align: right;
+}
+tab_contents.people_conversation_tab .no_records_message {
+	padding: 10px 10px;
+	font-size: 22px;
+	color: #AAA;
+}
+tab_contents.people_conversation_tab tabbed_box[name=add_a_conversation] {
+	margin-bottom: 10px;
+}
+tab_contents.people_conversation_tab .delete_conversation {
+	text-align: right;
+}
+tab_contents.people_conversation_tab fragment[name=conversation_tags] {
+	padding: 10px;
+}
+tab_contents.people_conversation_tab fragment[name=conversation_tags] tag {
+	clear: both;
+}
+tab_contents.people_conversation_tab .new_tag {
+	display: block;
+	clear: both;
+}
+tab_contents.people_conversation_tab .section_details {
+	display: block;
+	padding: 10px;
+}
+tab_contents.people_conversation_tab .tags_and_other_info {
+	padding: 0px 20px;
+}
+tab_contents.people_conversation_tab tags {
+	width: 100%;
+	overflow: auto;
+	padding: 0px;
+}
