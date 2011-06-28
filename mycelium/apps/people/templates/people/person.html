@@ -10,6 +10,7 @@
 {% block javascript %}{{block.super}}
 {% js "/js/mycelium/people_volunteer.js" %}
 {% js "/js/mycelium/people_donations.js" %}
+{% js "/js/mycelium/people_conversations.js" %}
 {% js "/js/mycelium/people_tags.js" %}
 {% js "/js/mycelium/people_common.js" %}
 {% js "/js/mycelium/people_person.js" %}
@@ -94,15 +95,15 @@ $(function(){
 
 <detail_tabs update_url="{% url people:tab_contents person.pk %}">
 	{# <a class="detail_tab current" href="#recent_activity">Recent Activity</a> #}
-	{# <a class="detail_tab" href="#conversations">Conversations</a>	 #}
-	<a class="detail_tab current" href="#volunteer">Volunteer</a>
+	<a class="detail_tab current" href="#conversations">Conversations</a>	
+	<a class="detail_tab" href="#volunteer">Volunteer</a>
 	<a class="detail_tab" href="#donor">Donations</a>
 	<a class="detail_tab" href="#tags">Tags</a>
 </detail_tabs>
 <detail_tab_contents>
 	<fragment name="detail_tab" action="replace" class="detail_tab">
 		{# {% include "recent_activity/_people_recent_activity_tab.html" %} #}
-		{% include "volunteers/_people_volunteer_tab.html" %}
+		{% include "conversations/_people_conversations_tab.html" %}
 	</fragment>
 </detail_tab_contents>
 <delete_object_block>

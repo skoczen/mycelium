@@ -1,0 +1,5 @@
+{% load i18n generic_fields friendly_data_formatting humanize %}
+{{c.date}}
+{{c.conversation_type}}
+{{c.body}}
+<a href="{% url conversations:delete_conversation_from_people_tab person.pk %}" class="delete_conversation_btn mycelium_delete_btn mycelium_active_grey mycelium_small_btn mycelium_btn">Delete Conversation</a>
