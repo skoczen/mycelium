@@ -20,6 +20,9 @@ tab_contents.people_conversations_tab #new_conversation .conversation_type label
 tab_contents.people_conversations_tab #new_conversation .conversation_type label input {
 	margin-right: 4px;
 }
+tab_contents.people_conversations_tab #new_conversation form_actions {
+	padding-left: 0px;
+}
 tab_contents.people_conversations_tab .delete_conversation {
 	text-align: right;
 }
@@ -65,7 +68,7 @@ tab_contents.people_conversations_tab textarea {
 tab_contents.people_conversations_tab .full_body, tab_contents.people_conversations_tab .gist {
 	display: block;
 	white-space: pre;	
-	padding: 0px 10px 10px 10px;
+	padding: 0px 10px 10px 0px;
 }
 tab_contents.people_conversations_tab .full_body.hidden {
 	display: none;
@@ -76,6 +79,7 @@ tab_contents.people_conversations_tab .delete_conversation_btn {
 }
 tab_contents.people_conversations_tab .conversation_row .conversation_date {
 	font-size: 18px;
+	
 }
 tab_contents.people_conversations_tab .conversation_row {
 	clear: left;
