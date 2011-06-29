@@ -42,7 +42,6 @@ def save_new_conversation(request, person_id):
         if form.is_valid():
             new_conversation = form.save(commit=False)
             new_conversation.person = person
-            new_conversation.staff = request.useraccount
             new_conversation.save()
         else:
             print form
