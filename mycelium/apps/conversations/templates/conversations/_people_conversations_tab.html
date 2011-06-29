@@ -12,9 +12,9 @@
 			<div class="conversation_type">
 				
 				{% for ct in CONVERSATION_TYPES  %}
-					<label for="id_conversation_type_{{forloop.counter}}" class="{{ct|first}}" >
-					<input type="radio" name="conversation_type" value="{{ct|first}}" id="id_conversation_type_{{forloop.counter}}" {% if forloop.first %}checked{% endif %} />{{ct|last}}
-					</label>
+					<label for="id_conversation_type_{{forloop.counter}}" class="{{ct|first}} {% if forloop.first %}selected{% endif %}" >
+					<input type="radio" name="conversation_type" value="{{ct|first}}" id="id_conversation_type_{{forloop.counter}}" {% if forloop.first %}checked{% endif %} />
+					{{ct|last}}</label>
 				{% endfor %}
 			</div>
 			<div class="body">{{conversation_form.body}}</div>
