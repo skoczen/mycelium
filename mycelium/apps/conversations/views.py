@@ -13,12 +13,13 @@ from django.views.decorators.cache import cache_page
 from conversations.models import Conversation
 from conversations.forms import NewConversationForm
 from people.models import Person
-from conversations import CONVERSATION_TYPES
+from conversations import CONVERSATION_TYPES, MORE_CONVERSATIONS_SIZE
 
 def _people_conversations_tab_context(context):
     conversation_form = NewConversationForm(account=context["request"].account)
     conversation_form.initial["staff"] = context["request"].useraccount
-    context.update({"conversation_form":conversation_form,'CONVERSATION_TYPES':CONVERSATION_TYPES,})
+    new_start_index = 3
+    context.update({"conversation_form":conversation_form,'CONVERSATION_TYPES':CONVERSATION_TYPES,'new_start_index':new_start_index})
 
     return context
 
@@ -54,3 +55,20 @@ def delete_conversation_from_people_tab(request, conversation_id):
     obj = person
 
     return _return_fragments_or_redirect(request,locals())
+
+
+def more_conversations(request, person_id, start_index):
+    start_index = int(start_index)
+    person = get_or_404_by_account(Person, request.account, person_id, using='default')
+    new_start_index = start_index + MORE_CONVERSATIONS_SIZE
+    conversations = person.conversations.all()[start_index:new_start_index]
+    there_are_more_conversations = person.conversations.all().count() > new_start_index
+
+    if request.is_ajax():
+        return HttpResponse(simplejson.dumps( {"fragments":{"more_conversations":render_to_string("conversations/_more_conversations.html", RequestContext(request,locals()))}}))
+    else:
+        return HttpResponseRedirect(reverse("people:person",args=(person.pk,)))    
+
+    
+
+    

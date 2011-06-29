@@ -22,7 +22,7 @@ class Conversation(AccountBasedModel, TimestampModelMixin):
         return "%s on %s" % (self.conversation_type, self.date)
     
     class Meta:
-        ordering = ("-date",)
+        ordering = ("-date","-created_at")
 
     @property
     def bigger_than_the_gist(self):

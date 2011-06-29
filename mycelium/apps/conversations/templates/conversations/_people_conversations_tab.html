@@ -36,11 +36,12 @@
 		
 	<div class="detail_header recent_conversations_header">Recent Conversations</div>
 	<div class="conversation_table striped">
-		{% for c in person.conversations|slice:":3" %}
-			{% include "conversations/_conversation_summary.html" %}
-		{% empty %}
-			<div class="no_records_message">No conversations yet!</div>
-		{% endfor %}
+		<span class="showing_conversations"></span>
+		<fragment name="more_conversations" action="replace">
+		{% with person.conversations|slice:":3" as conversations%}
+			{% include "conversations/_more_conversations.html" %}
+		{% endwith %}
+		</fragment>
 	</div>
 </tab_contents>
 

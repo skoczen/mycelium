@@ -3,6 +3,7 @@ $(function(){
     $(".people_conversations_tab .delete_conversation_btn").live("click",conversationTab.delete_conversation_from_people_tab);
     $(".read_all_link").live("click",conversationTab.show_full_conversation_text);
     $(".read_less_link").live("click",conversationTab.hide_full_conversation_text);
+    $(".more_conversations_link").live("click",conversationTab.show_more_conversations);
 	bind_conversation_tab_events();
 });
 
@@ -30,7 +31,7 @@ conversationTab.delete_conversation_from_people_tab = function() {
     return false;	
 }
 
-conversationTab.cancel_add_conversation = function() {
+conversationTab.cancel_add_conversation = function () {
     $("tabbed_box[name=add_a_conversation] tab_title").trigger("click");
     return false;
 }
@@ -48,6 +49,19 @@ conversationTab.hide_full_conversation_text = function () {
 	$(".gist",parent).show();
 	$(".read_all_link",parent).show();
 	return false
+}
+conversationTab.show_more_conversations = function () {
+	$(".showing_conversations").html($(".showing_conversations").html()+$("fragment[name=more_conversations] .conversation_list").html());
+	$("fragment[name=more_conversations]").html("Loading...");
+	$.ajax({
+		url: $(this).attr("href"),
+		type: "GET",
+		dataType: "json",
+		success: function(json) {
+			$.Mycelium.fragments.process_fragments_from_json(json);
+		}
+	});	
+	return false;
 }
 
 
