@@ -6,11 +6,12 @@ from people.tests.selenium_abstractions import PeopleTestAbstractions
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
 from generic_tags.tests.selenium_abstractions import TagTestAbstractions
+from conversations.tests.selenium_abstractions import ConversationTestAbstractions
 from rules.tasks import populate_rule_components_for_an_account
 
 
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions, TagTestAbstractions):
+class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions, TagTestAbstractions, ConversationTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
@@ -237,6 +238,22 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, P
         time.sleep(1)
         self.assertEqual(sel.get_text("css=.group_row:nth(0) .name"), "Test Tag Group")
         self.assertEqual(sel.get_text("css=.group_row:nth(0) .num_members"), "1")
+    
+    def test_searching_for_conversation_date_works(self):
+        sel = self.selenium
+        self.create_new_group("Test Conversation Group")
+        sel.click("css=.start_edit_btn")
+        self.create_a_new_rule(left_side="last conversation",operator="is before",right_side="1/1/2020")
+        
+        assert not sel.is_text_present("John Smith")
+
+        self.create_person_with_one_conversation()
+        sel.click("link=Groups")
+        sel.wait_for_page_to_load("30000")
+        sel.click("link=Test Conversation Group")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("John Smith")
+
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
