@@ -50,13 +50,16 @@ tab_contents.people_conversations_tab .datetime_time input {
 	width: 1.5em;
 	text-align: center;
 }
-tab_contents.people_conversations_tab .date {
+tab_contents.people_conversations_tab .date_and_with {
 	margin-top: 6px;
 }
-tab_contents.people_conversations_tab .date label {
+tab_contents.people_conversations_tab .date_and_with label {
 	padding: 3px 1px 0px 0px;
 	display: block;
 	float: left;
+}
+tab_contents.people_conversations_tab .date_and_with .with  label{
+	margin: 0px 5px 0px 30px;
 }
 tab_contents.people_conversations_tab form_actions input {
 	padding: 5px 11px;

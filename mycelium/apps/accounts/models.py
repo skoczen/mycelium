@@ -221,10 +221,10 @@ class UserAccount(TimestampModelMixin):
             return self.full_name[:self.full_name.find(" ")]
 
     def __unicode__(self):
-        return "%s with %s" % (self.denamespaced_username, self.account)
+        return "%s" % (self.nickname_or_full_name,)
 
     class Meta(object):
-        ordering = ("account","access_level","user")
+        ordering = ("nickname", "user__first_name", "account","access_level","user")
 
 
 class AccountBasedModel(models.Model):

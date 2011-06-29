@@ -17,6 +17,7 @@ from conversations import CONVERSATION_TYPES
 
 def _people_conversations_tab_context(context):
     conversation_form = NewConversationForm(account=context["request"].account)
+    conversation_form.initial["staff"] = context["request"].useraccount
     context.update({"conversation_form":conversation_form,'CONVERSATION_TYPES':CONVERSATION_TYPES,})
 
     return context

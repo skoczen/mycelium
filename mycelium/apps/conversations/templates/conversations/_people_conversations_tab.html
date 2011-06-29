@@ -18,7 +18,9 @@
 				{% endfor %}
 			</div>
 			<div class="body">{{conversation_form.body}}</div>
-			<div class="date">{{conversation_form.date}}</div>
+			<div class="date_and_with">{{conversation_form.date}} 
+			<span class="with"><label>with</label> {{conversation_form.staff}}</span>
+			</div>
 
 		
 			<form_actions>

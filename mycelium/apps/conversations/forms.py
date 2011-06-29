@@ -10,4 +10,8 @@ class NewConversationForm(AccountBasedModelForm):
   
     class Meta:
         model = Conversation
-        fields = ("account", "conversation_type", "body", "date",)
+        fields = ("account", "conversation_type", "body", "staff", "date",)
+
+    def __init__(self, *args, **kwargs):
+        super(NewConversationForm,self).__init__(*args,**kwargs)
+        self.fields["staff"].choices = [i for i in self.fields["staff"].choices][1:]
