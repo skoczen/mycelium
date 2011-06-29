@@ -13,7 +13,7 @@ from people.models import Person, Organization, PeopleAndOrganizationsSearchProx
 from people.forms import PersonForm, OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
 
 from volunteers.views import _render_people_volunteer_tab, _people_volunteer_tab_context
-from conversations.views import _render_people_conversations_tab
+from conversations.views import _render_people_conversations_tab, _people_conversations_tab_context
 from donors.views import _render_people_donor_tab
 from recent_activity.views import _render_people_recent_activity_tab 
 from generic_tags.views import _render_people_tag_tab
@@ -55,7 +55,7 @@ def person(request, person_id):
     person = get_or_404_by_account(Person, request.account, person_id)
     (form, employee_formset) = _basic_forms(person, request)
     c = locals()
-    return _people_volunteer_tab_context(c)
+    return _people_conversations_tab_context(c)
 
 @json_view
 def save_person_basic_info(request, person_id):

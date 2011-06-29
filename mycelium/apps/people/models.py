@@ -173,7 +173,9 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     def donation_totals_all_time(self):
         return self.donor.donation_set.distinct().aggregate(Sum('amount'))["amount__sum"] or 0
     
-    
+    @property
+    def conversations(self):
+        return self.conversation_set.all()
 
 class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, TimestampModelMixin, PotentiallyImportedModel):
     name = models.CharField(max_length=255, blank=True, null=True)

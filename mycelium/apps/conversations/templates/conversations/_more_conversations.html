@@ -1,0 +1,11 @@
+{% load i18n generic_fields friendly_data_formatting humanize %}
+<span class="conversation_list">
+{% for c in conversations %}
+	{% include "conversations/_conversation_summary.html" %}
+{% empty %}
+<div class="no_records_message">No more conversations.</div>
+{% endfor %}
+</span>
+{% if not conversations|length == 0 %}
+<a href="{% url conversations:more_conversations person.pk new_start_index %}" class="more_conversations_link">More conversations</a>
+{% endif %}

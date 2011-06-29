@@ -7,5 +7,7 @@ parser = dselector.Parser()
 url = parser.url
 
 urlpatterns = parser.patterns('',                      
-    # url(r'{volunteer_id:digits}/save-completed-shift$',           views.save_completed_volunteer_shift,                 name='save_completed_volunteer_shift'),    
+    url(r'{person_id:digits}/save-new-conversation$',                  views.save_new_conversation,                        name='save_new_conversation'),
+    url(r'{conversation_id:digits}/delete-conversation$',              views.delete_conversation_from_people_tab,          name='delete_conversation_from_people_tab'),
+    url(r'{person_id:digits}/more/{start_index:digits}$',              views.more_conversations,                           name='more_conversations'),
 )

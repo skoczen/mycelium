@@ -32,6 +32,10 @@ function load_detail_tab(tab_name) {
             "async": false
         });
         switch(tab_name){
+        	
+            case "#conversations":
+                bind_conversation_tab_events();
+                break;
             case "#volunteer":
                 bind_volunteer_tab_events();
                 break;

@@ -33,7 +33,6 @@
 
 		</form>
 		</box_content>
-		</tabbed_box>
 	</tabbed_box>
 		
 	{% if person.volunteer.completed_shifts_by_year|length > 0 %}
@@ -43,6 +42,7 @@
 			{% include "volunteers/_completed_volunteer_shift_row.html" %}
 		{% endfor %}
 	</table>
+	
 	{% endif %}
 
 	<div class="detail_header">Historical Totals</div>
