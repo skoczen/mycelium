@@ -772,6 +772,18 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual("555 123-4567", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
         
 
+    def test_editing_a_birthday_saves(self):
+        assert True == "Test written"
+
+    def test_age_calculates_correctly(self):
+        assert True == "Test written"
+
+    def test_upcoming_birthdays_display_on_the_dashboard(self):
+        assert True == "Test written"
+    
+    def test_upcoming_birthdays_display_on_the_dashboard_when_it_is_dec_27(self):
+        assert True == "Test written"
+
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["200_test_people.json"]
     
@@ -968,5 +980,6 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         time.sleep(1)
         first_result = sel.get_text("css=search_results .result_row:nth(0)")
         assert first_result.find('<b>') == -1
+
 
 
