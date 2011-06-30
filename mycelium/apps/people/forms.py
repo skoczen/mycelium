@@ -9,6 +9,9 @@ class PersonForm(AccountBasedModelForm):
         model = Person
         fields = ("account", "first_name", "last_name", "email", "phone_number", "line_1", "line_2", "city", "state", "postal_code", "birth_date", "birth_month", "birth_year")
 
+    def __init__(self, *args, **kwargs):
+        super(PersonForm,self).__init__(*args,**kwargs)
+        self.fields["birth_month"].choices = [(None,"Unknown")] + [i for i in self.fields["birth_month"].choices][1:]
 
 # class EmailForm(ModelForm):
 #     class Meta:

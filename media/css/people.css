@@ -249,7 +249,7 @@ search_results {
 	margin-left: 5px;
 }
 .basic_info .birthday .date_year_comma {
-	margin-right: -5px;
+	margin-left: 0px;
 }
 .additional_information {
 	padding-top: 15px;
