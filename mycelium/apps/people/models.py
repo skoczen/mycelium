@@ -15,6 +15,37 @@ import datetime
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING_PERSON = _("Unnamed Person")
 NO_NAME_STRING_ORGANIZATION = _("Unnamed Organization")
+NORMALIZED_BIRTH_YEAR = 2000  # should be a leap year for normalization's sake.
+MONTHS = [
+    (1,  _("January")),
+    (2,  _("February")),
+    (3,  _("March")),
+    (4,  _("April")),
+    (5,  _("May")),
+    (6,  _("June")),
+    (7,  _("July")),
+    (8,  _("August")),
+    (9,  _("September")),
+    (10, _("October")),
+    (11, _("November")),
+    (12, _("December")),
+]
+
+ABBREV_MONTHS = [
+    (1,  _("Jan.")),
+    (2,  _("Feb.")),
+    (3,  _("Mar.")),
+    (4,  _("Apr.")),
+    (5,  _("May")),
+    (6,  _("June")),
+    (7,  _("July")),
+    (8,  _("Aug.")),
+    (9,  _("Sep.")),
+    (10, _("Oct.")),
+    (11, _("Nov.")),
+    (12, _("Dec.")),
+]
+
 from generic_tags.models import TagSet, Tag
 from django.template.loader import render_to_string
 from django.db.models.signals import post_save
@@ -22,6 +53,7 @@ from django.core.cache import cache
 from mycelium_core.models import SearchableItemProxy
 from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
 from data_import.models import PotentiallyImportedModel
+
 
 class OrganizationType(AccountBasedModel, models.Model):
     internal_name = models.CharField(max_length=255)
@@ -66,8 +98,67 @@ class PhoneNumberBase(models.Model):
     class Meta(object):
         abstract = True
 
+class BirthdayBase(models.Model):
+    birth_date          = models.IntegerField(blank=True, null=True, verbose_name="day")
+    birth_month         = models.IntegerField(blank=True, null=True, choices=MONTHS, verbose_name="month")
+    birth_year          = models.IntegerField(blank=True, null=True, verbose_name="year")
+    actual_birthday     = models.DateField(blank=True, null=True)
+    normalized_birthday = models.DateField(blank=True, null=True)
 
-class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumberBase, EmailAddressBase, PotentiallyImportedModel):
+    def __unicode__(self):
+        return "%s" % self.best_birthday_description
+
+    def save(self, *args, **kwargs):
+        if self.birth_date and self.birth_month:
+            self.normalized_birthday = datetime.date(year=NORMALIZED_BIRTH_YEAR, month=self.birth_month, day=self.birth_date)
+        else:
+            self.normalized_birthday = None
+        
+        if self.birth_date and self.birth_month and self.birth_year:
+            self.actual_birthday = datetime.date(year=self.birth_year, month=self.birth_month, day=self.birth_date)
+        else:
+            self.actual_birthday = None
+        
+        super(BirthdayBase,self).save(*args, **kwargs)
+    
+    @property
+    def best_birthday_text(self):
+        if self.actual_birthday:
+            return "%s %s, %s" % (self.get_birth_month_display(), self.birth_date, self.birth_year)
+        elif self.normalized_birthday:
+            return "%s %s" % (self.get_birth_month_display(), self.birth_date)
+        else:
+            return ""
+    
+    @property
+    def abbreviated_birth_month(self):
+        month = ""
+        if self.birth_month:
+            for k,v in ABBREV_MONTHS:
+                if k == self.birth_month:
+                    month = v
+        return month
+
+    @property
+    def birthday_abbrev_month_day_text(self):
+        if self.normalized_birthday:
+            return "%s %s" % (self.abbreviated_birth_month, self.birth_date)
+        else:
+            return ""
+
+    def age(self):
+        from math import ceil
+        print self.actual_birthday
+        if self.actual_birthday:
+            return int(ceil( (datetime.date.today() - self.actual_birthday).total_seconds() / (60*60*24*365)))
+        else:
+            return None
+
+    class Meta(object):
+        abstract = True
+
+
+class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumberBase, EmailAddressBase, BirthdayBase, PotentiallyImportedModel):
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     

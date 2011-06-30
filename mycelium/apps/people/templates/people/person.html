@@ -86,13 +86,21 @@ $(function(){
 		</tabbed_box>
 		{% endfor %}
 		{{employee_formset.management_form}}
+
+<div class="additional_information">
+	{# Extra emails, phone #s, Addresses #}
+	<div class="birthday">
+	<label>Birthday:</label>
+		{% generic_editable_field form.birth_month %}
+		{% generic_editable_field form.birth_date %}<span class="date_year_comma">,</span> 
+		{% generic_editable_field form.birth_year %}
+	</div>
+</div>
 </div>
 
 </form>
 
-<div class="additional_information">
-	{# Extra emails, phone #s, Addresses #}
-</div>
+
 
 <detail_tabs update_url="{% url people:tab_contents person.pk %}">
 	{# <a class="detail_tab current" href="#recent_activity">Recent Activity</a> #}

@@ -147,6 +147,33 @@ class Account(TimestampModelMixin):
                     self.has_completed_any_challenges = True
 
             self.save()
+    
+    def upcoming_birthdays(self):
+        from people.models import Person, NORMALIZED_BIRTH_YEAR
+        from dashboard import NUMBER_BIRTHDAYS_OF_TO_SHOW
+        import datetime
+        from django.db.models import Q
+
+        today = datetime.date.today()
+        normalized_today = datetime.date(day=today.day, month=today.month, year=NORMALIZED_BIRTH_YEAR)
+        normalized_end_date = normalized_today + datetime.timedelta(days=30)
+        if today.month == 12 and today.day > 24:
+            normalized_end_date = normalized_end_date - datetime.timedelta(years=1)
+            if Person.objects_by_account(self).filter(normalized_birthday__gte=today).count() + \
+               Person.objects_by_account(self).filter(normalized_birthday__lt=normalized_end_date).count() > NUMBER_BIRTHDAYS_OF_TO_SHOW-1:
+
+                birthday_people = Person.objects_by_account(self).filter(Q(normalized_birthday__lt=normalized_end_date) | Q(normalized_birthday__gte=today)).all()
+            else:
+                birthday_people = Person.objects_by_account(self).filter(Q(normalized_birthday__lt=normalized_end_date) | Q(normalized_birthday__gte=today))
+        else:
+            if Person.objects_by_account(self).filter(normalized_birthday__lt=normalized_end_date, normalized_birthday__gte=today).count() > NUMBER_BIRTHDAYS_OF_TO_SHOW-1:
+                birthday_people = Person.objects_by_account(self).filter(normalized_birthday__lt=normalized_end_date, normalized_birthday__gte=today)
+            else:
+                birthday_people = Person.objects_by_account(self).filter(normalized_birthday__gte=normalized_today) 
+        
+        if birthday_people:
+            return birthday_people.all().order_by("birth_month","birth_date", "first_name", "last_name")[:NUMBER_BIRTHDAYS_OF_TO_SHOW]
+        return None
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)

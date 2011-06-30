@@ -96,11 +96,23 @@
 		</column_content>
 		</div>
 		{% endif %}
-		<column_header>GoodCloud News</column_header>
+		<column_header class="news">GoodCloud News</column_header>
 		{% include "dashboard/_goodcloud_news.html" %}
 	</td>
 	<td class="right_col">
-		<column_header>By the Numbers</column_header>
+		<column_header class="birthdays">Birthdays</column_header>
+		{% for p in request.account.upcoming_birthdays %}
+			<div class="birthday_row">		
+				<div class="birthday_date">{% ifchanged p.birthday_abbrev_month_day_text %}{{p.birthday_abbrev_month_day_text}}{% endifchanged %}</div>
+				<div class="person_and_age">
+					<span class="name">{{p.full_name}}</span>
+					{% if p.age %}<span class="age"> turns <span class="number">{{p.age}}</span></span>{% endif %}
+				</div>
+			</div>
+		{% empty %}
+			<div class="no_birthdays">None in the next month!</div>
+		{% endfor %}
+		<column_header class="numbers">By the Numbers</column_header>
 		{% include "dashboard/_the_numbers.html" %}
 	</td>
 

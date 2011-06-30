@@ -7,7 +7,7 @@ from accounts.forms import AccountBasedModelForm, AccountBasedModelFormSet
 class PersonForm(AccountBasedModelForm):
     class Meta:
         model = Person
-        fields = ("account", "first_name", "last_name", "email", "phone_number", "line_1", "line_2", "city", "state", "postal_code",)
+        fields = ("account", "first_name", "last_name", "email", "phone_number", "line_1", "line_2", "city", "state", "postal_code", "birth_date", "birth_month", "birth_year")
 
 
 # class EmailForm(ModelForm):

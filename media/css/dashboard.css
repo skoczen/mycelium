@@ -63,9 +63,25 @@ salutation, .welcome_text, .nickname_question {
 	border-width: 0px 0px 1px 0px;
 	display: block;
 	width: 100%;
-	padding-top: 20px;
+	margin-top: 20px;
 	color: #111;
+	background-repeat: no-repeat;
+	background-position: left 0px;
 }
+.dashboard_panel_table column_header.birthdays {
+	background-image: url("../images/icon-birthday-black-26.png");
+	padding-left: 34px;
+}
+.dashboard_panel_table column_header.news {
+	background-image: url("../images/icon-news-black-26.png");
+	padding-left: 35px;
+}
+.dashboard_panel_table column_header.numbers {
+	background-image: url("../images/icon-numbers-black-26.png");
+	padding-left: 45px;
+}
+
+
 
 challenge {
 	display: block;
@@ -140,4 +156,27 @@ column_content.news news_story .date {
 news_story {
 	display: block;
 	padding: 10px 0px;
+}
+.birthday_row {
+	margin: 6px 5px;
+}
+.birthday_date {
+	color: #AAA;
+	width: 60px;
+	float: left;
+	clear: left;
+	height: 15px;
+
+}
+
+.person_and_age {
+	margin-left: 10px;
+}
+.no_birthdays {
+	margin: 5px 10px;
+	color: #AAA;
+	font-size: 18px;
+}
+.age {
+	color: #999;
 }

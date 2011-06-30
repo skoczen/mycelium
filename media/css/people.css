@@ -232,6 +232,25 @@ search_results {
 #container_id_line_1 input, #container_id_line_2 input{
 	min-width: 70%;
 }
+.basic_info .birthday {
+	height: 20px;
+}
+.edit_mode_on .birthday {
+	margin-bottom: 20px;
+}
+.edit_mode_on .birthday .edit_field {
+	margin-bottom: 0px;
+}
+.basic_info .birthday label {
+	padding-top: 1px;
+}
+.basic_info .birthday label, .basic_info .birthday .generic_editable_field, .basic_info .birthday .date_year_comma {
+	float: left;
+	margin-left: 5px;
+}
+.basic_info .birthday .date_year_comma {
+	margin-right: -5px;
+}
 .additional_information {
 	padding-top: 15px;
 	clear: both;
