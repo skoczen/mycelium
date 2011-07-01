@@ -103,6 +103,15 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
         assert not sel.is_text_present("Welcome to your very own GoodCloud")
         assert sel.is_text_present("Looks like you haven't finished")
 
+    def test_upcoming_birthdays_display_on_the_dashboard(self):
+        sel = self.selenium
+        self.test_that_the_dashboard_checks_off_appropriately()
+        self.create_john_smith()
+        self.save_a_birthday()
+        self.get_to_the_dashboard()
+        assert sel.is_text_present("John Smith")
+        assert sel.is_text_present("Apr 9")
+        
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
