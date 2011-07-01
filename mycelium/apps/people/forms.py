@@ -11,7 +11,7 @@ class PersonForm(AccountBasedModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PersonForm,self).__init__(*args,**kwargs)
-        self.fields["birth_month"].choices = [(None,"Unknown")] + [i for i in self.fields["birth_month"].choices][1:]
+        self.fields["birth_month"].choices = [("","Unknown")] + [i for i in self.fields["birth_month"].choices][1:]
 
 # class EmailForm(ModelForm):
 #     class Meta:

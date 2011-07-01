@@ -157,6 +157,10 @@ news_story {
 	display: block;
 	padding: 10px 0px;
 }
+news_story .story_body {
+	display: block;
+	padding-left: 110px;
+}
 .birthday_row {
 	margin: 6px 5px;
 }
