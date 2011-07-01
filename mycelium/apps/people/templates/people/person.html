@@ -65,7 +65,13 @@ $(function(){
 				</div>
 
 			</div>
-			</box_content>
+			<div class="birthday" {% if not person.normalized_birthday %}style="display:none;"{% endif %}>
+				<label >Birthday:</label>
+				{% generic_editable_field form.birth_month %}
+				{% generic_editable_field form.birth_date %}<span class="date_year_comma">,</span> 
+				{% generic_editable_field form.birth_year %}
+			</div>
+		</box_content>
 		</tabbed_box>
 		{% for e_form in employee_formset.forms %}
 		<tabbed_box class="open" name="job">
@@ -89,12 +95,7 @@ $(function(){
 
 <div class="additional_information">
 	{# Extra emails, phone #s, Addresses #}
-	<div class="birthday">
-	<label>Birthday:</label>
-		{% generic_editable_field form.birth_month %}
-		{% generic_editable_field form.birth_date %}<span class="date_year_comma">,</span> 
-		{% generic_editable_field form.birth_year %}
-	</div>
+
 </div>
 </div>
 

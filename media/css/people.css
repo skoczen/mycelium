@@ -233,23 +233,31 @@ search_results {
 	min-width: 70%;
 }
 .basic_info .birthday {
-	height: 20px;
+	float: left;
+	clear: both;
+	margin: 10px 0px 0px 0px;
 }
 .edit_mode_on .birthday {
 	margin-bottom: 20px;
+	padding-bottom: 20px;
 }
 .edit_mode_on .birthday .edit_field {
 	margin-bottom: 0px;
+
 }
 .basic_info .birthday label {
-	padding-top: 1px;
+	padding: 1px 0px 0px 24px;
+	background-repeat: no-repeat;
+	background-position: 0px 2px;
+	background-image: url("../images/icon-birthday-grey-20.png");
+
 }
 .basic_info .birthday label, .basic_info .birthday .generic_editable_field, .basic_info .birthday .date_year_comma {
 	float: left;
-	margin-left: 5px;
+	margin-right: 5px;
 }
 .basic_info .birthday .date_year_comma {
-	margin-left: 0px;
+	margin-left: -5px;
 }
 .additional_information {
 	padding-top: 15px;

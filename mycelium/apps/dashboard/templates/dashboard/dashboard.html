@@ -105,8 +105,8 @@
 			<div class="birthday_row">		
 				<div class="birthday_date">{% ifchanged p.birthday_abbrev_month_day_text %}{{p.birthday_abbrev_month_day_text}}{% endifchanged %}</div>
 				<div class="person_and_age">
-					<span class="name">{{p.full_name}}</span>
-					{% if p.age %}<span class="age"> turns <span class="number">{{p.age}}</span></span>{% endif %}
+					<a href="{% url people:person p.pk %}" class="name">{{p.full_name}}</a>
+					{% if p.age %}<span class="age"> turns <span class="number">{{p.next_birthday_age}}</span></span>{% endif %}
 				</div>
 			</div>
 		{% empty %}

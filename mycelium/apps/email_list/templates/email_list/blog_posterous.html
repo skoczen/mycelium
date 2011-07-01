@@ -19,7 +19,7 @@
 
 <!--[if lte IE 9]><link rel="stylesheet" href="https://s3.amazonaws.com/goodcloud1/d6639d62ae62eca3ba55dfa61ff2848799862dc5/css/contrib/1140/ie.css" type="text/css" media="screen, projection">
 <style type="text/css">
-	#footer {display:block; position: relative;}
+    #footer {display:block; position: relative;}
 </style>
 <![endif]-->
 
@@ -549,7 +549,7 @@ ul.contribs li img, ul.fans li img {
     padding: 2px 0px 0px 20px;
     line-height: 20px; 
     position: relative;
-    top: -2px;
+    margin-top: 2px;
 
 }
 .subscribe-site {
@@ -606,17 +606,17 @@ ul.navigation li a.current { color: #444; font-weight: bold; }
 
 
 <div id="nav_and_logo_container">
-	<a id="logo" href="/" class="png_bg">
-		
-	</a>
-	<div id="main_nav"><a href='https://www.agoodcloud.com/about-us' class=' ' >Our Mission</a><a href='https://www.agoodcloud.com/features' class=' ' >Features</a><a href='https://www.agoodcloud.com/tour' class=' ' >Tour</a><a href='https://www.agoodcloud.com/pricing' >Pricing</a><a href='https://www.agoodcloud.com/blog/'  class='current ' >Blog</a><a href='https://www.agoodcloud.com/signup' class=' ' >Sign Up</a></div>
+    <a id="logo" href="https://www.agoodcloud.com/" class="png_bg">
+        
+    </a>
+    <div id="main_nav"><a href='https://www.agoodcloud.com/about-us' class=' ' >Our Mission</a><a href='https://www.agoodcloud.com/features' class=' ' >Features</a><a href='https://www.agoodcloud.com/tour' class=' ' >Tour</a><a href='https://www.agoodcloud.com/pricing' >Pricing</a><a href='https://www.agoodcloud.com/blog/'  class='current ' >Blog</a><a href='https://www.agoodcloud.com/signup' class=' ' >Sign Up</a></div>
 </div>
 
 <div id="wrap">
-	<div class="page_header">Real people, real voices.</div>
+    <div class="page_header">Real people, real voices.</div>
 
-	<div class="page_content_body">
-	{block:PosterousBar direction="left" translucent="true"}{/block:PosterousBar}        
+    <div class="page_content_body">
+    {block:PosterousBar direction="left" translucent="true"}{/block:PosterousBar}        
 
 {block:HasPages}
   <ul class="navigation">
@@ -696,7 +696,7 @@ ul.navigation li a.current { color: #444; font-weight: bold; }
                             <div class="sms_notice">Posted from my mobile phone (SMS)</div>
                         {/block:SMS}
 
-						<div class="date">{block:NewDayDate}<a href="{Permalink}"><span class="date-day">{ShortMonth} {DayOfMonth}{/block:NewDayDate}</a></div>
+                        <div class="date">{block:NewDayDate}<a href="{Permalink}"><span class="date-day">{ShortMonth} {DayOfMonth}, {Year}{/block:NewDayDate}</a></div>
 
                         {block:Author}
                             <div class="posted_by">
@@ -874,16 +874,19 @@ ul.navigation li a.current { color: #444; font-weight: bold; }
           
         </div>
 
-                <div class="sidebar-block">   
+          <div class="sidebar-block">   
           <h5>Keep Updated</h5>
-                  <div class="subscribe-site">
-            {block:Subscription}{/block:Subscription}
-         </div>
-
-                    
           {block:NotSearchOrTag}
               <a href="{RSS}" class="subscribe-link subscribe-rss">Subscribe via RSS</a>
           {/block:NotSearchOrTag}    
+          
+          	<div class="subscribe-site">
+            	{block:Subscription}{/block:Subscription}
+         	</div>
+         	                    
+
+
+
       </div>
 
                 
@@ -895,51 +898,51 @@ ul.navigation li a.current { color: #444; font-weight: bold; }
 
 
 
-	
+    
 
-	<div class="clearfix"></div>
-	<div id="footer">
-	<table class="footer_table">
-	<tr>
-		<td>
-			<a href="https://www.agoodcloud.com/about-us" class="top_link" >About Us</a>
-			<a href="https://www.agoodcloud.com/about-us#our_company">Our Company</a>
-			<a href="https://www.agoodcloud.com/about-us#our_mission">Our Mission</a>
-			<a href="https://www.agoodcloud.com/about-us#our_team">Our Team</a>
-		</td>
-		<td>
-			<a href="https://www.agoodcloud.com/features" class="top_link" >Features</a>
-			<a href="https://www.agoodcloud.com/features#everything_in_one_place">Full CRM for Nonprofits</a>
-			<a href="https://www.agoodcloud.com/features#know_every_person">Know every person</a>
-			<a href="https://www.agoodcloud.com/features#save_money">Save your money</a>
-			<a href="https://www.agoodcloud.com/features#save_time">Save your time</a>
-			<a href="https://www.agoodcloud.com/features#gets_younger">Cloud-based</a>
-			<a href="https://www.agoodcloud.com/features#secure">Secure</a>
-		</td>
-		<td>
-			<a href="https://www.agoodcloud.com/tour" class="top_link" >Tour</a>
-			<a href="https://www.agoodcloud.com/tour#video_tour">Video Tour</a>
-			<a href="https://www.agoodcloud.com/tour#pictures_and_words">Screenshots</a>
-		</td>
-		<td>
-			<a href="https://www.agoodcloud.com/legal" class="top_link" >Legal</a>
-			<a href="https://www.agoodcloud.com/legal#user_agreement">User Agreement</a>
-			<a href="https://www.agoodcloud.com/legal#privacy_policy">Privacy Policy</a>
-			<a href="https://www.agoodcloud.com/legal#copyright">Copyright</a>
-		</td>
-		<td>
-			<a href="https://www.agoodcloud.com/contact_us" class="top_link" >Contact Us</a>
-			<a href="#" class="contact_button online">Online Support</a>
-			<a href="https://www.agoodcloud.com/contact_us">Send an Email</a>
-			<a href="https://www.agoodcloud.com/contact_us">Phone Call</a>
-			<a href="http://www.facebook.com/AGoodCloud" target="_blank">Facebook</a>
-			<a href="http://www.twitter.com/agoodcloud" target="_blank">Twitter</a>
-			<a href="https://www.agoodcloud.com/blog/">Blog</a>
-		</td>
+    <div class="clearfix"></div>
+    <div id="footer">
+    <table class="footer_table">
+    <tr>
+        <td>
+            <a href="https://www.agoodcloud.com/about-us" class="top_link" >About Us</a>
+            <a href="https://www.agoodcloud.com/about-us#our_company">Our Company</a>
+            <a href="https://www.agoodcloud.com/about-us#our_mission">Our Mission</a>
+            <a href="https://www.agoodcloud.com/about-us#our_team">Our Team</a>
+        </td>
+        <td>
+            <a href="https://www.agoodcloud.com/features" class="top_link" >Features</a>
+            <a href="https://www.agoodcloud.com/features#everything_in_one_place">Full CRM for Nonprofits</a>
+            <a href="https://www.agoodcloud.com/features#know_every_person">Know every person</a>
+            <a href="https://www.agoodcloud.com/features#save_money">Save your money</a>
+            <a href="https://www.agoodcloud.com/features#save_time">Save your time</a>
+            <a href="https://www.agoodcloud.com/features#gets_younger">Cloud-based</a>
+            <a href="https://www.agoodcloud.com/features#secure">Secure</a>
+        </td>
+        <td>
+            <a href="https://www.agoodcloud.com/tour" class="top_link" >Tour</a>
+            <a href="https://www.agoodcloud.com/tour#video_tour">Video Tour</a>
+            <a href="https://www.agoodcloud.com/tour#pictures_and_words">Screenshots</a>
+        </td>
+        <td>
+            <a href="https://www.agoodcloud.com/legal" class="top_link" >Legal</a>
+            <a href="https://www.agoodcloud.com/legal#user_agreement">User Agreement</a>
+            <a href="https://www.agoodcloud.com/legal#privacy_policy">Privacy Policy</a>
+            <a href="https://www.agoodcloud.com/legal#copyright">Copyright</a>
+        </td>
+        <td>
+            <a href="https://www.agoodcloud.com/contact_us" class="top_link" >Contact Us</a>
+            <a href="#" class="contact_button online">Online Support</a>
+            <a href="https://www.agoodcloud.com/contact_us">Send an Email</a>
+            <a href="https://www.agoodcloud.com/contact_us">Phone Call</a>
+            <a href="http://www.facebook.com/AGoodCloud" target="_blank">Facebook</a>
+            <a href="http://www.twitter.com/agoodcloud" target="_blank">Twitter</a>
+            <a href="https://www.agoodcloud.com/blog/">Blog</a>
+        </td>
 
-	</tr>
-	</table>
-	</div>	
+    </tr>
+    </table>
+    </div>    
 </div>
 
 
@@ -954,3 +957,4 @@ ul.navigation li a.current { color: #444; font-weight: bold; }
 </body>
 
 </html>
+​

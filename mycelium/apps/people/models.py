@@ -109,16 +109,14 @@ class BirthdayBase(models.Model):
         return "%s" % self.best_birthday_description
 
     def save(self, *args, **kwargs):
+        self.actual_birthday = None
         if self.birth_date and self.birth_month:
             self.normalized_birthday = datetime.date(year=NORMALIZED_BIRTH_YEAR, month=self.birth_month, day=self.birth_date)
+            if self.birth_year:
+                self.actual_birthday = datetime.date(year=self.birth_year, month=self.birth_month, day=self.birth_date)
         else:
             self.normalized_birthday = None
-        
-        if self.birth_date and self.birth_month and self.birth_year:
-            self.actual_birthday = datetime.date(year=self.birth_year, month=self.birth_month, day=self.birth_date)
-        else:
-            self.actual_birthday = None
-        
+
         super(BirthdayBase,self).save(*args, **kwargs)
     
     @property
@@ -146,11 +144,22 @@ class BirthdayBase(models.Model):
         else:
             return ""
 
-    def age(self):
-        from math import ceil
-        print self.actual_birthday
+    @property
+    def next_or_todays_birthday_age(self):
         if self.actual_birthday:
-            return int(ceil( (datetime.date.today() - self.actual_birthday).total_seconds() / (60*60*24*365)))
+            today = datetime.date.today()
+            if self.actual_birthday.day == today.day and self.actual_birthday.month == today.month:
+                return self.age
+            else:
+                return self.age + 1
+        else:
+            return None
+    
+    @property
+    def age(self):
+        from math import floor
+        if self.actual_birthday:
+            return int(floor( (datetime.date.today() - self.actual_birthday).days /365.25))
         else:
             return None
 

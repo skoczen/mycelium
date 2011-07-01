@@ -784,6 +784,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
     def test_upcoming_birthdays_display_on_the_dashboard_when_it_is_dec_27(self):
         assert True == "Test written"
 
+    def test_clearing_a_birthday_clears_it(self):
+        assert True == "Test written"
+
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["200_test_people.json"]
     
