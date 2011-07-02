@@ -332,6 +332,7 @@ MEDIASYNC = {
         'js/mycelium_core.js': [
                 "js/mycelium/mycelium_elements.js",
                 "js/mycelium/mycelium_top_search.js",
+                "js/mycelium/mycelium_common.js",
         ],
         'css/mycelium_base.css': BASE_CSS + [
                 "css/contrib/fileuploader.css",

@@ -55,27 +55,6 @@ p {
 	margin: 1em 0px;
 }
 
-#page {
-	display: block;
-	margin: 80px auto;
-	width: 92%;
-	
-	background: #FFF;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	
-    -moz-box-sizing: border-box;
-    -opera-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -khtml-box-sizing: border-box;
-    box-sizing: border-box;
-	border: 1px solid #AAA;
-	padding: 4px;
-	color: #333;
-	position: relative;
-	z-index: 10;
-}
 ::-moz-selection{ background: #3AA5FF; color:#fff; text-shadow: none; }
 ::selection { background:#3AA5FF; color:#fff; text-shadow: none; } 
 

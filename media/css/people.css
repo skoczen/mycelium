@@ -1,16 +1,3 @@
-#page {
-	padding: 4px;
-}
-
-breadcrumb {
-	left: -18px;
-	top: 3px;
-}
-.breadcrumb_container .triangle-l {
-    left: -27px;
-    top: 23px;
-}
-
 
 #id_search_query {
 	width: 30%;
@@ -179,7 +166,7 @@ search_results {
 	position: relative;
 	clear: both;
 	margin-top: 10px;
-	width: 100%;
+	/*width: 100%;*/
 	padding: 0px 2% 20px 2%;
 	font-size: 20px;
 }
@@ -352,6 +339,7 @@ detail_tab_contents {
 	border: 1px solid #999;
 	min-height: 100px;
 	padding: 15px 2%;
+	background-color: #FFF;
 }
 detail_tab_contents fragment.detail_tab {
 	display: block;
