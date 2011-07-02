@@ -13,8 +13,10 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 	{% block nav %}
 {# 	<logo>GoodCloud</logo> #}
 	{% spaceless %}<main_nav>
-		<a href="{% url dashboard:dashboard %}" class="logo"></a>
-		<input type="search" id="global_search" name="global_search" placeholder="Find anything in GoodCloud..." />
+		<a href="{% url dashboard:dashboard %}" class="logo">
+			<span class="account_name"><p>{{request.account.name}}</p></span>
+		</a>
+		<input type="search" id="global_search" name="global_search" placeholder="Search for anything..." />
 		<div class="username_and_logout">
 			<a href="{% url accounts:my_account %}" class="my_account_btn" >My Account</a>
 
@@ -24,6 +26,7 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 	</main_nav>
 	<div id="global_search_results"><fragment name="global_search_results" action="replace"></fragment></div>
 	<side_nav>
+		<div class="nav_title"></div>
 		{# <a href="{% url core:more_menu %}" class="nav_btn {% if section == "more" %}current{% endif %}">Admin</a> #}
 		{# <a href="#">Events</a> #}
 		{# <a href="#">Communicate</a> #}
@@ -44,7 +47,12 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 		{% endif %}
 		
 		<a href="#" class="help_btn help nav_btn">Help</a>
-		
+
+		<footer>
+		{% block footer %}
+		<a href="https://www.agoodcloud.com">Powered by <footer_icon><span>GoodCloud</span></footer_icon></a>
+		{% endblock %}
+		</footer>		
 	</side_nav>{% endspaceless %}
 	
 	{% endblock %}
@@ -58,13 +66,6 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 	{% endblock %}
 	</div>
 	</main_content>
-	<!--
-	<footer>
-	{% block footer %}
-	<a href="https://www.agoodcloud.com">Powered by <img src="{% media_url "images/goodcloud-logo-24.png" %}" >GoodCloud</a>
-	{% endblock %}
-	</footer>
-	-->
 	{% endblock %}
 	<script type="text/javascript">
 	  (function() {

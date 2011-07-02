@@ -7,13 +7,10 @@ Orange: #ff6600;
 */
 
 body {
-	background: url("../images/background-pattern-green.png");
+/*	background: url("../images/background-pattern-green.png");
 	background: url("../images/background-noise-green.png");
-	background-image: url("../images/marketing-text-back-background.jpg");
-/*	background-color: #0a5ab9;
-	background-image: url("../images/marketing-background-plain-4.jpg");
-	background-repeat: no-repeat;
-	background-position: 50% 0px;*/
+	background-image: url("../images/marketing-text-back-background.jpg");*/
+	background: #FFF;
 }
 main_nav {
 	display: block;
@@ -21,21 +18,17 @@ main_nav {
 	top: 0px;
 	right: 0%;
 	width: 100%;
-	height: 8%;
+	height: 80px;
 	/*background-color: #F2F2F2;*/
 
     overflow: hidden;
-	background-image: url("../images/nav-top-bar.png");
-	background-repeat: repeat-x;
-	background: #000486;
-	background: #EEE;
 	background-color: #0060b9;
-	box-shadow: 		0px 0px 1px rgba(0,0,0,0.85);
-	-moz-box-shadow:	0px 0px 1px rgba(0,0,0,0.85);
-	-khtml-box-shadow: 	0px 0px 1px rgba(0,0,0,0.85);
-	-webkit-box-shadow: 0px 0px 1px rgba(0,0,0,0.85);
+	box-shadow: 		0px 1px 2px rgba(0,0,0,0.35);
+	-moz-box-shadow:	0px 1px 2px rgba(0,0,0,0.35);
+	-khtml-box-shadow: 	0px 1px 2px rgba(0,0,0,0.35);
+	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.35);
 	z-index: 250;
-	border: 1px solid #AAA;
+	border: 1px solid #000;
 	border-width: 0px 0px 1px 0px;
 	/*background-image: url("../images/marketing-menubar.png");	*/
 	/*background-image: url("../images/marketing-nav-bar-2.png");	*/
@@ -44,23 +37,50 @@ main_nav {
 
 }
 main_nav a.logo {
-	background-image: url("../images/goodcloud-logo-40.png");
-	background-position: 5px 12px;
-	background-repeat: no-repeat;
-	width: 80px;
-	margin-left: 5px;
+	width: 180px;
 	float: left;
-	display: block;
-	height: 60px;
 	border: 0px;
+	height: 80px;
+	text-transform: uppercase;
+
+	padding: 0px;
+	line-height: 1em;
+	text-align: center;
+	
+	text-decoration: none;
+	font-family: "News Cycle", 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+	font-size: 20px;
+	color: #2887df;
+	display: table-cell;
+    vertical-align: middle;
+
+	position: relative;
+	
 }
+
+main_nav a.logo .account_name {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 170px;
+  padding: 0px 5px;
+  height: 80px;
+  display: table;
+}
+
+main_nav a.logo .account_name p {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
 main_nav .username_and_logout {
 	float: right;
 	display: block;
 	/*width: 140px;*/
 	text-align: center;
 	color: #cee0f1;
-	margin: 2% 20px 0px 0px;
+	margin: 27px 20px 0px 0px;
 	padding: 0px;
 }
 main_nav .username_and_logout .username {
@@ -69,9 +89,10 @@ main_nav .username_and_logout .username {
 main_nav .username_and_logout a.logout_btn, main_nav .username_and_logout a.my_account_btn {
 	color: #cee0f1;
 	font-size: 14px;
+	text-decoration: none;
 }
 main_nav .username_and_logout a.my_account_btn {
-	margin-right: 6px;
+	margin-right: 15px;
 }
 main_nav .username_and_logout a.logout_btn:hover, main_nav .username_and_logout a.my_account_btn:hover {
 	color: #FFF;
@@ -96,44 +117,53 @@ side_nav {
 	left: 0px;
 	top: 8%;
 	height: 92%;
-	width: 15%;
+	width: 170px;
 	margin-top: 0px;
 	font-size: 16px;
 	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 
 	background-image: url("../images/marketing-text-back-background.jpg");
 	background: #E2E2E2;
-	
-	border: 1px solid #AAA;
+	background: #FFF;
+	/*background: url("../images/white-text-back.jpg");*/
+	background: #FAFAFA;
+
+	border: 1px solid #EEE;
 	border-width: 0px 1px 0px 0px;
 	z-index: 200;
-	box-shadow: 		0px 1px 2px rgba(0,0,0,0.35);
+	/*box-shadow: 		0px 1px 2px rgba(0,0,0,0.35);
 	-moz-box-shadow:	0px 1px 2px rgba(0,0,0,0.35);
 	-khtml-box-shadow: 	0px 1px 2px rgba(0,0,0,0.35);
-	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.35);
-	
+	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.35);*/
+}
+side_nav .nav_title {
+	width: 100%;
+	height: 30px;
+	display: block;
 }
 side_nav a.nav_btn {
 	display: block;
 	padding: 10px 10px 10px 45px;
 	text-decoration: none;
-	color: #555;
-	margin: 5px 0px 0px 0px;
+	color: #888;
+	margin: 5px 0px 0px 10px;
 	background-repeat: no-repeat;
 	background-position: 13px 9px;
 
-	border: 1px solid #E2E2E2;
-	border-width: 1px 0px 1px 0px;
+	/*border: 1px solid #E2E2E2;
+	border-width: 1px 0px 1px 0px;*/
+
 }
 side_nav a.nav_btn.current {
-	background-color: #0060b9;
-	background-color: #CCC;
+	/*background-color: #0060b9;
+	background-color: #CCC;*/
 	/*background-color: #dbefff;*/
 	border-color: #AAA;
 	
 	
 	border-bottom-color: #C2C2C2;
-	color: #222;
+	color: #000486;
+	color: #454545;
 }
 side_nav .username {
 	display: block;
@@ -165,18 +195,15 @@ main_content {
 	clear: none;
 	display: block;
 	margin: 0px ;
-	width: 85%;
-	padding: 0px;
+	padding: 0px 3% 0px 190px;
 
 	top: 8%;
-	left: 15%;
+	left: 0px;
+	width: 100%;
 	height: 92%;
 	position: absolute;	
 	z-index: 100;
 	
-	background: #FFF;
-	
-	background-image: url("../images/marketing-text-back-background.jpg");
 
     -moz-box-sizing: border-box;
     -opera-sizing: border-box;
@@ -192,26 +219,52 @@ main_content {
 	position: relative;	
 	padding: 20px;
 	display: block;
+
 }
 footer {
-	text-align: center;
-	color: #FFF;
+	position: absolute;
+	bottom: 6px;
+	width: 100%;
+
 }
 footer img {
-	vertical-align: text-bottom;
-	margin: 0px 3px;
+	
 }
 footer a, footer a:active, footer a:visited {
-	color: #EEE;
+	display: block;
+	width: 100%;
+	color: #CCC;
+	text-align: center;
 	text-decoration: none;
-	font-size: 16px;
+	font-size: 13px;
 }
+
 footer a:hover {
-	color: #FFF;
+	color: #999;
 	text-decoration: none;
+}
+footer footer_icon {
+	display: inline-block;
+	width: 44px;
+	height: 25px;
+	background-image: url("../images/goodcloud-transparent-lightgrey-30.png");
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	vertical-align: middle;
+	margin: 0px 3px;
+	padding: 0px 0px 6px 0px;
+}
+footer:hover footer_icon {
+	background-image: url("../images/goodcloud-transparent-darkergrey-30.png");
+}
+footer footer_icon span {
+	display:none;
 }
 #global_search {
-	margin: 1.5% 0px 0px 16%;
+	position: absolute;
+	left: 23%;
+	top: 20px;
+
 	padding: 6px 0px 6px 28px;
 	border: 0px solid #BBB;
 	width: 40%;
@@ -237,13 +290,13 @@ footer a:hover {
 }
 #global_search_results {
 	position: absolute;
-	top: 1.5%;
-	left: 25%;
+	top: 57px;
+	left: 24.5%;
 	display: block;
 	overflow: auto;
-	min-width: 46%;
+	min-width: 40%;
 	z-index: 10001;
-	margin-top: 39px;
+	margin-top: 0px;
 	padding: 0px 0px 3px 0px;
 	z-index: 300;
 }
