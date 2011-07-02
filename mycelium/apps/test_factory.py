@@ -78,7 +78,7 @@ class Factory(QiFactory):
                                        last_name=cls.rand_name(),
                                        email=cls.email(name_hint=first_name),
                                        phone_number=cls.phone(),
-                                       birth_date=birthday.day,
+                                       birth_day=birthday.day,
                                        birth_month=birthday.month,
                                        birth_year=birthday.year,
                 )

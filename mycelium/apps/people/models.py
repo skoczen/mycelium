@@ -99,7 +99,7 @@ class PhoneNumberBase(models.Model):
         abstract = True
 
 class BirthdayBase(models.Model):
-    birth_date          = models.IntegerField(blank=True, null=True, verbose_name="day")
+    birth_day           = models.IntegerField(blank=True, null=True, verbose_name="day")
     birth_month         = models.IntegerField(blank=True, null=True, choices=MONTHS, verbose_name="month")
     birth_year          = models.IntegerField(blank=True, null=True, verbose_name="year")
     actual_birthday     = models.DateField(blank=True, null=True)
@@ -110,10 +110,10 @@ class BirthdayBase(models.Model):
 
     def save(self, *args, **kwargs):
         self.actual_birthday = None
-        if self.birth_date and self.birth_month:
-            self.normalized_birthday = datetime.date(year=NORMALIZED_BIRTH_YEAR, month=self.birth_month, day=self.birth_date)
+        if self.birth_day and self.birth_month:
+            self.normalized_birthday = datetime.date(year=NORMALIZED_BIRTH_YEAR, month=self.birth_month, day=self.birth_day)
             if self.birth_year:
-                self.actual_birthday = datetime.date(year=self.birth_year, month=self.birth_month, day=self.birth_date)
+                self.actual_birthday = datetime.date(year=self.birth_year, month=self.birth_month, day=self.birth_day)
         else:
             self.normalized_birthday = None
 
@@ -122,9 +122,9 @@ class BirthdayBase(models.Model):
     @property
     def best_birthday_text(self):
         if self.actual_birthday:
-            return "%s %s, %s" % (self.get_birth_month_display(), self.birth_date, self.birth_year)
+            return "%s %s, %s" % (self.get_birth_month_display(), self.birth_day, self.birth_year)
         elif self.normalized_birthday:
-            return "%s %s" % (self.get_birth_month_display(), self.birth_date)
+            return "%s %s" % (self.get_birth_month_display(), self.birth_day)
         else:
             return ""
     
@@ -140,7 +140,7 @@ class BirthdayBase(models.Model):
     @property
     def birthday_abbrev_month_day_text(self):
         if self.normalized_birthday:
-            return "%s %s" % (self.abbreviated_birth_month, self.birth_date)
+            return "%s %s" % (self.abbreviated_birth_month, self.birth_day)
         else:
             return ""
 

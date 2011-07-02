@@ -68,8 +68,9 @@ $(function(){
 			<div class="birthday" {% if not person.normalized_birthday %}style="display:none;"{% endif %}>
 				<label >Birthday:</label>
 				{% generic_editable_field form.birth_month %}
-				{% generic_editable_field form.birth_date %}<span class="date_year_comma">,</span> 
+				{% generic_editable_field form.birth_day %}<span class="date_year_comma">,</span> 
 				{% generic_editable_field form.birth_year %}
+				<div class="invalid_date">Hm. <span class="selected_month"></span> <span class="selected_day"></span> isn't a real date, and can't be saved.</div>
 			</div>
 		</box_content>
 		</tabbed_box>

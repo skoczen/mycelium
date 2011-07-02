@@ -110,6 +110,6 @@ class PeopleTestAbstractions(object):
     def save_a_birthday(self, birth_day="9", birth_month="April", birth_year="1980"):
         sel = self.selenium
         sel.select("css=#id_birth_month", birth_month)
-        sel.type("css=#id_birth_date", birth_day)
+        sel.type("css=#id_birth_day", birth_day)
         sel.type("css=#id_birth_year", birth_year)
         time.sleep(4)

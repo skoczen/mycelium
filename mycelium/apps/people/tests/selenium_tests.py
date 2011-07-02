@@ -779,7 +779,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.click("css=.start_edit_btn")
         time.sleep(1)
         sel.select("css=#id_birth_month", "Unknown")
-        sel.type("css=#id_birth_date", "")
+        sel.type("css=#id_birth_day", "")
         sel.type("css=#id_birth_year", "")
         time.sleep(4)
         sel.click("css=.edit_done_btn")
@@ -793,7 +793,31 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual(sel.get_text("css=.birthday .view_field:nth(1)"), "")
         self.assertEqual(sel.get_text("css=.birthday .view_field:nth(2)"), "")
 
-        
+  
+
+    def test_entering_an_invalid_birthday_warns_and_saves_blank(self):
+        sel = self.selenium
+        self.test_editing_a_birthday_saves()
+        sel.click("css=.start_edit_btn")
+        time.sleep(1)
+        self.save_a_birthday(birth_day="29", birth_month="February", birth_year="1980")
+        assert not sel.is_text_present("Hm.")
+        self.save_a_birthday(birth_day="29", birth_month="February", birth_year="1981")
+        assert sel.is_text_present("Hm.")
+        time.sleep(4)
+        sel.click("css=.edit_done_btn")
+        time.sleep(1)
+        self.assertEqual(sel.get_text("css=.birthday .view_field:nth(0)"), "February")
+        self.assertEqual(sel.get_text("css=.birthday .view_field:nth(1)"), "29")
+        self.assertEqual(sel.get_text("css=.birthday .view_field:nth(2)"), "1981")
+        assert sel.is_text_present("Hm.")
+
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        self.assertEqual(sel.get_text("css=.birthday .view_field:nth(0)"), "Unknown")
+        self.assertEqual(sel.get_text("css=.birthday .view_field:nth(1)"), "")
+        self.assertEqual(sel.get_text("css=.birthday .view_field:nth(2)"), "1981")
+      
 
 
 

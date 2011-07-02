@@ -259,6 +259,14 @@ search_results {
 .basic_info .birthday .date_year_comma {
 	margin-left: -5px;
 }
+.basic_info .birthday .invalid_date {
+	display: none;
+	float: left;
+
+	margin: 20px 0px 0px 100px;
+	color: red;
+	font-size: 13px;
+}
 .additional_information {
 	padding-top: 15px;
 	clear: both;

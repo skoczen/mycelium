@@ -35,7 +35,7 @@ class TestBirthdays(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Acco
         p3 = Factory.person(account=self.account, birthday=tomorrow_20_years_ago)
         p4 = Factory.person(account=self.account)
         p4.birth_year = None
-        p4.birth_date = 4
+        p4.birth_day = 4
         p4.birth_month = 9
         p4.save()
 

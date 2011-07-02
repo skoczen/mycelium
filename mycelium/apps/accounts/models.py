@@ -172,7 +172,7 @@ class Account(TimestampModelMixin):
                 birthday_people = Person.objects_by_account(self).filter(normalized_birthday__gte=normalized_today) 
         
         if birthday_people:
-            return birthday_people.all().order_by("birth_month","birth_date", "first_name", "last_name")[:NUMBER_BIRTHDAYS_OF_TO_SHOW]
+            return birthday_people.all().order_by("birth_month","birth_day", "first_name", "last_name")[:NUMBER_BIRTHDAYS_OF_TO_SHOW]
         return None
 
 class AccessLevel(TimestampModelMixin):
