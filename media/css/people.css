@@ -1,6 +1,6 @@
 
 #id_search_query {
-	width: 30%;
+	width: 50%;
 	margin: 6px 10px 0px 6px;
 	padding: 6px 0px;
 	border: 0px solid #BBB;
@@ -168,7 +168,7 @@ search_results {
 	margin-top: 10px;
 	/*width: 100%;*/
 	padding: 0px 2% 20px 2%;
-	font-size: 20px;
+	font-size: 18px;
 }
 .basic_info.edit {
 	display: none;
@@ -205,6 +205,7 @@ search_results {
 }
 .basic_info .name_phone_email .name .generic_editable_field input{
 	min-width: 20%;
+	
 }
 .basic_info .name_phone_email .name .generic_field_label {
 	margin-top: 5px;
@@ -241,7 +242,7 @@ search_results {
 }
 .basic_info .birthday label, .basic_info .birthday .generic_editable_field, .basic_info .birthday .date_year_comma {
 	float: left;
-	margin-right: 5px;
+	margin-right: 10px;
 }
 .basic_info .birthday .date_year_comma {
 	margin-left: -5px;
@@ -302,6 +303,7 @@ detail_tabs {
 	height: 49px;
 	clear: both;
 	display: block;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 detail_tabs a.detail_tab {
 	display: block;
@@ -345,14 +347,6 @@ detail_tab_contents fragment.detail_tab {
 	display: block;
 	width: 100%;
 	overflow: auto;
-}
-.detail_header {
-	font-size: 24px;
-	color: #454545;
-	border: 1px solid #BBB;
-	border-width: 0px 0px 1px 0px;
-	padding-top: 4px;
-	clear: both;
 }
 .volunteer_shift_table {
 	width: 100%;

@@ -123,6 +123,7 @@ class SpreadsheetSearchProxy(SearchableItemProxy):
         return self.obj.qi_simple_searchable_search_field
 
     def render_result_row(self):
+        print self
         if self.spreadsheet_id:
             return render_to_string("spreadsheets/_search_result_row_spreadsheet.html",{'obj':self.obj})
         else:

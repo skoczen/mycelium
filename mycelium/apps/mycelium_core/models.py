@@ -36,6 +36,8 @@ class SearchableItemProxy(SimpleSearchableModel, AccountBasedModel):
             return self.peopleandorganizationssearchproxy
         elif hasattr(self,"groupsearchproxy"):
             return self.groupsearchproxy
+        elif hasattr(self,"spreadsheetsearchproxy"):
+            return self.spreadsheetsearchproxy
         else:
             return None
     

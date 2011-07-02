@@ -24,8 +24,8 @@ body {
 	border: 0px;
 	padding: 0px;
 	margin: 0px;
-	font-family: 'ExpresswayRegular', "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
-	font-size: 16px;
+	font-family: "Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+	font-size: 1em;	
 }
 table {
 	border-collapse: collapse;
@@ -33,8 +33,11 @@ table {
 	margin: 0px;
 }
 .plain_text {
-	font-family: Helvetica, "Lucida Grande", "DejaVu Sans","Bitstream Vera Sans",Verdana, Arial, sans-serif;
-	font-size: 0.95em;
+	font-family: "Droid Sans", Helvetica,  "Lucida Grande", "DejaVu Sans","Bitstream Vera Sans",Verdana, Arial, sans-serif;
+
+}
+.goodcloud_typeface {
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 
 a, a:active, a:visited {
@@ -44,8 +47,9 @@ a:hover {
 	color: #0044A8;	
 }
 input {
-	font-family: 'ExpresswayRegular', Arial, sans-serif;
-	font-size: 20px;	
+	/*font-family: 'ExpresswayRegular', Arial, sans-serif;*/
+	font-family: "Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+
 }
 img, a img {
 	border: 0px;

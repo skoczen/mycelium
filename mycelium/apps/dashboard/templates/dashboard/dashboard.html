@@ -30,7 +30,7 @@
 	</div>
 {% endif %}
 
-<div class="welcome_text plain_text">
+<div class="welcome_text ">
 	{% if request.account.has_completed_any_challenges %}
 		Welcome back to GoodCloud!
 		{% if not request.account.has_completed_all_challenges %}
@@ -46,42 +46,42 @@
 {% if not request.account.has_completed_all_challenges %}
 	<td class="full_col">
 		<column_header>GoodCloud Challenges</column_header>
-		<div class="challenge_description plain_text" >Complete the GoodCloud Challenges and receive an additional two weeks free. What's that you say? Half a month just for setting things up and doing a quick tour? Are we crazy? Well, yes. But we really believe GoodCloud is the best solution out there for small nonprofits, and we're ready to prove it.</div>
+		<div class="challenge_description " >Complete the GoodCloud Challenges and receive an additional two weeks free. What's that you say? Half a month just for setting things up and doing a quick tour? Are we crazy? Well, yes. But we really believe GoodCloud is the best solution out there for small nonprofits, and we're ready to prove it.</div>
 
 		<challenge class="import {% if request.account.challenge_has_imported_contacts %}complete{% endif %}">
 			<title_text>Import your contacts.</title_text>
-			<description class="plain_text">Got a system or spreadsheet that you currently keep your contacts in?  Get that contact list to an Excel or .csv file and let's import that thing to get you rolling! <a href="{% url data_import:start %}" class="get_started_link">Get Started!</a></description>
+			<description class="">Got a system or spreadsheet that you currently keep your contacts in?  Get that contact list to an Excel or .csv file and let's import that thing to get you rolling! <a href="{% url data_import:start %}" class="get_started_link">Get Started!</a></description>
 		</challenge>
 		<challenge class="volunteer {% if request.account.challenge_has_logged_volunteer_hours %}complete{% endif %}">
 			<title_text>Track volunteer hours.</title_text>
-			<description class="plain_text">{# Got a spreadsheet with all your volunteers' hours?  If so, import that baby in.  If not, go ahead and  #}
+			<description class="">{# Got a spreadsheet with all your volunteers' hours?  If so, import that baby in.  If not, go ahead and  #}
 			Easy as pie - just log the hours of the last person that volunteered for your organization. Just go to that person, click the volunteer tab, and enter the hours!<a href="{% url data_import:start %}" class="get_started_link">Get Started!</a></description>
 		</challenge>
 		<challenge class="donation {% if request.account.challenge_has_added_a_donation %}complete{% endif %}">
 			<title_text>Add your donations.</title_text>
-			<description class="plain_text">
+			<description class="">
 			{# If you have a spreadsheet with all of this year's donations, let's import that!  If not, input #} 
 			Enter the last donation that your organization handled.  Just go to that contact, find the donation tab, and add away. <a href="{% url data_import:start %}" class="get_started_link">Get Started!</a></description>
 		</challenge>
 		<challenge class="board {% if request.account.challenge_has_added_board %}complete{% endif %}">
 			<title_text>Add your board.</title_text>
-			<description class="plain_text">Make a tag for Board Members.  Then, tag each of your board members.  Finally, make a new group for everyone who has a Board Members tag. <a href="{% url generic_tags:manage %}" class="get_started_link">Get Started!</a></description>
+			<description class="">Make a tag for Board Members.  Then, tag each of your board members.  Finally, make a new group for everyone who has a Board Members tag. <a href="{% url generic_tags:manage %}" class="get_started_link">Get Started!</a></description>
 		</challenge>		
 		<challenge class="tags {% if request.account.challenge_has_set_up_tags %}complete{% endif %}">
 			<title_text>Set up your tags.</title_text>
-			<description class="plain_text">Create the tags that make the most sense for the way you categorize your volunteers, donors, and mission-based contacts.  <a href="{% url generic_tags:manage %}" class="get_started_link">Get Started!</a></description>
+			<description class="">Create the tags that make the most sense for the way you categorize your volunteers, donors, and mission-based contacts.  <a href="{% url generic_tags:manage %}" class="get_started_link">Get Started!</a></description>
 		</challenge>
 		<challenge class="spreadsheet {% if request.account.challenge_has_downloaded_spreadsheet %}complete{% endif %}">
 			<title_text>Download a spreadsheet.</title_text>
-			<description class="plain_text">Have your spreadsheet include all your board members with their first and last names, email addresses, and phone numbers. <a href="{% url spreadsheets:search %}" class="get_started_link">Get Started!</a></description>
+			<description class="">Have your spreadsheet include all your board members with their first and last names, email addresses, and phone numbers. <a href="{% url spreadsheets:search %}" class="get_started_link">Get Started!</a></description>
 		</challenge>
 		<challenge class="user {% if request.account.challenge_has_created_other_accounts %}complete{% endif %}">
 			<title_text>Share the love - Get everyone else onboard!</title_text>
-			<description class="plain_text">Make an account for other staff members. If you're the only staff member, send us a note, and we'll check this one off for you. <a href="{% url accounts:manage_users %}" class="get_started_link">Get Started!</a></description>
+			<description class="">Make an account for other staff members. If you're the only staff member, send us a note, and we'll check this one off for you. <a href="{% url accounts:manage_users %}" class="get_started_link">Get Started!</a></description>
 		</challenge>
 {# 		<challenge class="{% if request.account.challenge_has_submitted_support %}complete{% endif %}"> #}
 {# 			<title_text>Say Hello!</title_text> #}
-{# 			<description class="plain_text">We get to know our clients and want to make sure that using GoodCloud is easy like Sunday morning for you.  Click that blue “Feedback &amp; Support” button in the corner, and submit a message with any questions you have, more info about you and your organization, or just a hello! <a href="javascript:UserVoice.showPopupWidget();" class="get_started_link">Get Started!</a></description> #}
+{# 			<description class="">We get to know our clients and want to make sure that using GoodCloud is easy like Sunday morning for you.  Click that blue “Feedback &amp; Support” button in the corner, and submit a message with any questions you have, more info about you and your organization, or just a hello! <a href="javascript:UserVoice.showPopupWidget();" class="get_started_link">Get Started!</a></description> #}
 {# 		</challenge> #}
 
 	</td>
@@ -91,7 +91,7 @@
 		{% if request.useraccount.show_challenges_complete_section %}
 		<div class="challenges_complete_section">
 		<column_header>GoodCloud Challenges</column_header>
-		<column_content class="completed_goodcloud_challenges plain_text">
+		<column_content class="completed_goodcloud_challenges ">
 		You've completed all of the GoodCloud challenges, and earned two weeks free!  <span class="challenge_complete_btn_area"><a href="{% url dashboard:hide_challenge_complete_notice %}" class="hide_challenge_complete_link" >Hide this section in the future.</a></span>
 		</column_content>
 		</div>
@@ -100,7 +100,9 @@
 		{% include "dashboard/_goodcloud_news.html" %}
 	</td>
 	<td class="right_col">
+
 		<column_header class="birthdays">Birthdays</column_header>
+		<column_content>
 		{% for p in request.account.upcoming_birthdays %}
 			<div class="birthday_row">		
 				<div class="birthday_date">{% ifchanged p.birthday_abbrev_month_day_text %}{{p.birthday_abbrev_month_day_text}}{% endifchanged %}</div>
@@ -112,6 +114,7 @@
 		{% empty %}
 			<div class="no_birthdays">None in the next month!</div>
 		{% endfor %}
+		</column_content>
 		<column_header class="numbers">By the Numbers</column_header>
 		{% include "dashboard/_the_numbers.html" %}
 	</td>

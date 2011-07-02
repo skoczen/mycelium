@@ -12,6 +12,7 @@ dashboard {
 }
 salutation {
 	font-size: 30px;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 
 salutation, .welcome_text, .nickname_question {
@@ -43,6 +44,7 @@ salutation, .welcome_text, .nickname_question {
 
 .dashboard_panel_table {
 	width: 100%;
+	font-size: 16px;
 }
 .dashboard_panel_table .left_col {
 	width: 60%;
@@ -67,6 +69,7 @@ salutation, .welcome_text, .nickname_question {
 	color: #111;
 	background-repeat: no-repeat;
 	background-position: left 0px;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 .dashboard_panel_table column_header.birthdays {
 	background-image: url("../images/icon-birthday-black-26.png");
@@ -137,6 +140,7 @@ challenge description {
 column_content {
 	display: block;
 	padding: 2px 6px;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 column_content.completed_goodcloud_challenges {
 	padding: 4px 0px 2px 50px;
@@ -160,6 +164,7 @@ news_story {
 news_story .story_body {
 	display: block;
 	padding-left: 110px;
+	font-family: "Droid Sans", Helvetica, "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 .birthday_row {
 	margin: 6px 5px;
