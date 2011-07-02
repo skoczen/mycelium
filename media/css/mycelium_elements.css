@@ -262,7 +262,7 @@ footer footer_icon span {
 }
 #global_search {
 	position: absolute;
-	left: 23%;
+	left: 30%;
 	top: 20px;
 
 	padding: 6px 0px 6px 28px;
@@ -291,13 +291,13 @@ footer footer_icon span {
 #global_search_results {
 	position: absolute;
 	top: 57px;
-	left: 24.5%;
+	left: 30%;
 	display: block;
 	overflow: auto;
 	min-width: 40%;
 	z-index: 10001;
 	margin-top: 0px;
-	padding: 0px 0px 3px 0px;
+	padding: 0px 0px 3px 20px;
 	z-index: 300;
 }
 #global_search_results tr.odd {

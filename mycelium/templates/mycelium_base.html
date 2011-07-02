@@ -14,7 +14,7 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 {# 	<logo>GoodCloud</logo> #}
 	{% spaceless %}<main_nav>
 		<a href="{% url dashboard:dashboard %}" class="logo">
-			<span class="account_name"><p>Congo Leadership Initiative</p></span>
+			<span class="account_name"><p>{{request.account.name}}</p></span>
 		</a>
 		<input type="search" id="global_search" name="global_search" placeholder="Search for anything..." />
 		<div class="username_and_logout">
