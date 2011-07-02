@@ -284,6 +284,7 @@ BASE_JS = [
     "js/contrib/jquery.django.csrf.js",
     "js/plugins.js",
     "js/script.js",
+    "js/contrib/date.js",
 ]
 COMMON_JS = [
     "js/contrib/jquery.autogrow.js",

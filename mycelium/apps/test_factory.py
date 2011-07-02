@@ -65,10 +65,12 @@ class Factory(QiFactory):
         return address
 
     @classmethod
-    def person(cls, account=None):
+    def person(cls, account=None, birthday=None):
         if not account:
             print "No account specified when creating a person. Making one up."
             account = cls.account()
+        if not birthday:
+            birthday = cls.rand_date()
         
         first_name = cls.rand_name()
         person = Person.raw_objects.create(account=account,
@@ -76,6 +78,9 @@ class Factory(QiFactory):
                                        last_name=cls.rand_name(),
                                        email=cls.email(name_hint=first_name),
                                        phone_number=cls.phone(),
+                                       birth_day=birthday.day,
+                                       birth_month=birthday.month,
+                                       birth_year=birthday.year,
                 )
         person.__dict__.update(cls.address())
         person.save()

@@ -232,6 +232,41 @@ search_results {
 #container_id_line_1 input, #container_id_line_2 input{
 	min-width: 70%;
 }
+.basic_info .birthday {
+	float: left;
+	clear: both;
+	margin: 10px 0px 0px 0px;
+}
+.edit_mode_on .birthday {
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+}
+.edit_mode_on .birthday .edit_field {
+	margin-bottom: 0px;
+
+}
+.basic_info .birthday label {
+	padding: 1px 0px 0px 26px;
+	background-repeat: no-repeat;
+	background-position: 0px 2px;
+	background-image: url("../images/icon-birthday-grey-20.png");
+
+}
+.basic_info .birthday label, .basic_info .birthday .generic_editable_field, .basic_info .birthday .date_year_comma {
+	float: left;
+	margin-right: 5px;
+}
+.basic_info .birthday .date_year_comma {
+	margin-left: -5px;
+}
+.basic_info .birthday .invalid_date {
+	display: none;
+	float: left;
+
+	margin: 20px 0px 0px 100px;
+	color: red;
+	font-size: 13px;
+}
 .additional_information {
 	padding-top: 15px;
 	clear: both;

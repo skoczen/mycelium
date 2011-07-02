@@ -65,7 +65,14 @@ $(function(){
 				</div>
 
 			</div>
-			</box_content>
+			<div class="birthday" {% if not person.normalized_birthday %}style="display:none;"{% endif %}>
+				<label >Birthday:</label>
+				{% generic_editable_field form.birth_month %}
+				{% generic_editable_field form.birth_day %}<span class="date_year_comma">,</span> 
+				{% generic_editable_field form.birth_year %}
+				<div class="invalid_date">Hm. <span class="selected_month"></span> <span class="selected_day"></span> isn't a real date, and can't be saved.</div>
+			</div>
+		</box_content>
 		</tabbed_box>
 		{% for e_form in employee_formset.forms %}
 		<tabbed_box class="open" name="job">
@@ -86,13 +93,16 @@ $(function(){
 		</tabbed_box>
 		{% endfor %}
 		{{employee_formset.management_form}}
+
+<div class="additional_information">
+	{# Extra emails, phone #s, Addresses #}
+
+</div>
 </div>
 
 </form>
 
-<div class="additional_information">
-	{# Extra emails, phone #s, Addresses #}
-</div>
+
 
 <detail_tabs update_url="{% url people:tab_contents person.pk %}">
 	{# <a class="detail_tab current" href="#recent_activity">Recent Activity</a> #}

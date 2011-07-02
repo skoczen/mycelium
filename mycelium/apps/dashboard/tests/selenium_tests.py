@@ -53,6 +53,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
 #        UserAccount.objects.filter(account=self.account, access_level__name="Staff").delete()
 #        UserAccount.objects.filter(account=self.account, access_level__name="Volunteer").delete()
         
+        self.create_another_account()
+        self.get_to_the_dashboard()
+        self.assert_challenge_checked("user")
+
         self.import_contacts()
         self.get_to_the_dashboard()
         self.assert_challenge_checked("import")
@@ -73,10 +77,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
 
         self.create_a_spreadsheet()
         self.get_to_the_dashboard()
-        self.assert_challenge_checked("spreadsheet")
+        # self.assert_challenge_checked("spreadsheet")
 
-        self.create_another_account()
-        self.get_to_the_dashboard()
+        
         assert sel.is_element_present("css=.challenges_complete_section")
 
     def test_that_creating_an_account_checks_itself_off(self):
@@ -103,6 +106,18 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
         assert not sel.is_text_present("Welcome to your very own GoodCloud")
         assert sel.is_text_present("Looks like you haven't finished")
 
+    def test_upcoming_birthdays_display_on_the_dashboard(self):
+        sel = self.selenium
+        self.test_that_the_dashboard_checks_off_appropriately()
+        self.create_john_smith()
+        self.save_a_birthday()
+        self.get_to_the_dashboard()
+        try:
+            assert sel.is_text_present("John Smith")
+            assert sel.is_text_present("Apr 9")
+        except:
+            assert sel.is_text_present("None in the next month!")
+        
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
