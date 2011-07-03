@@ -13,7 +13,7 @@
 {% block page_content %}
 <dashboard>
 {# <div class="dashboard_title">Welcome to GoodCloud.</div> #}
-<salutation>{% if not request.useraccount.nickname %}Hello <span class="full_name">{{request.useraccount.full_name}}</span>,{% else %}Hi {{request.useraccount.nickname}},{% endif %}</salutation>
+<salutation>{% if not request.useraccount.nickname %}Hello <span class="full_name">{{request.useraccount.full_name}}</span>,{% else %}Hi {{request.useraccount.nickname}}!{% endif %}</salutation>
 {% if not request.useraccount.nickname %}
 	<div class="nickname_question" save_url="{% url dashboard:save_nickname %}">
 		<div class="initial_question">
@@ -32,7 +32,6 @@
 
 <div class="welcome_text ">
 	{% if request.account.has_completed_any_challenges %}
-		Welcome back to GoodCloud!
 		{% if not request.account.has_completed_all_challenges %}
 			Looks like you haven't finished up the challenges quite yet - keep at it, and let us know if you have any questions!
 		{% endif %}

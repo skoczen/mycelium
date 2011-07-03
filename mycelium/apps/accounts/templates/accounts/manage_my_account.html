@@ -14,7 +14,7 @@
 {% block breadcrumb_links %}<a href="{% url core:more_menu %}" >Back to Admin</a>{% endblock %}
 
 {% block page_content %}
-<page_title>Your GoodCloud Account</page_title>
+<page_title>My Account</page_title>
 
 <form action="{% url accounts:save_my_account_info %}" class="edit_mode_off my_account_info_form" id="basic_info_form"  method="POST">{% csrf_token %}
 {% with "Edit Account" as edit_label %}

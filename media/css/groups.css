@@ -29,7 +29,7 @@
 
     border: 1px solid #DDD;
 
-	overflow-y: scroll;
+	overflow-y: auto;
 	height: 350px;
 	/*width: 100%;*/
 	text-align: left;

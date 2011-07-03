@@ -47,12 +47,12 @@ salutation, .welcome_text, .nickname_question {
 	font-size: 16px;
 }
 .dashboard_panel_table .left_col {
-	width: 60%;
+	width: 55%;
 	padding: 10px;
-	padding-right: 4%;
+	padding-right: 9%;
 }
 .dashboard_panel_table .right_col {
-	width: 40%;
+	width: 35%;
 	padding: 10px;
 }
 .dashboard_panel_table .full_col {
@@ -163,8 +163,11 @@ news_story {
 }
 news_story .story_body {
 	display: block;
-	padding-left: 110px;
-	font-family: "Droid Sans", Helvetica, "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+	padding-left: 115px;
+	
+}
+news_story .date {
+	white-space: nowrap;
 }
 .birthday_row {
 	margin: 6px 5px;

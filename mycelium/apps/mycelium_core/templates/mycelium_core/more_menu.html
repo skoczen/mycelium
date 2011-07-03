@@ -8,14 +8,9 @@
 {% block page_content %}
 <div class="more_buttons">
 	<div class="more_row">
-<!--	<a href="{% url spreadsheets:search %}" class="mycelium_btn more_button spreadsheets_btn">
-		<div class="button_title">Spreadsheets</div>
-		<div class="button_description">Create and download custom spreadsheets</div>
-	</a>
--->
-	<a href="{% url accounts:my_account %}" class="mycelium_btn more_button my_account_button">
-		<div class="button_title">My Account</div>
-		<div class="button_description">Update username, password, and contact info</div>
+	<a href="{% url data_import:list %}" class="mycelium_btn more_button data_import_btn">
+		<div class="button_title">Data Import</div>
+		<div class="button_description">Import records from other systems into GoodCloud</div>
 	</a>
 	<a href="{% url generic_tags:manage %}" class="mycelium_btn more_button tag_button">
 		<div class="button_title">Tags</div>
@@ -35,9 +30,9 @@
 	</div>
 	{% endif %}
 	<div class="more_row">
-	<a href="{% url data_import:list %}" class="mycelium_btn more_button data_import_btn">
-		<div class="button_title">Data Import</div>
-		<div class="button_description">Import records from other systems into GoodCloud</div>
+	<a href="{% url accounts:my_account %}" class="mycelium_btn more_button my_account_button">
+		<div class="button_title">My Account</div>
+		<div class="button_description">Update username, password, and contact info</div>
 	</a>
 	
 	</div>
