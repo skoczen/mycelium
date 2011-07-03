@@ -130,7 +130,7 @@ tab_contents.people_conversations_tab .delete_conversation_btn {
 	margin-top: 4px;
 }
 tab_contents.people_conversations_tab .conversation_row .conversation_date {
-	font-size: 18px;
+	
 	
 }
 tab_contents.people_conversations_tab .conversation_row {
@@ -138,7 +138,7 @@ tab_contents.people_conversations_tab .conversation_row {
 }
 tab_contents.people_conversations_tab .conversation_row .conversation_date_and_staff {
 	margin-left: 80px;
-	padding-top: 5px;
+	padding-top: 8px;
 }
 tab_contents.people_conversations_tab .conversation_row .conversation_type {
 	float: left;
@@ -166,6 +166,7 @@ tab_contents.people_conversations_tab .conversation_row .conversation_type.onlin
 
 tab_contents.people_conversations_tab .conversation_body {
 	margin-left: 80px;
+	min-height: 40px;
 }
 tab_contents.people_conversations_tab .more_conversations_link {
 	clear: left;

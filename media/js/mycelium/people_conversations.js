@@ -86,6 +86,7 @@ function bind_conversation_tab_events() {
         // "gotoCurrent": true,
         "showCurrentAtPos": 1            
     });
+    $.Mycelium.update_stripes();
 
     // $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd-yy' });
 }
