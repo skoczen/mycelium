@@ -44,7 +44,7 @@ salutation, .welcome_text, .nickname_question {
 
 .dashboard_panel_table {
 	width: 100%;
-	font-size: 16px;
+	font-size: 15px;
 }
 .dashboard_panel_table .left_col {
 	width: 55%;
@@ -66,21 +66,21 @@ salutation, .welcome_text, .nickname_question {
 	display: block;
 	width: 100%;
 	margin-top: 20px;
-	color: #454545;
+	color: #888;
 	background-repeat: no-repeat;
 	background-position: left 0px;
 	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 .dashboard_panel_table column_header.birthdays {
-	background-image: url("../images/icon-birthday-black-26.png");
+	background-image: url("../images/icon-birthday-grey-26.png");
 	padding-left: 34px;
 }
 .dashboard_panel_table column_header.news {
-	background-image: url("../images/icon-news-black-26.png");
+	background-image: url("../images/icon-news-grey-26.png");
 	padding-left: 35px;
 }
 .dashboard_panel_table column_header.numbers {
-	background-image: url("../images/icon-numbers-black-26.png");
+	background-image: url("../images/icon-numbers-grey-26.png");
 	padding-left: 45px;
 }
 
@@ -150,35 +150,37 @@ column_content.completed_goodcloud_challenges {
 	
 }
 column_content.news news_story .date {
-	font-weight: bold;
-	height: 50px;
+	/*font-weight: bold;*/
+	height: 40px;
 	float: left;
-	padding: 0px 10px 0px 0px;
-	text-align: center;
-	width: 100px;
+	margin: 0px 10px 0px 0px;
+	text-align: left;
+	width: 90px;
+	white-space: nowrap;
+	color: #000;
 }
 news_story {
 	display: block;
 	padding: 10px 0px;
+	color: #454545;
 }
 news_story .story_body {
 	display: block;
 	padding-left: 115px;
 	
 }
-news_story .date {
-	white-space: nowrap;
-}
+
 .birthday_row {
 	margin: 6px 5px;
 }
 .birthday_date {
-	color: #AAA;
+	color: #454545;
 	width: 60px;
 	float: left;
 	clear: left;
 	height: 15px;
-
+	text-align: left;
+	
 }
 
 .person_and_age {
