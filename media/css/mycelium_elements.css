@@ -85,7 +85,7 @@ main_nav .username_and_logout {
 	/*width: 140px;*/
 	text-align: center;
 	color: #cee0f1;
-	margin: 27px 20px 0px 0px;
+	margin: 32px 20px 0px 0px;
 	padding: 0px;
 }
 main_nav .username_and_logout .username {
@@ -269,7 +269,7 @@ footer footer_icon span {
 #global_search {
 	position: absolute;
 	left: 30%;
-	top: 20px;
+	top: 22px;
 
 	padding: 6px 0px 6px 30px;
 	border: 0px solid #BBB;
@@ -296,7 +296,7 @@ footer footer_icon span {
 }
 #global_search_results {
 	position: absolute;
-	top: 57px;
+	top: 59px;
 	left: 30%;
 	display: block;
 	overflow: auto;
@@ -808,6 +808,9 @@ table.two_column_70_30 {
 .two_column_70_30 .column_2 {
 	width: 30%
 }
+tag.checkbox {
+	position: relative;
+}
 tag.checkbox, tag.new_checkbox_tag {
 	display: block;
 	background: transparent;
@@ -818,18 +821,23 @@ tag.checkbox, tag.new_checkbox_tag {
 	margin: 2px 0px;
 }
 tag.checkbox label {
-	float: none;
-	display: inline;
+	margin-left: 16px;
+	display: block;
 }
 
 tag.checkbox .checkbox_input {
 	margin: 0px 4px 2px 0px;
+	position: absolute;
+	left: 0px;
+	top: 4px;
+
 }
 tags.checkboxes {
 	padding: 0px 0px 0px 16px;
 }
 tags.checkboxes .new_checkbox_tag input.checkbox_input {
 	margin-bottom: 4px;
+
 }
 tags.checkboxes .new_checkbox_tag input.new_tag_name_input {
 	border: 1px solid #BBB;

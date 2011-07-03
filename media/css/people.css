@@ -170,6 +170,9 @@ search_results {
 	padding: 0px 2% 20px 2%;
 	font-size: 18px;
 }
+.basic_info box_content {
+	padding: 15px;
+}
 .basic_info.edit {
 	display: none;
 }
@@ -214,6 +217,7 @@ search_results {
 	white-space: nowrap;
 }
 
+
 .basic_info .phone_email .generic_editable_field input {
 	min-width: 40%;
 }
@@ -241,7 +245,7 @@ search_results {
 	background-position: 0px 2px;
 	background-image: url("../images/icon-birthday-grey-20.png");
 	position: absolute;
-	left: 10px;
+	left: 20px;
 	height: 20px;
 	width: 20px;
 }
@@ -307,8 +311,15 @@ search_results {
 #container_id_postal_code {
 /*	min-width: 50px;*/
 }
-
-
+/*
+For Icons
+#container_id_phone_number {
+	padding-left: 10px;
+}
+#container_id_email {
+	padding-left: 10px;
+}
+*/
 
 
 
@@ -433,9 +444,8 @@ detail_tab_contents fragment.detail_tab {
 }
 #no_home_contact_info_message {
 	display: block;
-/*	width: 100%;*/
 	text-align: center;
-	padding: 20px 0px 0px 0px;
+	/*padding: 20px 0px 0px 0px;*/
 	color: #999;
 }
 detail_tab_contents tabbed_box {
