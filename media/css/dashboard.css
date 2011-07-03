@@ -66,22 +66,21 @@ salutation, .welcome_text, .nickname_question {
 	display: block;
 	width: 100%;
 	margin-top: 20px;
-	color: #777;
-	color: #2887df;
+	color: #454545;
 	background-repeat: no-repeat;
 	background-position: left 0px;
 	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 .dashboard_panel_table column_header.birthdays {
-	background-image: url("../images/icon-birthday-blue-26.png");
+	background-image: url("../images/icon-birthday-black-26.png");
 	padding-left: 34px;
 }
 .dashboard_panel_table column_header.news {
-	background-image: url("../images/icon-news-blue-26.png");
+	background-image: url("../images/icon-news-black-26.png");
 	padding-left: 35px;
 }
 .dashboard_panel_table column_header.numbers {
-	background-image: url("../images/icon-numbers-blue-26.png");
+	background-image: url("../images/icon-numbers-black-26.png");
 	padding-left: 45px;
 }
 
