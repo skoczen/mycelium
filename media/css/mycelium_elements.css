@@ -19,7 +19,6 @@ main_nav {
 	right: 0%;
 	width: 100%;
 	height: 80px;
-	/*background-color: #F2F2F2;*/
 
     overflow: hidden;
 	background-color: #0060b9;
@@ -35,6 +34,12 @@ main_nav {
 	/*background-image: url("../images/marketing-page-header.jpg");*/
 	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 
+}
+a { 
+	text-decoration: none;
+}
+a:hover { 
+	text-decoration: underline;
 }
 main_nav a.logo {
 	width: 180px;
@@ -164,6 +169,7 @@ side_nav a.nav_btn.current {
 	border-bottom-color: #C2C2C2;
 	color: #000486;
 	color: #454545;
+	color: #2887df;
 }
 side_nav .username {
 	display: block;
@@ -171,19 +177,19 @@ side_nav .username {
 	color: #888;
 }
 side_nav a.nav_btn.people 		   	{		background-image: url("../images/icon-person-grey-inset-20.png");	}
-side_nav a.nav_btn.people.current  	{		background-image: url("../images/icon-person-darkergrey-inset-20.png");	}
+side_nav a.nav_btn.people.current  	{		background-image: url("../images/icon-person-blue-inset-20.png");	}
 side_nav a.nav_btn.dashboard 		  {		background-image: url("../images/icon-dashboard-grey-inset-20.png");	}
-side_nav a.nav_btn.dashboard.current  {		background-image: url("../images/icon-dashboard-darkergrey-inset-20.png");	}
+side_nav a.nav_btn.dashboard.current  {		background-image: url("../images/icon-dashboard-blue-inset-20.png");	}
 side_nav a.nav_btn.organizations 		  {		background-image: url("../images/icon-organizations-grey-inset-20.png");	}
-side_nav a.nav_btn.organizations.current  {		background-image: url("../images/icon-organizations-darkergrey-inset-20.png");	}
+side_nav a.nav_btn.organizations.current  {		background-image: url("../images/icon-organizations-blue-inset-20.png");	}
 side_nav a.nav_btn.groups 		  {		background-image: url("../images/icon-groups-grey-inset-20.png");	}
-side_nav a.nav_btn.groups.current  {		background-image: url("../images/icon-groups-darkergrey-inset-20.png");	}
+side_nav a.nav_btn.groups.current  {		background-image: url("../images/icon-groups-blue-inset-20.png");	}
 side_nav a.nav_btn.spreadsheets 		  {		background-image: url("../images/icon-spreadsheets-grey-inset-20.png");	}
-side_nav a.nav_btn.spreadsheets.current  {		background-image: url("../images/icon-spreadsheets-darkergrey-inset-20.png");	}
+side_nav a.nav_btn.spreadsheets.current  {		background-image: url("../images/icon-spreadsheets-blue-inset-20.png");	}
 side_nav a.nav_btn.admin 		  {		background-image: url("../images/icon-admin-grey-inset-20.png");	}
-side_nav a.nav_btn.admin.current  {		background-image: url("../images/icon-admin-darkergrey-inset-20.png");	}
+side_nav a.nav_btn.admin.current  {		background-image: url("../images/icon-admin-blue-inset-20.png");	}
 side_nav a.nav_btn.help 		  {		background-image: url("../images/icon-help-grey-inset-20.png");	}
-side_nav a.nav_btn.help.current  {		background-image: url("../images/icon-help-darkergrey-inset-20.png");	}
+side_nav a.nav_btn.help.current  {		background-image: url("../images/icon-help-blue-inset-20.png");	}
 
 side_nav a.nav_btn.groups {
 	background-position: 7px 9px;
@@ -265,7 +271,7 @@ footer footer_icon span {
 	left: 30%;
 	top: 20px;
 
-	padding: 6px 0px 6px 28px;
+	padding: 6px 0px 6px 30px;
 	border: 0px solid #BBB;
 	width: 40%;
 	font-size: 20px;
@@ -863,7 +869,7 @@ tab_contents actions {
 	padding: 10px;
 }
 .result_row.even {
-	background-color: #F2F2F2;
+	background-color: #F8F8F8;
 }
 .result_row a {
 	text-decoration: none;

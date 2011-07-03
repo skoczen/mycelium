@@ -234,15 +234,32 @@ search_results {
 
 }
 .basic_info .birthday label {
-	padding: 1px 0px 0px 26px;
+	padding: 24px 0px 0px 0px;
+	font-size: 14px;
+	color: #AAA;
 	background-repeat: no-repeat;
 	background-position: 0px 2px;
 	background-image: url("../images/icon-birthday-grey-20.png");
-
+	position: absolute;
+	left: 10px;
+	height: 20px;
+	width: 20px;
+}
+.birthday label .text {
+	display: none;
+}
+.edit_mode_on .birthday label .text {
+	display: inline;
+}
+.basic_info .birthday #container_id_birth_month {
+	margin-left: 33px;
+}
+.basic_info .birthday #container_id_birth_month .generic_field_label {
+	margin-left: 30px;
 }
 .basic_info .birthday label, .basic_info .birthday .generic_editable_field, .basic_info .birthday .date_year_comma {
 	float: left;
-	margin-right: 10px;
+	margin-right: 5px;
 }
 .basic_info .birthday .date_year_comma {
 	margin-left: -5px;

@@ -66,7 +66,7 @@ $(function(){
 
 			</div>
 			<div class="birthday" {% if not person.normalized_birthday %}style="display:none;"{% endif %}>
-				<label >Birthday:</label>
+				<label ><span class="text">Birthday</span></label>
 				{% generic_editable_field form.birth_month %}
 				{% generic_editable_field form.birth_day %}<span class="date_year_comma">,</span> 
 				{% generic_editable_field form.birth_year %}
