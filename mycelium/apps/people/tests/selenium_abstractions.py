@@ -96,14 +96,14 @@ class PeopleTestAbstractions(object):
     def create_new_organization_and_return_to_search(self):
         sel = self.selenium
         self.create_new_organization()
-        sel.click("link=Back to All People and Organizations")
+        sel.click("link=Organizations")
         sel.wait_for_page_to_load("30000")        
 
 
     def create_my_new_organization_with_employee_and_return_to_search(self):
         sel = self.selenium
         self.create_new_organization_with_employee()
-        sel.click("link=Back to All People and Organizations")
+        sel.click("link=Organizations")
         sel.wait_for_page_to_load("30000")        
 
 

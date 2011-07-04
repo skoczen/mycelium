@@ -16,6 +16,7 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 		<a href="{% url dashboard:dashboard %}" class="logo">
 			<span class="account_name"><p>{{request.account.name}}</p></span>
 		</a>
+
 		<input type="search" id="global_search" name="global_search" placeholder="Search for anything..." />
 		<div class="username_and_logout">
 			<a href="{% url accounts:my_account %}" class="my_account_btn" >My Account</a>
@@ -27,21 +28,16 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 	<div id="global_search_results"><fragment name="global_search_results" action="replace"></fragment></div>
 	<side_nav>
 		<div class="nav_title"></div>
-		{# <a href="{% url core:more_menu %}" class="nav_btn {% if section == "more" %}current{% endif %}">Admin</a> #}
-		{# <a href="#">Events</a> #}
-		{# <a href="#">Communicate</a> #}
-		{# <a href="{% url spreadsheets:search %}" class="{% if section == "spreadsheets" %}current{% endif %}" >Reports</a> #}
-		{# <a href="#">Fund</a> #}
-		{# <a href="#">Donors</a> #}
-		{# <a href="#">Volunteers</a> #}
-		
-		{# <a href="{% url people:new_person %}" >New Person</a> #}
-		{# <span class="username">{{request.useraccount.full_name}}</span> #}
 		<a href="{% url dashboard:dashboard %}" class="nav_btn dashboard {% if section == "dashboard" %}current{% endif %}">Dashboard</a>
 		<a href="{% url people:search %}" class="nav_btn people {% if not section %}current{% endif %}">People</a>
 		<a href="{% url people:search %}" class="nav_btn organizations {% if section == "organizations" %}current{% endif %}">Organizations</a>
 		<a href="{% url groups:search %}" class="nav_btn groups {% if section == "groups" %}current{% endif %}">Groups</a>
 		<a href="{% url spreadsheets:search %}" class="nav_btn spreadsheets {% if section == "spreadsheets" %}current{% endif %}">Spreadsheets</a>
+		{# <a href="{% url spreadsheets:search %}" class="nav_btn spreadsheets {% if section == "spreadsheets" %}current{% endif %}">Donations</a> #}
+		{# <a href="{% url spreadsheets:search %}" class="nav_btn spreadsheets {% if section == "spreadsheets" %}current{% endif %}">Volunteers</a> #}
+		{# <a href="#">Events</a> #}
+		{# <a href="#">Communicate</a> #}
+
 		{% if request.useraccount.is_admin %}
 				<a href="{% url core:more_menu %}" class="admin_btn admin nav_btn {% if section == "admin" %}current{% endif %}" >Admin</a>				
 		{% endif %}

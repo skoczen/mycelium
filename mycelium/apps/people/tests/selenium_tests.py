@@ -118,7 +118,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual("Williamsborough", sel.get_text("//span[@id='container_id_city']/span[1]"))
         self.assertEqual("IN", sel.get_text("//span[@id='container_id_state']/span[1]"))
         self.assertEqual("45321", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
-        sel.click("link=Back to All People and Organizations")
+        sel.click("link=Organizations")
         sel.wait_for_page_to_load("30000")
 
         sel.focus("css=#id_search_query")
@@ -151,7 +151,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=email] .view_field"))        
         sel.click("css=tabbed_box tab_title")
         sel.click("css=tabbed_box box_close a")
-        sel.click("link=Back to All People and Organizations")
+        sel.click("link=People")
         sel.wait_for_page_to_load("30000")
         sel.click("link=New Person")
         sel.wait_for_page_to_load("30000")
@@ -160,7 +160,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.click("link=Save Now")
         time.sleep(2)
         sel.click("link=Done")
-        sel.click("link=Back to All People")
+        sel.click("link=Organizations")
         sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Organization 555123")
@@ -207,7 +207,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=email] .view_field"))        
         sel.click("css=tabbed_box tab_title")
         sel.click("css=tabbed_box box_close a")
-        sel.click("link=Back to All People and Organizations")
+        sel.click("link=People")
         sel.wait_for_page_to_load("30000")
 
         sel.focus("css=#id_search_query")
@@ -266,7 +266,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=email] .view_field"))        
         sel.click("css=tabbed_box tab_title")
         sel.click("css=tabbed_box box_close a")
-        sel.click("link=Back to All People and Organizations")
+        sel.click("link=People")
         sel.wait_for_page_to_load("30000")
 
         sel.focus("css=#id_search_query")
@@ -281,7 +281,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual("503-247.8451", sel.get_text("css=tabbed_box[name=job]:nth(0) box_content .generic_editable_field[id$=phone_number] .view_field"))
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=tabbed_box[name=job]:nth(0) box_content .generic_editable_field[id$=email] .view_field"))
 
-        sel.click("link=Back to All People")
+        sel.click("link=People")
         sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Org 555123")
@@ -300,7 +300,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.click("css=employee:nth(0) .edit_done_btn")
         time.sleep(1)
 
-        sel.click("link=Back to All People and Organizations")
+        sel.click("link=People")
         sel.wait_for_page_to_load("30000")
 
         sel.focus("css=#id_search_query")
@@ -428,7 +428,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=employee:nth(0) .generic_editable_field[id$=email] .view_field"))        
         sel.click("css=tabbed_box tab_title")
         sel.click("css=tabbed_box box_close a")
-        sel.click("link=Back to All People and Organizations")
+        sel.click("link=People")
         sel.wait_for_page_to_load("30000")
 
         sel.focus("css=#id_search_query")
@@ -625,7 +625,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.open("/people/")
         sel.click("link=New Organization")
         sel.wait_for_page_to_load("30000")
-        sel.click("link=People")
+        sel.click("link=Organizations")
         sel.wait_for_page_to_load("30000")
 
         self.assertEqual("Unnamed Organization", sel.get_text("css=search_results .result_row:nth(0) .name a"))
@@ -653,7 +653,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel = self.selenium
         self.create_new_organization_and_return_to_search()
 
-        sel.click("link=People")
+        sel.click("link=Organizations")
         sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Organ")
@@ -673,48 +673,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         assert not sel.is_text_present("Test Organization")
 
 
-    def test_that_search_ordering_for_people_and_orgs_is_mixed(self):
-        sel = self.selenium
-        self.open("/people/")
-        sel.click("link=New Organization")
-        sel.wait_for_page_to_load("30000")
-        sel.type("id_name", "Foo Test Organization")
-        sel.click("link=Back to All People and Organizations")
-        sel.wait_for_page_to_load("30000")
 
-
-        sel.click("link=New Person")
-        sel.wait_for_page_to_load("30000")
-        sel.type("id_first_name", "John")
-        sel.type("id_last_name", "Smith")
-        sel.click("link=People")
-        sel.wait_for_page_to_load("30000")
-
-        sel.click("link=New Person")
-        sel.wait_for_page_to_load("30000")
-        sel.type("id_first_name", "Alfred")
-        sel.type("id_last_name", "Williams")
-        # wait for celery to catch up.
-        time.sleep(5)
-        sel.click("link=People")
-        sel.wait_for_page_to_load("30000")
-
-        self.assertEqual("Alfred Williams", sel.get_text("css=search_results .result_row:nth(0) .name a"))
-        self.assertEqual("Foo Test Organization", sel.get_text("css=search_results .result_row:nth(1) .name a"))
-        self.assertEqual("John Smith", sel.get_text("css=search_results .result_row:nth(2) .name a"))
-        sel.click("css=search_results .result_row:nth(1) .name a")
-        sel.wait_for_page_to_load("30000")
-
-        sel.click("link=Edit Organization")
-        sel.click("id_name")
-        sel.type("id_name", "Test Organization")
-        # wait for celery to catch up.
-        time.sleep(5)
-        sel.click("link=People")
-        sel.wait_for_page_to_load("30000")
-        self.assertEqual("Alfred Williams", sel.get_text("css=search_results .result_row:nth(0) .name a"))
-        self.assertEqual("John Smith", sel.get_text("css=search_results .result_row:nth(1) .name a"))
-        self.assertEqual("Test Organization", sel.get_text("css=search_results .result_row:nth(2) .name a"))
 
     def test_that_the_last_selected_tab_stays_open_after_refresh_in_people(self):
         sel = self.selenium
@@ -924,7 +883,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         time.sleep(4)
         self.assertEqual("Saved a few seconds ago.", sel.get_text("css=.last_save_time"))
         self.assertEqual("Saved", sel.get_text("css=.save_and_status_btn"))
-        sel.click("css=main_nav a:contains('People')")
+        sel.click("css=side_nav a:contains('People')")
         sel.wait_for_page_to_load("30000")
         time.sleep(1)
         sel.focus("css=#id_search_query")
@@ -979,7 +938,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         sel.wait_for_page_to_load("30000")
         # celery catch-up
         time.sleep(5)
-        sel.click("link=Back to All People and Organizations")
+        sel.click("link=Organizations")
         sel.wait_for_page_to_load("30000")
 
         self.assertEqual("Unnamed Organization", sel.get_text("css=search_results .result_row:nth(0) .name a"))

@@ -121,9 +121,12 @@ side_nav {
 	position: fixed;
 	left: 0px;
 	top: 8%;
-	height: 92%;
+	
+	padding: 80px 0px 0px 0px;
+	margin: 0px;
+	height: 100%;
 	width: 170px;
-	margin-top: 0px;
+	
 	font-size: 16px;
 	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 	background: #FAFAFA;
@@ -131,11 +134,9 @@ side_nav {
 	border: 1px solid #EEE;
 	border-width: 0px 1px 0px 0px;
 	z-index: 200;
-
 }
 side_nav .nav_title {
 	width: 100%;
-	height: 30px;
 	display: block;
 }
 side_nav a.nav_btn {
@@ -189,12 +190,13 @@ main_content {
 	clear: none;
 	display: block;
 	margin: 0px ;
-	padding: 0px 3% 0px 190px;
+	padding: 80px 3% 0px 190px;
 
-	top: 8%;
+	height: 100%;
+
 	left: 0px;
 	width: 100%;
-	height: 92%;
+	
 	position: absolute;	
 	z-index: 100;
 	
@@ -417,6 +419,7 @@ new_object_buttons .new_label {
 	text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 	white-space: nowrap;
 	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+
 
 }
 .mycelium_btn, input.mycelium_btn {

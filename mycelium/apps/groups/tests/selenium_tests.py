@@ -277,7 +277,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         sel.wait_for_page_to_load("30000")
         # celery catch-up
         time.sleep(5)
-        self.click_and_wait("link=Back to Groups")
+        self.click_and_wait("link=Groups")
         
 
         self.assertEqual("Unnamed Group", sel.get_text("css=search_results .result_row:nth(0) .name a"))
@@ -295,7 +295,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         time.sleep(1)
         sel.type("css=#basic_info_form #id_name","A Completely Different name!!")
         time.sleep(4)
-        self.click_and_wait("link=Back to Groups")
+        self.click_and_wait("link=Groups")
 
         sel.type("css=#id_search_query", "name!!")
         time.sleep(2)
