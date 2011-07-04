@@ -33,7 +33,8 @@ class TestModels(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Generat
         self.assertEqual(s2.num_rows, Person.objects_by_account(self.a1).count())
 
     def _mailing_list_row_dict(self, p):
-        return [ p.first_name, p.last_name, p.line_1, p.line_2, p.city, p.state, p.postal_code, p.pk ]
+        return [ p.first_name, p.last_name, p.email, p.phone_number,  p.line_1, p.line_2, p.city, p.state, p.postal_code,'', '', '', '', '', '', '', '', '', "%s" % (p.pk,) ]
+
 
     def test_get_row(self):
         s = self.created_and_imported_csv_spreadsheet()
