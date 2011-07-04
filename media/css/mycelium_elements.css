@@ -120,9 +120,9 @@ side_nav {
 	display: block;
 	position: fixed;
 	left: 0px;
-	top: 8%;
+	top: 0px;
 	
-	padding: 80px 0px 0px 0px;
+	padding: 110px 0px 0px 0px;
 	margin: 0px;
 	height: 100%;
 	width: 170px;

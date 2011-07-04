@@ -73,15 +73,15 @@ salutation, .welcome_text, .nickname_question {
 }
 .dashboard_panel_table column_header.birthdays {
 	background-image: url("../images/icon-birthday-grey-26.png");
-	padding: 0px -24px 0px 34px;
+	padding: 0px 0px 0px 34px;
 }
 .dashboard_panel_table column_header.news {
 	background-image: url("../images/icon-news-grey-26.png");
-	padding: 0px -25px 0px 35px;
+	padding: 0px 0px 0px 35px;
 }
 .dashboard_panel_table column_header.numbers {
 	background-image: url("../images/icon-numbers-grey-26.png");
-	padding: 0px -35px 0px 45px;
+	padding: 0px 0px 0px 45px;
 }
 
 
