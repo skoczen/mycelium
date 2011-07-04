@@ -153,6 +153,12 @@ side_nav a.nav_btn.current {
 	border-bottom-color: #C2C2C2;
 	color: #2887df;
 }
+side_nav a.nav_btn:hover {
+	color: #707070;
+}
+side_nav a.nav_btn.current {
+	color: #167ad6;
+}
 side_nav .username {
 	display: block;
 	padding: 10px;

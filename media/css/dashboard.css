@@ -64,24 +64,24 @@ salutation, .welcome_text, .nickname_question {
 	border: 1px solid #CCC;
 	border-width: 0px 0px 1px 0px;
 	display: block;
-	width: 100%;
+	/*width: 100%;*/
 	margin-top: 20px;
-	color: #888;
+	color: #656565;
 	background-repeat: no-repeat;
 	background-position: left 0px;
 	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 .dashboard_panel_table column_header.birthdays {
 	background-image: url("../images/icon-birthday-grey-26.png");
-	padding-left: 34px;
+	padding: 0px -24px 0px 34px;
 }
 .dashboard_panel_table column_header.news {
 	background-image: url("../images/icon-news-grey-26.png");
-	padding-left: 35px;
+	padding: 0px -25px 0px 35px;
 }
 .dashboard_panel_table column_header.numbers {
 	background-image: url("../images/icon-numbers-grey-26.png");
-	padding-left: 45px;
+	padding: 0px -35px 0px 45px;
 }
 
 
