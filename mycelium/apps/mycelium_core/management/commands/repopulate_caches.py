@@ -4,7 +4,8 @@ from django.core.management import call_command
 import subprocess
 from os.path import abspath, join
 
-from people.models import PeopleAndOrganizationsSearchProxy
+from people.models import PeopleSearchProxy
+from organizations.models import OrganizationsSearchProxy
 from groups.models import GroupSearchProxy
 
 class Command(BaseCommand):
@@ -12,5 +13,6 @@ class Command(BaseCommand):
     __test__ = False
 
     def handle(self, *args, **options):
-        PeopleAndOrganizationsSearchProxy.populate_cache()
+        PeopleSearchProxy.populate_cache()
+        OrganizationsSearchProxy.populate_cache()
         GroupSearchProxy.populate_cache()

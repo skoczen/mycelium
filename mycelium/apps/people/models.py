@@ -14,7 +14,6 @@ import re
 import datetime
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING_PERSON = _("Unnamed Person")
-NO_NAME_STRING_ORGANIZATION = _("Unnamed Organization")
 NORMALIZED_BIRTH_YEAR = 2000  # should be a leap year for normalization's sake.
 MONTHS = [
     (1,  _("January")),
@@ -54,16 +53,6 @@ from mycelium_core.models import SearchableItemProxy
 from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
 from data_import.models import PotentiallyImportedModel
 
-
-class OrganizationType(AccountBasedModel, models.Model):
-    internal_name = models.CharField(max_length=255)
-    friendly_name = models.CharField(max_length=255)
-
-    def __unicode__(self):
-        return "%s" % self.friendly_name
-
-    class Meta(object):
-        ordering = ("id",)
 
 class AddressBase(models.Model):
     line_1 = models.CharField(max_length=255, blank=True, null=True, verbose_name="Address Line 1")
@@ -195,7 +184,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     
     @property
     def searchable_full_name(self):
-        if self.full_name:
+        if self.first_name or self.last_name:
             return self.full_name
         else:
             return ""
@@ -241,7 +230,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     @property
     def search_result_row(self):
         # Ugh.
-        return self.peopleandorganizationssearchproxy_set.all()[0].search_result_row
+        return self.peoplesearchproxy_set.all()[0].search_result_row
 
     @property
     def employed(self):
@@ -277,88 +266,25 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     def conversations(self):
         return self.conversation_set.all()
 
-class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, TimestampModelMixin, PotentiallyImportedModel):
-    name = models.CharField(max_length=255, blank=True, null=True)
 
-    search_fields = ["full_name","searchable_primary_phone_number"]
-    contact_type = "organization"
-    organization_type = models.ForeignKey(OrganizationType, blank=True, null=True)
-    organization_type_other_name = models.CharField(max_length=255, blank=True, null=True)
-    primary_phone_number = models.CharField(max_length=255, blank=True, null=True)
-    website = models.CharField(max_length=255, blank=True, null=True)
-    twitter_username = models.CharField(max_length=255, blank=True, null=True)
-
-    tags = TaggableManager()
-    def alphabetical_tags(self):
-        return self.tags.all().order_by("name")
-    
-    @property
-    def full_name(self):
-        if self.name:
-            return self.name
-        else:
-            return NO_NAME_STRING_ORGANIZATION
-
-    @property
-    def searchable_name(self):
-        if self.full_name:
-            return self.full_name
-        else:
-            return ""
-
-
-    @property
-    def searchable_primary_phone_number(self):
-        if self.primary_phone_number:
-            return DIGIT_REGEX.sub('', "%s" % self.primary_phone_number)
-        else:
-            return ''
-            
-    def __unicode__(self):
-        return "%s" % (self.name,)
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('people:organization', [str(self.id)])
-
-class Employee(AccountBasedModel, TimestampModelMixin):
-    person = models.ForeignKey(Person, related_name="jobs")
-    role = models.CharField(max_length=255, blank=True, null=True, verbose_name="Title")
-    email = models.CharField(max_length=255, blank=True, null=True,verbose_name="Email")
-    phone_number = models.CharField(max_length=255, blank=True, null=True, verbose_name="Phone number")
-    organization = models.ForeignKey(Organization, related_name="employees")
-    
-    def __unicode__(self):
-        return "%s - %s at %s" % (self.person, self.role, self.organization)
-    
-    class Meta:
-        ordering = ("organization","person",)
-
-
-
-class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
-    SEARCH_GROUP_NAME = "people_and_orgs"
+class PeopleSearchProxy(SearchableItemProxy):
+    SEARCH_GROUP_NAME = "people"
     person = models.ForeignKey(Person, blank=True, null=True)
-    organization = models.ForeignKey(Organization, blank=True, null=True)
 
     @property
     def obj(self):
-        return self.person or self.organization or None
+        return self.person or None
 
     @property
     def type(self):
         if self.person_id != None:
             return "person"
-        elif self.organization_id != None:
-            return "organization"
         return None
     
     @property
     def obj_id(self):
         if self.person_id:
             return self.person_id
-        elif self.organization_id:
-            return self.organization_id
         else:
             return None
 
@@ -366,9 +292,7 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
         sn = ""
         if self.person_id:
             sn =  self.person.full_name
-        elif self.organization_id:
-            sn = self.organization.searchable_name
-        if sn == NO_NAME_STRING_PERSON or sn == NO_NAME_STRING_ORGANIZATION:
+        if sn == NO_NAME_STRING_PERSON:
             sn = ""
         return sn
         
@@ -396,8 +320,6 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
     def render_result_row(self):
         if self.person_id:
             return render_to_string("people/_search_result_row_person.html",{'obj':self.obj})
-        elif self.organization_id:
-            return render_to_string("people/_search_result_row_organization.html",{'obj':self.obj})
         else:
             return ""
         
@@ -409,36 +331,29 @@ class PeopleAndOrganizationsSearchProxy(SearchableItemProxy):
 
 
     @classmethod
-    def organization_record_changed(cls, sender, instance, created=None, *args, **kwargs):
-        proxy, nil = cls.raw_objects.get_or_create(account=instance.account, organization=instance, search_group_name=cls.SEARCH_GROUP_NAME)
-        cache.delete(proxy.cache_name)
-        proxy.save()
-
-    @classmethod
     def related_people_record_changed(cls, sender, instance, created=None, *args, **kwargs):
         cls.people_record_changed(sender, instance.person, *args, **kwargs)
-
-    @classmethod
-    def related_organization_record_changed(cls, sender, instance, created=None, *args, **kwargs):
-        cls.organization_record_changed(sender, instance.organization, *args, **kwargs)
 
 
     @classmethod
     def populate_cache(cls):
         [cls.people_record_changed(Person,p) for p in Person.raw_objects.all()]
-        [cls.organization_record_changed(Organization,o) for o in Organization.raw_objects.all()]
 
     @classmethod
-    def resave_all_people_and_organizations(cls):
-        [p.save() for p in Person.raw_objects.all()]
-        [o.save() for o in Organization.raw_objects.all()]
+    def resave_all_people(cls, verbose=False):
+        counter = 0
+        if verbose:
+            total_count = Person.raw_objects.all().count()
+        for o in Person.raw_objects.all():
+            o.save()
+            if verbose:
+                counter += 1
+                if counter % 100 == 0:
+                    print "%s/%s" % (counter, total_count)
 
 
     class Meta(SearchableItemProxy.Meta):
-        verbose_name_plural = "PeopleAndOrganizationsSearchProxies"
+        verbose_name_plural = "PeopleSearchProxies"
 
         
-post_save.connect(PeopleAndOrganizationsSearchProxy.people_record_changed,sender=Person)
-post_save.connect(PeopleAndOrganizationsSearchProxy.organization_record_changed,sender=Organization)
-post_save.connect(PeopleAndOrganizationsSearchProxy.related_organization_record_changed,sender=Employee)
-post_save.connect(PeopleAndOrganizationsSearchProxy.related_people_record_changed,sender=Employee)
+post_save.connect(PeopleSearchProxy.people_record_changed,sender=Person)

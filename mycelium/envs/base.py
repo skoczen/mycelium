@@ -161,6 +161,7 @@ INSTALLED_APPS = (
     'email_list',
     'rewrite',
     'people',
+    'organizations',
     'mycelium_core',
     'spreadsheets',
     'data_import',

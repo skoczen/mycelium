@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     (r'^',              include('mycelium_core.urls',       app_name="core",            namespace="core")),    
     (r'^volunteers/',   include('volunteers.urls',          app_name="volunteers",      namespace="volunteers")),
     (r'^people/',       include('people.urls',              app_name="people",          namespace="people")),
+    (r'^organizations/',include('organizations.urls',       app_name="organizations",   namespace="organizations")),
     (r'^donors/',       include('donors.urls',              app_name="donors",          namespace="donors")),
     (r'^conversations/',include('conversations.urls',       app_name="conversations",   namespace="conversations")),    
     (r'^spreadsheets/', include('spreadsheets.urls',        app_name="spreadsheets",    namespace="spreadsheets")),
@@ -29,7 +30,6 @@ urlpatterns = patterns('',
     url(r'^', include('mediasync.urls')),
 )
 
-import os
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),

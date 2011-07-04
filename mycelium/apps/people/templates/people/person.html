@@ -77,7 +77,7 @@ $(function(){
 		{% for e_form in employee_formset.forms %}
 		<tabbed_box class="open" name="job">
 			<tab_title_container>
-			<a href="{% url people:organization e_form.instance.organization.pk %}">
+			<a href="{% url organizations:organization e_form.instance.organization.pk %}">
 			<tab_title>
 				<icon class="company"></icon>
 				<text>{{e_form.instance.organization}}</text>
