@@ -5,7 +5,8 @@ from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCas
 from qi_toolkit.selenium_test_case import QiUnitTestMixin
 from django.test import TestCase
 from groups.models import Group
-from people.models import Person, Organization, Employee
+from people.models import Person
+from organizations.models import Organization, Employee
 from donors.models import Donor, Donation
 from accounts.models import Account
 from volunteers.models import Volunteer, CompletedShift

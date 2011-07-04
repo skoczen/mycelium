@@ -184,7 +184,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     
     @property
     def searchable_full_name(self):
-        if self.first_name or self.last_name:
+        if self.full_name:
             return self.full_name
         else:
             return ""

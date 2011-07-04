@@ -301,22 +301,26 @@ class SpreadsheetAbstraction:
             rows.append([f[1].name for f in template_instance.fields.iteritems()])
 
         for r in query_set:
-            row = []
-            template_instance.get_primary_target(r.account, r.pk, force_refresh=True)
-            target_objects,created = template_instance.get_target_objects()
+            try:
+                row = []
+                template_instance.get_primary_target(r.account, r.pk, force_refresh=True)
+                target_objects,created = template_instance.get_target_objects()
 
-            for k,f in template.fields.iteritems():
-                if target_objects[f.model_key]:
-                    # try:
-                    if f.field in target_objects[f.model_key].__dict__:
-                        row.append(target_objects[f.model_key].__dict__[f.field])
+                for k,f in template.fields.iteritems():
+                    if target_objects[f.model_key]:
+                        # try:
+                        if f.field in target_objects[f.model_key].__dict__:
+                            row.append(target_objects[f.model_key].__dict__[f.field])
+                        else:
+                            row.append(eval("target_objects[f.model_key].%s" % f.field))
+                        # except:
+                        #     row.append("")    
                     else:
-                        row.append(eval("target_objects[f.model_key].%s" % f.field))
-                    # except:
-                    #     row.append("")    
-                else:
-                    row.append("")
-            rows.append(row)
+                        row.append("")
+                rows.append(row)
+            except Exception, e:
+                print "Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, e)
+
         return rows
 
     # Functions to generate a spreadsheet from the db

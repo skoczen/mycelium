@@ -3,12 +3,59 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
+from organizations.tests.selenium_abstractions import OrganizationsTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
 from django.conf import settings
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from django.core.cache import cache
     
-class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
+class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
+
+    def setUp(self, *args, **kwargs):
+        self.a1 = self.setup_for_logged_in_with_no_data()
+        cache.clear()
+        self.verificationErrors = []
+
+    def test_setting_access_levels_for_a_user_stays(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_manage_accounts_page()
+
+        # make everyone else admins
+        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(0) input:checked")
+        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(0) input:checked")
+        sel.click("css=.user_row:nth(2) .access_level input:nth(0)")
+        sel.click("css=.user_row:nth(3) .access_level input:nth(0)")
+        time.sleep(4)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(0) input:checked")
+        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(0) input:checked")
+
+        # make everyone else staff
+        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(1) input:checked")
+        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(1) input:checked")
+        sel.click("css=.user_row:nth(2) .access_level input:nth(1)")
+        sel.click("css=.user_row:nth(3) .access_level input:nth(1)")
+        time.sleep(4)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(1) input:checked")
+        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(1) input:checked")
+
+        # make everyone else a volunteer
+        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(2) input:checked")
+        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(2) input:checked")
+        sel.click("css=.user_row:nth(2) .access_level input:nth(2)")
+        sel.click("css=.user_row:nth(3) .access_level input:nth(2)")
+        time.sleep(4)
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(2) input:checked")
+        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(2) input:checked")
+
+
+class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
     # selenium_fixtures = []
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
@@ -293,43 +340,6 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.create_a_new_user_via_manage_accounts()
 
 
-    def test_setting_access_levels_for_a_user_stays(self):
-        sel = self.selenium
-        self.setup_for_logged_in()
-        self.go_to_the_manage_accounts_page()
-
-        # make everyone else admins
-        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(0) input:checked")
-        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(0) input:checked")
-        sel.click("css=.user_row:nth(2) .access_level input:nth(0)")
-        sel.click("css=.user_row:nth(3) .access_level input:nth(0)")
-        time.sleep(4)
-        sel.refresh()
-        sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(0) input:checked")
-        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(0) input:checked")
-
-        # make everyone else staff
-        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(1) input:checked")
-        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(1) input:checked")
-        sel.click("css=.user_row:nth(2) .access_level input:nth(1)")
-        sel.click("css=.user_row:nth(3) .access_level input:nth(1)")
-        time.sleep(4)
-        sel.refresh()
-        sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(1) input:checked")
-        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(1) input:checked")
-
-        # make everyone else a volunteer
-        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(2) input:checked")
-        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(2) input:checked")
-        sel.click("css=.user_row:nth(2) .access_level input:nth(2)")
-        sel.click("css=.user_row:nth(3) .access_level input:nth(2)")
-        time.sleep(4)
-        sel.refresh()
-        sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(2) input:checked")
-        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(2) input:checked")
 
     def test_resetting_a_password_changes_it_appropriately(self):
         sel = self.selenium
@@ -358,6 +368,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.get_confirmation()
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Welcome to GoodCloud")
+        # TODO: Intermittent fail because of random account ordering - need to actually make sure it's my account I'm deleting.
 
     def test_deleting_a_user(self):
         sel = self.selenium

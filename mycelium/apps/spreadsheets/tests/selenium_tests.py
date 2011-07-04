@@ -69,7 +69,7 @@ class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractio
     def test_that_searching_for_a_spreasheet_works(self):
         sel = self.selenium
         self.test_creating_a_new_spreadsheet_saves()
-        sel.click("css=.back_to_search_btn")
+        sel.click("link=Spreadsheets")
         sel.wait_for_page_to_load("30000")
         sel.type("css=#id_search_query","my test")
         time.sleep(1)
@@ -201,7 +201,7 @@ class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractio
     def test_that_the_quick_download_link_works(self):
         sel = self.selenium
         self.test_creating_a_new_spreadsheet_saves()
-        sel.click("css=.back_to_search_btn")
+        sel.click("link=Spreadsheets")
         sel.wait_for_page_to_load("30000")
         self.assert_on_spreadsheet_search_page()
         sel.click("css=.quick_download_btn")

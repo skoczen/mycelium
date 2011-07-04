@@ -60,7 +60,7 @@ class Organization(AccountBasedModel, SimpleSearchableModel, AddressBase, Timest
 
     @property
     def searchable_name(self):
-        if self.name:
+        if self.full_name:
             return self.full_name
         else:
             return ""

@@ -10,8 +10,8 @@ def _sitespaced_url(url, site="test"):
 class AccountTestAbstractions(object):
     MANAGE_USERS_URL = "/accounts/manage-users"
     
-    def create_demo_site(self, name="test", mostly_empty=False):
-        return Factory.create_demo_site(name, quick=True, delete_existing=True, mostly_empty=mostly_empty)
+    def create_demo_site(self, name="test", mostly_empty=False, **kwargs):
+        return Factory.create_demo_site(name, quick=True, delete_existing=True, mostly_empty=mostly_empty, **kwargs)
 
     def go_to_the_login_page(self, site=None):
         sel = self.selenium
@@ -60,16 +60,16 @@ class AccountTestAbstractions(object):
     def set_site(self, site):
         self.site = site
 
-    def setup_for_logged_in(self, name="test", mostly_empty=False):
+    def setup_for_logged_in(self, name="test", mostly_empty=False, **kwargs):
         cache.clear()
-        self.account = self.create_demo_site(name=name, mostly_empty=mostly_empty)
+        self.account = self.create_demo_site(name=name, mostly_empty=mostly_empty, **kwargs)
         self.go_to_the_login_page(site=name)
         self.log_in()
         self.assert_login_succeeded()
         return self.account
 
-    def setup_for_logged_in_with_no_data(self, name="test", mostly_empty=True):
-        return self.setup_for_logged_in(name=name, mostly_empty=mostly_empty)
+    def setup_for_logged_in_with_no_data(self, name="test", mostly_empty=True, single_user=True):
+        return self.setup_for_logged_in(name=name, mostly_empty=mostly_empty, single_user=single_user)
 
 
     def go_to_the_manage_accounts_page(self):
@@ -114,4 +114,10 @@ class AccountTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
         sel.click("css=.my_account_button")
         sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present("Your GoodCloud Account")
+        assert sel.is_text_present("My Account")
+
+    def get_my_nickname(self):
+        sel = self.selenium
+        sel.click("css=.my_account_btn")
+        sel.wait_for_page_to_load("30000")
+        return sel.get_text("css=#container_id_nickname .view_field")

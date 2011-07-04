@@ -14,10 +14,6 @@ class TestMarketingSite(QiSeleniumTestCase):
         s.name = "localhost"
         s.save()
 
-    def test_home_page_loads(self):
-        sel = self.selenium
-        sel.open("/")
-
 
     def test_each_page_loads(self):
         sel = self.selenium
@@ -26,22 +22,21 @@ class TestMarketingSite(QiSeleniumTestCase):
         # Home
         sel.click("css=#logo")
         sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present("People love using GoodCloud")
+        assert sel.is_text_present("Built for Small Nonprofits")
 
         # Features
+        sel.click("link=Our Mission")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Do Good Things.")
+
         sel.click("link=Features")
         sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present("All the things you need, nothing you don't")
+        assert sel.is_text_present("All the things you actually need.")
 
         # Tour
         sel.click("link=Tour")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Watch it in action")
-
-        # Love
-        sel.click("link=Love")
-        sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present("Love for ")
 
         # Pricing
         sel.click("link=Pricing")
@@ -50,12 +45,12 @@ class TestMarketingSite(QiSeleniumTestCase):
 
 
         # Free Trial
-        sel.click("link=Free Trial")
+        sel.click("link=Sign Up")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("One-step easy.")
         
         # About Us
-        sel.click("link=About us")
+        sel.click("link=About Us")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Small nonprofits deserve the best software in the world.")
 
@@ -75,6 +70,6 @@ class TestMarketingSite(QiSeleniumTestCase):
         assert sel.is_text_present("Information Gathering and Usage")
 
         # Contact us
-        sel.click("link=Contact us")
+        sel.click("link=Contact Us")
         time.sleep(1)
         assert sel.is_text_present("Say Hello!")

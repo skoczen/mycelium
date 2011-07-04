@@ -36,7 +36,7 @@ class SpreadsheetTestAbstractions(object):
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present(name)
-        sel.click("css=.back_to_search_btn")
+        sel.click("link=Spreadsheets")
         sel.wait_for_page_to_load("30000")
         self.assert_on_spreadsheet_search_page()
         assert sel.is_text_present(name)

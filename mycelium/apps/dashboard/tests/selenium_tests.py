@@ -8,7 +8,26 @@ from django.conf import settings
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from accounts.models import UserAccount
 from dashboard.tests.selenium_abstractions import DashboardTestAbstractions
+from django.core.cache import cache
     
+class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
+
+    def setUp(self, *args, **kwargs):
+        self.a1 = self.setup_for_logged_in_with_no_data()
+        cache.clear()
+        self.verificationErrors = []
+    
+    def test_the_nothing_done_on_the_checklist_welcome_text_and_something_done_text(self):
+        sel = self.selenium
+        UserAccount.objects.filter(account=self.account, access_level__name="Staff").delete()
+        UserAccount.objects.filter(account=self.account, access_level__name="Volunteer").delete()
+        self.get_to_the_dashboard()
+        assert sel.is_text_present("Welcome to your very own GoodCloud")
+        self.add_volunteer_shift()
+        self.get_to_the_dashboard()
+        assert not sel.is_text_present("Welcome to your very own GoodCloud")
+        assert sel.is_text_present("Looks like you haven't finished")
+
 class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
@@ -46,12 +65,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
         assert sel.is_text_present("Thanks, Jessy")
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present("Hi Jessy,")
+        assert sel.is_text_present("Hi Jessy!")
 
     def test_that_the_dashboard_checks_off_appropriately(self):
         sel = self.selenium
-#        UserAccount.objects.filter(account=self.account, access_level__name="Staff").delete()
-#        UserAccount.objects.filter(account=self.account, access_level__name="Volunteer").delete()
         
         self.create_another_account()
         self.get_to_the_dashboard()
@@ -97,14 +114,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
 
         assert not sel.is_element_present("css=.challenges_complete_section")
 
-    def test_the_nothing_done_on_the_checklist_welcome_text_and_something_done_text(self):
-        sel = self.selenium
-        self.get_to_the_dashboard()
-        assert sel.is_text_present("Welcome to your very own GoodCloud")
-        self.add_volunteer_shift()
-        self.get_to_the_dashboard()
-        assert not sel.is_text_present("Welcome to your very own GoodCloud")
-        assert sel.is_text_present("Looks like you haven't finished")
+
 
     def test_upcoming_birthdays_display_on_the_dashboard(self):
         sel = self.selenium
