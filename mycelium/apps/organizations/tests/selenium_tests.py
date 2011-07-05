@@ -220,7 +220,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, OrganizationsTestAbstrac
         self.assertEqual("503-247.8451", sel.get_text("css=tabbed_box[name=job]:nth(0) box_content .generic_editable_field[id$=phone_number] .view_field"))
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=tabbed_box[name=job]:nth(0) box_content .generic_editable_field[id$=email] .view_field"))
 
-        sel.click("link=People")
+        sel.click("link=Organizations")
         sel.wait_for_page_to_load("30000")
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Org 555123")
@@ -370,7 +370,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, OrganizationsTestAbstrac
     def test_that_closing_an_organization_page_makes_sure_the_changes_are_saved(self):
         sel = self.selenium
 
-        self.open_window("/people/", "one")
+        self.open_window("/organizations/", "one")
         sel.select_window("one")
         self.create_new_organization_and_return_to_search()
 
@@ -384,15 +384,15 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, OrganizationsTestAbstrac
         self.assertEqual("Test", sel.get_text("//div[@id='page']/search_results/fragment/table/tbody/tr[2]/td[1]/a/span/b[1]"))
         sel.click("//div[@id='page']/search_results/fragment/table/tbody/tr[2]/td[1]/a/span")
 
-        self.open_window("/people/", "two")
+        self.open_window("/organizations/", "two")
         sel.select_window("two")
-        time.sleep(2)
+        time.sleep(4)
 
         sel.focus("css=#id_search_query")
         sel.type("css=#id_search_query", "Test Organ")
         sel.key_down("css=#id_search_query","n")
         sel.key_up("css=#id_search_query","n")
-        time.sleep(2)
+        time.sleep(1)
 
         self.assertEqual("555 123-4567", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
         self.assertEqual("Test", sel.get_text("//div[@id='page']/search_results/fragment/table/tbody/tr[2]/td[1]/a/span/b[1]"))
@@ -410,6 +410,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, OrganizationsTestAbstrac
         sel.type("id_city", "Williamsborough")
         sel.type("id_state", "IN")
         sel.type("id_postal_code", "45321")
+        time.sleep(0.2)
         sel.close()
 
         sel.select_window("one")
@@ -488,7 +489,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
     
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in()
-        self.people = [Factory.person(self.account) for i in range(1,Factory.rand_int(30,300))]
+        self.organizations = [Factory.organization(self.account) for i in range(1,Factory.rand_int(30,300))]
         self.verificationErrors = []
 
     # def tearDown(self):

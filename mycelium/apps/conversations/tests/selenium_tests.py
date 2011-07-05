@@ -36,8 +36,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, ConversationTestAbstract
         
         # Test username
         my_name = sel.get_text("css=.conversation_staff")
-        nickname = sel.get_my_nickname()
-        self.assertEqual("with %s" % nickname, my_name)
+        my_full_name = self.get_my_full_name()
+        self.assertEqual("with %s" % (my_full_name,), my_name)
 
    
     def test_that_deleting_conversation_works(self):

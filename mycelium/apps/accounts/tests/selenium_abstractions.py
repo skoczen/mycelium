@@ -116,8 +116,9 @@ class AccountTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("My Account")
 
-    def get_my_nickname(self):
+    def get_my_full_name(self):
         sel = self.selenium
         sel.click("css=.my_account_btn")
         sel.wait_for_page_to_load("30000")
-        return sel.get_text("css=#container_id_nickname .view_field")
+        print sel.get_text("css=#container_id_first_name .view_field")
+        return sel.get_text("css=#container_id_first_name .view_field")

@@ -8,13 +8,14 @@ from groups.tests.selenium_abstractions import GroupTestAbstractions
 from generic_tags.tests.selenium_abstractions import TagTestAbstractions
 from conversations.tests.selenium_abstractions import ConversationTestAbstractions
 from rules.tasks import populate_rule_components_for_an_account
-
+from django.core.cache import cache
 
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions, TagTestAbstractions, ConversationTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
+        cache.clear()
         self.account = self.setup_for_logged_in_with_no_data()
         populate_rule_components_for_an_account(self.account)
         self.verificationErrors = []

@@ -21,38 +21,51 @@ class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstr
         self.setup_for_logged_in()
         self.go_to_the_manage_accounts_page()
 
+        # get my row
+        for i in range(1,3):
+            if sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(0) input:checked" % i):
+                my_user = i
+                break
+        
         # make everyone else admins
-        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(0) input:checked")
-        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(0) input:checked")
-        sel.click("css=.user_row:nth(2) .access_level input:nth(0)")
-        sel.click("css=.user_row:nth(3) .access_level input:nth(0)")
+        for i in range(1,3):
+            if not i == my_user:
+                assert not sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(0) input:checked" % (i,))
+                sel.click("css=.user_row:nth(%s) .access_level input:nth(0)" % (i,))
+
         time.sleep(4)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(0) input:checked")
-        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(0) input:checked")
+        for i in range(1,3):
+            if not i == my_user:
+                assert sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(0) input:checked" % (i,))
 
         # make everyone else staff
-        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(1) input:checked")
-        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(1) input:checked")
-        sel.click("css=.user_row:nth(2) .access_level input:nth(1)")
-        sel.click("css=.user_row:nth(3) .access_level input:nth(1)")
+        for i in range(1,3):
+            if not i == my_user:
+                assert not sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(1) input:checked" % (i,))
+                sel.click("css=.user_row:nth(%s) .access_level input:nth(1)" % (i,))
+
         time.sleep(4)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(1) input:checked")
-        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(1) input:checked")
+        for i in range(1,3):
+            if not i == my_user:
+                assert sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(1) input:checked" % (i,))
 
         # make everyone else a volunteer
-        assert not sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(2) input:checked")
-        assert not sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(2) input:checked")
-        sel.click("css=.user_row:nth(2) .access_level input:nth(2)")
-        sel.click("css=.user_row:nth(3) .access_level input:nth(2)")
+        for i in range(1,3):
+            if not i == my_user:
+                assert not sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(2) input:checked" % (i,))
+                sel.click("css=.user_row:nth(%s) .access_level input:nth(2)" % (i,))
+
         time.sleep(4)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("css=.user_row:nth(2) .access_level label:nth(2) input:checked")
-        assert sel.is_element_present("css=.user_row:nth(3) .access_level label:nth(2) input:checked")
+        for i in range(1,3):
+            if not i == my_user:
+                assert sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(2) input:checked" % (i,))
+
 
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
@@ -346,10 +359,16 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         self.setup_for_logged_in()
         self.create_a_new_user_via_manage_accounts()
         assert sel.is_element_present("css=.user_row:nth(4)")
+        
+        for i in range(1,4):
+            if "Joe Smith" == sel.get_text("css=.user_row:nth(%s) .full_name" % i):
+                john_smith_row = i
+                break
+
         sel.choose_cancel_on_next_confirmation()
-        sel.click("css=.user_row:nth(2) .reset_password_btn")
+        sel.click("css=.user_row:nth(%s) .reset_password_btn" % john_smith_row )
         self.assertEqual(sel.get_confirmation(),"Are you sure you want to reset the password for Joe Smith?\n\nClick OK to reset their password.\nClick Cancel to leave it unchanged.\n")
-        sel.click("css=.user_row:nth(2) .reset_password_btn")
+        sel.click("css=.user_row:nth(%s) .reset_password_btn" % john_smith_row )
         sel.get_confirmation()
         time.sleep(2)
         assert sel.is_alert_present()
@@ -364,21 +383,32 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel = self.selenium
         self.setup_for_logged_in()
         self.go_to_the_manage_accounts_page()
-        sel.click("css=.user_row:nth(1) .delete_user_btn")
+        for i in range(1,3):
+            if sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(0) input:checked" % i):
+                my_user = i
+                break
+        
+        sel.click("css=.user_row:nth(%s) .delete_user_btn" % my_user)
         sel.get_confirmation()
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Welcome to GoodCloud")
-        # TODO: Intermittent fail because of random account ordering - need to actually make sure it's my account I'm deleting.
+        
 
     def test_deleting_a_user(self):
         sel = self.selenium
         self.setup_for_logged_in()
         self.create_a_new_user_via_manage_accounts()
         assert sel.is_element_present("css=.user_row:nth(4)")
+        
+        for i in range(1,4):
+            if "Joe Smith" == sel.get_text("css=.user_row:nth(%s) .full_name" % i):
+                john_smith_row = i
+                break
+
         sel.choose_cancel_on_next_confirmation()
-        sel.click("css=.user_row:nth(2) .delete_user_btn")
+        sel.click("css=.user_row:nth(%s) .delete_user_btn" % (john_smith_row,))
         self.assertEqual(sel.get_confirmation(),"Are you sure you want to delete the account for Joe Smith?\n\nThis is permanent, but will not affect any data besides their account.\n\nClick OK to delete the account.\nClick Cancel to leave it alone.\n")
-        sel.click("css=.user_row:nth(2) .delete_user_btn")
+        sel.click("css=.user_row:nth(%s) .delete_user_btn" % (john_smith_row,))
         sel.get_confirmation()
         sel.wait_for_page_to_load("30000")
         assert not sel.is_element_present("css=.user_row:nth(4)")

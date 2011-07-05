@@ -4,6 +4,7 @@ from south.db import db
 from south.v2 import DataMigration
 from django.db import models
 from johnny import cache as jcache
+from django.core.cache import cache
 
 from people.models import PeopleSearchProxy
 from organizations.models import OrganizationsSearchProxy
@@ -16,6 +17,7 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
         print "Starting update of search proxies. Clearing old proxies..."
+        cache.clear()
         PeopleSearchProxy.objects.all().delete()
         print "Organizations cleared."
         OrganizationsSearchProxy.objects.all().delete()
@@ -26,6 +28,7 @@ class Migration(DataMigration):
         print "Re-saving people..."
         PeopleSearchProxy.resave_all_people(verbose=True)
         print "Invalidating cache.."
+        
         jcache.invalidate(PeopleSearchProxy)
         jcache.invalidate(OrganizationsSearchProxy)
         print "Done."

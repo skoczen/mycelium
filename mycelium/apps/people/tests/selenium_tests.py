@@ -4,11 +4,12 @@ from test_factory import Factory
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from people.tests.selenium_abstractions import PeopleTestAbstractions
-
+from django.core.cache import cache
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
+        cache.clear()
         self.verificationErrors = []
 
     # def tearDown(self):
@@ -131,25 +132,22 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.type("id_city", "Williamsburg")
         sel.type("id_state", "TN")
         sel.type("id_postal_code", "54321")
+        time.sleep(0.5)
         sel.close()
         sel.select_window("one")        
-        sel.refresh()
         time.sleep(4)
+        sel.refresh()
+        
 
         self.assertEqual("Jon", sel.get_text("//span[@id='container_id_first_name']/span[1]"))
         self.assertEqual("Smithe", sel.get_text("//span[@id='container_id_last_name']/span[1]"))
-
         self.assertEqual("555-765-4321", sel.get_text("//span[@id='container_id_phone_number']/span[1]"))
-
         self.assertEqual("jon@smithefamily.com", sel.get_text("link=jon@smithefamily.com"))
-
         self.assertEqual("1234 Main St", sel.get_text("//span[@id='container_id_line_1']/span[1]"))
-
         self.assertEqual("Williamsburg", sel.get_text("//span[@id='container_id_city']/span[1]"))
-
         self.assertEqual("TN", sel.get_text("//span[@id='container_id_state']/span[1]"))
-
         self.assertEqual("54321", sel.get_text("//span[@id='container_id_postal_code']/span[1]"))
+        # TODO: This always fails on firefox.
 
     def test_creating_and_deleting_a_new_person(self):
         sel = self.selenium

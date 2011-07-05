@@ -56,7 +56,7 @@ class TestMarketingSite(QiSeleniumTestCase):
 
         # Mission / About us
         sel.click("link=Our Team")
-        time.sleep(1)
+        time.sleep(3)
         assert sel.is_text_present("GoodCloud is currently a team of")
 
         # Legal
@@ -66,10 +66,10 @@ class TestMarketingSite(QiSeleniumTestCase):
 
         # Privacy Policy
         sel.click("link=Privacy Policy")
-        time.sleep(1)
+        time.sleep(3)
         assert sel.is_text_present("Information Gathering and Usage")
 
         # Contact us
         sel.click("link=Contact Us")
-        time.sleep(1)
+        time.sleep(3)
         assert sel.is_text_present("Say Hello!")

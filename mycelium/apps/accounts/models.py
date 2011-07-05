@@ -251,7 +251,7 @@ class UserAccount(TimestampModelMixin):
         return "%s" % (self.nickname_or_full_name,)
 
     class Meta(object):
-        ordering = ("nickname", "user__first_name", "account","access_level","user")
+        ordering = ("account", "nickname", "user__first_name", "access_level","user")
 
 
 class AccountBasedModel(models.Model):
