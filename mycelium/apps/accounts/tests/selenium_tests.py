@@ -383,7 +383,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel = self.selenium
         self.setup_for_logged_in()
         self.go_to_the_manage_accounts_page()
-        for i in range(1,3):
+        for i in range(1,4):
             if sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(0) input:checked" % i):
                 my_user = i
                 break
