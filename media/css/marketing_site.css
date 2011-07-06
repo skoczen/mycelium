@@ -6,7 +6,7 @@ body {
 }
 body.home_page {
 	background-color: #0a5ab9;
-	background-image: url("../images/marketing-background-stripes-6.jpg");	
+	/*background-image: url("../images/marketing-background-stripes-6.jpg");	*/
 	background-image: url("../images/marketing-background-stripes-7.jpg");		
 	background-repeat: no-repeat;
 	background-position: 50% 0px;
@@ -390,55 +390,6 @@ social_links {
   	background-color: #EEE;
   	margin-bottom: 20px;
 }
-#home_boxes .home_box.loved_by {
-/*	width: 30%;*/
-}
-#home_boxes .home_box .title {
-	background-color: #000486;
-	color: #FFF;
-	padding: 6px 6px 6px 10px;
-	border-top-right-radius: 6px;
-  	-moz-border-radius-topright: 6px;
-  	border-top-left-radius: 6px;
-  	-moz-border-radius-topleft: 6px;
-  	font-size: 18px;
-
-	box-shadow: 		0px 1px 1px rgba(0,0,0,0.35);
-  	-moz-box-shadow:	0px 1px 1px rgba(0,0,0,0.35);
-  	-khtml-box-shadow: 	0px 1px 1px rgba(0,0,0,0.35);
-  	-webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.35);
-
-/*	border: #222 1px solid;
-    border-width: 0px 0px 1px 0px;
-*/
-}
-#home_boxes .home_box .description {
-	padding: 10px 10px 0px 10px;
-
-}
-#home_boxes .home_box .action {
-	text-align: right;
-	padding: 10px;
-}
-#home_boxes .home_box.built_for_nonprofits .description {
-	background: url("../images/chat-48.png");
-	background-repeat: no-repeat;
-	background-position: 10px 12px;	
-	padding-left: 70px;
-}
-#home_boxes .home_box.loved_by .description {
-	background: url("../images/heart-48.png");
-	background-repeat: no-repeat;
-	background-position: 10px 12px;	
-	padding-left: 70px;
-}
-#home_boxes .home_box.ready_to_go .description {
-	background: url("../images/magic-48.png");
-	background-repeat: no-repeat;
-	background-position: 10px 12px;	
-	padding-left: 70px;
-}
-
 .features {
 
 }
@@ -1037,6 +988,128 @@ social_links {
 #example_people #will .name_and_role {
 	background-image: url("../images/marketing-will-120.png");
 }
+
+
+
+
+#overview_tabs {
+	display: block;
+	
+	border-radius: 		8px;
+	-moz-border-radius: 8px;
+	box-shadow: 		1px 1px 2px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	1px 1px 2px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);
+  	padding: 0px;
+  	margin: 10px 0px 20px 0px;
+  	background-color: #FFF;
+}
+#overview_tabs .overview_tabs_navigation {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	border: 1px solid #b8ab7e;
+	border-width: 0px 0px 1px 0px;
+	background: url("../images/marketing-text-back-contrast-highlight-background.jpg");
+	border-top-right-radius: 8px;
+  	-moz-border-radius-topright: 8px;
+  	border-top-left-radius: 8px;
+  	-moz-border-radius-topleft: 8px;
+  	padding: 5px 0px 0px 0px;
+}
+#overview_tabs .ui-widget-header, #overview_tabs .person_detail {
+	background: none;
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+#overview_tabs .overview_tabs_navigation li {
+	width: 21%;
+	display: block;
+	margin: 0px 0px 0px 2%;
+	background: none;
+	border: 0px;
+	padding: 0px;
+	border-radius: 		0px;
+	-moz-border-radius: 0px;
+	font-weight: normal;
+	color: #454545;
+	text-align: center;
+	position: relative;
+}
+#overview_tabs .overview_tabs_navigation li .link_wrapper {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+#overview_tabs .overview_tabs_navigation li.ui-state-active {
+	background: url("../images/marketing-text-back-contrast-background.jpg");
+}
+
+#overview_tabs .overview_tab {
+	background: none;
+	background-repeat: no-repeat;
+	background-position: 5px 50%;
+	padding: 0px 10px 0px 0px;
+	height: 80px;
+	font-size: 20px;
+	text-align: left;
+	display: block;
+	width: auto;
+	color: #524a2e;
+	width: 25%;
+	background-color: #000486;
+}
+#overview_tabs .overview_tab .role {
+	font-size: 16px;
+	padding-left: 2px;
+	color: #766b43;
+}
+#overview_tabs .person_detail {
+	width: 100%;
+	overflow: auto;
+}
+#overview_tabs .name_and_role  {
+	background-repeat: no-repeat;	
+	padding-top: 130px;
+	width: 120px;
+	float: left;
+	margin: 20px 40px 20px 20px;
+	text-align: center;
+	
+}
+#overview_tabs .name_and_role .name {
+	font-size: 28px;
+}
+#overview_tabs .name_and_role .role {
+	line-height: 18px;
+}
+#overview_tabs .person_detail .details {
+	padding: 20px 15px 0px 0px;
+}
+
+#overview_tabs .overview_tab.john {
+	background-image: url("../images/marketing-john-70.png");
+}
+#overview_tabs .overview_tab.cindy {
+	background-image: url("../images/marketing-cindy-70.png");
+}
+#overview_tabs .overview_tab.will {
+	background-image: url("../images/marketing-will-70.png");
+}
+
+#overview_tabs #john .name_and_role {
+	background-image: url("../images/marketing-john-120.png");
+}
+#overview_tabs #cindy .name_and_role {
+	background-image: url("../images/marketing-cindy-120.png");
+}
+#overview_tabs #will .name_and_role {
+	background-image: url("../images/marketing-will-120.png");
+}
+
+
 #screenshot_gallery {
 	margin-bottom: 60px;
 	height: 600px;
