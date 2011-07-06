@@ -82,7 +82,7 @@ body.home_page .page_header {
 }
 
 
-#side_nav .tab_content {
+#section .tab_content {
 	width: 66%;
 	margin-left: 22%;
 	background: rgba(255,255,255,0.8);
@@ -635,7 +635,7 @@ social_links {
 	width: 90%;
 	margin: 20px auto;
 }
-.contact_us .contact_button, .contact_us a.contact_button {
+.contact_us .contact_methods .contact_button, .contact_us .contact_methods a.contact_button {
 	display: block;
 	margin-bottom: 20px;
 	background-color: #000486;
@@ -650,12 +650,12 @@ social_links {
   	-khtml-box-shadow: 	2px 2px 4px rgba(0,0,0,0.35);
   	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.35);
 }
-.contact_us .contact_button:hover, .contact_us a.contact_button:hover {
+.contact_us .contact_methods .contact_button:hover, .contact_us .contact_methods a.contact_button:hover {
 	color: #FFF;
 	background-color: #0005ac;
 	cursor: pointer;
 }
-.contact_us .contact_button .type {
+.contact_us .contact_methods .contact_button .type {
 	padding: 25px 10px 10px 10px;
 	font-size: 40px;
 	text-align: center;
@@ -664,20 +664,20 @@ social_links {
 	padding-left: 30%;
 	height: 48px;
 }
-.contact_us .contact_button .details {
+.contact_us .contact_methods .contact_button .details {
 	padding: 10px 20px 14px 20px;
 	text-align: center;
 }
 .contact_us .contact_button.phone  .type { background-image: url("../images/contact-phone-48.png");}
 .contact_us .contact_button.online .type { background-image: url("../images/contact-online-48.png");}
 .contact_us .contact_button.email  .type { background-image: url("../images/contact-email-48.png");}
-#side_nav {
+#section {
 	padding: 0px;
 }
 .tabs {
 	border: 0px;
 }
-#side_nav ul.nav_links {
+#section ul.nav_links {
 	display: block;
 	float: left;
 	
@@ -687,7 +687,7 @@ social_links {
 	padding: 10px 2% 10px 0px;
 	margin: 10px 0px 0px 0px;
 }
-#side_nav ul.nav_links li {
+#section ul.nav_links li {
 	display: block;
 	width: 100%;
 	background: transparent;
@@ -695,7 +695,7 @@ social_links {
 	margin: 0px;
 	padding: 0px;
 }
-#side_nav ul.nav_links li a {
+#section ul.nav_links li a {
 	height: 30px;
 	display: block;
 	float: left;
@@ -711,10 +711,10 @@ social_links {
 	margin: 4px 0px;
 	text-decoration: none;
 }
-#side_nav ul.nav_links li a:hover {
+#section ul.nav_links li a:hover {
 /*	background-color: #002dab;*/
 }
-#side_nav ul.nav_links li.ui-tabs-selected a {
+#section ul.nav_links li.ui-tabs-selected a {
 	background-color: transparent;
 	background-repeat: no-repeat;
 	background-image: url("../images/sidenav-selected.jpg");	

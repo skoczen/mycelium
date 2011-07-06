@@ -62,7 +62,6 @@ function check_for_valid_birthday() {
 		catch (e) {
 			valid_date = false;
 		}
-		console.log(valid_date)
 
 		if (valid_date == false) {
 			$(".birthday .invalid_date .selected_month").html($("#id_birth_month option:selected").html());
