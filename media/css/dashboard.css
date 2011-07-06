@@ -61,7 +61,7 @@ salutation, .welcome_text, .nickname_question {
 
 .dashboard_panel_table column_header {
 	font-size: 24px;
-	border: 1px solid #CCC;
+	border: 1px solid #E2E2E2;
 	border-width: 0px 0px 1px 0px;
 	display: block;
 	/*width: 100%;*/

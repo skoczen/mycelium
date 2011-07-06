@@ -54,7 +54,9 @@ a:hover {
 input {
 	/*font-family: 'ExpresswayRegular', Arial, sans-serif;*/
 	font-family: "Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
-
+}
+input, textarea {
+	font-size: 1.4em;
 }
 img, a img {
 	border: 0px;
