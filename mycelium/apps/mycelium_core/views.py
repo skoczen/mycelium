@@ -10,7 +10,7 @@ from mycelium_core.models import SearchableItemProxy
 
 @render_to("mycelium_core/more_menu.html")
 def more_menu(request):
-    section = "more"
+    section = "admin"
     return locals()
 
 @render_to("mycelium_core/more_menu.html")
