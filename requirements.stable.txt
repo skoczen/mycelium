@@ -12,10 +12,10 @@ django-xmlrpc==0.1.3
 akismet==0.2.0
 BeautifulSoup==3.2.0
 # -e git://github.com/skoczen/django-form-designer.git#egg=form_designer
--e git://github.com/GoodCloud/django-ajax-uploader.git@cbd501856cc475fb285ba4394d48103d3976c5b5#egg=ajaxuploader-dev
+-e git://github.com/GoodCloud/django-ajax-uploader.git@4d8bb95833e976af126e84c5718c2a64d9700266#egg=ajaxuploader-dev
 
 django-extensions==0.6
--e git://github.com/skoczen/qi-toolkit.git@de8a44d893559582b4a90776f1384cb98f14d579#egg=qi_toolkit-dev
+-e git://github.com/skoczen/qi-toolkit.git@68883da5fa3fc271cbb4d90856327f90d94f0156#egg=qi_toolkit-dev
 python-crontab==0.9.6
 django-analytical==0.8.1
 
@@ -55,9 +55,7 @@ xlrd==0.7.1
 xlutils==1.4.1
 # mezzanine
 # django-grappelli
-# django-filebrowser
-
-## The following requirements were added by pip --freeze:
+# django-filebrowser## The following requirements were added by pip --freeze:
 CherryPy==3.2.0
 Django==1.3
 Fabric==1.0.1
@@ -69,7 +67,7 @@ anyjson==0.3.1
 async==0.6.1
 django-indexer==0.3.0
 django-paging==0.2.4
--e hg+https://bitbucket.org/david/django-storages@c6c65d30e7b560cd19784aa9cfaef7f4fdf41a1d#egg=django_storages-dev
+-e hg+https://bitbucket.org/david/django-storages@b85568a98f57e71573d0dd0bf403c0b33859dac4#egg=django_storages-dev
 django-templatetag-sugar==0.1
 errorhandler==1.1.1
 gitdb==0.5.2
