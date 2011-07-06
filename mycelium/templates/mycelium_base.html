@@ -12,58 +12,62 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 {% block content %}
 	{% block nav %}
 {# 	<logo>GoodCloud</logo> #}
-	<main_nav>{% spaceless %}
-		<a href="{% url dashboard:dashboard %}" class="logo"></a>
-		<input type="search" id="global_search" name="global_search" placeholder="Everything in GoodCloud..." />
+	{% spaceless %}<main_nav>
+		<a href="{% url dashboard:dashboard %}" class="logo">
+			<span class="account_name"><p>{{request.account.name}}</p></span>
+		</a>
+
+		<input type="search" id="global_search" name="global_search" placeholder="Search for anything..." />
 		<div class="username_and_logout">
-			<div class="username">{{request.useraccount.full_name}}</div>
-			{% if request.useraccount.is_admin %}
-				<a href="{% url core:more_menu %}" class="admin_btn mycelium_btn mycelium_grey mycelium_active_grey" >Admin</a>				
-			{% else %}
-				<a href="{% url accounts:my_account %}" class="my_account_btn" >Account</a>
-			{% endif %}
-			
+			<a href="{% url accounts:my_account %}" class="my_account_btn" >My Account</a>
+
+
 			<a href="{% url accounts:logout %}" class="logout_btn" >Logout</a>
 		</div>
-		{# <a href="{% url core:more_menu %}" class="nav_btn {% if section == "more" %}current{% endif %}">Admin</a> #}
+	</main_nav>
+	<div id="global_search_results"><fragment name="global_search_results" action="replace"></fragment></div>
+	<side_nav>
+		<div class="nav_title"></div>
+		<a href="{% url dashboard:dashboard %}" class="nav_btn dashboard {% if section == "dashboard" %}current{% endif %}">Dashboard</a>
+		<a href="{% url people:search %}" class="nav_btn people {% if not section %}current{% endif %}">People</a>
+		<a href="{% url organizations:search %}" class="nav_btn organizations {% if section == "organizations" %}current{% endif %}">Organizations</a>
+		<a href="{% url groups:search %}" class="nav_btn groups {% if section == "groups" %}current{% endif %}">Groups</a>
+		<a href="{% url spreadsheets:search %}" class="nav_btn spreadsheets {% if section == "spreadsheets" %}current{% endif %}">Spreadsheets</a>
+		{# <a href="{% url spreadsheets:search %}" class="nav_btn spreadsheets {% if section == "spreadsheets" %}current{% endif %}">Donations</a> #}
+		{# <a href="{% url spreadsheets:search %}" class="nav_btn spreadsheets {% if section == "spreadsheets" %}current{% endif %}">Volunteers</a> #}
 		{# <a href="#">Events</a> #}
 		{# <a href="#">Communicate</a> #}
-		{# <a href="{% url spreadsheets:search %}" class="{% if section == "spreadsheets" %}current{% endif %}" >Reports</a> #}
-		{# <a href="#">Fund</a> #}
-		{# <a href="#">Donors</a> #}
-		{# <a href="#">Volunteers</a> #}
+
+		{% if request.useraccount.is_admin %}
+				<a href="{% url core:more_menu %}" class="admin_btn admin nav_btn {% if section == "admin" %}current{% endif %}" >Admin</a>				
+		{% endif %}
 		
-		{# <a href="{% url people:new_person %}" >New Person</a> #}
-		<a href="{% url spreadsheets:search %}" class="nav_btn {% if section == "spreadsheets" %}current{% endif %}">Spreadsheets</a>
-		<a href="{% url groups:search %}" class="nav_btn {% if section == "groups" %}current{% endif %}">Groups</a>
-		<a href="{% url people:search %}" class="nav_btn first {% if not section %}current{% endif %}">People</a>
-		{# <a href="{% url dashboard:dashboard %}" class="nav_btn {% if section == "dashboard" %}current{% endif %}">Dashboard</a> #}
-		
-	{% endspaceless %}</main_nav>
-	<div id="global_search_results"><fragment name="global_search_results" action="replace"></fragment></div>
+		<a href="#" class="help_btn help nav_btn">Help</a>
+
+		<footer>
+		{% block footer %}
+		<a href="https://www.agoodcloud.com">Powered by <footer_icon><span>GoodCloud</span></footer_icon></a>
+		{% endblock %}
+		</footer>		
+	</side_nav>{% endspaceless %}
+	
 	{% endblock %}
 	
 	{% block page %}
+	<main_content>
 	<div id="page">
-	{% block breadcrumb %}<div class="breadcrumb_container"><breadcrumb>{% block breadcrumb_links %}{% endblock %}</breadcrumb><div class="triangle-l"></div></div>{% endblock %}
+	{# {% block breadcrumb %}<div class="breadcrumb_container"><breadcrumb>{% block breadcrumb_links %}{% endblock %}</breadcrumb></div>{% endblock %} #}
 	{% block page_content %}
 	
 	{% endblock %}
 	</div>
-	
-	<footer>
-	{% block footer %}
-	<a href="https://www.agoodcloud.com">Powered by <img src="{% media_url "images/goodcloud-logo-24.png" %}" >GoodCloud</a>
+	</main_content>
 	{% endblock %}
-	</footer>
-	{% endblock %}
-	{# <feedback_button></feedback_button> #}
 	<script type="text/javascript">
-  	(function() {
+	  (function() {
 	    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-	    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/RP8dTYXSOIeaTsKxGLBQ.js';
+	    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/AwQUXURGT97r7ts4zvEIaA.js';
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
 	  })();
 	</script>
-{#	<script type="text/javascript"> var uservoiceOptions = {   /* required */   key: 'goodcloud',   host: 'goodcloud.uservoice.com',    forum: '107765',   showTab: true,     /* optional */   alignment: 'left',   background_color:'#004486',    text_color: 'white',   hover_color: '#06C',   lang: 'en' };  function _loadUserVoice() {   var s = document.createElement('script');   s.setAttribute('type', 'text/javascript');   s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");   document.getElementsByTagName('head')[0].appendChild(s); } _loadSuper = window.onload; window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); }; </script> #}
 {% endblock %}

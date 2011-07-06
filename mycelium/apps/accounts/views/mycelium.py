@@ -75,6 +75,7 @@ def _account_forms(request):
 
 @render_to("accounts/manage_users.html")
 def manage_users(request):
+    section = "admin"
     if not request.useraccount.is_admin:
         return HttpResponseRedirect(reverse("dashboard:dashboard"))
 
@@ -133,6 +134,7 @@ def dashboard(request):
 
 @render_to("accounts/manage_account.html")
 def manage_account(request):
+    section = "admin"
     form = AccountForm(instance=request.account)
     return locals()
 
@@ -159,7 +161,7 @@ def _my_forms(request):
 
 @render_to("accounts/manage_my_account.html")
 def my_account(request):
-    section = "more"
+    section = "admin"
     form, useraccount_form = _my_forms(request)
     return locals()
 

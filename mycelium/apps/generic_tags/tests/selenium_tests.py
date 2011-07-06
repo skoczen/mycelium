@@ -6,12 +6,14 @@ from people.tests.selenium_abstractions import PeopleTestAbstractions
 from groups.tests.selenium_tests import GroupTestAbstractions
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from generic_tags.tests.selenium_abstractions import TagTestAbstractions
+from django.core.cache import cache
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
+        cache.clear()
 
     # def tearDown(self):
     #     self.account.delete()

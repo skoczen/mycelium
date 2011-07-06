@@ -1,19 +1,6 @@
-#page {
-	padding: 4px;
-}
-
-breadcrumb {
-	left: -18px;
-	top: 3px;
-}
-.breadcrumb_container .triangle-l {
-    left: -27px;
-    top: 23px;
-}
-
 
 #id_search_query {
-	width: 30%;
+	width: 50%;
 	margin: 6px 10px 0px 6px;
 	padding: 6px 0px;
 	border: 0px solid #BBB;
@@ -179,9 +166,12 @@ search_results {
 	position: relative;
 	clear: both;
 	margin-top: 10px;
-	width: 100%;
+	/*width: 100%;*/
 	padding: 0px 2% 20px 2%;
-	font-size: 20px;
+	font-size: 18px;
+}
+.basic_info box_content {
+	padding: 15px;
 }
 .basic_info.edit {
 	display: none;
@@ -218,6 +208,7 @@ search_results {
 }
 .basic_info .name_phone_email .name .generic_editable_field input{
 	min-width: 20%;
+	
 }
 .basic_info .name_phone_email .name .generic_field_label {
 	margin-top: 5px;
@@ -225,6 +216,7 @@ search_results {
 .basic_info .generic_field_label {
 	white-space: nowrap;
 }
+
 
 .basic_info .phone_email .generic_editable_field input {
 	min-width: 40%;
@@ -246,11 +238,28 @@ search_results {
 
 }
 .basic_info .birthday label {
-	padding: 1px 0px 0px 26px;
+	padding: 24px 0px 0px 0px;
+	font-size: 14px;
+	color: #AAA;
 	background-repeat: no-repeat;
 	background-position: 0px 2px;
 	background-image: url("../images/icon-birthday-grey-20.png");
-
+	position: absolute;
+	left: 20px;
+	height: 20px;
+	width: 20px;
+}
+.birthday label .text {
+	display: none;
+}
+.edit_mode_on .birthday label .text {
+	display: inline;
+}
+.basic_info .birthday #container_id_birth_month {
+	margin-left: 33px;
+}
+.basic_info .birthday #container_id_birth_month .generic_field_label {
+	margin-left: 30px;
 }
 .basic_info .birthday label, .basic_info .birthday .generic_editable_field, .basic_info .birthday .date_year_comma {
 	float: left;
@@ -302,8 +311,15 @@ search_results {
 #container_id_postal_code {
 /*	min-width: 50px;*/
 }
-
-
+/*
+For Icons
+#container_id_phone_number {
+	padding-left: 10px;
+}
+#container_id_email {
+	padding-left: 10px;
+}
+*/
 
 
 
@@ -315,6 +331,7 @@ detail_tabs {
 	height: 49px;
 	clear: both;
 	display: block;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 detail_tabs a.detail_tab {
 	display: block;
@@ -352,19 +369,12 @@ detail_tab_contents {
 	border: 1px solid #999;
 	min-height: 100px;
 	padding: 15px 2%;
+	background-color: #FFF;
 }
 detail_tab_contents fragment.detail_tab {
 	display: block;
 	width: 100%;
 	overflow: auto;
-}
-.detail_header {
-	font-size: 24px;
-	color: #454545;
-	border: 1px solid #BBB;
-	border-width: 0px 0px 1px 0px;
-	padding-top: 4px;
-	clear: both;
 }
 .volunteer_shift_table {
 	width: 100%;
@@ -434,9 +444,8 @@ detail_tab_contents fragment.detail_tab {
 }
 #no_home_contact_info_message {
 	display: block;
-/*	width: 100%;*/
 	text-align: center;
-	padding: 20px 0px 0px 0px;
+	/*padding: 20px 0px 0px 0px;*/
 	color: #999;
 }
 detail_tab_contents tabbed_box {

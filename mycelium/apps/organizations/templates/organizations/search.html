@@ -1,0 +1,21 @@
+{% extends "organizations/base.html" %}
+{% block title %}Organizations - Search{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block javascript %}{{block.super}}
+<script type="text/javascript" charset="utf-8">
+	var SEARCH_URL = "{% url organizations:search_results %}";
+</script>
+{% js "/js/mycelium/people_search.js" %}
+{% endblock %}
+{% block page_content %}
+<div class="main_search_box">
+	<input type="search" name="search_query" id="id_search_query" placeholder="Search for an organization..." autofocus />
+</div>
+<new_object_buttons>
+	<a href="{% url organizations:new_organization %}" class="new_organization_btn mycelium_btn mycelium_new_btn">New Organization</a>
+</new_object_buttons>
+<search_results><fragment name="main_search_results" action="replace">
+	{% include "organizations/_search_results.html" %}
+</fragment>
+</search_results>
+{% endblock %}

@@ -8,13 +8,14 @@ from groups.tests.selenium_abstractions import GroupTestAbstractions
 from generic_tags.tests.selenium_abstractions import TagTestAbstractions
 from conversations.tests.selenium_abstractions import ConversationTestAbstractions
 from rules.tasks import populate_rule_components_for_an_account
-
+from django.core.cache import cache
 
 
 class TestAgainstNoData(QiConservativeSeleniumTestCase, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions, TagTestAbstractions, ConversationTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
+        cache.clear()
         self.account = self.setup_for_logged_in_with_no_data()
         populate_rule_components_for_an_account(self.account)
         self.verificationErrors = []
@@ -277,7 +278,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         sel.wait_for_page_to_load("30000")
         # celery catch-up
         time.sleep(5)
-        self.click_and_wait("link=Back to Groups")
+        self.click_and_wait("link=Groups")
         
 
         self.assertEqual("Unnamed Group", sel.get_text("css=search_results .result_row:nth(0) .name a"))
@@ -295,7 +296,7 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, GroupTestAbstract
         time.sleep(1)
         sel.type("css=#basic_info_form #id_name","A Completely Different name!!")
         time.sleep(4)
-        self.click_and_wait("link=Back to Groups")
+        self.click_and_wait("link=Groups")
 
         sel.type("css=#id_search_query", "name!!")
         time.sleep(2)

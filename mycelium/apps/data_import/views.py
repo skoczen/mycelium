@@ -19,14 +19,14 @@ import datetime
 
 @render_to("data_import/list.html")
 def list(request):
-    section = "more"
+    section = "admin"
     all_imports = DataImport.objects_by_account(request.account).all()
     return locals()
 
 @render_to("data_import/start.html")
 def start(request):
     # TODO: this is obnoxious.  Fix it.
-    section = "more"
+    section = "admin"
     csrf_token = get_token( request )
 
     return locals()
@@ -76,7 +76,7 @@ def import_status(request):
 @render_to("data_import/review.html")
 def review(request, import_id):
     # TODO: this is obnoxious.  Fix it.
-    section = "more"
+    section = "admin"
     data_import = DataImport.objects_by_account(request.account).get(pk=import_id)
     return locals()
 

@@ -2,11 +2,13 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from spreadsheets.tests.selenium_abstractions import SpreadsheetTestAbstractions
 import time
+from django.core.cache import cache
 
 class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractions, AccountTestAbstractions):
     selenium_fixtures = []
 
     def setUp(self, *args, **kwargs):
+        cache.clear()
         self.account = self.setup_for_logged_in()
     
     def test_spreadsheet_search_loads(self):
@@ -69,7 +71,7 @@ class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractio
     def test_that_searching_for_a_spreasheet_works(self):
         sel = self.selenium
         self.test_creating_a_new_spreadsheet_saves()
-        sel.click("css=.back_to_search_btn")
+        sel.click("link=Spreadsheets")
         sel.wait_for_page_to_load("30000")
         sel.type("css=#id_search_query","my test")
         time.sleep(1)
@@ -134,7 +136,7 @@ class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractio
         sel.wait_for_page_to_load("30000")
 
         # get groups
-        self.assertEqual(num_members,sel.get_text("css=.group_row:nth(1) .num_members"))
+        self.assertEqual(num_members,sel.get_text("css=.group_row:nth(0) .num_members"))
         
     def test_changing_the_template_type_of_a_spreadsheet_works(self):
         sel = self.selenium
@@ -201,7 +203,7 @@ class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractio
     def test_that_the_quick_download_link_works(self):
         sel = self.selenium
         self.test_creating_a_new_spreadsheet_saves()
-        sel.click("css=.back_to_search_btn")
+        sel.click("link=Spreadsheets")
         sel.wait_for_page_to_load("30000")
         self.assert_on_spreadsheet_search_page()
         sel.click("css=.quick_download_btn")

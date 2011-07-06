@@ -13,7 +13,12 @@
 	font-style: normal;
 
 }
-
+@-moz-document url-prefix(http://) {
+    button::-moz-focus-inner, input[type="button"]::-moz-focus-inner, input[type="submit"]::-moz-focus-inner, input[type="reset"]::-moz-focus-inner {
+	    padding: 0 !important;
+        border: 0 none !important;
+    }
+}
 
 
 html {
@@ -24,8 +29,8 @@ body {
 	border: 0px;
 	padding: 0px;
 	margin: 0px;
-	font-family: 'ExpresswayRegular', "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
-	font-size: 16px;
+	font-family: "Droid Sans", "Lucida Grande", "DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+	
 }
 table {
 	border-collapse: collapse;
@@ -33,8 +38,11 @@ table {
 	margin: 0px;
 }
 .plain_text {
-	font-family: Helvetica, "Lucida Grande", "DejaVu Sans","Bitstream Vera Sans",Verdana, Arial, sans-serif;
-	font-size: 0.95em;
+	font-family: "Droid Sans", Helvetica,  "Lucida Grande", "DejaVu Sans","Bitstream Vera Sans",Verdana, Arial, sans-serif;
+
+}
+.goodcloud_typeface {
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 
 a, a:active, a:visited {
@@ -44,8 +52,9 @@ a:hover {
 	color: #0044A8;	
 }
 input {
-	font-family: 'ExpresswayRegular', Arial, sans-serif;
-	font-size: 20px;	
+	/*font-family: 'ExpresswayRegular', Arial, sans-serif;*/
+	font-family: "Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+
 }
 img, a img {
 	border: 0px;
@@ -55,27 +64,6 @@ p {
 	margin: 1em 0px;
 }
 
-#page {
-	display: block;
-	margin: 80px auto;
-	width: 92%;
-	
-	background: #FFF;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	
-    -moz-box-sizing: border-box;
-    -opera-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -khtml-box-sizing: border-box;
-    box-sizing: border-box;
-	border: 1px solid #AAA;
-	padding: 4px;
-	color: #333;
-	position: relative;
-	z-index: 10;
-}
 ::-moz-selection{ background: #3AA5FF; color:#fff; text-shadow: none; }
 ::selection { background:#3AA5FF; color:#fff; text-shadow: none; } 
 

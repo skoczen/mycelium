@@ -35,8 +35,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, ConversationTestAbstract
         assert sel.is_element_present("css=.conversation_type.email")
         
         # Test username
-        my_name = sel.get_text("css=.username")
-        self.assertEqual("with %s" % my_name, sel.get_text("css=.conversation_staff"))
+        my_name = sel.get_text("css=.conversation_staff")
+        my_full_name = self.get_my_full_name()
+        self.assertEqual("with %s" % (my_full_name,), my_name)
 
    
     def test_that_deleting_conversation_works(self):

@@ -234,6 +234,6 @@ def delete_tag(request, tag_id):
 
 @render_to("generic_tags/manage.html")
 def manage(request):
-    section = "more"
+    section = "admin"
     all_tagsets = TagSet.objects_by_account(request.account).all()
     return locals()

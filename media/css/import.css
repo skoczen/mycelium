@@ -33,11 +33,11 @@ page_title {
 
 
 .total {
-	font-size: 24px;
+	font-size: 20px;
 }
 .result_header {
 	margin-top: 6px;
-	font-size: 24px;
+	font-size: 20px;
 	text-decoration: underline;
 }
 .result_data {
@@ -69,6 +69,7 @@ page_title {
 	margin-top: -6px;
 	background-color: #D4D4D4;
 	color: #999;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 .start_data_import step.active step_number {
 	background-color: #004486;
@@ -85,7 +86,8 @@ page_title {
 	color: #999;
 	border--radius: 30px;
 	-moz-border-radius: 30px;
-	-webkit-border-radius: 30px;	
+	-webkit-border-radius: 30px;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 .start_data_import step.active instruction {
 	background-color: #EEE;
@@ -104,12 +106,12 @@ page_title {
 	padding: 7px 15px 5px 45px;
 }
 .start_data_import step pre_step_content {
-	font-size: 18px;
+	font-size: 16px;
 	color: #999;
 }
 .easy_header {
-	font-size: 18px;
-	padding: 5px;
+	font-size: 15px;
+	padding: 5px 5px 20px 5px;
 }
 table.import_fields_confirmation td, table.import_fields_confirmation  th {
 	text-align: center;

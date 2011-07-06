@@ -161,6 +161,7 @@ INSTALLED_APPS = (
     'email_list',
     'rewrite',
     'people',
+    'organizations',
     'mycelium_core',
     'spreadsheets',
     'data_import',
@@ -332,6 +333,7 @@ MEDIASYNC = {
         'js/mycelium_core.js': [
                 "js/mycelium/mycelium_elements.js",
                 "js/mycelium/mycelium_top_search.js",
+                "js/mycelium/mycelium_common.js",
         ],
         'css/mycelium_base.css': BASE_CSS + [
                 "css/contrib/fileuploader.css",

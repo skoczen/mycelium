@@ -17,7 +17,7 @@ from sorl.thumbnail import get_thumbnail
 
 @render_to("logo_maker/list.html")
 def list_logos(request):
-    section = "more"
+    section = "admin"
     if request.method == "POST":
         form = LogoForm(request.POST, request.FILES, account=request.account)
         if form.is_valid():

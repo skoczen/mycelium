@@ -1,4 +1,4 @@
-{% extends "people/base.html" %}
+{% extends "organizations/base.html" %}
 {% load i18n generic_fields friendly_data_formatting generic_tag_tags %}
 {% block title %}Organizations - {% if org.name %}{{org.name}}{% else %}New Organization{% endif %}{% endblock %}
 {% block css %}{{block.super}}
@@ -19,10 +19,10 @@ $(function(){
 {% endif %}
 
 {% endblock %}
-{% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People and Organizations</a>{% endblock %}
+{% block breadcrumb_links %}<a href="{% url organizations:search %}" >Back to All Organizations</a>{% endblock %}
 {% block page_content %}
 
-<form action="{% url people:organization_save_basic org.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
+<form action="{% url organizations:organization_save_basic org.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">
 {% with "Edit Organization" as edit_label %}
 {% include "people/_save_status_and_button.html" %}
 {% endwith %}
@@ -88,9 +88,9 @@ $(function(){
 			<div id="search_for_person">
 				{# <section_title>Add a Person</section_title> #}
 				<instructions>Who do you want to add?</instructions>
-				<input type="search" {# results=5 #} name="new_person_name" id="id_search_new_person" placeholder="Type the name of the person you want to add..." results_url="{% url people:add_person_via_organization_search_results %}" />
+				<input type="search" {# results=5 #} name="new_person_name" id="id_search_new_person" placeholder="Type the name of the person you want to add..." results_url="{% url organizations:add_person_via_organization_search_results %}" />
 				<fragment name="new_person_search_results" action="replace">
-					{# {% include "people/_add_person_to_org_results.html" %} #}
+					{# {% include "organizations/_add_person_to_org_results.html" %} #}
 				</fragment>
 			</div>
 			</pane>
@@ -99,7 +99,7 @@ $(function(){
 			<div id="add_existing_person">
 				<a href="#" id="up_to_search">Back to Search</a>
 				<section_title>Role Details</section_title>		
-				<form action="{% url people:existing_person_via_organization org.pk %}" method="POST">{% csrf_token %}
+				<form action="{% url organizations:existing_person_via_organization org.pk %}" method="POST">{% csrf_token %}
 					<span class="edit_mode_on">
 					<input type="hidden" name="person_pk" value=""/>
 					<span class="full_name"></span>
@@ -119,7 +119,7 @@ $(function(){
 			<div id="new_person">
 				<a href="#" id="up_to_search">Back to Search</a>
 				<section_title>New Person Details</section_title>
-				<form action="{% url people:new_person_via_organization org.pk %}" method="POST">{% csrf_token %}
+				<form action="{% url organizations:new_person_via_organization org.pk %}" method="POST">{% csrf_token %}
 					<span class="edit_mode_on">
 					{% generic_editable_field form_new_person.first_name %}
 					{% generic_editable_field form_new_person.last_name %}
@@ -144,13 +144,13 @@ $(function(){
 		</box_content>
 	</tabbed_box>
 	<employees>
-		<form action="{% url people:organization_save_employees org.pk %}" id="employee_forms" method="POST">
+		<form action="{% url organizations:organization_save_employees org.pk %}" id="employee_forms" method="POST">
 		{% for e_form in employee_formset.forms %}
 		<employee class="edit_mode_off">
 			<save_status_and_button>
 			<a href="#" class="mycelium_btn mycelium_small_btn start_edit_btn">Edit</a>
 			<a href="#" class="mycelium_btn mycelium_small_btn edit_done_btn " >Done</a>
-			<a href="{% url people:organization_remove_employee org.pk e_form.instance.pk %}" class="mycelium_btn  mycelium_active_grey mycelium_small_btn delete_contact_btn">Remove</a>
+			<a href="{% url organizations:organization_remove_employee org.pk e_form.instance.pk %}" class="mycelium_btn  mycelium_active_grey mycelium_small_btn delete_contact_btn">Remove</a>
 			</save_status_and_button>
 			<span class="name"><a href="{% url people:person e_form.instance.person.pk %}" class="mycelium_crosslink_btn">{{e_form.instance.person.full_name}}</a></span>
 			{% generic_editable_field e_form.role %}
@@ -165,7 +165,7 @@ $(function(){
 	</fragment>
 </detail_tab_contents>
 <delete_object_block>
-	<form action="{% url people:delete_organization %}" method="POST" id="delete_org_form">{% csrf_token %}
+	<form action="{% url organizations:delete_organization %}" method="POST" id="delete_org_form">{% csrf_token %}
 	<input type="hidden" name="org_pk" value="{{form.instance.pk}}">
 	<a href="#" class="mycelium_btn mycelium_active_grey mycelium_delete_btn org_delete_btn" >Delete this Organization</a>
 	</form>

@@ -32,10 +32,14 @@ class SearchableItemProxy(SimpleSearchableModel, AccountBasedModel):
 
     @property
     def child_proxy(self):
-        if hasattr(self,"peopleandorganizationssearchproxy"):
-            return self.peopleandorganizationssearchproxy
+        if hasattr(self,"peoplesearchproxy"):
+            return self.peoplesearchproxy
+        elif hasattr(self,"organizationssearchproxy"):
+            return self.organizationssearchproxy
         elif hasattr(self,"groupsearchproxy"):
             return self.groupsearchproxy
+        elif hasattr(self,"spreadsheetsearchproxy"):
+            return self.spreadsheetsearchproxy
         else:
             return None
     

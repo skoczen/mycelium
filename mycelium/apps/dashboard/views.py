@@ -10,7 +10,8 @@ from django.views.decorators.cache import cache_page
 from django.db.models import Sum, Count, Avg
 
 from groups.models import Group
-from people.models import Person, Organization
+from people.models import Person
+from organizations.models import Organization
 from donors.models import Donation
 from volunteers.models import CompletedShift
 from generic_tags.models import Tag, TaggedItem

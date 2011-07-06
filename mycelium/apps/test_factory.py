@@ -1,5 +1,6 @@
 from qi_toolkit.factory import QiFactory
-from people.models import Person, Organization, Employee
+from people.models import Person
+from organizations.models import Organization, Employee
 from groups.models import Group, GroupRule
 from django.conf import settings
 from volunteers.models import CompletedShift
@@ -266,7 +267,7 @@ class Factory(QiFactory):
         return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=first_name))
 
     @classmethod
-    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False):
+    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False, single_user=False):
         if quick:
             max_num_people = 5
             max_num_orgs = 2
@@ -298,11 +299,12 @@ class Factory(QiFactory):
         # create admin user (admin / admin)
         cls.useraccount(account=account, username="admin", password="admin", access_level=admin_accesslevel)
     
-        # create staff user (staff / staff)
-        cls.useraccount(account=account, username="staff", password="staff", access_level=staff_accesslevel)
+        if not single_user:
+            # create staff user (staff / staff)
+            cls.useraccount(account=account, username="staff", password="staff", access_level=staff_accesslevel)
 
-        # create volunteer user ( volunteer / volunteer )
-        cls.useraccount(account=account, username="volunteer", password="volunteer", access_level=volunteer_accesslevel)
+            # create volunteer user ( volunteer / volunteer )
+            cls.useraccount(account=account, username="volunteer", password="volunteer", access_level=volunteer_accesslevel)
         
         print_if_verbose(verbose, "Users created.")
 
