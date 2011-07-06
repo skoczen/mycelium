@@ -1,0 +1,27 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}News from around the nonprofit world with The GoodCloud Times!{% endblock %}
+{% block description %}Our monthly newsletter keeps you up-to-date on the latest news in the nonprofit sector - and throws in a great recipe to boot!{% endblock %}
+{% block page_header %}Real people, real voices.{% endblock %}
+
+{% block page_content %}
+<div id="section" class=" features">
+	<ul class="nav_links png_bg">
+	 	<li class="ui-tabs-selected ui-state-active"><a href="{% url marketing_site:newsletter %}">Newsletter</a></li>
+	 	<li><a href="{% url blog %}">Blog</a></li>
+ 	</ul>
+
+	<div class="tab_content" id="video_tour">
+			<div class="page_top_hook">All the latest news, and a couple great recipes.</div>
+			Subscribe to the GoodCloud Times
+
+			Read past issues:
+
+			Latest Issue - August, 2011
+			
+	</div>
+	</div>	
+
+
+
+{% endblock %}
