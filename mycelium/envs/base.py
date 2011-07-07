@@ -144,7 +144,8 @@ INSTALLED_APPS = (
     'mediasync',
     'sentry',
     'sentry.client',
-
+    'newsletter',
+    
     #'cms',
     #'mptt',
     #'menus',
@@ -155,7 +156,7 @@ INSTALLED_APPS = (
     #'cms.plugins.snippet',
     #'cms.plugins.googlemap',
     # 'form_designer',
-    #'tinymce',
+    'tinymce',
 
     'marketing_site',
     'email_list',
@@ -187,6 +188,8 @@ GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-20296975-1'
 ANALYTICAL_INTERNAL_IPS = ['127.0.0.1', '192.168.2.164']
 HUBSPOT_PORTAL_ID = '98343'
 HUBSPOT_DOMAIN = 'agoodcloud.app9.hubspot.com'
+
+MAILCHIMP_API_KEY = "fa5bdaa6065aa4fd8975781bceaddd26-us2"
 
 LOGIN_REDIRECT_URL = "/dashboard/"
 AUTH_PROFILE_MODULE = "accounts.UserAccount"

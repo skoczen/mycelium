@@ -537,90 +537,6 @@ social_links {
 	vertical-align: middle;
 	padding: 0px 0px 10px 4px;
 }
-.praise .testimonial .quote {
-	display: block;
-	font-size: 20px;
-}
-.praise .testimonial .person {
-	text-align: right;
-}
-.praise .testimonial .organization {
-	text-align: right;
-}
-.praise .testimonial.style_3{
-	background-image: url("../images/speech3.png");	
-	background-repeat: no-repeat;
-	background-position: 0px 0px;
-	width: 290px;
-	height: 204px; 
-
-	position: absolute;
-	top: 220px;
-	left: 7%;	
-
-	
-	padding: 25px 30px 40px 30px;
-}
-.praise .testimonial.style3 .quote {
-	font-size: 32px;
-	margin-bottom: 5px;
-}
-
-.praise .testimonial.style_1{
-	background-image: url("../images/speech1.png");	
-	background-repeat: no-repeat;
-	background-position: 0px 0px;
-	width: 250px;
-	height: 210px; 
-	
-	float: right;
-	margin-top: 70px;
-	margin-right: 20%;
-
-	padding: 25px;
-	
-}
-.praise .testimonial.style_1 .quote {
-	font-size: 40px;
-	padding: 5px 0px 20px 0px;
-	text-align: center;
-}
-.praise .testimonial.style_1 .person, .praise .testimonial.style_1 .organization {
-	margin-right: 15px;
-}
-.praise .testimonial.style_2{
-	background-image: url("../images/speech2.png");	
-	background-repeat: no-repeat;
-	background-position: 0px 0px;
-	width: 200px;
-	height: 177px; 
-
-	position: absolute;
-	top: 520px;
-	left: 18%;
-
-
-	padding: 50px;
-}
-.praise .testimonial.style_2 .quote {
-	padding: 0px 0px 20px 0px;
-	text-align: center;
-}
-.praise .clearfix.right_bubble_clear {
-	margin-bottom: 60px;
-	width: 100%;
-	height: 2px;
-}
-
-.praise .page_action {
-	position: absolute;
-	top: 630px;
-	right: 0px;
-}
-.praise #footer {
-	margin-top: 300px;
-}
-
 
 
 .contact_us .page_subheader {
@@ -1177,4 +1093,59 @@ social_links {
 #screenshot_gallery li {
 	list-style-type: none;
 	padding: 20px;
+}
+.newsletter .issue {
+	display: block;
+	margin-top: 20px;
+	padding: 10px 20px 20px 10px;
+	background-color: #FFF;
+	box-shadow: 		2px 2px 2px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	2px 2px 2px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	2px 2px 2px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 2px 2px 2px rgba(0,0,0,0.35);
+  	color: #454545;
+}
+.newsletter a.issue:hover {
+	text-decoration: none;
+	background-color: #F2F2F2;
+}
+.newsletter .issue .cover_image {
+	float: left;
+	padding: 10px 20px 10px 10px ;
+	width: 100px;
+	height: 100px;
+}
+.newsletter .title_and_date {
+	font-size: 20px;
+	padding: 10px 0px 5px 0px;
+}
+.newsletter .title_and_date .date {
+	
+}
+.newsletter .issue .issue_title {
+	font-family: 'Droid Serif', 'Bevan', Arial, sans-serif;	
+	font-weight: bold;
+}
+
+.the_good_times {
+	font-family: 'Droid Serif', Georgia, "Times New Roman", serif;	
+	font-weight: bold;
+	font-size: 0.91em;
+}
+.features .newsletter .feature {
+	margin: 0px;
+	width: 100%;
+}
+.subscription_block {
+	padding: 20px;
+}
+.newsletter #id_email {
+	border: 1px solid #CCC;	
+	border-radius: 		4px;
+	-moz-border-radius: 4px;
+	width: 250px;
+}
+.not_me_link {
+	margin-left: 10px;
+	font-size: 15px;
 }
