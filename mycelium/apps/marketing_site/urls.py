@@ -20,4 +20,7 @@ urlpatterns = parser.patterns('',
 
     # Temp for SSL
     url(r'^d8GdULy.html$',       views.ssl_page,         name='ssl_page'),    
+
+    # Newsletters
+    url(r'^newsletter/{year:digits}/{month:digits}$',      views.newsletter_issue,  name='newsletter_issue'),
 )

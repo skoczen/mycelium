@@ -78,3 +78,24 @@ def legal(request):
 @render_to("marketing_site/contact_us.html")
 def contact_us(request):
     return locals()
+
+@render_to("marketing_site/newsletter/2011_08.html")
+def newsletter_issue(request, year, month):
+    form = EmailForm()
+    save_success=False
+    newsletter_subscriber = request.session.get('newsletter_subscriber', False)
+    save_success = request.GET.get('save_success', None)
+
+    if request.method == "POST":
+        posted = True
+
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            form.save()
+            request.session['newsletter_subscriber'] = email
+            save_success=True
+            # Set a cookie, so we remember them.
+            return HttpResponseRedirect("%s?save_success=True" %reverse("marketing_site:newsletter_issue", args=(year, month)))
+            
+    return locals()
