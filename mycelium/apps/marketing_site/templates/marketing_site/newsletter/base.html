@@ -8,8 +8,9 @@
 
 {% block page_content %}
 <div id="section">
-<div class="newsletter_sidebar">
+<div class="newsletter_sidebar features">
 	<div class="feature">
+		<div class="title">Subscribe!</div>
 		<div class="subscription_block">
 		{% if not save_success %}
 			{% if newsletter_subscriber %}
@@ -21,7 +22,7 @@
 			<div class="new_subscription {% if newsletter_subscriber %}hidden{% endif %}">
 				<form action="" method="POST">{% csrf_token %}
 					<input type="email" id="id_email" name="email" placeholder="Enter your email..."  />
-					<input type="submit" value="Save Email" class="mycelium_btn" />
+					<input type="submit" value="Save Email" id="id_submit" class="mycelium_btn" />
 				</form>
 			</div>
 		{% else %}

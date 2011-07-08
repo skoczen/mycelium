@@ -79,7 +79,7 @@ def legal(request):
 def contact_us(request):
     return locals()
 
-@render_to("marketing_site/newsletter/2011_08.html")
+
 def newsletter_issue(request, year, month):
     form = EmailForm()
     save_success=False
@@ -98,4 +98,5 @@ def newsletter_issue(request, year, month):
             # Set a cookie, so we remember them.
             return HttpResponseRedirect("%s?save_success=True" %reverse("marketing_site:newsletter_issue", args=(year, month)))
             
-    return locals()
+    return render_to_response("marketing_site/newsletter/%s_%02d.html" % (year, int(month),), RequestContext(request, locals()))
+

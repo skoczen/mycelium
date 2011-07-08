@@ -9,6 +9,7 @@
 	<ul class="nav_links png_bg">
 	 	<li class="ui-tabs-selected ui-state-active"><a href="{% url marketing_site:newsletter %}">Newsletter</a></li>
 	 	<li><a href="{% url blog %}">Blog</a></li>
+	 	{# <li><a href="{% url blog %}">Press</a></li> #}
  	</ul>
 
 	<div class="tab_content newsletter" >
@@ -45,11 +46,10 @@
 			<div class="feature">
 				<div class="title">Read back issues of <span class="the_good_times">The Good Times</span></div>
 			
-				<a href="{% url marketing_site:newsletter_issue 2011 8 %}" class="issue">
+				<a href="{% url marketing_site:newsletter_issue 2011 7 %}" class="issue">
 					<div class="cover_image"><img src="{% media_url "images/newsletters/2011-08/burger-crop.jpg"%}" /></div> 
 					<div class="title_and_date">
-						{# <span class="issue_title">The Good Times</span> #}
-						<span class="date">August 2011</span>
+						<span class="date">July 2011</span>
 					</div>
 					<div class="overview">This month, <span class="the_good_times">The Good Times</span> looks at how to keep institutional knowledge in the face of staff turnover, the latest trends in social media and how they affect non-profits, and a great recipe for burgers (veggie or otherwise)!</div>
 				</a>
