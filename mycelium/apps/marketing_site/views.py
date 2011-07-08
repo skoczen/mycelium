@@ -9,33 +9,13 @@ from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
 from django.core.validators import validate_email
 
-# import mailchimp
 from email_list.models import EmailSubscription
+from email_list import GOODCLOUD_TIMES_KEY
 from marketing_site.forms import EmailForm
 from marketing_site.models import GoodCloudEmployee
 
 @render_to("marketing_site/home.html")
 def home(request):
-    form = EmailForm()
-    save_success=False
-    
-    if request.method == "POST":
-        posted = True
-
-        form = EmailForm(request.POST)
-        if form.is_valid():
-            form.save()
-            try:
-                from django.core.mail import send_mail
-                for email in settings.MANAGERS:
-                    send_mail("New Email Signup!", "%s" % render_to_string("marketing_site/new_signup_email.txt", form.cleaned_data), settings.SERVER_EMAIL, [email[1]])
-            except:
-                from qi_toolkit.helpers import print_exception
-                print_exception()
-                pass
-            save_success=True
-            return HttpResponseRedirect("%s?save_success=True" %reverse("marketing_site:home"))
-            
     return locals()
 
     
@@ -61,6 +41,26 @@ def tour(request):
 def screenshots(request):
     return locals()
 
+@render_to("marketing_site/newsletter.html")
+def newsletter(request):
+    form = EmailForm()
+    save_success=False
+    newsletter_subscriber = request.session.get('newsletter_subscriber', False)
+    save_success = request.GET.get('save_success', None)
+
+    if request.method == "POST":
+        posted = True
+
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            form.save()
+            request.session['newsletter_subscriber'] = email
+            save_success=True
+            # Set a cookie, so we remember them.
+            return HttpResponseRedirect("%s?save_success=True" %reverse("marketing_site:newsletter"))
+            
+    return locals()
 
 @render_to("marketing_site/praise.html")
 def praise(request):
@@ -78,3 +78,25 @@ def legal(request):
 @render_to("marketing_site/contact_us.html")
 def contact_us(request):
     return locals()
+
+
+def newsletter_issue(request, year, month):
+    form = EmailForm()
+    save_success=False
+    newsletter_subscriber = request.session.get('newsletter_subscriber', False)
+    save_success = request.GET.get('save_success', None)
+
+    if request.method == "POST":
+        posted = True
+
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            form.save()
+            request.session['newsletter_subscriber'] = email
+            save_success=True
+            # Set a cookie, so we remember them.
+            return HttpResponseRedirect("%s?save_success=True" %reverse("marketing_site:newsletter_issue", args=(year, month)))
+            
+    return render_to_response("marketing_site/newsletter/%s_%02d.html" % (year, int(month),), RequestContext(request, locals()))
+

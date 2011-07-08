@@ -1,0 +1,40 @@
+{% extends "marketing_site/base.html" %}
+{% block title %}News from around the nonprofit world with The GoodCloud Times!{% endblock %}
+{% block description %}Our monthly newsletter keeps you up-to-date on the latest news in the nonprofit sector - and throws in a great recipe to boot!{% endblock %}
+{% block page_header %}Real people, real voices.{% endblock %}
+{% block css %}{{block.super}}
+{% css "css/newsletter.css" %}
+{% endblock %}
+
+{% block page_content %}
+<div id="section">
+<div class="newsletter_sidebar features">
+	<div class="feature">
+		<div class="title">Subscribe!</div>
+		<div class="subscription_block">
+		{% if not save_success %}
+			{% if newsletter_subscriber %}
+			<div class="returning_subscriber">
+				<p>You're subscribed as {{newsletter_subscriber}}.</p>
+				<p><a href="#" class="not_me_link">Not you?</a></p>
+			</div>
+			{% endif %}
+			<div class="new_subscription {% if newsletter_subscriber %}hidden{% endif %}">
+				<form action="" method="POST">{% csrf_token %}
+					<input type="email" id="id_email" name="email" placeholder="Enter your email..."  />
+					<input type="submit" value="Save Email" id="id_submit" class="mycelium_btn" />
+				</form>
+			</div>
+		{% else %}
+			<p>You're all set - look for a copy of the <span class="the_good_times">The Good Times</span> in your inbox soon!</p> 
+		{% endif %}
+		</div>
+	</div>
+</div>
+<div class="newsletter_body">
+{% block newsletter_body %}
+{% endblock %}
+</div>
+
+</div>
+{% endblock %}
