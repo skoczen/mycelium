@@ -54,6 +54,15 @@ class TestMarketingSite(QiSeleniumTestCase):
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Small nonprofits deserve the best software in the world.")
 
+        # News /  Blog / Press
+        sel.click("link=News")
+        time.sleep(3)
+        assert sel.is_text_present("All the latest news, and a couple great recipes.")
+        sel.click("css=.issue_2011_07")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("July 2011")
+        assert sel.is_text_present("Don't Let Your Nonprofit's")
+
         # Mission / About us
         sel.click("link=Our Team")
         time.sleep(3)
