@@ -144,7 +144,7 @@ INSTALLED_APPS = (
     'mediasync',
     'sentry',
     'sentry.client',
-    'newsletter',
+    # 'newsletter',
     
     #'cms',
     #'mptt',
