@@ -144,7 +144,6 @@ INSTALLED_APPS = (
     'mediasync',
     'sentry',
     'sentry.client',
-    # 'newsletter',
     
     #'cms',
     #'mptt',
@@ -156,7 +155,7 @@ INSTALLED_APPS = (
     #'cms.plugins.snippet',
     #'cms.plugins.googlemap',
     # 'form_designer',
-    'tinymce',
+    # 'tinymce',
 
     'marketing_site',
     'email_list',
