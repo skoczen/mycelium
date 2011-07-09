@@ -82,7 +82,7 @@ body.home_page .page_header {
 }
 
 
-#side_nav .tab_content {
+#section .tab_content {
 	width: 66%;
 	margin-left: 22%;
 	background: rgba(255,255,255,0.8);
@@ -143,7 +143,7 @@ body.home_page .page_header {
 	display: block;
 	float: left;
 	color: #cee0f1;
-
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 #main_nav a.first {
 /*	border-left: 1px solid #EEE;	*/
@@ -368,6 +368,8 @@ social_links {
 	background: url("../images/superpowers-text.png");
 	background-position: 50% 70px;
 	background-repeat: no-repeat;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+	font-size: 15px;
 }
 #home_boxes .home_box {
 	/*display: block;*/
@@ -390,6 +392,7 @@ social_links {
   	background-color: #EEE;
   	margin-bottom: 20px;
 }
+
 .features {
 
 }
@@ -486,90 +489,6 @@ social_links {
 	vertical-align: middle;
 	padding: 0px 0px 10px 4px;
 }
-.praise .testimonial .quote {
-	display: block;
-	font-size: 20px;
-}
-.praise .testimonial .person {
-	text-align: right;
-}
-.praise .testimonial .organization {
-	text-align: right;
-}
-.praise .testimonial.style_3{
-	background-image: url("../images/speech3.png");	
-	background-repeat: no-repeat;
-	background-position: 0px 0px;
-	width: 290px;
-	height: 204px; 
-
-	position: absolute;
-	top: 220px;
-	left: 7%;	
-
-	
-	padding: 25px 30px 40px 30px;
-}
-.praise .testimonial.style3 .quote {
-	font-size: 32px;
-	margin-bottom: 5px;
-}
-
-.praise .testimonial.style_1{
-	background-image: url("../images/speech1.png");	
-	background-repeat: no-repeat;
-	background-position: 0px 0px;
-	width: 250px;
-	height: 210px; 
-	
-	float: right;
-	margin-top: 70px;
-	margin-right: 20%;
-
-	padding: 25px;
-	
-}
-.praise .testimonial.style_1 .quote {
-	font-size: 40px;
-	padding: 5px 0px 20px 0px;
-	text-align: center;
-}
-.praise .testimonial.style_1 .person, .praise .testimonial.style_1 .organization {
-	margin-right: 15px;
-}
-.praise .testimonial.style_2{
-	background-image: url("../images/speech2.png");	
-	background-repeat: no-repeat;
-	background-position: 0px 0px;
-	width: 200px;
-	height: 177px; 
-
-	position: absolute;
-	top: 520px;
-	left: 18%;
-
-
-	padding: 50px;
-}
-.praise .testimonial.style_2 .quote {
-	padding: 0px 0px 20px 0px;
-	text-align: center;
-}
-.praise .clearfix.right_bubble_clear {
-	margin-bottom: 60px;
-	width: 100%;
-	height: 2px;
-}
-
-.praise .page_action {
-	position: absolute;
-	top: 630px;
-	right: 0px;
-}
-.praise #footer {
-	margin-top: 300px;
-}
-
 
 
 .contact_us .page_subheader {
@@ -584,7 +503,7 @@ social_links {
 	width: 90%;
 	margin: 20px auto;
 }
-.contact_us .contact_button, .contact_us a.contact_button {
+.contact_us .contact_methods .contact_button, .contact_us .contact_methods a.contact_button {
 	display: block;
 	margin-bottom: 20px;
 	background-color: #000486;
@@ -599,12 +518,12 @@ social_links {
   	-khtml-box-shadow: 	2px 2px 4px rgba(0,0,0,0.35);
   	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.35);
 }
-.contact_us .contact_button:hover, .contact_us a.contact_button:hover {
+.contact_us .contact_methods .contact_button:hover, .contact_us .contact_methods a.contact_button:hover {
 	color: #FFF;
 	background-color: #0005ac;
 	cursor: pointer;
 }
-.contact_us .contact_button .type {
+.contact_us .contact_methods .contact_button .type {
 	padding: 25px 10px 10px 10px;
 	font-size: 40px;
 	text-align: center;
@@ -613,20 +532,20 @@ social_links {
 	padding-left: 30%;
 	height: 48px;
 }
-.contact_us .contact_button .details {
+.contact_us .contact_methods .contact_button .details {
 	padding: 10px 20px 14px 20px;
 	text-align: center;
 }
 .contact_us .contact_button.phone  .type { background-image: url("../images/contact-phone-48.png");}
 .contact_us .contact_button.online .type { background-image: url("../images/contact-online-48.png");}
 .contact_us .contact_button.email  .type { background-image: url("../images/contact-email-48.png");}
-#side_nav {
+#section {
 	padding: 0px;
 }
 .tabs {
 	border: 0px;
 }
-#side_nav ul.nav_links {
+#section ul.nav_links {
 	display: block;
 	float: left;
 	
@@ -636,7 +555,7 @@ social_links {
 	padding: 10px 2% 10px 0px;
 	margin: 10px 0px 0px 0px;
 }
-#side_nav ul.nav_links li {
+#section ul.nav_links li {
 	display: block;
 	width: 100%;
 	background: transparent;
@@ -644,7 +563,7 @@ social_links {
 	margin: 0px;
 	padding: 0px;
 }
-#side_nav ul.nav_links li a {
+#section ul.nav_links li a {
 	height: 30px;
 	display: block;
 	float: left;
@@ -660,10 +579,10 @@ social_links {
 	margin: 4px 0px;
 	text-decoration: none;
 }
-#side_nav ul.nav_links li a:hover {
+#section ul.nav_links li a:hover {
 /*	background-color: #002dab;*/
 }
-#side_nav ul.nav_links li.ui-tabs-selected a {
+#section ul.nav_links li.ui-tabs-selected a {
 	background-color: transparent;
 	background-repeat: no-repeat;
 	background-image: url("../images/sidenav-selected.jpg");	
@@ -1248,4 +1167,59 @@ social_links {
 #screenshot_gallery li {
 	list-style-type: none;
 	padding: 20px;
+}
+.newsletter .issue {
+	display: block;
+	margin-top: 20px;
+	padding: 10px 20px 20px 10px;
+	background-color: #FFF;
+	box-shadow: 		2px 2px 2px rgba(0,0,0,0.35);
+  	-moz-box-shadow:	2px 2px 2px rgba(0,0,0,0.35);
+  	-khtml-box-shadow: 	2px 2px 2px rgba(0,0,0,0.35);
+  	-webkit-box-shadow: 2px 2px 2px rgba(0,0,0,0.35);
+  	color: #454545;
+}
+.newsletter a.issue:hover {
+	text-decoration: none;
+	background-color: #F2F2F2;
+}
+.newsletter .issue .cover_image {
+	float: left;
+	padding: 10px 20px 10px 10px ;
+	width: 100px;
+	height: 100px;
+}
+.newsletter .title_and_date {
+	font-size: 20px;
+	padding: 10px 0px 5px 0px;
+}
+.newsletter .title_and_date .date {
+	
+}
+.newsletter .issue .issue_title {
+	font-family: 'Droid Serif', 'Bevan', Arial, sans-serif;	
+	font-weight: bold;
+}
+
+.the_good_times {
+	font-family: 'Droid Serif', Georgia, "Times New Roman", serif;	
+	font-weight: bold;
+	font-size: 0.91em;
+}
+.features .newsletter .feature {
+	margin: 0px;
+	width: 100%;
+}
+.subscription_block {
+	padding: 20px;
+}
+.newsletter #id_email {
+	border: 1px solid #CCC;	
+	border-radius: 		4px;
+	-moz-border-radius: 4px;
+	width: 250px;
+}
+.not_me_link {
+	margin-left: 10px;
+	font-size: 15px;
 }

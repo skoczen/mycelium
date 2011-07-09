@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^sentry/', include('sentry.web.urls')),
     url(r'^', include('django_ses.urls')),
     url(r'^', include('mediasync.urls')),
+    url(r'^newsletter/', include('newsletter.urls')),
 )
 if settings.DEBUG:
     urlpatterns += patterns('',

@@ -142,7 +142,7 @@ td.remainder_count {
 	margin: 4px 2% 4px 0px;
 	overflow: auto;
 	float: left;
-	min-height: 3em;
+	min-height: 80px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;	

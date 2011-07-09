@@ -4,6 +4,7 @@ $(function(){
 	$(window).resize(make_sure_identical_height_block_boxes_are_equal_height);
 	make_sure_identical_height_block_boxes_are_equal_height();
 	$(".contact_button.online").click(open_uservoice);
+	$(".not_me_link").click(not_me_link_clicked);
 	// $("html").preloadCssImages();
 });
 
@@ -37,4 +38,8 @@ function make_sure_identical_height_block_boxes_are_equal_height() {
 }
 function open_uservoice() {
 	UserVoice.showPopupWidget();
+}
+function not_me_link_clicked() {
+	$(".new_subscription").removeClass("hidden").show();
+	$(".returning_subscriber").hide();
 }

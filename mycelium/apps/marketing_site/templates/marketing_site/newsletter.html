@@ -1,0 +1,63 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}News from around the nonprofit world with The GoodCloud Times!{% endblock %}
+{% block description %}Our monthly newsletter keeps you up-to-date on the latest news in the nonprofit sector - and throws in a great recipe to boot!{% endblock %}
+{% block page_header %}Real people, real voices.{% endblock %}
+
+{% block page_content %}
+<div id="section" class=" features">
+	<ul class="nav_links png_bg">
+	 	<li class="ui-tabs-selected ui-state-active"><a href="{% url marketing_site:newsletter %}">Newsletter</a></li>
+	 	<li><a href="{% url blog %}">Blog</a></li>
+	 	{# <li><a href="{% url blog %}">Press</a></li> #}
+ 	</ul>
+
+	<div class="tab_content newsletter" >
+			<div class="page_top_hook">All the latest news, and a couple great recipes.</div>
+
+			<span class="the_good_times">The Good Times</span> is our monthly newsletter with all the latest news in the nonprofit community, features in GoodCloud, and often, an amazing recipe. Sign up to recieve it below!
+			
+
+			<div class="feature">
+				<div class="title">Subscribe to <span class="the_good_times">The Good Times</span></div>
+				<div class="subscription_block">
+				{% if not save_success %}
+					{% if newsletter_subscriber %}
+					<div class="returning_subscriber">
+						Oh! Hey there, {{newsletter_subscriber}}, good to see you again!  <a href="#" class="not_me_link">Not you?</a>
+					</div>
+					{% endif %}
+					<div class="new_subscription {% if newsletter_subscriber %}hidden{% endif %}">
+					<form action="" method="POST">{% csrf_token %}
+					<input type="email" id="id_email" name="email" placeholder="Enter your email..."  />
+					<input type="submit" value="Save Email" class="mycelium_btn" />
+					</form>
+					</div>
+				{% else %}
+
+				<b>Hooray!</b> 
+
+				<p>You're all set - look for a copy of the <span class="the_good_times">The Good Times</span> in your inbox soon!</p> 
+				<p>In the meantime, you can check out the back issues below, or check out <a href="{% url blog %}">our blog</a>.</p>
+				{% endif %}
+				</div>
+			</div>
+
+			<div class="feature">
+				<div class="title">Read back issues of <span class="the_good_times">The Good Times</span></div>
+			
+				<a href="{% url marketing_site:newsletter_issue 2011 7 %}" class="issue issue_2011_07">
+					<div class="cover_image"><img src="{% media_url "images/newsletters/2011-08/burger-crop.jpg"%}" /></div> 
+					<div class="title_and_date">
+						<span class="date">July 2011</span>
+					</div>
+					<div class="overview">This month, <span class="the_good_times">The Good Times</span> looks at how to keep institutional knowledge in the face of staff turnover, the latest trends in social media and how they affect non-profits, and a great recipe for burgers (veggie or otherwise)!</div>
+				</a>
+
+			</div>
+
+	</div>	
+</div>
+
+
+{% endblock %}

@@ -5,6 +5,7 @@ $(function(){
 	$("#id_new_nickname").bind('keydown', 'Enter' ,save_new_nickname);
 	$("#id_new_nickname").bind('keydown', 'Return' ,save_new_nickname);
 	$(".hide_challenge_complete_link").click(hide_challenge_complete);
+	$(".older_news_link").click(show_older_news);
 });
 
 var nickname = false;
@@ -53,4 +54,8 @@ function hide_challenge_complete(){
           }
      });
      return false;
+}
+function show_older_news() {
+	$(".archived_news").removeClass("hidden").show();
+	$(".older_news_link").hide();
 }
