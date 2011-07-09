@@ -392,7 +392,15 @@ social_links {
   	background-color: #EEE;
   	margin-bottom: 20px;
 }
-
+#home_boxes #overview_tabs {
+	height: 400px;
+	position: relative;
+}
+#home_boxes #overview_tabs .overview_tabs_navigation {
+	top: 400px;
+	background: transparent;
+	border: 0px;
+}
 .features {
 
 }
@@ -921,7 +929,7 @@ social_links {
   	-khtml-box-shadow: 	1px 1px 2px rgba(0,0,0,0.35);
   	-webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.35);
   	padding: 0px;
-  	margin: 10px 0px 20px 0px;
+  	margin: 10px 0px 0px 0px;
   	background-color: #FFF;
 }
 #overview_tabs .overview_tabs_navigation {
@@ -931,13 +939,9 @@ social_links {
 	border: 1px solid #b8ab7e;
 	border-width: 0px 0px 1px 0px;
 	background: url("../images/marketing-text-back-contrast-highlight-background.jpg");
-	border-top-right-radius: 8px;
-  	-moz-border-radius-topright: 8px;
-  	border-top-left-radius: 8px;
-  	-moz-border-radius-topleft: 8px;
-  	padding: 5px 0px 0px 0px;
+  	padding: 0px 0px 0px 0px;
 }
-#overview_tabs .ui-widget-header, #overview_tabs .person_detail {
+#overview_tabs .ui-widget-header, #overview_tabs .tab_detail {
 	background: none;
 	border: 0px;
 	padding: 0px;
@@ -977,15 +981,19 @@ social_links {
 	display: block;
 	width: auto;
 	color: #524a2e;
-	width: 25%;
-	background-color: #000486;
+	width: 100%;
+	background-color: #EEE;
+	border-bottom-right-radius: 8px;
+  	-moz-border-radius-bottomright: 8px;
+  	border-bottom-left-radius: 8px;
+  	-moz-border-radius-bottomleft: 8px;	
 }
 #overview_tabs .overview_tab .role {
 	font-size: 16px;
 	padding-left: 2px;
 	color: #766b43;
 }
-#overview_tabs .person_detail {
+#overview_tabs .tab_detail {
 	width: 100%;
 	overflow: auto;
 }
@@ -1004,7 +1012,7 @@ social_links {
 #overview_tabs .name_and_role .role {
 	line-height: 18px;
 }
-#overview_tabs .person_detail .details {
+#overview_tabs .tab_detail .details {
 	padding: 20px 15px 0px 0px;
 }
 
