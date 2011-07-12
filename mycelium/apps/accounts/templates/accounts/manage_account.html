@@ -26,7 +26,14 @@
 </form_field>
 
 <form_field>
-<label>Plan:</label>Free Trial
+<label>Plan:</label>Monthly  (With discount)
+</form_field>
+
+Links <a href="https://goodcloud.chargify.com/h/42689/subscriptions/new?organization={{request.account.name|urlencode}}&reference={{request.account.pk}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" target="_blank">Signup</a>
+
+Modify <a href="https://goodcloud.chargify.com/h/42689/subscriptions/new">Signup</a>
+<form_field>
+<label>Billing:</label>**** **** **** 1234  <a href="https://goodcloud.chargify.com/update_payment/{{request.account.pk}}"
 </form_field>
 
 {# <div class="coming_soon">Billing Information coming soon!</div> #}

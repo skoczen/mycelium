@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from managers import AccountDataModelManager, ExplicitAccountDataModelManager
 from qi_toolkit.models import TimestampModelMixin
+from accounts import ACCOUNT_STATII
+import datetime
 
 class Plan(TimestampModelMixin):
     name = models.CharField(max_length=255)
@@ -35,6 +37,12 @@ class Account(TimestampModelMixin):
     has_completed_all_challenges         = models.BooleanField(default=False)  # A separate field to support when the challenges change.
     has_completed_any_challenges         = models.BooleanField(default=False)  
 
+    #status      = models.IntegerField(default=ACCOUNT_STATII[0][0])
+    #signup_date = models.DateTimeField(null=True, default=datetime.datetime.now())
+    #last_billing_date = models.DateTimeField(blank=True, null=True)
+    #last_subscription_id = models.IntegerField(blank=True, null=True)
+    
+
     def __unicode__(self):
         return "%s" % self.name
 
@@ -56,6 +64,7 @@ class Account(TimestampModelMixin):
         user.save()
         
         return UserAccount.objects.get_or_create(user=user, account=self, access_level=access_level)[0]
+
 
     @classmethod
     def create_default_tagsets(cls, instance, created=None, *args, **kwargs):

@@ -68,3 +68,4 @@ django-newsletter
 vobject
 django-tinymce
 chardet
+-e git://github.com/davidgit/pychargify.git#egg=pychargify

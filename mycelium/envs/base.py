@@ -107,11 +107,13 @@ SUBDOMAIN_URLCONFS = {
     # The format for these is 'subdomain': 'urlconf'
     None: 'mycelium.urls.marketing',
     'www': 'mycelium.urls.marketing',
+    'dev': 'mycelium.urls.marketing',
     # 'api': 'myproject.urls.api',
 }
 PUBLIC_SUBDOMAINS = [
     None,
-    "www"
+    "www",
+    "dev",
 ]
 REMOVE_WWW_FROM_SUBDOMAIN = True
 
@@ -175,6 +177,7 @@ INSTALLED_APPS = (
     'rules',
     'accounts',
     'dashboard',
+    'webhooks',
 
     'djangosanetesting',
 )
@@ -273,6 +276,9 @@ AWS_ACCESS_KEY_ID = 'AKIAJTNZWCZDOIDWFR4A'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = "goodcloud1"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
+
+CHARGIFY_API = "H4a_DfhPSl6w5h4DqWZg"
+CHARGIFY_SUBDOMAIN = "goodcloud"
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 
