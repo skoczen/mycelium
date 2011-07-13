@@ -136,6 +136,7 @@ def dashboard(request):
 def manage_account(request):
     section = "admin"
     form = AccountForm(instance=request.account)
+    CHARGIFY_HOSTED_SIGNUP_URL = settings.CHARGIFY_HOSTED_SIGNUP_URL
     return locals()
 
 @json_view

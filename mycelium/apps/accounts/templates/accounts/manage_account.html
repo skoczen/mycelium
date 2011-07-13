@@ -29,9 +29,23 @@
 <label>Plan:</label>Monthly  (With discount)
 </form_field>
 
-Links <a href="https://goodcloud.chargify.com/h/42689/subscriptions/new?organization={{request.account.name|urlencode}}&reference={{request.account.pk}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" target="_blank">Signup</a>
+<form_field>
+<label>Status:</label>{{request.account.get_status_display}}
+</form_field>
 
-Modify <a href="https://goodcloud.chargify.com/h/42689/subscriptions/new">Signup</a>
+
+<form_field>
+<label>Signup Date:</label>{{request.account.signup_date|date}}
+</form_field>
+
+
+{% if request.account.has_subscription %}
+	<a href="{{request.account.chargify_manage_url}}" target="_blank">Modify Billing Information</a>
+{% else %}
+ <a href="{{request.account.chargify_signup_url}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" target="_blank">Enter Billing Information</a>
+{% endif %}
+
+
 <form_field>
 <label>Billing:</label>**** **** **** 1234  <a href="https://goodcloud.chargify.com/update_payment/{{request.account.pk}}"
 </form_field>

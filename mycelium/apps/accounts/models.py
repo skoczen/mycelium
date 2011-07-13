@@ -3,7 +3,10 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from managers import AccountDataModelManager, ExplicitAccountDataModelManager
 from qi_toolkit.models import TimestampModelMixin
-from accounts import ACCOUNT_STATII
+from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII
+from django.conf import settings
+from pychargify.api import ChargifySubscription
+import hashlib
 import datetime
 
 class Plan(TimestampModelMixin):
@@ -37,11 +40,19 @@ class Account(TimestampModelMixin):
     has_completed_all_challenges         = models.BooleanField(default=False)  # A separate field to support when the challenges change.
     has_completed_any_challenges         = models.BooleanField(default=False)  
 
-    #status      = models.IntegerField(default=ACCOUNT_STATII[0][0])
-    #signup_date = models.DateTimeField(null=True, default=datetime.datetime.now())
-    #last_billing_date = models.DateTimeField(blank=True, null=True)
-    #last_subscription_id = models.IntegerField(blank=True, null=True)
-    
+    status                              = models.IntegerField(default=ACCOUNT_STATII[0][0], choices=ACCOUNT_STATII)
+    signup_date                         = models.DateTimeField(null=True, default=datetime.datetime.now())
+    last_billing_date                   = models.DateTimeField(blank=True, null=True)                # chargify sub: current_period_started_at
+    chargify_subscription_id            = models.IntegerField(blank=True, null=True)
+    chargify_state                      = models.CharField(max_length=255, blank=True, null=True)
+    chargify_activated_at               = models.DateTimeField(blank=True, null=True)
+    chargify_cancel_at_end_of_period    = models.BooleanField(default=False)
+    chargify_next_assessment_at         = models.DateTimeField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.signup_date = datetime.datetime.now()
+        super(Account,self).save(*args, **kwargs)
 
     def __unicode__(self):
         return "%s" % self.name
@@ -183,6 +194,53 @@ class Account(TimestampModelMixin):
         if birthday_people:
             return birthday_people.all().order_by("birth_month","birth_day", "first_name", "last_name")[:NUMBER_BIRTHDAYS_OF_TO_SHOW]
         return None
+
+    def update_account_status(self):
+        if self.chargify_subscription_id:
+            print "have a sub"
+            chargify = ChargifySubscription(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+            chargify_sub = chargify.getBySubscriptionId(self.chargify_subscription_id)
+
+            self.last_billing_date = chargify_sub.current_period_started_at
+            self.chargify_state = chargify_sub.state
+            self.chargify_activated_at = chargify_sub.activated_at
+            self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period
+            self.chargify_next_assessment_at = chargify_sub.next_assessment_at
+
+            self.status = CHARGIFY_STATUS_MAPPING[chargify_sub.state][0]
+            print chargify_sub.state
+            print self.status
+        else:
+            now = datetime.datetime.now()
+            if now - datetime.timedelta(days=30) > self.signup_date:
+                self.status = ACCOUNT_STATII[1][0]
+            else:
+                self.status = ACCOUNT_STATII[0][0]
+        self.save()
+    
+    @property
+    def has_subscription(self):
+        return self.status in HAS_A_SUBSCRIPTION_STATII
+
+    @property
+    def chargify_manage_url(self):
+        h = hashlib.new('sha1')
+        h.update("update_payment--%s--%s" % (self.chargify_subscription_id, settings.CHARGIFY_SHARED_KEY))
+
+        return "https://%(subdomain)s.chargify.com/update_payment/%(sub_id)s/%(message)s" % {
+            'subdomain': settings.CHARGIFY_SUBDOMAIN,
+            'sub_id': self.chargify_subscription_id,
+            'message': h.hexdigest()[:10]
+        }
+        
+    
+    @property
+    def chargify_signup_url(self):
+        return "%(HOSTED_URL)s?organization=%(org_name)s&reference=%(account_pk)s" % {
+                  'HOSTED_URL' : settings.CHARGIFY_HOSTED_SIGNUP_URL,
+                  'org_name' : self.name,
+                  'account_pk': self.pk,
+                  }
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)

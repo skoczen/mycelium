@@ -38,6 +38,12 @@ MEDIA_URL = CDN_MEDIA_URL
 STATIC_URL = MEDIA_URL
 STATIC_ROOT = MEDIA_ROOT
 
+# chargify
+CHARGIFY_API = "H4a_DfhPSl6w5h4DqWZg"
+CHARGIFY_SUBDOMAIN = "goodcloud"
+CHARGIFY_HOSTED_SIGNUP_URL = "https://goodcloud.chargify.com/h/42689/subscriptions/new"
+CHARGIFY_SHARED_KEY = "uQ2mOxf9ZE3FFyzCj3t_"
+
 # ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 ADMIN_MEDIA_PREFIX = "/admin-media/"
 FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
