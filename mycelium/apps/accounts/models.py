@@ -48,6 +48,7 @@ class Account(TimestampModelMixin):
     chargify_activated_at               = models.DateTimeField(blank=True, null=True)
     chargify_cancel_at_end_of_period    = models.BooleanField(default=False)
     chargify_next_assessment_at         = models.DateTimeField(blank=True, null=True)
+    chargify_last_four                  = models.CharField(blank=True, null=True, max_length=4)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -204,12 +205,12 @@ class Account(TimestampModelMixin):
             self.last_billing_date = chargify_sub.current_period_started_at
             self.chargify_state = chargify_sub.state
             self.chargify_activated_at = chargify_sub.activated_at
-            self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period
-            self.chargify_next_assessment_at = chargify_sub.next_assessment_at
+            self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period == "true"
+
+            self.chargify_next_assessment_at = chargify_sub.current_period_ends_at
+            self.chargify_last_four = chargify_sub.credit_card.masked_card_number[chargify_sub.credit_card.masked_card_number.rfind("-")+1:]
 
             self.status = CHARGIFY_STATUS_MAPPING[chargify_sub.state][0]
-            print chargify_sub.state
-            print self.status
         else:
             now = datetime.datetime.now()
             if now - datetime.timedelta(days=30) > self.signup_date:

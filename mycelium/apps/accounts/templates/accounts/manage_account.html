@@ -33,24 +33,34 @@
 <label>Status:</label>{{request.account.get_status_display}}
 </form_field>
 
-
+{% if request.account.has_subscription %}
 <form_field>
 <label>Signup Date:</label>{{request.account.signup_date|date}}
 </form_field>
 
-
-{% if request.account.has_subscription %}
-	<a href="{{request.account.chargify_manage_url}}" target="_blank">Modify Billing Information</a>
-{% else %}
- <a href="{{request.account.chargify_signup_url}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" target="_blank">Enter Billing Information</a>
-{% endif %}
-
-
 <form_field>
-<label>Billing:</label>**** **** **** 1234  <a href="https://goodcloud.chargify.com/update_payment/{{request.account.pk}}"
+<label>Billing Information:</label>&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; {{request.account.chargify_last_four}} <a href="{{request.account.chargify_manage_url}}" target="_blank">Modify Billing Information</a>
 </form_field>
 
-{# <div class="coming_soon">Billing Information coming soon!</div> #}
+<form_field>
+<label>Subscription:</label>
+	Subscriber since: {{request.account.chargify_activated_at|date}}<br/>
+	Last billing date: {{request.account.last_billing_date|date}}<br/>
+	{% if request.account.chargify_cancel_at_end_of_period %}
+	Account cancelled, paid and active until {{request.account.chargify_next_assessment_at|date}}
+	{% else %}
+	Next billing date: {{request.account.chargify_next_assessment_at|date}}<br/>
+	{% endif %}
+
+</form_field>
+
+	
+{% else %}
+<form_field>
+<label>Billing Information:</label><a href="{{request.account.chargify_signup_url}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" target="_blank">Enter Billing Information</a>
+</form_field>
+ {% endif %}
+
 
 </form>
 {% endblock %}
