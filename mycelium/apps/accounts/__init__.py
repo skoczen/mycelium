@@ -4,7 +4,7 @@ ACCOUNT_STATII = [
     (20, "Active"),
     (30, "Active, Billing Issue"), # Was paid, billing failed.
     (40, "On Hold"),  # no way to get to this currently
-    (50, "Closed"),   
+    (50, "Cancelled"),   
 ]
 
 CHARGIFY_STATUS_MAPPING = {
@@ -22,6 +22,12 @@ CHARGIFY_STATUS_MAPPING = {
 HAS_A_SUBSCRIPTION_STATII = [
     ACCOUNT_STATII[2][0],
     ACCOUNT_STATII[3][0],
+]
+HAD_A_SUBSCRIPTION_STATII = HAS_A_SUBSCRIPTION_STATII + [
     ACCOUNT_STATII[4][0],
+    ACCOUNT_STATII[5][0],
+]
+
+CANCELLED_SUBSCRIPTION_STATII = [
     ACCOUNT_STATII[5][0],
 ]

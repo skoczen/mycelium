@@ -11,7 +11,7 @@ from django.views.decorators.cache import never_cache
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.sites.models import get_current_site
-
+from pychargify.api import ChargifySubscription
 
 @csrf_protect
 @never_cache
@@ -135,6 +135,7 @@ def dashboard(request):
 @render_to("accounts/manage_account.html")
 def manage_account(request):
     section = "admin"
+    request.account.update_account_status()
     form = AccountForm(instance=request.account)
     CHARGIFY_HOSTED_SIGNUP_URL = settings.CHARGIFY_HOSTED_SIGNUP_URL
     return locals()
@@ -192,3 +193,23 @@ def change_my_password(request):
         pass
 
     return {"success":success}
+
+def cancel_subscription(request):
+    if not request.useraccount.is_admin:
+        return HttpResponseRedirect(reverse("dashboard:dashboard"))
+    
+    # cancel the subscription.
+    chargify = ChargifySubscription(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+    chargify_sub = chargify.getBySubscriptionId(request.account.chargify_subscription_id)
+    chargify_sub.unsubscribe("Unsubscribe via site")
+    return HttpResponseRedirect(reverse("accounts:manage_account"))
+
+def reactivate_subscription(request):
+    if not request.useraccount.is_admin:
+        return HttpResponseRedirect(reverse("dashboard:dashboard"))
+    
+    # reactivate_subscription the subscription.
+    chargify = ChargifySubscription(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+    chargify_sub = chargify.getBySubscriptionId(request.account.chargify_subscription_id)
+    chargify_sub.reactivate()
+    return HttpResponseRedirect(reverse("accounts:manage_account"))

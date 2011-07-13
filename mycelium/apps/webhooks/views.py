@@ -21,6 +21,7 @@ def _update_account_subscription(account_id, chargify_subscription_id):
 @csrf_exempt
 def chargify_webhook(request):
     print request.POST
+    print request.REQUEST
     assert request.POST['event'][0] == "subscription_state_change"
     
     payload = request.POST['payload']
@@ -28,11 +29,13 @@ def chargify_webhook(request):
 
     account_id = payload["customer_reference"]
     subscription_id = payload["subscription_id"]
-    account = _update_account_subscription(account_id, subscription_id)    
+    account = _update_account_subscription(account_id, subscription_id)
     return {}
 
 @csrf_exempt
 def chargify_postback(request):
+    print request.POST
+    print request.REQUEST
     chargify_subscription_id = request.GET['subscription_id']
     account_id = request.GET['customer_reference']
     account = _update_account_subscription(account_id, chargify_subscription_id)

@@ -26,7 +26,7 @@
 </form_field>
 
 <form_field>
-<label>Plan:</label>Monthly  (With discount)
+<label>Plan:</label>Monthly
 </form_field>
 
 <form_field>
@@ -39,7 +39,7 @@
 </form_field>
 
 <form_field>
-<label>Billing Information:</label>&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; {{request.account.chargify_last_four}} <a href="{{request.account.chargify_manage_url}}" target="_blank">Modify Billing Information</a>
+<label>Billing Information:</label>Automatic billing to &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; {{request.account.chargify_last_four}} <a href="{{request.account.chargify_manage_url}}" target="_blank">Modify Billing Information</a>
 </form_field>
 
 <form_field>
@@ -54,10 +54,17 @@
 
 </form_field>
 
+<form_field>
+<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn">Cancel</a></form_field>
 	
 {% else %}
 <form_field>
-<label>Billing Information:</label><a href="{{request.account.chargify_signup_url}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" target="_blank">Enter Billing Information</a>
+<label>Billing Information:</label>
+	{% if request.account.cancelled_subscription %}
+	<a href="{% url accounts:reactivate_subscription %}" >Reactivate Subscription</a>
+	{% else %}
+	<a href="{{request.account.chargify_signup_url}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" target="_blank">Enter Billing Information</a>
+	{% endif %}
 </form_field>
  {% endif %}
 
