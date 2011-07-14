@@ -631,6 +631,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Your account has been cancelled.")
         assert sel.is_element_present("css=.reactivate_subscription_btn")
+        assert sel.is_element_present("css=#expired_side_bar")
 
     def test_that_users_can_resume_a_cancelled_subscription_and_see_that_its_resumed(self):
         sel = self.selenium
@@ -653,21 +654,27 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
     def test_expired_accounts_display_an_expired_bar(self):
         sel = self.selenium
-        self.setup_for_logged_in()
         a = self.a1
         a.signup_date = datetime.datetime.now() - datetime.timedelta(days=35)
         a.save()
+        self.go_to_the_login_page()
+        self.log_in()
         self.go_to_the_account_page()
+        
         assert sel.is_element_present(".expired_bar")
+        assert sel.is_element_present("css=#expired_side_bar")
 
     def test_expired_accounts_go_to_the_billing_page_for_admin_user_logins(self):
         sel = self.selenium
-        assert True == "Test written"
+        self.go_to_the_login_page()
+        self.log_in()
+        assert sel.is_text_present("Plan: Monthly")
+
     
     def test_expired_accounts_display_a_human_explanation_on_the_billing_page(self):
         sel = self.selenium
+        self.test_expired_accounts_display_an_expired_bar()
         assert sel.is_text_present("is past its free trial, and has expired")
-        assert True == "Test written"
     
     def test_users_can_completely_delete_their_account(self):
         sel = self.selenium
