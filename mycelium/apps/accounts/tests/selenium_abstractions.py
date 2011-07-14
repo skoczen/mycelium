@@ -5,7 +5,10 @@ from django.core.cache import cache
 
 def _sitespaced_url(url, site="test"):
     from django.conf import settings
-    return "http://%s.localhost:%s%s" % (site, settings.LIVE_SERVER_PORT, url)
+    spacer = ""
+    if site != "":
+        spacer = "."
+    return "http://%s%slocalhost:%s%s" % (site, spacer, settings.LIVE_SERVER_PORT, url)
 
 class AccountTestAbstractions(object):
     MANAGE_USERS_URL = "/accounts/manage-users"
@@ -117,8 +120,43 @@ class AccountTestAbstractions(object):
         assert sel.is_text_present("My Account")
 
     def get_my_full_name(self):
-        sel = self.selenium
+        sel = self.seleniumps
         sel.click("css=.my_account_btn")
         sel.wait_for_page_to_load("30000")
-        print sel.get_text("css=#container_id_first_name .view_field")
         return sel.get_text("css=#container_id_first_name .view_field")
+
+    def enter_billing_info_signup(self, cc_number="1", coupon_code=None, update=False):
+        """Assumes you're starting on the manage acct page"""
+        sel = self.selenium
+        sel.click("link=Enter Billing Information")
+        time.sleep(4)
+
+        sel.select_frame("css=.cboxIframe")
+        sel.type("css=#subscription_payment_profile_attributes_full_number",cc_number)
+        sel.type("css=#subscription_payment_profile_attributes_cvv","123")
+        sel.select("css=#subscription_payment_profile_attributes_expiration_month","5 - May")
+        sel.select("css=#subscription_payment_profile_attributes_expiration_year","2020")
+        sel.type("css=#subscription_payment_profile_attributes_first_name","Joe")
+        sel.type("css=#subscription_payment_profile_attributes_last_name","Smith")
+        sel.type("css=#subscription_customer_attributes_first_name","Joe")
+        sel.type("css=#subscription_customer_attributes_last_name","Smith")
+        sel.type("css=#subscription_customer_attributes_email","joe@smith.com")
+        sel.type("css=#subscription_customer_attributes_phone","555 123-4567")
+        sel.click("css=#accept_terms")
+        if coupon_code:
+            sel.type("css=#subscription_coupon_code",coupon_code)
+        
+        sel.click("css=#subscription_submit")
+        sel.wait_for_page_to_load("30000")
+        sel.select_frame("css=.cboxIframe")
+        loc = sel.get_location()
+        postback_loc = _sitespaced_url(loc[loc.find("/webhooks"):], site="")
+        sel.open(postback_loc)
+        time.sleep(3)
+
+        sel.select_frame("relative=top")
+        sel.click("css=#cboxClose")
+        sel.wait_for_page_to_load("30000")
+        # time.sleep(8)
+        
+       

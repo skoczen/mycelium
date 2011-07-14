@@ -247,7 +247,11 @@ class Factory(QiFactory):
                 Account.objects.filter(name=name).delete()
 
         monthly_plan = Plan.objects.get(name="Monthly")
-        return Account.objects.create(plan=monthly_plan, name=name, subdomain=subdomain)
+        new_id = cls.rand_int(10000,99999999)
+        while Account.objects.filter(pk=new_id).count() > 0:
+            new_id = cls.rand_int(10000,99999999)
+        
+        return Account.objects.create(id=new_id, plan=monthly_plan, name=name, subdomain=subdomain)
 
     @classmethod
     def useraccount(cls, account=account, username=None, password=None, full_name=None, access_level=None):

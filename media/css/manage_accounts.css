@@ -166,3 +166,6 @@ tabbed_box box_content {
 #new_account .generic_editable_field .edit_field input {
 	min-width: 100px;
 }
+#cboxContent {
+	/*background-color: #E6E6E6;*/
+}

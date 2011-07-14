@@ -340,6 +340,7 @@ MEDIASYNC = {
                 "js/mycelium/generic_fields.js",
                 "js/mycelium/mycelium_search.js",
                 "js/lib/fileuploader.mycelium.js",
+                "js/contrib/jquery.colorbox-min.js",
         ],
         'js/mycelium_core.js': [
                 "js/mycelium/mycelium_elements.js",
@@ -348,6 +349,7 @@ MEDIASYNC = {
         ],
         'css/mycelium_base.css': BASE_CSS + [
                 "css/contrib/fileuploader.css",
+                "css/contrib/colorbox.css",
         ],
 
         'js/marketing_base.js': BASE_JS + COMMON_JS + [

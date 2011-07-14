@@ -11,18 +11,11 @@ class Migration(SchemaMigration):
         # Adding field 'Account.was_a_feedback_partner'
         db.add_column('accounts_account', 'was_a_feedback_partner', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
-        # Adding field 'Account.chargify_last_four'
-        db.add_column('accounts_account', 'chargify_last_four', self.gf('django.db.models.fields.CharField')(max_length=4, null=True, blank=True), keep_default=False)
-
 
     def backwards(self, orm):
         
         # Deleting field 'Account.was_a_feedback_partner'
         db.delete_column('accounts_account', 'was_a_feedback_partner')
-
-        # Deleting field 'Account.chargify_last_four'
-        db.delete_column('accounts_account', 'chargify_last_four')
-
 
     models = {
         'accounts.accesslevel': {

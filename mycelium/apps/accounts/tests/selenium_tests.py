@@ -1,6 +1,7 @@
 # encoding: utf-8
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
+import datetime
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from organizations.tests.selenium_abstractions import OrganizationsTestAbstractions
@@ -8,6 +9,7 @@ from groups.tests.selenium_abstractions import GroupTestAbstractions
 from django.conf import settings
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from django.core.cache import cache
+from django.template.defaultfilters import date
     
 class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
 
@@ -574,11 +576,92 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         assert not sel.is_element_present("css=.admin_btn")
 
 
-    def admins_see_the_admin_link_and_not_an_account_link(self):
+    def test_admins_see_the_admin_link_and_not_an_account_link(self):
         sel = self.selenium
         self.setup_for_logged_in()
         assert not sel.is_element_present("css=.my_account_btn")
         assert sel.is_element_present("css=.admin_btn")
+
+
+
+    def test_that_new_signups_see_their_status_as_free_trial(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Status: Free Trial")
+    
+    def test_that_new_signups_see_the_correct_signup_date(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Signup Date: %s" % (date(datetime.date.today()),) )
+
+    def test_that_new_signups_can_sign_up_for_an_account(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_account_page()
+        self.enter_billing_info_signup()
+        assert sel.is_text_present("Status: Active")
+        assert sel.is_text_present("Subscriber since: %s" % (date(datetime.date.today()),) )
+        assert sel.is_text_present("Last billing date: %s" % (date(datetime.date.today()),) )
+        assert sel.is_element_present("link=Modify Billing Information")
+
+
+    def test_that_after_signup_users_can_change_their_billing_info(self):
+        # And see it updated.
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Billing Information: XXXX-XXXX-XXXX-1")
+        self.enter_billing_info_signup(cc_number="2")
+        assert not sel.is_text_present("Billing Information: XXXX-XXXX-XXXX-1")
+        assert sel.is_text_present("Billing Information: XXXX-XXXX-XXXX-2")
+
+
+    def test_that_a_signup_saves_in_chargify(self):
+        sel = self.selenium
+        assert True == "Test written"
+    
+    def test_that_users_can_cancel_their_subscription_and_see_that_its_cancelled(self):
+        sel = self.selenium
+        assert True == "Test written"
+
+    def test_that_users_can_resume_a_cancelled_subscription_and_see_that_its_resumed(self):
+        sel = self.selenium
+        assert True == "Test written"
+
+    def test_that_feedback_team_users_can_enter_a_coupon_on_signup_and_get_half_off(self):
+        sel = self.selenium
+        self.setup_for_logged_in()
+        self.go_to_the_account_page()
+        self.enter_billing_info_signup("FEEDBACKTEAM")
+        assert True == "Test written"
+    
+    def test_that_users_see_the_correct_last_billing_date_and_next_billing_date(self):
+        sel = self.selenium
+        assert True == "Test written"
+
+    def test_expired_accounts_display_an_expired_bar(self):
+        sel = self.selenium
+        assert True == "Test written"
+
+    def test_expired_accounts_go_to_the_billing_page_for_admin_user_logins(self):
+        sel = self.selenium
+        assert True == "Test written"
+    
+    def test_expired_accounts_display_a_human_explanation_on_the_billing_page(self):
+        sel = self.selenium
+        assert True == "Test written"
+    
+    def test_users_can_completely_delete_their_account(self):
+        sel = self.selenium
+        assert True == "Test written"
+
+
+
+
+
+
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
