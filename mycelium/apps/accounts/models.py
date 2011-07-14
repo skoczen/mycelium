@@ -232,6 +232,26 @@ class Account(TimestampModelMixin):
         self.save()
     
     @property
+    def is_active(self):
+        return self.status == ACCOUNT_STATII[2][0]
+
+    @property
+    def is_expired(self):
+        return self.status == ACCOUNT_STATII[1][0]
+
+    @property
+    def has_billing_issue(self):
+        return self.status == ACCOUNT_STATII[3][0]
+
+    @property
+    def is_on_hold(self):
+        return self.status == ACCOUNT_STATII[4][0]
+
+    @property
+    def is_cancelled(self):
+        return self.status == ACCOUNT_STATII[5][0]
+
+    @property
     def has_subscription(self):
         return self.status in HAS_A_SUBSCRIPTION_STATII
 

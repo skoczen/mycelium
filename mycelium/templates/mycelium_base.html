@@ -27,6 +27,11 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 	</main_nav>
 	<div id="global_search_results"><fragment name="global_search_results" action="replace"></fragment></div>
 	<side_nav>
+		{% if not request.account.is_active %}
+			{% if request.useraccount.is_admin %}<a href="{% url accounts:manage_account %}" class="side_account_expired_link">{% endif %}
+			<div id="expired_side_bar">Account Expired</div>
+			{% if request.useraccount.is_admin %}</a>{% endif %}
+		{% endif %}
 		<div class="nav_title"></div>
 		<a href="{% url dashboard:dashboard %}" class="nav_btn dashboard {% if section == "dashboard" %}current{% endif %}">Dashboard</a>
 		<a href="{% url people:search %}" class="nav_btn people {% if not section %}current{% endif %}">People</a>

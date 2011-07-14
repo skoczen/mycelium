@@ -21,6 +21,25 @@
 	{% include "people/_save_status_and_button.html" %}
 {% endwith %}
 
+{% if not request.account.is_active %}
+	<div class="expired_message">
+	{% if request.account.is_expired %}
+	Looks like your account is past its free trial, and has expired. To keep using GoodCloud, please enter your billing information below. Thanks!
+	{% else %}
+	{% if request.account.has_billing_issue %}
+		There's been a problem processing your billing method. Please update it using the link below. Thanks!
+	{% else %}
+	{% if request.account.is_cancelled %}
+	Your account has been cancelled. To keep using GoodCloud, you'll need to reactivate your subscription below. Thanks!
+	{% endif %}{% endif %}{% endif %}
+	<br/>
+	- The GoodCloud Team
+	</div>
+{% endif %}
+
+
+
+
 <form_field>
 <label>Organization Name:</label>{% generic_editable_field form.name %}
 </form_field>
@@ -55,15 +74,15 @@
 </form_field>
 
 <form_field>
-<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn">Cancel</a></form_field>
+<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn mycelium_small_btn mycelium_btn mycelium_grey">Cancel</a></form_field>
 	
 {% else %}
 <form_field>
 <label>Billing Information:</label>
 	{% if request.account.cancelled_subscription %}
-	<a href="{% url accounts:reactivate_subscription %}" class="reactivate_subscription_btn" >Reactivate Subscription</a>
+	<a href="{% url accounts:reactivate_subscription %}" class="reactivate_subscription_btn mycelium_btn mycelium_small_btn" >Reactivate Subscription</a>
 	{% else %}
-	<a href="{{request.account.chargify_signup_url}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" class="billing_popup_link">Enter Billing Information</a>
+	<a href="{{request.account.chargify_signup_url}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" class="billing_popup_link mycelium_btn mycelium_small_btn">Enter Billing Information</a>
 	{% endif %}
 </form_field>
  {% endif %}

@@ -629,6 +629,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.click("css=.cancel_subscription_btn")
         sel.get_confirmation()
         sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Your account has been cancelled.")
         assert sel.is_element_present("css=.reactivate_subscription_btn")
 
     def test_that_users_can_resume_a_cancelled_subscription_and_see_that_its_resumed(self):
@@ -665,6 +666,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
     
     def test_expired_accounts_display_a_human_explanation_on_the_billing_page(self):
         sel = self.selenium
+        assert sel.is_text_present("is past its free trial, and has expired")
         assert True == "Test written"
     
     def test_users_can_completely_delete_their_account(self):
