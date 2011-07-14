@@ -128,7 +128,10 @@ class AccountTestAbstractions(object):
     def enter_billing_info_signup(self, cc_number="1", coupon_code=None, update=False):
         """Assumes you're starting on the manage acct page"""
         sel = self.selenium
-        sel.click("link=Enter Billing Information")
+        if update:
+            sel.click("link=Change Billing Information")
+        else:
+            sel.click("link=Enter Billing Information")
         time.sleep(4)
 
         sel.select_frame("css=.cboxIframe")
@@ -138,25 +141,28 @@ class AccountTestAbstractions(object):
         sel.select("css=#subscription_payment_profile_attributes_expiration_year","2020")
         sel.type("css=#subscription_payment_profile_attributes_first_name","Joe")
         sel.type("css=#subscription_payment_profile_attributes_last_name","Smith")
-        sel.type("css=#subscription_customer_attributes_first_name","Joe")
-        sel.type("css=#subscription_customer_attributes_last_name","Smith")
-        sel.type("css=#subscription_customer_attributes_email","joe@smith.com")
-        sel.type("css=#subscription_customer_attributes_phone","555 123-4567")
-        sel.click("css=#accept_terms")
-        if coupon_code:
-            sel.type("css=#subscription_coupon_code",coupon_code)
+        if not update:
+            sel.type("css=#subscription_customer_attributes_first_name","Joe")
+            sel.type("css=#subscription_customer_attributes_last_name","Smith")
+            sel.type("css=#subscription_customer_attributes_email","joe@smith.com")
+            sel.type("css=#subscription_customer_attributes_phone","555 123-4567")
+            sel.click("css=#accept_terms")
+            if coupon_code:
+                sel.type("css=#subscription_coupon_code",coupon_code)
         
         sel.click("css=#subscription_submit")
         sel.wait_for_page_to_load("30000")
-        sel.select_frame("css=.cboxIframe")
-        loc = sel.get_location()
-        postback_loc = _sitespaced_url(loc[loc.find("/webhooks"):], site="")
-        sel.open(postback_loc)
-        time.sleep(3)
+        if not update:
+            sel.select_frame("css=.cboxIframe")
+            loc = sel.get_location()
+            postback_loc = _sitespaced_url(loc[loc.find("/webhooks"):], site="")
+            sel.open(postback_loc)
+            time.sleep(3)
 
         sel.select_frame("relative=top")
         sel.click("css=#cboxClose")
         sel.wait_for_page_to_load("30000")
-        # time.sleep(8)
+        
+        time.sleep(8)
         
        

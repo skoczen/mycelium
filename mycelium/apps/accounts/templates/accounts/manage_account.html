@@ -39,7 +39,7 @@
 
 {% if request.account.has_subscription %}
 <form_field>
-<label>Billing Information:</label>XXXX XXXX XXXX {{request.account.chargify_last_four}} <a href="{{request.account.chargify_manage_url}}" class="billing_popup_link">Modify Billing Information</a>
+<label>Billing Information:</label>XXXX-XXXX-XXXX-{{request.account.chargify_last_four}} <a href="{{request.account.chargify_manage_url}}" class="billing_popup_link">Change Billing Information</a>
 </form_field>
 
 <form_field>
@@ -61,7 +61,7 @@
 <form_field>
 <label>Billing Information:</label>
 	{% if request.account.cancelled_subscription %}
-	<a href="{% url accounts:reactivate_subscription %}" >Reactivate Subscription</a>
+	<a href="{% url accounts:reactivate_subscription %}" class="reactivate_subscription_btn" >Reactivate Subscription</a>
 	{% else %}
 	<a href="{{request.account.chargify_signup_url}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" class="billing_popup_link">Enter Billing Information</a>
 	{% endif %}

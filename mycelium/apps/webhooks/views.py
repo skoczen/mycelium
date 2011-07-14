@@ -36,7 +36,6 @@ def chargify_postback(request):
     account_id = request.GET['customer_reference']
     account = _update_account_subscription(account_id, chargify_subscription_id)
 
-    # redirect to their account page.
     return locals()
     # return HttpResponseRedirect("%s%s.%s/accounts/manage-account" % (request.protocol, account.subdomain, "agoodcloud.com"))
     

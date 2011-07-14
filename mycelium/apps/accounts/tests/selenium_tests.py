@@ -604,7 +604,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         assert sel.is_text_present("Status: Active")
         assert sel.is_text_present("Subscriber since: %s" % (date(datetime.date.today()),) )
         assert sel.is_text_present("Last billing date: %s" % (date(datetime.date.today()),) )
-        assert sel.is_element_present("link=Modify Billing Information")
+        assert sel.is_element_present("link=Change Billing Information")
 
 
     def test_that_after_signup_users_can_change_their_billing_info(self):
@@ -612,38 +612,52 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel = self.selenium
         self.setup_for_logged_in()
         self.go_to_the_account_page()
-        assert sel.is_text_present("Billing Information: XXXX-XXXX-XXXX-1")
-        self.enter_billing_info_signup(cc_number="2")
-        assert not sel.is_text_present("Billing Information: XXXX-XXXX-XXXX-1")
-        assert sel.is_text_present("Billing Information: XXXX-XXXX-XXXX-2")
+        self.enter_billing_info_signup( )
+        assert sel.is_text_present("XXXX-XXXX-XXXX-1")
+        self.enter_billing_info_signup(cc_number="2", update=True)
+        assert not sel.is_text_present("XXXX-XXXX-XXXX-1")
+        assert sel.is_text_present("XXXX-XXXX-XXXX-2")
 
 
-    def test_that_a_signup_saves_in_chargify(self):
-        sel = self.selenium
-        assert True == "Test written"
-    
     def test_that_users_can_cancel_their_subscription_and_see_that_its_cancelled(self):
         sel = self.selenium
-        assert True == "Test written"
+        self.test_that_new_signups_can_sign_up_for_an_account()
+        assert not sel.is_text_present("Reactivate subscription")
+        sel.choose_cancel_on_next_confirmation()
+        sel.click("css=.cancel_subscription_btn")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to cancel your GoodCloud subscription?  This will take effect immediately.")
+        sel.click("css=.cancel_subscription_btn")
+        sel.get_confirmation()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=.reactivate_subscription_btn")
 
     def test_that_users_can_resume_a_cancelled_subscription_and_see_that_its_resumed(self):
         sel = self.selenium
-        assert True == "Test written"
+        self.test_that_users_can_cancel_their_subscription_and_see_that_its_cancelled()
+        sel.click("css=.reactivate_subscription_btn")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("link=Change Billing Information")
+        
 
     def test_that_feedback_team_users_can_enter_a_coupon_on_signup_and_get_half_off(self):
         sel = self.selenium
         self.setup_for_logged_in()
         self.go_to_the_account_page()
-        self.enter_billing_info_signup("FEEDBACKTEAM")
-        assert True == "Test written"
-    
-    def test_that_users_see_the_correct_last_billing_date_and_next_billing_date(self):
-        sel = self.selenium
-        assert True == "Test written"
+        self.enter_billing_info_signup(coupon_code="FEEDBACKTEAM")
+        assert sel.is_text_present("Status: Active")
+        assert sel.is_text_present("Subscriber since: %s" % (date(datetime.date.today()),) )
+        assert sel.is_text_present("Last billing date: %s" % (date(datetime.date.today()),) )
+        assert sel.is_element_present("link=Change Billing Information")
+
 
     def test_expired_accounts_display_an_expired_bar(self):
         sel = self.selenium
-        assert True == "Test written"
+        self.setup_for_logged_in()
+        a = self.a1
+        a.signup_date = datetime.datetime.now() - datetime.timedelta(days=35)
+        a.save()
+        self.go_to_the_account_page()
+        assert sel.is_element_present(".expired_bar")
 
     def test_expired_accounts_go_to_the_billing_page_for_admin_user_logins(self):
         sel = self.selenium
