@@ -129,7 +129,7 @@ function confirm_cancel_subscription() {
 }
 
 function force_reload_page() {
-	window.location = $.param.querystring( window.location+"", "?force_reload=true");
+	window.location = $.param.querystring( window.location+"", "?r=r");
 }
 function close_colorbox() {
 	parent.jQuery.colorbox.close();

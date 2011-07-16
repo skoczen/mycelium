@@ -52,13 +52,10 @@ class Account(TimestampModelMixin):
     chargify_last_four                  = models.CharField(blank=True, null=True, max_length=4)
 
     def save(self, *args, **kwargs):
-        was_new = False
-        if not self.id:
+        if not self.created_at:
             self.signup_date = datetime.datetime.now()
-            was_new = True
         super(Account,self).save(*args, **kwargs)
-        if was_new:
-            self.create_subscription()
+            
 
     def __unicode__(self):
         return "%s" % self.name
@@ -221,6 +218,7 @@ class Account(TimestampModelMixin):
         subscription = chargify.Subscription()
         subscription.product_handle = settings.CHARGIFY_PRODUCT_HANDLE
         subscription.customer_reference = "%s" % self.id
+        # subscription.next_billing_at = self.free_trial_ends.isoformat()
         subscription.save()
 
         subscription = chargify.Subscription()
@@ -253,7 +251,7 @@ class Account(TimestampModelMixin):
 
     @property
     def free_trial_ends(self):
-        return self.signup_date - relativedelta(months=+6)
+        return self.signup_date + relativedelta(months=+1)
 
     @property
     def in_free_trial(self):
@@ -289,7 +287,6 @@ class Account(TimestampModelMixin):
 
     @property
     def has_card_on_file(self):
-        print "last 4 %s" % self.chargify_last_four
         return self.chargify_last_four != None
 
     @property

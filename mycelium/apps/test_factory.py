@@ -310,6 +310,7 @@ class Factory(QiFactory):
             # create volunteer user ( volunteer / volunteer )
             cls.useraccount(account=account, username="volunteer", password="volunteer", access_level=volunteer_accesslevel)
         
+        account.create_subscription()
         print_if_verbose(verbose, "Users created.")
 
         # create a bunch of reasonable tags, including the favorite color category

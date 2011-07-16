@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         output = file('/dev/null', 'a+')
-        VERBOSE = True
+        VERBOSE = False
         if VERBOSE:
             outputs={}
         else:

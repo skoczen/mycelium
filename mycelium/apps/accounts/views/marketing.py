@@ -30,6 +30,7 @@ def signup(request):
                                        email=user_form.cleaned_data['email'], 
                                        access_level=AccessLevel.admin()
                                        )
+            account.create_subscription()
             site = Site.objects.get_current()
 
             # Send off emails to us and them.

@@ -578,7 +578,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
     def test_admins_see_the_admin_link_and_not_an_account_link(self):
         sel = self.selenium
-        self.setup_for_logged_in()
+        self.get_logged_in()
         assert not sel.is_element_present("css=.my_account_btn")
         assert sel.is_element_present("css=.admin_btn")
 
@@ -586,31 +586,32 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
     def test_that_new_signups_see_their_status_as_free_trial(self):
         sel = self.selenium
-        self.setup_for_logged_in()
+        self.get_logged_in()
         self.go_to_the_account_page()
         assert sel.is_text_present("Status: Free Trial")
     
     def test_that_new_signups_see_the_correct_signup_date(self):
         sel = self.selenium
-        self.setup_for_logged_in()
+        self.get_logged_in()
         self.go_to_the_account_page()
         assert sel.is_text_present("Signup Date: %s" % (date(datetime.date.today()),) )
 
     def test_that_new_signups_can_sign_up_for_an_account(self):
         sel = self.selenium
-        self.setup_for_logged_in()
+        self.get_logged_in()
         self.go_to_the_account_page()
         self.enter_billing_info_signup()
-        assert sel.is_text_present("Status: Active")
-        assert sel.is_text_present("Subscriber since: %s" % (date(datetime.date.today()),) )
-        assert sel.is_text_present("Last billing date: %s" % (date(datetime.date.today()),) )
-        assert sel.is_element_present("link=Change Billing Information")
+        assert sel.is_text_present("Status: Free Trial")
+        assert sel.is_text_present("XXXX-XXXX-XXXX-1")
+        assert sel.is_text_present("Signup Date: %s" % (date(datetime.date.today()),) )
+        assert sel.is_text_present("Next billing date: %s" % (date(self.a1.free_trial_ends),) )
+        assert sel.is_element_present("link=Update Billing Information")
 
 
     def test_that_after_signup_users_can_change_their_billing_info(self):
         # And see it updated.
         sel = self.selenium
-        self.setup_for_logged_in()
+        self.get_logged_in()
         self.go_to_the_account_page()
         self.enter_billing_info_signup( )
         assert sel.is_text_present("XXXX-XXXX-XXXX-1")
@@ -631,25 +632,24 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Your account has been cancelled.")
         assert sel.is_element_present("css=.reactivate_subscription_btn")
-        assert sel.is_element_present("css=#expired_side_bar")
 
     def test_that_users_can_resume_a_cancelled_subscription_and_see_that_its_resumed(self):
         sel = self.selenium
         self.test_that_users_can_cancel_their_subscription_and_see_that_its_cancelled()
         sel.click("css=.reactivate_subscription_btn")
         sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("link=Change Billing Information")
+        assert sel.is_element_present("link=Update Billing Information")
         
 
     def test_that_feedback_team_users_can_enter_a_coupon_on_signup_and_get_half_off(self):
         sel = self.selenium
-        self.setup_for_logged_in()
+        self.get_logged_in()
         self.go_to_the_account_page()
         self.enter_billing_info_signup(coupon_code="FEEDBACKTEAM")
         assert sel.is_text_present("Status: Active")
         assert sel.is_text_present("Subscriber since: %s" % (date(datetime.date.today()),) )
         assert sel.is_text_present("Last billing date: %s" % (date(datetime.date.today()),) )
-        assert sel.is_element_present("link=Change Billing Information")
+        assert sel.is_element_present("link=Update Billing Information")
 
 
     def test_expired_accounts_display_an_expired_bar(self):
@@ -657,8 +657,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         a = self.a1
         a.signup_date = datetime.datetime.now() - datetime.timedelta(days=35)
         a.save()
-        self.go_to_the_login_page()
-        self.log_in()
+        self.get_logged_in()
         self.go_to_the_account_page()
         
         assert sel.is_element_present(".expired_bar")
@@ -666,8 +665,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
     def test_expired_accounts_go_to_the_billing_page_for_admin_user_logins(self):
         sel = self.selenium
-        self.go_to_the_login_page()
-        self.log_in()
+        self.get_logged_in()
         assert sel.is_text_present("Plan: Monthly")
 
     
@@ -686,6 +684,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         assert True == "Test written"
 
 
+    def test_that_webhook_causes_a_subscription_update(self):
+        sel = self.selenium
+        assert True == "Test written"
 
 
 

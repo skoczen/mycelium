@@ -21,7 +21,7 @@
 	{% include "people/_save_status_and_button.html" %}
 {% endwith %}
 
-{% if not request.account.is_active and not request.account.in_free_trial %}
+{% if request.account.is_expired or request.account.has_billing_issue or request.account.is_cancelled %}
 	<div class="expired_message">
 	{% if request.account.is_expired %}
 	Looks like your account is past its free trial, and has expired. To keep using GoodCloud, please enter your billing information below. Thanks!
@@ -59,7 +59,7 @@
 </form_field>
 
 <form_field>
-{% if request.account.chargify_cancel_at_end_of_period %}
+{% if request.account.is_cancelled %}
 <label>Cancellation status:</label>	Account cancelled, paid and active until {{request.account.chargify_next_assessment_at|date}}.  <a href="{% url accounts:reactivate_subscription %}" class="reactivate_subscription_btn mycelium_btn mycelium_small_btn" >Reactivate Subscription</a>
 {% else %}
 <label>Next billing date:</label> {{request.account.chargify_next_assessment_at|date}}
@@ -78,8 +78,11 @@ No card on file.
 </form_field>
 {% endif %}
 
+{% if not request.account.is_cancelled %}
 <form_field>
-<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn mycelium_small_btn mycelium_btn mycelium_grey">Cancel</a></form_field>
+<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn mycelium_small_btn mycelium_btn mycelium_grey">Cancel</a>
+</form_field>
+{% endif %}
 	
 
 

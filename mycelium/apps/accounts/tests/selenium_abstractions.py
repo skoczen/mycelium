@@ -63,6 +63,11 @@ class AccountTestAbstractions(object):
     def set_site(self, site):
         self.site = site
 
+    def get_logged_in(self, name="test"):
+        self.go_to_the_login_page(site=name)
+        self.log_in()
+        self.assert_login_succeeded()
+
     def setup_for_logged_in(self, name="test", mostly_empty=False, **kwargs):
         cache.clear()
         self.account = self.create_demo_site(name=name, mostly_empty=mostly_empty, **kwargs)
@@ -128,10 +133,7 @@ class AccountTestAbstractions(object):
     def enter_billing_info_signup(self, cc_number="1", coupon_code=None, update=False):
         """Assumes you're starting on the manage acct page"""
         sel = self.selenium
-        if update:
-            sel.click("link=Change Billing Information")
-        else:
-            sel.click("link=Enter Billing Information")
+        sel.click("link=Update Billing Information")
         time.sleep(4)
 
         sel.select_frame("css=.cboxIframe")
@@ -144,16 +146,8 @@ class AccountTestAbstractions(object):
 
         sel.click("css=#subscription_submit")
         sel.wait_for_page_to_load("30000")
-        if not update:
-            sel.select_frame("css=.cboxIframe")
-            loc = sel.get_location()
-            postback_loc = _sitespaced_url(loc[loc.find("/webhooks"):], site="")
-            sel.open(postback_loc)
-            time.sleep(3)
-
         sel.select_frame("relative=top")
         sel.click("css=#cboxClose")
-        sel.wait_for_page_to_load("30000")
         
         time.sleep(8)
         
