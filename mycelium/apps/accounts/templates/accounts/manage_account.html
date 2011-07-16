@@ -60,7 +60,9 @@
 
 <form_field>
 {% if request.account.is_cancelled %}
-<label>Cancellation status:</label>	Account cancelled, paid and active until {{request.account.chargify_next_assessment_at|date}}.  <a href="{% url accounts:reactivate_subscription %}" class="reactivate_subscription_btn mycelium_btn mycelium_small_btn" >Reactivate Subscription</a>
+<label>Cancellation status:</label>	Account cancelled, paid and active until {{request.account.chargify_next_assessment_at|date}}.  
+{# <a href="{% url accounts:reactivate_subscription %}" class="reactivate_subscription_btn mycelium_btn mycelium_small_btn" >Reactivate Subscription</a> #}
+If you'd like to reactivate your subscription, please <a href="#" class="help_btn">contact us</a>!
 {% else %}
 <label>Next billing date:</label> {{request.account.chargify_next_assessment_at|date}}
 {% endif %}

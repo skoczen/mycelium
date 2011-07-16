@@ -643,9 +643,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
     def test_that_feedback_team_users_can_enter_a_coupon_on_signup_and_get_half_off(self):
         sel = self.selenium
+        assert True == "Test written"
         self.get_logged_in()
         self.go_to_the_account_page()
-        self.enter_billing_info_signup(coupon_code="FEEDBACKTEAM")
+        self.enter_billing_info_signup()
         assert sel.is_text_present("Status: Active")
         assert sel.is_text_present("Subscriber since: %s" % (date(datetime.date.today()),) )
         assert sel.is_text_present("Last billing date: %s" % (date(datetime.date.today()),) )
@@ -680,13 +681,12 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
 
     def test_that_signing_up_during_a_free_trial_does_not_bill_their_card(self):
-        sel = self.selenium
-        assert True == "Test written"
+        self.test_that_new_signups_can_sign_up_for_an_account()
+        sub = self.a1.chargify_subscription
+        assert sub.signup_revenue == "0.00"
+        
 
 
-    def test_that_webhook_causes_a_subscription_update(self):
-        sel = self.selenium
-        assert True == "Test written"
 
 
 

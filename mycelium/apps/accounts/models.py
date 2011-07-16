@@ -227,11 +227,15 @@ class Account(TimestampModelMixin):
         self.chargify_subscription_id = subscription.id
         self.save()
 
-    def update_account_status(self):
+    @property
+    def chargify_subscription(self):
         chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
         subscription = chargify.Subscription()
-        chargify_sub = subscription.getBySubscriptionId(self.chargify_subscription_id)
+        return subscription.getBySubscriptionId(self.chargify_subscription_id)
 
+
+    def update_account_status(self):
+        chargify_sub = self.chargify_subscription
         self.last_billing_date = chargify_sub.current_period_started_at
         self.chargify_state = chargify_sub.state
         

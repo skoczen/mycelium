@@ -130,7 +130,7 @@ class AccountTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
         return sel.get_text("css=#container_id_first_name .view_field")
 
-    def enter_billing_info_signup(self, cc_number="1", coupon_code=None, update=False):
+    def enter_billing_info_signup(self, cc_number="1", update=False, close_and_refresh=True):
         """Assumes you're starting on the manage acct page"""
         sel = self.selenium
         sel.click("link=Update Billing Information")
@@ -147,8 +147,9 @@ class AccountTestAbstractions(object):
         sel.click("css=#subscription_submit")
         sel.wait_for_page_to_load("30000")
         sel.select_frame("relative=top")
-        sel.click("css=#cboxClose")
+        if close_and_refresh:
+            sel.click("css=#cboxClose")
         
-        time.sleep(8)
+            time.sleep(8)
         
        

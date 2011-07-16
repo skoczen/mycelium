@@ -9,27 +9,24 @@ from accounts import CHARGIFY_STATUS_MAPPING, ACCOUNT_STATII
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 
-def _update_account_subscription(account_id, chargify_subscription_id):
-    a = Account.objects.get(pk=account_id)
-    a.chargify_subscription_id = chargify_subscription_id
-    a.save()
-
+def _update_account_subscription(chargify_subscription_id):
+    print chargify_subscription_id
+    a = Account.objects.get(chargify_subscription_id=chargify_subscription_id)
     a.update_account_status()
+
     return a
 
 @json_view
 @csrf_exempt
 def chargify_webhook(request):
-    print request.POST
     print request.REQUEST
-    assert request.POST['event'][0] == "subscription_state_change"
+    assert request.REQUEST['event'] == "subscription_state_changed"
     
-    payload = request.POST['payload']
+    for s in request.POST.getlist('payload[subscription][id]'):
+        _update_account_subscription(s)
 
-    account_id = payload["customer_reference"]
-    subscription_id = payload["subscription_id"]
-    account = _update_account_subscription(account_id, subscription_id)
     return {}
+
 
 @csrf_exempt
 @render_to("webhooks/chargify_postback.html")

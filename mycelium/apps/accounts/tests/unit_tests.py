@@ -1,4 +1,5 @@
 import time
+import datetime
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
 from qi_toolkit.selenium_test_case import QiUnitTestMixin
@@ -11,6 +12,8 @@ from accounts.models import Account, UserAccount, AccessLevel
 from volunteers.models import Volunteer, CompletedShift
 from generic_tags.models import TagSet, Tag
 from django.core import mail
+from django.test.client import Client
+from accounts import CANCELLED_SUBSCRIPTION_STATII
 
 class Dummy(object):
     pass
@@ -80,6 +83,21 @@ class TestAccountFactory(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase)
         admin_accesslevel = AccessLevel.objects.get(name__iexact="Admin")     
         admin_account = UserAccount.objects.get(account=a1, access_level=admin_accesslevel)
         assert a1.primary_useraccount == admin_account
+
+
+    def test_that_webhook_causes_a_subscription_update(self):
+        a1 = Factory.create_demo_site("test1", quick=True)
+        sub = a1.chargify_subscription
+        sub.unsubscribe("Unsubscribe via site")
+
+        c = Client()
+        response = c.post('/webhooks/chargify/webhook', {'event': 'subscription_state_changed', 'payload[subscription][id]': sub.id})
+        assert response.status_code == 200
+
+        a1a = Account.objects.get(pk=a1.pk)
+
+        assert a1a.status in CANCELLED_SUBSCRIPTION_STATII
+
 
     # def test_that_signing_up_generates_a_message_to_the_user_and_to_us(self):
     #     from django.test.client import Client
