@@ -3,11 +3,12 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from managers import AccountDataModelManager, ExplicitAccountDataModelManager
 from qi_toolkit.models import TimestampModelMixin
-from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII
+from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII
 from django.conf import settings
-from pychargify.api import ChargifySubscription
+from pychargify.api import ChargifySubscription, ChargifyCustomer, Chargify
 import hashlib
 import datetime
+from dateutil.relativedelta import *
 
 class Plan(TimestampModelMixin):
     name = models.CharField(max_length=255)
@@ -46,21 +47,28 @@ class Account(TimestampModelMixin):
     last_billing_date                   = models.DateTimeField(blank=True, null=True)                # chargify sub: current_period_started_at
     chargify_subscription_id            = models.IntegerField(blank=True, null=True)
     chargify_state                      = models.CharField(max_length=255, blank=True, null=True)
-    chargify_activated_at               = models.DateTimeField(blank=True, null=True)
     chargify_cancel_at_end_of_period    = models.BooleanField(default=False)
     chargify_next_assessment_at         = models.DateTimeField(blank=True, null=True)
     chargify_last_four                  = models.CharField(blank=True, null=True, max_length=4)
 
     def save(self, *args, **kwargs):
+        was_new = False
         if not self.id:
             self.signup_date = datetime.datetime.now()
+            was_new = True
         super(Account,self).save(*args, **kwargs)
+        if was_new:
+            self.create_subscription()
 
     def __unicode__(self):
         return "%s" % self.name
 
     class Meta(object):
         ordering = ("name",)
+
+    @property
+    def primary_useraccount(self):
+        return self.useraccount_set.order_by("created_at").all()[0]
 
     def namespaced_username_for_username(self, username):
         return "a%s_%s" % (self.pk, username)
@@ -197,43 +205,63 @@ class Account(TimestampModelMixin):
             return birthday_people.all().order_by("birth_month","birth_day", "first_name", "last_name")[:NUMBER_BIRTHDAYS_OF_TO_SHOW]
         return None
 
-    def update_account_status(self):
-        if self.chargify_subscription_id:
-            try:
-                chargify = ChargifySubscription(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-                chargify_sub = chargify.getBySubscriptionId(self.chargify_subscription_id)
+    def create_subscription(self):
+        chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+        customer = chargify.Customer()
+        customer.first_name = self.primary_useraccount.full_name[:self.primary_useraccount.full_name.find(" ")]
+        customer.last_name = self.primary_useraccount.full_name[self.primary_useraccount.full_name.find(" ")+1:]
+        customer.organization = self.name
+        customer.reference = "%s" % self.id
+        customer.email = self.primary_useraccount.user.email
+        customer.save()
 
-                self.last_billing_date = chargify_sub.current_period_started_at
-                self.chargify_state = chargify_sub.state
-                self.chargify_activated_at = chargify_sub.activated_at
-                self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period == "true"
+        customer = chargify.Customer()
+        customer = customer.getByReference(self.pk)
 
-                self.chargify_next_assessment_at = chargify_sub.current_period_ends_at
-                self.chargify_last_four = chargify_sub.credit_card.masked_card_number[chargify_sub.credit_card.masked_card_number.rfind("-")+1:]
+        subscription = chargify.Subscription()
+        subscription.product_handle = settings.CHARGIFY_PRODUCT_HANDLE
+        subscription.customer_reference = "%s" % self.id
+        subscription.save()
 
-                self.status = CHARGIFY_STATUS_MAPPING[chargify_sub.state][0]
-                self.save()
-                return self
-            except:
-                pass        
+        subscription = chargify.Subscription()
+        subscription = subscription.getByCustomerId(customer.id)[0]
 
-        now = datetime.datetime.now()
-        if now - datetime.timedelta(days=30) > self.signup_date:
-            self.status = ACCOUNT_STATII[1][0]
-        else:
-            self.status = ACCOUNT_STATII[0][0]
-
-        self.last_billing_date = None
-        self.chargify_state = None
-        self.chargify_activated_at = None
-        self.chargify_cancel_at_end_of_period = False
-        self.chargify_next_assessment_at = None
-        self.chargify_last_four = None
+        self.chargify_subscription_id = subscription.id
         self.save()
+
+    def update_account_status(self):
+        chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+        subscription = chargify.Subscription()
+        chargify_sub = subscription.getBySubscriptionId(self.chargify_subscription_id)
+
+        self.last_billing_date = chargify_sub.current_period_started_at
+        self.chargify_state = chargify_sub.state
+        
+        self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period == "true"
+
+        self.chargify_next_assessment_at = chargify_sub.current_period_ends_at
+        if chargify_sub.credit_card:
+            self.chargify_last_four = chargify_sub.credit_card.masked_card_number[chargify_sub.credit_card.masked_card_number.rfind("-")+1:]
+        else:
+            self.chargify_last_four = None
+
+        self.status = CHARGIFY_STATUS_MAPPING[chargify_sub.state][0]
+        self.save()
+
+        return self
     
+
+    @property
+    def free_trial_ends(self):
+        return self.signup_date - relativedelta(months=+6)
+
+    @property
+    def in_free_trial(self):
+        return datetime.datetime.now() <= self.free_trial_ends
+
     @property
     def is_active(self):
-        return self.status == ACCOUNT_STATII[2][0]
+        return self.status in ACTIVE_SUBSCRIPTION_STATII
 
     @property
     def is_expired(self):
@@ -258,6 +286,11 @@ class Account(TimestampModelMixin):
     @property
     def cancelled_subscription(self):
         return self.status in CANCELLED_SUBSCRIPTION_STATII
+
+    @property
+    def has_card_on_file(self):
+        print "last 4 %s" % self.chargify_last_four
+        return self.chargify_last_four != None
 
     @property
     def chargify_manage_url(self):

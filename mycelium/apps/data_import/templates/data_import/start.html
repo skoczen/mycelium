@@ -103,7 +103,12 @@
 		col_count = 0;
 		$(".import_fields_confirmation thead th").each(function(){
 			th = $(this);
-			th.html('<td><select class="import_column_type" name="import_col_'+col_count+'">' + COLUMN_HEADERS.rendered_select_options[import_type] +'</select></td>');
+			col_count_str = col_count + "";
+			while (col_count_str.length < 4) {
+				col_count_str = "0" + col_count_str;
+			}
+
+			th.html('<td><select class="import_column_type" name="import_col_'+col_count_str+'">' + COLUMN_HEADERS.rendered_select_options[import_type] +'</select></td>');
 			col_count ++;
 		});
 

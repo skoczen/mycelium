@@ -135,8 +135,8 @@ def dashboard(request):
 @render_to("accounts/manage_account.html")
 def manage_account(request):
     section = "admin"
-    if "force_reload" in request.GET and request.GET["force_reload"] == "true":
-        request.account.update_account_status()
+    
+    request.account.update_account_status()
 
     form = AccountForm(instance=request.account)
     return locals()

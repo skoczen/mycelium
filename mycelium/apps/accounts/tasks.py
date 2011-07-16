@@ -10,4 +10,4 @@ def send_welcome_emails(account, useraccount):
     send_mail("Welcome to GoodCloud!", "%s" % render_to_string("accounts/welcome_email.txt", locals()), settings.SERVER_EMAIL, [useraccount.email] )
 
     # Send us a notification that we have a new signup!
-    send_mail("New Account: %s!" % (account,), "%s" % render_to_string("accounts/new_signup_email.txt", locals()), settings.SERVER_EMAIL, settings.MANAGERS )    
+    send_mail("New Account: %s!" % (account,), "%s" % render_to_string("accounts/new_signup_email.txt", locals()), settings.SERVER_EMAIL, [e[1] for e in settings.MANAGERS] )    

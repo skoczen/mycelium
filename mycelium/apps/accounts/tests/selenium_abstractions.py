@@ -141,15 +141,7 @@ class AccountTestAbstractions(object):
         sel.select("css=#subscription_payment_profile_attributes_expiration_year","2020")
         sel.type("css=#subscription_payment_profile_attributes_first_name","Joe")
         sel.type("css=#subscription_payment_profile_attributes_last_name","Smith")
-        if not update:
-            sel.type("css=#subscription_customer_attributes_first_name","Joe")
-            sel.type("css=#subscription_customer_attributes_last_name","Smith")
-            sel.type("css=#subscription_customer_attributes_email","joe@smith.com")
-            sel.type("css=#subscription_customer_attributes_phone","555 123-4567")
-            sel.click("css=#accept_terms")
-            if coupon_code:
-                sel.type("css=#subscription_coupon_code",coupon_code)
-        
+
         sel.click("css=#subscription_submit")
         sel.wait_for_page_to_load("30000")
         if not update:

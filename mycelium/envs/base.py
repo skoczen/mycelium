@@ -282,6 +282,7 @@ CHARGIFY_API = "H4a_DfhPSl6w5h4DqWZg"
 CHARGIFY_SUBDOMAIN = "goodcloud-test"
 CHARGIFY_HOSTED_SIGNUP_URL = "https://goodcloud-test.chargify.com/h/44718/subscriptions/new"
 CHARGIFY_SHARED_KEY = "hjMV9CUiUjSFecCIo9Fi"
+CHARGIFY_PRODUCT_HANDLE = "monthly"
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 

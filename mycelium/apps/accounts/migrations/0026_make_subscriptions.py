@@ -8,9 +8,11 @@ from accounts.models import Account
 class Migration(DataMigration):
 
     def forwards(self, orm):
+        "Write your forwards methods here."
         for a in Account.objects.all():
-            a.update_account_status()
-
+            print "making a subscription for %s..." % a.name,
+            a.create_subscription()
+            print " done."
 
     def backwards(self, orm):
         "Write your backwards methods here."
@@ -35,7 +37,6 @@ class Migration(DataMigration):
             'challenge_has_logged_volunteer_hours': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'challenge_has_set_up_tags': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'challenge_has_submitted_support': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'chargify_activated_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'chargify_cancel_at_end_of_period': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'chargify_last_four': ('django.db.models.fields.CharField', [], {'max_length': '4', 'null': 'True', 'blank': 'True'}),
             'chargify_next_assessment_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
@@ -45,12 +46,11 @@ class Migration(DataMigration):
             'has_completed_all_challenges': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'has_completed_any_challenges': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'last_billing_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'modified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'plan': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['accounts.Plan']", 'blank': 'True'}),
-            'signup_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2011, 7, 12, 21, 44, 45, 488400)', 'null': 'True'}),
+            'signup_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2011, 7, 15, 19, 40, 21, 908081)', 'null': 'True'}),
             'status': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'subdomain': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255', 'db_index': 'True'}),
             'was_a_feedback_partner': ('django.db.models.fields.BooleanField', [], {'default': 'False'})

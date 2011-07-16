@@ -681,6 +681,9 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         assert True == "Test written"
 
 
+    def test_that_signing_up_during_a_free_trial_does_not_bill_their_card(self):
+        sel = self.selenium
+        assert True == "Test written"
 
 
 

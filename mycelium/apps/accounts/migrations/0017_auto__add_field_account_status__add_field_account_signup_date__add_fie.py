@@ -26,9 +26,6 @@ class Migration(SchemaMigration):
         # Adding field 'Account.chargify_state'
         db.add_column('accounts_account', 'chargify_state', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
-        # Adding field 'Account.chargify_activated_at'
-        db.add_column('accounts_account', 'chargify_activated_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True), keep_default=False)
-
         # Adding field 'Account.chargify_cancel_at_end_of_period'
         db.add_column('accounts_account', 'chargify_cancel_at_end_of_period', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
@@ -56,9 +53,6 @@ class Migration(SchemaMigration):
         # Deleting field 'Account.chargify_state'
         db.delete_column('accounts_account', 'chargify_state')
 
-        # Deleting field 'Account.chargify_activated_at'
-        db.delete_column('accounts_account', 'chargify_activated_at')
-
         # Deleting field 'Account.chargify_cancel_at_end_of_period'
         db.delete_column('accounts_account', 'chargify_cancel_at_end_of_period')
 
@@ -85,7 +79,6 @@ class Migration(SchemaMigration):
             'challenge_has_logged_volunteer_hours': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'challenge_has_set_up_tags': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'challenge_has_submitted_support': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'chargify_activated_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'chargify_cancel_at_end_of_period': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'chargify_next_assessment_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'chargify_state': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),

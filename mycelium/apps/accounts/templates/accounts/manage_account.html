@@ -21,19 +21,24 @@
 	{% include "people/_save_status_and_button.html" %}
 {% endwith %}
 
-{% if not request.account.is_active %}
+{% if not request.account.is_active and not request.account.in_free_trial %}
 	<div class="expired_message">
 	{% if request.account.is_expired %}
 	Looks like your account is past its free trial, and has expired. To keep using GoodCloud, please enter your billing information below. Thanks!
+	<br/>
+	- Tom &amp; Steven (the GoodCloud team)
 	{% else %}
 	{% if request.account.has_billing_issue %}
 		There's been a problem processing your billing method. Please update it using the link below. Thanks!
+		<br/>
+		- Tom &amp; Steven (the GoodCloud team)
 	{% else %}
 	{% if request.account.is_cancelled %}
 	Your account has been cancelled. To keep using GoodCloud, you'll need to reactivate your subscription below. Thanks!
-	{% endif %}{% endif %}{% endif %}
 	<br/>
 	- Tom &amp; Steven (the GoodCloud team)
+	{% endif %}{% endif %}{% endif %}
+	
 	</div>
 {% endif %}
 
@@ -44,50 +49,39 @@
 <label>Organization Name:</label>{% generic_editable_field form.name %}
 </form_field>
 
-<form_field>
-<label>Plan:</label>Monthly
-</form_field>
 
 <form_field>
-<label>Account Status:</label> {{request.account.get_status_display}}
+<label>Account Status:</label> {{request.account.get_status_display}} {% if request.account.in_free_trial %}until {{request.account.free_trial_ends|date}} {% endif %}
 </form_field>
 
-
-{% if request.account.has_subscription %}
-<form_field>
-<label>Subscriber since:</label> {{request.account.chargify_activated_at|date}}
-</form_field>
-<form_field>
-<label>Last billing date:</label> {{request.account.last_billing_date|date}}
-</form_field>
-<form_field>
-{% if request.account.chargify_cancel_at_end_of_period %}
-<label> </label>	Account cancelled, paid and active until {{request.account.chargify_next_assessment_at|date}}
-{% else %}
-<label>Next billing date:</label> {{request.account.chargify_next_assessment_at|date}}
-{% endif %}
-</form_field>
-<form_field>
-<label>Billing Information:</label>XXXX-XXXX-XXXX-{{request.account.chargify_last_four}} <a href="{{request.account.chargify_manage_url}}" class="billing_popup_link mycelium_btn mycelium_small_btn">Change Billing Information</a>
-</form_field>
-
-<form_field>
-<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn mycelium_small_btn mycelium_btn mycelium_grey">Cancel</a></form_field>
-	
-{% else %}
 <form_field>
 <label>Signup Date:</label> {{request.account.signup_date|date}}
 </form_field>
 
 <form_field>
-<label>Billing Information:</label>
-	{% if request.account.cancelled_subscription %}
-	<a href="{% url accounts:reactivate_subscription %}" class="reactivate_subscription_btn mycelium_btn mycelium_small_btn" >Reactivate Subscription</a>
-	{% else %}
-	<a href="{{request.account.chargify_signup_url}}&email={{request.useraccount.user.email|urlencode}}&first_name={{request.useraccount.user.first_name}}" class="billing_popup_link mycelium_btn mycelium_small_btn">Enter Billing Information</a>
-	{% endif %}
+{% if request.account.chargify_cancel_at_end_of_period %}
+<label>Cancellation status:</label>	Account cancelled, paid and active until {{request.account.chargify_next_assessment_at|date}}.  <a href="{% url accounts:reactivate_subscription %}" class="reactivate_subscription_btn mycelium_btn mycelium_small_btn" >Reactivate Subscription</a>
+{% else %}
+<label>Next billing date:</label> {{request.account.chargify_next_assessment_at|date}}
+{% endif %}
 </form_field>
- {% endif %}
+
+{% if not request.account.cancelled_subscription %}
+<form_field>
+<label>Billing Information:</label> 
+{% if request.account.has_card_on_file %}
+XXXX-XXXX-XXXX-{{request.account.chargify_last_four}} 
+{% else %}
+No card on file.
+{% endif %}
+<a href="{{request.account.chargify_manage_url}}" class="billing_popup_link mycelium_btn mycelium_small_btn">Update Billing Information</a>
+</form_field>
+{% endif %}
+
+<form_field>
+<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn mycelium_small_btn mycelium_btn mycelium_grey">Cancel</a></form_field>
+	
+
 
 
 </form>

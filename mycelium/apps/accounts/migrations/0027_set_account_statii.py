@@ -3,17 +3,18 @@ import datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
+from accounts.models import Account
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        for a in orm.Account.objects.all():
-            a.signup_date = a.created_at
-            a.save()
+        for a in Account.objects.all():
+            a.update_account_status()
 
 
     def backwards(self, orm):
-        pass
+        "Write your backwards methods here."
+
 
     models = {
         'accounts.accesslevel': {
@@ -35,10 +36,10 @@ class Migration(DataMigration):
             'challenge_has_set_up_tags': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'challenge_has_submitted_support': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'chargify_cancel_at_end_of_period': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'chargify_last_four': ('django.db.models.fields.CharField', [], {'max_length': '4', 'null': 'True', 'blank': 'True'}),
             'chargify_next_assessment_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'chargify_state': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'chargify_subscription_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'chargify_subscription_started': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'has_completed_all_challenges': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'has_completed_any_challenges': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -48,9 +49,10 @@ class Migration(DataMigration):
             'modified_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'plan': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['accounts.Plan']", 'blank': 'True'}),
-            'signup_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2011, 7, 12, 18, 44, 36, 271095)', 'null': 'True'}),
+            'signup_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2011, 7, 12, 21, 44, 45, 488400)', 'null': 'True'}),
             'status': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'subdomain': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255', 'db_index': 'True'})
+            'subdomain': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255', 'db_index': 'True'}),
+            'was_a_feedback_partner': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         },
         'accounts.plan': {
             'Meta': {'ordering': "('name',)", 'object_name': 'Plan'},

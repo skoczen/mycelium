@@ -7,7 +7,7 @@ from groups.models import Group
 from people.models import Person
 from organizations.models import Organization, Employee
 from donors.models import Donor, Donation
-from accounts.models import Account
+from accounts.models import Account, UserAccount, AccessLevel
 from volunteers.models import Volunteer, CompletedShift
 from generic_tags.models import TagSet, Tag
 from django.core import mail
@@ -75,6 +75,11 @@ class TestAccountFactory(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase)
         # The two commented out behave properly in hand-testing, but were a beast to test via this method, and we *are* trying to ship.
 
 
+    def test_primary_useraccount_chooses_the_right_account(self):
+        a1 = Factory.create_demo_site("test1", quick=True)
+        admin_accesslevel = AccessLevel.objects.get(name__iexact="Admin")     
+        admin_account = UserAccount.objects.get(account=a1, access_level=admin_accesslevel)
+        assert a1.primary_useraccount == admin_account
 
     # def test_that_signing_up_generates_a_message_to_the_user_and_to_us(self):
     #     from django.test.client import Client

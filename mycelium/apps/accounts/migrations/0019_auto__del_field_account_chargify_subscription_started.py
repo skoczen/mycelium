@@ -37,7 +37,6 @@ class Migration(SchemaMigration):
             'challenge_has_logged_volunteer_hours': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'challenge_has_set_up_tags': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'challenge_has_submitted_support': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'chargify_activated_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'chargify_cancel_at_end_of_period': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'chargify_next_assessment_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'chargify_state': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
