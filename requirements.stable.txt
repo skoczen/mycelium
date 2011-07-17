@@ -28,7 +28,7 @@ ipython==0.10.2
 django-nose==0.1.3
 nose-exclude==0.1.5
 django-nose-selenium==0.7
--e git://github.com/Almad/django-sane-testing.git@e2bf9652ee27222936a013445f31564bc90818c4#egg=djangosanetesting-dev
+-e git://github.com/Almad/django-sane-testing.git@c1b21943557747afae9c878ad12423f70925453f#egg=djangosanetesting-dev
 celery==2.2.6
 django-celery==2.2.4
 -e git://github.com/kmmbvnr/django-jenkins.git@e5031e9254e172aff1dee1e92b5e2609235612f9#egg=django_jenkins-dev
@@ -55,7 +55,13 @@ xlrd==0.7.1
 xlutils==1.4.1
 # mezzanine
 # django-grappelli
-# django-filebrowser## The following requirements were added by pip --freeze:
+# django-filebrowser
+django-newsletter==0.2.6
+vobject==0.8.1c
+django-tinymce==1.5.1a2
+chardet==1.0.1
+-e git://github.com/skoczen/pychargify.git@9db4ca11ab95c8658f99f77e4e8724d7e077a662#egg=pychargify-dev
+## The following requirements were added by pip --freeze:
 CherryPy==3.2.0
 Django==1.3
 Fabric==1.0.1
@@ -67,7 +73,7 @@ anyjson==0.3.1
 async==0.6.1
 django-indexer==0.3.0
 django-paging==0.2.4
--e hg+https://bitbucket.org/david/django-storages@b85568a98f57e71573d0dd0bf403c0b33859dac4#egg=django_storages-dev
+-e hg+https://bitbucket.org/david/django-storages@629607f8767f3bcea74df8d704c0ef22d5b51881#egg=django_storages-dev
 django-templatetag-sugar==0.1
 errorhandler==1.1.1
 gitdb==0.5.2
