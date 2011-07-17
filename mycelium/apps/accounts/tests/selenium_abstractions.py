@@ -14,7 +14,7 @@ class AccountTestAbstractions(object):
     MANAGE_USERS_URL = "/accounts/manage-users"
     
     def create_demo_site(self, name="test", mostly_empty=False, **kwargs):
-        return Factory.create_demo_site(name, quick=True, delete_existing=True, mostly_empty=mostly_empty, **kwargs)
+        return Factory.create_demo_site(name, quick=True, delete_existing=True,  mostly_empty=mostly_empty, **kwargs)
 
     def go_to_the_login_page(self, site=None):
         sel = self.selenium

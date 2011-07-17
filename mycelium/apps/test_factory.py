@@ -271,7 +271,7 @@ class Factory(QiFactory):
         return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=first_name))
 
     @classmethod
-    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False, single_user=False):
+    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False, single_user=False, create_subscription=False):
         if quick:
             max_num_people = 5
             max_num_orgs = 2
@@ -310,7 +310,6 @@ class Factory(QiFactory):
             # create volunteer user ( volunteer / volunteer )
             cls.useraccount(account=account, username="volunteer", password="volunteer", access_level=volunteer_accesslevel)
         
-        account.create_subscription()
         print_if_verbose(verbose, "Users created.")
 
         # create a bunch of reasonable tags, including the favorite color category
@@ -449,6 +448,10 @@ class Factory(QiFactory):
             cls.grouprule(account, "last volunteer shift","is after",datetime.date(day=1,month=1,year=today.year), group=group)
         else:
             print_if_verbose(verbose, "Mostly empty called - skipping people, etc.")
+
+        if create_subscription:
+            account.create_subscription()
+            print_if_verbose(verbose, "Created subscription.")
 
         print_if_verbose(verbose, "Setup complete.")
         return account

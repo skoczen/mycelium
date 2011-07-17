@@ -10,7 +10,6 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 
 def _update_account_subscription(chargify_subscription_id):
-    print chargify_subscription_id
     a = Account.objects.get(chargify_subscription_id=chargify_subscription_id)
     a.update_account_status()
 
@@ -19,7 +18,7 @@ def _update_account_subscription(chargify_subscription_id):
 @json_view
 @csrf_exempt
 def chargify_webhook(request):
-    print request.REQUEST
+    # print request.REQUEST
     assert request.REQUEST['event'] == "subscription_state_changed"
     
     for s in request.POST.getlist('payload[subscription][id]'):

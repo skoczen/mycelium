@@ -579,9 +579,17 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
     def test_admins_see_the_admin_link_and_not_an_account_link(self):
         sel = self.selenium
         self.get_logged_in()
-        assert not sel.is_element_present("css=.my_account_btn")
         assert sel.is_element_present("css=.admin_btn")
 
+
+class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
+    # selenium_fixtures = []
+    # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
+
+    def setUp(self, *args, **kwargs):
+        self.a1 = self.create_demo_site(create_subscription=True)
+        cache.clear()
+        self.verificationErrors = []
 
 
     def test_that_new_signups_see_their_status_as_free_trial(self):
@@ -631,7 +639,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         sel.get_confirmation()
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("Your account has been cancelled.")
-        assert sel.is_element_present("css=.reactivate_subscription_btn")
+        # assert sel.is_element_present("css=.reactivate_subscription_btn")
+        assert sel.is_text_present("reactivate your subscription")
 
     def test_that_users_can_resume_a_cancelled_subscription_and_see_that_its_resumed(self):
         sel = self.selenium

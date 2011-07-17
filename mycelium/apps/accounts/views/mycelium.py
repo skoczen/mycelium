@@ -213,8 +213,8 @@ def reactivate_subscription(request):
     # reactivate_subscription the subscription.
     chargify = ChargifySubscription(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
     chargify_sub = chargify.getBySubscriptionId(request.account.chargify_subscription_id)
-    print chargify_sub
-    print chargify_sub.reactivate()
+    
+    chargify_sub.reactivate()
 
 
     request.account.update_account_status()
