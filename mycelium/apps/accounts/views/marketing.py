@@ -13,7 +13,8 @@ from accounts.forms import NewAccountForm, NewUserForm
 from accounts.models import AccessLevel, Account
 from accounts.tasks import send_welcome_emails
 from django.contrib.sites.models import Site
-
+from django.conf import settings
+from pychargify.api import *
 
 @render_to("accounts/signup.html")
 def signup(request):
@@ -29,6 +30,7 @@ def signup(request):
                                        email=user_form.cleaned_data['email'], 
                                        access_level=AccessLevel.admin()
                                        )
+            account.create_subscription()
             site = Site.objects.get_current()
 
             # Send off emails to us and them.
@@ -52,3 +54,22 @@ def verify_subdomain(request):
         is_available = Account.objects.filter(subdomain=request.POST["subdomain"]).count() == 0
     
     return {'success':True, 'is_available':is_available}
+
+
+
+@json_view
+def chargify_webhook(request):
+    print request.POST
+    # billing_subscription_id = request.GET['subscription_id']
+    # billing_customer_id = request.GET['customer_id']
+    # account_id = request.GET['account_id']
+
+    # go to the chargify API, and verify the status.
+    chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+    # chargify_customer = chargify.Customer(id=billing_customer_id)
+    print chargify
+
+
+    # a = Account.objects.get(pk=account_id)
+    # a.subscription_id
+    return {}

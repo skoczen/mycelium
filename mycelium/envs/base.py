@@ -107,11 +107,13 @@ SUBDOMAIN_URLCONFS = {
     # The format for these is 'subdomain': 'urlconf'
     None: 'mycelium.urls.marketing',
     'www': 'mycelium.urls.marketing',
+    'dev': 'mycelium.urls.marketing',
     # 'api': 'myproject.urls.api',
 }
 PUBLIC_SUBDOMAINS = [
     None,
-    "www"
+    "www",
+    "dev",
 ]
 REMOVE_WWW_FROM_SUBDOMAIN = True
 
@@ -175,6 +177,7 @@ INSTALLED_APPS = (
     'rules',
     'accounts',
     'dashboard',
+    'webhooks',
 
     'djangosanetesting',
 )
@@ -185,8 +188,8 @@ TEMPLATE_DIRS = (
 # Django-analytical
 GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-20296975-1'
 ANALYTICAL_INTERNAL_IPS = ['127.0.0.1', '192.168.2.164']
-HUBSPOT_PORTAL_ID = '98343'
-HUBSPOT_DOMAIN = 'agoodcloud.app9.hubspot.com'
+# HUBSPOT_PORTAL_ID = '98343'
+# HUBSPOT_DOMAIN = 'agoodcloud.app9.hubspot.com'
 
 MAILCHIMP_API_KEY = "fa5bdaa6065aa4fd8975781bceaddd26-us2"
 
@@ -274,6 +277,13 @@ AWS_SECRET_ACCESS_KEY = 'WT1wp3UQsFPdeXMxwUyvjF7IM8q/qkcm/EW6EKvy'
 AWS_STORAGE_BUCKET_NAME = "goodcloud1"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 
+# chargify
+CHARGIFY_API = "H4a_DfhPSl6w5h4DqWZg"
+CHARGIFY_SUBDOMAIN = "goodcloud-test"
+CHARGIFY_HOSTED_SIGNUP_URL = "https://goodcloud-test.chargify.com/h/44718/subscriptions/new"
+CHARGIFY_SHARED_KEY = "hjMV9CUiUjSFecCIo9Fi"
+CHARGIFY_PRODUCT_HANDLE = "monthly"
+
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 
 
@@ -331,6 +341,7 @@ MEDIASYNC = {
                 "js/mycelium/generic_fields.js",
                 "js/mycelium/mycelium_search.js",
                 "js/lib/fileuploader.mycelium.js",
+                "js/contrib/jquery.colorbox-min.js",
         ],
         'js/mycelium_core.js': [
                 "js/mycelium/mycelium_elements.js",
@@ -339,6 +350,7 @@ MEDIASYNC = {
         ],
         'css/mycelium_base.css': BASE_CSS + [
                 "css/contrib/fileuploader.css",
+                "css/contrib/colorbox.css",
         ],
 
         'js/marketing_base.js': BASE_JS + COMMON_JS + [

@@ -247,7 +247,11 @@ class Factory(QiFactory):
                 Account.objects.filter(name=name).delete()
 
         monthly_plan = Plan.objects.get(name="Monthly")
-        return Account.objects.create(plan=monthly_plan, name=name, subdomain=subdomain)
+        new_id = cls.rand_int(10000,99999999)
+        while Account.objects.filter(pk=new_id).count() > 0:
+            new_id = cls.rand_int(10000,99999999)
+        
+        return Account.objects.create(id=new_id, plan=monthly_plan, name=name, subdomain=subdomain)
 
     @classmethod
     def useraccount(cls, account=account, username=None, password=None, full_name=None, access_level=None):
@@ -267,7 +271,7 @@ class Factory(QiFactory):
         return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=first_name))
 
     @classmethod
-    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False, single_user=False):
+    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False, single_user=False, create_subscription=False):
         if quick:
             max_num_people = 5
             max_num_orgs = 2
@@ -444,6 +448,10 @@ class Factory(QiFactory):
             cls.grouprule(account, "last volunteer shift","is after",datetime.date(day=1,month=1,year=today.year), group=group)
         else:
             print_if_verbose(verbose, "Mostly empty called - skipping people, etc.")
+
+        if create_subscription:
+            account.create_subscription()
+            print_if_verbose(verbose, "Created subscription.")
 
         print_if_verbose(verbose, "Setup complete.")
         return account

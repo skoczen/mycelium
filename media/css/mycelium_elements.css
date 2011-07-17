@@ -186,6 +186,16 @@ side_nav a.nav_btn.groups {
 side_nav a.nav_btn.people {
 	background-position: 12px 9px;
 }
+side_nav #expired_side_bar {
+	color: #FFF;
+	width: 100%;
+	background-color: red;	
+	text-align: center;
+	padding: 4px 0px;
+}
+side_nav .side_account_expired_link:hover {
+	text-decoration: none;
+}
 main_content {
 	clear: none;
 	display: block;

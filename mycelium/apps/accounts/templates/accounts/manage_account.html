@@ -1,6 +1,6 @@
 {% extends "mycelium_base.html" %}
 {% load i18n i18n generic_fields friendly_data_formatting generic_tag_tags %}
-{% block title %}More Tools - Data Import, Account Settings, and more{% endblock %}
+{% block title %}GoodCloud Account Information{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
 
@@ -14,22 +14,80 @@
 {% block breadcrumb_links %}<a href="{% url core:more_menu %}" >Back to Admin</a>{% endblock %}
 
 {% block page_content %}
-<page_title>Account Information</page_title>
+<page_title>GoodCloud Account Information</page_title>
 
 <form action="{% url accounts:save_account_info %}" class="edit_mode_off account_info_form" id="basic_info_form"  method="POST">{% csrf_token %}
 {% with "Edit Account" as edit_label %}
 	{% include "people/_save_status_and_button.html" %}
 {% endwith %}
 
+{% if request.account.is_expired or request.account.has_billing_issue or request.account.is_cancelled %}
+	<div class="expired_message">
+	{% if request.account.is_expired %}
+	Looks like your account is past its free trial, and has expired. To keep using GoodCloud, please enter your billing information below. Thanks!
+	<br/>
+	- Tom &amp; Steven (the GoodCloud team)
+	{% else %}
+	{% if request.account.has_billing_issue %}
+		There's been a problem processing your billing method. Please update it using the link below. Thanks!
+		<br/>
+		- Tom &amp; Steven (the GoodCloud team)
+	{% else %}
+	{% if request.account.is_cancelled %}
+	Your account has been cancelled. To keep using GoodCloud, you'll need to reactivate your subscription below. Thanks!
+	<br/>
+	- Tom &amp; Steven (the GoodCloud team)
+	{% endif %}{% endif %}{% endif %}
+	
+	</div>
+{% endif %}
+
+
+
+
 <form_field>
 <label>Organization Name:</label>{% generic_editable_field form.name %}
 </form_field>
 
+
 <form_field>
-<label>Plan:</label>Free Trial
+<label>Account Status:</label> {{request.account.get_status_display}} {% if request.account.in_free_trial %}until {{request.account.free_trial_ends|date}} {% endif %}
 </form_field>
 
-{# <div class="coming_soon">Billing Information coming soon!</div> #}
+<form_field>
+<label>Signup Date:</label> {{request.account.signup_date|date}}
+</form_field>
+
+<form_field>
+{% if request.account.is_cancelled %}
+<label>Cancellation status:</label>	Account cancelled, paid and active until {{request.account.chargify_next_assessment_at|date}}.  
+{# <a href="{% url accounts:reactivate_subscription %}" class="reactivate_subscription_btn mycelium_btn mycelium_small_btn" >Reactivate Subscription</a> #}
+If you'd like to reactivate your subscription, please <a href="#" class="help_btn">contact us</a>!
+{% else %}
+<label>Next billing date:</label> {{request.account.chargify_next_assessment_at|date}}
+{% endif %}
+</form_field>
+
+{% if not request.account.cancelled_subscription %}
+<form_field>
+<label>Billing Information:</label> 
+{% if request.account.has_card_on_file %}
+XXXX-XXXX-XXXX-{{request.account.chargify_last_four}} 
+{% else %}
+No card on file.
+{% endif %}
+<a href="{{request.account.chargify_manage_url}}" class="billing_popup_link mycelium_btn mycelium_small_btn">Update Billing Information</a>
+</form_field>
+{% endif %}
+
+{% if not request.account.is_cancelled %}
+<form_field>
+<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn mycelium_small_btn mycelium_btn mycelium_grey">Cancel</a>
+</form_field>
+{% endif %}
+	
+
+
 
 </form>
 {% endblock %}

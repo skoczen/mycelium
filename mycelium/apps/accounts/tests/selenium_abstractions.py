@@ -5,13 +5,16 @@ from django.core.cache import cache
 
 def _sitespaced_url(url, site="test"):
     from django.conf import settings
-    return "http://%s.localhost:%s%s" % (site, settings.LIVE_SERVER_PORT, url)
+    spacer = ""
+    if site != "":
+        spacer = "."
+    return "http://%s%slocalhost:%s%s" % (site, spacer, settings.LIVE_SERVER_PORT, url)
 
 class AccountTestAbstractions(object):
     MANAGE_USERS_URL = "/accounts/manage-users"
     
     def create_demo_site(self, name="test", mostly_empty=False, **kwargs):
-        return Factory.create_demo_site(name, quick=True, delete_existing=True, mostly_empty=mostly_empty, **kwargs)
+        return Factory.create_demo_site(name, quick=True, delete_existing=True,  mostly_empty=mostly_empty, **kwargs)
 
     def go_to_the_login_page(self, site=None):
         sel = self.selenium
@@ -59,6 +62,11 @@ class AccountTestAbstractions(object):
 
     def set_site(self, site):
         self.site = site
+
+    def get_logged_in(self, name="test"):
+        self.go_to_the_login_page(site=name)
+        self.log_in()
+        self.assert_login_succeeded()
 
     def setup_for_logged_in(self, name="test", mostly_empty=False, **kwargs):
         cache.clear()
@@ -117,8 +125,31 @@ class AccountTestAbstractions(object):
         assert sel.is_text_present("My Account")
 
     def get_my_full_name(self):
-        sel = self.selenium
+        sel = self.seleniums
         sel.click("css=.my_account_btn")
         sel.wait_for_page_to_load("30000")
-        print sel.get_text("css=#container_id_first_name .view_field")
         return sel.get_text("css=#container_id_first_name .view_field")
+
+    def enter_billing_info_signup(self, cc_number="1", update=False, close_and_refresh=True):
+        """Assumes you're starting on the manage acct page"""
+        sel = self.selenium
+        sel.click("link=Update Billing Information")
+        time.sleep(4)
+
+        sel.select_frame("css=.cboxIframe")
+        sel.type("css=#subscription_payment_profile_attributes_full_number",cc_number)
+        sel.type("css=#subscription_payment_profile_attributes_cvv","123")
+        sel.select("css=#subscription_payment_profile_attributes_expiration_month","5 - May")
+        sel.select("css=#subscription_payment_profile_attributes_expiration_year","2020")
+        sel.type("css=#subscription_payment_profile_attributes_first_name","Joe")
+        sel.type("css=#subscription_payment_profile_attributes_last_name","Smith")
+
+        sel.click("css=#subscription_submit")
+        sel.wait_for_page_to_load("30000")
+        sel.select_frame("relative=top")
+        if close_and_refresh:
+            sel.click("css=#cboxClose")
+        
+            time.sleep(8)
+        
+       

@@ -1,6 +1,7 @@
 # encoding: utf-8
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
+import datetime
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from organizations.tests.selenium_abstractions import OrganizationsTestAbstractions
@@ -8,6 +9,7 @@ from groups.tests.selenium_abstractions import GroupTestAbstractions
 from django.conf import settings
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from django.core.cache import cache
+from django.template.defaultfilters import date
     
 class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
 
@@ -574,11 +576,130 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         assert not sel.is_element_present("css=.admin_btn")
 
 
-    def admins_see_the_admin_link_and_not_an_account_link(self):
+    def test_admins_see_the_admin_link_and_not_an_account_link(self):
         sel = self.selenium
-        self.setup_for_logged_in()
-        assert not sel.is_element_present("css=.my_account_btn")
+        self.get_logged_in()
         assert sel.is_element_present("css=.admin_btn")
+
+
+class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
+    # selenium_fixtures = []
+    # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
+
+    def setUp(self, *args, **kwargs):
+        self.a1 = self.create_demo_site(create_subscription=True)
+        cache.clear()
+        self.verificationErrors = []
+
+
+    def test_that_new_signups_see_their_status_as_free_trial(self):
+        sel = self.selenium
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Status: Free Trial")
+    
+    def test_that_new_signups_see_the_correct_signup_date(self):
+        sel = self.selenium
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Signup Date: %s" % (date(datetime.date.today()),) )
+
+    def test_that_new_signups_can_sign_up_for_an_account(self):
+        sel = self.selenium
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        self.enter_billing_info_signup()
+        assert sel.is_text_present("Status: Free Trial")
+        assert sel.is_text_present("XXXX-XXXX-XXXX-1")
+        assert sel.is_text_present("Signup Date: %s" % (date(datetime.date.today()),) )
+        assert sel.is_text_present("Next billing date: %s" % (date(self.a1.free_trial_ends),) )
+        assert sel.is_element_present("link=Update Billing Information")
+
+
+    def test_that_after_signup_users_can_change_their_billing_info(self):
+        # And see it updated.
+        sel = self.selenium
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        self.enter_billing_info_signup( )
+        assert sel.is_text_present("XXXX-XXXX-XXXX-1")
+        self.enter_billing_info_signup(cc_number="2", update=True)
+        assert not sel.is_text_present("XXXX-XXXX-XXXX-1")
+        assert sel.is_text_present("XXXX-XXXX-XXXX-2")
+
+
+    def test_that_users_can_cancel_their_subscription_and_see_that_its_cancelled(self):
+        sel = self.selenium
+        self.test_that_new_signups_can_sign_up_for_an_account()
+        assert not sel.is_text_present("Reactivate subscription")
+        sel.choose_cancel_on_next_confirmation()
+        sel.click("css=.cancel_subscription_btn")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to cancel your GoodCloud subscription?  This will take effect immediately.")
+        sel.click("css=.cancel_subscription_btn")
+        sel.get_confirmation()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Your account has been cancelled.")
+        # assert sel.is_element_present("css=.reactivate_subscription_btn")
+        assert sel.is_text_present("reactivate your subscription")
+
+    def test_that_users_can_resume_a_cancelled_subscription_and_see_that_its_resumed(self):
+        sel = self.selenium
+        self.test_that_users_can_cancel_their_subscription_and_see_that_its_cancelled()
+        sel.click("css=.reactivate_subscription_btn")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("link=Update Billing Information")
+        
+
+    def test_that_feedback_team_users_can_enter_a_coupon_on_signup_and_get_half_off(self):
+        sel = self.selenium
+        assert True == "Test written"
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        self.enter_billing_info_signup()
+        assert sel.is_text_present("Status: Active")
+        assert sel.is_text_present("Subscriber since: %s" % (date(datetime.date.today()),) )
+        assert sel.is_text_present("Last billing date: %s" % (date(datetime.date.today()),) )
+        assert sel.is_element_present("link=Update Billing Information")
+
+
+    def test_expired_accounts_display_an_expired_bar(self):
+        sel = self.selenium
+        a = self.a1
+        a.signup_date = datetime.datetime.now() - datetime.timedelta(days=35)
+        a.status = 10
+        a.save()
+        self.get_logged_in()
+        
+        
+        # assert sel.is_element_present(".expired_bar")
+        assert sel.is_element_present("css=#expired_side_bar")
+
+    def test_expired_accounts_go_to_the_billing_page_for_admin_user_logins(self):
+        sel = self.selenium
+        self.get_logged_in()
+        assert sel.is_text_present("Plan: Monthly")
+
+    
+    def test_expired_accounts_display_a_human_explanation_on_the_billing_page(self):
+        sel = self.selenium
+        self.test_expired_accounts_display_an_expired_bar()
+        self.go_to_the_manage_accounts_page()
+        assert sel.is_text_present("is past its free trial, and has expired")
+    
+    def test_users_can_completely_delete_their_account(self):
+        sel = self.selenium
+        assert True == "Test written"
+
+
+    def test_that_signing_up_during_a_free_trial_does_not_bill_their_card(self):
+        self.test_that_new_signups_can_sign_up_for_an_account()
+        sub = self.a1.chargify_subscription
+        assert sub.signup_revenue == "0.00"
+        
+
+
+
+
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
