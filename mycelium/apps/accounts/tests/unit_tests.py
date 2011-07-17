@@ -86,7 +86,7 @@ class TestAccountFactory(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase)
 
 
     def test_that_webhook_causes_a_subscription_update(self):
-        a1 = Factory.create_demo_site("test1", quick=True)
+        a1 = Factory.create_demo_site("test1", quick=True, create_subscription=True)
         sub = a1.chargify_subscription
         sub.unsubscribe("Unsubscribe via site")
 
