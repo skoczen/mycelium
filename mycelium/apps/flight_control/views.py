@@ -1,36 +1,34 @@
-from django.template import RequestContext
-from django.template.loader import render_to_string
 from accounts.managers import get_or_404_by_account
-from django.http import HttpResponseRedirect, HttpResponse
-from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from qi_toolkit.helpers import *
-from django.views.decorators.cache import cache_page
-
 from django.db.models import Sum, Count, Avg
 
-from groups.models import Group
-from people.models import Person
-from organizations.models import Organization
-from donors.models import Donation
-from volunteers.models import CompletedShift
-from generic_tags.models import Tag, TaggedItem
-import datetime
+from accounts.models import Account
+from accounts import BILLING_PROBLEM_STATII
+from django.contrib.admin.views.decorators import staff_member_required
 
+@staff_member_required
 @render_to("flight_control/home.html")
 def home(request):
-
+    problem_accounts = Account.objects.billing_problem.all()
+    active_account_count = Account.objects.active.count()
+    
+    week_1 = Account.objects.week_1.count()
+    week_2 = Account.objects.week_2.count()
+    week_3 = Account.objects.week_3.count()
+    week_4 = Account.objects.week_4.count()
     return locals()
 
-
+@staff_member_required
 @render_to("flight_control/account.html")
 def account(request, account_id):
-
     account = Account.objects.get(pk=account_id)
+    # recent_activity = Activity.objects.all()[:10]
+    recent_activity = []
     
     return locals()
 
-
+@staff_member_required
 @json_view
 def search_results(request):
     pass

@@ -1,5 +1,7 @@
 from django.db import models
 from django.shortcuts import get_object_or_404
+import datetime
+from accounts import ACTIVE_SUBSCRIPTION_STATII, BILLING_PROBLEM_STATII
 
 def get_or_404_by_account(cls, account, id, using=None):
     if hasattr(account,"account"):
@@ -11,6 +13,42 @@ def get_or_404_by_account(cls, account, id, using=None):
         # return get_object_or_404(cls.objects_by_account(account),pk=id)
     # else:
     #     return get_object_or_404(cls.objects_by_account(account).using(using),pk=id)
+
+class AccountManager(models.Manager):
+
+    def week_range(self, d1, d2):
+        return self.filter(signup_date__range=(d1, d2))
+
+    @property
+    def week_1(self):
+        target = datetime.datetime.today() - datetime.timedelta(days=7)
+        return self.filter(signup_date__lte=target)
+    
+    @property
+    def week_2(self):
+        d1 = datetime.datetime.today() - datetime.timedelta(days=14)
+        d2 = datetime.datetime.today() - datetime.timedelta(days=7)
+        return self.week_range(d1,d2)
+    
+    @property
+    def week_3(self):
+        d1 = datetime.datetime.today() - datetime.timedelta(days=21)
+        d2 = datetime.datetime.today() - datetime.timedelta(days=14)
+        return self.week_range(d1,d2)
+    
+    @property
+    def week_4(self):
+        d1 = datetime.datetime.today() - datetime.timedelta(days=30)
+        d2 = datetime.datetime.today() - datetime.timedelta(days=21)
+        return self.week_range(d1,d2)
+    
+    @property
+    def active(self):
+        return self.filter(status__in=ACTIVE_SUBSCRIPTION_STATII)
+
+    @property
+    def billing_problem(self):
+        return self.filter(status__in=BILLING_PROBLEM_STATII)
 
 class AccountDataModelManager(models.Manager):
     def __call__(self, *args, **kwargs):

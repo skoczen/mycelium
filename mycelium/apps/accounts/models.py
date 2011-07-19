@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-from managers import AccountDataModelManager, ExplicitAccountDataModelManager
+from managers import AccountDataModelManager, ExplicitAccountDataModelManager, AccountManager
 from qi_toolkit.models import TimestampModelMixin
 from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII
 from django.conf import settings
@@ -312,6 +312,8 @@ class Account(TimestampModelMixin):
                   'org_name' : self.name,
                   'account_pk': self.pk,
                   }
+
+    objects = AccountManager()
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)

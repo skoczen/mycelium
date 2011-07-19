@@ -15,34 +15,41 @@
 <div class="container">
 	<div class="row">
 		<span class="active threecol">
-			{% flip_clock 102 "Active" %}
+			{% flip_clock active_account_count "Active" %}
 		</span>
 
 		<span class="billing twocol">
-			<span class="bad">
-				{% flip_clock 2 "Bill Issue"  %}
+			<span class="{% if problem_accounts.count > 0 %}bad{% else %}good{% endif %}">
+				{% flip_clock problem_accounts.count "Bill Issue"  %}
 			</span>
 		</span>
 
 		<span class="free_trial sevencol">
-			{% flip_clock 2 "Trial Week 1"  %}
-			{% flip_clock 7 "Trial Week 2"  %}
-			{% flip_clock 32 "Trial Week 3"  %}
-			{% flip_clock 12 "Trial Week 4"  %}
+			{% flip_clock week_1 "Trial Week 1"  %}
+			{% flip_clock week_2 "Trial Week 2"  %}
+			{% flip_clock week_3 "Trial Week 3"  %}
+			{% flip_clock week_4 "Trial Week 4"  %}
 		</span>
 	</div>
 </div>
+<div class="container twitter_feed">
+	<div class="row">
+		<column class="twelvecol"></column>
+	</div>
+</div>
+
 
 <div class="container info_columns">
 	<div class="row">
 		<column class="fourcol billing_issues">
 			<column_header>Billing Issues</column_header>
+			{% for a in problem_accounts %}
 			<div class="account_info_block">
-				<a href="#">Account Name</a> is past due.
+				<a href="{% url flight_control:account a.pk %}">{{a.name}}</a> is {{a.get_status_display}}.
 			</div>
-			<div class="account_info_block">
-				<a href="#">Another Account Name</a> is past due.
-			</div>
+			{% empty %}
+			<div class="empty_message">No accounts with billing issues! Hooray!</div>
+			{% endfor %}
 		</column>
 		<column class="fourcol recent_activity">
 			<column_header>Recent Activity</column_header>
@@ -55,19 +62,43 @@
 			<div class="activity_block">
 				Tom Noble with <a href="#">Account Name</a> imported a spreadsheet. <span class="when">47 minutes ago</span>
 			</div>
-
 		</column>
 		<column class="fourcol averages">
 			<column_header>Averages</column_header>
 
 			<average>
 				<number>52</number>
-				<caption>People/acct</caption>
+				<caption>People</caption>
 			</average>
 
 			<average>
 				<number>21</number>
-				<caption>Orgs/acct</caption>
+				<caption>Organization</caption>
+			</average>
+
+			<average>
+				<number>21</number>
+				<caption>Donations</caption>
+			</average>
+			<average>
+				<number>21</number>
+				<caption>per Donation</caption>
+			</average>
+			<average>
+				<number>21</number>
+				<caption>Vol Hours</caption>
+			</average>
+			<average>
+				<number>21</number>
+				<caption>Tags</caption>
+			</average>
+			<average>
+				<number>21</number>
+				<caption>Tags per Person</caption>
+			</average>
+			<average>
+				<number>21</number>
+				<caption>Spreadsheets</caption>
 			</average>
 		</column>
 	</div>
