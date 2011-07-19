@@ -17,7 +17,7 @@ def get_or_404_by_account(cls, account, id, using=None):
 class AccountManager(models.Manager):
 
     def week_range(self, d1, d2):
-        return self.filter(signup_date__range=(d1, d2))
+        return self.filter(signup_date__range=(d1, d2)).order_by("-signup_date")
 
     @property
     def week_1(self):

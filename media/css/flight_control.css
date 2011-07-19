@@ -177,6 +177,7 @@ column_header {
 	font-size: 20px;
 	border: 1px solid #DDD;
 	border-width: 0px 0px 1px 0px;
+	margin: 8px 0px 6px 0px ;
 }
 average {
 	display: block;
@@ -185,8 +186,33 @@ average {
 	width: 96%;
 	margin: 0px auto;
 }
-.activity_block .when {
+.info_block .when {
 	display: block;
 	margin-left: 10px;
 	color: #999;
+}
+.info_block {
+	display: block;
+	padding: 3px 5px;
+}
+
+.number_row {
+	clear: left;
+	position: relative;
+	display: block;
+}
+.number_row number {
+	display: block;
+	float: left;
+	font-size: 36px;
+	width: 130px;
+	text-align: right;
+	white-space: nowrap;
+}
+.number_row description {
+	font-size: 20px;
+	color: #AAA;
+	padding: 10px 0px 0px 0px;
+	margin-left: 140px;
+	display: block;
 }

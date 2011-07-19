@@ -1,15 +1,7 @@
 {% extends "flight_control/base.html" %}
-{% load i18n %}
-{% block title %}Dashboard{% endblock %}
-{% block css %}{{block.super}}
-{% css "/css/contrib/1140/1140.css" %}
-{% css "/css/flight_control.css" %}
-{% endblock %}
-{% block javascript %}{{block.super}}
-{% js "/js/mycelium/flight_control.js" %}
-{% endblock %}
+{% load i18n flip_clock %}
+{% block title %}Dashboard for {{account.name}}{% endblock %}
 
-{% block breadcrumb %}{% endblock %}
 {% block page_content %}
 
 <div class="container">

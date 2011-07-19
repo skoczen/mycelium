@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
 	{% css "css/mycelium_base.css" %}
+	{% css "/css/contrib/1140/1140.css" %}
+	{% css "/css/flight_control.css" %}
 {% endblock %}
 {% block base_js %}{% js "js/mycelium_base.js" %}{% endblock %}
 {% block javascript %}{{block.super}}
 	{% js "js/mycelium_core.js" %}
+	{% js "/js/mycelium/flight_control.js" %}
 <script>
 var GLOBAL_SEARCH_URL = "{% url flight_control:search_results %}";
 </script>
