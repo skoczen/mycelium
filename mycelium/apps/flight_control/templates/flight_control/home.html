@@ -1,0 +1,95 @@
+{% extends "flight_control/base.html" %}
+{% load i18n %}
+{% block title %}Dashboard{% endblock %}
+{% block css %}{{block.super}}
+{% css "/css/contrib/1140/1140.css" %}
+{% css "/css/flight_control.css" %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+{% js "/js/mycelium/flight_control.js" %}
+{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+{% block page_content %}
+
+<div class="container">
+	<div class="row">
+		<span class="active threecol">
+			<div class="analog_clock">
+				<div class="number three_digit">
+					<div class="flip bottom back"><span>002</span><span class="ap">Active</span></div>
+					<div class="flip top front hide"><span>002</span><span class="ap">Active</span></div>
+					<div class="flip top back"><span>002</span></div>
+				</div>
+			</div>
+		</span>
+
+		<span class="billing twocol">
+			<div class="analog_clock">
+				<div class="number bad">
+					<div class="flip bottom back"><span>02</span><span class="ap">Bill Issue</span></div>
+					<div class="flip top front hide"><span>02</span><span class="ap">Bill Issue</span></div>
+					<div class="flip top back"><span>02</span></div>
+				</div>
+			</div>
+		</span>
+
+		<span class="free_trial sevencol">
+			<div class="analog_clock">
+				<div class="number">
+					<div class="flip bottom back"><span>02</span><span class="ap">Trial Week 1</span></div>
+					<div class="flip top front hide"><span>02</span><span class="ap">Trial Week 1</span></div>
+					<div class="flip top back"><span>02</span></div>
+				</div>
+			</div>
+			<div class="analog_clock">
+				<div class="number">
+					<div class="flip bottom back"><span>02</span><span class="ap">Trial Week 2</span></div>
+					<div class="flip top front hide"><span>02</span><span class="ap">Trial Week 2</span></div>
+					<div class="flip top back"><span>02</span></div>
+				</div>
+			</div>
+			<div class="analog_clock">
+				<div class="number">
+					<div class="flip bottom back"><span>02</span><span class="ap">Trial Week 3</span></div>
+					<div class="flip top front hide"><span>02</span><span class="ap">Trial Week 3</span></div>
+					<div class="flip top back"><span>02</span></div>
+				</div>
+			</div>
+			<div class="analog_clock">
+				<div class="number">
+					<div class="flip bottom back"><span>02</span><span class="ap">Trial Week 4</span></div>
+					<div class="flip top front hide"><span>02</span><span class="ap">Trial Week 4</span></div>
+					<div class="flip top back"><span>02</span></div>
+				</div>
+			</div>
+		</span>
+	</div>
+</div>
+
+<div class="container info_columns">
+	<div class="row">
+		<column class="fourcol billing_issues">
+			<column_header>Billing Issues</column_header>
+		</column>
+		<column class="fourcol recent_activity">
+			<column_header>Recent Activity</column_header>
+		</column>
+		<column class="fourcol averages">
+			<column_header>Averages</column_header>
+
+			<average>
+				<number>52</number>
+				<caption>People/acct</caption>
+			</average>
+
+			<average>
+				<number>21</number>
+				<caption>Orgs/acct</caption>
+			</average>
+		</column>
+	</div>
+</div>
+
+
+{% endblock %}

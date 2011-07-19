@@ -108,12 +108,14 @@ SUBDOMAIN_URLCONFS = {
     None: 'mycelium.urls.marketing',
     'www': 'mycelium.urls.marketing',
     'dev': 'mycelium.urls.marketing',
+    'dashboard': 'mycelium.urls.dashboard',
     # 'api': 'myproject.urls.api',
 }
 PUBLIC_SUBDOMAINS = [
     None,
     "www",
     "dev",
+    "dashboard",
 ]
 REMOVE_WWW_FROM_SUBDOMAIN = True
 
@@ -178,6 +180,7 @@ INSTALLED_APPS = (
     'accounts',
     'dashboard',
     'webhooks',
+    'flight_control',
 
     'djangosanetesting',
 )

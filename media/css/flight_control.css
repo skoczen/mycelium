@@ -1,0 +1,187 @@
+main_content {
+	padding: 80px 0px;
+	width: 100%;
+}
+#global_search {
+	left: auto;
+	right: 5%;
+}
+
+main_nav .account_name {
+	font-size: 30px;
+	width: 100%;
+}
+main_nav a.logo .account_name {
+	width: 90%;
+	margin-left: 40px;
+}
+main_nav a.logo {
+	width: 100%;
+	margin-left: 40px;
+	background: url("../images/icon-flight-control-40.png");
+	background-repeat: no-repeat;
+	background-position: 0px 20px;
+}
+
+main_nav a.logo .account_name p {
+	text-align: left;
+}
+
+.analog_clock {
+	overflow: auto;
+	float: left;
+}
+
+.analog_clock .number {
+	width:100px;
+	position:relative;
+	
+	margin:20px;
+	height:125px;
+}
+.analog_clock .flip {
+	position:absolute;
+	height:55px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:80px;
+	line-height:100px;
+	text-align:center;
+	overflow:hidden;
+	width:100px;
+	color:white;
+	background-color:black;
+	border:1px #999 outset;
+}
+.analog_clock .number.three_digit, .analog_clock .number.three_digit .flip {
+	width: 150px;
+}
+.analog_clock .number.good .flip {
+	background-color: #008309;
+}
+.analog_clock .number.bad .flip {
+	background-color: #aa0000;
+}
+
+.analog_clock .top {
+	top:0px;
+	-moz-transform-origin:center bottom;
+	-webkit-transform-origin:center bottom;
+	-o-transform-origin:center bottom;
+	transform-origin:center bottom;
+	-moz-border-radius:10px 10px 0 0;
+	-webkit-border-radius:10px 10px 0 0;
+	border-radius:10px 10px 0 0;
+	border-bottom-width:1px;
+	
+}
+.analog_clock .bottom {
+	top:51px;
+	-moz-transform-origin:center top;
+	-webkit-transform-origin:center top;
+	-o-transform-origin:center top;
+	transform-origin:center top;
+	-moz-border-radius:0 0 10px 10px;
+	-webkit-border-radius:0 0 10px 10px;
+	border-radius:0 0 10px 10px;
+	border-top-width:1px;
+
+	
+}
+.analog_clock .bottom SPAN {
+	display:block;
+	margin-top:	-50px;
+}
+.analog_clock .ap {
+	font-weight:bold;
+	text-transform: uppercase;
+	font-size:12px;
+	line-height:25px;
+	position:absolute;
+	left:8px;
+	top:82px;
+}
+.analog_clock .number.three_digit .ap {
+	left:14px;
+	top:82px;
+}
+.analog_clock .front {
+	z-index:200;
+}
+.analog_clock .back {
+	z-index:0;
+}
+.analog_clock .hide {
+	display:none;	
+}
+.analog_clock .ani1 .top.front {
+	-moz-transform:skew(5deg) scaleY(.90);
+	-webkit-transform:skew(5deg) scaleY(.90);
+	-o-transform:skew(5deg) scaleY(.90);
+	transform:skew(5deg) scaleY(.90);
+}
+.analog_clock .ani2 .top.front {
+	-moz-transform:skew(10deg) scaleY(.60);
+	-webkit-transform:skew(10deg) scaleY(.60);
+	-o-transform:skew(10deg) scaleY(.60);
+	transform:skew(10deg) scaleY(.60);
+}
+.analog_clock .ani3 .top.front {
+	-moz-transform:skew(20deg) scaleY(.30);
+	-webkit-transform:skew(20deg) scaleY(.30);
+	-o-transform:skew(20deg) scaleY(.30);
+	transform:skew(20deg) scaleY(.30);
+}
+.analog_clock .ani4 .top.front {
+	-moz-transform:skew(50deg) scaleY(0.10);
+	-webkit-transform:skew(50deg) scaleY(0.10);
+	-o-transform:skew(50deg) scaleY(0.10);
+	transform:skew(50deg) scaleY(0.10);
+}
+.analog_clock .ani4 .bottom.front {
+	-moz-transform:skew(-50deg) scaleY(0.10);
+	-webkit-transform:skew(-50deg) scaleY(0.10);
+	-o-transform:skew(-50deg) scaleY(0.10);
+	transform:skew(-50deg) scaleY(0.10);
+}
+.analog_clock .ani3 .bottom.front {
+	-moz-transform:skew(-20deg) scaleY(.30);
+	-webkit-transform:skew(-20deg) scaleY(.30);
+	-o-transform:skew(-20deg) scaleY(.30);
+	transform:skew(-20deg) scaleY(.30);
+}
+.analog_clock .ani2 .bottom.front {
+	-moz-transform:skew(-10deg) scaleY(.60);
+	-webkit-transform:skew(-10deg) scaleY(.60);
+	-o-transform:skew(-10deg) scaleY(.60);
+	transform:skew(-10deg) scaleY(.60);
+}
+.analog_clock .ani1 .bottom.front {
+	-moz-transform:skew(-5deg) scaleY(.90);
+	-webkit-transform:skew(-5deg) scaleY(.90);
+	-o-transform:skew(-5deg) scaleY(.90);
+	transform:skew(-5deg) scaleY(.90);
+}
+.container {
+	padding: 0px;
+}
+
+.onecol, .twocol, .threecol, .fourcol, .fivecol, .sixcol, .sevencol, .eightcol, .ninecol, .tencol, .elevencol {
+	margin-left: 1%;
+	margin-right: 1%;
+}
+#page {
+	padding: 20px 0px;
+}
+column_header {
+	display: block;
+	font-size: 20px;
+	border: 1px solid #DDD;
+	border-width: 0px 0px 1px 0px;
+}
+average {
+	display: block;
+}
+.info_columns {
+	width: 96%;
+	margin: 0px auto;
+}
