@@ -1,5 +1,5 @@
 {% extends "flight_control/base.html" %}
-{% load i18n flip_clock humanize %}
+{% load i18n flip_clock humanize pagination_tags %}
 {% block title %}Dashboard for {{account.name}}{% endblock %}
 
 {% block page_content %}
@@ -20,19 +20,29 @@
 	<div class="row">
 		<column class="fourcol billing_issues">
 			<column_header>Users</column_header>
-			<div class="account_info_block">
-				Robyn Steely  rsteely  email phone
+			<table class="info_block">
+			{% with account.useraccount_set.all as users %}
+			{% autopaginate users 15 %}
+			{% for u in users %}
+			<tr class="account_info_block">
+				<td>{{u.full_name}}</td>
+				<td>{{u.denamespaced_username}}</td>
+				<td><a href="mailto:{{u.user.email}}">Email</a></td>
 			</div>
+			{% endfor %}
+			</table>
+			{% paginate %}
+			{% endwith %}
 		</column>
 		<column class="fourcol recent_activity">
 			<column_header>Recent Activity</column_header>
-			<div class="activity_block">
+			<div class="info_block">
 				Steven Skoczen edited a person. <span class="when">15 minutes ago</span>
 			</div>
-			<div class="activity_block">
+			<div class="info_block">
 				Steven Skoczen created a group. <span class="when">22 minutes ago</span>
 			</div>
-			<div class="activity_block">
+			<div class="info_block">
 				Tom Noble imported a spreadsheet. <span class="when">47 minutes ago</span>
 			</div>
 

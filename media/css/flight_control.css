@@ -198,8 +198,11 @@ average {
 .info_block {
 	display: block;
 	padding: 3px 5px;
+	width: 100%;
 }
-
+table.info_block {
+	display: table;
+}
 .number_row {
 	clear: left;
 	position: relative;

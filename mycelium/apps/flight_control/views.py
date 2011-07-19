@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Count, Avg
 
-from accounts.models import Account
+from accounts.models import Account, UserAccount
 from accounts import BILLING_PROBLEM_STATII
 from people.models import Person
 from organizations.models import Organization
@@ -32,6 +32,7 @@ def home(request):
     week_3 = Account.objects.week_3.count()
     week_4 = Account.objects.week_4.all()
 
+    avg_users = float(UserAccount.objects.count()) / active_account_count
     avg_people = Person.objects.count() / active_account_count
     avg_organizations = Organization.objects.count() / active_account_count
     avg_donations = Donation.objects.count() / active_account_count
