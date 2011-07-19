@@ -50,6 +50,7 @@ class Account(TimestampModelMixin):
     chargify_cancel_at_end_of_period    = models.BooleanField(default=False)
     chargify_next_assessment_at         = models.DateTimeField(blank=True, null=True)
     chargify_last_four                  = models.CharField(blank=True, null=True, max_length=4)
+    chargify_balance                    = models.FloatField(blank=True, null=True, default=0)
 
     def save(self, *args, **kwargs):
         if not self.created_at:
@@ -240,6 +241,7 @@ class Account(TimestampModelMixin):
         self.chargify_state = chargify_sub.state
         
         self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period == "true"
+        self.chargify_balance = chargify_sub.balance_in_cents / 100
 
         self.chargify_next_assessment_at = chargify_sub.current_period_ends_at
         if chargify_sub.credit_card:

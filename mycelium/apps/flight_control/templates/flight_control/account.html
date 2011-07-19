@@ -40,27 +40,60 @@
 		<column class="fourcol averages">
 			<column_header>Billing</column_header>
 			<div class="info_block">
-				Signup Date: 
+				Signup Date: {{account.signup_date|date}}
 			</div>
 			<div class="info_block">
-				Last Billed: 
+				Last Billed: {{account.last_billing_date|date}}
 			</div>
 			<div class="info_block">
-				Next Billed: 
+				Next Billed: {{account.chargify_next_assessment_at|date}}
 			</div>
 			<div class="info_block">
-				Account Balance: 
+				Account Balance: ${{account.chargify_balance|floatformat:2|intcomma}}
 			</div>
-			<column_header>By the Numbers</column_header>
-
-			<average>
-				<number>52</number>
-				<caption>People</caption>
+			<column_header>Account Averages</column_header>
+			<average class="info_block number_row">
+				<number>{{num_people|floatformat:0|intcomma}}</number>
+				<description>People</description>
 			</average>
 
-			<average>
-				<number>21</number>
-				<caption>Orgs</caption>
+			<average class="info_block number_row">
+				<number>{{num_organizations|floatformat:0|intcomma}}</number>
+				<description>Organizations</description>
+			</average>
+
+			<average class="info_block number_row">
+				<number>{{num_donations|floatformat:0|intcomma}}</number>
+				<description>Donations</description>
+			</average>
+			<average class="info_block number_row">
+				<number>${{avg_donation|floatformat:2|intcomma}}</number>
+				<description>Per Donation</description>
+			</average>
+			<average class="info_block number_row">
+				<number>{{num_volunteer_hours|floatformat:0|intcomma}}</number>
+				<description>Volunteer Hours</description>
+			</average>
+			<average class="info_block number_row">
+				<number>{{avg_vol_hours_per_person|floatformat:0|intcomma}}</number>
+				<description>Volunteer Hours per person</description>
+			</average>
+			
+			<average class="info_block number_row">
+				<number>{{num_tags|floatformat:0|intcomma}}</number>
+				<description>Tags</description>
+			</average>
+			<average class="info_block number_row">
+				<number>{{avg_tags_per_person|floatformat:1|intcomma}}</number>
+				<description>Tags per Person</description>
+			</average>
+			<average class="info_block number_row">
+				<number>{{num_groups|floatformat:1|intcomma}}</number>
+				<description>Groups</description>
+			</average>
+			<average class="info_block number_row">
+				<number>{{num_spreadsheets|floatformat:1|intcomma}}</number>
+				<description>Spreadsheets</description>
 			</average>
 		</column>
 	</div>

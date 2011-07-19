@@ -48,9 +48,21 @@ def home(request):
 @render_to("flight_control/account.html")
 def account(request, account_id):
     account = Account.objects.get(pk=account_id)
-    # recent_activity = Activity.objects.all()[:10]
+    # recent_activity = Activity.objects_by_account(account).all()[:10]
     recent_activity = []
     
+
+    num_people = Person.objects_by_account(account).count()
+    num_organizations = Organization.objects_by_account(account).count()
+    num_donations = Donation.objects_by_account(account).count()
+    avg_donation = Donation.objects_by_account(account).all().aggregate(Sum('amount'))["amount__sum"] / Donation.objects_by_account(account).count()
+    num_volunteer_hours = CompletedShift.objects_by_account(account).all().aggregate(Sum('duration'))["duration__sum"]
+    avg_vol_hours_per_person = CompletedShift.objects_by_account(account).all().aggregate(Sum('duration'))["duration__sum"] / Person.objects_by_account(account).count()
+    num_tags = Tag.objects_by_account(account).count()
+    avg_tags_per_person = TaggedItem.objects_by_account(account).count() / Person.objects_by_account(account).count()
+    num_groups = Group.objects_by_account(account).count() 
+    num_spreadsheets = Spreadsheet.objects_by_account(account).count()
+
     return locals()
 
 @staff_member_required
