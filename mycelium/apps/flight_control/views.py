@@ -19,10 +19,17 @@ import datetime
 
 @render_to("flight_control/home.html")
 def home(request):
-    section = "dashboard"
 
+    return locals()
+
+
+@render_to("flight_control/account.html")
+def account(request, account_id):
+
+    account = Account.objects.get(pk=account_id)
     
-    return {}
+    return locals()
+
 
 @json_view
 def search_results(request):

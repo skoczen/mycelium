@@ -8,6 +8,7 @@ url = parser.url
 
 urlpatterns = parser.patterns('',                      
     url(r'^$',                               views.home,                          name='home'),
+    url(r'account/{account_id:digits}^$',    views.account,                       name='account'),
     url(r'^search-results$',                 views.search_results,                name='search_results'),
 
 )

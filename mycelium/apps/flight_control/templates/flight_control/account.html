@@ -1,0 +1,65 @@
+{% extends "flight_control/base.html" %}
+{% load i18n %}
+{% block title %}Dashboard{% endblock %}
+{% block css %}{{block.super}}
+{% css "/css/contrib/1140/1140.css" %}
+{% css "/css/flight_control.css" %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+{% js "/js/mycelium/flight_control.js" %}
+{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+{% block page_content %}
+
+<div class="container">
+	<div class="row">
+		<span class="name_and_info ninecol">
+			<div class="name">{{account.name}}</div>
+			<div class="url">{{account.subdomain}}.agoodcloud.com</div>
+		</span>
+		<span class="active threecol">
+			{% flip_clock 2 "Months"  %}
+		</span>
+	</div>
+</div>
+
+<div class="container info_columns">
+	<div class="row">
+		<column class="fourcol billing_issues">
+			<column_header>Users</column_header>
+			<div class="account_info_block">
+				Robyn Steely  rsteely  email phone
+			</div>
+		</column>
+		<column class="fourcol recent_activity">
+			<column_header>Recent Activity</column_header>
+			<div class="activity_block">
+				Steven Skoczen edited a person. <span class="when">15 minutes ago</span>
+			</div>
+			<div class="activity_block">
+				Steven Skoczen created a group. <span class="when">22 minutes ago</span>
+			</div>
+			<div class="activity_block">
+				Tom Noble imported a spreadsheet. <span class="when">47 minutes ago</span>
+			</div>
+
+		</column>
+		<column class="fourcol averages">
+			<column_header>Numbers</column_header>
+
+			<average>
+				<number>52</number>
+				<caption>People</caption>
+			</average>
+
+			<average>
+				<number>21</number>
+				<caption>Orgs</caption>
+			</average>
+		</column>
+	</div>
+</div>
+
+
+{% endblock %}

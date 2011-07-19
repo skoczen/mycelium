@@ -55,10 +55,10 @@ main_nav a.logo .account_name p {
 .analog_clock .number.three_digit, .analog_clock .number.three_digit .flip {
 	width: 150px;
 }
-.analog_clock .number.good .flip {
+.good .analog_clock .number .flip {
 	background-color: #008309;
 }
-.analog_clock .number.bad .flip {
+.bad .analog_clock .number .flip {
 	background-color: #aa0000;
 }
 
@@ -184,4 +184,9 @@ average {
 .info_columns {
 	width: 96%;
 	margin: 0px auto;
+}
+.activity_block .when {
+	display: block;
+	margin-left: 10px;
+	color: #999;
 }
