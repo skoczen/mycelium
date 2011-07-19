@@ -2,13 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from managers import AccountDataModelManager, ExplicitAccountDataModelManager, AccountManager
-from qi_toolkit.models import TimestampModelMixin
+from qi_toolkit.models import TimestampModelMixin, SimpleSearchableModel
 from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII
 from django.conf import settings
 from pychargify.api import ChargifySubscription, ChargifyCustomer, Chargify
 import hashlib
 import datetime
 from dateutil.relativedelta import *
+from django.db.models import Sum, Count, Avg
 
 class Plan(TimestampModelMixin):
     name = models.CharField(max_length=255)
@@ -23,7 +24,8 @@ class Plan(TimestampModelMixin):
     def monthly_plan(cls):
         return cls.objects.get_or_create(name="Monthly")[0]
 
-class Account(TimestampModelMixin):
+
+class Account(TimestampModelMixin, SimpleSearchableModel):
     name = models.CharField(max_length=255, verbose_name="Organization Name")
     subdomain = models.CharField(max_length=255, unique=True, db_index=True, verbose_name="GoodCloud address (myorganization.agodocloud.com)")
     is_active = models.BooleanField(default=True)
@@ -63,6 +65,8 @@ class Account(TimestampModelMixin):
 
     class Meta(object):
         ordering = ("name",)
+
+    search_fields = ["name", "subdomain"]
 
     @property
     def primary_useraccount(self):
@@ -204,35 +208,42 @@ class Account(TimestampModelMixin):
         return None
 
     def create_subscription(self):
-        chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-        customer = chargify.Customer()
-        customer.first_name = self.primary_useraccount.full_name[:self.primary_useraccount.full_name.find(" ")]
-        customer.last_name = self.primary_useraccount.full_name[self.primary_useraccount.full_name.find(" ")+1:]
-        customer.organization = self.name
-        customer.reference = "%s" % self.id
-        customer.email = self.primary_useraccount.user.email
-        customer.save()
+        try:
+            assert self.chargify_subscription != None
+        except:
+            chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+            customer = chargify.Customer()
+            customer.first_name = self.primary_useraccount.full_name[:self.primary_useraccount.full_name.find(" ")]
+            customer.last_name = self.primary_useraccount.full_name[self.primary_useraccount.full_name.find(" ")+1:]
+            customer.organization = self.name
+            customer.reference = "%s" % self.id
+            customer.email = self.primary_useraccount.user.email
+            customer.save()
 
-        customer = chargify.Customer()
-        customer = customer.getByReference(self.pk)
+            customer = chargify.Customer()
+            customer = customer.getByReference(self.pk)
 
-        subscription = chargify.Subscription()
-        subscription.product_handle = settings.CHARGIFY_PRODUCT_HANDLE
-        subscription.customer_reference = "%s" % self.id
-        # subscription.next_billing_at = self.free_trial_ends.isoformat()
-        subscription.save()
+            subscription = chargify.Subscription()
+            subscription.product_handle = settings.CHARGIFY_PRODUCT_HANDLE
+            subscription.customer_reference = "%s" % self.id
+            # subscription.next_billing_at = self.free_trial_ends.isoformat()
+            subscription.save()
 
-        subscription = chargify.Subscription()
-        subscription = subscription.getByCustomerId(customer.id)[0]
+            subscription = chargify.Subscription()
+            subscription = subscription.getByCustomerId(customer.id)[0]
 
-        self.chargify_subscription_id = subscription.id
-        self.save()
+            self.chargify_subscription_id = subscription.id
+            self.save()
 
     @property
     def chargify_subscription(self):
-        chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-        subscription = chargify.Subscription()
-        return subscription.getBySubscriptionId(self.chargify_subscription_id)
+        from pychargify.api import ChargifyNotFound
+        try:
+            chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+            subscription = chargify.Subscription()
+            return subscription.getBySubscriptionId(self.chargify_subscription_id)
+        except ChargifyNotFound:
+            return None
 
 
     def update_account_status(self):
@@ -241,7 +252,7 @@ class Account(TimestampModelMixin):
         self.chargify_state = chargify_sub.state
         
         self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period == "true"
-        self.chargify_balance = chargify_sub.balance_in_cents / 100
+        self.chargify_balance = float(chargify_sub.balance_in_cents) / 100
 
         self.chargify_next_assessment_at = chargify_sub.current_period_ends_at
         if chargify_sub.credit_card:
@@ -254,6 +265,11 @@ class Account(TimestampModelMixin):
 
         return self
     
+    @property
+    def age_in_months(self):
+        print (datetime.datetime.today() - self.signup_date)
+        print (datetime.datetime.today() - self.signup_date).days
+        return (datetime.datetime.today() - self.signup_date).days / 30
 
     @property
     def free_trial_ends(self):
@@ -316,6 +332,15 @@ class Account(TimestampModelMixin):
                   }
 
     objects = AccountManager()
+
+    # Aggregates
+    @property
+    def total_donation_sum(self):
+        return self.donation_set.all().aggregate(Sum('amount'))["amount__sum"] or 0
+
+    @property
+    def total_volunteer_hours(self):
+        return self.completedshift_set.all().aggregate(Sum('duration'))["duration__sum"] or 0
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)

@@ -1,5 +1,5 @@
 {% extends "flight_control/base.html" %}
-{% load i18n flip_clock %}
+{% load i18n flip_clock humanize %}
 {% block title %}Dashboard for {{account.name}}{% endblock %}
 
 {% block page_content %}
@@ -11,7 +11,7 @@
 			<div class="url">{{account.subdomain}}.agoodcloud.com</div>
 		</span>
 		<span class="active threecol">
-			{% flip_clock 2 "Months"  %}
+			{% flip_clock account.age_in_months "Months"  %}
 		</span>
 	</div>
 </div>
@@ -75,7 +75,7 @@
 				<description>Volunteer Hours</description>
 			</average>
 			<average class="info_block number_row">
-				<number>{{avg_vol_hours_per_person|floatformat:0|intcomma}}</number>
+				<number>{{avg_vol_hours_per_person|floatformat:1|intcomma}}</number>
 				<description>Volunteer Hours per person</description>
 			</average>
 			

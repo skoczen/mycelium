@@ -1,6 +1,7 @@
 from accounts.managers import get_or_404_by_account
 from django.core.urlresolvers import reverse
 from qi_toolkit.helpers import *
+from django.template.loader import render_to_string
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Count, Avg
 
@@ -55,11 +56,18 @@ def account(request, account_id):
     num_people = Person.objects_by_account(account).count()
     num_organizations = Organization.objects_by_account(account).count()
     num_donations = Donation.objects_by_account(account).count()
-    avg_donation = Donation.objects_by_account(account).all().aggregate(Sum('amount'))["amount__sum"] / Donation.objects_by_account(account).count()
-    num_volunteer_hours = CompletedShift.objects_by_account(account).all().aggregate(Sum('duration'))["duration__sum"]
-    avg_vol_hours_per_person = CompletedShift.objects_by_account(account).all().aggregate(Sum('duration'))["duration__sum"] / Person.objects_by_account(account).count()
+    avg_donation = 0
+    if num_donations > 0:
+        avg_donation = account.total_donation_sum / num_donations
+    num_volunteer_hours = account.total_volunteer_hours
+    avg_vol_hours_per_person = 0
+    if account.total_volunteer_hours and num_people > 0:
+        avg_vol_hours_per_person = float(account.total_volunteer_hours) / num_people
     num_tags = Tag.objects_by_account(account).count()
-    avg_tags_per_person = TaggedItem.objects_by_account(account).count() / Person.objects_by_account(account).count()
+    avg_tags_per_person = 0
+    if TaggedItem.objects_by_account(account).count() and num_people > 0:
+        avg_tags_per_person = float(TaggedItem.objects_by_account(account).count()) / num_people
+    
     num_groups = Group.objects_by_account(account).count() 
     num_spreadsheets = Spreadsheet.objects_by_account(account).count()
 
@@ -68,4 +76,10 @@ def account(request, account_id):
 @staff_member_required
 @json_view
 def search_results(request):
-    pass
+    search_results = Account.objects.all()[:6]
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if q != "":
+            search_results = Account.search(q,ignorable_chars=["-","(",")"])[:6]
+
+    return {"fragments":{"global_search_results":render_to_string("flight_control/_search_results.html", locals())}}

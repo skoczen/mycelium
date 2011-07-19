@@ -9,6 +9,7 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         for a in Account.objects.all():
+            print a.name
             a.chargify_balance = 0.00
             a.save()
             a.update_account_status()
