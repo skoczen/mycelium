@@ -487,6 +487,16 @@ new_object_buttons .new_label {
 	background-color: #CCC;
 	color: #454545;
 }
+.mycelium_red_btn, input.mycelium_red_btn, a.mycelium_red_btn {
+	border-color: red;
+	background-color: #d91a00 !important;
+	color: #FFF;
+}
+.mycelium_red_btn:hover, input.mycelium_red_btn:hover, a.mycelium_red_btn:hover {
+	border-color: red;
+	background-color: #FE1E00 !important;
+	color: #FFF !important;
+}
 
 .mycelium_left_arrow_btn, .mycelium_left_arrow_btn:hover {
 	padding: 5px 12px 5px 25px ;

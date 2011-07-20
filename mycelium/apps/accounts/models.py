@@ -61,6 +61,11 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
             self.signup_date = datetime.datetime.now()
         super(Account,self).save(*args, **kwargs)
             
+    def delete(self, *args, **kwargs):
+        sub = self.chargify_subscription
+        sub.unsubscribe("Account deleted")
+        super(Account,self).delete(*args, **kwargs)
+    
     objects = AccountManager()
 
     def __unicode__(self):

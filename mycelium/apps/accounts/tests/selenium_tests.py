@@ -6,6 +6,7 @@ from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from organizations.tests.selenium_abstractions import OrganizationsTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
+from accounts.models import Account
 from django.conf import settings
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from django.core.cache import cache
@@ -688,8 +689,26 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
     
     def test_users_can_completely_delete_their_account(self):
         sel = self.selenium
-        assert True == "Test written"
+        a_pk = self.a1.pk
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        sel.click("css=.account_delete_btn")
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.do_account_delete_btn")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("We're sad to see you go, but we understand.")
+        assert Account.objects.filter(pk=a_pk).count() == 0
 
+    def test_that_clicking_get_me_outta_here_does_that(self):
+        sel = self.selenium
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        sel.click("css=.account_delete_btn")
+        sel.wait_for_page_to_load("30000")
+        sel.click("css=.outta_here")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("My Account")
+        
 
     def test_that_signing_up_during_a_free_trial_does_not_bill_their_card(self):
         self.test_that_new_signups_can_sign_up_for_an_account()
@@ -708,3 +727,5 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         self.a1 = self.create_demo_site()   
         self.verificationErrors = []
     
+    
+        

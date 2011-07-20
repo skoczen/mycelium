@@ -219,3 +219,21 @@ def reactivate_subscription(request):
 
     request.account.update_account_status()
     return HttpResponseRedirect(reverse("accounts:manage_account"))
+
+@render_to("accounts/confirm_account_delete.html")
+def confirm_account_delete(request):
+    if not request.useraccount.is_admin:
+        return HttpResponseRedirect(reverse("dashboard:dashboard"))
+    
+    return locals()
+
+
+def do_account_delete(request):
+    if not request.useraccount.is_admin and not request.method == "POST":
+        return HttpResponseRedirect(reverse("dashboard:dashboard"))
+    
+    account_id = request.POST['account_pk']
+    assert int(account_id) == request.account.pk
+    request.account.delete()
+
+    return HttpResponseRedirect( "http://%s/account-deleted" % (settings.BASE_DOMAIN))

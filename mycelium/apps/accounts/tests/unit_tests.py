@@ -12,7 +12,9 @@ from accounts.models import Account, UserAccount, AccessLevel
 from volunteers.models import Volunteer, CompletedShift
 from generic_tags.models import TagSet, Tag
 from django.core import mail
+from django.conf import settings
 from django.test.client import Client
+from pychargify.api import Chargify
 from accounts import CANCELLED_SUBSCRIPTION_STATII
 
 class Dummy(object):
@@ -97,6 +99,19 @@ class TestAccountFactory(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase)
         a1a = Account.objects.get(pk=a1.pk)
 
         assert a1a.status in CANCELLED_SUBSCRIPTION_STATII
+
+    def test_deleting_an_account_cancels_its_subscription(self):
+        a1 = Factory.create_demo_site("test1", quick=True, create_subscription=True)
+        sub_id = a1.chargify_subscription_id
+
+        a1.delete()
+
+        chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+        subscription = chargify.Subscription()
+        s = subscription.getBySubscriptionId(sub_id)
+
+        self.assertEqual(s.state,"canceled")
+
 
 
     # def test_that_signing_up_generates_a_message_to_the_user_and_to_us(self):

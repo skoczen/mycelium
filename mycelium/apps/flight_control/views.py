@@ -18,10 +18,6 @@ from django.contrib.auth.models import User
 
 
 
-
-
-
-
 @staff_member_required
 @render_to("flight_control/home.html")
 def home(request):
@@ -53,22 +49,22 @@ def home(request):
     if total_donations_divisor == 0:
         total_donations_divisor = 1
     total_donation_amount = Donation.objects.filter(account__is_demo=False).all().aggregate(Sum('amount'))["amount__sum"]
-    if not total_donation_amount:
+    if total_donation_amount == None:
         total_donation_amount = 0
 
     avg_donations = Donation.objects.filter(account__is_demo=False).count() / active_account_denominator
-    if Donation.objects.filter(account__is_demo=False).count() > 0:
+    if Donation.objects.filter(account__is_demo=False).count() == 0:
         avg_donation = 0
     else:
         avg_donation =  total_donation_amount / total_donations_divisor
 
     total_volunteer_hours = CompletedShift.objects.filter(account__is_demo=False).all().aggregate(Sum('duration'))["duration__sum"] or 0
-    avg_volunteer_hours = total_volunteer_hours / active_account_denominator
-    avg_vol_hours_per_person = total_volunteer_hours / total_people_denominator
-    avg_tags = Tag.objects.filter(account__is_demo=False).count() / active_account_denominator
-    avg_tags_per_person = TaggedItem.objects.filter(account__is_demo=False).count() / total_people_denominator
-    avg_groups = Group.objects.filter(account__is_demo=False).count() / active_account_denominator
-    avg_spreadsheets = Spreadsheet.objects.filter(account__is_demo=False).count() / active_account_denominator
+    avg_volunteer_hours = float(total_volunteer_hours) / active_account_denominator
+    avg_vol_hours_per_person = float(total_volunteer_hours) / total_people_denominator
+    avg_tags = float(Tag.objects.filter(account__is_demo=False).count()) / active_account_denominator
+    avg_tags_per_person = float(TaggedItem.objects.filter(account__is_demo=False).count()) / total_people_denominator
+    avg_groups = float(Group.objects.filter(account__is_demo=False).count()) / active_account_denominator
+    avg_spreadsheets = float(Spreadsheet.objects.filter(account__is_demo=False).count()) / active_account_denominator
 
     return locals()
 
