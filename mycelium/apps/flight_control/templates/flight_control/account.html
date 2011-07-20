@@ -33,22 +33,10 @@
 			</table>
 			{% paginate %}
 			{% endwith %}
-		</column>
-		<column class="fourcol recent_activity">
-			<column_header>Recent Activity</column_header>
-			<div class="info_block">
-				Steven Skoczen edited a person. <span class="when">15 minutes ago</span>
-			</div>
-			<div class="info_block">
-				Steven Skoczen created a group. <span class="when">22 minutes ago</span>
-			</div>
-			<div class="info_block">
-				Tom Noble imported a spreadsheet. <span class="when">47 minutes ago</span>
-			</div>
-
-		</column>
-		<column class="fourcol averages">
 			<column_header>Billing</column_header>
+			<div class="info_block">
+				Status: {{account.get_status_display}}
+			</div>
 			<div class="info_block">
 				Signup Date: {{account.signup_date|date}}
 			</div>
@@ -61,7 +49,58 @@
 			<div class="info_block">
 				Account Balance: ${{account.chargify_balance|floatformat:2|intcomma}}
 			</div>
-			<column_header>Account Averages</column_header>
+			<div class="info_block">
+				<a href="{{account.chargify_subscription_url}}" target="_blank">Chargify Subscription</a>
+			</div>
+			<column_header>Challenges</column_header>
+			<challenge class="info_block import {% if account.challenge_has_imported_contacts %}complete{% endif %}">
+				<title_text>Import your contacts.</title_text>
+			</challenge>
+			<challenge class="info_block volunteer {% if account.challenge_has_logged_volunteer_hours %}complete{% endif %}">
+				<title_text>Track volunteer hours.</title_text>
+			</challenge>
+			<challenge class="info_block donation {% if account.challenge_has_added_a_donation %}complete{% endif %}">
+				<title_text>Add your donations.</title_text>
+			</challenge>
+			<challenge class="info_block board {% if account.challenge_has_added_board %}complete{% endif %}">
+				<title_text>Add your board.</title_text>
+			</challenge>		
+			<challenge class="info_block tags {% if account.challenge_has_set_up_tags %}complete{% endif %}">
+				<title_text>Set up your tags.</title_text>
+			</challenge>
+			<challenge class="info_block spreadsheet {% if account.challenge_has_downloaded_spreadsheet %}complete{% endif %}">
+				<title_text>Download a spreadsheet.</title_text>
+			</challenge>
+			<challenge class="info_block user {% if account.challenge_has_created_other_accounts %}complete{% endif %}">
+				<title_text>Share the love - Get everyone else onboard!</title_text>
+			</challenge>
+		</column>
+		<column class="fourcol recent_activity">
+			<column_header>Recent Logins</column_header>
+			{% for u in recent_users %}
+			<div class="info_block">
+				{{u.user.last_login|date}} - {{u.full_name}} 
+			</div>
+		 	{% endfor %}
+			<column_header>Recent Activity</column_header>
+			<div class="empty_message info_block">
+				Still working on the activity tracker.
+			</div>
+			<!--
+			<div class="info_block">
+				Steven Skoczen with <a href="#">Account Name</a> edited a person. <span class="when">15 minutes ago</span>
+			</div>
+			<div class="info_block">
+				Steven Skoczen with <a href="#">Account Name</a> created a group. <span class="when">22 minutes ago</span>
+			</div>
+			<div class="info_block">
+				Tom Noble with <a href="#">Account Name</a> imported a spreadsheet. <span class="when">47 minutes ago</span>
+			</div>
+			-->
+		</column>
+		<column class="fourcol averages">
+			
+			<column_header>Totals &amp; Averages</column_header>
 			<average class="info_block number_row">
 				<number>{{num_people|floatformat:0|intcomma}}</number>
 				<description>People</description>

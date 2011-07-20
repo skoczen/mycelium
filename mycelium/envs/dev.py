@@ -42,6 +42,7 @@ CACHES = {
 BROKER_VHOST = "2"                       # Maps to database number.
 
 SESSION_COOKIE_DOMAIN = None
+TIME_ZONE = "America/Los_Angeles"
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

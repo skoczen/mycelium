@@ -30,7 +30,7 @@ ADMINS = [
 MANAGERS = ADMINS
 SENTRY_ADMINS = ADMINS
 
-TIME_ZONE = "America/Los_Angeles"
+TIME_ZONE = "UTC"
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
         # ('fr', gettext('French')),

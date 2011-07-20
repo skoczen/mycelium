@@ -54,11 +54,14 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     chargify_last_four                  = models.CharField(blank=True, null=True, max_length=4)
     chargify_balance                    = models.FloatField(blank=True, null=True, default=0)
 
+    is_demo                             = models.BooleanField(default=False)
+
     def save(self, *args, **kwargs):
         if not self.created_at:
             self.signup_date = datetime.datetime.now()
         super(Account,self).save(*args, **kwargs)
             
+    objects = AccountManager()
 
     def __unicode__(self):
         return "%s" % self.name
@@ -331,7 +334,12 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
                   'account_pk': self.pk,
                   }
 
-    objects = AccountManager()
+    @property
+    def chargify_subscription_url(self):
+        from django.conf import settings
+        return "https://%s.chargify.com/subscriptions/%s" % (settings.CHARGIFY_SUBDOMAIN, self.chargify_subscription_id)
+
+    
 
     # Aggregates
     @property

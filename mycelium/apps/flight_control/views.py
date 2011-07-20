@@ -14,6 +14,8 @@ from volunteers.models import CompletedShift
 from generic_tags.models import Tag, TaggedItem
 from groups.models import Group
 from spreadsheets.models import Spreadsheet
+from django.contrib.auth.models import User
+
 
 
 
@@ -24,25 +26,27 @@ from spreadsheets.models import Spreadsheet
 @render_to("flight_control/home.html")
 def home(request):
     
-    problem_accounts = Account.objects.billing_problem.all()
-    active_account_count = Account.objects.active.count()
-    
-    week_1 = Account.objects.week_1.count()
-    week_2 = Account.objects.week_2.count()
-    week_3 = Account.objects.week_3.count()
-    week_4 = Account.objects.week_4.all()
+    problem_accounts = Account.objects.billing_problem.filter(is_demo=False).all()
+    active_account_count = Account.objects.active.filter(is_demo=False).count()
 
-    avg_users = float(UserAccount.objects.count()) / active_account_count
-    avg_people = Person.objects.count() / active_account_count
-    avg_organizations = Organization.objects.count() / active_account_count
-    avg_donations = Donation.objects.count() / active_account_count
-    avg_donation = Donation.objects.all().aggregate(Sum('amount'))["amount__sum"] / Donation.objects.count()
+    recent_users = User.objects.all().order_by("-last_login")[:5]
+    
+    week_1 = Account.objects.week_1.filter(is_demo=False).count()
+    week_2 = Account.objects.week_2.filter(is_demo=False).count()
+    week_3 = Account.objects.week_3.filter(is_demo=False).count()
+    week_4 = Account.objects.week_4.filter(is_demo=False).all()
+
+    avg_users = float(UserAccount.objects.filter(account__is_demo=False).count()) / active_account_count
+    avg_people = Person.objects.filter(account__is_demo=False).count() / active_account_count
+    avg_organizations = Organization.objects.filter(account__is_demo=False).count() / active_account_count
+    avg_donations = Donation.objects.filter(account__is_demo=False).count() / active_account_count
+    avg_donation = Donation.objects.filter(account__is_demo=False).all().aggregate(Sum('amount'))["amount__sum"] / Donation.objects.filter(account__is_demo=False).count()
     avg_volunteer_hours = CompletedShift.objects.all().aggregate(Sum('duration'))["duration__sum"] / active_account_count
-    avg_vol_hours_per_person = CompletedShift.objects.all().aggregate(Sum('duration'))["duration__sum"] / Person.objects.count()
-    avg_tags = Tag.objects.count() / active_account_count
-    avg_tags_per_person = TaggedItem.objects.count() / Person.objects.count()
-    avg_groups = Group.objects.count() / active_account_count
-    avg_spreadsheets = Spreadsheet.objects.count() / active_account_count
+    avg_vol_hours_per_person = CompletedShift.objects.filter(account__is_demo=False).all().aggregate(Sum('duration'))["duration__sum"] / Person.objects.filter(account__is_demo=False).count()
+    avg_tags = Tag.objects.filter(account__is_demo=False).count() / active_account_count
+    avg_tags_per_person = TaggedItem.objects.filter(account__is_demo=False).count() / Person.objects.filter(account__is_demo=False).count()
+    avg_groups = Group.objects.filter(account__is_demo=False).count() / active_account_count
+    avg_spreadsheets = Spreadsheet.objects.filter(account__is_demo=False).count() / active_account_count
 
     return locals()
 
@@ -50,6 +54,8 @@ def home(request):
 @render_to("flight_control/account.html")
 def account(request, account_id):
     account = Account.objects.get(pk=account_id)
+    recent_users = account.useraccount_set.order_by("-user__last_login")[:5]
+    
     # recent_activity = Activity.objects_by_account(account).all()[:10]
     recent_activity = []
     

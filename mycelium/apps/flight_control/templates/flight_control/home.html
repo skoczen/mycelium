@@ -53,6 +53,13 @@
 			{% endfor %}
 		</column>
 		<column class="fourcol recent_activity">
+			<column_header>Recent Logins</column_header>
+			{% for u in recent_users %}
+			<div class="info_block">
+				{{u.last_login|date}} - {{u.first_name}} ({% if u.get_profile %}<a href="{% url flight_control:account u.get_profile.account.pk %}">{{u.get_profile.account.name}}</a>{% else %}Internal{% endif %})
+			</div>
+		 	{% endfor %}
+
 			<column_header>Recent Activity</column_header>
 			<div class="empty_message info_block">
 				Still working on the activity tracker.

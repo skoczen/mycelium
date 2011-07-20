@@ -180,7 +180,7 @@ column_header {
 	font-size: 20px;
 	border: 1px solid #DDD;
 	border-width: 0px 0px 1px 0px;
-	margin: 8px 0px 6px 0px ;
+	margin: 12px 0px 6px 0px ;
 	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
 }
 average {
@@ -235,4 +235,15 @@ table.info_block {
 	font-size: 20px;
 	color: #999;
 	padding: 0px 0px 0px 13px;
+}
+challenge.info_block {
+	display: block;
+	padding: 4px 0px 2px 18px;
+	color: #AAA;
+}
+challenge.info_block.complete {
+	background-image: url("../images/icon-check-plain-12.png");
+	background-repeat: no-repeat;
+	background-position: 0px 5px;
+	color: #333;
 }

@@ -47,8 +47,12 @@ class AccountManager(models.Manager):
         return self.filter(status__in=ACTIVE_SUBSCRIPTION_STATII)
 
     @property
+    def non_demo(self):
+        return self.filter(is_demo=False).all()
+
+    @property
     def billing_problem(self):
-        return self.filter(status__in=BILLING_PROBLEM_STATII)
+        return self.filter(status__in=BILLING_PROBLEM_STATII).all()
 
 class AccountDataModelManager(models.Manager):
     def __call__(self, *args, **kwargs):
