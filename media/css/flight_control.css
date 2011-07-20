@@ -237,8 +237,9 @@ table.info_block {
 	padding: 0px 0px 0px 13px;
 }
 challenge.info_block {
+	margin-left: 5px;
 	display: block;
-	padding: 4px 0px 2px 18px;
+	padding: 4px 0px 2px 19px;
 	color: #AAA;
 }
 challenge.info_block.complete {
