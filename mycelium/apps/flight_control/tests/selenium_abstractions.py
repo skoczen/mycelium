@@ -15,7 +15,7 @@ class FlightControlTestAbstractions(object):
 
     def get_to_flight_control(self):
         sel = self.selenium
-        sel.open("http://dashboard.localhost:%s" % settings.LIVE_SERVER_PORT)
+        sel.open("http://flightcontrol.localhost:%s" % settings.LIVE_SERVER_PORT)
         sel.wait_for_page_to_load("30000")
         sel.type("css=#id_username", "admin")
         sel.type("css=#id_password", "admin")

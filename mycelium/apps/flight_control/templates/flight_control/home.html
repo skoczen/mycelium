@@ -78,47 +78,47 @@
 		</column>
 		<column class="fourcol averages">
 			<column_header>Account Averages</column_header>
-			<average class="info_block number_row">
+			<average class="info_block number_row num_people">
 				<number>{{avg_people|floatformat:0|intcomma}}</number>
 				<description>People</description>
 			</average>
-			<average class="info_block number_row">
+			<average class="info_block number_row num_orgs">
 				<number>{{avg_organizations|floatformat:0|intcomma}}</number>
 				<description>Organizations</description>
 			</average>
-			<average class="info_block number_row">
+			<average class="info_block number_row num_users">
 				<number>{{avg_users|floatformat:1|intcomma}}</number>
 				<description>User Accounts</description>
 			</average>
-			<average class="info_block number_row">
-				<number>{{avg_donations|floatformat:0|intcomma}}</number>
+			<average class="info_block number_row num_donations">
+				<number>{{avg_donations|floatformat:1|intcomma}}</number>
 				<description>Donations</description>
 			</average>
-			<average class="info_block number_row">
+			<average class="info_block number_row avg_per_donation">
 				<number>${{avg_donation|floatformat:2|intcomma}}</number>
 				<description>Per Donation</description>
 			</average>
-			<average class="info_block number_row">
+			<average class="info_block number_row num_vol_hours">
 				<number>{{avg_volunteer_hours|floatformat:0|intcomma}}</number>
 				<description>Volunteer Hours</description>
 			</average>
-			<average class="info_block number_row">
+			<average class="info_block number_row avg_vol_hours_per_person">
 				<number>{{avg_vol_hours_per_person|floatformat:1|intcomma}}</number>
 				<description>Volunteer Hours per person</description>
 			</average>
-			<average class="info_block number_row">
+			<average class="info_block number_row num_tags">
 				<number>{{avg_tags|floatformat:0|intcomma}}</number>
 				<description>Tags</description>
 			</average>
-			<average class="info_block number_row">
+			<average class="info_block number_row avg_tags_per_person">
 				<number>{{avg_tags_per_person|floatformat:1|intcomma}}</number>
 				<description>Tags per Person</description>
 			</average>
-			<average class="info_block number_row">
+			<average class="info_block number_row num_groups">
 				<number>{{avg_groups|floatformat:1|intcomma}}</number>
 				<description>Groups</description>
 			</average>
-			<average class="info_block number_row">
+			<average class="info_block number_row num_spreadsheets">
 				<number>{{avg_spreadsheets|floatformat:1|intcomma}}</number>
 				<description>Spreadsheets</description>
 			</average>
