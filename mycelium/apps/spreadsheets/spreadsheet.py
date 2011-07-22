@@ -298,13 +298,14 @@ class SpreadsheetAbstraction:
         template_instance = Spreadsheet.spreadsheet_template_instance_class(template.template_type)(query_set[0].account)
         if with_header:
             rows.append([f[1].name for f in template_instance.fields.iteritems()])
-
+        
         for r in query_set:
             try:
                 row = []
                 template_instance.get_primary_target(r.account, r.pk, force_refresh=True)
                 target_objects,created = template_instance.get_target_objects()
 
+                print template.fields
                 for k,f in template.fields.iteritems():
                     if target_objects[f.model_key]:
                         # try:
@@ -319,6 +320,7 @@ class SpreadsheetAbstraction:
                 rows.append(row)
             except Exception, e:
                 print "Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, e)
+                pass
 
         return rows
 

@@ -3,7 +3,9 @@ from accounts.managers import get_or_404_by_account
 from people.models import Person
 from volunteers.models import CompletedShift
 from donors.models import Donation
+from conversations.models import Conversation
 from collections import OrderedDict
+
 import datetime
 
 
@@ -15,11 +17,13 @@ class TargetObjectBasedTemplate(object):
         
         return self.primary_target
 
+    def get_target_object_people_Person(self):
+        return self.get_primary_target(), False            
+
+
 class PersonBasedTemplate(TargetObjectBasedTemplate):
     model = Person
-
-    def get_target_object_people_Person(self):
-        return self.get_primary_target(), False
+    row_descriptor = "people"
 
     def get_target_object_people_Employee(self):
         return self.get_target_object_people_Person()[0].primary_job, False
@@ -32,13 +36,14 @@ class PersonBasedTemplate(TargetObjectBasedTemplate):
 
 class DonationBasedTemplate(TargetObjectBasedTemplate):
     model = Donation
-
+    person_field = "donor.person"
+    row_descriptor = "donations"
 
     def get_target_object_donors_Donation(self):
         return self.get_primary_target(), False
-    
+
     def get_target_object_people_Person(self):
-        return self.get_target_object_donors_Donation()[0].donor.person, False
+        self.get_target_object_donors_Donation()[0].donor.person, False
 
     def get_target_object_people_Employee(self):
         return self.get_target_object_people_Person()[0].primary_job, False
@@ -52,17 +57,30 @@ class DonationBasedTemplate(TargetObjectBasedTemplate):
 
 class CompletedShiftBasedTemplate(TargetObjectBasedTemplate):
     model = CompletedShift
+    person_field = "volunteer.person"
+    row_descriptor = "volunteer shifts"
 
     def get_target_object_volunteers_CompletedShift(self):
         return self.get_primary_target(), False
 
     def get_target_object_people_Person(self):
-        return self.get_target_object_volunteers_CompletedShift()[0].volunteer.person, False
+        self.get_target_object_volunteers_CompletedShift()[0].volunteer.person, False
 
     def get_target_object_people_Organization(self):
         return self.get_target_object_people_Person()[0].primary_job, False
 
 
+
+class ConversationBasedTemplate(TargetObjectBasedTemplate):
+    model = Conversation
+    person_field = "person"
+    row_descriptor = "conversations"
+
+    def get_target_object_conversations_Conversation(self):
+        return self.get_primary_target(), False
+
+    def get_target_object_people_Person(self):
+        self.get_target_object_conversations_Conversation()[0].person, False
 
 
 class FullContactListTemplate(PersonBasedTemplate):
@@ -128,6 +146,25 @@ class EmailListTemplate (PersonBasedTemplate):
 
 class EmailListTemplateInstance(EmailListTemplate,SpreadsheetRow):
     pass
+
+        
+class ConversationsTemplate (ConversationBasedTemplate):
+    template_type = "conversations"
+    name = "Conversations"
+    description = "All conversations, including when they were, who they were with, and the full transcript."
+    fields = OrderedDict([
+        ("date",                ImportField("Date",                 "conversations",    "Conversation",     "date",                 )),
+        ("staff",               ImportField("Staff Member",         "conversations",    "Conversation",     "staff",                )),
+        ("converation_type",    ImportField("Conversation Type",    "conversations",    "Conversation",     "conversation_type",    )),
+        ("first_name",          ImportField("First Name",           "people",           "Person",           "first_name",           )),
+        ("last_name",           ImportField("Last Name",            "people",           "Person",           "last_name",            )),
+        ("body",                ImportField("Transcript",           "conversations",    "Conversation",     "body",                 )),
+        ("goodcloud_id",        ImportField("GoodCloud ID",         "people",           "Person",           "id",                   )),
+    ])
+
+class ConversationsTemplateInstance(ConversationsTemplate,SpreadsheetRow):
+    pass
+
 
 class DonationListTemplate (DonationBasedTemplate):
     template_type = "donations"
@@ -245,7 +282,6 @@ class VolunteerHoursSummaryTemplateInstance(VolunteerHoursSummaryTemplate,Spread
             this_year = datetime.date.today().year
             for y in range(oldest.year, this_year+1):
                 self.fields["hours_%s" % y] = ImportField("%s Total Hours" % y,           "people",       "Person",       "volunteer_hours_for_year(%s)" % y)
-        
 
 class CustomTemplate (object):
     template_type = "custom_template"
@@ -264,19 +300,23 @@ SPREADSHEET_TEMPLATES = [
     FullContactListTemplate(),
     MailingListTemplate(),
     EmailListTemplate(),
+    ConversationsTemplate(),
     DonationListTemplate(),
     DonationSummaryListTemplate(),
     VolunteerHoursTemplate(),
     VolunteerHoursSummaryTemplate(),
+
     # CustomTemplate(),
 ]
 SPREADSHEET_TEMPLATE_INSTANCES = {
     "full_contact_list"      : FullContactListTemplateInstance,
     "mailing_list"           : MailingListTemplateInstance,
     "email_list"             : EmailListTemplateInstance,
+    "conversations"          : ConversationsTemplateInstance,
     "donations"              : DonationListTemplateInstance,
     "donation_summary"       : DonationSummaryListTemplateInstance,   # see post_init_setup
     "volunteer_hours"        : VolunteerHoursTemplateInstance,
     "volunteer_hour_summary" : VolunteerHoursSummaryTemplateInstance,
+    
     # "custom_template"        : CustomTemplateInstance,
 }
