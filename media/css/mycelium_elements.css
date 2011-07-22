@@ -41,6 +41,10 @@ a {
 a:hover { 
 	text-decoration: underline;
 }
+input, textarea {
+	font-size: 1.0em;	
+}
+
 main_nav a.logo {
 	width: 180px;
 	float: left;

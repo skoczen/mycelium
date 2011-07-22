@@ -221,3 +221,26 @@ class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractio
         time.sleep(5.9)
         assert sel.is_element_present("css=.download_spreadsheet_btn")
         assert not sel.is_element_present("css=.download_spreadsheet_btn.disabled")
+
+    def test_that_downloading_an_empty_excel_spreadsheet_does_not_error(self):
+        assert True == "test written (but it should be!)"
+        sel = self.selenium
+        self.test_creating_a_new_spreadsheet_saves()
+        sel.click("link=Spreadsheets")
+        sel.wait_for_page_to_load("30000")
+        self.assert_on_spreadsheet_search_page()
+        sel.click("css=.quick_download_btn")
+        time.sleep(5)
+        self.assert_on_spreadsheet_search_page()
+
+    def test_that_downloading_an_empty_csv_spreadsheet_does_not_error(self):
+        assert True == "test written (but it should be!)"
+        sel = self.selenium
+        self.test_creating_a_new_spreadsheet_saves()
+        sel.click("link=Spreadsheets")
+        sel.wait_for_page_to_load("30000")
+        self.assert_on_spreadsheet_search_page()
+        sel.click("css=.quick_download_btn")
+        time.sleep(5)
+        self.assert_on_spreadsheet_search_page()
+

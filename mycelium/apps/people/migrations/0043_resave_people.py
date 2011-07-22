@@ -3,35 +3,13 @@ import datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
-from johnny import cache as jcache
-from django.core.cache import cache
-
-from people.models import PeopleSearchProxy
-from organizations.models import OrganizationsSearchProxy
 
 class Migration(DataMigration):
-    depends_on = (
-        ("organizations", "0002_auto__del_organizationnew__del_organizationssearchproxynew__del_organi"),
-    )
 
     def forwards(self, orm):
         "Write your forwards methods here."
-        print "Starting update of search proxies. Clearing old proxies..."
-        cache.clear()
-        PeopleSearchProxy.objects.all().delete()
-        print "Organizations cleared."
-        OrganizationsSearchProxy.objects.all().delete()
-        print "People cleared."
-
-        print "Re-saving organizations..."
-        OrganizationsSearchProxy.resave_all_organizations(verbose=True)
-        print "Re-saving people..."
-        PeopleSearchProxy.resave_all_people(verbose=True)
-        print "Invalidating cache.."
-        
-        jcache.invalidate(PeopleSearchProxy)
-        jcache.invalidate(OrganizationsSearchProxy)
-        print "Done."
+        for p in orm.Person.objects.all():
+            p.save()
 
     def backwards(self, orm):
         "Write your backwards methods here."
@@ -65,7 +43,7 @@ class Migration(DataMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'plan': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['accounts.Plan']", 'blank': 'True'}),
             'qi_simple_searchable_search_field': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'signup_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2011, 7, 21, 20, 56, 22, 153075)', 'null': 'True'}),
+            'signup_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2011, 7, 21, 20, 57, 14, 644165)', 'null': 'True'}),
             'status': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'subdomain': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255', 'db_index': 'True'}),
             'was_a_feedback_partner': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
@@ -96,6 +74,7 @@ class Migration(DataMigration):
             'Meta': {'ordering': "('first_name', 'last_name')", 'object_name': 'Person'},
             'account': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['accounts.Account']"}),
             'actual_birthday': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+            'age': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'birth_day': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'birth_month': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'birth_year': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),

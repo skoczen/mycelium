@@ -218,7 +218,7 @@ class SpreadsheetAbstraction:
         try:
             self.file.seek(0)
             s = self.file.read(2048)
-            dialect = csv.Sniffer().sniff(s)
+            dialect = csv.Sniffer().sniff(s, delimiters=',')
             self.has_header = csv.Sniffer().has_header(s)
             self.file.seek(0)
             return dialect != None
@@ -268,7 +268,6 @@ class SpreadsheetAbstraction:
                 probable_type = CSV_TYPE
             elif extension in EXCEL_EXTENSIONS:
                 probable_type = EXCEL_TYPE
-        
         file_type = None
         if probable_type and probable_type == EXCEL_TYPE:
             # try to parse an excel file first
@@ -337,12 +336,13 @@ class SpreadsheetAbstraction:
         sheet1= book.add_sheet('Sheet 1')
 
         row = 0
-        for r in cls._value_rows_from_queryset(query_set, template, **kwargs):
-            col = 0
-            for c in r:
-                sheet1.write(row, col, "%s" % c)
-                col += 1
-            row += 1
+        if query_set.count() > 0:
+            for r in cls._value_rows_from_queryset(query_set, template, **kwargs):
+                col = 0
+                for c in r:
+                    sheet1.write(row, col, "%s" % c)
+                    col += 1
+                row += 1
         
         book.save(file_handler)
         file_handler.flush()
@@ -358,7 +358,8 @@ class SpreadsheetAbstraction:
             file_handler = open(file_name, "wb")
 
         csv_writer = csv.writer(file_handler)
-        csv_writer.writerows([c for c in r] for r in cls._value_rows_from_queryset(query_set, template, **kwargs))
+        if query_set.count() > 0:
+            csv_writer.writerows([c for c in r] for r in cls._value_rows_from_queryset(query_set, template, **kwargs))
         file_handler.flush()
         return file_handler
 

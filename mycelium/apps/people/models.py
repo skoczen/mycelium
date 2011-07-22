@@ -93,6 +93,7 @@ class BirthdayBase(models.Model):
     birth_year          = models.IntegerField(blank=True, null=True, verbose_name="year")
     actual_birthday     = models.DateField(blank=True, null=True)
     normalized_birthday = models.DateField(blank=True, null=True)
+    age                 = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s" % self.best_birthday_description
@@ -103,6 +104,10 @@ class BirthdayBase(models.Model):
             self.normalized_birthday = datetime.date(year=NORMALIZED_BIRTH_YEAR, month=self.birth_month, day=self.birth_day)
             if self.birth_year:
                 self.actual_birthday = datetime.date(year=self.birth_year, month=self.birth_month, day=self.birth_day)
+                self.age = BirthdayBase.age_from_birthday(self.actual_birthday)
+            else:
+                self.age = None
+                self.actual_birthday = None
         else:
             self.normalized_birthday = None
 
@@ -144,13 +149,10 @@ class BirthdayBase(models.Model):
         else:
             return None
     
-    @property
-    def age(self):
+    @classmethod
+    def age_from_birthday(cls, birthdate):
         from math import floor
-        if self.actual_birthday:
-            return int(floor( (datetime.date.today() - self.actual_birthday).days /365.25))
-        else:
-            return None
+        return int(floor( (datetime.date.today() - birthdate).days /365.25))
 
     class Meta(object):
         abstract = True
