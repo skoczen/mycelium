@@ -17,13 +17,15 @@ class TargetObjectBasedTemplate(object):
         
         return self.primary_target
 
-    def get_target_object_people_Person(self):
-        return self.get_primary_target(), False            
 
 
 class PersonBasedTemplate(TargetObjectBasedTemplate):
     model = Person
     row_descriptor = "people"
+
+
+    def get_target_object_people_Person(self):
+        return self.get_primary_target(), False           
 
     def get_target_object_people_Employee(self):
         return self.get_target_object_people_Person()[0].primary_job, False
@@ -80,8 +82,11 @@ class ConversationBasedTemplate(TargetObjectBasedTemplate):
         return self.get_primary_target(), False
 
     def get_target_object_people_Person(self):
-        self.get_target_object_conversations_Conversation()[0].person, False
+        return self.get_target_object_conversations_Conversation()[0].person, False
 
+
+    def get_target_object_accounts_UserAccount(self):
+        return self.get_target_object_conversations_Conversation()[0].staff, False
 
 class FullContactListTemplate(PersonBasedTemplate):
     template_type = "full_contact_list"
@@ -154,7 +159,7 @@ class ConversationsTemplate (ConversationBasedTemplate):
     description = "All conversations, including when they were, who they were with, and the full transcript."
     fields = OrderedDict([
         ("date",                ImportField("Date",                 "conversations",    "Conversation",     "date",                 )),
-        ("staff",               ImportField("Staff Member",         "conversations",    "Conversation",     "staff",                )),
+        ("staff",               ImportField("Staff Member",         "accounts",         "UserAccount",      "full_name",            )),
         ("converation_type",    ImportField("Conversation Type",    "conversations",    "Conversation",     "conversation_type",    )),
         ("first_name",          ImportField("First Name",           "people",           "Person",           "first_name",           )),
         ("last_name",           ImportField("Last Name",            "people",           "Person",           "last_name",            )),
@@ -171,8 +176,8 @@ class DonationListTemplate (DonationBasedTemplate):
     name = "Donation List"
     description = "All donations entered into GoodCloud, with the contact information of the donor."
     fields = OrderedDict([
-        ("date",                ImportField("Date",                 "donors",    "Donation",        "date",         )),
-        ("amount",              ImportField("Amount",               "donors",    "Donation",        "amount",       )),
+        ("date",                ImportField("Date",                 "donors",       "Donation",     "date",         )),
+        ("amount",              ImportField("Amount",               "donors",       "Donation",     "amount",       )),
         # ("category",            ImportField("Category",             "donors",    "Donation",     "category",     )),
         # ("campaign",            ImportField("Campaign",             "donors",    "Donation",     "campaign",     )),
         ("first_name",          ImportField("First Name",           "people",       "Person",       "first_name",   )),
@@ -185,7 +190,7 @@ class DonationListTemplate (DonationBasedTemplate):
         ("state",               ImportField("State",                "people",       "Person",       "state",        )),
         ("postal_code",         ImportField("Zip Code",             "people",       "Person",       "postal_code",  )),
         ("org_name",            ImportField("Organization Name",    "people",       "Organization", "name",         )),
-        ("goodcloud_id",        ImportField("GoodCloud Donation ID","donors",    "Donation",        "id",           )),
+        ("goodcloud_id",        ImportField("GoodCloud Donation ID","donors",       "Donation",     "id",           )),
     ])
 
 class DonationListTemplateInstance(DonationListTemplate,SpreadsheetRow):

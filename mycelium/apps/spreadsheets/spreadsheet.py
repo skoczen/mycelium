@@ -305,7 +305,6 @@ class SpreadsheetAbstraction:
                 template_instance.get_primary_target(r.account, r.pk, force_refresh=True)
                 target_objects,created = template_instance.get_target_objects()
 
-                print template.fields
                 for k,f in template.fields.iteritems():
                     if target_objects[f.model_key]:
                         # try:
@@ -319,7 +318,9 @@ class SpreadsheetAbstraction:
                         row.append("")
                 rows.append(row)
             except Exception, e:
-                print "Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, e)
+                # print "Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, e)
+                # from qi_toolkit.helpers import print_exception
+                # print_exception()
                 pass
 
         return rows
@@ -411,7 +412,7 @@ class SpreadsheetAbstraction:
                 try:
                     d[f] = row[i].encode('utf-8','replace')
                 except Exception, e:
-                    print e
+                    # print e
                     d[f] = None
             i += 1
         return d

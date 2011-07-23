@@ -189,7 +189,7 @@ class RuleGroup(models.Model):
                         results = "%s | %s%s.%s " % (results, "self.target_model.", objects_str,  r.queryset_filter_string)
         else:
             return eval("self.target_model.%s.none()" % objects_str )
-
+        
         qs = eval(results).distinct().all()
 
         return qs
