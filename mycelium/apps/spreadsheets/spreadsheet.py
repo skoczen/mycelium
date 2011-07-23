@@ -318,9 +318,9 @@ class SpreadsheetAbstraction:
                         row.append("")
                 rows.append(row)
             except Exception, e:
-                # print "Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, e)
-                # from qi_toolkit.helpers import print_exception
-                # print_exception()
+                print "Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, e)
+                from qi_toolkit.helpers import print_exception
+                print_exception()
                 pass
 
         return rows
@@ -412,7 +412,7 @@ class SpreadsheetAbstraction:
                 try:
                     d[f] = row[i].encode('utf-8','replace')
                 except Exception, e:
-                    # print e
+                    print e
                     d[f] = None
             i += 1
         return d
