@@ -57,7 +57,7 @@ def spreadsheet(request, spreadsheet_id):
     spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
     form = _basic_forms(spreadsheet, request, no_data=True)
 
-    members = spreadsheet.members
+    members = spreadsheet.people
 
     spreadsheet_templates = SPREADSHEET_TEMPLATES
     section = "spreadsheets"

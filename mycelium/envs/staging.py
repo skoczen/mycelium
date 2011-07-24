@@ -28,7 +28,7 @@ DATABASE_POOL = {
     'slave': 1,
 }
 MASTER_DATABASE = 'default'
-
+BASE_DOMAIN = "digitalmycelium.com"
 
 MEDIA_URL = 'http://media.digitalmycelium.com/'
 MANUAL_MEDIA_URL = 'http://digitalmycelium.com/media/'

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block css %}{{block.super}}
+	{% css "css/mycelium_base.css" %}
+	{% css "/css/contrib/1140/1140.css" %}
+	{% css "/css/flight_control.css" %}
+{% endblock %}
+{% block base_js %}{% js "js/mycelium_base.js" %}{% endblock %}
+{% block javascript %}{{block.super}}
+	{% js "js/mycelium_core.js" %}
+	{% js "/js/mycelium/flight_control.js" %}
+<script>
+var GLOBAL_SEARCH_URL = "{% url flight_control:search_results %}";
+</script>
+{% endblock %}
+{% block content %}
+	{% block nav %}
+	<main_nav>
+		<a href="{% url flight_control:home %}" class="logo">
+			<span class="account_name"><p>GoodCloud Flight Control</p></span>
+		</a>
+
+		<input type="search" id="global_search" name="global_search" placeholder="Search for an account..." />
+	</main_nav>
+	<div id="global_search_results"><fragment name="global_search_results" action="replace"></fragment></div>
+
+	
+	{% endblock %}
+	
+	{% block page %}
+	<main_content>
+	<div id="page">
+	{# {% block breadcrumb %}<div class="breadcrumb_container"><breadcrumb>{% block breadcrumb_links %}{% endblock %}</breadcrumb></div>{% endblock %} #}
+	{% block page_content %}
+	
+	{% endblock %}
+	</div>
+	</main_content>
+	{% endblock %}
+{% endblock %}

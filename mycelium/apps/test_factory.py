@@ -234,7 +234,7 @@ class Factory(QiFactory):
 
 
     @classmethod
-    def account(cls, name=None, subdomain=None, delete_existing=False):
+    def account(cls, name=None, subdomain=None, delete_existing=False, is_demo=True):
         if not name:
             name = cls.rand_str()
         if not subdomain:
@@ -251,7 +251,7 @@ class Factory(QiFactory):
         while Account.objects.filter(pk=new_id).count() > 0:
             new_id = cls.rand_int(10000,99999999)
         
-        return Account.objects.create(id=new_id, plan=monthly_plan, name=name, subdomain=subdomain)
+        return Account.objects.create(id=new_id, plan=monthly_plan, name=name, subdomain=subdomain, is_demo=is_demo)
 
     @classmethod
     def useraccount(cls, account=account, username=None, password=None, full_name=None, access_level=None):
@@ -271,7 +271,7 @@ class Factory(QiFactory):
         return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=first_name))
 
     @classmethod
-    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False, single_user=False, create_subscription=False):
+    def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False, single_user=False, create_subscription=False, with_demo_flag=True):
         if quick:
             max_num_people = 5
             max_num_orgs = 2
@@ -289,7 +289,7 @@ class Factory(QiFactory):
 
         # Create account
         print_if_verbose(verbose, "Starting creation of %s's site." % organization_name)
-        account = cls.account(name=organization_name, subdomain=subdomain, delete_existing=delete_existing)
+        account = cls.account(name=organization_name, subdomain=subdomain, delete_existing=delete_existing, is_demo=with_demo_flag)
         request = DummyObj()
         request.account = account
 

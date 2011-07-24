@@ -11,27 +11,36 @@
 <body>
 	
 	<div id="error_message">
-	<div class="adorable_image">
-	<img src="https://goodcloud1.s3.amazonaws.com/images/icon-raincloud-400.png" />
-	</div>
-	<div class="detail_box">
-	<h1>How Embarrassing. We ran into problems loading that page.</h1>
+		<div class="adorable_image">
+			<img src="https://goodcloud1.s3.amazonaws.com/images/icon-sadcloud-400.png" />
+			{# <img src="{% media_url "images/icon-sadcloud-400.png" %}" /> #}
+		</div>
+	
+		<div class="detail_box">
+			<h1>Alright. Bad news first.</h1>
 
-	<div class="detail_text">
-	After the last action you took, GoodCloud had a problem loading the page to send back to you.<br/><br/>
+			<ul>
+				<li>We're sorry. We do our best to make GoodCloud ridiculously reliable. But every once in a while, there's a bug hiding. Looks like you found one.</li>
+				<li>After the last action you took, GoodCloud had a problem loading the page.</li>
+				<li>If you were trying to change something, those changes may or may not have gone through. Please check, and make sure!</li>
+			</ul>
 
-	The good news - we've been emailed with the details of what went wrong, and will be getting whatever happened fixed up!<br/>
-	The bad news - if you were trying to change something, or take an action, those changes may or may not have gone through. Please check, and make sure!
-	<br/><br/>
-	We're sorry.  If you're running into this on a consistent basis, or just want to talk, as always, feel free to send us an email, or give us a call!<br/><br/>
 
-	Some useful places to go from here:
-	<ul>
-	<li><a href="javascript:window.history.go(-1);">Back to the last page you were on</a></li>
-	<li><a href="https://www.agoodcloud.com">GoodCloud Home</a></li>
-	</ul>
-	</div>
-	</div>
+			<h1>There's good news.</h1>
+			<ul>
+				<li>We've been emailed with the details of what went wrong.</li>
+				<li>Steven is obsessive about making sure these never happen. So odds are, it will be fixed up by the next release if not sooner.</li>
+				<li>If you're running into trouble right now, give us a call at (503) 308-1460, or send an email to <a href="mailto:support@agoodcloud.com">support@agoodcloud.com</a></li>
+
+			</ul>
+
+			<h1>Some useful places to go from here:</h1>
+			<ul>
+				<li><a href="javascript:window.history.go(-1);">Back to the last page you were on</a></li>
+				<li><a href="https://www.agoodcloud.com">GoodCloud Home</a></li>
+			</ul>
+		
+		</div>
 	</div>
 </body>
 </html>

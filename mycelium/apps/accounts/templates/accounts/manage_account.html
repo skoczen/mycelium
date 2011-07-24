@@ -82,12 +82,13 @@ No card on file.
 
 {% if not request.account.is_cancelled %}
 <form_field>
-<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn mycelium_small_btn mycelium_btn mycelium_grey">Cancel</a>
+<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn mycelium_small_btn mycelium_btn mycelium_active_grey">Cancel</a>
 </form_field>
 {% endif %}
-	
 
 
+<form_field class="account_deletion">
+<label>Delete Account:</label><a href="{% url accounts:confirm_account_delete %}" class="mycelium_btn mycelium_active_grey mycelium_delete_btn account_delete_btn mycelium_small_btn" >Delete Account</a>
+</form_field>
 
-</form>
 {% endblock %}

@@ -1,14 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-from managers import AccountDataModelManager, ExplicitAccountDataModelManager
-from qi_toolkit.models import TimestampModelMixin
+from managers import AccountDataModelManager, ExplicitAccountDataModelManager, AccountManager
+from qi_toolkit.models import TimestampModelMixin, SimpleSearchableModel
+from qi_toolkit.helpers import classproperty
 from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII
 from django.conf import settings
 from pychargify.api import ChargifySubscription, ChargifyCustomer, Chargify
 import hashlib
 import datetime
 from dateutil.relativedelta import *
+from django.db.models import Sum, Count, Avg
 
 class Plan(TimestampModelMixin):
     name = models.CharField(max_length=255)
@@ -23,7 +25,8 @@ class Plan(TimestampModelMixin):
     def monthly_plan(cls):
         return cls.objects.get_or_create(name="Monthly")[0]
 
-class Account(TimestampModelMixin):
+
+class Account(TimestampModelMixin, SimpleSearchableModel):
     name = models.CharField(max_length=255, verbose_name="Organization Name")
     subdomain = models.CharField(max_length=255, unique=True, db_index=True, verbose_name="GoodCloud address (myorganization.agodocloud.com)")
     is_active = models.BooleanField(default=True)
@@ -50,18 +53,30 @@ class Account(TimestampModelMixin):
     chargify_cancel_at_end_of_period    = models.BooleanField(default=False)
     chargify_next_assessment_at         = models.DateTimeField(blank=True, null=True)
     chargify_last_four                  = models.CharField(blank=True, null=True, max_length=4)
+    chargify_balance                    = models.FloatField(blank=True, null=True, default=0)
+
+    is_demo                             = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        if not self.created_at:
+        if not self.id:
             self.signup_date = datetime.datetime.now()
         super(Account,self).save(*args, **kwargs)
             
+    def delete(self, *args, **kwargs):
+        sub = self.chargify_subscription
+        if sub:
+            sub.unsubscribe("Account deleted")
+        super(Account,self).delete(*args, **kwargs)
+    
+    objects = AccountManager()
 
     def __unicode__(self):
         return "%s" % self.name
 
     class Meta(object):
         ordering = ("name",)
+
+    search_fields = ["name", "subdomain"]
 
     @property
     def primary_useraccount(self):
@@ -203,35 +218,42 @@ class Account(TimestampModelMixin):
         return None
 
     def create_subscription(self):
-        chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-        customer = chargify.Customer()
-        customer.first_name = self.primary_useraccount.full_name[:self.primary_useraccount.full_name.find(" ")]
-        customer.last_name = self.primary_useraccount.full_name[self.primary_useraccount.full_name.find(" ")+1:]
-        customer.organization = self.name
-        customer.reference = "%s" % self.id
-        customer.email = self.primary_useraccount.user.email
-        customer.save()
+        try:
+            assert self.chargify_subscription != None
+        except:
+            chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+            customer = chargify.Customer()
+            customer.first_name = self.primary_useraccount.full_name[:self.primary_useraccount.full_name.find(" ")]
+            customer.last_name = self.primary_useraccount.full_name[self.primary_useraccount.full_name.find(" ")+1:]
+            customer.organization = self.name
+            customer.reference = "%s" % self.id
+            customer.email = self.primary_useraccount.user.email
+            customer.save()
 
-        customer = chargify.Customer()
-        customer = customer.getByReference(self.pk)
+            customer = chargify.Customer()
+            customer = customer.getByReference(self.pk)
 
-        subscription = chargify.Subscription()
-        subscription.product_handle = settings.CHARGIFY_PRODUCT_HANDLE
-        subscription.customer_reference = "%s" % self.id
-        # subscription.next_billing_at = self.free_trial_ends.isoformat()
-        subscription.save()
+            subscription = chargify.Subscription()
+            subscription.product_handle = settings.CHARGIFY_PRODUCT_HANDLE
+            subscription.customer_reference = "%s" % self.id
+            # subscription.next_billing_at = self.free_trial_ends.isoformat()
+            subscription.save()
 
-        subscription = chargify.Subscription()
-        subscription = subscription.getByCustomerId(customer.id)[0]
+            subscription = chargify.Subscription()
+            subscription = subscription.getByCustomerId(customer.id)[0]
 
-        self.chargify_subscription_id = subscription.id
-        self.save()
+            self.chargify_subscription_id = subscription.id
+            self.save()
 
     @property
     def chargify_subscription(self):
-        chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-        subscription = chargify.Subscription()
-        return subscription.getBySubscriptionId(self.chargify_subscription_id)
+        from pychargify.api import ChargifyNotFound
+        try:
+            chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
+            subscription = chargify.Subscription()
+            return subscription.getBySubscriptionId(self.chargify_subscription_id)
+        except ChargifyNotFound:
+            return None
 
 
     def update_account_status(self):
@@ -240,6 +262,7 @@ class Account(TimestampModelMixin):
         self.chargify_state = chargify_sub.state
         
         self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period == "true"
+        self.chargify_balance = float(chargify_sub.balance_in_cents) / 100
 
         self.chargify_next_assessment_at = chargify_sub.current_period_ends_at
         if chargify_sub.credit_card:
@@ -252,6 +275,9 @@ class Account(TimestampModelMixin):
 
         return self
     
+    @property
+    def age_in_months(self):
+        return (datetime.datetime.today() - self.signup_date).days / 30
 
     @property
     def free_trial_ends(self):
@@ -312,6 +338,242 @@ class Account(TimestampModelMixin):
                   'org_name' : self.name,
                   'account_pk': self.pk,
                   }
+
+    @property
+    def chargify_subscription_url(self):
+        from django.conf import settings
+        return "https://%s.chargify.com/subscriptions/%s" % (settings.CHARGIFY_SUBDOMAIN, self.chargify_subscription_id)
+
+    
+
+    # Aggregates
+    @property
+    def total_donation_sum(self):
+        return self.donation_set.all().aggregate(Sum('amount'))["amount__sum"] or 0
+
+    @property
+    def total_volunteer_hours(self):
+        return self.completedshift_set.all().aggregate(Sum('duration'))["duration__sum"] or 0
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts(cls):
+        return cls.objects.filter(is_demo=False)
+
+    @classproperty
+    @classmethod
+    def num_non_demo_accounts(cls):
+        return cls.all_non_demo_accounts.count()
+    
+    @classproperty
+    @classmethod
+    def num_non_demo_accounts_denominator(cls):
+        if cls.num_non_demo_accounts > 0:
+            return cls.num_non_demo_accounts
+        else:
+            return 1
+    
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_total_people(cls):
+        from people.models import Person
+        return Person.objects.non_demo.count()
+
+    @classproperty
+    @classmethod
+    def num_non_demo_accounts_num_total_people_denominator(cls):
+        if cls.all_non_demo_accounts_num_total_people> 0:
+            return cls.all_non_demo_accounts_num_total_people
+        else:
+            return 1
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_total_organizations(cls):
+        from organizations.models import Organization
+        return Organization.objects.non_demo.count()
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_total_volunteer_hours(cls):
+        from volunteers.models import CompletedShift
+        return CompletedShift.objects.non_demo.aggregate(Sum('duration'))["duration__sum"] or 0
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_total_donation_amount(cls):
+        from donors.models import Donation
+        return Donation.objects.non_demo.aggregate(Sum('amount'))["amount__sum"] or 0
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_total_donations(cls):
+        from donors.models import Donation
+        return Donation.objects.non_demo.count()
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_tags(cls):
+        from generic_tags.models import Tag
+        return Tag.objects.non_demo.count()
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_tagged_items(cls):
+        from generic_tags.models import TaggedItem
+        return TaggedItem.objects.non_demo.count()
+
+    @classproperty
+    @classmethod
+    def num_non_demo_accounts_num_total_donations_denominator(cls):
+        if cls.all_non_demo_accounts_num_total_donations> 0:
+            return cls.all_non_demo_accounts_num_total_donations
+        else:
+            return 1
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_total_groups(cls):
+        from groups.models import Group
+        return Group.objects.non_demo.count()
+
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_total_spreadsheets(cls):
+        from spreadsheets.models import Spreadsheet
+        return Spreadsheet.objects.non_demo.count()
+
+
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_num_users(cls):
+        return float(UserAccount.objects.filter(account__is_demo=False).count()) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_num_people(cls):
+        return float(cls.all_non_demo_accounts_num_total_people) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_num_organizations(cls):
+        return float(cls.all_non_demo_accounts_num_total_organizations) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_donation_amount(cls):
+        return float(cls.all_non_demo_accounts_total_donation_amount) / cls.num_non_demo_accounts_num_total_donations_denominator
+
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_number_of_donations_per_account(cls):
+        return float(cls.all_non_demo_accounts_num_total_donations) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_volunteer_hours_per_account(cls):
+        return float(cls.all_non_demo_accounts_total_volunteer_hours) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_volunteer_hours_per_person(cls):
+        return float(cls.all_non_demo_accounts_total_volunteer_hours) / cls.num_non_demo_accounts_num_total_people_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_tags_per_person(cls):
+        return float(cls.all_non_demo_accounts_num_tags) / cls.num_non_demo_accounts_num_total_people_denominator
+    
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_tags_per_account(cls):
+        return float(cls.all_non_demo_accounts_num_tags) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_taggeditems_per_person(cls):
+        return float(cls.all_non_demo_accounts_num_tagged_items) / cls.num_non_demo_accounts_num_total_people_denominator
+    
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_taggeditems_per_account(cls):
+        return float(cls.all_non_demo_accounts_num_tagged_items) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_groups_per_account(cls):
+        return float(cls.all_non_demo_accounts_num_total_groups) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_spreadsheets_per_account(cls):
+        return float(cls.all_non_demo_accounts_num_total_spreadsheets) / cls.num_non_demo_accounts_denominator
+
+    @property
+    def num_people(self):
+        return self.person_set.count()
+
+    @property
+    def num_people_denominator(self):
+        if self.num_people > 0:
+            return self.num_people
+        else:
+            return 1
+
+    @property
+    def num_organizations(self):
+        return self.organization_set.count()
+
+    @property
+    def num_donations(self):
+        return self.donation_set.count()
+
+    @property
+    def num_donations_denominator(self):
+        if self.num_donations > 0:
+            return self.num_donations
+        else:
+            return 1
+
+    @property
+    def total_donations(self):
+        return self.donation_set.all().aggregate(Sum('amount'))["amount__sum"] or 0
+
+    @property
+    def avg_donation(self):
+        return float(self.total_donations) / self.num_donations_denominator
+
+    @property
+    def num_volunteer_hours(self):
+        return self.completedshift_set.all().aggregate(Sum('duration'))["duration__sum"] or 0
+
+    @property
+    def avg_vol_hours_per_person(self):
+        return float(self.num_volunteer_hours) / self.num_people_denominator
+
+    @property
+    def num_tags(self):
+        return self.tag_set.count()
+
+    @property
+    def num_taggeditems(self):
+        return self.taggeditem_set.count()
+
+    @property
+    def avg_tags_per_person(self):
+        return float(self.num_taggeditems) / self.num_people_denominator
+
+    @property
+    def num_groups(self):
+        return self.group_set.count()
+    
+    @property
+    def num_spreadsheets(self):
+        return self.spreadsheet_set.count()
+
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)

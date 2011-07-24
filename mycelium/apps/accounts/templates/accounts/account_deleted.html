@@ -1,0 +1,18 @@
+{% extends "marketing_site/base.html" %}
+{% load i18n generic_fields friendly_data_formatting  %}
+{% block title %}Account Deleted{% endblock %}
+{% block description %}Your account has been successfully deleted!{% endblock %}
+
+{% block page_header %}So long, and fare well!{% endblock %}
+
+{% block page_content %}
+<div id="section">
+<div class="page_top_hook full">We're sad to see you go, but we understand.</div>
+<div class="tab_content">
+	<p>Your account has been successfully removed from GoodCloud.  We want to thank you for using GoodCloud, and appreciate you giving it a shot! </p>
+	<p>If you have feedback on how we can improve GoodCloud to make it more valuable and useful, please <a href="#" class="contact_button online">let us know!</a> And of course, you can always <a href="{% url accounts:signup %}">sign back up.</a></p>
+
+	<p>Bon Voyage!<br/>-The GoodCloud Team</p>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% if search_results %}
+<table class="results_table global_results_table striped results_found">
+{% for a in search_results %}<tr class="striped_row"><td class=""><a href="{% url flight_control:account a.pk %}"><span class="highlightable">{{a.name}}</span></a></td><td class="highlightable">{{a.subdomain}}</td></tr>{% endfor %}
+</table>
+{% else %}
+{% if q %}
+<table class="global_results_table no_people_found">
+<tr><td>
+	No results found for search "{{q}}".
+</td></tr>
+</table>
+{% else %}
+{# 	No search. #}
+{% endif %}
+{% endif %}

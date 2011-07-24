@@ -52,6 +52,7 @@ def generic_editable_field_anyall_bool(field, field_type="input",include_context
 def generic_editable_field_twitter(field, field_type="input",include_context=True):
     MEDIA_URL = settings.MEDIA_URL
     generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_twitter_view.html",locals())
+    generic_editable_edit_override = render_to_string("mycelium_core/template_tags/generic_fields/_twitter_edit.html",locals())
     return locals()
 
 

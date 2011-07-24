@@ -1,0 +1,130 @@
+{% extends "flight_control/base.html" %}
+{% load i18n flip_clock humanize %}
+{% block title %}GoodCloud Flight Control{% endblock %}
+
+{% block page_content %}
+
+<div class="container">
+	<div class="row">
+		<span class="active threecol">
+			{% flip_clock active_account_count "Active" %}
+		</span>
+
+		<span class="billing twocol">
+			<span class="{% if problem_accounts.count > 0 %}bad{% else %}good{% endif %}">
+				{% flip_clock problem_accounts.count "Bill Issue"  %}
+			</span>
+		</span>
+
+		<span class="free_trial sevencol">
+			{% flip_clock week_1 "Trial Week 1"  %}
+			{% flip_clock week_2 "Trial Week 2"  %}
+			{% flip_clock week_3 "Trial Week 3"  %}
+			{% flip_clock week_4.count "Trial Week 4"  %}
+		</span>
+	</div>
+</div>
+<div class="container twitter_feed">
+	<div class="row">
+		<column class="twelvecol"></column>
+	</div>
+</div>
+
+
+<div class="container info_columns">
+	<div class="row">
+		<column class="fourcol billing_issues">
+			<column_header>Billing Issues</column_header>
+			{% for a in problem_accounts %}
+			<div class="info_block">
+				<a href="{% url flight_control:account a.pk %}">{{a.name}}</a> is {{a.get_status_display}}.
+			</div>
+			{% empty %}
+			<div class="info_block empty_message">No accounts with billing issues! Hooray!</div>
+			{% endfor %}
+
+			<column_header>Expiring Soon</column_header>
+			{% for a in week_4 %}
+			<div class="info_block">
+				<a href="{% url flight_control:account a.pk %}">{{a.name}}</a> expires {{a.free_trial_ends|date}}.
+			</div>
+			{% empty %}
+			<div class="info_block empty_message">None in the next week.</div>
+			{% endfor %}
+		</column>
+		<column class="fourcol recent_activity">
+			<column_header>Recent Logins</column_header>
+			{% for u in recent_users %}
+			<div class="info_block login_block">
+				{{u.last_login|date}} - {{u.first_name}} ({% if u.get_profile %}<a href="{% url flight_control:account u.get_profile.account.pk %}">{{u.get_profile.account.name}}</a>{% else %}Internal{% endif %})
+			</div>
+		 	{% endfor %}
+
+			<column_header>Recent Activity</column_header>
+			<div class="empty_message info_block">
+				Still working on the activity tracker.
+			</div>
+			<!--
+			<div class="info_block">
+				Steven Skoczen with <a href="#">Account Name</a> edited a person. <span class="when">15 minutes ago</span>
+			</div>
+			<div class="info_block">
+				Steven Skoczen with <a href="#">Account Name</a> created a group. <span class="when">22 minutes ago</span>
+			</div>
+			<div class="info_block">
+				Tom Noble with <a href="#">Account Name</a> imported a spreadsheet. <span class="when">47 minutes ago</span>
+			</div>
+			-->
+		</column>
+		<column class="fourcol averages">
+			<column_header>Account Averages</column_header>
+			<average class="info_block number_row num_people">
+				<number>{{avg_people|floatformat:0|intcomma}}</number>
+				<description>People</description>
+			</average>
+			<average class="info_block number_row num_orgs">
+				<number>{{avg_organizations|floatformat:0|intcomma}}</number>
+				<description>Organizations</description>
+			</average>
+			<average class="info_block number_row num_users">
+				<number>{{avg_users|floatformat:1|intcomma}}</number>
+				<description>User Accounts</description>
+			</average>
+			<average class="info_block number_row num_donations">
+				<number>{{avg_donations|floatformat:1|intcomma}}</number>
+				<description>Donations</description>
+			</average>
+			<average class="info_block number_row avg_per_donation">
+				<number>${{avg_donation|floatformat:2|intcomma}}</number>
+				<description>Per Donation</description>
+			</average>
+			<average class="info_block number_row num_vol_hours">
+				<number>{{avg_volunteer_hours|floatformat:0|intcomma}}</number>
+				<description>Volunteer Hours</description>
+			</average>
+			<average class="info_block number_row avg_vol_hours_per_person">
+				<number>{{avg_vol_hours_per_person|floatformat:1|intcomma}}</number>
+				<description>Volunteer Hours per person</description>
+			</average>
+			<average class="info_block number_row num_tags">
+				<number>{{avg_tags|floatformat:0|intcomma}}</number>
+				<description>Tags</description>
+			</average>
+			<average class="info_block number_row avg_tags_per_person">
+				<number>{{avg_tags_per_person|floatformat:1|intcomma}}</number>
+				<description>Tags per Person</description>
+			</average>
+			<average class="info_block number_row num_groups">
+				<number>{{avg_groups|floatformat:1|intcomma}}</number>
+				<description>Groups</description>
+			</average>
+			<average class="info_block number_row num_spreadsheets">
+				<number>{{avg_spreadsheets|floatformat:1|intcomma}}</number>
+				<description>Spreadsheets</description>
+			</average>
+		</column>
+	</div>
+</div>
+
+
+{% endblock %}

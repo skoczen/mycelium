@@ -3,6 +3,7 @@
 				<icon class="spreadsheet" ></icon>
 				<a href="{% url spreadsheets:spreadsheet obj.pk %}" ><span class="highlightable">{{obj.full_name}}</span></a>
 	</td>
-	<td class="count	"	>{{obj.num_rows}} people</td>
+	<td class="count	"	>{{obj.num_people}} people</td>
+{# 	<td class="count	"	>{{obj.num_rows}} rows</td> #}
 	<td class="download "	><a href="{% url spreadsheets:download %}?type={{obj.default_filetype}}&spreadsheet_id={{obj.pk}}" class="mycelium_btn mycelium_small_btn quick_download_btn">Download File</a></td>
 </tr>

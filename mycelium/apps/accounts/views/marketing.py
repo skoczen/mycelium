@@ -56,20 +56,6 @@ def verify_subdomain(request):
     return {'success':True, 'is_available':is_available}
 
 
-
-@json_view
-def chargify_webhook(request):
-    print request.POST
-    # billing_subscription_id = request.GET['subscription_id']
-    # billing_customer_id = request.GET['customer_id']
-    # account_id = request.GET['account_id']
-
-    # go to the chargify API, and verify the status.
-    chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-    # chargify_customer = chargify.Customer(id=billing_customer_id)
-    print chargify
-
-
-    # a = Account.objects.get(pk=account_id)
-    # a.subscription_id
-    return {}
+@render_to("accounts/account_deleted.html")
+def account_deleted(request):
+    return locals()

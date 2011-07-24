@@ -30,7 +30,7 @@ ADMINS = [
 MANAGERS = ADMINS
 SENTRY_ADMINS = ADMINS
 
-TIME_ZONE = "America/Los_Angeles"
+TIME_ZONE = "UTC"
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
         # ('fr', gettext('French')),
@@ -108,12 +108,14 @@ SUBDOMAIN_URLCONFS = {
     None: 'mycelium.urls.marketing',
     'www': 'mycelium.urls.marketing',
     'dev': 'mycelium.urls.marketing',
+    'flightcontrol': 'mycelium.urls.dashboard',
     # 'api': 'myproject.urls.api',
 }
 PUBLIC_SUBDOMAINS = [
     None,
     "www",
     "dev",
+    "flightcontrol",
 ]
 REMOVE_WWW_FROM_SUBDOMAIN = True
 
@@ -178,6 +180,7 @@ INSTALLED_APPS = (
     'accounts',
     'dashboard',
     'webhooks',
+    'flight_control',
 
     'djangosanetesting',
 )

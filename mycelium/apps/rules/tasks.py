@@ -228,6 +228,14 @@ def populate_rule_components_for_an_account(account):
     ls.order=150
     ls.save()
 
+    ls = left_side_for_date (account=account,          display_name="birthday"                                     ,query_string_partial="actual_birthday"                                   )
+    ls.order=170
+    ls.save()
+
+    ls = left_side_for_number (account=account,        display_name="age"                                           ,query_string_partial="age"                                   )
+    ls.order=190
+    ls.save()
+
 
     # Left sides - generateds
     from generic_tags.models import TagSet

@@ -68,6 +68,7 @@ CACHE_BACKEND = 'johnny.backends.memcached://int-Memcached1010.agoodcloud.com:11
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
 SESSION_COOKIE_DOMAIN = "agoodcloud.com"
+BASE_DOMAIN = "agoodcloud.com"
 
 
 # django-mediasync

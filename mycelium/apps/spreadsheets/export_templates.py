@@ -3,7 +3,9 @@ from accounts.managers import get_or_404_by_account
 from people.models import Person
 from volunteers.models import CompletedShift
 from donors.models import Donation
+from conversations.models import Conversation
 from collections import OrderedDict
+
 import datetime
 
 
@@ -15,11 +17,15 @@ class TargetObjectBasedTemplate(object):
         
         return self.primary_target
 
+
+
 class PersonBasedTemplate(TargetObjectBasedTemplate):
     model = Person
+    row_descriptor = "people"
+
 
     def get_target_object_people_Person(self):
-        return self.get_primary_target(), False
+        return self.get_primary_target(), False           
 
     def get_target_object_people_Employee(self):
         return self.get_target_object_people_Person()[0].primary_job, False
@@ -32,11 +38,12 @@ class PersonBasedTemplate(TargetObjectBasedTemplate):
 
 class DonationBasedTemplate(TargetObjectBasedTemplate):
     model = Donation
-
+    person_field = "donor.person"
+    row_descriptor = "donations"
 
     def get_target_object_donors_Donation(self):
         return self.get_primary_target(), False
-    
+
     def get_target_object_people_Person(self):
         return self.get_target_object_donors_Donation()[0].donor.person, False
 
@@ -52,6 +59,8 @@ class DonationBasedTemplate(TargetObjectBasedTemplate):
 
 class CompletedShiftBasedTemplate(TargetObjectBasedTemplate):
     model = CompletedShift
+    person_field = "volunteer.person"
+    row_descriptor = "volunteer shifts"
 
     def get_target_object_volunteers_CompletedShift(self):
         return self.get_primary_target(), False
@@ -60,35 +69,56 @@ class CompletedShiftBasedTemplate(TargetObjectBasedTemplate):
         return self.get_target_object_volunteers_CompletedShift()[0].volunteer.person, False
 
     def get_target_object_people_Organization(self):
-        return self.get_target_object_people_Person()[0].primary_job, False
+        if self.get_target_object_people_Person()[0].primary_job:
+            return self.get_target_object_people_Person()[0].primary_job.organization, False
+        else: 
+            return None, False
 
 
 
+class ConversationBasedTemplate(TargetObjectBasedTemplate):
+    model = Conversation
+    person_field = "person"
+    row_descriptor = "conversations"
+
+    def get_target_object_conversations_Conversation(self):
+        return self.get_primary_target(), False
+
+    def get_target_object_people_Person(self):
+        return self.get_target_object_conversations_Conversation()[0].person, False
+
+
+    def get_target_object_accounts_UserAccount(self):
+        return self.get_target_object_conversations_Conversation()[0].staff, False
 
 class FullContactListTemplate(PersonBasedTemplate):
     template_type = "full_contact_list"
     name = "Full Contact List"
     description = "All of the contact information stored in GoodCloud, including personal and work contact information."
     fields = OrderedDict([
-        ("first_name",          ImportField("First Name",                    "people",       "Person",       "first_name",   )),
-        ("last_name",           ImportField("Last Name",                     "people",       "Person",       "last_name",    )),
-        ("email",               ImportField("Email",                         "people",       "Person",       "email",        )),
-        ("phone_number",        ImportField("Home Phone",                    "people",       "Person",       "phone_number", )),
-        ("line_1",              ImportField("Home Address 1",                "people",       "Person",       "line_1",       )),
-        ("line_2",              ImportField("Home Address 2",                "people",       "Person",       "line_2",       )),
-        ("city",                ImportField("City",                          "people",       "Person",       "city",         )),
-        ("state",               ImportField("State",                         "people",       "Person",       "state",        )),
-        ("postal_code",         ImportField("Zip Code",                      "people",       "Person",       "postal_code",  )),
-        ("org_role",            ImportField("Title",                         "people",       "Employee",     "role",         )),
-        ("org_phone_number",    ImportField("Work Phone",                    "people",       "Employee",     "phone_number", )),
-        ("org_email",           ImportField("Work Email",                    "people",       "Employee",     "email",        )),
-        ("org_name",            ImportField("Organization Name",             "people",       "Organization", "name",         )),
-        ("org_line_1",          ImportField("Organization Address 1",        "people",       "Organization", "line_1",       )),
-        ("org_line_2",          ImportField("Organization Address 2",        "people",       "Organization", "line_2",       )),
-        ("org_city",            ImportField("Organization City",             "people",       "Organization", "city",         )),
-        ("org_state",           ImportField("Organization State",            "people",       "Organization", "state",        )),
-        ("org_postal_code",     ImportField("Organization Zip",              "people",       "Organization", "postal_code",  )),
-        ("goodcloud_id",        ImportField("GoodCloud ID",         "people",       "Person",       "id",           )),
+        ("first_name",          ImportField("First Name",                    "people",       "Person",       "first_name",      )),
+        ("last_name",           ImportField("Last Name",                     "people",       "Person",       "last_name",       )),
+        ("email",               ImportField("Email",                         "people",       "Person",       "email",           )),
+        ("phone_number",        ImportField("Home Phone",                    "people",       "Person",       "phone_number",    )),
+        ("line_1",              ImportField("Home Address 1",                "people",       "Person",       "line_1",          )),
+        ("line_2",              ImportField("Home Address 2",                "people",       "Person",       "line_2",          )),
+        ("city",                ImportField("City",                          "people",       "Person",       "city",            )),
+        ("state",               ImportField("State",                         "people",       "Person",       "state",           )),
+        ("postal_code",         ImportField("Zip Code",                      "people",       "Person",       "postal_code",     )),
+        ("org_role",            ImportField("Title",                         "people",       "Employee",     "role",            )),
+        ("org_phone_number",    ImportField("Work Phone",                    "people",       "Employee",     "phone_number",    )),
+        ("org_email",           ImportField("Work Email",                    "people",       "Employee",     "email",           )),
+        ("org_name",            ImportField("Organization Name",             "people",       "Organization", "name",            )),
+        ("org_line_1",          ImportField("Organization Address 1",        "people",       "Organization", "line_1",          )),
+        ("org_line_2",          ImportField("Organization Address 2",        "people",       "Organization", "line_2",          )),
+        ("org_city",            ImportField("Organization City",             "people",       "Organization", "city",            )),
+        ("org_state",           ImportField("Organization State",            "people",       "Organization", "state",           )),
+        ("org_postal_code",     ImportField("Organization Zip",              "people",       "Organization", "postal_code",     )),
+        ("birth_month",         ImportField("Birth Month",                   "people",       "Person",       "birth_month",     )),
+        ("birth_date",          ImportField("Birth Day",                     "people",       "Person",       "birth_day",       )),
+        ("birth_year",          ImportField("Birth Year",                    "people",       "Person",       "birth_year",      )),
+        ("birthday",            ImportField("Birthday",                      "people",       "Person",       "actual_birthday", )),
+        ("goodcloud_id",        ImportField("GoodCloud ID",                  "people",       "Person",       "id",           )),
     ])
 
 class FullContactListTemplateInstance(FullContactListTemplate,SpreadsheetRow):
@@ -125,26 +155,46 @@ class EmailListTemplate (PersonBasedTemplate):
 class EmailListTemplateInstance(EmailListTemplate,SpreadsheetRow):
     pass
 
+        
+class ConversationsTemplate (ConversationBasedTemplate):
+    template_type = "conversations"
+    name = "Conversations"
+    description = "All conversations, including when they were, who they were with, and the full transcript."
+    fields = OrderedDict([
+        ("date",                ImportField("Date",                 "conversations",    "Conversation",     "date",                 )),
+        ("staff",               ImportField("Staff Member",         "accounts",         "UserAccount",      "full_name",            )),
+        ("converation_type",    ImportField("Conversation Type",    "conversations",    "Conversation",     "conversation_type",    )),
+        ("first_name",          ImportField("First Name",           "people",           "Person",           "first_name",           )),
+        ("last_name",           ImportField("Last Name",            "people",           "Person",           "last_name",            )),
+        ("body",                ImportField("Transcript",           "conversations",    "Conversation",     "body",                 )),
+        ("goodcloud_id",        ImportField("GoodCloud ID",         "people",           "Person",           "id",                   )),
+    ])
+
+class ConversationsTemplateInstance(ConversationsTemplate,SpreadsheetRow):
+    pass
+
+
 class DonationListTemplate (DonationBasedTemplate):
     template_type = "donations"
     name = "Donation List"
     description = "All donations entered into GoodCloud, with the contact information of the donor."
     fields = OrderedDict([
-        ("date",                ImportField("Date",                 "donors",    "Donation",        "date",         )),
-        ("amount",              ImportField("Amount",               "donors",    "Donation",        "amount",       )),
-        # ("category",            ImportField("Category",             "donors",    "Donation",     "category",     )),
-        # ("campaign",            ImportField("Campaign",             "donors",    "Donation",     "campaign",     )),
-        ("first_name",          ImportField("First Name",           "people",       "Person",       "first_name",   )),
-        ("last_name",           ImportField("Last Name",            "people",       "Person",       "last_name",    )),
-        ("email",               ImportField("Email",                "people",       "Person",       "email",        )),
-        ("phone_number",        ImportField("Home Phone",           "people",       "Person",       "phone_number", )),
-        ("line_1",              ImportField("Home Address 1",       "people",       "Person",       "line_1",       )),
-        ("line_2",              ImportField("Home Address 2",       "people",       "Person",       "line_2",       )),
-        ("city",                ImportField("City",                 "people",       "Person",       "city",         )),
-        ("state",               ImportField("State",                "people",       "Person",       "state",        )),
-        ("postal_code",         ImportField("Zip Code",             "people",       "Person",       "postal_code",  )),
-        ("org_name",            ImportField("Organization Name",    "people",       "Organization", "name",         )),
-        ("goodcloud_id",        ImportField("GoodCloud Donation ID","donors",    "Donation",        "id",           )),
+        ("date",                  ImportField("Date",                 "donors",       "Donation",     "date",         )),
+        ("amount",                ImportField("Amount",               "donors",       "Donation",     "amount",       )),
+        # ("category",              ImportField("Category",             "donors",    "Donation",     "category",     )),
+        # ("campaign",              ImportField("Campaign",             "donors",    "Donation",     "campaign",     )),
+        ("first_name",            ImportField("First Name",           "people",       "Person",       "first_name",   )),
+        ("last_name",             ImportField("Last Name",            "people",       "Person",       "last_name",    )),
+        ("email",                 ImportField("Email",                "people",       "Person",       "email",        )),
+        ("phone_number",          ImportField("Home Phone",           "people",       "Person",       "phone_number", )),
+        ("line_1",                ImportField("Home Address 1",       "people",       "Person",       "line_1",       )),
+        ("line_2",                ImportField("Home Address 2",       "people",       "Person",       "line_2",       )),
+        ("city",                  ImportField("City",                 "people",       "Person",       "city",         )),
+        ("state",                 ImportField("State",                "people",       "Person",       "state",        )),
+        ("postal_code",           ImportField("Zip Code",             "people",       "Person",       "postal_code",  )),
+        ("org_name",              ImportField("Organization Name",    "people",       "Organization", "name",         )),
+        ("goodcloud_donation_id", ImportField("GoodCloud Donation ID","donors",       "Donation",     "id",           )),
+        ("goodcloud_id",          ImportField("GoodCloud ID",         "people",       "Person",     "id",           )),
     ])
 
 class DonationListTemplateInstance(DonationListTemplate,SpreadsheetRow):
@@ -203,6 +253,7 @@ class VolunteerHoursTemplate (CompletedShiftBasedTemplate):
         ("state",               ImportField("State",                "people",       "Person",       "state",        )),
         ("postal_code",         ImportField("Zip Code",             "people",       "Person",       "postal_code",  )),
         ("name",                ImportField("Organization Name",    "people",       "Organization", "name",         )),
+        ("goodcloud_id",        ImportField("GoodCloud ID",         "people",       "Person",     "id",           )),
     ])
 
 class VolunteerHoursTemplateInstance(VolunteerHoursTemplate,SpreadsheetRow):
@@ -241,7 +292,6 @@ class VolunteerHoursSummaryTemplateInstance(VolunteerHoursSummaryTemplate,Spread
             this_year = datetime.date.today().year
             for y in range(oldest.year, this_year+1):
                 self.fields["hours_%s" % y] = ImportField("%s Total Hours" % y,           "people",       "Person",       "volunteer_hours_for_year(%s)" % y)
-        
 
 class CustomTemplate (object):
     template_type = "custom_template"
@@ -260,19 +310,23 @@ SPREADSHEET_TEMPLATES = [
     FullContactListTemplate(),
     MailingListTemplate(),
     EmailListTemplate(),
+    ConversationsTemplate(),
     DonationListTemplate(),
     DonationSummaryListTemplate(),
     VolunteerHoursTemplate(),
     VolunteerHoursSummaryTemplate(),
+
     # CustomTemplate(),
 ]
 SPREADSHEET_TEMPLATE_INSTANCES = {
     "full_contact_list"      : FullContactListTemplateInstance,
     "mailing_list"           : MailingListTemplateInstance,
     "email_list"             : EmailListTemplateInstance,
+    "conversations"          : ConversationsTemplateInstance,
     "donations"              : DonationListTemplateInstance,
     "donation_summary"       : DonationSummaryListTemplateInstance,   # see post_init_setup
     "volunteer_hours"        : VolunteerHoursTemplateInstance,
     "volunteer_hour_summary" : VolunteerHoursSummaryTemplateInstance,
+    
     # "custom_template"        : CustomTemplateInstance,
 }

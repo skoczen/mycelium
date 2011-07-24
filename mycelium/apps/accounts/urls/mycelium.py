@@ -24,6 +24,9 @@ urlpatterns = parser.patterns('',
    url(r'^accounts/change-my-password$',                 views.change_my_password                                                             , name="change_my_password"        ),
    url(r'^accounts/cancel-subscription$',                views.cancel_subscription                                                            , name="cancel_subscription"       ),
    url(r'^accounts/reactivate-subscription$',            views.reactivate_subscription                                                        , name="reactivate_subscription"   ),
+   url(r'^accounts/confirm-account-deletion$',           views.confirm_account_delete                                                         , name="confirm_account_delete"   ),
+   url(r'^accounts/do-account-delete$',                  views.do_account_delete                                                              , name="do_account_delete"   ),
+
 
    # Redirect to dashboard
     url(r'^$',                                           views.dashboard                                                                      , name="dashboard"                 ),
