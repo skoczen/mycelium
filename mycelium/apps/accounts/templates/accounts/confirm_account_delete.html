@@ -1,0 +1,37 @@
+{% extends "mycelium_base.html" %}
+{% load i18n i18n generic_fields friendly_data_formatting generic_tag_tags %}
+{% block title %}GoodCloud Account Information{% endblock %}
+{% block css %}{{block.super}}
+{% generic_field_css %}
+
+{% css "/css/manage_accounts.css" %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+
+{% js "/js/mycelium/manage_accounts.js" %}
+{% endblock %}
+
+{% block breadcrumb_links %}<a href="{% url core:more_menu %}" >Back to Admin</a>{% endblock %}
+
+{% block page_content %}
+<page_title>Delete GoodCloud Account</page_title>
+
+<div class="delete_page">
+<p>We want to make sure you're sure.  Pressing "Yes, Delete My Account" below will:</p>
+<ul>
+<li><b>Immediately and permanently</b> delete all of your data from the GoodCloud servers,</li>
+<li>Cancel any paid subscriptions or free trials, and </li>
+<li>Log you out (there will be no account to log in to!).</li>
+</ul>
+
+<p>Are you sure you want to delete your account?</p>
+</div>
+<delete_object_block>
+	<form action="{% url accounts:do_account_delete %}" method="POST" id="delete_account_form">{% csrf_token %}
+	<input type="hidden" name="account_pk" value="{{request.account.pk}}">
+	<input type="submit" class="mycelium_btn mycelium_active_grey mycelium_red_btn do_account_delete_btn auto_disable" disabled_text="Deleting your account..." value="Yes, Delete My Account" />
+	</form>
+	<a href="{% url accounts:manage_account %}" class="mycelium_btn mycelium_active_grey outta_here auto_disable" disabled_text="Getting you outta here..." >No way! Get me outta here!</a>
+</delete_object_block>
+
+{% endblock %}

@@ -399,3 +399,21 @@ class TestQuerySetGeneration(TestCase, GroupTestAbstractions, QiUnitTestMixin, D
 
         GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
         self.assertEqual(group.has_a_valid_rule, True)
+    
+    def test_age_group(self):
+        group = Factory.group(self.account,rules_boolean=False)
+        left_side = LeftSide.objects_by_account(self.account).get(display_name="age")
+        icontains = Operator.objects_by_account(self.account).get(display_name="is less than")
+        rst = self._number_right_side_types[0]
+        rsv ="50"
+        self._generate_people(number=50)
+        
+        GroupRule.raw_objects.create(account=self.account, group=group, left_side=left_side, operator=icontains, right_side_value=rsv, right_side_type=rst)
+        self.assertEqual(group.has_a_valid_rule, True)
+
+        birthday_qs = Person.objects.filter(actual_birthday__gt=datetime.datetime.now()-datetime.timedelta(days=365.25*50))
+        self.assertEqualQuerySets(group.members, birthday_qs)
+
+
+
+        

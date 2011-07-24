@@ -177,3 +177,16 @@ tabbed_box box_content {
 	border-radius: 4px;
 	-moz-border-radius: 4px;	
 }
+
+delete_object_block input, delete_object_block a {
+	float: left;
+	margin: 5px;
+}
+.delete_page {
+	font-size: 16px;
+	line-height: 2em;
+	padding: 10px;
+}
+form_field.account_deletion {
+	margin-top: 30px;
+}

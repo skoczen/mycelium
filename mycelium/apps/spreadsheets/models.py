@@ -48,13 +48,34 @@ class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin)
     @property
     def num_rows(self):
         return self.members.count()
+
+    @property
+    def num_people(self):
+        return self.members.count()
+
     
     @property
-    def members(self):
+    def people(self):
         if self.group:
             return self.group.members
         else:
             return Person.objects_by_account(self.account).all()
+    
+    @property
+    def members(self):
+        t = self.template_instance_class(self.account)
+        if t.model == Person:
+            if self.group:
+                return self.group.members
+            else:
+                return Person.objects_by_account(self.account).all()
+        else:
+            if self.group:
+                qs = self.group.members.filter()
+            else:
+                qs = Person.objects_by_account(self.account).all()
+            filter_kwargs = {"%s__in" % t.person_field.replace(".","__") : [p.pk for p in qs]}
+            return t.model.objects.filter(**filter_kwargs)
 
     @property
     def template_obj(self):

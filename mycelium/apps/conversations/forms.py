@@ -15,3 +15,4 @@ class NewConversationForm(AccountBasedModelForm):
     def __init__(self, *args, **kwargs):
         super(NewConversationForm,self).__init__(*args,**kwargs)
         self.fields["staff"].choices = [i for i in self.fields["staff"].choices][1:]
+

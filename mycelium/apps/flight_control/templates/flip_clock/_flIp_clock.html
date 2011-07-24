@@ -1,0 +1,7 @@
+<div class="analog_clock">
+	<div class="number {% if number > 99 %}three_digit{% endif %} ">
+		<div class="flip bottom back"><span>{{number}}</span>{% if caption %}<span class="ap">{{caption}}</span>{% endif %}</div>
+		<div class="flip top front hide"><span>{{number}}</span>{% if caption %}<span class="ap">{{caption}}</span>{% endif %}</div>
+		<div class="flip top back"><span>{{number}}</span></div>
+	</div>
+</div>

@@ -37,6 +37,8 @@ class RightSideType(AccountBasedModel, TimestampModelMixin):
             return "datetime.date(month=%s,day=%s,year=%s)" % (d.month, d.day, d.year)
         if self.name == "choices":
             return "'%s'" % value_to_prep
+        if self.name == "number":
+            return "'%s'" % int(value_to_prep)
         else:
             raise NotYetImplemented
 
@@ -125,7 +127,7 @@ class Rule(TimestampModelMixin):
                 filter_str =  "filter(%s)" % filter_str
             else:
                 filter_str = "exclude(%s)" % filter_str
-
+            
             return filter_str
 
     # @property
@@ -187,7 +189,7 @@ class RuleGroup(models.Model):
                         results = "%s | %s%s.%s " % (results, "self.target_model.", objects_str,  r.queryset_filter_string)
         else:
             return eval("self.target_model.%s.none()" % objects_str )
-
+        
         qs = eval(results).distinct().all()
 
         return qs

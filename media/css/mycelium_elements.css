@@ -41,6 +41,10 @@ a {
 a:hover { 
 	text-decoration: underline;
 }
+input, textarea {
+	font-size: 1.0em;	
+}
+
 main_nav a.logo {
 	width: 180px;
 	float: left;
@@ -486,6 +490,16 @@ new_object_buttons .new_label {
 	border-color: #DDD;
 	background-color: #CCC;
 	color: #454545;
+}
+.mycelium_red_btn, input.mycelium_red_btn, a.mycelium_red_btn {
+	border-color: red;
+	background-color: #d91a00 !important;
+	color: #FFF;
+}
+.mycelium_red_btn:hover, input.mycelium_red_btn:hover, a.mycelium_red_btn:hover {
+	border-color: red;
+	background-color: #FE1E00 !important;
+	color: #FFF !important;
 }
 
 .mycelium_left_arrow_btn, .mycelium_left_arrow_btn:hover {
