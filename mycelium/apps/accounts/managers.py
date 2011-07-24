@@ -17,12 +17,12 @@ def get_or_404_by_account(cls, account, id, using=None):
 class AccountManager(models.Manager):
 
     def week_range(self, d1, d2):
-        return self.filter(signup_date__range=(d1, d2)).order_by("-signup_date")
+        return self.filter(signup_date__range=(d1, d2)).filter(is_demo=False).order_by("-signup_date")
 
     @property
     def week_1(self):
-        target = datetime.datetime.today() - datetime.timedelta(days=7)
-        return self.filter(signup_date__lte=target)
+        target = datetime.datetime.now() - datetime.timedelta(days=7)
+        return self.filter(signup_date__gte=target).filter(is_demo=False)
     
     @property
     def week_2(self):
@@ -48,11 +48,11 @@ class AccountManager(models.Manager):
 
     @property
     def non_demo(self):
-        return self.filter(is_demo=False).all()
+        return self.filter(is_demo=False)
 
     @property
     def billing_problem(self):
-        return self.filter(status__in=BILLING_PROBLEM_STATII).all()
+        return self.filter(status__in=BILLING_PROBLEM_STATII)
 
 class AccountDataModelManager(models.Manager):
     def __call__(self, *args, **kwargs):
@@ -83,6 +83,9 @@ class AccountDataModelManager(models.Manager):
                 return super(AccountDataModelManager, self).get_query_set()
             else:
                 raise Exception, "Missing Request and/or Account!"
+    @property
+    def non_demo(self):
+        return self.filter(account__is_demo=False).all()
 
 
 class ExplicitAccountDataModelManager(models.Manager):

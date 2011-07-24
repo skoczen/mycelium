@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from managers import AccountDataModelManager, ExplicitAccountDataModelManager, AccountManager
 from qi_toolkit.models import TimestampModelMixin, SimpleSearchableModel
+from qi_toolkit.helpers import classproperty
 from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII
 from django.conf import settings
 from pychargify.api import ChargifySubscription, ChargifyCustomer, Chargify
@@ -57,13 +58,14 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     is_demo                             = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        if not self.created_at:
+        if not self.id:
             self.signup_date = datetime.datetime.now()
         super(Account,self).save(*args, **kwargs)
             
     def delete(self, *args, **kwargs):
         sub = self.chargify_subscription
-        sub.unsubscribe("Account deleted")
+        if sub:
+            sub.unsubscribe("Account deleted")
         super(Account,self).delete(*args, **kwargs)
     
     objects = AccountManager()
@@ -275,8 +277,6 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     
     @property
     def age_in_months(self):
-        print (datetime.datetime.today() - self.signup_date)
-        print (datetime.datetime.today() - self.signup_date).days
         return (datetime.datetime.today() - self.signup_date).days / 30
 
     @property
@@ -354,6 +354,164 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     @property
     def total_volunteer_hours(self):
         return self.completedshift_set.all().aggregate(Sum('duration'))["duration__sum"] or 0
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts(cls):
+        return cls.objects.filter(is_demo=False)
+
+    @classproperty
+    @classmethod
+    def num_non_demo_accounts(cls):
+        return cls.all_non_demo_accounts.count()
+    
+    @classproperty
+    @classmethod
+    def num_non_demo_accounts_denominator(cls):
+        if cls.num_non_demo_accounts > 0:
+            return cls.num_non_demo_accounts
+        else:
+            return 1
+    
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_total_people(cls):
+        from people.models import Person
+        return Person.objects.non_demo.count()
+
+    @classproperty
+    @classmethod
+    def num_non_demo_accounts_num_total_people_denominator(cls):
+        if cls.all_non_demo_accounts_num_total_people> 0:
+            return cls.all_non_demo_accounts_num_total_people
+        else:
+            return 1
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_total_organizations(cls):
+        from organizations.models import Organization
+        return Organization.objects.non_demo.count()
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_total_volunteer_hours(cls):
+        from volunteers.models import CompletedShift
+        return CompletedShift.objects.non_demo.aggregate(Sum('duration'))["duration__sum"] or 0
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_total_donation_amount(cls):
+        from donors.models import Donation
+        return Donation.objects.non_demo.aggregate(Sum('amount'))["amount__sum"] or 0
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_total_donations(cls):
+        from donors.models import Donation
+        return Donation.objects.non_demo.count()
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_tags(cls):
+        from generic_tags.models import Tag
+        return Tag.objects.non_demo.count()
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_tagged_items(cls):
+        from generic_tags.models import TaggedItem
+        return TaggedItem.objects.non_demo.count()
+
+    @classproperty
+    @classmethod
+    def num_non_demo_accounts_num_total_donations_denominator(cls):
+        if cls.all_non_demo_accounts_num_total_donations> 0:
+            return cls.all_non_demo_accounts_num_total_donations
+        else:
+            return 1
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_total_groups(cls):
+        from groups.models import Group
+        return Group.objects.non_demo.count()
+
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_num_total_spreadsheets(cls):
+        from spreadsheets.models import Spreadsheet
+        return Spreadsheet.objects.non_demo.count()
+
+
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_num_users(cls):
+        return float(UserAccount.objects.filter(account__is_demo=False).count()) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_num_people(cls):
+        return float(cls.all_non_demo_accounts_num_total_people) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_num_organizations(cls):
+        return float(cls.all_non_demo_accounts_num_total_organizations) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_donation_amount(cls):
+        return float(cls.all_non_demo_accounts_total_donation_amount) / cls.num_non_demo_accounts_num_total_donations_denominator
+
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_number_of_donations_per_account(cls):
+        return float(cls.all_non_demo_accounts_num_total_donations) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_volunteer_hours_per_account(cls):
+        return float(cls.all_non_demo_accounts_total_volunteer_hours) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_volunteer_hours_per_person(cls):
+        return float(cls.all_non_demo_accounts_total_volunteer_hours) / cls.num_non_demo_accounts_num_total_people_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_tags_per_person(cls):
+        return float(cls.all_non_demo_accounts_num_tags) / cls.num_non_demo_accounts_num_total_people_denominator
+    
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_tags_per_account(cls):
+        return float(cls.all_non_demo_accounts_num_tags) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_taggeditems_per_person(cls):
+        return float(cls.all_non_demo_accounts_num_tagged_items) / cls.num_non_demo_accounts_num_total_people_denominator
+    
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_taggeditems_per_account(cls):
+        return float(cls.all_non_demo_accounts_num_tagged_items) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_groups_per_account(cls):
+        return float(cls.all_non_demo_accounts_num_total_groups) / cls.num_non_demo_accounts_denominator
+
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_spreadsheets_per_account(cls):
+        return float(cls.all_non_demo_accounts_num_total_spreadsheets) / cls.num_non_demo_accounts_denominator
+
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)

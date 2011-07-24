@@ -22,3 +22,14 @@ class FlightControlTestAbstractions(object):
         sel.click("css=input[type=submit]")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("GoodCloud Flight Control")
+    
+    def get_to_account_by_searching(self, name="test"):
+        sel = self.selenium
+        sel.type("css=#global_search", name)
+        time.sleep(3)
+        assert not sel.is_element_present("css=.no_people_found")
+        assert sel.is_element_present("css=.results_found")
+        sel.click("css=.results_found .striped_row a")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present(name)
+        assert sel.is_text_present("Totals & Averages")

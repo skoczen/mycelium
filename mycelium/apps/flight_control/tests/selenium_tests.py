@@ -28,9 +28,8 @@ from django.contrib.auth.models import User
 class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()
-        self.create_demo_site()
-        self.create_demo_site(with_demo_flag=False)
+        self.a1 = self.create_demo_site(with_demo_flag=False)
+        self.create_demo_site(name="test1")
         cache.clear()
         self.create_fake_account_for_flight_control()
         self.verificationErrors = []
@@ -51,49 +50,137 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
     def test_that_flight_control_lists_the_right_people_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_people number") , "%s" % (Person.objects.filter(account__is_demo=False).count() / Account.objects.active.count()))
+        self.assertEqual(sel.get_text("css=.num_people number") , "%s" % (Person.objects.non_demo.count() / Account.objects.active.count()))
 
     def test_that_flight_control_lists_the_right_organizations_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_orgs number") , "%s" % (Organization.objects.filter(account__is_demo=False).count() / Account.objects.active.count()))
+        self.assertEqual(sel.get_text("css=.num_orgs number") , "%s" % (Organization.objects.non_demo.count() / Account.objects.active.count()))
 
     def test_that_flight_control_lists_the_right_users_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_users number") , "%.1f" % (UserAccount.objects.filter(account__is_demo=False).count() / Account.objects.active.count()))
+        self.assertEqual(sel.get_text("css=.num_users number") , "%.1f" % (UserAccount.objects.non_demo.count() / Account.objects.active.count()))
 
     def test_that_flight_control_lists_the_right_donations_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_donations number") , "%.1f" % (Donation.objects.filter(account__is_demo=False).count() / Account.objects.active.count()))
+        self.assertEqual(sel.get_text("css=.num_donations number") , "%.1f" % (Donation.objects.non_demo.count() / Account.objects.active.count()))
 
     def test_that_flight_control_lists_the_right_per_donation_average(self):
         sel = self.selenium
         self.get_to_flight_control()
         total_donations = 0
-        for d in Donation.objects.filter(account__is_demo=False).all():
+        for d in Donation.objects.non_demo.all():
             total_donations += d.amount
-        self.assertEqual(sel.get_text("css=.num_donations number") , "%.1f" % (total_donations / Account.objects.active.count()))
+        self.assertEqual(sel.get_text("css=.num_donations number") , "%.1f" % (total_donations / Donation.objects.non_demo.count()))
 
 
     def test_that_flight_control_lists_the_right_vol_hours_average(self):
         sel = self.selenium
         self.get_to_flight_control()
         total_volunteer_hours = 0
-        for cs in CompletedShift.objects.filter(account__is_demo=False).all():
+        for cs in CompletedShift.objects.non_demo.all():
             total_volunteer_hours += cs.duration
-        self.assertEqual(sel.get_text("css=.num_vol_hours number") , "%.1f" % (total_volunteer_hours / Person.objects.filter(account__is_demo=False).count()))
+        self.assertEqual(sel.get_text("css=.num_vol_hours number") , "%.1f" % (total_volunteer_hours / Person.objects.non_demo.count()))
 
-    def testShat_flight_control_lists_the_right_per_Completed_shift_average(self):
+    def test_that_flight_control_lists_the_right_per_Completed_shift_average(self):
         sel = self.selenium
         self.get_to_flight_control()
         total_volunteer_hours = 0
-        for cs in CompletedShift.objects.filter(account__is_demo=False).all():
+        for cs in CompletedShift.objects.non_demo.all():
             total_volunteer_hours += cs.duration
         self.assertEqual(sel.get_text("css=.avg_vol_hours_per_person number") , "%.1f" % (total_volunteer_hours / Account.objects.active.count()))
 
 
+    def test_that_flight_control_lists_accounts_that_expire_soon(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        assert sel.is_text_present("None in the next week.")
+        a = self.a1
+        a.signup_date = datetime.datetime.now() - datetime.timedelta(days=25)
+        a.save()
+        cache.clear()
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert not sel.is_text_present("None in the next week.")
+
+
+
+    def test_that_each_week_displays_correctly(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        a = self.a1
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(0) span:nth(0)"),"1")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(1) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(2) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(3) span:nth(0)"),"0")
+        a.signup_date = datetime.datetime.now() - datetime.timedelta(days=12)
+        a.save()
+        cache.clear()
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(0) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(1) span:nth(0)"),"1")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(2) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(3) span:nth(0)"),"0")
+        a.signup_date = datetime.datetime.now() - datetime.timedelta(days=18)
+        a.save()
+        cache.clear()
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(0) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(1) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(2) span:nth(0)"),"1")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(3) span:nth(0)"),"0")
+        a.signup_date = datetime.datetime.now() - datetime.timedelta(days=25)
+        a.save()
+        cache.clear()
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(0) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(1) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(2) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(3) span:nth(0)"),"1")
+        a.signup_date = datetime.datetime.now() - datetime.timedelta(days=35)
+        a.save()
+        cache.clear()
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(0) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(1) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(2) span:nth(0)"),"0")
+        self.assertEqual(sel.get_text("css=.free_trial .flip.bottom:nth(3) span:nth(0)"),"0")
+
+
+    def test_that_the_number_of_active_accounts_displays_correctly(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        self.assertEqual(sel.get_text("css=.active .flip.bottom:nth(0) span:nth(0)"),"1")
+
+
+    def test_that_accounts_with_billing_issues_display(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        assert sel.is_text_present("No accounts with billing issues! Hooray!")
+        self.assertEqual(sel.get_text("css=.billing .flip.bottom:nth(0) span:nth(0)"),"0")
+        a = self.a1
+        a.status = 10
+        a.save()
+        cache.clear()
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert not sel.is_text_present("No accounts with billing issues! Hooray!")
+        assert sel.is_text_present("test is Expired")
+        self.assertEqual(sel.get_text("css=.billing .flip.bottom:nth(0) span:nth(0)"),"1")
+    
+    def test_searching_for_an_account_works(self):
+        self.get_to_flight_control()
+        self.get_to_account_by_searching()
 
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):

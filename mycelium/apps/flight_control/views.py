@@ -24,47 +24,36 @@ def home(request):
     
     problem_accounts = Account.objects.billing_problem.filter(is_demo=False).all()
     active_account_count = Account.objects.active.filter(is_demo=False).count() 
-    active_account_denominator = 1
-    if active_account_count > 1:
-        active_account_denominator = active_account_count
-
+    
     recent_users = User.objects.all().order_by("-last_login")[:5]
     
-    week_1 = Account.objects.week_1.filter(is_demo=False).count()
-    week_2 = Account.objects.week_2.filter(is_demo=False).count()
-    week_3 = Account.objects.week_3.filter(is_demo=False).count()
-    week_4 = Account.objects.week_4.filter(is_demo=False).all()
+    week_1 = Account.objects.week_1.count()
+    week_2 = Account.objects.week_2.count()
+    week_3 = Account.objects.week_3.count()
+    week_4 = Account.objects.week_4.all()
 
-    total_people= Person.objects.filter(account__is_demo=False).count()
+    total_people = Account.all_non_demo_accounts_num_total_people
+    total_people_denominator = Account.num_non_demo_accounts_num_total_people_denominator
 
-    total_people_denominator = total_people
-    if total_people_denominator == 0:
-        total_people_denominator = 1
+    avg_users = Account.all_non_demo_accounts_average_num_users
+    avg_people = Account.all_non_demo_accounts_average_num_people
+    avg_organizations = Account.all_non_demo_accounts_average_num_organizations
 
-    avg_users = float(UserAccount.objects.filter(account__is_demo=False).count()) / active_account_denominator
-    avg_people = total_people / active_account_denominator
-    avg_organizations = Organization.objects.filter(account__is_demo=False).count() / active_account_denominator
+    total_donations_divisor = Account.num_non_demo_accounts_num_total_donations_denominator
+    total_donation_amount = Account.all_non_demo_accounts_total_donation_amount
 
-    total_donations_divisor = Donation.objects.filter(account__is_demo=False).count()
-    if total_donations_divisor == 0:
-        total_donations_divisor = 1
-    total_donation_amount = Donation.objects.filter(account__is_demo=False).all().aggregate(Sum('amount'))["amount__sum"]
-    if total_donation_amount == None:
-        total_donation_amount = 0
+    avg_donations = Account.all_non_demo_accounts_average_number_of_donations_per_account
+    avg_donation = Account.all_non_demo_accounts_average_donation_amount
 
-    avg_donations = Donation.objects.filter(account__is_demo=False).count() / active_account_denominator
-    if Donation.objects.filter(account__is_demo=False).count() == 0:
-        avg_donation = 0
-    else:
-        avg_donation =  total_donation_amount / total_donations_divisor
+    total_volunteer_hours = Account.all_non_demo_accounts_total_volunteer_hours
+    avg_volunteer_hours = Account.all_non_demo_accounts_average_volunteer_hours_per_account
+    avg_vol_hours_per_person = Account.all_non_demo_accounts_average_volunteer_hours_per_person
+    avg_tags = Account.all_non_demo_accounts_average_tags_per_account
+    avg_tags_per_person = Account.all_non_demo_accounts_average_taggeditems_per_person
+    avg_groups = Account.all_non_demo_accounts_average_groups_per_account
+    avg_spreadsheets = Account.all_non_demo_accounts_average_spreadsheets_per_account
 
-    total_volunteer_hours = CompletedShift.objects.filter(account__is_demo=False).all().aggregate(Sum('duration'))["duration__sum"] or 0
-    avg_volunteer_hours = float(total_volunteer_hours) / active_account_denominator
-    avg_vol_hours_per_person = float(total_volunteer_hours) / total_people_denominator
-    avg_tags = float(Tag.objects.filter(account__is_demo=False).count()) / active_account_denominator
-    avg_tags_per_person = float(TaggedItem.objects.filter(account__is_demo=False).count()) / total_people_denominator
-    avg_groups = float(Group.objects.filter(account__is_demo=False).count()) / active_account_denominator
-    avg_spreadsheets = float(Spreadsheet.objects.filter(account__is_demo=False).count()) / active_account_denominator
+    account_stats = Account
 
     return locals()
 
