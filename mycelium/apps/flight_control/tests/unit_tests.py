@@ -87,3 +87,5 @@ class TestFlightControl(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
 
     def test_all_non_demo_accounts_num_spreadsheets(self):
         self.assertEqual(Account.all_non_demo_accounts_num_total_spreadsheets, Spreadsheet.objects.filter(account__is_demo=False).count())
+
+

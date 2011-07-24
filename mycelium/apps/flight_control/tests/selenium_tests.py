@@ -182,6 +182,12 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
         self.get_to_flight_control()
         self.get_to_account_by_searching()
 
+    def test_account_page_displays_the_correct_number_of_people(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        self.get_to_account_by_searching()
+        self.assertEqual(sel.get_text("css=.num_people number"), "%s" % self.a1.num_people)
+
 
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
 

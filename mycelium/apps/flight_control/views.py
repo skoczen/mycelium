@@ -65,25 +65,7 @@ def account(request, account_id):
     
     # recent_activity = Activity.objects_by_account(account).all()[:10]
     recent_activity = []
-    
 
-    num_people = Person.objects_by_account(account).count()
-    num_organizations = Organization.objects_by_account(account).count()
-    num_donations = Donation.objects_by_account(account).count()
-    avg_donation = 0
-    if num_donations > 0:
-        avg_donation = account.total_donation_sum / num_donations
-    num_volunteer_hours = account.total_volunteer_hours
-    avg_vol_hours_per_person = 0
-    if account.total_volunteer_hours and num_people > 0:
-        avg_vol_hours_per_person = float(account.total_volunteer_hours) / num_people
-    num_tags = Tag.objects_by_account(account).count()
-    avg_tags_per_person = 0
-    if TaggedItem.objects_by_account(account).count() and num_people > 0:
-        avg_tags_per_person = float(TaggedItem.objects_by_account(account).count()) / num_people
-    
-    num_groups = Group.objects_by_account(account).count() 
-    num_spreadsheets = Spreadsheet.objects_by_account(account).count()
 
     return locals()
 

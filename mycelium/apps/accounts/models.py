@@ -512,6 +512,68 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     def all_non_demo_accounts_average_spreadsheets_per_account(cls):
         return float(cls.all_non_demo_accounts_num_total_spreadsheets) / cls.num_non_demo_accounts_denominator
 
+    @property
+    def num_people(self):
+        return self.person_set.count()
+
+    @property
+    def num_people_denominator(self):
+        if self.num_people > 0:
+            return self.num_people
+        else:
+            return 1
+
+    @property
+    def num_organizations(self):
+        return self.organization_set.count()
+
+    @property
+    def num_donations(self):
+        return self.donation_set.count()
+
+    @property
+    def num_donations_denominator(self):
+        if self.num_donations > 0:
+            return self.num_donations
+        else:
+            return 1
+
+    @property
+    def total_donations(self):
+        return self.donation_set.all().aggregate(Sum('amount'))["amount__sum"] or 0
+
+    @property
+    def avg_donation(self):
+        return float(self.total_donations) / self.num_donations_denominator
+
+    @property
+    def num_volunteer_hours(self):
+        return self.completedshift_set.all().aggregate(Sum('duration'))["duration__sum"] or 0
+
+    @property
+    def avg_vol_hours_per_person(self):
+        return float(self.num_volunteer_hours) / self.num_people_denominator
+
+    @property
+    def num_tags(self):
+        return self.tag_set.count()
+
+    @property
+    def num_taggeditems(self):
+        return self.taggeditem_set.count()
+
+    @property
+    def avg_tags_per_person(self):
+        return float(self.num_taggeditems) / self.num_people_denominator
+
+    @property
+    def num_groups(self):
+        return self.group_set.count()
+    
+    @property
+    def num_spreadsheets(self):
+        return self.spreadsheet_set.count()
+
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)

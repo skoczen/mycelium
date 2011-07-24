@@ -10,7 +10,8 @@ from organizations.models import Organization, Employee
 from donors.models import Donor, Donation
 from accounts.models import Account, UserAccount, AccessLevel
 from volunteers.models import Volunteer, CompletedShift
-from generic_tags.models import TagSet, Tag
+from spreadsheets.models import Spreadsheet
+from generic_tags.models import TagSet, Tag, TaggedItem
 from django.core import mail
 from django.conf import settings
 from django.test.client import Client
@@ -112,6 +113,83 @@ class TestAccountFactory(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase)
 
         self.assertEqual(s.state,"canceled")
 
+
+    def test_num_people(self):
+        a = Factory.create_demo_site("test", quick=True)
+        self.assertEqual(a.num_people, Person.objects_by_account(a).count())
+
+    
+    def test_num_people_denominator(self):
+        a = Factory.create_demo_site("test", quick=True)
+        if Person.objects_by_account(a).count() > 0:
+            self.assertEqual(a.num_people, Person.objects_by_account(a).count())
+        else:
+            self.assertEqual(a.num_people,1)
+
+    def test_num_organizations(self):
+        a = Factory.create_demo_site("test", quick=True)
+        self.assertEqual(a.num_organizations, Organization.objects_by_account(a).count())
+
+    
+    def test_num_donations(self):
+        a = Factory.create_demo_site("test", quick=True)
+        self.assertEqual(a.num_donations, Donation.objects_by_account(a).count())
+
+    
+    def test_num_donations_denominator(self):
+        a = Factory.create_demo_site("test", quick=True)
+        if Donation.objects_by_account(a).count() > 0:
+            self.assertEqual(a.num_donations, Donation.objects_by_account(a).count())
+        else:
+            self.assertEqual(a.num_donations,1)
+
+    def test_total_donations(self):
+        a = Factory.create_demo_site("test", quick=True)
+        total = 0
+        for d in Donation.objects_by_account(a).all():
+            total += d.amount
+        self.assertEqual(a.total_donations, total)
+
+    
+    def test_avg_donation(self):
+        a = Factory.create_demo_site("test", quick=True)
+        self.assertEqual(a.avg_donation, float(a.total_donations) / a.num_donations_denominator)
+    
+    def test_num_volunteer_hours(self):
+        a = Factory.create_demo_site("test", quick=True)
+        hours = 0
+        for c in CompletedShift.objects.all():
+            hours += c.duration
+
+        self.assertEqual(a.num_volunteer_hours, hours)
+    
+    def test_avg_vol_hours_per_person(self):
+        a = Factory.create_demo_site("test", quick=True)
+        self.assertEqual(a.avg_vol_hours_per_person, float(a.num_volunteer_hours) /a.num_people_denominator)
+    
+    def test_num_tags(self):
+        a = Factory.create_demo_site("test", quick=True)
+        self.assertEqual(a.num_tags, Tag.objects_by_account(a).count())
+
+    
+    def test_num_taggeditems(self):
+        a = Factory.create_demo_site("test", quick=True)
+        self.assertEqual(a.num_taggeditems, TaggedItem.objects_by_account(a).count())
+
+    
+    def test_avg_tags_per_person(self):
+        a = Factory.create_demo_site("test", quick=True)
+        self.assertEqual(a.avg_tags_per_person, float(a.num_taggeditems) / a.num_people_denominator)
+    
+
+    def test_num_groups(self):
+        a = Factory.create_demo_site("test", quick=True)
+        self.assertEqual(a.num_groups, Group.objects_by_account(a).count())
+    
+    
+    def test_num_spreadsheets(self):
+        a = Factory.create_demo_site("test", quick=True)
+        self.assertEqual(a.num_spreadsheets, Spreadsheet.objects_by_account(a).count())
 
 
     # def test_that_signing_up_generates_a_message_to_the_user_and_to_us(self):
