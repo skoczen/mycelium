@@ -34,7 +34,7 @@
 			{% paginate %}
 			{% endwith %}
 			<column_header>Billing</column_header>
-			<div class="info_block">
+			<div class="info_block account_status">
 				Status: {{account.get_status_display}}
 			</div>
 			<div class="info_block">
@@ -78,7 +78,7 @@
 		<column class="fourcol recent_activity">
 			<column_header>Recent Logins</column_header>
 			{% for u in recent_users %}
-			<div class="info_block">
+			<div class="info_block login_entry">
 				{{u.user.last_login|date}} - {{u.full_name}} 
 			</div>
 		 	{% endfor %}

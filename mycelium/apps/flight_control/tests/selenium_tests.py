@@ -189,6 +189,68 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
         self.assertEqual(sel.get_text("css=.num_people number"), "%s" % self.a1.num_people)
 
 
+    def test_account_page_displays_the_correct_status(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        self.get_to_account_by_searching()
+        self.assertEqual(sel.get_text("css=.account_status"), "Status: Free Trial")
+        a = self.a1
+        a.status = 10
+        a.save()
+        cache.clear()
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        self.assertEqual(sel.get_text("css=.account_status"), "Status: Expired")
+
+    def test_account_page_displays_the_last_login(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        self.get_to_account_by_searching()
+        # assert not sel.is_element_present("css=.login_entry:nth(3)")
+        # self.get_logged_in()
+        # self.get_to_flight_control()
+        # self.get_to_account_by_searching()
+        assert sel.is_element_present("css=.login_entry:nth(3)")
+
+
+    def test_the_home_page_displays_the_last_logins(self):
+        sel = self.selenium
+        a = self.a1
+        a.challenge_has_imported_contacts = False
+        a.challenge_has_set_up_tags = False
+        a.challenge_has_added_board = False
+        a.challenge_has_created_other_accounts = False
+        a.challenge_has_downloaded_spreadsheet = False
+        a.challenge_has_submitted_support = False
+        a.challenge_has_added_a_donation = False
+        a.challenge_has_logged_volunteer_hours = False
+        self.get_to_flight_control()
+        self.get_to_account_by_searching()
+        assert not sel.is_element_present("css=challenge.complete")
+        
+        a.challenge_has_imported_contacts = True
+        a.challenge_has_set_up_tags = True
+        a.challenge_has_added_board = True
+        a.challenge_has_created_other_accounts = True
+        a.challenge_has_downloaded_spreadsheet = True
+        a.challenge_has_submitted_support = True
+        a.challenge_has_added_a_donation = True
+        a.challenge_has_logged_volunteer_hours = True
+        a.save()
+        cache.clear()
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=challenge.complete")
+        assert not sel.is_element_present("css=challenge:not(.complete)")
+
+    def test_the_account_page_displays_the_right_dashboard_status(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        self.get_to_account_by_searching()
+        assert sel.is_element_present("css=.login_entry")
+
+
+
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):

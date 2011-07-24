@@ -17,10 +17,14 @@ class FlightControlTestAbstractions(object):
         sel = self.selenium
         sel.open("http://flightcontrol.localhost:%s" % settings.LIVE_SERVER_PORT)
         sel.wait_for_page_to_load("30000")
-        sel.type("css=#id_username", "admin")
-        sel.type("css=#id_password", "admin")
-        sel.click("css=input[type=submit]")
-        sel.wait_for_page_to_load("30000")
+        try:
+            assert sel.is_element_present("css=#id_username")
+            sel.type("css=#id_username", "admin")
+            sel.type("css=#id_password", "admin")
+            sel.click("css=input[type=submit]")
+            sel.wait_for_page_to_load("30000")
+        except:
+            pass
         assert sel.is_text_present("GoodCloud Flight Control")
     
     def get_to_account_by_searching(self, name="test"):

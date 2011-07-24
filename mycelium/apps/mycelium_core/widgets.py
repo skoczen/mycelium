@@ -24,11 +24,12 @@ class JqSplitDateTimeWidget(MultiWidget):
         super(JqSplitDateTimeWidget, self).__init__(widgets, attrs)
 
     def decompress(self, value):
+        
         if value:
-            d = strftime("%m/%d/%Y", value.timetuple())
-            hour = strftime("%I", value.timetuple())
-            minute = strftime("%M", value.timetuple())
-            meridian = strftime("%p", value.timetuple())
+            d = value.strftime("%m/%d/%Y")
+            hour = value.strftime("%I")
+            minute = value.strftime("%M")
+            meridian = value.strftime("%p")
             return (d, hour, minute, meridian)
         else:
             return (None, None, None, None)

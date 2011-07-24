@@ -456,3 +456,6 @@ detail_tab_contents tabbed_box {
 	font-size: 22px;
 	color: #AAA;
 }
+detail_tab_contents input, detail_tab_contents textarea {
+	font-size: 1.2em;
+}
