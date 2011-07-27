@@ -104,22 +104,22 @@ DATE_INPUT_FORMATS = ('%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%b %d %Y',
 ROOT_URLCONF = 'urls.mycelium'
 SUBDOMAIN_URLCONFS = {
     # The format for these is 'subdomain': 'urlconf'
-    None: 'urls.marketing',
-    'www': 'urls.marketing',
-    'dev': 'urls.marketing',
+    None: 'urls.internal',
+    'www': 'urls.internal',
     'flightcontrol': 'urls.dashboard',
-    # 'api': 'myproject.urls.api',
+    'api': 'urls.api',
+    'internal': 'urls.internal',
+    'signup': 'urls.signup',
 }
 PUBLIC_SUBDOMAINS = [
     None,
     "www",
-    "dev",
     "flightcontrol",
+    "api",
+    "internal",
+    "signup",
 ]
 REMOVE_WWW_FROM_SUBDOMAIN = True
-
-PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
-PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
 
 INSTALLED_APPS = (
     'django_monkeypatches',     # 100-char username field.
@@ -151,9 +151,6 @@ INSTALLED_APPS = (
     'sentry',
     'sentry.client',
 
-    'marketing_site',
-    'email_list',
-    'rewrite',
     'people',
     'organizations',
     'mycelium_core',
@@ -333,21 +330,6 @@ MEDIASYNC = {
                 "css/contrib/fileuploader.css",
                 "css/contrib/colorbox.css",
         ],
-
-        'js/marketing_base.js': BASE_JS + COMMON_JS + [
-
-        ],
-        'js/marketing_core.js': [
-                "js/mycelium/marketing_site.js",
-                "js/mycelium/signup.js",
-                "js/mycelium/marketing_tabs.js",
-        ],
-        'css/marketing_base.css': BASE_CSS + [
-                "css/marketing_site.css",
-                "css/contrib/1140/1140.css",
-                "css/login.css",
-                "css/signup.css",
-        ]
     }
 
 }
