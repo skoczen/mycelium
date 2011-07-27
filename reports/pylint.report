@@ -1,0 +1,396 @@
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/__init__.py:69: [W0511] TODO: It would be nice to support different login methods, like signed cookies.
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/__init__.py:38: [W0404, get_backends] Reimport 'settings' (imported line 4)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/__init__.py:93: [W0404, logout] Reimport 'AnonymousUser' (imported line 4)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/__init__.py:97: [W0404, get_user] Reimport 'AnonymousUser' (imported line 4)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:94: [C0301] Line too long (208/160)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:28: [E1102, UserAdmin] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:29: [E1102, UserAdmin] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:30: [E1102, UserAdmin] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:31: [E1102, UserAdmin] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:76: [W0404, UserAdmin.get_urls] Reimport 'patterns' (imported line 9)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:105: [W0622, UserAdmin.user_change_password] Redefining built-in 'id'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:105: [C0103, UserAdmin.user_change_password] Invalid name "id" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:105: [C0103, UserAdmin.user_change_password] Invalid name "id" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:120: [C0103, UserAdmin.user_change_password] Invalid name "adminForm" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:123: [E1102, UserAdmin.user_change_password] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/admin.py:112: [W0612, UserAdmin.user_change_password] Unused variable 'new_user'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/backends.py:12: [W0511] TODO: Model, login attribute name and password attribute name should be
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/backends.py:78: [W0221, RemoteUserBackend.authenticate] Arguments number differs from overridden method
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/backends.py:1: [W0611] Unused import connection
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/context_processors.py:26: [W0404, auth.get_user] Reimport 'AnonymousUser' (imported line 2)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/context_processors.py:32: [E1102, auth] lazy(lambda : PermWrapper(get_user()), PermWrapper) is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/context_processors.py:2: [W0611] Unused import memoize
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/decorators.py:4: [W0404] Reimport 'update_wrapper' (imported line 6)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/decorators.py:4: [W0404] Reimport 'wraps' (imported line 6)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/decorators.py:19: [W0404, user_passes_test] Reimport 'settings' (imported line 6)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/decorators.py:2: [W0611] Unused import update_wrapper
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:91: [W0511] TODO: determine whether this should move to its own method.
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:14: [E1102, UserCreationForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:15: [E1102, UserCreationForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:16: [E1102, UserCreationForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:17: [E1102, UserCreationForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:18: [E1102, UserCreationForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:19: [E1102, UserCreationForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:31: [E1102, UserCreationForm.clean_username] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:37: [E1102, UserCreationForm.clean_password2] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:48: [E1102, UserChangeForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:49: [E1102, UserChangeForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:50: [E1102, UserChangeForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:57: [C0103, UserChangeForm.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:66: [E1102, AuthenticationForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:67: [E1102, AuthenticationForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:87: [E1102, AuthenticationForm.clean] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:89: [E1102, AuthenticationForm.clean] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:94: [E1102, AuthenticationForm.clean] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:107: [E1102, PasswordResetForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:116: [E1102, PasswordResetForm.clean_email] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:124: [W0404, PasswordResetForm.save] Reimport 'send_mail' (imported line 6)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:132: [C0103, PasswordResetForm.save] Invalid name "t" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:133: [C0103, PasswordResetForm.save] Invalid name "c" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:142: [E1102, PasswordResetForm.save] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:114: [W0201, PasswordResetForm.clean_email] Attribute 'users_cache' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:150: [E1102, SetPasswordForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:151: [E1102, SetPasswordForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:162: [E1102, SetPasswordForm.clean_new_password2] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:176: [E1102, PasswordChangeForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:184: [E1102, PasswordChangeForm.clean_old_password] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:192: [E1102, AdminPasswordChangeForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:193: [E1102, AdminPasswordChangeForm] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/forms.py:204: [E1102, AdminPasswordChangeForm.clean_password2] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/middleware.py:15: [C0301] Line too long (230/160)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/middleware.py:8: [W0404, LazyUser.__get__] Reimport 'get_user' (imported line 5)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:169: [W0311] Bad indentation. Found 28 spaces, expected 24
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:192: [C0301] Line too long (166/160)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:196: [C0301] Line too long (169/160)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:198: [C0301] Line too long (180/160)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:199: [C0301] Line too long (173/160)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:24: [W0404, get_hexdigest] Reimport 'crypt' (imported line 387)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:66: [E1102, Permission] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:68: [E1102, Permission] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:72: [E1102, Permission.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:73: [E1102, Permission.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:94: [E1102, Group] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:95: [E1102, Group] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:98: [E1102, Group.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:99: [E1102, Group.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:129: [C0103, UserManager.create_superuser] Invalid name "u" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:140: [W0404, UserManager.make_random_password] Reimport 'choice' (imported line 387)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:141: [W0612, UserManager.make_random_password] Unused variable 'i'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:192: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:192: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:193: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:194: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:195: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:196: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:196: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:197: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:197: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:198: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:198: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:199: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:199: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:200: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:201: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:202: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:203: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:204: [E1102, User] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:208: [E1102, User.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:209: [E1102, User.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:240: [W0404, User.set_password] Reimport 'random' (imported line 387)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:340: [C0103, User.get_and_delete_messages] Invalid name "m" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:347: [W0404, User.email_user] Reimport 'send_mail' (imported line 387)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:356: [W0404, User.get_profile] Reimport 'settings' (imported line 387)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:380: [W0404, User._get_message_set] Reimport 'warnings' (imported line 387)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:384: [E1101, User._get_message_set] Instance of 'User' has no '_message_set' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:373: [W0201, User.get_profile] Attribute '_profile_cache' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/models.py:397: [E1102, Message] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tokens.py:23: [W0622, PasswordResetTokenGenerator.check_token] Redefining built-in 'hash'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tokens.py:28: [C0103, PasswordResetTokenGenerator.check_token] Invalid name "ts" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tokens.py:23: [W0612, PasswordResetTokenGenerator.check_token] Unused variable 'hash'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tokens.py:54: [W0622, PasswordResetTokenGenerator._make_token_with_timestamp] Redefining built-in 'hash'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tokens.py:53: [W0404, PasswordResetTokenGenerator._make_token_with_timestamp] Reimport 'sha_constructor' (imported line 1)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tokens.py:59: [C0103, PasswordResetTokenGenerator._num_days] Invalid name "dt" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tokens.py:59: [C0103, PasswordResetTokenGenerator._num_days] Invalid name "dt" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tokens.py:60: [C0324, PasswordResetTokenGenerator._num_days] Comma not followed by a space
+        return (dt - date(2001,1,1)).days
+                              ^^
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/urls.py:5: [W0401] Wildcard import django.conf.urls.defaults
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/urls.py:5: [W0614] Unused import include from wildcard import
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/urls.py:5: [W0614] Unused import handler404 from wildcard import
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/urls.py:5: [W0614] Unused import url from wildcard import
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/urls.py:5: [W0614] Unused import handler500 from wildcard import
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/views.py:42: [W0311] Bad indentation. Found 20 spaces, expected 16
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/views.py:68: [W0621, logout] Redefining name 'logout' from outer scope (line 66)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/views.py:68: [W0404, logout] Reimport 'logout' (imported line 172)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/views.py:91: [W0622, redirect_to_login] Redefining built-in 'next'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/views.py:14: [W0611] Unused import Http404
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/views.py:12: [W0611] Unused import get_object_or_404
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/handlers/modpython.py:1: [F0401] Unable to import 'mod_python'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/handlers/modpython.py:28: [W0404, authenhandler] Reimport 'User' (imported line 2)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/handlers/modpython.py:29: [W0404, authenhandler] Reimport 'db' (imported line 2)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/__init__.py:19: [W0404, create_permissions] Reimport 'ContentType' (imported line 18)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/__init__.py:20: [W0404, create_permissions] Reimport 'Permission' (imported line 18)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/__init__.py:27: [C0103, create_permissions] Invalid name "p" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/__init__.py:33: [W0404, create_superuser] Reimport 'User' (imported line 18)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/__init__.py:34: [W0404, create_superuser] Reimport 'call_command' (imported line 18)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/commands/changepassword.py:11: [C0103, Command._get_pass] Invalid name "p" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/commands/changepassword.py:26: [C0103, Command.handle] Invalid name "u" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/commands/changepassword.py:32: [C0103, Command.handle] Invalid name "MAX_TRIES" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/commands/changepassword.py:34: [C0103, Command.handle] Invalid name "p1" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/commands/changepassword.py:34: [C0103, Command.handle] Invalid name "p2" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/commands/changepassword.py:36: [C0103, Command.handle] Invalid name "p1" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/commands/changepassword.py:37: [C0103, Command.handle] Invalid name "p2" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/commands/createsuperuser.py:135: [W0311] Bad indentation. Found 10 spaces, expected 12
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/commands/createsuperuser.py:39: [R0912, Command.handle] Too many branches (26/12)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/management/commands/createsuperuser.py:39: [R0915, Command.handle] Too many statements (73/50)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/__init__.py:4: [C0301] Line too long (176/160)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/auth_backends.py:42: [C0322, BackendTest.test_custom_perms] Operator not preceded by a space
+        content_type=ContentType.objects.get_for_model(Group)
+                    ^
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/auth_backends.py:82: [C0322, BackendTest.test_has_no_object_perm] Operator not preceded by a space
+        content_type=ContentType.objects.get_for_model(Group)
+                    ^
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/auth_backends.py:180: [C0322, RowlevelBackendTest.test_get_group_permissions] Operator not preceded by a space
+        content_type=ContentType.objects.get_for_model(Group)
+                    ^
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/auth_backends.py:180: [W0612, RowlevelBackendTest.test_get_group_permissions] Unused variable 'content_type'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/auth_backends.py:260: [C0103, NoBackendsTest.setUp] Invalid name "old_AUTHENTICATION_BACKENDS" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/basic.py:9: [C0103, BasicTestCase.test_user] Invalid name "u" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/basic.py:31: [C0103, BasicTestCase.test_user] Invalid name "u2" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/basic.py:31: [W0612, BasicTestCase.test_user] Unused variable 'u2'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/basic.py:36: [C0103, BasicTestCase.test_anonymous_user] Invalid name "a" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/basic.py:46: [W0622, BasicTestCase.test_superuser] Redefining built-in 'super'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/basic.py:63: [C0103, BasicTestCase.test_createsuperuser_management_command] Invalid name "u" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/basic.py:78: [C0103, BasicTestCase.test_createsuperuser_management_command] Invalid name "u" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/basic.py:89: [C0103, BasicTestCase.test_createsuperuser_management_command] Invalid name "u" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/forms.py:73: [C0103, UserCreationFormTest.test_success] Invalid name "u" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/forms.py:215: [W0612, UserChangeFormTest.test_bug_14242] Unused variable 'form'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/forms.py:239: [W0612, PasswordResetFormTest.test_cleaned_data] Unused variable 'user'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/models.py:9: [C0103, ProfileTestCase.setUp] Invalid name "old_AUTH_PROFILE_MODULE" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/remote_user.py:112: [C0323, RemoteUserNoCreateTest] Operator not followed by a space
+    backend =\
+            ^
+        'django.contrib.auth.tests.remote_user.RemoteUserNoCreateBackend'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/remote_user.py:148: [C0323, RemoteUserCustomTest] Operator not followed by a space
+    backend =\
+            ^
+        'django.contrib.auth.tests.remote_user.CustomRemoteUserBackend'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/tokens.py:16: [C0103, TokenGeneratorTest.test_make_token] Invalid name "p0" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/tokens.py:29: [W0622, TokenGeneratorTest.test_10265] Redefining built-in 'reload'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/tokens.py:27: [C0103, TokenGeneratorTest.test_10265] Invalid name "p0" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/tokens.py:40: [W0231, TokenGeneratorTest.test_timeout.Mocked.__init__] __init__ method from base class 'PasswordResetTokenGenerator' is not called
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/tokens.py:46: [C0103, TokenGeneratorTest.test_timeout] Invalid name "p0" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/tokens.py:48: [C0103, TokenGeneratorTest.test_timeout] Invalid name "p1" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/tokens.py:51: [C0103, TokenGeneratorTest.test_timeout] Invalid name "p2" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/tokens.py:59: [C0103, TokenGeneratorTest.test_date_length] Invalid name "p0" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/tokens.py:4: [W0611] Unused import AnonymousUser
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/urls.py:8: [C0103, remote_user_auth_view] Invalid name "t" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/urls.py:9: [C0103, remote_user_auth_view] Invalid name "c" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:23: [C0103, AuthViewsTestCase.setUp] Invalid name "old_LANGUAGE_CODE" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:22: [C0103, AuthViewsTestCase.setUp] Invalid name "old_LANGUAGES" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:26: [C0103, AuthViewsTestCase.setUp] Invalid name "old_TEMPLATE_DIRS" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:69: [W0612, PasswordResetTest.test_confirm_valid] Unused variable 'url'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:76: [W0612, PasswordResetTest.test_confirm_invalid] Unused variable 'url'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:100: [C0103, PasswordResetTest.test_confirm_invalid_post] Invalid name "u" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:94: [W0612, PasswordResetTest.test_confirm_invalid_post] Unused variable 'url'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:97: [W0612, PasswordResetTest.test_confirm_invalid_post] Unused variable 'response'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:110: [C0103, PasswordResetTest.test_confirm_complete] Invalid name "u" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:104: [W0612, PasswordResetTest.test_confirm_complete] Unused variable 'url'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:119: [W0612, PasswordResetTest.test_confirm_different_passwords] Unused variable 'url'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:146: [W0612, ChangePasswordTest.logout] Unused variable 'response'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/auth/tests/views.py:8: [W0611] Unused import RequestSite
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:53: [W0311] Bad indentation. Found 13 spaces, expected 12
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:55: [W0311] Bad indentation. Found 13 spaces, expected 12
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:48: [W0622, GenericForeignKey.get_content_type] Redefining built-in 'id'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:48: [C0103, GenericForeignKey.get_content_type] Invalid name "id" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:48: [C0103, GenericForeignKey.get_content_type] Invalid name "id" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:51: [C0103, GenericForeignKey.get_content_type] Invalid name "ContentType" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:73: [C0103, GenericForeignKey.__get__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:76: [C0103, GenericForeignKey.__get__] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:86: [E1101, GenericForeignKey.__set__] Instance of 'GenericForeignKey' has no 'related' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:88: [C0103, GenericForeignKey.__set__] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:89: [C0103, GenericForeignKey.__set__] Invalid name "fk" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:91: [C0103, GenericForeignKey.__set__] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:92: [C0103, GenericForeignKey.__set__] Invalid name "fk" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:28: [W0201, GenericForeignKey.contribute_to_class] Attribute 'model' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:27: [W0201, GenericForeignKey.contribute_to_class] Attribute 'name' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:29: [W0201, GenericForeignKey.contribute_to_class] Attribute 'cache_attr' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:101: [W0231, GenericRelation.__init__] __init__ method from base class 'RelatedField' is not called
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:101: [C0103, GenericRelation.__init__] Invalid name "to" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:101: [C0103, GenericRelation.__init__] Invalid name "to" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:122: [C0103, GenericRelation.value_to_string] Invalid name "qs" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:152: [W0621, GenericRelation.db_type] Redefining name 'connection' from outer scope (line 6)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:164: [C0103, GenericRelation.extra_filters] Invalid name "ContentType" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/db/models/fields/__init__.py:236: [W0201, Field.contribute_to_class] Attribute 'model' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:187: [W0404, ReverseGenericRelatedObjectsDescriptor.__get__] Reimport 'ContentType' (imported line 11)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:193: [C0103, ReverseGenericRelatedObjectsDescriptor.__get__] Invalid name "RelatedManager" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:195: [C0103, ReverseGenericRelatedObjectsDescriptor.__get__] Invalid name "qn" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:226: [R0902, create_generic_related_manager.GenericRelatedObjectManager] Too many instance attributes (11/7)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:227: [E1002, create_generic_related_manager.GenericRelatedObjectManager.__init__] Use super on an old style class
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:227: [R0913, create_generic_related_manager.GenericRelatedObjectManager.__init__] Too many arguments (11/10)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:246: [C0103, create_generic_related_manager.GenericRelatedObjectManager.get_query_set] Invalid name "db" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:246: [E1101, create_generic_related_manager.GenericRelatedObjectManager.get_query_set] Instance of 'GenericRelatedObjectManager' has no '_db' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:263: [C0103, create_generic_related_manager.GenericRelatedObjectManager.remove] Invalid name "db" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:269: [C0103, create_generic_related_manager.GenericRelatedObjectManager.clear] Invalid name "db" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:270: [E1101, create_generic_related_manager.GenericRelatedObjectManager.clear] Instance of 'GenericRelatedObjectManager' has no 'all' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:274: [E1002, create_generic_related_manager.GenericRelatedObjectManager.create] Use super on an old style class
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:277: [C0103, create_generic_related_manager.GenericRelatedObjectManager.create] Invalid name "db" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:285: [C0103, GenericRel.__init__] Invalid name "to" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:284: [W0231, GenericRel.__init__] __init__ method from base class 'ManyToManyRel' is not called
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:284: [C0103, GenericRel.__init__] Invalid name "to" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:284: [C0103, GenericRel.__init__] Invalid name "to" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:300: [W0404, BaseGenericInlineFormSet.__init__] Reimport 'ContentType' (imported line 11)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:305: [E1101, BaseGenericInlineFormSet.__init__] Instance of 'BaseGenericInlineFormSet' has no 'ct_field' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:305: [E1101, BaseGenericInlineFormSet.__init__] Instance of 'BaseGenericInlineFormSet' has no 'ct_fk_field' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:308: [C0103, BaseGenericInlineFormSet.__init__] Invalid name "qs" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:312: [C0103, BaseGenericInlineFormSet.__init__] Invalid name "qs" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:313: [E1101, BaseGenericInlineFormSet.__init__] Instance of 'BaseGenericInlineFormSet' has no 'ct_field' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:314: [E1101, BaseGenericInlineFormSet.__init__] Instance of 'BaseGenericInlineFormSet' has no 'ct_fk_field' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:325: [E1101, BaseGenericInlineFormSet.get_default_prefix] Class 'BaseGenericInlineFormSet' has no 'ct_field' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:325: [E1101, BaseGenericInlineFormSet.get_default_prefix] Class 'BaseGenericInlineFormSet' has no 'ct_fk_field' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:331: [W0404, BaseGenericInlineFormSet.save_new] Reimport 'ContentType' (imported line 11)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:333: [E1101, BaseGenericInlineFormSet.save_new] Instance of 'BaseGenericInlineFormSet' has no 'ct_field' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:334: [E1101, BaseGenericInlineFormSet.save_new] Instance of 'BaseGenericInlineFormSet' has no 'ct_fk_field' member
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:339: [R0913, generic_inlineformset_factory] Too many arguments (12/10)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:354: [W0404, generic_inlineformset_factory] Reimport 'ContentType' (imported line 11)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:362: [E1103, generic_inlineformset_factory] Instance of 'str' has no 'name' member (but some types could not be inferred)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:362: [E1103, generic_inlineformset_factory] Instance of 'str' has no 'name' member (but some types could not be inferred)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:364: [E1103, generic_inlineformset_factory] Instance of 'str' has no 'name' member (but some types could not be inferred)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:364: [E1103, generic_inlineformset_factory] Instance of 'str' has no 'name' member (but some types could not be inferred)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/generic.py:365: [C0103, generic_inlineformset_factory] Invalid name "FormSet" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/management.py:18: [C0103, update_contenttypes] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/management.py:22: [C0103, update_contenttypes] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/management.py:45: [C0103, update_contenttypes] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:13: [C0103, ContentTypeManager.get_by_natural_key] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:15: [C0103, ContentTypeManager.get_by_natural_key] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:30: [C0103, ContentTypeManager.get_for_model] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:35: [C0103, ContentTypeManager.get_for_model] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:35: [W0612, ContentTypeManager.get_for_model] Unused variable 'created'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:44: [W0622, ContentTypeManager.get_for_id] Redefining built-in 'id'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:44: [C0103, ContentTypeManager.get_for_id] Invalid name "id" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:44: [C0103, ContentTypeManager.get_for_id] Invalid name "id" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:50: [C0103, ContentTypeManager.get_for_id] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:54: [C0103, ContentTypeManager.get_for_id] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:67: [C0103, ContentTypeManager._add_to_cache] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:67: [C0103, ContentTypeManager._add_to_cache] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:77: [E1102, ContentType] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:81: [E1102, ContentType.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:82: [E1102, ContentType.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:92: [W0621, ContentType.model_class] Redefining name 'models' from outer scope (line 1)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/models.py:92: [W0404, ContentType.model_class] Reimport 'models' (imported line 1)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/tests.py:16: [C0103, ContentTypesTests.setUp] Invalid name "old_DEBUG" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/tests.py:17: [C0103, ContentTypesTests.setUp] Invalid name "old_Site_meta_installed" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/tests.py:38: [C0103, ContentTypesTests.test_lookup_cache] Invalid name "ct" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/tests.py:61: [W0404, ContentTypesTests.test_shortcut_view] Reimport 'User' (imported line 6)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/tests.py:6: [W0611] Unused import ObjectDoesNotExist
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/contenttypes/views.py:6: [R0912, shortcut] Too many branches (18/12)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/models.py:20: [C0103, SessionManager.save] Invalid name "s" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/models.py:45: [E1102, Session] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/models.py:47: [E1102, Session] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/models.py:48: [E1102, Session] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/models.py:53: [E1102, Session.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/models.py:54: [E1102, Session.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/models.py:60: [W0404, Session.get_decoded] Reimport 'SuspiciousOperation' (imported line 5)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/tests.py:137: [C0301] Line too long (222/160)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/backends/base.py:10: [W0404] Reimport 'pickle' (imported line 14)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/backends/base.py:249: [W0201, SessionBase.cycle_key] Attribute '_session_cache' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/backends/base.py:4: [W0611] Unused import sys
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/backends/cache.py:25: [W0612, SessionStore.create] Unused variable 'i'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/backends/db.py:18: [C0103, SessionStore.load] Invalid name "s" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/backends/base.py:249: [W0201, SessionBase.cycle_key] Attribute '_session_cache' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/backends/db.py:2: [W0611] Unused import settings
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/backends/file.py:111: [W0622, SessionStore.save] Redefining built-in 'dir'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/backends/file.py:88: [C0103, SessionStore.save] Invalid name "fd" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sessions/backends/base.py:249: [W0201, SessionBase.cycle_key] Attribute '_session_cache' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/management.py:9: [C0103, create_default_site] Invalid name "db" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/management.py:9: [C0103, create_default_site] Invalid name "db" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/management.py:13: [C0103, create_default_site] Invalid name "s" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/models.py:21: [C0301] Line too long (203/160)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/models.py:16: [W0404, SiteManager.get_current] Reimport 'settings' (imported line 2)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/models.py:20: [W0404, SiteManager.get_current] Reimport 'ImproperlyConfigured' (imported line 2)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/models.py:31: [W0603, SiteManager.clear_cache] Using the global statement
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/models.py:37: [E1102, Site] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/models.py:38: [E1102, Site] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/models.py:43: [E1102, Site.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/models.py:44: [E1102, Site.Meta] _ is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/models.py:56: [W0221, Site.delete] Arguments number differs from overridden method
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/tests.py:12: [C0103, SitesFrameworkTests.setUp] Invalid name "old_Site_meta_installed" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/tests.py:20: [C0103, SitesFrameworkTests.test_site_manager] Invalid name "s" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/sites/tests.py:30: [C0103, SitesFrameworkTests.test_site_cache] Invalid name "s2" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/__init__.py:1: [W0403] Relative import 'api', should be 'django.contrib.messages.api'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/__init__.py:1: [W0401] Wildcard import api
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/__init__.py:2: [W0403] Relative import 'constants', should be 'django.contrib.messages.constants'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/__init__.py:2: [W0401] Wildcard import constants
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/api.py:43: [W0404, get_messages.get_user] Reimport 'AnonymousUser' (imported line 31)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/api.py:46: [E1102, get_messages] lazy(memoize(get_user().get_and_delete_messages, {}, 0), list) is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/storage/__init__.py:31: [W0108, <lambda>] Lambda may not be necessary
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/storage/base.py:16: [W0231, Message.__init__] __init__ method from base class 'StrAndUnicode' is not called
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/storage/base.py:88: [W0612, BaseStorage._loaded_messages] Unused variable 'all_retrieved'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/storage/base.py:179: [W0201, BaseStorage._set_level] Attribute '_level' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/storage/base.py:89: [W0201, BaseStorage._loaded_messages] Attribute '_loaded_data' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/storage/cookie.py:17: [E0202, MessageEncoder.default] An attribute inherited from JSONEncoder hide this method
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/storage/cookie.py:41: [C0103, MessageDecoder.decode] Invalid name "s" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/storage/cookie.py:41: [C0103, MessageDecoder.decode] Invalid name "s" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/storage/cookie.py:141: [W0622, CookieStorage._decode] Redefining built-in 'hash'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/storage/cookie.py:4: [W0611] Unused import constants
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/base.py:101: [E1102, BaseTest.test_add_lazy_translation] ugettext_lazy is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/base.py:200: [W0612, BaseTest.test_middleware_disabled_auth_user] Unused variable 'user'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/base.py:252: [W0612, BaseTest.test_middleware_disabled_anon_user] Unused variable 'show_url'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/base.py:26: [R0904, BaseTest] Too many public methods (51/50)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/cookie.py:98: [W0612, CookieTest.test_json_encoder_decoder] Unused variable 'x'
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/cookie.py:40: [R0904, CookieTest] Too many public methods (54/50)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/fallback.py:15: [W0201, FallbackTest.get_request] Attribute 'session' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/fallback.py:11: [R0904, FallbackTest] Too many public methods (62/50)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/session.py:24: [W0201, SessionTest.get_request] Attribute 'session' defined outside __init__
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/session.py:20: [R0904, SessionTest] Too many public methods (51/50)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/urls.py:1: [W0401] Wildcard import django.conf.urls.defaults
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/urls.py:24: [C0103, show] Invalid name "t" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/urls.py:1: [W0614] Unused import include from wildcard import
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/urls.py:1: [W0614] Unused import handler404 from wildcard import
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/urls.py:1: [W0614] Unused import url from wildcard import
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/urls.py:5: [W0611] Unused import render_to_response
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/urls.py:1: [W0614] Unused import handler500 from wildcard import
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/user_messages.py:3: [C0324] Comma not followed by a space
+from django.contrib.messages.storage.user_messages import UserMessagesStorage,\
+                                                                             ^^
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/messages/tests/user_messages.py:34: [R0904, LegacyFallbackTest] Too many public methods (64/50)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/__init__.py:14: [W0404, autodiscover] Reimport 'copy' (imported line 2)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/__init__.py:15: [W0404, autodiscover] Reimport 'settings' (imported line 2)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/__init__.py:16: [W0404, autodiscover] Reimport 'import_module' (imported line 2)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/__init__.py:17: [W0404, autodiscover] Reimport 'module_has_submodule' (imported line 2)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/actions.py:42: [C0103, delete_selected] Invalid name "n" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/actions.py:73: [E1102] ugettext_lazy is not callable
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/actions.py:13: [W0611] Unused import capfirst
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/actions.py:12: [W0611] Unused import mark_safe
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/actions.py:11: [W0611] Unused import escape
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:18: [C0103, FilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:18: [C0103, FilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:26: [C0103, FilterSpec.create] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:26: [C0103, FilterSpec.create] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:35: [C0103, FilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:35: [C0103, FilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:41: [C0103, FilterSpec.output] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:41: [C0103, FilterSpec.output] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:42: [C0103, FilterSpec.output] Invalid name "t" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:55: [C0103, RelatedFilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:55: [C0103, RelatedFilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:72: [C0103, RelatedFilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:72: [C0103, RelatedFilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:84: [C0103, ChoicesFilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:84: [C0103, ChoicesFilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:89: [C0103, ChoicesFilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:89: [C0103, ChoicesFilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:93: [C0103, ChoicesFilterSpec.choices] Invalid name "v" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:101: [C0103, DateFieldFilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:101: [C0103, DateFieldFilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:127: [C0103, DateFieldFilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:127: [C0103, DateFieldFilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:136: [C0103, BooleanFieldFilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:136: [C0103, BooleanFieldFilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:146: [C0103, BooleanFieldFilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:146: [C0103, BooleanFieldFilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:147: [C0103, BooleanFieldFilterSpec.choices] Invalid name "v" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:162: [C0103, AllValuesFilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:162: [C0103, AllValuesFilterSpec.__init__] Invalid name "f" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:170: [C0103, AllValuesFilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)
+/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/contrib/admin/filterspecs.py:170: [C0103, AllValuesFilterSpec.choices] Invalid name "cl" (should match [a-z_][a-z0-9_]{2,30}$)

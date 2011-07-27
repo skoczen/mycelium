@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<testsuite errors="0" failures="0" name="google_analytics.tests.test_templatetags.NodeTest" tests="7" time="0.013">
+	<testcase classname="google_analytics.tests.test_templatetags.NodeTest" name="test_default_template_name" time="0.002"/>
+	<testcase classname="google_analytics.tests.test_templatetags.NodeTest" name="test_defined_site" time="0.002"/>
+	<testcase classname="google_analytics.tests.test_templatetags.NodeTest" name="test_explicit_code_name" time="0.002"/>
+	<testcase classname="google_analytics.tests.test_templatetags.NodeTest" name="test_explicit_template_name" time="0.002"/>
+	<testcase classname="google_analytics.tests.test_templatetags.NodeTest" name="test_fixture" time="0.002"/>
+	<testcase classname="google_analytics.tests.test_templatetags.NodeTest" name="test_noarg_code_name" time="0.002"/>
+	<testcase classname="google_analytics.tests.test_templatetags.NodeTest" name="test_site_overrides_explicit_code" time="0.002"/>
+	<system-out>
+<![CDATA[ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+]]>	</system-out>
+	<system-err/>
+</testsuite>

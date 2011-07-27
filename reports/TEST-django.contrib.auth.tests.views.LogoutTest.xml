@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<testsuite errors="0" failures="0" name="django.contrib.auth.tests.views.LogoutTest" tests="5" time="0.009">
+	<testcase classname="django.contrib.auth.tests.views.LogoutTest" name="test_14377" time="0.002"/>
+	<testcase classname="django.contrib.auth.tests.views.LogoutTest" name="test_logout_default" time="0.002"/>
+	<testcase classname="django.contrib.auth.tests.views.LogoutTest" name="test_logout_with_custom_redirect_argument" time="0.002"/>
+	<testcase classname="django.contrib.auth.tests.views.LogoutTest" name="test_logout_with_next_page_specified" time="0.002"/>
+	<testcase classname="django.contrib.auth.tests.views.LogoutTest" name="test_logout_with_redirect_argument" time="0.002"/>
+	<system-out>
+<![CDATA[ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+]]>	</system-out>
+	<system-err/>
+</testsuite>

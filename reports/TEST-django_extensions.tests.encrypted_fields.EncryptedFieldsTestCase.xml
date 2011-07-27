@@ -1,0 +1,266 @@
+<?xml version="1.0" ?>
+<testsuite errors="4" failures="0" name="django_extensions.tests.encrypted_fields.EncryptedFieldsTestCase" tests="4" time="0.007">
+	<testcase classname="django_extensions.tests.encrypted_fields.EncryptedFieldsTestCase" name="testCharFieldCreate" time="0.002">
+		<error message="(1050, &quot;Table 'cms_cmsplugin' already exists&quot;)" type="OperationalError">
+<![CDATA[Traceback (most recent call last):
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django_extensions/tests/encrypted_fields.py", line 31, in setUp
+    call_command('syncdb', verbosity=0)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/__init__.py", line 166, in call_command
+    return klass.execute(*args, **defaults)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 220, in execute
+    output = self.handle(*args, **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 351, in handle
+    return self.handle_noargs(**options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/management/commands/syncdb.py", line 99, in handle_noargs
+    management.call_command('migrate', **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/__init__.py", line 166, in call_command
+    return klass.execute(*args, **defaults)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 220, in execute
+    output = self.handle(*args, **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/management/commands/migrate.py", line 105, in handle
+    ignore_ghosts = ignore_ghosts,
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/__init__.py", line 191, in migrate_app
+    success = migrator.migrate_many(target, workplan, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 221, in migrate_many
+    result = migrator.__class__.migrate_many(migrator, target, migrations, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 292, in migrate_many
+    result = self.migrate(migration, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 125, in migrate
+    result = self.run(migration)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 99, in run
+    return self.run_migration(migration)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 81, in run_migration
+    migration_function()
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 57, in <lambda>
+    return (lambda: direction(orm))
+  File "/Users/skoczen/.virtualenvs/mycelium/src/django-cms/cms/migrations/0001_initial.py", line 18, in forwards
+    ('plugin_type', models.CharField(_("plugin_name"), max_length=50, editable=False, db_index=True)),
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/db/generic.py", line 226, in create_table
+    ', '.join([col for col in columns if col]),
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/db/generic.py", line 150, in execute
+    cursor.execute(sql, params)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/db/backends/mysql/base.py", line 86, in execute
+    return self.cursor.execute(query, args)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/MySQLdb/cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+OperationalError: (1050, "Table 'cms_cmsplugin' already exists")
+]]>		</error>
+	</testcase>
+	<testcase classname="django_extensions.tests.encrypted_fields.EncryptedFieldsTestCase" name="testCharFieldRead" time="0.002">
+		<error message="(1050, &quot;Table 'cms_cmsplugin' already exists&quot;)" type="OperationalError">
+<![CDATA[Traceback (most recent call last):
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django_extensions/tests/encrypted_fields.py", line 31, in setUp
+    call_command('syncdb', verbosity=0)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/__init__.py", line 166, in call_command
+    return klass.execute(*args, **defaults)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 220, in execute
+    output = self.handle(*args, **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 351, in handle
+    return self.handle_noargs(**options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/management/commands/syncdb.py", line 99, in handle_noargs
+    management.call_command('migrate', **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/__init__.py", line 166, in call_command
+    return klass.execute(*args, **defaults)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 220, in execute
+    output = self.handle(*args, **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/management/commands/migrate.py", line 105, in handle
+    ignore_ghosts = ignore_ghosts,
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/__init__.py", line 191, in migrate_app
+    success = migrator.migrate_many(target, workplan, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 221, in migrate_many
+    result = migrator.__class__.migrate_many(migrator, target, migrations, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 292, in migrate_many
+    result = self.migrate(migration, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 125, in migrate
+    result = self.run(migration)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 99, in run
+    return self.run_migration(migration)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 81, in run_migration
+    migration_function()
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 57, in <lambda>
+    return (lambda: direction(orm))
+  File "/Users/skoczen/.virtualenvs/mycelium/src/django-cms/cms/migrations/0001_initial.py", line 18, in forwards
+    ('plugin_type', models.CharField(_("plugin_name"), max_length=50, editable=False, db_index=True)),
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/db/generic.py", line 226, in create_table
+    ', '.join([col for col in columns if col]),
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/db/generic.py", line 150, in execute
+    cursor.execute(sql, params)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/db/backends/mysql/base.py", line 86, in execute
+    return self.cursor.execute(query, args)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/MySQLdb/cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+OperationalError: (1050, "Table 'cms_cmsplugin' already exists")
+]]>		</error>
+	</testcase>
+	<testcase classname="django_extensions.tests.encrypted_fields.EncryptedFieldsTestCase" name="testTextFieldCreate" time="0.002">
+		<error message="(1050, &quot;Table 'cms_cmsplugin' already exists&quot;)" type="OperationalError">
+<![CDATA[Traceback (most recent call last):
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django_extensions/tests/encrypted_fields.py", line 31, in setUp
+    call_command('syncdb', verbosity=0)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/__init__.py", line 166, in call_command
+    return klass.execute(*args, **defaults)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 220, in execute
+    output = self.handle(*args, **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 351, in handle
+    return self.handle_noargs(**options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/management/commands/syncdb.py", line 99, in handle_noargs
+    management.call_command('migrate', **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/__init__.py", line 166, in call_command
+    return klass.execute(*args, **defaults)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 220, in execute
+    output = self.handle(*args, **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/management/commands/migrate.py", line 105, in handle
+    ignore_ghosts = ignore_ghosts,
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/__init__.py", line 191, in migrate_app
+    success = migrator.migrate_many(target, workplan, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 221, in migrate_many
+    result = migrator.__class__.migrate_many(migrator, target, migrations, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 292, in migrate_many
+    result = self.migrate(migration, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 125, in migrate
+    result = self.run(migration)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 99, in run
+    return self.run_migration(migration)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 81, in run_migration
+    migration_function()
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 57, in <lambda>
+    return (lambda: direction(orm))
+  File "/Users/skoczen/.virtualenvs/mycelium/src/django-cms/cms/migrations/0001_initial.py", line 18, in forwards
+    ('plugin_type', models.CharField(_("plugin_name"), max_length=50, editable=False, db_index=True)),
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/db/generic.py", line 226, in create_table
+    ', '.join([col for col in columns if col]),
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/db/generic.py", line 150, in execute
+    cursor.execute(sql, params)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/db/backends/mysql/base.py", line 86, in execute
+    return self.cursor.execute(query, args)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/MySQLdb/cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+OperationalError: (1050, "Table 'cms_cmsplugin' already exists")
+]]>		</error>
+	</testcase>
+	<testcase classname="django_extensions.tests.encrypted_fields.EncryptedFieldsTestCase" name="testTextFieldRead" time="0.002">
+		<error message="(1050, &quot;Table 'cms_cmsplugin' already exists&quot;)" type="OperationalError">
+<![CDATA[Traceback (most recent call last):
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django_extensions/tests/encrypted_fields.py", line 31, in setUp
+    call_command('syncdb', verbosity=0)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/__init__.py", line 166, in call_command
+    return klass.execute(*args, **defaults)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 220, in execute
+    output = self.handle(*args, **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 351, in handle
+    return self.handle_noargs(**options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/management/commands/syncdb.py", line 99, in handle_noargs
+    management.call_command('migrate', **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/__init__.py", line 166, in call_command
+    return klass.execute(*args, **defaults)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/core/management/base.py", line 220, in execute
+    output = self.handle(*args, **options)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/management/commands/migrate.py", line 105, in handle
+    ignore_ghosts = ignore_ghosts,
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/__init__.py", line 191, in migrate_app
+    success = migrator.migrate_many(target, workplan, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 221, in migrate_many
+    result = migrator.__class__.migrate_many(migrator, target, migrations, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 292, in migrate_many
+    result = self.migrate(migration, database)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 125, in migrate
+    result = self.run(migration)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 99, in run
+    return self.run_migration(migration)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 81, in run_migration
+    migration_function()
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/migration/migrators.py", line 57, in <lambda>
+    return (lambda: direction(orm))
+  File "/Users/skoczen/.virtualenvs/mycelium/src/django-cms/cms/migrations/0001_initial.py", line 18, in forwards
+    ('plugin_type', models.CharField(_("plugin_name"), max_length=50, editable=False, db_index=True)),
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/db/generic.py", line 226, in create_table
+    ', '.join([col for col in columns if col]),
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/south/db/generic.py", line 150, in execute
+    cursor.execute(sql, params)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/django/db/backends/mysql/base.py", line 86, in execute
+    return self.cursor.execute(query, args)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/MySQLdb/cursors.py", line 174, in execute
+    self.errorhandler(self, exc, value)
+  File "/Users/skoczen/.virtualenvs/mycelium/lib/python2.6/site-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorclass, errorvalue
+OperationalError: (1050, "Table 'cms_cmsplugin' already exists")
+]]>		</error>
+	</testcase>
+	<system-out>
+<![CDATA[ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+ ! Error found during real run of migration! Aborting.
+
+ ! Since you have a database that does not support running
+ ! schema-altering statements in transactions, we have had 
+ ! to leave it in an interim state between migrations.
+
+! You *might* be able to recover with:   = DROP TABLE `cms_cmsplugin` CASCADE; []
+   = DROP TABLE `cms_title` CASCADE; []
+   = DROP TABLE `cms_pagepermission` CASCADE; []
+   = DROP TABLE `cms_page` CASCADE; []
+   = DROP TABLE `cms_placeholder` CASCADE; []
+   = DROP TABLE `cms_page_sites` CASCADE; []
+
+ ! The South developers regret this has happened, and would
+ ! like to gently persuade you to consider a slightly
+ ! easier-to-deal-with DBMS.
+ ! NOTE: The error which caused the migration to fail is further up.
+]]>	</system-out>
+	<system-err/>
+</testsuite>
