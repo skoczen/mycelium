@@ -122,7 +122,7 @@ PUBLIC_SUBDOMAINS = [
 REMOVE_WWW_FROM_SUBDOMAIN = True
 
 INSTALLED_APPS = (
-    'django_monkeypatches',     # 100-char username field.
+    'longerusername',     # 100-char username field.
 
     'django.contrib.contenttypes',
     'django.contrib.auth',
@@ -334,3 +334,6 @@ MEDIASYNC = {
 
 }
 MEDIASYNC['SERVE_REMOTE'] = True
+
+
+MAX_USERNAME_LENGTH = 100
