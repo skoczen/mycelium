@@ -17,10 +17,6 @@ sys.path.insert(0, LIB_DIR)
 sys.path.insert(0, APPS_DIR)
 
 
-EMAIL_HOST='mail.quantumimagery.com'
-EMAIL_PORT=25
-EMAIL_HOST_USER='robot@quantumimagery.com'
-EMAIL_HOST_PASSWORD='E3Kfgozz7iMyb38N7ohb'
 DEFAULT_FROM_EMAIL = 'GoodCloud'
 SERVER_EMAIL = 'support@agoodcloud.com'
 SEND_BROKEN_LINK_EMAILS = True
@@ -90,11 +86,8 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     "django.core.context_processors.request",
     'django.contrib.auth.context_processors.auth',
     
-    # "cms.context_processors.media",
     "qi_toolkit.context_processors.add_env_to_request",
     "qi_toolkit.context_processors.add_favicon_to_request",    
-    "mycelium_core.context_processors.cdn_media_url",
-    "mycelium_core.context_processors.manual_media_url",
 )
 
 DATE_INPUT_FORMATS = ('%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%b %d %Y',
@@ -184,12 +177,10 @@ ANALYTICAL_INTERNAL_IPS = ['127.0.0.1', '192.168.2.164']
 # HUBSPOT_DOMAIN = 'agoodcloud.app9.hubspot.com'
 
 MAILCHIMP_API_KEY = "fa5bdaa6065aa4fd8975781bceaddd26-us2"
+GOOGLE_MAPS_KEY = "ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRHA9ICmOpg9-1g76S5BMdlTE0SKRRfIwbO5xyH_2XiYLy9Wt8qQ9Ymz"
 
 LOGIN_REDIRECT_URL = "/dashboard/"
 AUTH_PROFILE_MODULE = "accounts.UserAccount"
-
-
-GOOGLE_MAPS_KEY = "ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRHA9ICmOpg9-1g76S5BMdlTE0SKRRfIwbO5xyH_2XiYLy9Wt8qQ9Ymz"
 
 
 SESSION_COOKIE_AGE = 1209600
@@ -207,7 +198,6 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--where=apps', '-s']
 
 FORCE_SELENIUM_TESTS = False
-# SELENIUM_BROWSER_COMMAND = "safari"
 SELENIUM_BROWSER_COMMAND = "*chrome"
 LIVE_SERVER_PORT = 8099
 SELENIUM_PORT = 64444
@@ -223,12 +213,6 @@ JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_mycelium'
 MAN_IN_BLACKLIST = ["data_import_dataimport",]
 
 # celery / rabbitmq
-# BROKER_HOST = "localhost"
-# BROKER_PORT = 5672
-# BROKER_USER = "mycelium"
-# BROKER_PASSWORD = "68WXmV6K49r8veczVaUK"
-# BROKER_VHOST = "digitalmycelium"
-# CELERY_RESULT_BACKEND = "amqp"
 BROKER_BACKEND = "redis"
 BROKER_HOST = "localhost"  # Maps to redis host.
 BROKER_PORT = 6379         # Maps to redis port.
@@ -247,8 +231,6 @@ djcelery.setup_loader()
 # sorl
 THUMBNAIL_PREFIX = "_cache/"
 
-
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_ACCESS_KEY_ID = 'AKIAJTNZWCZDOIDWFR4A'
 AWS_SECRET_ACCESS_KEY = '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'

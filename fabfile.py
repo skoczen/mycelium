@@ -13,7 +13,7 @@ setup_env_centos("mycelium","root",
                     'python_version': '2.7',
                 }, 
                 overrides={
-                    'git_origin':"http://mycelium.skoczen.webfactional.com/mycelium.git",
+                    'git_origin':"git@github.com:skoczen/mycelium.git",
                     # 'dry_run':True,
                     'local_working_path':"~/workingCopy/goodcloud",
                     "staging_virtualenv_name": "mycelium",
