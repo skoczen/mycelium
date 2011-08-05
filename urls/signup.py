@@ -8,6 +8,7 @@ add_to_builtins('mediasync.templatetags.media')
 
 urlpatterns = patterns('',
     url(r'^',              include('accounts.urls.marketing',  app_name="accounts",        namespace="accounts")),    
+    url(r'^',              include('rewrite.urls',  app_name="rewrite",        namespace="rewrite")),    
     url(r'^', include('django_ses.urls')),
     url(r'^', include('mediasync.urls')),
     ("^", include("mezzanine.urls")),
@@ -15,6 +16,7 @@ urlpatterns = patterns('',
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
     )
 
 

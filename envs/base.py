@@ -8,8 +8,8 @@ from os.path import abspath, dirname, join
 gettext = lambda s: s
 
 PROJECT_ROOT = join(abspath(dirname(__file__)), "../")
-STATIC_ROOT = join(abspath(PROJECT_ROOT),"media")
-MEDIA_ROOT = abspath(STATIC_ROOT)
+MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
+STATIC_ROOT = join(abspath(PROJECT_ROOT),"../static")
 LIB_DIR = join(PROJECT_ROOT, 'lib')
 APPS_DIR = join(PROJECT_ROOT, 'apps')
 sys.path.insert(0, abspath(PROJECT_ROOT))
