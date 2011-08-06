@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
-import views
+from rewrite.views import public as views
 
 import dselector
 parser = dselector.Parser()
