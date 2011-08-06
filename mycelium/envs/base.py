@@ -27,7 +27,7 @@ SEND_BROKEN_LINK_EMAILS = True
 ADMINS = [
      ('Steven Skoczen', 'steven@quantumimagery.com'),
 ]
-MANAGERS = ADMINS + ('Tom Noble', 'tom@agoodcloud.com')
+MANAGERS = ADMINS + [('Tom Noble', 'tom@agoodcloud.com')]
 SENTRY_ADMINS = ADMINS
 
 TIME_ZONE = "UTC"

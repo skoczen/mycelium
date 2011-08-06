@@ -6,7 +6,7 @@ from mycelium_core.widgets import JqSplitDateTimeWidget
 import datetime
 
 class NewConversationForm(AccountBasedModelForm):
-    date = JqSplitDateTimeField(widget=JqSplitDateTimeWidget(attrs={'date_class':'datepicker','time_class':'timepicker'}),initial=datetime.datetime.now())
+    date = JqSplitDateTimeField(widget=JqSplitDateTimeWidget(attrs={'date_class':'datepicker','time_class':'timepicker'}))
   
     class Meta:
         model = Conversation
@@ -15,4 +15,6 @@ class NewConversationForm(AccountBasedModelForm):
     def __init__(self, *args, **kwargs):
         super(NewConversationForm,self).__init__(*args,**kwargs)
         self.fields["staff"].choices = [i for i in self.fields["staff"].choices][1:]
+        now = datetime.datetime.now()
+        self.fields["date"].initial = now
 
