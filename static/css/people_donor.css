@@ -1,0 +1,75 @@
+tab_contents.people_donor_tab #new_donation .sentence {
+	margin-top: 5px;
+}
+tab_contents.people_donor_tab #new_donation .sentence input {
+	background: transparent;
+	text-align: center;
+}
+tab_contents.people_donor_tab #new_donation .sentence select {
+	margin-left: 0.5em;
+}
+tab_contents.people_donor_tab #new_donation .duration input {
+/*	min-width: 50px;*/
+}
+tab_contents.people_donor_tab #new_donation .sentence_fragment {
+	font-size: 18px;
+	bottom: -3px;
+	position: relative;
+	display: inline-block;	
+}
+tab_contents.people_donor_tab .donor_donation_table {
+	width: 100%;
+}
+tab_contents.people_donor_tab .donor_donation_table .year {
+	text-align: left;
+	width: 3em;
+	padding-left: 10px;
+}
+tab_contents.people_donor_tab .donor_donation_table .year_of_donations {
+	display: none;
+}
+tab_contents.people_donor_tab .donor_donation_table tr.donation_row td {
+	padding-left: 10px;
+}
+tab_contents.people_donor_tab .year_of_donor_donations_table {
+	margin: 6px 1%;
+	width: 98%;
+	border: 1px solid #DDD;
+	border-width: 0px 1px 1px 1px;
+}
+tab_contents.people_donor_tab .year_overview td {
+	text-align: right;
+}
+tab_contents.people_donor_tab .no_records_message {
+	padding: 10px 10px;
+	font-size: 22px;
+	color: #AAA;
+}
+tab_contents.people_donor_tab tabbed_box[name=add_a_donation] {
+	margin-bottom: 10px;
+}
+tab_contents.people_donor_tab .delete_donation {
+	text-align: right;
+}
+tab_contents.people_donor_tab fragment[name=donor_tags] {
+	padding: 10px;
+}
+tab_contents.people_donor_tab fragment[name=donor_tags] tag {
+	clear: both;
+}
+tab_contents.people_donor_tab .new_tag {
+	display: block;
+	clear: both;
+}
+tab_contents.people_donor_tab .section_details {
+	display: block;
+	padding: 10px;
+}
+tab_contents.people_donor_tab .tags_and_other_info {
+	padding: 0px 20px;
+}
+tab_contents.people_donor_tab tags {
+	width: 100%;
+	overflow: auto;
+	padding: 0px;
+}

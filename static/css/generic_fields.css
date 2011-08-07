@@ -1,0 +1,86 @@
+.edit_field {
+	display: none;
+}
+
+.edit_mode_on .edit_field {
+	display: inherit;
+}
+.edit_mode_on .view_field {
+	display: none;
+}
+.edit_mode_off .edit_field {
+	display: none;
+}
+.edit_mode_off .view_field {
+	display: inherit;
+}
+.generic_editable_field {
+	position: relative;
+}
+.edit_mode_on .edit_field {
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+.generic_field_label {
+	position: absolute;
+	top: 100%;
+	font-size: 14px;
+	text-align: center;
+	color: #AAA;
+	clear: none;
+	left: 0px;
+	float: left;
+}
+.http_prefix {
+	display: block;
+	float: left;
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+	border-width: 0px 0px 1px 0px;
+	padding-top: 3px;
+}
+.edit_mode_on input {
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+	border-width: 0px 0px 1px 0px;
+	padding-bottom: 0px;
+}
+.edit_mode_on input[type=text] {
+	background-color: transparent;
+}
+.edit_mode_on input:focus {
+	outline-style:none;
+	border: 1px solid #3E9CFD;
+	border-width: 0px 0px 1px 0px;	
+}
+
+.edit_mode_on .http_prefix {
+	color: #777;
+}
+
+/* Radio buttons */
+.edit_field ul {
+	display: block;
+	list-style:none;
+	overflow: auto;
+	padding: 0px 0px 6px 0px;
+	margin: 0px;
+}
+.edit_field li {
+	display: block;
+	float: left;
+	padding-left: 15px;
+}
+.generic_editable_field_table_row .label_col, .generic_editable_field_table_row .label_col label  {
+
+	color: #555;
+}
+.generic_editable_field_table_row .label_col, .generic_editable_field_table_row .field_col  {
+	padding: 6px;
+}
+.generic_editable_field_table_row .field_col .view_field {
+	
+	padding: 0px 0px 1px 1px;
+}

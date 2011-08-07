@@ -1,0 +1,196 @@
+dashboard {
+	display: block;
+	padding: 0px 20px 20px 20px;
+}
+.dashboard_title {
+	font-size: 48px;
+	text-align: center;
+	color: #BBB;
+	margin-top: -10px;
+	margin-bottom: 10px;
+	/*text-shadow: 1px 1px 1px rgba(0,0,0,0.2);*/
+}
+salutation {
+	font-size: 30px;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+}
+
+salutation, .welcome_text, .nickname_question {
+	display: block;
+	margin: 0px 10px;
+}
+.nickname_no_followup {
+	display: block;
+	padding: 6px 0px;
+	font-size: 18px;
+	display: none;
+}
+.nickname_no_followup .followup_question {
+	float: left;
+	padding: 2px 6px 0px 0px;
+	color: #454545;
+}
+.nickname_no_followup .save_new_nickname {
+	padding: 4px 10px;
+}
+.welcome_text {
+	font-size: 18px;
+}
+.nickname_question {
+	margin-top: 2px;
+	margin-bottom: 10px;
+	color: #888;
+}
+
+.dashboard_panel_table {
+	width: 100%;
+	font-size: 15px;
+}
+.dashboard_panel_table .left_col {
+	width: 55%;
+	padding: 10px;
+	padding-right: 9%;
+}
+.dashboard_panel_table .right_col {
+	width: 35%;
+	padding: 10px;
+}
+.dashboard_panel_table .full_col {
+	padding: 0px 10px;
+}
+
+.dashboard_panel_table column_header {
+	font-size: 24px;
+	border: 1px solid #E2E2E2;
+	border-width: 0px 0px 1px 0px;
+	display: block;
+	/*width: 100%;*/
+	margin-top: 20px;
+	color: #656565;
+	background-repeat: no-repeat;
+	background-position: left 0px;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+}
+.dashboard_panel_table column_header.birthdays {
+	background-image: url("../images/icon-birthday-grey-26.png");
+	padding: 0px 0px 0px 34px;
+}
+.dashboard_panel_table column_header.news {
+	background-image: url("../images/icon-news-grey-26.png");
+	padding: 0px 0px 0px 35px;
+}
+.dashboard_panel_table column_header.numbers {
+	background-image: url("../images/icon-numbers-grey-26.png");
+	padding: 0px 0px 0px 45px;
+}
+
+
+
+challenge {
+	display: block;
+	padding: 10px 0px 10px 40px;
+	background-image: url("../images/checkbox-40-off.png");
+	background-repeat: no-repeat;
+	background-position: 0px 2px;
+}
+challenge.complete {
+	background-image: url("../images/checkbox-40-on.png");
+	color: #BBB;
+}
+challenge.complete description {
+	/*display: none;*/
+}
+challenge.complete a.get_started_link {
+	display: none;
+}
+challenge title_text {
+	display: block;
+	font-size: 24px;
+
+}
+challenge description {
+	display: block;
+}
+
+.challenge_description {
+	color: #777;
+	font-size: 15px;
+	margin-top: 5px;
+}
+.number_row {
+	clear: left;
+	position: relative;
+	display: block;
+}
+.number_row number {
+	display: block;
+	float: left;
+	font-size: 36px;
+	width: 130px;
+	text-align: right;
+	white-space: nowrap;
+}
+.number_row description {
+	font-size: 20px;
+	color: #AAA;
+	padding: 10px 0px 0px 0px;
+	margin-left: 140px;
+	display: block;
+}
+column_content {
+	display: block;
+	padding: 2px 6px;
+	font-family: 'ExpresswayRegular',"Droid Sans", "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+}
+column_content.completed_goodcloud_challenges {
+	padding: 4px 0px 2px 50px;
+	background-image: url("../images/checkbox-40-on.png");
+	background-repeat: no-repeat;
+	background-position: 6px 0px;
+	
+}
+column_content.news news_story .date {
+	/*font-weight: bold;*/
+	height: 40px;
+	float: left;
+	margin: 0px 10px 0px 0px;
+	text-align: left;
+	width: 90px;
+	white-space: nowrap;
+	color: #000;
+}
+news_story {
+	display: block;
+	padding: 10px 0px;
+	color: #454545;
+}
+news_story .story_body {
+	display: block;
+	padding-left: 115px;
+	
+}
+
+.birthday_row {
+	margin: 6px 5px;
+}
+.birthday_date {
+	color: #454545;
+	width: 60px;
+	float: left;
+	clear: left;
+	height: 15px;
+	text-align: left;
+	
+}
+
+.person_and_age {
+	margin-left: 10px;
+}
+.no_birthdays {
+	margin: 5px 10px;
+	color: #AAA;
+	font-size: 18px;
+}
+.age {
+	color: #999;
+}

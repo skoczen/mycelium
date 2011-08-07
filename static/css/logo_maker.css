@@ -1,0 +1,41 @@
+input {
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+}
+input:focus {
+	outline-style:none;
+	border: 1px solid #3E9CFD;
+}
+logo_info {
+	display: block;
+	padding: 0px;
+	width: 100%;
+	overflow: auto;
+}
+logo_info:hover {
+	background-color: #E1F1FF;
+}
+.height_field, .width_field {
+	width: 3em;
+	text-align: center;
+}
+.download_form {
+	padding: 20px;
+	float: right;
+}
+.download_form fields {
+	margin-left: 20px;
+}
+section_title {
+	color: #004486;
+	font-size: 24px;
+	display: block;
+	padding: 10px;
+}
+logo_info img.logo_thumb {
+	margin-left: 20px;
+}
+#id_image {
+	border: 0px;
+}

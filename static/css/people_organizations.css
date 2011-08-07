@@ -1,0 +1,193 @@
+fragment[name=new_person_search_results] {
+	display: block;
+}
+#search_for_person {
+	padding: 10px 0px 0px 0px;
+}
+#search_for_person #id_search_new_person {
+	width: 40%;
+	font-size: 16px;
+	display: inline;
+	border: 0px solid #999;
+	padding: 2px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	outline: none;
+	box-shadow: 		inset 0px 1px 2px rgba(0,0,0,0.55);
+	-moz-box-shadow: 	inset 0px 1px 2px rgba(0,0,0,0.55);
+	-khtml-box-shadow: 	inset 0px 1px 2px rgba(0,0,0,0.55);
+	-webkit-box-shadow: inset 0px 1px 2px rgba(0,0,0,0.55);
+}
+.tab_contents.organizations_people .add_person_container, .tab_contents.organizations_people #add_existing_person, .tab_contents.organizations_people #new_person, .tab_contents.organizations_people #search_for_person {
+	display: none;
+}
+
+#add_existing_person, #new_person {
+	display: block;
+	padding: 0px 0px 10px 0px;
+	width: 100%;
+	position: relative;
+	clear: none;
+}
+#add_existing_person input, #new_person input {
+	min-width: 100px;
+}
+#add_existing_person form, #new_person form {
+	margin-left: 10px;
+	clear: left;
+}
+tabbed_box box_content .no_people_found {
+	text-align: left;
+	font-size: 16px;
+	color: #606060;
+}
+employees {
+	display: block;
+	padding: 10px 0px;
+	width: 100%;
+	overflow: auto;
+	position: relative;
+}
+employees employee {
+	display: block;
+	width: 29%;
+	padding: 10px 1%;
+	margin: 1%;
+	float: left;
+	min-height: 100px;
+	border: 1px solid #DDD;
+	position: relative;
+}
+employees employee span {
+	display: block;
+}
+employees employee.warning {
+/*	border-color:red;*/
+	opacity: 0.4;
+}
+employees employee.warning * {
+/*	opacity: 0.4;*/
+}
+tabbed_box box_content {
+	width: 96%;
+	background-color: #EEE;
+	overflow: hidden;	
+}
+tabbed_box box_content .edit_mode_on input {
+	background-color: #EEE;
+/*	border-color: #454545;*/
+	color: #222;
+}
+section_title {
+	display: block;
+	font-size: 16px;
+	color: #004486;
+	margin-top: 10px;
+}
+tabbed_box box_content fragment table {
+	margin: 4px 0px;
+}
+tabbed_box box_content fragment td.action {
+	padding: 5px 0px 0px 0px;
+	white-space: nowrap;
+	width: 15%;
+	text-align: left;
+}
+tabbed_box box_content fragment td.name {
+	width: 35%;
+}
+tabbed_box box_content fragment td.email {
+	width: 25%;
+}
+tabbed_box box_content fragment td.phone {
+	width: 25%;
+}
+tabbed_box box_content fragment .pagination_row {
+	padding-left: 16px;
+}
+tabbed_box box_close .cancel_add_btn {
+	background-color: #CCC;
+	color: #454545;
+}
+tabbed_box box_close .cancel_add_btn:hover {
+	background-color: #D2D2D2;
+	color: #222;
+}
+instructions {
+	display: block;
+	float: left;
+	font-size: 16px;
+	color: #454545;
+	padding: 3px 0px 0px 0px;
+	margin-right: 10px;
+}
+tabbed_box box_content #add_existing_person .full_name {
+	font-size: 20px;
+	color: #222;
+	float: left;
+	display: block;
+	padding-right: 10px;
+}
+tabbed_box box_content .generic_editable_field {
+	display: inline;
+	padding-right: 5px;
+}
+tabbed_box box_content .results_table {
+	font-size: 16px;
+}
+tabbed_box box_content .mycelium_btn {
+	font-size: 16px;
+	padding: 3px 8px;	
+}
+tabbed_box box_content .edit_mode_on .generic_field_label {
+	top: 140%;
+	color: #777;
+}
+tabbed_box box_content form_actions {
+	padding-left: 0px;
+}
+tabbed_box box_content fragment section_title {
+	display: block;
+	position: relative;
+	left: 0px;
+	top: 0px;
+}
+tabbed_box box_content fragment .results_table {
+	margin-left: 10px;
+}
+tabbed_box box_content fragment section_title.or {
+	display: block;
+	padding: 0px 10px 7px 0px;
+}
+tabbed_box box_content fragment .not_in_goodcloud_btn {
+	margin: 0px 0px 0px 10px;
+}
+.new_person_btn_container {
+	margin-bottom: 20px;
+}
+#up_to_search {
+	display: block;
+	float: right;
+	clear: none;
+	padding: 5px 0px 4px 32px;
+	z-index: 100;
+	background: url("../images/up-pointout-arrow-20.png");
+	background-position: 0px 5px;
+	background-repeat: no-repeat;
+
+}
+pane.pane_2 {
+	display: none;
+}
+pane.pane_2 section_title {
+	display: block;
+	width: 80%;
+	float: left;
+	padding-top: 0px;
+	width: auto;
+	font-size: 20px;
+}
+#basic_info_form.edit_mode_on input { 
+	background-color: #FFF;
+}

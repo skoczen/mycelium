@@ -1,0 +1,179 @@
+
+.signup_page .welcome_message {
+	margin: 0px;
+	padding: 10px 0px 10px 20px;
+	line-height: 1.1em;
+	text-align: left;
+	font-size: 20;
+	color: #AAA;
+}
+.signup_page.single_dialog {
+	width: 60%;
+	margin-left: 20%;
+	padding: 10px 10px;
+	/*background-color: transparent;
+	box-shadow: 		none;
+	-moz-box-shadow:	none;
+	-khtml-box-shadow: 	none;
+	-webkit-box-shadow: none;*/
+
+}
+.signup_page .organization_and_domain {
+	display: block;
+	margin: 5% auto 2% auto;
+	width: 100%;
+	font-family: 'Bevan', Arial, sans-serif;
+}
+.signup_page .organization_and_domain .organization_name {
+	color: #FFF;
+	text-shadow:		 1px 2px 2px #222;
+	-moz-text-shadow:    1px 2px 2px #222;
+	-webkit-text-shadow: 1px 2px 2px #222;
+	background-color: transparent;
+}
+
+#signup_form {
+	
+}
+#signup_form input {
+	
+}
+#signup_form label {
+	width: 150px;
+	padding-left: 10px;
+	text-align: left;
+	float: left;
+	padding-right: 20px;
+	min-height: 20px;
+}
+.editable_field {
+	display: block;
+	overflow: auto;
+	width: 100%;
+	padding: 8px 0px 2px 0px;
+}
+#signup_form .form_section {
+	padding: 10px;	
+	margin: 10px 10px 0px 10px;
+	position: relative;
+	display: block;
+}
+#signup_form .section_title {
+	display: block;
+	width: 100%;
+	border: 1px solid #DDD;
+
+	border-width: 0px 0px 1px 0px;
+	font-size: 24px;
+	text-align: left;
+	padding-bottom: 0px;
+}
+
+#signup_form #submit_button {
+	margin: 10px 0px 4px 0px;
+	font-size: 24px;
+}
+#signup_form #submit_button.disabled {
+	border-color: #DDD;
+	text-shadow: 0px 0px 0px;
+}
+
+.signup_page .editable_field {
+	font-size: 18px;
+}
+.signup_page .edit_field span, .signup_page .edit_field input {
+	float: left;
+}
+.signup_page .edit_field input {
+	width: 200px;
+
+}
+.signup_page .edit_field input {
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+	border-width: 0px 0px 1px 0px;
+	border-bottom-color: #999;
+	padding-bottom: 0px;
+}
+.signup_page .edit_field input:focus {
+	outline-style:none;
+	border: 1px solid #3E9CFD;
+	border-width: 0px 0px 1px 0px;	
+}
+#container_id_subdomain {
+	padding-bottom: 0px;
+}
+#container_id_subdomain input {
+	width: 160px;
+	font-size: 18px;
+}
+#container_id_subdomain .edit_field {
+	display: block;
+	padding-top: 22px;
+}
+.signup_page .address_boilerplate {
+	display: block;
+	padding-top: 0px;
+	color: #777;
+}
+#subdomain_verification {
+	font-size: 16px;
+}
+#subdomain_verification .subdomain_response {
+	text-align: left;
+	display: block;
+	margin-left: 180px;
+	padding-left: 20px;
+}
+#subdomain_verification .generic_field_label {
+	height: 32px;
+}
+#container_id_subdomain .generic_field_label {
+	height: 60px;
+}
+#subdomain_verification .subdomain_response.pending {
+	background-image: url("../images/spinner-grey-16.gif");
+	background-position: 0px 2px;
+	background-repeat: no-repeat;
+}
+#subdomain_verification .subdomain_response.verified {
+	background-image: url("../images/icon-check-16.png");
+	background-position: 0px 2px;
+	background-repeat: no-repeat;
+}
+#subdomain_verification .subdomain_response.trouble {
+	background-image: url("../images/icon-exclam-16.png");
+	background-position: 0px 2px;
+	background-repeat: no-repeat;
+}
+#subdomain_verification {
+	display: none;
+	padding: 0px;
+}
+#subdomain_verification .subdomain_response .domain {
+	/*color: #000;*/
+	font-weight: bold;
+}
+#signup_form .form_section.terms {
+	display: block;
+	overflow: auto;
+	text-align: center;
+}
+#signup_form .checkbox_and_label {
+	display: block;
+	margin: 0px auto;
+	overflow: visible;
+	width: 250px;
+	text-align: center;
+	margin: 0px auto;
+}
+#signup_form .terms label, #signup_form .terms .agree_checkbox {
+	display: block;
+	float: left;
+	
+}
+#signup_form .terms label {
+	padding-top: 2px;
+	width: auto;
+}

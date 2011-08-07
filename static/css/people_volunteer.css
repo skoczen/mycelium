@@ -1,0 +1,91 @@
+tab_contents.people_volunteer_tab #new_completed_volunteer_shift .sentence {
+	margin-top: 5px;
+}
+tab_contents.people_volunteer_tab #new_completed_volunteer_shift .sentence input {
+	background: transparent;
+	text-align: center;
+}
+tab_contents.people_volunteer_tab #new_completed_volunteer_shift .sentence select {
+	margin-left: 0.5em;
+}
+tab_contents.people_volunteer_tab #new_completed_volunteer_shift .duration input {
+/*	min-width: 50px;*/
+}
+tab_contents.people_volunteer_tab #new_completed_volunteer_shift .sentence_fragment {
+	font-size: 18px;
+	bottom: -3px;
+	position: relative;
+	display: inline-block;	
+}
+tab_contents.people_volunteer_tab .volunteer_shift_table {
+	width: 100%;
+}
+tab_contents.people_volunteer_tab .volunteer_shift_table .year {
+	text-align: left;
+	width: 3em;
+	padding-left: 10px;
+}
+tab_contents.people_volunteer_tab .volunteer_shift_table .year_of_shifts {
+	display: none;
+}
+tab_contents.people_volunteer_tab .volunteer_shift_table tr.completed_volunteer_shift_row td {
+	padding-left: 10px;
+}
+tab_contents.people_volunteer_tab .year_of_volunteer_shifts_table {
+	margin: 6px 1%;
+	width: 98%;
+	border: 1px solid #DDD;
+	border-width: 0px 1px 1px 1px;
+}
+tab_contents.people_volunteer_tab .year_overview td {
+	text-align: right;
+}
+tab_contents.people_volunteer_tab .no_records_message {
+	padding: 10px 10px;
+	font-size: 22px;
+	color: #AAA;
+
+}
+tab_contents.people_volunteer_tab tabbed_box[name=add_a_volunteer_shift] {
+	margin-bottom: 10px;
+}
+tab_contents.people_volunteer_tab .status_and_skills {
+	padding: 0px 20px;
+}
+tab_contents.people_volunteer_tab .status_and_skills .generic_editable_field li {
+	display: block;
+	float: none;
+	margin-left: 0px;
+}
+tab_contents.people_volunteer_tab .status_and_skills .status_field {
+	margin-top: 2px
+}
+tab_contents.people_volunteer_tab .status_and_skills .status_field .generic_field_label {
+	display: none;
+}
+tab_contents.people_volunteer_tab .status_and_skills .edit_mode_on .edit_field {
+	margin-bottom: 0px;
+}
+tab_contents.people_volunteer_tab .status_and_skills .reactivation_date {
+	padding-left: 21px;
+	overflow: auto;
+	padding-bottom: 20px;
+	width: 90%;
+	clear: both;
+}
+tab_contents.people_volunteer_tab .status_and_skills .reactivation_date .question_label {
+	float: left;
+	padding: 1px 6px 0px 0px;
+
+	font-size: 18px;
+}
+tab_contents.people_volunteer_tab .status_and_skills .reactivation_date .generic_editable_field {
+	float: left;
+}
+tab_contents.people_volunteer_tab .status_and_skills .reactivation_date .generic_editable_field input[name$=reactivation_date] {
+	width: 120px;
+/*	text-align: center;*/
+}
+tab_contents.people_volunteer_tab .delete_shift {
+	text-align: right;
+}

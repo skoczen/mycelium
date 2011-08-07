@@ -1,0 +1,217 @@
+input {
+	border: 1px solid #DDD;
+	padding: 0px;
+	margin: 0px;
+}
+input:focus {
+	outline-style:none;
+	border: 1px solid #3E9CFD;
+}
+#container_id_name, #container_id_name input {
+	font-size: 30px;
+}
+
+.new_criterium {
+	margin-top: 6px;
+}
+.column_list {
+	display: block;
+	position: relative;
+	padding: 0px 0px 20px 20px;
+}
+.column {
+	display: block;
+	width: 30%;
+	float: left;
+	padding: 2px;
+}
+.column label {
+	padding-left: 6px;
+}
+.sample_results {
+	clear: both;
+	width: 100%;
+	padding-top: 20px;
+}
+.sample_results table.sample_table {
+	width: 98%;
+	margin-left: 1%;
+	margin-top: 2px;
+	border: 1px solid #DDD;
+}
+.sample_results table.sample_table th {
+	text-align: left;
+	background-color: #DDD;
+	border: 1px solid #BBB;
+	padding: 2px;
+}
+.sample_results table.sample_table td {
+	border: 1px solid #DDD;
+	padding: 2px;
+}
+.actions {
+	padding: 20px 0px;
+	clear: both;
+}
+.right_actions {
+	clear: none;
+	float: right;
+}
+
+.small_search {
+	float: right;
+}
+.small_search #id_page_top_search {
+	font-size: 18px;
+	margin: 0px;
+	padding: 4px 4px;
+	border: 2px solid #DDD;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	width: 300px;
+	padding-left: 40px;
+
+	background-image: url("../images/search-24.png");
+	background-position: 4px 4px;
+	background-repeat: no-repeat;
+}
+
+.spreadsheet_list {
+	padding: 20px 10px;
+}
+table.spreadsheet_results {
+	width: 100%;
+	margin-top: 10px;
+}
+table.spreadsheet_results td {
+	padding: 2px;
+}
+table.spreadsheet_results .view_results, table.spreadsheet_results .download_csv {
+	width: 10%;
+}
+
+.total_results {
+	padding: 4px 10px;
+
+}
+td.remainder_count {
+	padding-left: 8px;
+}
+
+.criteria_list {
+	padding: 6px;
+}
+.basic_info .section {
+	display: block;
+	float: left;
+	margin: 0px 10px 0px 0px;
+	width: 100px;
+}
+.basic_info .group_and_template {
+	display: block;
+	padding: 10px 10px 10px 13px;
+}
+.basic_info .group_and_template .generic_field_label {
+	display: none;
+}
+.edit_mode_on .basic_info .group_and_template .edit_field {
+	margin-bottom: 4px;
+}
+.download_spreadsheet_button_block {
+	display: block;
+	text-align: center;
+	padding: 20px;
+}
+.download_spreadsheet_button_block .download_spreadsheet_btn {
+	/*font-size: 30px;*/
+}
+.detail_header {
+	padding-top: 10px;
+	width: 90%;
+}
+.selects_with_descriptions {
+	display: block;
+	width: 100%;
+	overflow: auto;
+}
+.file_type_option {
+	display: block;
+	padding: 8px;
+	width: 40%;
+	margin: 4px 2% 4px 0px;
+	overflow: auto;
+	float: left;
+	min-height: 80px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;	
+	border: 1px solid #FFF;
+}
+.file_type_option.selected {
+	background-color: #EEE;
+	border-color: #DDD;
+}
+.file_type_option input, .edit_mode_on .file_type_option input {
+	float: left;
+	display: block;
+	margin: 5px 2% 5px 2%;
+	width: 6%;
+
+}
+.file_type_option label {
+	display: block;
+	float: left;
+	width: 90%;
+}
+.file_type_option .option_name {
+	font-size: 20px;
+	color: #222;
+	display: block;
+}
+.file_type_option .option_description {
+	color: #888;
+	display: block;	
+	font-size: 14px;
+}
+
+#email_list_area, fragment[name=email_quick_copy] textarea {
+	width: 88%;
+	height: 6em;
+	border: 1px solid #DDD;
+	font-size: 14px;
+	color: 999;
+	margin: 2px 0px 0px 0px;
+}
+fragment[name=email_quick_copy] {
+	margin: 0px 0px 0px 1%;
+}
+.detail_description {
+	font-size: 14px;
+	display: block;
+	padding: 4px 5px 6px 0px;
+	color: #777;
+	margin: 0px 0px 0px 1%;
+}
+#container_id_spreadsheet_template .edit_field {
+	
+	overflow: auto;
+	
+}
+#container_id_spreadsheet_template .view_field.file_type_option {
+	margin: 0px;
+	padding: 0px;
+}
+
+#id_group_count_with_label, #id_group_count {
+	display: block;
+	margin-top: 0px;
+	font-size: 14px;
+	
+	padding: 0px 0px 10px 56px;
+	color: #777;
+}	
+
+.file_type.selects_with_descriptions .file_type_option {
+	margin: 4px 1% 4px 1%;
+}

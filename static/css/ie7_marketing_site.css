@@ -1,0 +1,11 @@
+
+.picture_frame {
+	background: none;
+}
+.picture_frame .picture {
+	border: 6px solid #60C6FD;
+}
+
+#home_layout_columns {
+	position: absolute;
+}
