@@ -1,4 +1,5 @@
 from django.db import models
+from rewrite import DEFAULT_CONTENT_FILLER
 
 class RewriteWebsite(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)
@@ -32,7 +33,10 @@ class RewriteContentBase(models.Model):
                         help_text="Keywords help search engines find results. Enter ones that describe this page. Less than 255 characters.")    
     template        = models.ForeignKey(RewriteTemplate)
 
-    content         = models.TextField(blank=True, null=True)
+    content         = models.TextField(blank=True, null=True, default=DEFAULT_CONTENT_FILLER)
+
+    class Meta:
+        is_abstract = True
 
 class RewritePage(RewriteContentBase):
     section         = models.ForeignKey(RewriteSection, blank=True, null=True)
