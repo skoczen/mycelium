@@ -1,61 +1,34 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from accounts.managers import get_or_404_by_account
-from django.template.loader import render_to_string
-from django.http import HttpResponseRedirect, HttpResponse
-from django.utils import simplejson
-from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
-from qi_toolkit.helpers import *
-from django.views.decorators.cache import cache_page
+from django.shortcuts import get_object_or_404
+# from django.http import HttpResponseRedirect, HttpResponse
+# from django.core.urlresolvers import reverse
+# from django.views.decorators.cache import cache_page
+# from django.contrib.sites.models import Site
+# from django.conf import settings
 
-from accounts.forms import NewAccountForm, NewUserForm
-from accounts.models import AccessLevel, Account
-from accounts.tasks import send_welcome_emails
-from django.contrib.sites.models import Site
-from django.conf import settings
-from pychargify.api import *
+from rewrite import ContentNotFound
+from rewrite.models import RewritePage, RewriteSection, RewriteBlogPost
 
-@render_to("accounts/signup.html")
-def signup(request):
-    
-    if request.method == "POST":
-        account_form = NewAccountForm(request.POST)
-        user_form = NewUserForm(request.POST)
-        if account_form.is_valid() and user_form.is_valid():
-            account = account_form.save()
-            useraccount = account.create_useraccount(full_name=user_form.cleaned_data['first_name'], 
-                                       username=user_form.cleaned_data['username'], 
-                                       password=user_form.cleaned_data['password'], 
-                                       email=user_form.cleaned_data['email'], 
-                                       access_level=AccessLevel.admin()
-                                       )
-            account.create_subscription()
-            site = Site.objects.get_current()
+def render_page(request, section=None, page_name=None):
+    if page_name:
+        page = get_object_or_404(RewritePage,slug=page_name)
+        template = page.template
+        section = page.section
 
-            # Send off emails to us and them.
-            send_welcome_emails.delay(account, useraccount)
-
-            return HttpResponseRedirect("%s%s.%s/" % (request.protocol, account.subdomain, site.domain))
-        else:
-            # print account_form
-            # print user_form
-            pass
     else:
-        account_form = NewAccountForm()
-        user_form = NewUserForm()
+        if section:
+            section = get_object_or_404(RewriteSection,slug=section)
+        else:
+            raise ContentNotFound
 
-    return locals()
+    return render_to_response("rewrite/base.html", locals(), RequestContext(request))
 
-@json_view
-def verify_subdomain(request):
-    is_available = False
-    if request.method == "POST" and "subdomain" in request.POST:
-        is_available = Account.objects.filter(subdomain=request.POST["subdomain"]).count() == 0
+def blog_home(request):
     
-    return {'success':True, 'is_available':is_available}
+    return render_to_response("rewrite/base.html", locals(), RequestContext(request))
 
+def blog_entry(request, entry_slug):
+    blog_post = get_object_or_404(RewriteBlogPost,slug=entry_slug)
 
-@render_to("accounts/account_deleted.html")
-def account_deleted(request):
-    return locals()
+    return render_to_response("rewrite/base.html", locals(), RequestContext(request))

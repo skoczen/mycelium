@@ -30,3 +30,7 @@ vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egesta
 est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per 
 conubia nostra, per inceptos himenaeos. Sed molestie augue sit amet leo 
 consequat posuere. Vestibulum ante ipsum primis.</p> """)
+
+
+class ContentNotFound(Exception):
+    pass

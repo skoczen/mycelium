@@ -19,6 +19,7 @@ If you have multiple, nested sections of content, please use one of the industri
 Dependencies
 ============
 
+dselector (need to bundle this)
 
 Installation
 ============

@@ -1,14 +1,22 @@
 from django.db import models
 from rewrite import DEFAULT_CONTENT_FILLER
+from django.template.defaultfilters import slugify
 
 class RewriteWebsite(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)
     blog_enabled        = models.BooleanField(default=True)
 
+    @property
+    def sections(self):
+        return self.rewritesection_set.all()
+    
 
 class RewriteSection(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)
     
+    @property
+    def pages(self):
+        return self.rewritepage_set.all()
 
 class RewriteTemplate(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)
@@ -23,6 +31,10 @@ class RewriteTemplate(models.Model):
 class RewriteBlog(models.Model):
     template        = models.ForeignKey(RewriteTemplate)
 
+    @property
+    def posts(self):
+        return self.rewriteblogpost_set.all()
+
 
 class RewriteContentBase(models.Model):
     title           = models.CharField(max_length=69, verbose_name="Page Title", blank=True, null=True,
@@ -33,6 +45,13 @@ class RewriteContentBase(models.Model):
                         help_text="Keywords help search engines find results. Enter ones that describe this page. Less than 255 characters.")    
     template        = models.ForeignKey(RewriteTemplate)
     content         = models.TextField(blank=True, null=True, default=DEFAULT_CONTENT_FILLER)
+    slug            = models.SlugField(editable=False, blank=True)
+
+    def save(self, *args, **kwargs):
+        # only do this once - cool URL's don't change.
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(RewriteContentBase, self).save(*args, **kwargs)
 
     class Meta:
         abstract = True

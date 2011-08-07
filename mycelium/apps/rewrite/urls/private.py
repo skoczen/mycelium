@@ -8,5 +8,9 @@ url = parser.url
 
 urlpatterns = parser.patterns('',                      
    # Redirect to dashboard
-    # url(r'^$',                                           views.dashboard                                                                      , name="dashboard"                 ),
+    url(r'manage^$',                views.pages              , name="manage"       ),
+    url(r'manage/pages^$',          views.pages              , name="pages"        ),
+    url(r'manage/template^$',       views.template           , name="template"     ),
+    url(r'manage/blog^$',           views.blog               , name="blog"         ),
+    url(r'manage/settings^$',       views.settings           , name="settings"     ),
 )
