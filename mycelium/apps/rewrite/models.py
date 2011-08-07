@@ -36,7 +36,7 @@ class RewriteContentBase(models.Model):
     content         = models.TextField(blank=True, null=True, default=DEFAULT_CONTENT_FILLER)
 
     class Meta:
-        is_abstract = True
+        abstract = True
 
 class RewritePage(RewriteContentBase):
     section         = models.ForeignKey(RewriteSection, blank=True, null=True)
