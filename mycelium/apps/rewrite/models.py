@@ -32,7 +32,6 @@ class RewriteContentBase(models.Model):
     keywords        = models.CharField(max_length=255, verbose_name="Keywords", blank=True, null=True,
                         help_text="Keywords help search engines find results. Enter ones that describe this page. Less than 255 characters.")    
     template        = models.ForeignKey(RewriteTemplate)
-
     content         = models.TextField(blank=True, null=True, default=DEFAULT_CONTENT_FILLER)
 
     class Meta:
