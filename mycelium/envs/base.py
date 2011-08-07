@@ -121,7 +121,7 @@ REMOVE_WWW_FROM_SUBDOMAIN = True
 
 
 INSTALLED_APPS = (
-    'django_monkeypatches',     # 100-char username field.
+    'longerusername',     # 100-char username field.
 
     'django.contrib.contenttypes',
     'django.contrib.auth',
