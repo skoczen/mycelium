@@ -697,7 +697,8 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         sel.click("css=.do_account_delete_btn")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("We're sad to see you go, but we understand.")
-        assert Account.objects.filter(pk=a_pk).count() == 0
+        print Account.objects.all()
+        self.assertEqual(Account.objects.filter(pk=a_pk).count(),0)
 
     def test_that_clicking_get_me_outta_here_does_that(self):
         sel = self.selenium

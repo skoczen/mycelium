@@ -149,7 +149,7 @@ class EmailListTemplate (PersonBasedTemplate):
     fields = OrderedDict([
         ("first_name",          ImportField("First Name",           "people",       "Person",       "first_name",   )),
         ("last_name",           ImportField("Last Name",            "people",       "Person",       "last_name",    )),
-        ("email",               ImportField("Email",                "people",       "Person",       "email",        )),
+        ("email",               ImportField("Email",                "people",       "Person",       "primary_email",)),
     ])
 
 class EmailListTemplateInstance(EmailListTemplate,SpreadsheetRow):
@@ -185,7 +185,7 @@ class DonationListTemplate (DonationBasedTemplate):
         # ("campaign",              ImportField("Campaign",             "donors",    "Donation",     "campaign",     )),
         ("first_name",            ImportField("First Name",           "people",       "Person",       "first_name",   )),
         ("last_name",             ImportField("Last Name",            "people",       "Person",       "last_name",    )),
-        ("email",                 ImportField("Email",                "people",       "Person",       "email",        )),
+        ("email",                 ImportField("Email",                "people",       "Person",       "primary_email",)),
         ("phone_number",          ImportField("Home Phone",           "people",       "Person",       "phone_number", )),
         ("line_1",                ImportField("Home Address 1",       "people",       "Person",       "line_1",       )),
         ("line_2",                ImportField("Home Address 2",       "people",       "Person",       "line_2",       )),
@@ -208,7 +208,7 @@ class DonationSummaryListTemplate (PersonBasedTemplate):
         ("goodcloud_id",        ImportField("GoodCloud ID",         "people",       "Person",       "id",           )),
         ("first_name",          ImportField("First Name",           "people",       "Person",       "first_name",   )),
         ("last_name",           ImportField("Last Name",            "people",       "Person",       "last_name",    )),
-        ("email",               ImportField("Email",                "people",       "Person",       "email",        )),
+        ("email",               ImportField("Email",                "people",       "Person",       "primary_email",)),
         ("phone_number",        ImportField("Home Phone",           "people",       "Person",       "phone_number", )),
         ("line_1",              ImportField("Home Address 1",       "people",       "Person",       "line_1",       )),
         ("line_2",              ImportField("Home Address 2",       "people",       "Person",       "line_2",       )),
@@ -245,7 +245,7 @@ class VolunteerHoursTemplate (CompletedShiftBasedTemplate):
        
         ("first_name",          ImportField("First Name",           "people",       "Person",       "first_name",   )),
         ("last_name",           ImportField("Last Name",            "people",       "Person",       "last_name",    )),
-        ("email",               ImportField("Email",                "people",       "Person",       "email",        )),
+        ("email",               ImportField("Email",                "people",       "Person",       "primary_email",)),
         ("phone_number",        ImportField("Home Phone",           "people",       "Person",       "phone_number", )),
         ("line_1",              ImportField("Home Address 1",       "people",       "Person",       "line_1",       )),
         ("line_2",              ImportField("Home Address 2",       "people",       "Person",       "line_2",       )),
@@ -267,7 +267,7 @@ class VolunteerHoursSummaryTemplate (PersonBasedTemplate):
         
         ("first_name",          ImportField("First Name",           "people",       "Person",       "first_name",   )),
         ("last_name",           ImportField("Last Name",            "people",       "Person",       "last_name",    )),
-        ("email",               ImportField("Email",                "people",       "Person",       "email",        )),
+        ("email",               ImportField("Email",                "people",       "Person",       "primary_email",)),
         ("phone_number",        ImportField("Home Phone",           "people",       "Person",       "phone_number", )),
         ("line_1",              ImportField("Home Address 1",       "people",       "Person",       "line_1",       )),
         ("line_2",              ImportField("Home Address 2",       "people",       "Person",       "line_2",       )),

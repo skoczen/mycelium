@@ -15,7 +15,7 @@ BeautifulSoup==3.2.0
 -e git://github.com/GoodCloud/django-ajax-uploader.git@4d8bb95833e976af126e84c5718c2a64d9700266#egg=ajaxuploader-dev
 
 django-extensions==0.6
--e git://github.com/skoczen/qi-toolkit.git@2008eccd9ba3787f0fa9aa7975ff5e1f2c10ea12#egg=qi_toolkit-dev
+-e git://github.com/skoczen/qi-toolkit.git@f454285e8f0d080263cbac606b0852367ae0c27e#egg=qi_toolkit-dev
 python-crontab==0.9.6
 django-analytical==0.8.1
 

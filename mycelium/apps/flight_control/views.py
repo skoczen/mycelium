@@ -25,7 +25,7 @@ def home(request):
     problem_accounts = Account.objects.billing_problem.filter(is_demo=False).all()
     active_account_count = Account.objects.active.filter(is_demo=False).count() 
     
-    recent_users = User.objects.all().order_by("-last_login")[:5]
+    recent_users = User.objects.all().order_by("-last_login")[:10]
     
     week_1 = Account.objects.week_1.count()
     week_2 = Account.objects.week_2.count()

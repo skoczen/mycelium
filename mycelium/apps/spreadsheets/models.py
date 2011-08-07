@@ -51,7 +51,7 @@ class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin)
 
     @property
     def num_people(self):
-        return self.members.count()
+        return self.group.members.count()
 
     
     @property

@@ -30,6 +30,11 @@ DATABASE_POOL = {
 MASTER_DATABASE = 'default'
 BASE_DOMAIN = "digitalmycelium.com"
 
+CHARGIFY_API = "H4a_DfhPSl6w5h4DqWZg"
+CHARGIFY_SUBDOMAIN = "goodcloud-staging"
+CHARGIFY_HOSTED_SIGNUP_URL = "https://goodcloud-staging.chargify.com/h/47396/subscriptions/new"
+CHARGIFY_SHARED_KEY = "rqaVvEEQWMuuyK0jmPu1"
+
 MEDIA_URL = 'http://media.digitalmycelium.com/'
 MANUAL_MEDIA_URL = 'http://digitalmycelium.com/media/'
 STATIC_URL = MEDIA_URL
