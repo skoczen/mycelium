@@ -46,10 +46,12 @@ class RewriteContentBase(models.Model):
     template        = models.ForeignKey(RewriteTemplate)
     content         = models.TextField(blank=True, null=True, default=DEFAULT_CONTENT_FILLER)
     slug            = models.SlugField(editable=False, blank=True)
+    is_published    = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         # only do this once - cool URL's don't change.
-        if not self.slug:
+        print self.__cls__
+        if not self.slug or not self.is_published:
             self.slug = slugify(self.title)
         super(RewriteContentBase, self).save(*args, **kwargs)
 

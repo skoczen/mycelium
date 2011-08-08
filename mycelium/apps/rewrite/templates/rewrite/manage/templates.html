@@ -1,8 +1,8 @@
 {% extends "rewrite/manage/base.html" %}
 {% block manage_page_content %}
-	Blog Posts
-	{% for b in blog_posts %}
-		{{b}}
+	Templates
+	{% for t in templates %}
+		{{t}}
 	{% endfor %}
-	<a href="#" class="new_page_link">New Blog Post</a>
+	<a href="#" class="new_template_link">New Template</a>
 {% endblock %}

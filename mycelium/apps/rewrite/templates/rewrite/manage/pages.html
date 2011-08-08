@@ -1,17 +1,11 @@
-{% extends "rewrite/base.html" %}
-{% block title %}{{page.title}}{% endblock %}
-{% block description %}{{page.description}}{% endblock %}
-{% block keywords %}{{page.keywords}}{% endblock %}
-{% block extra_head_html %}{{template.extra_head_html}}{% endblock %}
-{% block content %}
-    <header>
-  		{{ template.page_header_html }}
-	  	{# main navigation #}
-	  	{# section navigation #}
-    </header>
-    <div id="main" role="main">
-	  {{ template.pre_content_html }}
-	  {{ page.content }}
-	  {{ template.post_content_html }}
-    </div>
+{% extends "rewrite/manage/base.html" %}
+{% block manage_page_content %}
+	Pages
+	{% for s in sections %}
+	{{s}}
+		{% for p in section.pages %}
+		{{p}}
+		{% endfor %}
+	{% endfor %}
+	<a href="#" class="new_page_link">New Page</a>
 {% endblock %}

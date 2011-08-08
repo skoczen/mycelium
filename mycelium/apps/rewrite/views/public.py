@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from rewrite import ContentNotFound
 from rewrite.models import RewritePage, RewriteSection, RewriteBlogPost
 
-def render_page(request, section=None, page_name=None):
+def page(request, section=None, page_name=None):
     if page_name:
         page = get_object_or_404(RewritePage,slug=page_name)
         template = page.template

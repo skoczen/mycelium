@@ -7,10 +7,9 @@ parser = dselector.Parser()
 url = parser.url
 
 urlpatterns = parser.patterns('',                      
-   # Redirect to dashboard
-    url(r'manage^$',                views.pages              , name="manage"       ),
-    url(r'manage/pages^$',          views.pages              , name="pages"        ),
-    url(r'manage/template^$',       views.template           , name="template"     ),
-    url(r'manage/blog^$',           views.blog               , name="blog"         ),
-    url(r'manage/settings^$',       views.settings           , name="settings"     ),
+    url(r'$',               views.pages,            name="manage_home"         ),
+    url(r'pages$',          views.pages,            name="manage_pages"        ),
+    url(r'templates$',      views.templates,        name="manage_templates"    ),
+    url(r'blog$',           views.blog,             name="manage_blog"         ),
+    url(r'settings$',       views.settings,         name="manage_settings"     ),
 )
