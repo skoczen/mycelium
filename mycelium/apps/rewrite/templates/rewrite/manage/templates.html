@@ -2,7 +2,14 @@
 {% block manage_page_content %}
 	Templates
 	{% for t in templates %}
-		{{t}}
+		{{t}}[ edit ] [ delete ]
 	{% endfor %}
+
+	<form action="{% url rewrite:new_template %}" method="POST">{% csrf_token %}
+		{{new_template_form.as_p}}
+		<input type="submit" />
+	</form>
+
+
 	<a href="#" class="new_template_link">New Template</a>
 {% endblock %}

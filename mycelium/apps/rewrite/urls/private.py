@@ -12,4 +12,8 @@ urlpatterns = parser.patterns('',
     url(r'templates$',      views.templates,        name="manage_templates"    ),
     url(r'blog$',           views.blog,             name="manage_blog"         ),
     url(r'settings$',       views.settings,         name="manage_settings"     ),
+    url(r'new-page$',       views.new_page,         name="new_page"            ),
+    url(r'new-section$',    views.new_section,      name="new_section"         ),
+    url(r'new-template$',   views.new_template,     name="new_template"        ),
+    url(r'new-blog-post$',  views.new_blog_post,    name="new_blog_post"       ),
 )

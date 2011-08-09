@@ -9,7 +9,9 @@ class RewriteWebsite(models.Model):
     @property
     def sections(self):
         return self.rewritesection_set.all()
-    
+
+    def __unicode__(self):
+        return "%s" % self.name
 
 class RewriteSection(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)
@@ -17,6 +19,9 @@ class RewriteSection(models.Model):
     @property
     def pages(self):
         return self.rewritepage_set.all()
+
+    def __unicode__(self):
+        return "%s" % self.name
 
 class RewriteTemplate(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)
@@ -27,6 +32,8 @@ class RewriteTemplate(models.Model):
     show_main_nav       = models.BooleanField(default=True)
     show_section_nav    = models.BooleanField(default=True)
 
+    def __unicode__(self):
+        return "%s" % self.name
 
 class RewriteBlog(models.Model):
     template        = models.ForeignKey(RewriteTemplate)
@@ -43,23 +50,26 @@ class RewriteContentBase(models.Model):
                         help_text="This text is just for search engines. It will be displayed under your title in the results. Less than 156 characters.")
     keywords        = models.CharField(max_length=255, verbose_name="Keywords", blank=True, null=True,
                         help_text="Keywords help search engines find results. Enter ones that describe this page. Less than 255 characters.")    
-    template        = models.ForeignKey(RewriteTemplate)
     content         = models.TextField(blank=True, null=True, default=DEFAULT_CONTENT_FILLER)
     slug            = models.SlugField(editable=False, blank=True)
     is_published    = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         # only do this once - cool URL's don't change.
-        print self.__cls__
+        print self.__class__
         if not self.slug or not self.is_published:
             self.slug = slugify(self.title)
         super(RewriteContentBase, self).save(*args, **kwargs)
 
     class Meta:
         abstract = True
+    
+    def __unicode__(self):
+        return "%s" % self.title
 
 class RewritePage(RewriteContentBase):
     section         = models.ForeignKey(RewriteSection, blank=True, null=True)
+    template        = models.ForeignKey(RewriteTemplate)
     nav_link_name   = models.CharField(max_length=255, verbose_name="Navigation link", blank=True, null=True,
                         help_text="A short name that will be displayed in the section Navigation.")
 

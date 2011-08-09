@@ -1,8 +1,46 @@
 from django import forms
-from email_list.models import EmailSubscription
+from rewrite.models import RewriteWebsite, RewriteTemplate, RewriteSection,  RewriteBlog, RewritePage, RewriteBlogPost
 
-class EmailForm(forms.ModelForm):
+class RewriteWebsiteForm(forms.ModelForm):
     class Meta:
-        model = EmailSubscription
-        fields = ("email",)
+        model = RewriteWebsite
+        fields = ("name", "blog_enabled",)
 
+class RewriteSectionForm(forms.ModelForm):
+    class Meta:
+        model = RewriteSection
+        fields = ("name", )
+
+class RewriteTemplateForm(forms.ModelForm):
+    class Meta:
+        model = RewriteTemplate
+        fields = ("name", "extra_head_html", "page_header_html", 
+                  "pre_content_html", "post_content_html",
+                  "show_main_nav", "show_section_nav",)
+
+class RewriteBlogForm(forms.ModelForm):
+    class Meta:
+        model = RewriteBlog
+        fields = ("template", )
+
+
+class RewritePageForm(forms.ModelForm):
+    class Meta:
+        model = RewritePage
+        fields = ("title", "section", "nav_link_name", "description", "keywords", "template", "content", "is_published")
+
+class RewriteNewPageForm(forms.ModelForm):
+    class Meta:
+        model = RewritePage
+        fields = ("title", "section", "template",)
+
+
+class RewriteBlogPostForm(forms.ModelForm):
+    class Meta:
+        model = RewriteBlogPost
+        fields = ("title", "description", "keywords", "content", "is_published")
+
+class RewriteNewBlogPostForm(forms.ModelForm):
+    class Meta:
+        model = RewriteBlogPost
+        fields = ("title", )

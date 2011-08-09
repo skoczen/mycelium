@@ -2,7 +2,13 @@
 {% block manage_page_content %}
 	Blog Posts
 	{% for b in blog_posts %}
-		{{b}}
+		{{b}}[ view or edit ] [ delete ]
 	{% endfor %}
+	<form action="{% url rewrite:new_blog_post %}" method="POST">{% csrf_token %}
+		{{new_blog_post_form.as_p}}
+		<input type="submit" />
+	</form>
+
+
 	<a href="#" class="new_page_link">New Blog Post</a>
 {% endblock %}

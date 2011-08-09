@@ -2,10 +2,21 @@
 {% block manage_page_content %}
 	Pages
 	{% for s in sections %}
-	{{s}}
-		{% for p in section.pages %}
-		{{p}}
+	{{s}}:
+		{% for p in s.pages %}
+		<br/>{{p}} [ view or edit ] [ delete ]
 		{% endfor %}
 	{% endfor %}
+	<form action="{% url rewrite:new_page %}" method="POST">{% csrf_token %}
+		{{new_page_form.as_p}}
+		<input type="submit" />
+	</form>
+
+	<form action="{% url rewrite:new_section %}" method="POST">{% csrf_token %}
+		{{new_section_form.as_p}}
+		<input type="submit" />
+	</form>
+
 	<a href="#" class="new_page_link">New Page</a>
+	<a href="#" class="new_page_link">New Section</a>
 {% endblock %}
