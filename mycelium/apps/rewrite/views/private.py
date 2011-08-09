@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from rewrite.models import RewriteSection, RewriteBlogPost, RewriteTemplate, RewriteWebsite, RewriteBlog
-from rewrite.forms import RewriteBlogPostForm, RewritePageForm, RewriteSectionForm, RewriteNewPageForm, RewriteTemplateForm, RewriteNewBlogPostForm
+from rewrite.forms import *
 
 @login_required
 def pages(request):
@@ -21,8 +21,6 @@ def blog(request):
     blog_posts = RewriteBlogPost.objects.all()
     blog = RewriteBlog.objects.all()[0]
     new_blog_post_form = RewriteNewBlogPostForm()
-    # Need to get the right instance for this
-    # blog_settings_form = RewriteBlogForm()
     return render_to_response("rewrite/manage/blog.html", locals(), RequestContext(request))
 
 @login_required
@@ -35,6 +33,10 @@ def templates(request):
 @login_required
 def settings(request):
     tab = "settings"
+    website = RewriteWebsite.objects.all()[0]
+    blog = RewriteBlog.objects.all()[0]
+    blog_settings_form = RewriteBlogForm(instance=blog)
+    website_settings_form = RewriteWebsiteForm(instance=website)
     return render_to_response("rewrite/manage/settings.html", locals(), RequestContext(request))
 
 

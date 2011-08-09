@@ -22,7 +22,7 @@ def page(request, section=None, page_name=None):
         else:
             raise ContentNotFound
 
-    return render_to_response("rewrite/base.html", locals(), RequestContext(request))
+    return render_to_response("rewrite/page.html", locals(), RequestContext(request))
 
 def blog_home(request):
     

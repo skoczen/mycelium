@@ -2,16 +2,16 @@
 {% block title %}{{page.title}}{% endblock %}
 {% block description %}{{page.description}}{% endblock %}
 {% block keywords %}{{page.keywords}}{% endblock %}
-{% block extra_head_html %}{{template.extra_head_html}}{% endblock %}
+{% block extra_head_html %}{{template.extra_head_html|safe}}{% endblock %}
 {% block content %}
     <header>
-  		{{ template.page_header_html }}
+  		{{ template.page_header_html|safe }}
 	  	{# main navigation #}
 	  	{# section navigation #}
     </header>
     <div id="main" role="main">
-	  {{ template.pre_content_html }}
-	  {{ page.content }}
-	  {{ template.post_content_html }}
+	  {{ template.pre_content_html|safe }}
+	  {{ page.content|safe }}
+	  {{ template.post_content_html|safe }}
     </div>
 {% endblock %}
