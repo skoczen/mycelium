@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
-from rewrite.models import RewriteSection, RewriteBlogPost, RewriteTemplate
+from rewrite.models import RewriteSection, RewriteBlogPost, RewriteTemplate, RewriteWebsite, RewriteBlog
 from rewrite.forms import RewriteBlogPostForm, RewritePageForm, RewriteSectionForm, RewriteNewPageForm, RewriteTemplateForm, RewriteNewBlogPostForm
 
 @login_required
@@ -12,13 +12,17 @@ def pages(request):
     sections = RewriteSection.objects.all()
     new_page_form = RewriteNewPageForm()
     new_section_form = RewriteSectionForm()
+    website = RewriteWebsite.objects.all()[0]
     return render_to_response("rewrite/manage/pages.html", locals(), RequestContext(request))
 
 @login_required
 def blog(request):
     tab = "blog"
     blog_posts = RewriteBlogPost.objects.all()
+    blog = RewriteBlog.objects.all()[0]
     new_blog_post_form = RewriteNewBlogPostForm()
+    # Need to get the right instance for this
+    # blog_settings_form = RewriteBlogForm()
     return render_to_response("rewrite/manage/blog.html", locals(), RequestContext(request))
 
 @login_required

@@ -74,4 +74,4 @@ class RewritePage(RewriteContentBase):
                         help_text="A short name that will be displayed in the section Navigation.")
 
 class RewriteBlogPost(RewriteContentBase):
-    pass
+    blog            = models.ForeignKey(RewriteBlog)
