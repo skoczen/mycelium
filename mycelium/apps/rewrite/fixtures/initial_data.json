@@ -17,14 +17,16 @@
             "show_main_nav": true, 
             "pre_content_html": null, 
             "page_header_html": null, 
-            "show_section_nav": true
+            "show_section_nav": true,
+            "website": 1
         }
     }, 
     {
         "pk": 1, 
         "model": "rewrite.rewriteblog", 
         "fields": {
-            "template": 1
+            "template": 1,
+            "website": 1
         }
     }
 ]

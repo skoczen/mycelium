@@ -27,6 +27,22 @@ $(function(){
 		editor = null;
 		// var new_html = $("textarea[name=temp_editing]",node).val();
 		node.html(new_html);
+
+		// Save page
+		$.ajax({
+          url: urls.save_rewrite_page,
+          type: "POST",
+          dataType: "json",
+          data: {"content":new_html},
+          mode: 'abort',
+          success: function(json) {
+          	console.log("saved");
+          },
+          error: function() {
+          	alert("error")
+          }
+     	});
+
 		$("#rewrite_admin_bar .edit_link").show();
 		$("#rewrite_admin_bar .save_links").hide();
 		return false;

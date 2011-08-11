@@ -16,6 +16,7 @@ class RewriteWebsite(models.Model):
 class RewriteSection(models.Model):
     name            = models.CharField(max_length=255, blank=True, null=True)
     slug            = models.SlugField(editable=False, blank=True)
+    website         = models.ForeignKey(RewriteWebsite)
     
     @property
     def pages(self):
@@ -36,12 +37,14 @@ class RewriteTemplate(models.Model):
     extra_head_html     = models.TextField(blank=True, null=True)
     show_main_nav       = models.BooleanField(default=True)
     show_section_nav    = models.BooleanField(default=True)
+    website             = models.ForeignKey(RewriteWebsite)
 
     def __unicode__(self):
         return "%s" % self.name
 
 class RewriteBlog(models.Model):
     template        = models.ForeignKey(RewriteTemplate)
+    website         = models.ForeignKey(RewriteWebsite)
 
     @property
     def posts(self):
@@ -58,12 +61,18 @@ class RewriteContentBase(models.Model):
     content         = models.TextField(blank=True, null=True, default=DEFAULT_CONTENT_FILLER)
     slug            = models.SlugField(editable=False, blank=True)
     is_published    = models.BooleanField(default=False)
+    website         = models.ForeignKey(RewriteWebsite)
 
     def save(self, *args, **kwargs):
         # only do this once - cool URL's don't change.
-        print self.__class__
-        if not self.slug or not self.is_published:
+
+        if self.id and self.is_published:
+            old_me = self.__class__.objects.get(pk=self.id)
+            if not old_me.is_published:
+                self.slug = slugify(self.title)
+        elif not self.is_published or not self.id:
             self.slug = slugify(self.title)
+
         super(RewriteContentBase, self).save(*args, **kwargs)
 
     class Meta:

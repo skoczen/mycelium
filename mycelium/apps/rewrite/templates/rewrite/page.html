@@ -5,6 +5,10 @@
 {% block extra_head_html %}
 {% if request.user.is_authenticated %}<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/rewrite/rewrite-public.css">{% endif %}
 {{template.extra_head_html|safe}}
+<script>
+var urls = {};
+urls.save_rewrite_page = "{% url rewrite:save_page page.pk %}"
+</script>
 {% endblock %}
 {% block content %}
 {% if request.user.is_authenticated %}

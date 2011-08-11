@@ -1,8 +1,9 @@
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.utils import simplejson
 from django.core.urlresolvers import reverse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from rewrite.models import RewriteSection, RewriteBlogPost, RewriteTemplate, RewriteWebsite, RewriteBlog
 from rewrite.forms import *
 
@@ -103,3 +104,19 @@ def new_blog_post(request):
         if new_blog_post_form.is_valid():
             new_blog_post_form.save()
         return HttpResponseRedirect(reverse("rewrite:manage_blog"))
+
+@login_required
+def save_page(request, page_id):
+    success = False
+    try:
+        assert request.is_ajax() and request.method == "POST" and "content" in request.POST
+        website = _get_website(request)
+        page = get_object_or_404(RewritePage, pk=page_id, website=website)
+        content = request.POST["content"]
+        page.content = content
+        page.save()
+        success = True
+    except:
+        pass
+        
+    return HttpResponse(simplejson.dumps({"success":success}))
