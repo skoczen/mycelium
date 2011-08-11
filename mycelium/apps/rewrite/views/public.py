@@ -32,4 +32,4 @@ def blog_entry(request, entry_slug):
     page = get_object_or_404(RewriteBlogPost,slug=entry_slug)
     template = page.blog.template
 
-    return render_to_response("rewrite/page.html", locals(), RequestContext(request))
+    return render_to_response("rewrite/blog_post.html", locals(), RequestContext(request))

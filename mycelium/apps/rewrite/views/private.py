@@ -120,3 +120,19 @@ def save_page(request, page_id):
         pass
         
     return HttpResponse(simplejson.dumps({"success":success}))
+
+@login_required
+def save_post(request, post_id):
+    success = False
+    try:
+        assert request.is_ajax() and request.method == "POST" and "content" in request.POST
+        website = _get_website(request)
+        post = get_object_or_404(RewriteBlogPost, pk=post_id, website=website)
+        content = request.POST["content"]
+        post.content = content
+        post.save()
+        success = True
+    except:
+        pass
+        
+    return HttpResponse(simplejson.dumps({"success":success}))

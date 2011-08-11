@@ -1,0 +1,5 @@
+{% extends "rewrite/page.html" %}
+{% block js_urls %}
+var urls = {};
+urls.save_rewrite_page = "{% url rewrite:save_blog_post page.pk %}"
+{% endblock %}
