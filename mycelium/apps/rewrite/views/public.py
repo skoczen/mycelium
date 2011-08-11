@@ -29,6 +29,7 @@ def blog_home(request):
     return render_to_response("rewrite/base.html", locals(), RequestContext(request))
 
 def blog_entry(request, entry_slug):
-    blog_post = get_object_or_404(RewriteBlogPost,slug=entry_slug)
+    page = get_object_or_404(RewriteBlogPost,slug=entry_slug)
+    template = page.blog.template
 
-    return render_to_response("rewrite/base.html", locals(), RequestContext(request))
+    return render_to_response("rewrite/page.html", locals(), RequestContext(request))

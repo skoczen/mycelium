@@ -7,11 +7,11 @@ parser = dselector.Parser()
 url = parser.url
 
 urlpatterns = parser.patterns('',                      
-  url(r'^{section:slug}$',                         views.page,         name="section"),
-  url(r'^{section:slug}/{page_name:slug}$',        views.page,         name="page"),
   url(r'^blog/$',                                  views.blog_home,    name="blog_home"),
   url(r'^blog/{entry_slug:slug}$',                 views.blog_entry,   name="blog_entry"),
-
+  url(r'^{section:slug}$',                         views.page,         name="section"),
+  url(r'^{section:slug}/{page_name:slug}$',        views.page,         name="page"),
+  
   url(r'^tests/test0.html$',             'django.views.generic.simple.direct_to_template', {'template': 'rewrite/demo0.html'}),
   url(r'^tests/test1.html$',             'django.views.generic.simple.direct_to_template', {'template': 'rewrite/demo1.html'}),
   url(r'^tests/test2.html$',             'django.views.generic.simple.direct_to_template', {'template': 'rewrite/demo2.html'}),

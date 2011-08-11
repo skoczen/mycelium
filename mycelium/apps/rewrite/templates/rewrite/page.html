@@ -2,8 +2,24 @@
 {% block title %}{{page.title}}{% endblock %}
 {% block description %}{{page.description}}{% endblock %}
 {% block keywords %}{{page.keywords}}{% endblock %}
-{% block extra_head_html %}{{template.extra_head_html|safe}}{% endblock %}
+{% block extra_head_html %}
+{% if request.user.is_authenticated %}<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/rewrite/rewrite-public.css">{% endif %}
+{{template.extra_head_html|safe}}
+{% endblock %}
 {% block content %}
+{% if request.user.is_authenticated %}
+	<div id="rewrite_admin_bar">
+		Admin Bar:
+		
+		<div class="edit_and_save_links">
+			<a href="#" class="edit_link">edit</a>
+			<a href="#" class="save_link save_links">save</a>
+			<a href="#" class="cancel_link save_links">cancel</a>
+		</div>
+
+		<div id="rewrite_editor"></div>
+	</div>
+{% endif %}
     <header>
   		{{ template.page_header_html|safe }}
 	  	{# main navigation #}
@@ -11,7 +27,8 @@
     </header>
     <div id="main" role="main">
 	  {{ template.pre_content_html|safe }}
-	  {{ page.content|safe }}
+	  {% if request.user.is_authenticated %}<div id="rewrite_editable_body">{% endif %}{{ page.content|safe }}{% if request.user.is_authenticated %}</div>{% endif %}
 	  {{ template.post_content_html|safe }}
+	  
     </div>
 {% endblock %}

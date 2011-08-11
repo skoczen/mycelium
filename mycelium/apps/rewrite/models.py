@@ -14,7 +14,8 @@ class RewriteWebsite(models.Model):
         return "%s" % self.name
 
 class RewriteSection(models.Model):
-    name                = models.CharField(max_length=255, blank=True, null=True)
+    name            = models.CharField(max_length=255, blank=True, null=True)
+    slug            = models.SlugField(editable=False, blank=True)
     
     @property
     def pages(self):
@@ -22,6 +23,10 @@ class RewriteSection(models.Model):
 
     def __unicode__(self):
         return "%s" % self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(RewriteSection, self).save(*args, **kwargs)
 
 class RewriteTemplate(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)

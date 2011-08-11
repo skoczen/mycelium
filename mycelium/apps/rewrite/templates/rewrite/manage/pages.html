@@ -4,7 +4,7 @@
 	{% for s in sections %}
 	{{s}}:
 		{% for p in s.pages %}
-		<br/>{{p}} [ view or edit ] [ delete ]
+		<br/>{{p}} <a href="{% url website:page p.section.slug p.slug %}">[ view or edit ]</a> [ delete ]
 		{% endfor %}
 	{% endfor %}
 	<form action="{% url rewrite:new_page %}" method="POST">{% csrf_token %}

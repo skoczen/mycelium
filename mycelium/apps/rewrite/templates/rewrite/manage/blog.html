@@ -2,7 +2,7 @@
 {% block manage_page_content %}
 	Blog Posts
 	{% for b in blog_posts %}
-		{{b}}[ view or edit ] [ delete ]
+		<br/>{{b}} <a href="{% url website:blog_entry b.slug %}">[ view or edit ]</a> [ delete ]
 	{% endfor %}
 	<form action="{% url rewrite:new_blog_post %}" method="POST">{% csrf_token %}
 		{{new_blog_post_form.as_p}}

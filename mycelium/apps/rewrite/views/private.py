@@ -6,18 +6,25 @@ from django.shortcuts import render_to_response
 from rewrite.models import RewriteSection, RewriteBlogPost, RewriteTemplate, RewriteWebsite, RewriteBlog
 from rewrite.forms import *
 
+def _get_website(request):
+    return RewriteWebsite.objects.all()[0]
+
 @login_required
 def pages(request):
     tab = "pages"
+    website = _get_website(request)
+
     sections = RewriteSection.objects.all()
     new_page_form = RewriteNewPageForm()
     new_section_form = RewriteSectionForm()
-    website = RewriteWebsite.objects.all()[0]
+    
     return render_to_response("rewrite/manage/pages.html", locals(), RequestContext(request))
 
 @login_required
 def blog(request):
     tab = "blog"
+    website = _get_website(request)
+
     blog_posts = RewriteBlogPost.objects.all()
     blog = RewriteBlog.objects.all()[0]
     new_blog_post_form = RewriteNewBlogPostForm()
@@ -26,6 +33,8 @@ def blog(request):
 @login_required
 def templates(request):
     tab = "templates"
+    website = _get_website(request)
+
     templates = RewriteTemplate.objects.all()
     new_template_form = RewriteTemplateForm()
     return render_to_response("rewrite/manage/templates.html", locals(), RequestContext(request))
@@ -33,10 +42,18 @@ def templates(request):
 @login_required
 def settings(request):
     tab = "settings"
-    website = RewriteWebsite.objects.all()[0]
+    website = _get_website(request)
     blog = RewriteBlog.objects.all()[0]
-    blog_settings_form = RewriteBlogForm(instance=blog)
-    website_settings_form = RewriteWebsiteForm(instance=website)
+    if request.method == "POST":
+        blog_settings_form = RewriteBlogForm(request.POST, instance=blog)
+        website_settings_form = RewriteWebsiteForm(request.POST, instance=website)    
+        if blog_settings_form.is_valid() and website_settings_form.is_valid():
+            blog_settings_form.save()
+            website_settings_form.save()
+    else:
+        blog_settings_form = RewriteBlogForm(instance=blog)
+        website_settings_form = RewriteWebsiteForm(instance=website)
+
     return render_to_response("rewrite/manage/settings.html", locals(), RequestContext(request))
 
 
