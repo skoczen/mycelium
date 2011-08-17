@@ -93,8 +93,9 @@ def import_column_headers_js(request):
 
 
 class DataImportAjaxFileUploader(AjaxFileUploader):
+
     def __call__(self,request, import_type):
-        self._backend.import_type = import_type
+        request.import_type = import_type
         return self._ajax_upload(request)
 
 data_import_uploader = DataImportAjaxFileUploader(backend=DataImportUploadBackend)

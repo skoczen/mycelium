@@ -398,7 +398,10 @@ class SpreadsheetAbstraction:
 
     @property
     def num_rows(self):
-        return len(self.parsed_spreadsheet)
+        if self.parsed_spreadsheet:
+            return len(self.parsed_spreadsheet)
+        else:
+            return 0
 
     def get_row(self, row_number=0):
         return self.parsed_spreadsheet[row_number]
