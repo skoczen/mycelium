@@ -1,12 +1,18 @@
 {% extends "rewrite/manage/base.html" %}
 {% block js %}{{block.super}}
 	{% include "rewrite/manage/_code_textareas.html" %}
+	<script>
+		$(function(){
+			$( "section" ).sortable();
+			$( "section" ).disableSelection();
+		});
+	</script>
 {% endblock %}
 {% block manage_page_content %}
 	Templates
 	<templates><section>
 	{% for t in templates %}
-		<template>
+		<template class="list_block">
 			<name><a href="{% url rewrite:edit_template t.id %}">{{t}}</a></name>
 			<delete>{% if t.in_use %}In Use {% else %}<a href="{% url rewrite:delete_template t.id %}">delete</a>{% endif %}</delete>
 		</template>	

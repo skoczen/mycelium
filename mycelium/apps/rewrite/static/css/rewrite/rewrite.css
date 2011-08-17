@@ -73,3 +73,8 @@ template {
 .CodeMirror {
 	border: 1px solid #AAA;
 }
+
+.list_block {
+	border: 1px solid #CCC;
+	padding: 5px;
+}

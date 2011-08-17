@@ -1,16 +1,30 @@
 {% extends "rewrite/manage/base.html" %}
+{% block js %}{{block.super}}
+	<script>
+		$(function(){
+			$( "sections" ).sortable();
+			$( "sections" ).disableSelection();
+			$( "pages" ).sortable();
+			$( "pages" ).disableSelection();
+
+		});
+	</script>
+{% endblock %}
+
 {% block manage_page_content %}
 	Pages
 	<sections>
 	{% for s in sections %}
 	<section>
 		<name>{{s}}</name>
+		<pages>
 		{% for p in s.pages %}
-		<page>
+		<page class="list_block">
 			<name><a href="{% url website:page p.section.slug p.slug %}">{{p}}</a></name>
 			<delete><a href="{% url rewrite:delete_page p.id %}">delete</a></delete>
 		</page>
 		{% endfor %}
+		</pages>
 	</section>
 	{% endfor %}
 	</sections>

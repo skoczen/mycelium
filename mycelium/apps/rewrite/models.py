@@ -17,6 +17,7 @@ class RewriteSection(models.Model):
     name            = models.CharField(max_length=255, blank=True, null=True)
     slug            = models.SlugField(editable=False, blank=True)
     website         = models.ForeignKey(RewriteWebsite)
+    order           = models.IntegerField(default=0)
     
     @property
     def pages(self):
@@ -45,6 +46,9 @@ class RewriteTemplate(models.Model):
 
     def __unicode__(self):
         return "%s" % self.name
+
+    class Meta:
+        ordering = ("name",)
 
 class RewriteBlog(models.Model):
     template        = models.ForeignKey(RewriteTemplate)
@@ -90,6 +94,7 @@ class RewritePage(RewriteContentBase):
     template        = models.ForeignKey(RewriteTemplate)
     nav_link_name   = models.CharField(max_length=255, verbose_name="Navigation link", blank=True, null=True,
                         help_text="A short name that will be displayed in the section Navigation.")
+    order           = models.IntegerField(default=0)
 
 class RewriteBlogPost(RewriteContentBase):
     blog            = models.ForeignKey(RewriteBlog)

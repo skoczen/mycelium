@@ -60,25 +60,31 @@ def settings(request):
 
 @login_required
 def new_page(request):
+    website = _get_website(request)
     if request.is_ajax():
         print "ajax"
     else:
         print "normal"
         new_page_form = RewriteNewPageForm(request.POST)
         if new_page_form.is_valid():
-            new_page_form.save()
+            p = new_page_form.save(commit=False)
+            p.website = website
+            p.save()
         return HttpResponseRedirect(reverse("rewrite:manage_pages"))
     
 
 @login_required
 def new_section(request):
+    website = _get_website(request)
     if request.is_ajax():
         print "ajax"
     else:
         print "normal"
-        new_page_form = RewriteSectionForm(request.POST)
-        if new_page_form.is_valid():
-            new_page_form.save()
+        new_section_form = RewriteSectionForm(request.POST)
+        if new_section_form.is_valid():
+            s = new_section_form.save(commit=False)
+            s.website = website
+            s.save()
         return HttpResponseRedirect(reverse("rewrite:manage_pages"))
 
 
