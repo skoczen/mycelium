@@ -10,6 +10,9 @@ from rewrite.forms import *
 def _get_website(request):
     return RewriteWebsite.objects.all()[0]
 
+def _get_blog(request):
+    return _get_website(request).blog
+
 @login_required
 def pages(request):
     tab = "pages"
@@ -105,13 +108,18 @@ def new_template(request):
 
 @login_required
 def new_blog_post(request):
+    website = _get_website(request)
+    blog = _get_blog(request)
     if request.is_ajax():
         print "ajax"
     else:
         print "normal"
         new_blog_post_form = RewriteNewBlogPostForm(request.POST)
         if new_blog_post_form.is_valid():
-            new_blog_post_form.save()
+            p = new_blog_post_form.save(commit=False)
+            p.website = website
+            p.blog = blog
+            p.save()
         return HttpResponseRedirect(reverse("rewrite:manage_blog"))
 
 @login_required

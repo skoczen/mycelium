@@ -11,6 +11,11 @@ class RewriteWebsite(models.Model):
     def sections(self):
         return self.rewritesection_set.all()
 
+    @property
+    def blog(self):
+        return self.rewriteblog_set.all()[0]
+
+
     def __unicode__(self):
         return "%s" % self.name
 
@@ -61,7 +66,7 @@ class RewriteBlog(models.Model):
 
 
 class RewriteContentBase(models.Model):
-    title           = models.CharField(max_length=69, verbose_name="Page Title", blank=True, null=True,
+    title           = models.CharField(max_length=69, verbose_name="Title", blank=True, null=True,
                         help_text="This will show at the top of the browser window, and in search engine results. Less than 70 characters.")
     description     = models.CharField(max_length=156, verbose_name="Page Description", blank=True, null=True,
                         help_text="This text is just for search engines. It will be displayed under your title in the results. Less than 156 characters.")
@@ -94,7 +99,7 @@ class RewriteContentBase(models.Model):
 
 class RewritePage(RewriteContentBase):
     section         = models.ForeignKey(RewriteSection, blank=True, null=True)
-    template        = models.ForeignKey(RewriteTemplate)
+    template        = models.ForeignKey(RewriteTemplate, blank=False)
     nav_link_name   = models.CharField(max_length=255, verbose_name="Navigation link", blank=True, null=True,
                         help_text="A short name that will be displayed in the section Navigation.")
     order           = models.IntegerField(default=0)

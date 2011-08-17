@@ -57,6 +57,10 @@ $(function(){
 		$("#rewrite_admin_bar .save_links").hide();		
 		return false;
 	});
+	$(".new_page_link").live("click", show_new_page_for_section);
+	$(".cancel_new_page_link").live("click", hide_new_page_for_section);
+	$(".new_section_link").live("click", show_new_section);
+	$(".cancel_section_link").live("click", hide_new_section);
 });
 
 function editableNode(node) {
@@ -72,5 +76,27 @@ function edname(node) {
 	return "editor_for_"+$(node).attr("id")
 };
 
+function show_new_page_for_section() {
+	var section = $(this).parents("section");
+	$(".new_page_form",section).show();
+	$(".new_page_link",section).hide();
+	return false;
+}
+function hide_new_page_for_section() {
+	var section = $(this).parents("section");
+	$(".new_page_form",section).hide();
+	$(".new_page_link",section).show();
+	return false;
+}
 
 
+function show_new_section() {
+	$(".new_section_form").show();
+	$(".new_section_link").hide();
+	return false;
+}
+function hide_new_section() {
+	$(".new_section_form").hide();
+	$(".new_section_link").show();
+	return false;
+}

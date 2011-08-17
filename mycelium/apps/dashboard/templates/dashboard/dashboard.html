@@ -54,7 +54,7 @@
 		<challenge class="volunteer {% if request.account.challenge_has_logged_volunteer_hours %}complete{% endif %}">
 			<title_text>Track volunteer hours.</title_text>
 			<description class="">{# Got a spreadsheet with all your volunteers' hours?  If so, import that baby in.  If not, go ahead and  #}
-			Easy as pie - just log the hours of the last person that volunteered for your organization. Just go to that person, click the volunteer tab, and enter the hours!<a href="{% url data_import:start %}" class="get_started_link">Get Started!</a></description>
+			Easy as pie - just log the hours of the last person that volunteered for your organization. Just go to that person, click the volunteer tab, and enter the hours! <a href="{% url data_import:start %}" class="get_started_link">Get Started!</a></description>
 		</challenge>
 		<challenge class="donation {% if request.account.challenge_has_added_a_donation %}complete{% endif %}">
 			<title_text>Add your donations.</title_text>

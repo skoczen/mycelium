@@ -82,3 +82,7 @@ template {
 	float: right;
 	margin-right: 30%;
 }
+
+.new_page_form, .new_section_form {
+	display: none;
+}

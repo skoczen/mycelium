@@ -40,3 +40,10 @@ BILLING_PROBLEM_STATII = [
     ACCOUNT_STATII[1][0],
     ACCOUNT_STATII[3][0],
 ]
+
+FEATURE_ACCESS_STATII = [
+    (0,  "Standard"),
+    (10, "Beta"),
+    (20, "Alpha"),
+    (30, "Bleeding Edge"),
+]

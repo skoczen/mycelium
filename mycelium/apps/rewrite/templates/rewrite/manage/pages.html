@@ -6,7 +6,6 @@
 			$( "sections" ).disableSelection();
 			$( "pages" ).sortable();
 			$( "pages" ).disableSelection();
-
 		});
 	</script>
 {% endblock %}
@@ -15,7 +14,7 @@
 	Pages
 	<sections>
 	{% for s in sections %}
-	<section>
+	<section section_id="{{s.pk}}">
 		<name>{{s}}</name>
 		<pages>
 		{% for p in s.pages %}
@@ -27,18 +26,23 @@
 		{% endfor %}
 		</pages>
 		<a href="#" class="new_page_link">New Page</a>
+		<form action="{% url rewrite:new_page %}" method="POST" class="new_page_form">{% csrf_token %}
+		{{new_page_form.title}}
+		{{new_page_form.template}}
+		<input type="hidden" name="section" value="{{s.pk}}" />
+		<input type="submit" value="Add Page" />
+		<input type="reset" value="Cancel"  class="cancel_new_page_link" />
+	</form>
 	</section>
 	{% endfor %}
 	</sections>
-	<form action="{% url rewrite:new_page %}" method="POST">{% csrf_token %}
-		{{new_page_form.as_p}}
-		<input type="submit" />
-	</form>
-
-	<form action="{% url rewrite:new_section %}" method="POST">{% csrf_token %}
+	
+	<a href="#" class="new_section_link">New Section</a>
+	<form action="{% url rewrite:new_section %}" method="POST" class="new_section_form">{% csrf_token %}
 		{{new_section_form.as_p}}
-		<input type="submit" />
+		<input type="submit" value="Add Section" />
+		<input type="reset" value="Cancel" class="cancel_section_link" />
 	</form>
 	
-	<a href="#" class="new_page_link">New Section</a>
+	
 {% endblock %}
