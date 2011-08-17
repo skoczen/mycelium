@@ -1,9 +1,16 @@
 body {
 	background: #EEE;
 }
+h1.page_title {
+	color: #999;
+	font-weight: normal;
+	display: block;
+	padding: 20px 0px 10px 20px;
+	font-size: 28px;
+}
 .tabs {
 	width: 98%;
-	margin: 40px auto 0px auto;
+	margin: 20px auto 0px auto;
 	text-align: center;
 	height: 49px;
 	clear: both;

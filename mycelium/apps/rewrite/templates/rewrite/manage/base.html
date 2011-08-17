@@ -3,6 +3,7 @@
 {% block css %}{{block.super}}<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/rewrite/rewrite.css">{% endblock %}
 {% block js %}{{block.super}}<script src="{{STATIC_URL}}js/rewrite/rewrite.js"></script>{% endblock %}
 {% block content %}
+	<h1 class="page_title">Website Manager</h1>
     <header>
     	{% include "rewrite/manage/_tabs.html" %}
     </header>
