@@ -33,6 +33,10 @@ class RewriteNewPageForm(forms.ModelForm):
     class Meta:
         model = RewritePage
         fields = ("title", "section", "template",)
+    
+    def __init__(self, *args, **kwargs):
+        super(RewriteNewPageForm,self).__init__(*args,**kwargs)
+        self.fields["template"].choices = [f for f in self.fields["template"].choices][1:]
 
 
 class RewriteBlogPostForm(forms.ModelForm):

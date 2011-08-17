@@ -129,3 +129,13 @@ fields {
 	display: block;
 	padding: 10px 0px;
 }
+#id_name {
+	font-size: 16px;
+	padding: 2px;
+	width: 40%;
+}
+#id_title {
+	font-size: 16px;
+	padding: 2px;
+	width: 40%;
+}
