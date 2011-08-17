@@ -1,6 +1,7 @@
 from django.db import models
 from rewrite import DEFAULT_CONTENT_FILLER
 from django.template.defaultfilters import slugify
+import datetime
 
 class RewriteWebsite(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)
@@ -68,6 +69,7 @@ class RewriteContentBase(models.Model):
                         help_text="Keywords help search engines find results. Enter ones that describe this page. Less than 255 characters.")    
     content         = models.TextField(blank=True, null=True, default=DEFAULT_CONTENT_FILLER)
     slug            = models.SlugField(editable=False, blank=True)
+    publish_date    = models.DateTimeField(blank=True, null=True)
     is_published    = models.BooleanField(default=False)
     website         = models.ForeignKey(RewriteWebsite)
 
@@ -78,6 +80,7 @@ class RewriteContentBase(models.Model):
             old_me = self.__class__.objects.get(pk=self.id)
             if not old_me.is_published:
                 self.slug = slugify(self.title)
+                self.publish_date = datetime.datetime.now()
         elif not self.is_published or not self.id:
             self.slug = slugify(self.title)
 

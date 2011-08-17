@@ -22,9 +22,11 @@
 		<page class="list_block">
 			<name><a href="{% url website:page p.section.slug p.slug %}">{{p}}</a></name>
 			<delete><a href="{% url rewrite:delete_page p.id %}">delete</a></delete>
+			<div class="uses_template">{{p.template}}</div>
 		</page>
 		{% endfor %}
 		</pages>
+		<a href="#" class="new_page_link">New Page</a>
 	</section>
 	{% endfor %}
 	</sections>
@@ -37,7 +39,6 @@
 		{{new_section_form.as_p}}
 		<input type="submit" />
 	</form>
-
-	<a href="#" class="new_page_link">New Page</a>
+	
 	<a href="#" class="new_page_link">New Section</a>
 {% endblock %}

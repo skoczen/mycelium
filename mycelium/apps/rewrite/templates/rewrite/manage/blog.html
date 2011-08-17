@@ -5,6 +5,7 @@
 	{% for b in blog_posts %}
 		<post>
 			<name><a href="{% url website:blog_entry b.slug %}">{{b}}</a></name>
+			<date>{{b.publish_date|date}}</date>
 			<delete><a href="{% url rewrite:delete_post b.id %}">delete</a></delete>
 		</post>
 	{% endfor %}
