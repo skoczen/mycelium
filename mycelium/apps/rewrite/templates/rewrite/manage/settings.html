@@ -2,8 +2,12 @@
 {% block manage_page_content %}
 	Settings
 	<form action="" method="POST">{% csrf_token %}
-	{{blog_settings_form}}
 	{{website_settings_form}}
+	
+	Blog:
+	{{blog_settings_form}}
+
+	
 		<input type="submit">
 	</form>
 {% endblock %}

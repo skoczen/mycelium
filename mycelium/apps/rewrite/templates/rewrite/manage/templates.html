@@ -1,4 +1,7 @@
 {% extends "rewrite/manage/base.html" %}
+{% block js %}{{block.super}}
+	{% include "rewrite/manage/_code_textareas.html" %}
+{% endblock %}
 {% block manage_page_content %}
 	Templates
 	<templates><section>

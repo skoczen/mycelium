@@ -84,13 +84,16 @@ def new_section(request):
 
 @login_required
 def new_template(request):
+    website = _get_website(request)
     if request.is_ajax():
         print "ajax"
     else:
         print "normal"
         new_template_form = RewriteTemplateForm(request.POST)
         if new_template_form.is_valid():
-            new_template_form.save()
+            t = new_template_form.save(commit=False)
+            t.website = website
+            t.save()
         return HttpResponseRedirect(reverse("rewrite:manage_templates"))
 
 
