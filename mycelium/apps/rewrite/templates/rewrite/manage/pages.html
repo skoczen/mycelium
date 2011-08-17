@@ -1,12 +1,19 @@
 {% extends "rewrite/manage/base.html" %}
 {% block manage_page_content %}
 	Pages
+	<sections>
 	{% for s in sections %}
-	{{s}}:
+	<section>
+		<name>{{s}}</name>
 		{% for p in s.pages %}
-		<br/>{{p}} <a href="{% url website:page p.section.slug p.slug %}">[ view or edit ]</a> [ delete ]
+		<page>
+			<name><a href="{% url website:page p.section.slug p.slug %}">{{p}}</a></name>
+			<delete><a href="{% url rewrite:delete_page p.id %}">delete</a></delete>
+		</page>
 		{% endfor %}
+	</section>
 	{% endfor %}
+	</sections>
 	<form action="{% url rewrite:new_page %}" method="POST">{% csrf_token %}
 		{{new_page_form.as_p}}
 		<input type="submit" />

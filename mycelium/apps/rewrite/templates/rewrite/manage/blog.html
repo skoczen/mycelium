@@ -1,9 +1,14 @@
 {% extends "rewrite/manage/base.html" %}
 {% block manage_page_content %}
 	Blog Posts
+	<posts><section>
 	{% for b in blog_posts %}
-		<br/>{{b}} <a href="{% url website:blog_entry b.slug %}">[ view or edit ]</a> [ delete ]
+		<post>
+			<name><a href="{% url website:blog_entry b.slug %}">{{b}}</a></name>
+			<delete><a href="{% url rewrite:delete_post b.id %}">delete</a></delete>
+		</post>
 	{% endfor %}
+	</section></posts>
 	<form action="{% url rewrite:new_blog_post %}" method="POST">{% csrf_token %}
 		{{new_blog_post_form.as_p}}
 		<input type="submit" />

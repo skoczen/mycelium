@@ -1,9 +1,14 @@
 {% extends "rewrite/manage/base.html" %}
 {% block manage_page_content %}
 	Templates
+	<templates><section>
 	{% for t in templates %}
-		{{t}}[ edit ] [ delete ]
+		<template>
+			<name><a href="{% url rewrite:edit_template t.id %}">{{t}}</a></name>
+			<delete>{% if t.in_use %}In Use {% else %}<a href="{% url rewrite:delete_template t.id %}">delete</a>{% endif %}</delete>
+		</template>	
 	{% endfor %}
+	</section></templates>
 
 	<form action="{% url rewrite:new_template %}" method="POST">{% csrf_token %}
 		{{new_template_form.as_p}}

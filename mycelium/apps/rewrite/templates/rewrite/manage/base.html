@@ -1,7 +1,7 @@
 {% extends "rewrite/base.html" %}
 {% block title %}Website management: {{tab|title}}{% endblock %}
-{% block css %}<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/rewrite.css">{% endblock %}
-{% block js %}<script src="{{STATIC_URL}}js/rewrite.js"></script>{% endblock %}
+{% block css %}{{block.super}}<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/rewrite/rewrite.css">{% endblock %}
+{% block js %}{{block.super}}<script src="{{STATIC_URL}}js/rewrite/rewrite.js"></script>{% endblock %}
 {% block content %}
     <header>
     	{% include "rewrite/manage/_tabs.html" %}

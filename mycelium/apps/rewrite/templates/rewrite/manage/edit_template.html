@@ -1,0 +1,23 @@
+{% extends "rewrite/manage/base.html" %}
+{% block js %}{{block.super}}
+	<script src="{{STATIC_URL}}js/rewrite/libs/codemirror.js"></script>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/rewrite/codemirror/codemirror.css">
+	<script src="{{STATIC_URL}}js/rewrite/libs/mode/javascript/javascript.js"></script>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/rewrite/codemirror/theme/default.css">
+	<script>
+		$(function(){
+			$("textarea").each(function(){
+				CodeMirror.fromTextArea($(this)[0], {
+  				// your settings here
+				});	
+			});
+		});
+	</script>
+{% endblock %}
+{% block manage_page_content %}
+	<a href="{% url rewrite:manage_templates %}">All Templates</a>
+	<form action="{% url rewrite:edit_template template.pk %}" method="POST">{% csrf_token %}
+		{{template_form.as_p}}
+		<input type="submit" />
+	</form>
+{% endblock %}

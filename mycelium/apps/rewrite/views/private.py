@@ -136,3 +136,42 @@ def save_post(request, post_id):
         pass
         
     return HttpResponse(simplejson.dumps({"success":success}))
+
+
+@login_required
+def edit_template(request, template_id):
+    tab = "templates"
+    website = _get_website(request)
+    template = get_object_or_404(RewriteTemplate, pk=template_id, website=website)
+    if request.method == "POST":
+        template_form = RewriteTemplateForm(request.POST, instance=template)
+        if template_form.is_valid():
+            template = template_form.save()
+    else:
+        template_form = RewriteTemplateForm(instance=template)
+    
+    return render_to_response("rewrite/manage/edit_template.html", locals(), RequestContext(request))
+    
+
+
+
+@login_required
+def delete_page(request, page_id):
+    website = _get_website(request)
+    page = get_object_or_404(RewritePage, pk=page_id, website=website)
+    page.delete()
+    return HttpResponseRedirect(reverse("rewrite:manage_pages"))
+    
+@login_required
+def delete_post(request, post_id):
+    website = _get_website(request)
+    post = get_object_or_404(RewriteBlogPost, pk=post_id, website=website)
+    post.delete()
+    return HttpResponseRedirect(reverse("rewrite:manage_blog"))
+
+@login_required
+def delete_template(request, template_id):
+    website = _get_website(request)
+    template = get_object_or_404(RewriteTemplate, pk=template_id, website=website)
+    template.delete()
+    return HttpResponseRedirect(reverse("rewrite:manage_templates"))

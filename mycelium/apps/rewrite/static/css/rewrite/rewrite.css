@@ -47,4 +47,29 @@ body {
 	padding: 15px 2%;
 	background-color: #FFF;
 }
+sections {
+	display: block;
+}
+section {
+	display: block;
+}
+section page {
+	display: block;
+	margin-left: 10px;
+}
+section name {
 
+}
+section view {
+	float: right;
+	margin-right: 10px;
+}
+section delete {
+	float: right;
+}
+template {
+	display: block;
+}
+.CodeMirror {
+	border: 1px solid #AAA;
+}

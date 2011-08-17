@@ -11,7 +11,7 @@ $(function(){
 		html = node.html();
 		// node.html("<textarea name='temp_editing' id='panel1'>"+html+"</textarea>");
 		// editor = new nicEditor({fullPanel : true}).panelInstance('panel1',{hasPanel : true});
-		editor = new nicEditor({fullPanel : true, iconsPath : STATIC_URL + 'images/nicEditorIcons.gif'});
+		editor = new nicEditor({fullPanel : true, iconsPath : STATIC_URL + 'images/rewrite/nicEditorIcons.gif'});
 		editor.setPanel('rewrite_editor');
         editor.addInstance('rewrite_editable_body');
 		

@@ -39,6 +39,10 @@ class RewriteTemplate(models.Model):
     show_section_nav    = models.BooleanField(default=True)
     website             = models.ForeignKey(RewriteWebsite)
 
+    @property
+    def in_use(self):
+        return self.rewritepage_set.count() > 0 or self.rewriteblog_set.count() > 0
+
     def __unicode__(self):
         return "%s" % self.name
 
