@@ -11,37 +11,42 @@
 {% endblock %}
 
 {% block manage_page_content %}
-	Pages
+	<instructions>Drag sections and pages to rearrange, or click on a page title to edit.</instructions>
 	<sections>
 	{% for s in sections %}
-	<section section_id="{{s.pk}}">
+	<section section_id="{{s.pk}}" class="">
 		<name>{{s}}</name>
 		<pages>
 		{% for p in s.pages %}
-		<page class="list_block">
+		<page class="list_block ui-state-default ui-corner-all">
+			<icon class="ui-icon ui-icon-arrow-4"></icon>
 			<name><a href="{% url website:page p.section.slug p.slug %}">{{p}}</a></name>
-			<delete><a href="{% url rewrite:delete_page p.id %}">delete</a></delete>
+			<delete><a href="{% url rewrite:delete_page p.id %}" class="ui-icon-closethick ui-icon">Delete</a></delete>
 			<div class="uses_template">{{p.template}}</div>
 		</page>
 		{% endfor %}
 		</pages>
-		<a href="#" class="new_page_link">New Page</a>
-		<form action="{% url rewrite:new_page %}" method="POST" class="new_page_form">{% csrf_token %}
-		{{new_page_form.title}}
-		{{new_page_form.template}}
+		<a href="#" class="new_page_link ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">New Page</span></a>
+		<form action="{% url rewrite:new_page %}" method="POST" class="new_page_form ui-corner-all">{% csrf_token %}
+		<fields>
+			<label>Title:</label> {{new_page_form.title}}
+			<label>Template:</label> {{new_page_form.template}}
+		</fields>
 		<input type="hidden" name="section" value="{{s.pk}}" />
-		<input type="submit" value="Add Page" />
-		<input type="reset" value="Cancel"  class="cancel_new_page_link" />
+		<input class="ui-button ui-widget ui-state-default ui-corner-all" 						type="submit" value="Add Page" />
+		<input class="cancel_new_page_link ui-button ui-widget ui-state-default ui-corner-all" type="reset" value="Cancel"/>
 	</form>
 	</section>
 	{% endfor %}
 	</sections>
 	
-	<a href="#" class="new_section_link">New Section</a>
-	<form action="{% url rewrite:new_section %}" method="POST" class="new_section_form">{% csrf_token %}
+	<a href="#" class="new_section_link ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">New Section</span></a>
+	<form action="{% url rewrite:new_section %}" method="POST" class="new_section_form ui-corner-all">{% csrf_token %}
+		<fields>
 		{{new_section_form.as_p}}
-		<input type="submit" value="Add Section" />
-		<input type="reset" value="Cancel" class="cancel_section_link" />
+		</fields>
+		<input class="ui-button ui-widget ui-state-default ui-corner-all" 						type="submit" value="Add Section" />
+		<input class="cancel_section_link ui-button ui-widget ui-state-default ui-corner-all"  type="reset" value="Cancel" />
 	</form>
 	
 	

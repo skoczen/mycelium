@@ -52,13 +52,18 @@ sections {
 }
 section {
 	display: block;
+	position: relative;
+	margin: 4px 0px;
+	border: 1px solid #EEE;
+	background-color: #FDFDFD;
+	padding: 10px;
 }
 section page {
 	display: block;
-	margin-left: 10px;
+	margin: 1px 0px 1px 10px;
 }
 section name {
-
+	font-size: 18px;
 }
 section view {
 	float: right;
@@ -66,6 +71,9 @@ section view {
 }
 section delete {
 	float: right;
+}
+page name {
+	font-size: 14px;
 }
 template {
 	display: block;
@@ -85,4 +93,39 @@ template {
 
 .new_page_form, .new_section_form {
 	display: none;
+	padding: 10px;
+	background-color: #F5F5F5;
+}
+icon {
+	float: left;
+	display: block;
+	margin-right: 4px;
+}
+.new_page_link {
+	margin: 5px 0px 0px 10px;
+}
+.new_section_link {
+	margin: 10px 0px 0px 0px;
+}
+icon.drag_icon {
+	position: absolute;
+	left: -17px;
+	
+	border: 1px solid #EEE;
+	background-color: #FDFDFD;
+	border-right-color: transparent;
+
+}
+instructions {
+	display: block;
+	color: #AAA;
+	padding: 5px 0px;
+}
+.new_page_form {
+	margin: 10px;
+	
+}
+fields {
+	display: block;
+	padding: 10px 0px;
 }
