@@ -1,0 +1,5 @@
+{% if template.show_section_nav %}<section_nav>
+{% for p in section.pages %}
+<a href="{% url website:page section.slug p.slug %}">{{p.title}}</a>
+{% endfor %}
+</section_nav>{% endif %}

@@ -41,6 +41,13 @@ class RewriteSection(models.Model):
     
     class Meta:
         ordering = ("order", "name")
+    
+    @property
+    def first_page(self):
+        try:
+            return self.pages[0]
+        except:
+            return None
 
 class RewriteTemplate(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)

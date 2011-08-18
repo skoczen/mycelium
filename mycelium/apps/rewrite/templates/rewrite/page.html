@@ -6,9 +6,17 @@
 {% if request.user.is_authenticated %}<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/rewrite/rewrite-public.css">{% endif %}
 {{template.extra_head_html|default_if_none:""|safe}}
 {% endblock %}
-{% block js_urls %}
-var urls = {};
-urls.save_rewrite_page = "{% url rewrite:save_page page.pk %}"
+{% block js %}{{block.super}}
+<script>
+	var urls = {};
+	urls.save_rewrite_page = "{% url rewrite:save_page page.pk %}"
+	rewrite.editor.urls.init = function() {
+		rewrite.editor.urls.save_page = "{% url rewrite:save_page page.pk %}"
+	}		
+	$(function(){
+		rewrite.editor.init();
+	});
+</script>
 {% endblock %}
 {% block content %}
 {% if request.user.is_authenticated %}
@@ -26,8 +34,8 @@ urls.save_rewrite_page = "{% url rewrite:save_page page.pk %}"
 {% endif %}
     <header>
   		{{ template.page_header_html|default_if_none:""|safe }}
-	  	{# main navigation #}
-	  	{# section navigation #}
+  		{% include "rewrite/_main_nav.html" %}
+  		{% include "rewrite/_section_nav.html" %}
     </header>
     <div id="main" role="main">
 	  {{ template.pre_content_html|default_if_none:""|safe }}

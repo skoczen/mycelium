@@ -8,9 +8,14 @@ from django.shortcuts import get_object_or_404
 # from django.conf import settings
 
 from rewrite import ContentNotFound
-from rewrite.models import RewritePage, RewriteSection, RewriteBlogPost
+from rewrite.models import RewritePage, RewriteSection, RewriteBlogPost, RewriteWebsite
+
+def _get_website(request):
+    return RewriteWebsite.objects.all()[0]
+
 
 def page(request, section=None, page_name=None):
+    website = _get_website(request)
     if page_name:
         page = get_object_or_404(RewritePage,slug=page_name)
         template = page.template
@@ -21,7 +26,7 @@ def page(request, section=None, page_name=None):
             section = get_object_or_404(RewriteSection,slug=section)
         else:
             raise ContentNotFound
-
+            
     return render_to_response("rewrite/page.html", locals(), RequestContext(request))
 
 def blog_home(request):
