@@ -2,23 +2,32 @@
 {% block js %}{{block.super}}
 	<script>
 		$(function(){
-			$( "sections" ).sortable().disableSelection();
+			$( "sections" ).sortable({
+				update: rewrite.manage.handlers.pages_sorted,
+			}).disableSelection();
 			$( ".pages" ).sortable({
 				connectWith: ".pages",
+				update: rewrite.manage.handlers.pages_sorted,
 			}).disableSelection();
+			
+			rewrite.manage.init();
 		});
+		rewrite.manage.urls.init = function() {
+			rewrite.manage.urls.save_page_and_section_order = "{% url rewrite:save_page_and_section_order %}";
+		}
 	</script>
 {% endblock %}
 
 {% block manage_page_content %}
 	<instructions>Drag sections and pages to rearrange, or click on a page title to edit.</instructions>
+	<status></status>
 	<sections>
 	{% for s in sections %}
 	<section section_id="{{s.pk}}" class="">
 		<name>{{s}}</name>
 		<ul id="pages_{{s.pk}}" class="pages connectedPages">
 		{% for p in s.pages %}
-		<li class="page list_block ui-state-default ui-corner-all">
+		<li class="page list_block ui-state-default ui-corner-all" page_id="{{p.pk}}">
 			<icon class="ui-icon ui-icon-arrow-4"></icon>
 			<name><a href="{% url website:page p.section.slug p.slug %}">{{p}}</a></name>
 			<delete><a href="{% url rewrite:delete_page p.id %}" class="ui-icon-closethick ui-icon">Delete</a></delete>

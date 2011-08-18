@@ -1,3 +1,72 @@
+var rewrite = {};
+
+rewrite.manage = {};
+rewrite.manage.state = {};
+rewrite.manage.urls = {};
+rewrite.manage.handlers = {};
+rewrite.manage.actions = {};
+rewrite.manage.ui = {};
+
+rewrite.manage.init = function() {
+	rewrite.manage.state.init();
+	rewrite.manage.urls.init();
+	rewrite.manage.handlers.init();
+	rewrite.manage.actions.init();
+	rewrite.manage.ui.init();
+}
+rewrite.manage.state.init = function(){};
+rewrite.manage.urls.init = function(){};
+rewrite.manage.handlers.init = function(){};
+rewrite.manage.actions.init = function(){};
+rewrite.manage.ui.init = function(){};
+
+rewrite.manage.state.pages_and_sections_order_manifest = function() {
+	var manifest = {}
+	var order = 0;
+	$("section").each(function(){
+		manifest["section_" + $(this).attr("section_id") + "_order"] = order;
+		order++;
+	});
+	$(".page").each(function(){
+		var page_id = $(this).attr("page_id");
+		manifest["page_" + page_id + "_order"] = order;
+		manifest["page_" + page_id + "_section"] = $(this).parents("section").attr("section_id");
+		order++;
+	});
+	return manifest;
+}
+
+rewrite.manage.handlers.pages_sorted = function(e, ui) {
+	rewrite.manage.actions.save_section_and_page_sort_order()
+}
+rewrite.manage.handlers.save_section_and_page_response = function(json) {
+	rewrite.manage.ui.show_saved_pages_message();
+}
+rewrite.manage.handlers.response_error = function() {
+	alert("Error Saving.")
+}
+
+rewrite.manage.actions.save_section_and_page_sort_order = function() {
+	$.ajax({
+		url: rewrite.manage.urls.save_page_and_section_order,
+		type: "POST",
+		dataType: "json",
+		data: rewrite.manage.state.pages_and_sections_order_manifest(),
+		mode: 'abort',
+		success: rewrite.manage.handlers.save_section_and_page_response,
+		error: rewrite.manage.handlers.response_error
+     });
+	rewrite.manage.ui.show_saving_pages_message();
+}
+
+rewrite.manage.ui.show_saving_pages_message = function() {
+	$("status").html("Saving...");
+}
+
+rewrite.manage.ui.show_saved_pages_message = function() {
+	$("status").html("Saved.");
+}
+
 var editor;
 $(function(){
 	var editing_nodes = [];

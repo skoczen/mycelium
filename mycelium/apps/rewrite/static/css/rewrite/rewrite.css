@@ -153,3 +153,6 @@ fields {
 	padding: 2px;
 	width: 40%;
 }
+status {
+	float: right;
+}

@@ -192,3 +192,25 @@ def delete_template(request, template_id):
     template = get_object_or_404(RewriteTemplate, pk=template_id, website=website)
     template.delete()
     return HttpResponseRedirect(reverse("rewrite:manage_templates"))
+
+@login_required
+def save_page_and_section_order(request):
+    success = False
+    try:
+        assert request.method == "POST"
+        website = _get_website(request)
+        for s in website.sections:
+            s.order = request.POST.get("section_%s_order" % s.pk)
+            s.save()
+        
+        for p in website.pages:
+            p.order = request.POST.get("page_%s_order" % p.pk)
+            section_pk = request.POST.get("page_%s_section" % p.pk)
+            if not section_pk == p.section.pk:
+                p.section = get_object_or_404(RewriteSection,pk=section_pk, website=website)
+            p.save()
+
+    except:
+        pass
+    
+    return HttpResponse(simplejson.dumps({"success":success}))
