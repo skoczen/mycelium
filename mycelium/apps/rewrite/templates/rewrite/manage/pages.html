@@ -2,10 +2,10 @@
 {% block js %}{{block.super}}
 	<script>
 		$(function(){
-			$( "sections" ).sortable();
-			$( "sections" ).disableSelection();
-			$( "pages" ).sortable();
-			$( "pages" ).disableSelection();
+			$( "sections" ).sortable().disableSelection();
+			$( ".pages" ).sortable({
+				connectWith: ".pages",
+			}).disableSelection();
 		});
 	</script>
 {% endblock %}
@@ -16,20 +16,20 @@
 	{% for s in sections %}
 	<section section_id="{{s.pk}}" class="">
 		<name>{{s}}</name>
-		<pages>
+		<ul id="pages_{{s.pk}}" class="pages connectedPages">
 		{% for p in s.pages %}
-		<page class="list_block ui-state-default ui-corner-all">
+		<li class="page list_block ui-state-default ui-corner-all">
 			<icon class="ui-icon ui-icon-arrow-4"></icon>
 			<name><a href="{% url website:page p.section.slug p.slug %}">{{p}}</a></name>
 			<delete><a href="{% url rewrite:delete_page p.id %}" class="ui-icon-closethick ui-icon">Delete</a></delete>
 			<div class="uses_template">{{p.template}}</div>
-		</page>
+		</li>
 		{% endfor %}
-		</pages>
+		</ul>
 		<a href="#" class="new_page_link ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">New Page</span></a>
 		<form action="{% url rewrite:new_page %}" method="POST" class="new_page_form ui-corner-all">{% csrf_token %}
 		<fields>
-			<label>Title:</label> {{new_page_form.title}}
+			<label>Page title:</label> {{new_page_form.title}}
 			<label>Template:</label> {{new_page_form.template}}
 		</fields>
 		<input type="hidden" name="section" value="{{s.pk}}" />

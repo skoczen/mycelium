@@ -65,9 +65,13 @@ section {
 	background-color: #FDFDFD;
 	padding: 10px;
 }
-section page {
+section .pages {
+	padding: 10px;
+}
+section .page {
 	display: block;
-	margin: 1px 0px 1px 10px;
+	margin: 1px 0px 1px 0px;
+	list-style: none;
 }
 section name {
 	font-size: 18px;
@@ -79,8 +83,11 @@ section view {
 section delete {
 	float: right;
 }
-page name {
+.page name {
 	font-size: 14px;
+}
+.page name:hover {
+	text-decoration: underline;
 }
 template {
 	display: block;
