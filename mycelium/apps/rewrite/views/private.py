@@ -146,8 +146,12 @@ def save_post(request, post_id):
         website = _get_website(request)
         post = get_object_or_404(RewriteBlogPost, pk=post_id, website=website)
         content = request.POST["content"]
-        post.content = content
-        post.save()
+
+        blog_post_form = RewriteBlogPostForm(request.POST, instance=post)
+        post_to_save = blog_post_form.save(commit=False)
+        post_to_save.content = content
+        post_to_save.save()
+
         success = True
     except:
         pass

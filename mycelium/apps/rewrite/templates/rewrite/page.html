@@ -19,19 +19,17 @@
 </script>
 {% endblock %}
 {% block content %}
+
 {% if request.user.is_authenticated %}
 	<div id="rewrite_admin_bar">
+	{% block admin_bar %}
 		Admin Bar:
-		
-		<div class="edit_and_save_links">
-			<a href="#" class="edit_link">edit</a>
-			<a href="#" class="save_link save_links">save</a>
-			<a href="#" class="cancel_link save_links">cancel</a>
-		</div>
+		{% include "rewrite/_admin_bar_save_and_editor.html" %}		
 
-		<div id="rewrite_editor"></div>
 	</div>
+	{% endblock %}
 {% endif %}
+
     <header>
   		{{ template.page_header_html|default_if_none:""|safe }}
   		{% include "rewrite/_main_nav.html" %}

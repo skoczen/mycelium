@@ -1,6 +1,25 @@
 var rewrite = {};
 
 
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+
+
 ////////////////////////////////////////////////////////////////////////////
 //////////////////////////// MANAGEMENT ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -158,7 +177,7 @@ rewrite.editor.handlers.init = function(){
 };
 rewrite.editor.actions.init = function(){};
 rewrite.editor.ui.init = function(){
-	rewrite.editor.ui.update_mode_links();
+	rewrite.editor.ui.update_admin_bar();
 };
 
 
@@ -199,11 +218,15 @@ rewrite.editor.actions.cancel_edit = function() {
 	rewrite.editor.actions.turn_edit_mode_off();
 }
 rewrite.editor.actions.save_page = function() {
+	var data = {"content": rewrite.editor.state.get_page_html()}
+	if ($(".rewrite_associated_form").length > 0) {
+		$.extend(data, $(".rewrite_associated_form").serializeObject());
+	}
 	$.ajax({
       url: rewrite.editor.urls.save_page,
       type: "POST",
       dataType: "json",
-      data: {"content": rewrite.editor.state.get_page_html()},
+      data: data,
       mode: 'abort',
       success: function(json) {
       	rewrite.editor.state.current_html = rewrite.editor.state.get_page_html();
@@ -222,8 +245,9 @@ rewrite.editor.actions.turn_edit_mode_on = function() {
 		rewrite.editor.state.editor.setPanel('rewrite_editor');
 		rewrite.editor.state.editor.addInstance('rewrite_editable_body');
 	}
+	
 	rewrite.editor.state.is_editing = true;
-	rewrite.editor.ui.update_mode_links();
+	rewrite.editor.ui.update_admin_bar();
 }
 rewrite.editor.actions.turn_edit_mode_off = function() {
 	if (rewrite.editor.state.is_editing) {
@@ -234,17 +258,20 @@ rewrite.editor.actions.turn_edit_mode_off = function() {
 		$("#rewrite_admin_bar").append("<div id='rewrite_editor'></div>");
 		rewrite.editor.state.node.html(rewrite.editor.state.current_html);
 	}
+	
 	rewrite.editor.state.is_editing = false;
-	rewrite.editor.ui.update_mode_links();
+	rewrite.editor.ui.update_admin_bar();
 
 }
 
-rewrite.editor.ui.update_mode_links = function() {
+rewrite.editor.ui.update_admin_bar = function() {
 	if (rewrite.editor.state.is_editing) {
 		$("#rewrite_admin_bar .edit_link").hide();
 		$("#rewrite_admin_bar .save_links").show();
+		$(".rewrite_associated_form").show();
 	} else {
 		$("#rewrite_admin_bar .edit_link").show();
 		$("#rewrite_admin_bar .save_links").hide();
+		$(".rewrite_associated_form").hide();
 	}
 }

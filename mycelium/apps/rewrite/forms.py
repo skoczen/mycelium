@@ -42,7 +42,7 @@ class RewriteNewPageForm(forms.ModelForm):
 class RewriteBlogPostForm(forms.ModelForm):
     class Meta:
         model = RewriteBlogPost
-        fields = ("title", "description", "keywords", "content", "is_published")
+        fields = ("title", "description", "keywords", "is_published")
 
 class RewriteNewBlogPostForm(forms.ModelForm):
     class Meta:

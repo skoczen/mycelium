@@ -1,0 +1,14 @@
+{% extends "rewrite/base.html" %}
+
+{% block content %}
+	All Posts:
+	<posts>
+	{% for b in blog_posts %}
+		<post class="list_block ui-state-default ui-corner-all" >
+			<name><a href="{% url website:blog_entry b.slug %}">{{b}}</a></name>
+			<date>{% if b.is_published %}{{b.publish_date|date}}{% else %}Draft{% endif %}</date>
+		</post>
+	{% endfor %}
+	</posts>
+
+{% endblock %}

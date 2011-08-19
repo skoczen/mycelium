@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 
 from rewrite import ContentNotFound
 from rewrite.models import RewritePage, RewriteSection, RewriteBlogPost, RewriteWebsite
+from rewrite.forms import *
 
 def _get_website(request):
     return RewriteWebsite.objects.all()[0]
@@ -30,8 +31,9 @@ def page(request, section=None, page_name=None):
     return render_to_response("rewrite/page.html", locals(), RequestContext(request))
 
 def blog_home(request):
-    
-    return render_to_response("rewrite/base.html", locals(), RequestContext(request))
+    website = _get_website(request)
+    blog_posts = RewriteBlogPost.objects.filter(website=website, is_published=True).all()
+    return render_to_response("rewrite/blog_home.html", locals(), RequestContext(request))
 
 def blog_entry(request, entry_slug):
     website = _get_website(request)
@@ -39,4 +41,5 @@ def blog_entry(request, entry_slug):
     template = post.blog.template
     page = post
 
+    blog_post_form = RewriteBlogPostForm(instance=post)
     return render_to_response("rewrite/blog_post.html", locals(), RequestContext(request))

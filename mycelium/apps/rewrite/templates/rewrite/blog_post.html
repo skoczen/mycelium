@@ -7,3 +7,12 @@
 		rewrite.editor.init();
 	});
 {% endblock %}
+
+{% block admin_bar %}
+	Admin Bar:
+	<form action="" method="POST" class="blog_post_form rewrite_associated_form">
+	{{blog_post_form}}
+	</form>
+	{% include "rewrite/_admin_bar_save_and_editor.html" %}		
+	
+{% endblock %}
