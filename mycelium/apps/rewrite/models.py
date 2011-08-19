@@ -114,7 +114,7 @@ class RewritePage(RewriteContentBase):
     section         = models.ForeignKey(RewriteSection, blank=True, null=True)
     template        = models.ForeignKey(RewriteTemplate, blank=False)
     nav_link_name   = models.CharField(max_length=255, verbose_name="Navigation link", blank=True, null=True,
-                        help_text="A short name that will be displayed in the section Navigation.")
+                        help_text="A short name that will be displayed in the section navigation.")
     order           = models.IntegerField(default=0)
     
 
