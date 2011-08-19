@@ -44,3 +44,10 @@
 	display: block;
 	float: left;
 }
+
+#rewrite_admin_bar .rewrite_form_toggle_link {
+	display: none;
+}
+#rewrite_admin_bar .rewrite_associated_form {
+	display: none;
+}
