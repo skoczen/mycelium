@@ -157,6 +157,7 @@ rewrite.editor.state.init = function(){
 	rewrite.editor.state.is_editing = false;
 	rewrite.editor.state.node = $("#rewrite_editable_body");
 	rewrite.editor.state.current_html = rewrite.editor.state.node.html();
+	rewrite.editor.state.details_visible = false;
 };
 rewrite.editor.urls.init = function(){};
 rewrite.editor.handlers.init = function(){
@@ -174,10 +175,12 @@ rewrite.editor.handlers.init = function(){
 	$(".edit_link").live('click', rewrite.editor.handlers.edit_link_clicked);
 	$(".save_link").live('click', rewrite.editor.handlers.save_link_clicked);
 	$(".cancel_link").live('click', rewrite.editor.handlers.cancel_link_clicked);
+	$(".rewrite_form_toggle_link").live('click', rewrite.editor.handlers.toggle_details_clicked);
 };
 rewrite.editor.actions.init = function(){};
 rewrite.editor.ui.init = function(){
 	rewrite.editor.ui.update_admin_bar();
+	$("#rewrite_admin_bar .edit_and_save_links").show();
 };
 
 
@@ -211,6 +214,10 @@ rewrite.editor.handlers.save_link_clicked = function(){
 	rewrite.editor.actions.save_page();	
 	return false;
 }
+rewrite.editor.handlers.toggle_details_clicked = function(){
+	rewrite.editor.actions.toggle_details();
+	return false;
+}
 
 rewrite.editor.actions.cancel_edit = function() {
 	// Discard changes
@@ -236,6 +243,10 @@ rewrite.editor.actions.save_page = function() {
       	alert("error")
       }
  	});
+}
+rewrite.editor.actions.toggle_details = function() {
+	rewrite.editor.state.details_visible = !rewrite.editor.state.details_visible;
+	rewrite.editor.ui.update_admin_bar();
 }
 
 rewrite.editor.actions.turn_edit_mode_on = function() {
@@ -268,10 +279,20 @@ rewrite.editor.ui.update_admin_bar = function() {
 	if (rewrite.editor.state.is_editing) {
 		$("#rewrite_admin_bar .edit_link").hide();
 		$("#rewrite_admin_bar .save_links").show();
-		$(".rewrite_associated_form").show();
+		$(".rewrite_form_toggle_link").show();	
+		if (rewrite.editor.state.details_visible) {
+			$(".rewrite_form_toggle_link icon").addClass("ui-icon-triangle-1-s").removeClass("ui-icon-triangle-1-e");
+			$(".rewrite_associated_form").show();
+		} else {
+			$(".rewrite_form_toggle_link icon").removeClass("ui-icon-triangle-1-s").addClass("ui-icon-triangle-1-e");	
+			$(".rewrite_associated_form").hide();
+		}
+		
 	} else {
 		$("#rewrite_admin_bar .edit_link").show();
 		$("#rewrite_admin_bar .save_links").hide();
+		$(".rewrite_form_toggle_link").hide();
 		$(".rewrite_associated_form").hide();
 	}
+
 }

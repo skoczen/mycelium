@@ -1,8 +1,9 @@
 #rewrite_admin_bar {
 	display: block;
 	width: 100%;	
-	min-height: 50px;
+	min-height: 60px;
 	background-color: #FAFAFA;
+	position: relative;
 }
 #rewrite_editor {
 	/*display: none;*/
@@ -22,7 +23,10 @@
 	width: 100%;
 }
 #rewrite_admin_bar .edit_and_save_links {
-	float: right;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	display: none;
 }
 .rewrite_associated_form {
 	display: none;
@@ -35,4 +39,8 @@
 #rewrite_admin_bar .rewrite_associated_form p {
 	display: block;
 	padding: 10px;
+}
+#rewrite_admin_bar .rewrite_form_toggle_link icon {
+	display: block;
+	float: left;
 }
