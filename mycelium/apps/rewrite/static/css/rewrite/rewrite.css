@@ -68,7 +68,7 @@ section {
 section .pages {
 	padding: 10px;
 }
-section .page {
+section .page, post {
 	display: block;
 	margin: 1px 0px 1px 0px;
 	list-style: none;
@@ -80,13 +80,13 @@ section view {
 	float: right;
 	margin-right: 10px;
 }
-section delete {
+delete {
 	float: right;
 }
 .page name {
 	font-size: 14px;
 }
-.page name:hover {
+.page name:hover, post name:hover {
 	text-decoration: underline;
 }
 template {
@@ -100,12 +100,12 @@ template {
 	border: 1px solid #CCC;
 	padding: 5px;
 }
-.uses_template {
+.uses_template, post date {
 	float: right;
 	margin-right: 30%;
 }
 
-.new_page_form, .new_section_form {
+.new_page_form, .new_section_form, .new_post_form {
 	display: none;
 	padding: 10px;
 	background-color: #F5F5F5;
@@ -118,7 +118,7 @@ icon {
 .new_page_link {
 	margin: 5px 0px 0px 10px;
 }
-.new_section_link {
+.new_section_link, .new_post_link {
 	margin: 10px 0px 0px 0px;
 }
 icon.drag_icon {
@@ -156,4 +156,7 @@ fields {
 status {
 	float: right;
 	color: #AAA;
+}
+posts post {
+	display: block;
 }

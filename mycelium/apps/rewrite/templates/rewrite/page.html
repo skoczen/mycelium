@@ -8,14 +8,14 @@
 {% endblock %}
 {% block js %}{{block.super}}
 <script>
-	var urls = {};
-	urls.save_rewrite_page = "{% url rewrite:save_page page.pk %}"
+{% block rewrite_setup %}
 	rewrite.editor.urls.init = function() {
 		rewrite.editor.urls.save_page = "{% url rewrite:save_page page.pk %}"
 	}		
 	$(function(){
 		rewrite.editor.init();
 	});
+{% endblock %}
 </script>
 {% endblock %}
 {% block content %}

@@ -1,5 +1,9 @@
 {% extends "rewrite/page.html" %}
-{% block js_urls %}
-var urls = {};
-urls.save_rewrite_page = "{% url rewrite:save_blog_post page.pk %}"
+{% block rewrite_setup %}
+	rewrite.editor.urls.init = function() {
+		rewrite.editor.urls.save_page = "{% url rewrite:save_blog_post post.pk %}"
+	}		
+	$(function(){
+		rewrite.editor.init();
+	});
 {% endblock %}

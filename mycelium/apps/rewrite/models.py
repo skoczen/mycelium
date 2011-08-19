@@ -122,3 +122,5 @@ class RewritePage(RewriteContentBase):
 
 class RewriteBlogPost(RewriteContentBase):
     blog            = models.ForeignKey(RewriteBlog)
+
+    

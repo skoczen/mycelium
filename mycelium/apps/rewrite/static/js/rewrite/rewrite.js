@@ -1,5 +1,10 @@
 var rewrite = {};
 
+
+////////////////////////////////////////////////////////////////////////////
+//////////////////////////// MANAGEMENT ////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
 rewrite.manage = {};
 rewrite.manage.state = {};
 rewrite.manage.urls = {};
@@ -21,6 +26,8 @@ rewrite.manage.handlers.init = function(){
 	$(".cancel_new_page_link").live("click", rewrite.manage.handlers.hide_new_page_for_section);
 	$(".new_section_link").live("click", rewrite.manage.handlers.show_new_section);
 	$(".cancel_section_link").live("click", rewrite.manage.handlers.hide_new_section);
+	$(".new_post_link").live("click", rewrite.manage.handlers.show_new_post);
+	$(".cancel_post_link").live("click", rewrite.manage.handlers.hide_new_post);
 };
 rewrite.manage.actions.init = function(){};
 rewrite.manage.ui.init = function(){};
@@ -75,6 +82,17 @@ rewrite.manage.handlers.hide_new_section = function() {
 	return false;
 }
 
+rewrite.manage.handlers.show_new_post = function() {
+	$(".new_post_form").show();
+	$(".new_post_link").hide();
+	return false;
+}
+rewrite.manage.handlers.hide_new_post = function() {
+	$(".new_post_form").hide();
+	$(".new_post_link").show();
+	return false;
+}
+
 rewrite.manage.actions.save_section_and_page_sort_order = function() {
 	$.ajax({
 		url: rewrite.manage.urls.save_page_and_section_order,
@@ -95,6 +113,10 @@ rewrite.manage.ui.show_saving_pages_message = function() {
 rewrite.manage.ui.show_saved_pages_message = function() {
 	$("status").html("Saved.");
 }
+
+////////////////////////////////////////////////////////////////////////
+//////////////////////// EDITOR ////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 
 rewrite.editor = {};

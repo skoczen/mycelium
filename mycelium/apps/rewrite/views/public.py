@@ -17,7 +17,7 @@ def _get_website(request):
 def page(request, section=None, page_name=None):
     website = _get_website(request)
     if page_name:
-        page = get_object_or_404(RewritePage,slug=page_name)
+        page = get_object_or_404(RewritePage,slug=page_name, website=website)
         template = page.template
         section = page.section
 
@@ -34,7 +34,9 @@ def blog_home(request):
     return render_to_response("rewrite/base.html", locals(), RequestContext(request))
 
 def blog_entry(request, entry_slug):
-    page = get_object_or_404(RewriteBlogPost,slug=entry_slug)
-    template = page.blog.template
+    website = _get_website(request)
+    post = get_object_or_404(RewriteBlogPost,slug=entry_slug, website=website)
+    template = post.blog.template
+    page = post
 
     return render_to_response("rewrite/blog_post.html", locals(), RequestContext(request))
