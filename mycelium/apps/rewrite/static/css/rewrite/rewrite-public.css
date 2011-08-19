@@ -22,3 +22,6 @@
 #rewrite_admin_bar .edit_and_save_links {
 	float: right;
 }
+.rewrite_associated_form {
+	display: none;
+}

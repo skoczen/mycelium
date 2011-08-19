@@ -33,6 +33,7 @@ def page(request, section=None, page_name=None):
 
 def blog_home(request):
     website = _get_website(request)
+    template = website.blog.template
     blog_posts = RewriteBlogPost.objects.filter(website=website, is_published=True).all()
     return render_to_response("rewrite/blog_home.html", locals(), RequestContext(request))
 

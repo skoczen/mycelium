@@ -9,8 +9,9 @@
 
 
 {% block manage_page_content %}
+	<a href="{% url website:blog_home %}"  class="view_blog_btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">View Blog</span></a>
 	<instructions>Click on a post title to edit.</instructions>
-	<a class="ui-button ui-widget ui-state-default ui-corner-all"  href="{% url website:blog_home %}" >View Blog</a>
+
 	<posts>
 	{% for b in blog_posts %}
 		<post class="list_block ui-state-default ui-corner-all" >

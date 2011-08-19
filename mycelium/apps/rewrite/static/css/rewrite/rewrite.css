@@ -157,6 +157,13 @@ status {
 	float: right;
 	color: #AAA;
 }
+posts {
+	display: block;
+	margin-top: 10px;
+}
 posts post {
 	display: block;
+}
+.view_blog_btn {
+	float: right;
 }
