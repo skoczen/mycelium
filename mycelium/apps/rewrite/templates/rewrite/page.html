@@ -25,12 +25,11 @@
 	{% block admin_bar %}
 		Admin Bar:
 		<form action="" method="POST" class="blog_post_form rewrite_associated_form">
-		{{page_form}}
+		{{page_form.as_p}}
 		</form>
 		{% include "rewrite/_admin_bar_save_and_editor.html" %}		
-
-	</div>
 	{% endblock %}
+	</div>
 {% endif %}
 
     <header>
