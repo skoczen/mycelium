@@ -117,10 +117,19 @@ class RewritePage(RewriteContentBase):
                         help_text="A short name that will be displayed in the section Navigation.")
     order           = models.IntegerField(default=0)
     
+
+    def save(self, *args, **kwargs):
+        # only do this once - cool URL's don't change.
+
+        if not self.nav_link_name:
+            self.nav_link_name = self.title
+
+        super(RewritePage, self).save(*args, **kwargs)
+
+
     class Meta:
         ordering = ("order", "title")
 
 class RewriteBlogPost(RewriteContentBase):
     blog            = models.ForeignKey(RewriteBlog)
 
-    

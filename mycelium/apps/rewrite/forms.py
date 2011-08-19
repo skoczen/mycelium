@@ -24,11 +24,6 @@ class RewriteBlogForm(forms.ModelForm):
         fields = ("template", )
 
 
-class RewritePageForm(forms.ModelForm):
-    class Meta:
-        model = RewritePage
-        fields = ("title", "section", "nav_link_name", "description", "keywords", "template", "content", "is_published")
-
 class RewriteNewPageForm(forms.ModelForm):
     class Meta:
         model = RewritePage
@@ -37,6 +32,11 @@ class RewriteNewPageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RewriteNewPageForm,self).__init__(*args,**kwargs)
         self.fields["template"].choices = [f for f in self.fields["template"].choices][1:]
+
+class RewritePageForm(RewriteNewPageForm):
+    class Meta:
+        model = RewritePage
+        fields = ("title", "section", "nav_link_name", "description", "keywords", "template", "is_published")
 
 
 class RewriteBlogPostForm(forms.ModelForm):

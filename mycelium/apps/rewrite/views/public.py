@@ -27,7 +27,8 @@ def page(request, section=None, page_name=None):
             section = get_object_or_404(RewriteSection,slug=section)
         else:
             raise ContentNotFound
-            
+    if request.user.is_authenticated:
+        page_form = RewritePageForm(instance=page)
     return render_to_response("rewrite/page.html", locals(), RequestContext(request))
 
 def blog_home(request):
@@ -40,6 +41,6 @@ def blog_entry(request, entry_slug):
     post = get_object_or_404(RewriteBlogPost,slug=entry_slug, website=website)
     template = post.blog.template
     page = post
-
-    blog_post_form = RewriteBlogPostForm(instance=post)
+    if request.user.is_authenticated:
+        blog_post_form = RewriteBlogPostForm(instance=post)
     return render_to_response("rewrite/blog_post.html", locals(), RequestContext(request))

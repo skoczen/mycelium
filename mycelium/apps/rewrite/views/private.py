@@ -129,9 +129,10 @@ def save_page(request, page_id):
         assert request.is_ajax() and request.method == "POST" and "content" in request.POST
         website = _get_website(request)
         page = get_object_or_404(RewritePage, pk=page_id, website=website)
-        content = request.POST["content"]
-        page.content = content
-        page.save()
+        page_form = RewritePageForm(request.POST, instance=page)
+        page_to_save = page_form.save(commit=False)
+        page_to_save.content = request.POST["content"]
+        page_to_save.save()
         success = True
     except:
         pass
@@ -145,11 +146,10 @@ def save_post(request, post_id):
         assert request.is_ajax() and request.method == "POST" and "content" in request.POST
         website = _get_website(request)
         post = get_object_or_404(RewriteBlogPost, pk=post_id, website=website)
-        content = request.POST["content"]
 
         blog_post_form = RewriteBlogPostForm(request.POST, instance=post)
         post_to_save = blog_post_form.save(commit=False)
-        post_to_save.content = content
+        post_to_save.content = request.POST["content"]
         post_to_save.save()
 
         success = True
