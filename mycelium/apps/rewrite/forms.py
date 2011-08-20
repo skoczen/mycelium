@@ -18,6 +18,11 @@ class RewriteTemplateForm(forms.ModelForm):
                   "pre_content_html", "post_content_html",
                   "show_main_nav", "show_section_nav",)
 
+class RewriteNewTemplateForm(forms.ModelForm):
+    class Meta:
+        model = RewriteTemplate
+        fields = ("name",)
+
 class RewriteBlogForm(forms.ModelForm):
     class Meta:
         model = RewriteBlog

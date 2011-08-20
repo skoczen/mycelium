@@ -68,7 +68,7 @@ section {
 section .pages {
 	padding: 10px;
 }
-section .page, post {
+section .page, post, template {
 	display: block;
 	margin: 1px 0px 1px 0px;
 	list-style: none;

@@ -40,7 +40,7 @@ def templates(request):
     website = _get_website(request)
 
     templates = RewriteTemplate.objects.all()
-    new_template_form = RewriteTemplateForm()
+    new_template_form = RewriteNewTemplateForm()
     return render_to_response("rewrite/manage/templates.html", locals(), RequestContext(request))
 
 @login_required
@@ -98,7 +98,7 @@ def new_template(request):
         print "ajax"
     else:
         print "normal"
-        new_template_form = RewriteTemplateForm(request.POST)
+        new_template_form = RewriteNewTemplateForm(request.POST)
         if new_template_form.is_valid():
             t = new_template_form.save(commit=False)
             t.website = website
