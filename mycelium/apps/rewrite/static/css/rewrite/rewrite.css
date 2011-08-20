@@ -80,6 +80,9 @@ section view {
 	float: right;
 	margin-right: 10px;
 }
+templates {
+	display: block;
+}
 delete {
 	float: right;
 }
@@ -105,7 +108,7 @@ template {
 	margin-right: 30%;
 }
 
-.new_page_form, .new_section_form, .new_post_form {
+.new_page_form, .new_section_form, .new_post_form, .new_template_form {
 	display: none;
 	padding: 10px;
 	background-color: #F5F5F5;
@@ -118,7 +121,7 @@ icon {
 .new_page_link {
 	margin: 5px 0px 0px 10px;
 }
-.new_section_link, .new_post_link {
+.new_section_link, .new_post_link, .new_template_link {
 	margin: 10px 0px 0px 0px;
 }
 icon.drag_icon {

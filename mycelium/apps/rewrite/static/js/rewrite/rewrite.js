@@ -47,6 +47,8 @@ rewrite.manage.handlers.init = function(){
 	$(".cancel_section_link").live("click", rewrite.manage.handlers.hide_new_section);
 	$(".new_post_link").live("click", rewrite.manage.handlers.show_new_post);
 	$(".cancel_post_link").live("click", rewrite.manage.handlers.hide_new_post);
+	$(".new_template_link").live("click", rewrite.manage.handlers.show_new_template);
+	$(".cancel_template_link").live("click", rewrite.manage.handlers.hide_new_template);
 };
 rewrite.manage.actions.init = function(){};
 rewrite.manage.ui.init = function(){};
@@ -109,6 +111,17 @@ rewrite.manage.handlers.show_new_post = function() {
 rewrite.manage.handlers.hide_new_post = function() {
 	$(".new_post_form").hide();
 	$(".new_post_link").show();
+	return false;
+}
+
+rewrite.manage.handlers.show_new_template = function() {
+	$(".new_template_form").show();
+	$(".new_template_link").hide();
+	return false;
+}
+rewrite.manage.handlers.hide_new_template = function() {
+	$(".new_template_form").hide();
+	$(".new_template_link").show();
 	return false;
 }
 
