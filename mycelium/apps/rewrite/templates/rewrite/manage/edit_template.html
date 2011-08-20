@@ -4,7 +4,7 @@
 {% endblock %}
 {% block manage_page_content %}
 	<a href="{% url rewrite:manage_templates %}">All Templates</a>
-	<instructions>To create or edit a template, you'll need at least some HTML. The sections below fit into the page like this:</instructions>
+	<instructions>To create or edit a template, you'll need to know some HTML. The sections below fit into the page like this:</instructions>
 	<pre>
 &lt;html&gt;
    &lt;head&gt;
@@ -13,11 +13,14 @@
    &lt;/head&gt;
    &lt;body&gt;
       &lt;!-- Page Header HTML --&gt;
-      &lt;!-- Main navigation (if enabled) --&gt;
-      &lt;!-- Section navigation (if enabled) --&gt;
-      &lt;!-- Pre content HTML --&gt;
-      &lt;!-- Page/Blog Post Content --&gt;
-      &lt;!-- Post content HTML --&gt;
+      &lt;main_nav&gt; &lt;!-- Main navigation (if enabled) --&gt; &lt;main_nav&gt;
+      &lt;section_nav&gt; &lt;!-- Section navigation (if enabled) --&gt; &lt;/section_nav&gt;
+
+      &lt;div id="main" role="main"&gt;
+        &lt;!-- Pre content HTML --&gt;
+        &lt;div id="page_content"&gt;&lt;!-- Page/Blog Post Content --&gt;&lt;/div&gt;
+        &lt;!-- Post content HTML --&gt;
+      &lt;/div&gt;
    &lt;/body&gt;
 &lt;/html&gt;
 	</pre>
