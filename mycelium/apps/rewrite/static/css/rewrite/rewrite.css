@@ -82,6 +82,8 @@ section view {
 }
 templates {
 	display: block;
+	width: 100%;
+	overflow: auto;
 }
 delete {
 	float: right;
@@ -96,7 +98,14 @@ template {
 	display: block;
 }
 .CodeMirror {
-	border: 1px solid #AAA;
+	border: 1px solid #CCC;
+}
+.rewrite_edit_template p {
+	display: block;
+	width: 48%;
+	float: left;
+	padding: 10px 0px;
+	margin: 0px 1%;
 }
 
 .list_block {

@@ -14,9 +14,10 @@ class RewriteSectionForm(forms.ModelForm):
 class RewriteTemplateForm(forms.ModelForm):
     class Meta:
         model = RewriteTemplate
-        fields = ("name", "extra_head_html", "page_header_html", 
+        fields = ("name", "show_main_nav", "show_section_nav",
+                  "extra_head_html", "page_header_html", 
                   "pre_content_html", "post_content_html",
-                  "show_main_nav", "show_section_nav",)
+                  )
 
 class RewriteNewTemplateForm(forms.ModelForm):
     class Meta:
