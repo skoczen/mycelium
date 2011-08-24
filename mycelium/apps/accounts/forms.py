@@ -190,7 +190,7 @@ class UserAccountNicknameForm(ModelForm):
 
     class Meta:
         model = UserAccount
-        fields = ("nickname",)
+        fields = ("nickname","timezone")
 
 
 

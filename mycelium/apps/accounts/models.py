@@ -7,10 +7,12 @@ from qi_toolkit.helpers import classproperty
 from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII
 from django.conf import settings
 from pychargify.api import ChargifySubscription, ChargifyCustomer, Chargify
+from timezones.zones import PRETTY_TIMEZONE_CHOICES
 import hashlib
 import datetime
 from dateutil.relativedelta import *
 from django.db.models import Sum, Count, Avg
+from timezones.fields import TimeZoneField
 
 class Plan(TimestampModelMixin):
     name = models.CharField(max_length=255)
@@ -602,6 +604,10 @@ class UserAccount(TimestampModelMixin):
     account = models.ForeignKey(Account, db_index=True)
     access_level = models.ForeignKey(AccessLevel)
     nickname = models.CharField(max_length=255, blank=True, null=True)
+    
+    # timezone = TimeZoneField()
+    timezone = models.CharField(max_length=255, choices=PRETTY_TIMEZONE_CHOICES, blank=True, null=True,)  
+    
 
     show_challenges_complete_section     = models.BooleanField(default=True)    
 

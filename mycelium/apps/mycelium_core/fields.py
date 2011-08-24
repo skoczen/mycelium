@@ -3,6 +3,7 @@ from django import forms
 from django.db import models
 from django.forms import fields
 from mycelium_core.widgets import JqSplitDateTimeWidget
+from django.conf import settings
 
 class JqSplitDateTimeField(fields.MultiValueField):
     widget = JqSplitDateTimeWidget

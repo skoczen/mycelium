@@ -148,6 +148,7 @@ INSTALLED_APPS = (
     'mediasync',
     'sentry',
     'sentry.client',
+    'timezones',
     
     #'cms',
     #'mptt',
