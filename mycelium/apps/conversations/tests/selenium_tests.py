@@ -96,6 +96,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, ConversationTestAbstract
         assert sel.is_text_present("No more conversations")
 
 
+
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, ConversationTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
