@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 from managers import AccountDataModelManager, ExplicitAccountDataModelManager, AccountManager
 from qi_toolkit.models import TimestampModelMixin, SimpleSearchableModel
 from qi_toolkit.helpers import classproperty
-from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII
+from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII, BILLING_PROBLEM_STATII
 from django.conf import settings
 from pychargify.api import ChargifySubscription, ChargifyCustomer, Chargify
 import hashlib
@@ -297,7 +297,7 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
 
     @property
     def has_billing_issue(self):
-        return self.status == ACCOUNT_STATII[3][0]
+        return self.status in BILLING_PROBLEM_STATII
 
     @property
     def is_on_hold(self):
