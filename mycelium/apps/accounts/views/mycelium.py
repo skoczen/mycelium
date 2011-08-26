@@ -209,12 +209,8 @@ def cancel_subscription(request):
 def reactivate_subscription(request):
     if not request.useraccount.is_admin:
         return HttpResponseRedirect(reverse("dashboard:dashboard"))
-    
-    # reactivate_subscription the subscription.
-    chargify = ChargifySubscription(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-    chargify_sub = chargify.getBySubscriptionId(request.account.chargify_subscription_id)
-    
-    chargify_sub.reactivate()
+
+    request.account.chargify_subscription.reactivate()
 
 
     request.account.update_account_status()

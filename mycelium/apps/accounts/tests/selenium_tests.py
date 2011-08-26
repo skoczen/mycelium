@@ -1,5 +1,6 @@
 # encoding: utf-8
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+import unittest
 import time
 import datetime
 from test_factory import Factory
@@ -643,6 +644,7 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         # assert sel.is_element_present("css=.reactivate_subscription_btn")
         assert sel.is_text_present("reactivate your subscription")
 
+    @unittest.skip("Bug in chargify - feature disabled and low priority.")
     def test_that_users_can_resume_a_cancelled_subscription_and_see_that_its_resumed(self):
         sel = self.selenium
         self.test_that_users_can_cancel_their_subscription_and_see_that_its_cancelled()
