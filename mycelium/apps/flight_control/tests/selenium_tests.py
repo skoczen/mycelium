@@ -50,22 +50,22 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
     def test_that_flight_control_lists_the_right_people_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_people number") , "%s" % (Person.objects.non_demo.count() / Account.objects.active.count()))
+        self.assertEqual(sel.get_text("css=.num_people number") , "%s" % (Person.objects.non_demo.count() / Account.objects.active.filter(is_demo=False).count()))
 
     def test_that_flight_control_lists_the_right_organizations_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_orgs number") , "%s" % (Organization.objects.non_demo.count() / Account.objects.active.count()))
+        self.assertEqual(sel.get_text("css=.num_orgs number") , "%s" % (Organization.objects.non_demo.count() / Account.objects.active.filter(is_demo=False).count()))
 
     def test_that_flight_control_lists_the_right_users_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_users number") , "%.1f" % (UserAccount.objects.non_demo.count() / Account.objects.active.count()))
+        self.assertEqual(sel.get_text("css=.num_users number") , "%.1f" % (UserAccount.objects.filter(account__is_demo=False).count() / Account.objects.active.filter(is_demo=False).count()))
 
     def test_that_flight_control_lists_the_right_donations_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_donations number") , "%.1f" % (Donation.objects.non_demo.count() / Account.objects.active.count()))
+        self.assertEqual(sel.get_text("css=.num_donations number") , "%.1f" % (Donation.objects.non_demo.count() / Account.objects.active.filter(is_demo=False).count()))
 
     def test_that_flight_control_lists_the_right_per_donation_average(self):
         sel = self.selenium
@@ -90,7 +90,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
         total_volunteer_hours = 0
         for cs in CompletedShift.objects.non_demo.all():
             total_volunteer_hours += cs.duration
-        self.assertEqual(sel.get_text("css=.avg_vol_hours_per_person number") , "%.1f" % (total_volunteer_hours / Account.objects.active.count()))
+        self.assertEqual(sel.get_text("css=.avg_vol_hours_per_person number") , "%.1f" % (total_volunteer_hours / Account.objects.active.filter(is_demo=False).count()))
 
 
     def test_that_flight_control_lists_accounts_that_expire_soon(self):

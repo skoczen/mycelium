@@ -225,11 +225,18 @@ def confirm_account_delete(request):
 
 
 def do_account_delete(request):
+    from accounts.models import Account
+
     if not request.useraccount.is_admin and not request.method == "POST":
         return HttpResponseRedirect(reverse("dashboard:dashboard"))
     
     account_id = request.POST['account_pk']
     assert int(account_id) == request.account.pk
-    request.account.delete()
+    a = request.account
+    a.delete()
+
+    print "all accounts"
+    print Account.objects.all()
+    print "deleted"
 
     return HttpResponseRedirect( "http://%s/account-deleted" % (settings.BASE_DOMAIN))

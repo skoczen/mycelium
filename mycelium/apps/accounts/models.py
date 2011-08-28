@@ -258,20 +258,21 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
 
     def update_account_status(self):
         chargify_sub = self.chargify_subscription
-        self.last_billing_date = chargify_sub.current_period_started_at
-        self.chargify_state = chargify_sub.state
-        
-        self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period == "true"
-        self.chargify_balance = float(chargify_sub.balance_in_cents) / 100
+        if chargify_sub:
+            self.last_billing_date = chargify_sub.current_period_started_at
+            self.chargify_state = chargify_sub.state
+            
+            self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period == "true"
+            self.chargify_balance = float(chargify_sub.balance_in_cents) / 100
 
-        self.chargify_next_assessment_at = chargify_sub.current_period_ends_at
-        if chargify_sub.credit_card:
-            self.chargify_last_four = chargify_sub.credit_card.masked_card_number[chargify_sub.credit_card.masked_card_number.rfind("-")+1:]
-        else:
-            self.chargify_last_four = None
+            self.chargify_next_assessment_at = chargify_sub.current_period_ends_at
+            if chargify_sub.credit_card:
+                self.chargify_last_four = chargify_sub.credit_card.masked_card_number[chargify_sub.credit_card.masked_card_number.rfind("-")+1:]
+            else:
+                self.chargify_last_four = None
 
-        self.status = CHARGIFY_STATUS_MAPPING[chargify_sub.state][0]
-        self.save()
+            self.status = CHARGIFY_STATUS_MAPPING[chargify_sub.state][0]
+            self.save()
 
         return self
     
