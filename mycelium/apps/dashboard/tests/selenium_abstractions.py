@@ -10,8 +10,11 @@ from spreadsheets.tests.selenium_abstractions import SpreadsheetTestAbstractions
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from data_import.tests.selenium_abstractions import DataImportTestAbstractions
+from conversations.tests.selenium_abstractions import ConversationTestAbstractions
 
-class DashboardTestAbstractions(PeopleTestAbstractions, VolunteerTestAbstractions, DonorTestAbstractions, TagTestAbstractions, GroupTestAbstractions, SpreadsheetTestAbstractions, AccountTestAbstractions, DataImportTestAbstractions):
+class DashboardTestAbstractions(PeopleTestAbstractions, VolunteerTestAbstractions, 
+                                DonorTestAbstractions, TagTestAbstractions, GroupTestAbstractions, ConversationTestAbstractions,
+                                SpreadsheetTestAbstractions, AccountTestAbstractions, DataImportTestAbstractions,):
     
     def get_to_the_dashboard(self):
         sel = self.selenium

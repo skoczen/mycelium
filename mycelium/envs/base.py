@@ -68,11 +68,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
     
-    # 'cms.middleware.page.CurrentPageMiddleware',
-    # 'cms.middleware.user.CurrentUserMiddleware',
-    # 'cms.middleware.multilingual.MultilingualURLMiddleware',
-    # 'cms.middleware.media.PlaceholderMediaMiddleware',
-
 )
 AUTHENTICATION_BACKENDS = (
     'accounts.backends.AccountAuthBackend',

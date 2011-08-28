@@ -15,10 +15,9 @@ def _update_account_subscription(chargify_subscription_id):
 
     return a
 
-@json_view
 @csrf_exempt
+@json_view
 def chargify_webhook(request):
-    # print request.REQUEST
     assert request.REQUEST['event'] == "subscription_state_changed"
     
     for s in request.POST.getlist('payload[subscription][id]'):

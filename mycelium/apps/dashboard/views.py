@@ -15,6 +15,7 @@ from organizations.models import Organization
 from donors.models import Donation
 from volunteers.models import CompletedShift
 from generic_tags.models import Tag, TaggedItem
+from conversations.models import Conversation
 import datetime
 from decimal import Decimal
 
@@ -41,6 +42,7 @@ def _account_numbers_dict(account):
     total_groups = Group.objects_by_account(account).count()
     total_tags = Tag.objects_by_account(account).count()
     total_taggeditems = TaggedItem.objects_by_account(account).count()
+    recent_conversations = Conversation.objects_by_account(account).all()[:5]
 
     return locals()
 

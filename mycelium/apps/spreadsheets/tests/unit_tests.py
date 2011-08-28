@@ -72,10 +72,10 @@ class TestViews(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Generate
         p = Factory.person(account=self.a1)
         p.last_name = u"O\u2019Brien"
         p.save()
-        self._test_spreadsheet_download_200s_for_template_type(SPREADSHEET_TEMPLATE_CHOICES[0][0])
+        self._test_spreadsheet_download_200s_for_template_type(SPREADSHEET_TEMPLATE_CHOICES[0][0], file_type=EXCEL_TYPE)
 
     def test_full_contact_list_csv_spreadsheet_with_unicode_200s(self):
         p = Factory.person(account=self.a1)
         p.last_name = u"O\u2019Brien"
         p.save()
-        self._test_spreadsheet_download_200s_for_template_type(SPREADSHEET_TEMPLATE_CHOICES[0][0])
+        self._test_spreadsheet_download_200s_for_template_type(SPREADSHEET_TEMPLATE_CHOICES[0][0], file_type=CSV_TYPE)
