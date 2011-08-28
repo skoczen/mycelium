@@ -17,7 +17,7 @@ class DataImportUploadBackend(S3UploadBackend):
         f = default_storage.open(filename, 'r')
 
         # parse the file.
-        s = SpreadsheetAbstraction(request.account, f, self.import_type, filename=filename)
+        s = SpreadsheetAbstraction(request.account, f, request.import_type, filename=filename)
         f.close()
         
         # get the number of rows

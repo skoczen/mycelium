@@ -80,10 +80,10 @@ function bind_conversation_tab_events() {
         $("#new_conversation textarea[name$=body]").focus();
     });
     
-    $("#new_conversation .datepicker").datepicker({
+    $("#new_conversation input[name=date]").datepicker({
         "numberOfMonths": 2,
         "showButtonPanel": true,
-        // "gotoCurrent": true,
+        "gotoCurrent": true,
         "showCurrentAtPos": 1            
     });
     $.Mycelium.update_stripes();

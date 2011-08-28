@@ -58,4 +58,9 @@ def verify_subdomain(request):
 
 @render_to("accounts/account_deleted.html")
 def account_deleted(request):
+    
+    print "all accounts"
+    print Account.objects.all()
+    print "deleted"
+
     return locals()

@@ -141,7 +141,10 @@ class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         
         # average
         nums_avg = "%f" % nums["average_donation"]
-        calc_avg = "%f" % (total_donation_amount_hand_count/total_donations_hand_count)
+        if total_donations_hand_count == 0:
+            calc_avg = "%f" % 0.0
+        else:
+            calc_avg = "%f" % (total_donation_amount_hand_count/total_donations_hand_count)
         nums_avg = nums_avg[:-2]
         calc_avg = calc_avg[:-2]
         self.assertEqual(nums_avg, calc_avg )   

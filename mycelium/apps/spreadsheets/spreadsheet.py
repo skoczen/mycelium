@@ -362,7 +362,7 @@ class SpreadsheetAbstraction:
 
         csv_writer = csv.writer(file_handler)
         if query_set.count() > 0:
-            csv_writer.writerows([c for c in r] for r in cls._value_rows_from_queryset(query_set, template, **kwargs))
+            csv_writer.writerows( [unicode(c).encode("ascii","ignore") for c in r] for r in cls._value_rows_from_queryset(query_set, template, **kwargs) )
         file_handler.flush()
         return file_handler
 
@@ -398,7 +398,10 @@ class SpreadsheetAbstraction:
 
     @property
     def num_rows(self):
-        return len(self.parsed_spreadsheet)
+        if self.parsed_spreadsheet:
+            return len(self.parsed_spreadsheet)
+        else:
+            return 0
 
     def get_row(self, row_number=0):
         return self.parsed_spreadsheet[row_number]

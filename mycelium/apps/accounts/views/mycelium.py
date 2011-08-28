@@ -209,12 +209,8 @@ def cancel_subscription(request):
 def reactivate_subscription(request):
     if not request.useraccount.is_admin:
         return HttpResponseRedirect(reverse("dashboard:dashboard"))
-    
-    # reactivate_subscription the subscription.
-    chargify = ChargifySubscription(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-    chargify_sub = chargify.getBySubscriptionId(request.account.chargify_subscription_id)
-    
-    chargify_sub.reactivate()
+
+    request.account.chargify_subscription.reactivate()
 
 
     request.account.update_account_status()
@@ -229,11 +225,18 @@ def confirm_account_delete(request):
 
 
 def do_account_delete(request):
+    from accounts.models import Account
+
     if not request.useraccount.is_admin and not request.method == "POST":
         return HttpResponseRedirect(reverse("dashboard:dashboard"))
     
     account_id = request.POST['account_pk']
     assert int(account_id) == request.account.pk
-    request.account.delete()
+    a = request.account
+    a.delete()
+
+    print "all accounts"
+    print Account.objects.all()
+    print "deleted"
 
     return HttpResponseRedirect( "http://%s/account-deleted" % (settings.BASE_DOMAIN))

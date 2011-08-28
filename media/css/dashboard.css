@@ -83,6 +83,11 @@ salutation, .welcome_text, .nickname_question {
 	background-image: url("../images/icon-numbers-grey-26.png");
 	padding: 0px 0px 0px 45px;
 }
+.dashboard_panel_table column_header.conversations {
+	background-image: url("../images/icon-conversations-grey-26.png");
+	background-position: left 1px;
+	padding: 0px 0px 0px 35px;
+}
 
 
 
@@ -193,4 +198,13 @@ news_story .story_body {
 }
 .age {
 	color: #999;
+}
+conversation {
+	display: block;
+	padding: 4px;
+}
+conversation .conversation_body {
+	display: block;
+	color: #666;
+	padding: 2px 8px;
 }

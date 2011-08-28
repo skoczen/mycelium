@@ -130,6 +130,22 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
         
 
 
+    def test_that_new_conversations_show_up_on_the_dashboard(self):
+        sel = self.selenium
+        self.test_that_the_dashboard_checks_off_appropriately()
+        self.get_to_the_dashboard()
+        assert not sel.is_element_present("css=conversation")
+        assert sel.is_text_present("No conversations yet!")
+        
+        self.create_person_and_go_to_conversation_tab()
+
+        a1, d1 = self.add_a_conversation(body="Text like 123.45", date="3/8/2011")
+        self.get_to_the_dashboard()
+
+        assert sel.is_text_present("By the Numbers")
+        assert sel.is_text_present("Text like 123.45")
+        assert sel.is_element_present("css=conversation")
+
 class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
