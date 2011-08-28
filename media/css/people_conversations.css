@@ -93,7 +93,7 @@ tab_contents.people_conversations_tab .datetime_time {
 	position: relative;
 }
 tab_contents.people_conversations_tab .datetime_date input {
-	width: 80px;	
+	width: 90px;	
 }
 tab_contents.people_conversations_tab .datetime_time input {
 	width: 1.5em;
