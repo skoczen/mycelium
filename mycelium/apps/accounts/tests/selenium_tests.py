@@ -586,6 +586,42 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         assert sel.is_element_present("css=.admin_btn")
 
 
+    
+    def test_that_somehow_resubmitting_an_existing_account_subdomain_redirects_to_their_login_page(self):
+        sel = self.selenium
+        self.test_that_the_account_signup_page_loads()
+        sel.type("css=#id_name","My Test Organization")
+        sel.type("css=#id_subdomain","test2")
+        sel.focus("css=#id_subdomain")
+
+        sel.type("css=#id_first_name","Joe Tester")
+        sel.type("css=#id_email", "joe@example.com")
+        sel.type("css=#id_username", "joe")
+        sel.type("css=#id_password", "password")
+        sel.click("css=#id_agreed_to_terms")
+        time.sleep(2)
+
+        sel.click("css=#submit_button")
+        sel.wait_for_page_to_load("30000")
+        self.test_that_the_account_signup_page_loads()
+        sel.type("css=#id_name","My Test Organization")
+        sel.type("css=#id_subdomain","test2")
+        sel.focus("css=#id_subdomain")
+
+        sel.type("css=#id_first_name","Joe Tester")
+        sel.type("css=#id_email", "joe@example.com")
+        sel.type("css=#id_username", "joe")
+        sel.type("css=#id_password", "password")
+        sel.click("css=#id_agreed_to_terms")
+        sel.click("css=#submit_button")
+
+        # sel.wait_for_page_to_load("30000")
+
+        # self.go_to_the_login_page(site="test2")
+        self.log_in(username="joe", password="password")
+
+
+
 class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
     # selenium_fixtures = []
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
@@ -727,7 +763,6 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         sub = self.a1.chargify_subscription
         assert sub.signup_revenue == "0.00"
         
-
 
 
 

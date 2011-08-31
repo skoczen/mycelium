@@ -23,6 +23,11 @@ def signup(request):
         account_form = NewAccountForm(request.POST)
         user_form = NewUserForm(request.POST)
         if account_form.is_valid() and user_form.is_valid():
+            subdomain = account_form.cleaned_data["subdomain"]
+            if Account.objects.filter(subdomain=subdomain).count() > 0:
+                account = Account.objects.get(subdomain=subdomain)
+                return HttpResponseRedirect("%s%s.%s/" % (request.protocol, account.subdomain, site.domain))
+                
             account = account_form.save()
             useraccount = account.create_useraccount(full_name=user_form.cleaned_data['first_name'], 
                                        username=user_form.cleaned_data['username'], 
