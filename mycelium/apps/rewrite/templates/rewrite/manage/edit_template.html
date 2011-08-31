@@ -1,5 +1,5 @@
 {% extends "rewrite/manage/base.html" %}
-{% block js %}{{block.super}}
+{% block extra_head_html %}{{block.super}}
 	{% include "rewrite/manage/_code_textareas.html" %}
 	<script>
 	$(function(){
@@ -26,7 +26,7 @@
    	  {{template_form.page_header_html}}
       {{template_form.show_main_nav}} <code class="main_nav {% if not template_form.instance.show_main_nav %}disabled{% endif %}">&lt;main_nav&gt; &lt;!-- Main navigation --&gt; &lt;main_nav&gt;</code>
       {{template_form.show_section_nav}} <code class="section_nav {% if not template_form.instance.show_main_nav %}disabled{% endif %}">&lt;section_nav&gt; &lt;!-- Section navigation --&gt; &lt;/section_nav&gt;</code>
-      
+
          <code>&lt;div id="main" role="main"&gt;</code><span class="main_code">
 	     {{template_form.pre_content_html}}<code>            &lt;div id="page_content"&gt;
               &lt;!-- Page Content or Blog Post will show here --&gt;
