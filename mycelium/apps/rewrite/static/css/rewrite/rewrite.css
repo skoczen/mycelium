@@ -98,7 +98,21 @@ template {
 	display: block;
 }
 .CodeMirror {
-	border: 1px solid #CCC;
+	border: 1px solid #E2E2E2;
+	margin-left: 3.2em;
+	background-color: #FFF;
+}
+.body_code .CodeMirror {
+	margin-left: 5.4em;
+}
+.body_code .main_code .CodeMirror {
+	margin-left: 7.2em;
+}
+.CodeMirror-scroll {
+  height: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
+  width: 100%;
 }
 .rewrite_edit_template p {
 	display: block;
@@ -178,4 +192,21 @@ posts post {
 }
 .view_blog_btn {
 	float: right;
+}
+.rewrite_edit_template code.big {
+	font-size: 16px;
+}
+pre.html_page {
+	background-color: #F6F6F6;
+	padding: 10px;
+	border: 1px solid #EEE;
+	margin-top: 10px;
+}
+#id_show_main_nav, #id_show_section_nav {
+	margin-left: 1.9em;
+}
+
+code.main_nav.disabled, code.section_nav.disabled {
+	color: #DDD;
+	text-decoration: line-through;
 }
