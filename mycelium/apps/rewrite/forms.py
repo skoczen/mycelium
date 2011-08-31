@@ -4,7 +4,7 @@ from rewrite.models import RewriteWebsite, RewriteTemplate, RewriteSection,  Rew
 class RewriteWebsiteForm(forms.ModelForm):
     class Meta:
         model = RewriteWebsite
-        fields = ("blog_enabled",)
+        fields = ("blog_enabled", "domain",)
 
 class RewriteSectionForm(forms.ModelForm):
     class Meta:
