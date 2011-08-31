@@ -577,6 +577,21 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     def num_spreadsheets(self):
         return self.spreadsheet_set.count()
 
+    @property
+    def has_beta_access(self):
+        return self.feature_access_level >= FEATURE_ACCESS_STATII[1][0]
+
+    @property
+    def has_alpha_access(self):
+        return self.feature_access_level >= FEATURE_ACCESS_STATII[2][0]
+    
+    @property
+    def has_bleeding_edge_access(self):
+        return self.feature_access_level >= FEATURE_ACCESS_STATII[3][0]
+    
+    @property
+    def has_access_to_level(self, access_level):
+        return self.feature_access_level >= access_level
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)

@@ -41,9 +41,14 @@ BILLING_PROBLEM_STATII = [
     ACCOUNT_STATII[3][0],
 ]
 
+ACCESS_LEVEL_STANDARD      = 0
+ACCESS_LEVEL_ALPHA         = 10
+ACCESS_LEVEL_BETA          = 20
+ACCESS_LEVEL_BLEEDING_EDGE = 30
+
 FEATURE_ACCESS_STATII = [
-    (0,  "Standard"),
-    (10, "Beta"),
-    (20, "Alpha"),
-    (30, "Bleeding Edge"),
+    (ACCESS_LEVEL_STANDARD,  "Standard"),
+    (ACCESS_LEVEL_ALPHA, "Beta"),
+    (ACCESS_LEVEL_BETA, "Alpha"),
+    (ACCESS_LEVEL_BLEEDING_EDGE, "Bleeding Edge"),
 ]

@@ -3,8 +3,6 @@
 	<form action="" method="POST">{% csrf_token %}
 	{{website_settings_form.as_p}}
 	{{blog_settings_form.as_p}}
-
-	
-		<input type="submit" value="Save Settings">
+		<input class="ui-button ui-widget ui-state-default ui-corner-all" type="submit" value="Save Settings" >
 	</form>
 {% endblock %}

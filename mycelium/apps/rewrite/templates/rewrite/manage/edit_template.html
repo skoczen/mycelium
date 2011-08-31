@@ -7,7 +7,7 @@
 	});</script>
 {% endblock %}
 {% block manage_page_content %}
-	<a href="{% url rewrite:manage_templates %}">All Templates</a>
+	<a href="{% url rewrite:manage_templates %}" class="ui-button ui-widget ui-state-default ui-corner-all" >All Templates</a>
 	<instructions>To create or edit a template, you'll need to know some HTML. You can edit any of the sections in white below.</instructions>
 <form action="{% url rewrite:edit_template template.pk %}" method="POST" class="rewrite_edit_template">{% csrf_token %}
 
@@ -35,6 +35,6 @@
    &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-		<input type="submit" value="Save Changes" />
+		<input class="ui-button ui-widget ui-state-default ui-corner-all" type="submit" value="Save Changes" >
 	</form>
 {% endblock %}
