@@ -7,11 +7,11 @@
 	});</script>
 {% endblock %}
 {% block manage_page_content %}
-	<a href="{% url rewrite:manage_templates %}" class="ui-button ui-widget ui-state-default ui-corner-all" >All Templates</a>
+	<a href="{% url rewrite:manage_templates %}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">All Templates</span></a>
 	<instructions>To create or edit a template, you'll need to know some HTML. You can edit any of the sections in white below.</instructions>
 <form action="{% url rewrite:edit_template template.pk %}" method="POST" class="rewrite_edit_template">{% csrf_token %}
 
-{{template_form.name}}
+Name: {{template_form.name}}
 
 	<pre class="html_page">
 <code class="big">&lt;html&gt;

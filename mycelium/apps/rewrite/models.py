@@ -6,6 +6,7 @@ import datetime
 class RewriteWebsite(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)
     blog_enabled        = models.BooleanField(default=True)
+    domain              = models.CharField(max_length=255, blank=True, null=True, verbose_name="Website URL to host (ie. example.com)")
 
     @property
     def sections(self):
