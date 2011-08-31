@@ -1,13 +1,10 @@
 {% extends "rewrite/manage/base.html" %}
 {% block manage_page_content %}
-	Settings
 	<form action="" method="POST">{% csrf_token %}
-	{{website_settings_form}}
-	
-	Blog:
-	{{blog_settings_form}}
+	{{website_settings_form.as_p}}
+	{{blog_settings_form.as_p}}
 
 	
-		<input type="submit">
+		<input type="submit" value="Save Settings">
 	</form>
 {% endblock %}

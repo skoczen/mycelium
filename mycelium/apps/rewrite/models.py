@@ -70,7 +70,7 @@ class RewriteTemplate(models.Model):
         ordering = ("name",)
 
 class RewriteBlog(models.Model):
-    template        = models.ForeignKey(RewriteTemplate)
+    template        = models.ForeignKey(RewriteTemplate, verbose_name="Blog Template")
     website         = models.ForeignKey(RewriteWebsite)
 
     @property
