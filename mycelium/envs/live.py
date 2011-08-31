@@ -34,8 +34,9 @@ MASTER_DATABASE = 'default'
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 MANUAL_MEDIA_URL = 'http://www.agoodcloud.com/media/'
+# MEDIA_URL = CDN_MEDIA_URL
 STATIC_URL = CDN_MEDIA_URL
-
+# STATIC_ROOT = MEDIA_ROOT
 
 # chargify
 CHARGIFY_API = "H4a_DfhPSl6w5h4DqWZg"

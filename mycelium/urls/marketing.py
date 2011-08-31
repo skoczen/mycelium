@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^',              include('email_list.urls',          app_name="email_list",      namespace="email_list")),                                    
     url(r'^',              include('accounts.urls.marketing',  app_name="accounts",        namespace="accounts")),    
     url(r'^',              include('rewrite.urls.public',      app_name="rewrite",         namespace="rewrite")),
+    url(r'^',              include('rewrite.urls',  app_name="rewrite",        namespace="rewrite")),    
 
     url(r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodcloud.posterous.com"}, 'blog'),
     url(r'^administration/', include(admin.site.urls)),
@@ -25,6 +26,7 @@ urlpatterns = patterns('',
 if settings.DEBUG:
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
     )
 
 
