@@ -35,6 +35,7 @@
 		</li>
 		{% endfor %}
 		</ul>
+		{% if not s.is_blog_section %}
 		<a href="#" class="new_page_link ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">New Page</span></a>
 		<form action="{% url rewrite:new_page %}" method="POST" class="new_page_form ui-corner-all">{% csrf_token %}
 		<fields>
@@ -44,7 +45,8 @@
 		<input type="hidden" name="section" value="{{s.pk}}" />
 		<input class="ui-button ui-widget ui-state-default ui-corner-all" 						type="submit" value="Add Page" />
 		<input class="cancel_new_page_link ui-button ui-widget ui-state-default ui-corner-all" type="reset" value="Cancel"/>
-	</form>
+		</form>
+		{% endif %}
 	</section>
 	{% endfor %}
 	</sections>

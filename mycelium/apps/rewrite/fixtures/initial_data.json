@@ -13,7 +13,7 @@
         "fields": {
             "post_content_html": null, 
             "extra_head_html": null, 
-            "name": "Default (blank)", 
+            "name": "Completely Blank", 
             "show_main_nav": true, 
             "pre_content_html": null, 
             "page_header_html": null, 

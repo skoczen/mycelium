@@ -34,6 +34,7 @@ def page(request, section=None, page_name=None):
 def blog_home(request):
     website = _get_website(request)
     template = website.blog.template
+    section = website.blog_section
     blog_posts = RewriteBlogPost.objects.filter(website=website, is_published=True).all()
     return render_to_response("rewrite/blog_home.html", locals(), RequestContext(request))
 
@@ -41,6 +42,7 @@ def blog_entry(request, entry_slug):
     website = _get_website(request)
     post = get_object_or_404(RewriteBlogPost,slug=entry_slug, website=website)
     template = post.blog.template
+    section = website.blog_section
     page = post
     if request.user.is_authenticated:
         blog_post_form = RewriteBlogPostForm(instance=post)

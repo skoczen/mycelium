@@ -17,17 +17,41 @@ class RewriteWebsite(models.Model):
         return self.rewriteblog_set.all()[0]
 
     @property
+    def blog_section(self):
+        if self.sections.filter(is_blog_section=True).count():
+            return self.sections.filter(is_blog_section=True).all()[0]
+        else:
+            return None
+
+    def create_blog_section(self):
+        return self.rewritesection_set.create(name="Blog", slug="blog", website=self, is_blog_section=True)
+
+    @property
     def pages(self):
         return self.rewritepage_set.all()
 
     def __unicode__(self):
         return "%s" % self.name
 
+    def save(self, *args, **kwargs):
+        super(RewriteWebsite,self).save(*args, **kwargs)
+        if self.blog_enabled:
+            if not self.blog_section:
+                self.create_blog_section()
+        else:
+            if self.blog_section:
+                s = self.blog_section
+                s.delete()
+
+
+    
+
 class RewriteSection(models.Model):
     name            = models.CharField(max_length=255, blank=True, null=True)
     slug            = models.SlugField(editable=False, blank=True)
     website         = models.ForeignKey(RewriteWebsite)
     order           = models.IntegerField(default=0)
+    is_blog_section = models.BooleanField(default=False)
     
     @property
     def pages(self):

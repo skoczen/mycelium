@@ -43,7 +43,7 @@
     </header>
     <div id="main" role="main">
 	  {{ template.pre_content_html|default_if_none:""|safe }}
-	  <div id="page_content">{% block rewrite_page_content %}{% if request.user.is_authenticated %}<div id="rewrite_editable_body">{% endif %}{{ page.content|default_if_none:""|safe }}{% if request.user.is_authenticated %}</div>{% endif %}{% endblock %}</div>
+	  <div id="page_content">{% block rewrite_page_content %}{% if request.user.is_authenticated %}<div id="rewrite_editable_body">{% endif %}{% block page_content %}{{ page.content|default_if_none:""|safe }}{% endblock %}{% if request.user.is_authenticated %}</div>{% endif %}{% endblock %}</div>
 	  {{ template.post_content_html|default_if_none:""|safe }}
     </div>
 {% endblock %}
