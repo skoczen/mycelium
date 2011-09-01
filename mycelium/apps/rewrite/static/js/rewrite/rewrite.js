@@ -51,6 +51,7 @@ rewrite.manage.handlers.init = function(){
 	$(".cancel_template_link").live("click", rewrite.manage.handlers.hide_new_template);
 	$("#id_show_main_nav").live("click",rewrite.manage.handlers.main_nav_checkbox_toggle);
 	$("#id_show_section_nav").live("click",rewrite.manage.handlers.section_nav_checkbox_toggle);
+	$("#id_blog_enabled").live("click",rewrite.manage.handlers.blog_enabled_checkbox_toggle);
 };
 rewrite.manage.actions.init = function(){};
 rewrite.manage.ui.init = function(){};
@@ -142,8 +143,15 @@ rewrite.manage.handlers.section_nav_checkbox_toggle = function() {
 	} else {
 		$("code.section_nav").addClass("disabled");
 	}
-	
 }
+rewrite.manage.handlers.blog_enabled_checkbox_toggle = function() {
+	if ($(this).is(":checked")) {
+		$(".blog_settings").removeClass("hidden");
+	} else {
+		$(".blog_settings").addClass("hidden");
+	}
+}
+
 
 rewrite.manage.actions.save_section_and_page_sort_order = function() {
 	$.ajax({

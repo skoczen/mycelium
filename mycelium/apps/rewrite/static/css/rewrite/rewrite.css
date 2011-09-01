@@ -210,3 +210,9 @@ code.main_nav.disabled, code.section_nav.disabled {
 	color: #DDD;
 	text-decoration: line-through;
 }
+.settings_form p {
+	padding: 6px 0px;
+}
+.settings_form #id_domain {
+	width: 300px;
+}
