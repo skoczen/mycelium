@@ -130,7 +130,22 @@ class RewritePage(RewriteContentBase):
 
     class Meta:
         ordering = ("order", "title")
+    
+    @property
+    def is_page(self):
+        return True
+    
+    @property
+    def is_post(self):
+        return False
 
 class RewriteBlogPost(RewriteContentBase):
     blog            = models.ForeignKey(RewriteBlog)
 
+    @property
+    def is_page(self):
+        return False
+    
+    @property
+    def is_post(self):
+        return True

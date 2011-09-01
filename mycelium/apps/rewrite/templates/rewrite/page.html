@@ -23,11 +23,14 @@
 {% if request.user.is_authenticated %}
 	<div id="rewrite_admin_bar">
 	{% block admin_bar %}
-		Admin Bar:
+		<a href="{% url rewrite:manage_home %}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Manage Website</span></a>
+		<span class="admin_bar_title">Admin Panel</span>
+		<div class="rewrite_form_container list_block ui-state-default">
 		<div class="rewrite_form_toggle_link"><icon class="ui-icon"></icon>Page Details</div>
 		<form action="" method="POST" class="blog_post_form rewrite_associated_form">
 		{{page_form.as_p}}
 		</form>
+		</div>
 		{% include "rewrite/_admin_bar_save_and_editor.html" %}		
 	{% endblock %}
 	</div>

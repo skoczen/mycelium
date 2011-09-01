@@ -321,9 +321,11 @@ rewrite.editor.ui.update_admin_bar = function() {
 		$("#rewrite_admin_bar .edit_link").hide();
 		$("#rewrite_admin_bar .save_links").show();
 		$(".rewrite_form_toggle_link").show();	
+		$(".rewrite_form_container").show();
 		if (rewrite.editor.state.details_visible) {
 			$(".rewrite_form_toggle_link icon").addClass("ui-icon-triangle-1-s").removeClass("ui-icon-triangle-1-e");
 			$(".rewrite_associated_form").show();
+
 		} else {
 			$(".rewrite_form_toggle_link icon").removeClass("ui-icon-triangle-1-s").addClass("ui-icon-triangle-1-e");	
 			$(".rewrite_associated_form").hide();
@@ -334,6 +336,7 @@ rewrite.editor.ui.update_admin_bar = function() {
 		$("#rewrite_admin_bar .save_links").hide();
 		$(".rewrite_form_toggle_link").hide();
 		$(".rewrite_associated_form").hide();
+		$(".rewrite_form_container").hide();
 	}
 
 }
