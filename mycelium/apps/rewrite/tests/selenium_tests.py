@@ -14,8 +14,13 @@ class TestRewriteManagement(QiConservativeSeleniumTestCase, RewriteTestAbstracti
     def setUp(self, *args, **kwargs):
         self.verificationErrors = []
 
+    def test_management_console_loads(self):
+        self.get_to_management_console()
+        self.assert_in_the_management_console()
+
     def test_creating_a_page(self):
         self.get_to_management_console()
+        self.assert_in_the_management_console()
         self.log_in(username="admin")   
 
 

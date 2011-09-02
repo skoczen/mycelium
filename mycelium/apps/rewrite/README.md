@@ -48,6 +48,7 @@ Standard stuff:
 * Include the public and private URLs where you want them. Default reversing assumes the app names are "website" for public and "rewrite" for private.
 * `./manage.py syncdb`
 * `./manage.py migrate`
+* `./manage.py collectstatic` (before deploying)
 
 Usage
 =====
