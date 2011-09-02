@@ -1,3 +1,4 @@
+from django.conf.urls.defaults import *
 from rewrite.views.private import RewritePrivateViews
 from django.contrib.auth.decorators import login_required
 
@@ -11,7 +12,7 @@ private_views = RewritePrivateViews()
 
 # Define the URLs as a method, so the views class can be subclassed, and added as desired
 def private_url_patterns(view_class):
-    return parser.patterns('',
+    return ('',
         url(r'$',                                    login_required(view_class.pages),                       name="manage_home"                  ),
         url(r'pages$',                               login_required(view_class.pages),                       name="manage_pages"                 ),
         url(r'templates$',                           login_required(view_class.templates),                   name="manage_templates"             ),
@@ -31,5 +32,5 @@ def private_url_patterns(view_class):
     )
 
 # Acually set the URL patterns. 
-urlpatterns = private_url_patterns(private_views)
+urlpatterns = parser.patterns(*private_url_patterns(private_views))
 

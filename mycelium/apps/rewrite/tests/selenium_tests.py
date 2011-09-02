@@ -1,13 +1,7 @@
 # encoding: utf-8
 from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
-import datetime
-from test_factory import Factory
 from rewrite.tests.selenium_abstractions import RewriteTestAbstractions
-from accounts.models import Account
-from django.conf import settings
-from django.core.cache import cache
-from django.template.defaultfilters import date
     
 class TestRewriteManagement(QiConservativeSeleniumTestCase, RewriteTestAbstractions):
 
@@ -18,10 +12,18 @@ class TestRewriteManagement(QiConservativeSeleniumTestCase, RewriteTestAbstracti
         self.get_to_management_console()
         self.assert_in_the_management_console()
 
+    def test_creating_a_section(self):
+        self.create_a_section(name="My Test Section")
+
     def test_creating_a_page(self):
-        self.get_to_management_console()
-        self.assert_in_the_management_console()
-        self.log_in(username="admin")   
+        self.create_a_section()
+        self.create_a_page(name="My Test Page")
+        
+    def test_that_a_created_page_is_viewable_to_an_editor(self):
+        self.create_a_section(name="Section To Test")
+        self.create_a_page(name="My Test Page")
+        self.open_page_publicly(name="My Test Page", section="Section To Test")
+        time.sleep(50)
 
 
 

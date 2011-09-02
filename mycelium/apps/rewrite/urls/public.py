@@ -1,3 +1,4 @@
+from django.conf.urls.defaults import *
 from rewrite.views.public import RewritePublicViews
 
 # I like pretty non-regex URL patterns.
@@ -10,7 +11,7 @@ public_views = RewritePublicViews()
 
 # Define the URLs as a method, so the views class can be subclassed, and added as desired
 def public_url_patterns(view_class):
-    return parser.patterns('',
+    return ('',
         url(r'^blog/$',                                  view_class.blog_home,    name="blog_home"),
         url(r'^blog/{entry_slug:slug}$',                 view_class.blog_entry,   name="blog_entry"),
         url(r'^{section:slug}$',                         view_class.page,         name="section"),
@@ -18,4 +19,4 @@ def public_url_patterns(view_class):
     )
 
 # Acually set the URL patterns. 
-urlpatterns = public_url_patterns(public_views)
+urlpatterns = parser.patterns(*public_url_patterns(public_views))
