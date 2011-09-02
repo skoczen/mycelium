@@ -32,9 +32,12 @@ Currently incomplete, but with slow but steady improvement. We're a startup, and
 Dependencies
 ============
 - Django >= 1.3
-- django_sane_testng
-- qi_toolkit : Some of the tests, etc depend on the helper functions in the toolkit. Long term, we'll either remove the dependency, or integrate it in a more stable/reliable way.
 - south, if you'd like to use the migrations (we'll maintain any schema changes in it.)
+
+For the tests:
+- django_sane_testing
+- qi_toolkit : Some of the tests, etc depend on the helper functions in the toolkit. Long term, we'll either remove the dependency, or integrate it in a more stable/reliable way.
+- maybe some other dependencies? We're using it within a pretty heavy functional testing structure, so it's possible something has been missed. Please file an issue if so. 
 
 Installation
 ============
