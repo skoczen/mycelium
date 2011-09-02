@@ -14,18 +14,46 @@ I created django-rewrite to provide a simple website editor and blog that was a 
 
 If you have multiple, nested sections of content, please use one of the industrial solutions.  If you *need* tracebacks in your blog, please use one of the heavier blogging apps.  But for the 90% of projects that don't need those advanced features, here's something simpler.
 
+The basic philosophy for both content editing and template editing is this: You should see, clearly, exactly what your content is going to look like.  In the editor, this means with live, proper stylesheets and formatting.  In the template editor, that means the designer sees the actual HTML - no magic substitutions or placeholder abstractions here.
+
+
+Project Status
+==============
+
+We use rewrite in production to manage our site and provide our clients' over at GoodCloud[https://www.agoodcloud.com].  It's an actively maintained tool, and pull requests are welcome. 
+
+
+Documentation Status
+====================
+
+Currently incomplete, but with slow but steady improvement. We're a startup, and as you might imagine, our priorities are often elsewhere.  But it is valued, we're working on it, and your suggestions and improvements are always welcome.
 
 
 Dependencies
 ============
-
+- Django >= 1.3
+- django_sane_testng
+- qi_toolkit : Some of the tests, etc depend on the helper functions in the toolkit. Long term, we'll either remove the dependency, or integrate it in a more stable/reliable way.
+- south, if you'd like to use the migrations (we'll maintain any schema changes in it.)
 
 Installation
 ============
+Standard stuff: 
 
+* pip install, from here for now.  W're looking into pypi, but haven't gotten to it yet.
+* Add rewrite to `INSTALLED_APPS`
+* Include the public and private URLs where you want them. Default reversing assumes the app names are "website" for public and "rewrite" for private.
+* `./manage.py syncdb`
+* `./manage.py migrate`
 
 Usage
 =====
+
+Add sections and pages via the management console.  Drag/drop to reorder.
+
+To edit a page, visit it logged in, and click "Edit Page".  It's now editable. Make your changes, and click "Save".  That's it. You'll notice throught the process, that it looks like you're browsing the site. That's the point.
+
+More detailed instructions coming, but that should be enough to get you started!
 
 
 Templates and Styling
@@ -38,33 +66,9 @@ CSS is good. JS is good.  You have full control of both in styling up pages.  By
 * jQuery UI
 * 1140px templating system.
 
-We've taken the simplest and most flexibile approach to page customization by providing a few flexibile integration points.  The final page is rendered roughly like this:
+We've taken the simplest and most flexibile approach to page customization by providing a few flexibile integration points.  When editing a template, you'll see the full structure of the final page. Rewrite uses a simple, additive approach that means you can add side content, headers, footers, and pretty much whatever you'd like.  You can also disable the navigation, either via the interface, or with CSS.
 
-```
-<html>
-	<head>
-	  <title>{{ page title }}</title>
-	  <meta name="description" content="{{ page description }}">
-	  <meta name="keywords" content="{{ page keywords }}">
-
-	  {# Core JS #}
-	  {{ template.extra_head_html }}
-	</head>
-	<body>
-	  {{ template.page_header_html }}
-	  {# main navigation #}
-	  {# section navigation #}
-
-	  {{ template.pre_content_html }}
-	  {{ page.content }}
-	  {{ template.post_content_html }}
-	 </body>
-</html>
-```
-
-This means that you can add side content, headers, footers, and pretty much whatever you'd like in a template.  You can also disable the navigation, either via the interface, or with CSS.
-
-Typically, the use case is that developers build out a first template or two for their clients, using their HTML skills.  There's no pretty UI editing to the template HTML chunks, and that's by design. Knowledge of HTML isn't necessary to use the editor or the blog, but it is for the templates. We want that to be abundantly clear to users.
+Typically, the use case is that developers build out a first template or two for their clients, using their HTML skills.  There's no pretty UI editing to the template HTML, and that's by design. Knowledge of HTML isn't necessary to use the editor or the blog, but it is to write templates. We want that to be abundantly clear to users.
 
 
 Advanced Integration
@@ -72,6 +76,18 @@ Advanced Integration
 
 Subclassing really is better than sliced bread, and rewrite is built around it.  You can use rewrite as a set of base classes and functionality, and extend to integrate with your particular needs.
 
-- include URLS, 
-- include views, subclass and change.
-- include models and subclass.
+===Changing the templates===
+
+* Standard django template stuff applies. Make a `/rewrite` folder in your project `templates` folder, and replace any templates you'd like.
+
+===Changing the views===
+
+* The views are class-based, so you can import the default views class, subclass, and change specific methods to meet your needs.
+* The urls are also abstracted - so once you've written your own views, if you have the same url patterns, you can just pass your updated RewritePublicViews or RewritePrivateViews to the constructor, and move on.
+
+===Changing the models===
+
+* Subclass the models
+* Update the models and views to point to your new models
+* Include the rewrite urls, and pass your updated class to the url builder.
+
