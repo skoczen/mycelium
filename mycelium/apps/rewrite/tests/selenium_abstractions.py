@@ -4,8 +4,6 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.template.defaultfilters import slugify
 
-# TEMP
-settings.LIVE_SERVER_PORT = 8000
 
 class RewriteTestAbstractions(object):
 
@@ -43,11 +41,7 @@ class RewriteTestAbstractions(object):
     
     def assert_in_the_management_console(self):
         sel = self.selenium
-        try:
-            assert sel.is_text_present("Website Manager")
-        except:
-            time.sleep(60)
-            raise Exception
+        assert sel.is_text_present("Website Manager")
 
     def get_to_manage_pages(self):
         self.get_to_management_console()

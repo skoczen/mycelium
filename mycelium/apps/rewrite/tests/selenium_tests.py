@@ -3,10 +3,16 @@ from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import time
 from rewrite.tests.selenium_abstractions import RewriteTestAbstractions
     
-class TestRewriteManagement(QiConservativeSeleniumTestCase, RewriteTestAbstractions):
+# class TestRewriteManagement(QiConservativeSeleniumTestCase, RewriteTestAbstractions):
 
+#     def setUp(self, *args, **kwargs):
+#         self.verificationErrors = []
+
+from accounts.tests.selenium_abstractions import AccountTestAbstractions
+class TestRewriteManagement(QiConservativeSeleniumTestCase, AccountTestAbstractions):
+    
     def setUp(self, *args, **kwargs):
-        self.verificationErrors = []
+        self.account = self.setup_for_logged_in()
 
     def test_management_console_loads(self):
         self.get_to_management_console()
