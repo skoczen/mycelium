@@ -19,7 +19,6 @@ If you have multiple, nested sections of content, please use one of the industri
 Dependencies
 ============
 
-dselector (need to bundle this)
 
 Installation
 ============
@@ -71,8 +70,8 @@ Typically, the use case is that developers build out a first template or two for
 Advanced Integration
 ====================
 
-You can also use rewrite as a set of base classes and functionality, and extend to integrate with your particular needs.
+Subclassing really is better than sliced bread, and rewrite is built around it.  You can use rewrite as a set of base classes and functionality, and extend to integrate with your particular needs.
 
-- include URLS
-- include views
+- include URLS, 
+- include views, subclass and change.
 - include models and subclass.

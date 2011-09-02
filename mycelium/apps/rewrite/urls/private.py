@@ -1,27 +1,35 @@
-from django.conf.urls.defaults import *
-from django.conf import settings
-from rewrite.views import private as views
+from rewrite.views.private import RewritePrivateViews
+from django.contrib.auth.decorators import login_required
 
-import dselector
+# I like pretty non-regex URL patterns.
+from rewrite.libs import dselector
 parser = dselector.Parser()
 url = parser.url
 
-urlpatterns = parser.patterns('',                      
-    url(r'$',                                    views.pages,                       name="manage_home"                  ),
-    url(r'pages$',                               views.pages,                       name="manage_pages"                 ),
-    url(r'templates$',                           views.templates,                   name="manage_templates"             ),
-    url(r'blog$',                                views.blog,                        name="manage_blog"                  ),
-    url(r'settings$',                            views.settings,                    name="manage_settings"              ),
-    url(r'save-page/{page_id:digits}$',          views.save_page,                   name="save_page"                    ),
-    url(r'save-post/{post_id:digits}$',          views.save_post,                   name="save_blog_post"               ),
-    url(r'new-page$',                            views.new_page,                    name="new_page"                     ),
-    url(r'new-section$',                         views.new_section,                 name="new_section"                  ),
-    url(r'new-template$',                        views.new_template,                name="new_template"                 ),
-    url(r'edit-template/{template_id:digits}$',  views.edit_template,               name="edit_template"                ),
-    url(r'new-blog-post$',                       views.new_blog_post,               name="new_blog_post"                ),
-    url(r'delete-page/{page_id:digits}$',        views.delete_page,                 name="delete_page"                  ),
-    url(r'delete-post/{post_id:digits}$',        views.delete_post,                 name="delete_post"                  ),
-    url(r'delete-template/{template_id:digits}$',views.delete_template,             name="delete_template"              ),
-    url(r'save-order$',                          views.save_page_and_section_order, name="save_page_and_section_order"  ),
+# Instantiate the views class
+private_views = RewritePrivateViews()
 
-)
+# Define the URLs as a method, so the views class can be subclassed, and added as desired
+def private_url_patterns(view_class):
+    return parser.patterns('',
+        url(r'$',                                    login_required(view_class.pages),                       name="manage_home"                  ),
+        url(r'pages$',                               login_required(view_class.pages),                       name="manage_pages"                 ),
+        url(r'templates$',                           login_required(view_class.templates),                   name="manage_templates"             ),
+        url(r'blog$',                                login_required(view_class.blog),                        name="manage_blog"                  ),
+        url(r'settings$',                            login_required(view_class.settings),                    name="manage_settings"              ),
+        url(r'save-page/{page_id:digits}$',          login_required(view_class.save_page),                   name="save_page"                    ),
+        url(r'save-post/{post_id:digits}$',          login_required(view_class.save_post),                   name="save_blog_post"               ),
+        url(r'new-page$',                            login_required(view_class.new_page),                    name="new_page"                     ),
+        url(r'new-section$',                         login_required(view_class.new_section),                 name="new_section"                  ),
+        url(r'new-template$',                        login_required(view_class.new_template),                name="new_template"                 ),
+        url(r'edit-template/{template_id:digits}$',  login_required(view_class.edit_template),               name="edit_template"                ),
+        url(r'new-blog-post$',                       login_required(view_class.new_blog_post),               name="new_blog_post"                ),
+        url(r'delete-page/{page_id:digits}$',        login_required(view_class.delete_page),                 name="delete_page"                  ),
+        url(r'delete-post/{post_id:digits}$',        login_required(view_class.delete_post),                 name="delete_post"                  ),
+        url(r'delete-template/{template_id:digits}$',login_required(view_class.delete_template),             name="delete_template"              ),
+        url(r'save-order$',                          login_required(view_class.save_page_and_section_order), name="save_page_and_section_order"  ),
+    )
+
+# Acually set the URL patterns. 
+urlpatterns = private_url_patterns(private_views)
+
