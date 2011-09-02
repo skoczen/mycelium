@@ -9,7 +9,7 @@ from rewrite.tests.selenium_abstractions import RewriteTestAbstractions
 #         self.verificationErrors = []
 
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
-class TestRewriteManagement(QiConservativeSeleniumTestCase, AccountTestAbstractions):
+class TestRewriteManagement(QiConservativeSeleniumTestCase, RewriteTestAbstractions, AccountTestAbstractions):
     
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in()
@@ -26,10 +26,11 @@ class TestRewriteManagement(QiConservativeSeleniumTestCase, AccountTestAbstracti
         self.create_a_page(name="My Test Page")
         
     def test_that_a_created_page_is_viewable_to_an_editor(self):
+        sel = self.selenium
         self.create_a_section(name="Section To Test")
         self.create_a_page(name="My Test Page")
         self.open_page_publicly(name="My Test Page", section="Section To Test")
-        time.sleep(50)
+        self.assertEqual(sel.get_title(),"My Test Page")
 
 
 

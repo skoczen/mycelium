@@ -36,7 +36,7 @@ class RewriteTestAbstractions(object):
         if not name or not section:
             raise Exception, "Missing page name or section"
         else:
-            return self._open_public_url(reverse("website:page", args=(slugify(section),slugify(name))))
+            return self._open_public_url("/%s/%s" %(slugify(section),slugify(name)))
 
     
     def assert_in_the_management_console(self):
@@ -63,3 +63,6 @@ class RewriteTestAbstractions(object):
         sel.click("css=.new_page_link")
         sel.type("css=.new_page_form #id_title", name)
         sel.click("css=.new_page_form input[type=submit]")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=section .page")
+        assert sel.is_text_present(name)

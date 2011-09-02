@@ -30,7 +30,7 @@ urlpatterns = patterns('',
     url(r'^', include('django_ses.urls')),
     # url(r'^tinymce/', include('tinymce.urls')),
     url(r'^', include('mediasync.urls')),
-    url(r'^',              include('rewrite.urls.public',     app_name="rewrite",         namespace="website")),
+    url(r'public-website^',              include('rewrite.urls.public',     app_name="rewrite",         namespace="website")),
 )
 
 if settings.DEBUG:
