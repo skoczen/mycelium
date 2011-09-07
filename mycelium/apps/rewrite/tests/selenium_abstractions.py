@@ -23,6 +23,10 @@ class RewriteTestAbstractions(object):
         sel.open(self._public_urlify(url))
         sel.wait_for_page_to_load("30000")
 
+    def type_into_codemirror(self, css_selector, string):
+        sel = self.selenium
+        sel.get_eval("this.browserbot.getCurrentWindow().rewrite.editor.state.codeMirrorInstances['%s'].setValue('%s')" % (css_selector, string))
+
     def get_to_management_console(self, username="admin", password="admin"):
         sel = self.selenium
         self._open_private_url(reverse("rewrite:manage_home"))

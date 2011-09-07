@@ -14,10 +14,6 @@ class TestRewriteManagement(QiConservativeSeleniumTestCase, RewriteTestAbstracti
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in()
 
-    def type_into_codemirror(self, css_selector, str):
-        sel = self.selenium
-        sel.click("css=%s +.CodeMirror")
-
     def test_management_console_loads(self):
         self.get_to_management_console()
         self.assert_in_the_management_console()
@@ -180,14 +176,14 @@ class TestRewriteManagement(QiConservativeSeleniumTestCase, RewriteTestAbstracti
 
         self.get_to_manage_templates()
         self.edit_template_number(0)
-        self.type_into_codemirror("css=#id_extra_head_html", "<script>alert('test');</script>")
-        self.type_into_codemirror("css=#id_page_header_html", "Page Header")
-        self.type_into_codemirror("css=#id_pre_content_html",  "This is pre.")
-        self.type_into_codemirror("css=#id_post_content_html", "This is post.")
+        self.type_into_codemirror("id_extra_head_html", "<script>$(function(){setTimeout(function(){window.alert(\"test\");},300);});</script>")
+        self.type_into_codemirror("id_page_header_html", "Page Header")
+        self.type_into_codemirror("id_pre_content_html",  "This is pre.")
+        self.type_into_codemirror("id_post_content_html", "This is post.")
         self.save_template_changes()
-        time.sleep(10)
 
         self.open_page_publicly(name="My Test Page 1", section="Section 1")
+        time.sleep(0.3)
         assert sel.is_alert_present()
         assert sel.is_text_present("Page Header")
         assert sel.is_text_present("This is pre.")

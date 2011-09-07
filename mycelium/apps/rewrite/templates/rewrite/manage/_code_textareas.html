@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="{{STATIC_URL}}css/rewrite/codemirror/theme/default.css">
 <script>
 	$(function(){
+		rewrite.editor.state.codeMirrorInstances = {}
 		$("textarea").each(function(){
-			CodeMirror.fromTextArea($(this)[0], {
+			rewrite.editor.state.codeMirrorInstances[$(this).attr("id")] = CodeMirror.fromTextArea($(this)[0], {
 				name: "text/html", 
 				htmlMode: true,
 				tabMode: "indent",
 			});	
 		});
+		console.log(rewrite.editor.state.codeMirrorInstances)
 	});
 </script>
