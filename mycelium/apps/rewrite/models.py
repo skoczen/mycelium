@@ -1,5 +1,6 @@
 from django.db import models
 from rewrite import DEFAULT_CONTENT_FILLER
+from rewrite.libs.slughifi import slughifi
 from django.template.defaultfilters import slugify
 import datetime
 
@@ -61,7 +62,7 @@ class RewriteSection(models.Model):
         return "%s" % self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.slug = slughifi(self.name)
         super(RewriteSection, self).save(*args, **kwargs)
     
     class Meta:
@@ -76,10 +77,10 @@ class RewriteSection(models.Model):
 
 class RewriteTemplate(models.Model):
     name                = models.CharField(max_length=255, blank=True, null=True)
-    page_header_html    = models.TextField(blank=True, null=True, default="<!-- Enter any HTML that should show above the navigation (like a page header) here. -->")
-    pre_content_html    = models.TextField(blank=True, null=True, default="<!-- Enter any HTML that goes before the content here -->")
+    page_header_html    = models.TextField(blank=True, null=True, default="<!-- Type any HTML that should show above the navigation (like a page header) here. -->")
+    pre_content_html    = models.TextField(blank=True, null=True, default="<!-- Type any HTML that goes before the content here -->")
     post_content_html   = models.TextField(blank=True, null=True, default="<!-- Type any HTML that goes after the content here -->")
-    extra_head_html     = models.TextField(blank=True, null=True, default="<!-- Enter any JavaScript or CSS that should be in the page <HEAD> here. -->")
+    extra_head_html     = models.TextField(blank=True, null=True, default="<!-- Type any JavaScript or CSS that should be in the page <HEAD> here. -->")
     show_main_nav       = models.BooleanField(default=True)
     show_section_nav    = models.BooleanField(default=True)
     website             = models.ForeignKey(RewriteWebsite)
@@ -122,7 +123,7 @@ class RewriteContentBase(models.Model):
         if self.id and self.is_published:
             old_me = self.__class__.objects.get(pk=self.id)
             if not old_me.is_published:
-                self.slug = slugify(self.title)
+                self.slug = slughifi(self.title)
                 self.publish_date = datetime.datetime.now()
         elif not self.is_published or not self.id:
             self.slug = slugify(self.title)

@@ -46,6 +46,28 @@ class RewriteTestAbstractions(object):
     def get_to_manage_pages(self):
         self.get_to_management_console()
 
+    def get_to_manage_templates(self):
+        sel = self.selenium
+        self.get_to_management_console()
+        sel.click("link=Templates")
+        sel.wait_for_page_to_load("30000")
+        self.assert_on_the_templates_list()
+
+    def assert_on_the_templates_list(self):
+        sel = self.selenium
+        assert sel.is_text_present("Click on a template name to edit.")
+
+    def edit_template_number(self, number):
+        sel = self.selenium
+        sel.click("css=template:nth(%s) a" % number)
+        sel.wait_for_page_to_load("30000")
+
+    def save_template_changes(self):
+        sel = self.selenium
+        sel.click("css=#id_save_template_changes")
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_text_present("Changes Saved.")
+
     def create_a_section(self, name="Section One"):
         sel = self.selenium
         self.get_to_manage_pages()
@@ -57,12 +79,12 @@ class RewriteTestAbstractions(object):
         assert sel.is_text_present(name)
 
 
-    def create_a_page(self, name="Test Page"):
+    def create_a_page(self, name="Test Page", section_number=0):
         sel = self.selenium
         self.get_to_manage_pages()
-        sel.click("css=.new_page_link")
-        sel.type("css=.new_page_form #id_title", name)
-        sel.click("css=.new_page_form input[type=submit]")
+        sel.click("css=.new_page_link:nth(%s)" % section_number)
+        sel.type("css=.new_page_form:nth(%s) #id_title" % section_number, name)
+        sel.click("css=.new_page_form:nth(%s) input[type=submit]" % section_number)
         sel.wait_for_page_to_load("30000")
         assert sel.is_element_present("css=section .page")
         assert sel.is_text_present(name)

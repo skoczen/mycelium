@@ -154,11 +154,13 @@ class RewritePrivateViews(object):
     def edit_template(self, request, template_id):
         tab = "templates"
         website = self._get_website(request)
+        changes_saved = False
         template = get_object_or_404(RewriteTemplate, pk=template_id, website=website)
         if request.method == "POST":
             template_form = RewriteTemplateForm(request.POST, instance=template)
             if template_form.is_valid():
                 template = template_form.save()
+                changes_saved = True
         else:
             template_form = RewriteTemplateForm(instance=template)
         

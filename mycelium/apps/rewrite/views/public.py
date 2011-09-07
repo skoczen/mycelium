@@ -15,7 +15,7 @@ class RewritePublicViews(object):
     def page(self, request, section=None, page_name=None):
         website = self._get_website(request)
         if page_name:
-            page = get_object_or_404(RewritePage,slug=page_name, website=website)
+            page = get_object_or_404(RewritePage, slug=page_name, website=website, section__slug=section)
             template = page.template
             section = page.section
         else:

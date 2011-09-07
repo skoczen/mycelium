@@ -216,3 +216,10 @@ code.main_nav.disabled, code.section_nav.disabled {
 .settings_form #id_domain {
 	width: 300px;
 }
+.in_place_changes_saved {
+	display: block;
+	font-size: 16px;
+	padding: 10px;
+	width: 50%;
+	margin: 10px auto;
+}
