@@ -92,3 +92,34 @@ class RewriteTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
         assert sel.is_element_present("css=section .page")
         assert sel.is_text_present(name)
+
+
+    def create_a_template(self, name="Test Template"):
+        sel = self.selenium
+        self.get_to_manage_pages()
+        self.get_to_manage_templates()
+        assert not sel.is_element_present("css=templates template:nth(1)")
+        sel.click("css=.new_template_link" )
+        sel.type("css=.new_template_form #id_name", name)
+        sel.click("css=.new_template_form input[type=submit]" )
+        sel.wait_for_page_to_load("30000")
+        assert sel.is_element_present("css=templates template:nth(1)")
+        assert sel.is_text_present(name)
+
+    def start_page_or_post_editing(self):
+        sel = self.selenium
+        sel.click("css=.edit_link")
+        time.sleep(0.25)
+        assert sel.is_element_present("css=.save_link")
+
+    def set_page_content(self, content="Test content"):
+        self.type_into_codemirror("rewrite_editable_body", content)
+
+    def save_page_or_post(self):
+        sel = self.selenium
+        sel.click("css=.save_link")
+        time.sleep(2)
+        assert sel.is_element_present("css=.edit_link")
+
+        
+        

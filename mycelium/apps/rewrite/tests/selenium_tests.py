@@ -189,6 +189,27 @@ class TestRewriteManagement(QiConservativeSeleniumTestCase, RewriteTestAbstracti
         assert sel.is_text_present("This is pre.")
         assert sel.is_text_present("This is post.")
 
+    def test_creating_a_template(self):
+        self.create_a_template()
+
+    def test_editing_a_page(self):
+        sel = self.selenium
+
+        test_content = "Here's some test content"
+
+        self.create_a_section(name="Section 1")
+        self.create_a_page(name="My Test Page 1")
+        self.open_page_publicly(name="My Test Page 1", section="Section 1")
+        self.start_page_or_post_editing()
+        self.set_page_content(test_content)
+        self.save_page_or_post()
+        assert sel.is_text_present(test_content)
+        sel.refresh()
+        assert sel.is_text_present(test_content)
+        
+
+        
+
 class TestRewriteBlog(QiConservativeSeleniumTestCase, RewriteTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
