@@ -34,12 +34,12 @@
 		<div class="button_title">My Account</div>
 		<div class="button_description">Update username, password, and contact info</div>
 	</a>
-	{% if request.account.has_alpha_access %}
-	<a href="{% url rewrite:manage_home %}" class="mycelium_btn more_button website_button">
-		<div class="button_title">Website and Blog</div>
-		<div class="button_description">Update your website or blog</div>
-	</a>
-	{% endif %}
+	{# {% if request.account.has_alpha_access %}  #}
+	{# <a href="{% url rewrite:manage_home %}" class="mycelium_btn more_button website_button">  #}
+	{# 	<div class="button_title">Website and Blog</div>  #}
+	{# 	<div class="button_description">Update your website or blog</div>  #}
+	{# </a>  #}
+	{# {% endif %}  #}
 
 	</div>
 <!--	<div class="more_row">

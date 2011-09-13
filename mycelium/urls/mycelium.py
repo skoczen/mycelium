@@ -21,8 +21,6 @@ urlpatterns = patterns('',
     url(r'^rules/',        include('rules.urls',               app_name="rules",           namespace="rules")),
     url(r'^',              include('accounts.urls.mycelium',   app_name="accounts",        namespace="accounts")),
     url(r'^dashboard/',    include('dashboard.urls',           app_name="dashboard",       namespace="dashboard")),
-    url(r'^website/',      include('rewrite.urls.private',     app_name="rewrite",         namespace="rewrite")),
-
     
     # (r'^administration/doc/', include('django.contrib.admindocs.urls')),
     # (r'^administration/', include(admin.site.urls)),
@@ -30,7 +28,7 @@ urlpatterns = patterns('',
     url(r'^', include('django_ses.urls')),
     # url(r'^tinymce/', include('tinymce.urls')),
     url(r'^', include('mediasync.urls')),
-    url(r'^public-website/',              include('rewrite.urls.public',     app_name="rewrite",         namespace="website")),
+    
 )
 
 if settings.DEBUG:

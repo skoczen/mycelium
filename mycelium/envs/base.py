@@ -164,7 +164,7 @@ INSTALLED_APPS = (
 
     'marketing_site',
     'email_list',
-    'rewrite',
+    # 'rewrite',
     'people',
     'organizations',
     'mycelium_core',
