@@ -4,7 +4,8 @@ from django.utils.translation import ugettext as _
 from managers import AccountDataModelManager, ExplicitAccountDataModelManager, AccountManager
 from qi_toolkit.models import TimestampModelMixin, SimpleSearchableModel
 from qi_toolkit.helpers import classproperty
-from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII, BILLING_PROBLEM_STATII
+from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII, BILLING_PROBLEM_STATII, FEATURE_ACCESS_STATII
+
 from django.conf import settings
 from pychargify.api import ChargifySubscription, ChargifyCustomer, Chargify
 import hashlib
@@ -24,7 +25,6 @@ class Plan(TimestampModelMixin):
     @classmethod
     def monthly_plan(cls):
         return cls.objects.get_or_create(name="Monthly")[0]
-
 
 class Account(TimestampModelMixin, SimpleSearchableModel):
     name = models.CharField(max_length=255, verbose_name="Organization Name")
@@ -56,6 +56,10 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     chargify_balance                    = models.FloatField(blank=True, null=True, default=0)
 
     is_demo                             = models.BooleanField(default=False)
+
+    feature_access_level                = models.IntegerField(default=FEATURE_ACCESS_STATII[0][0], choices=FEATURE_ACCESS_STATII)
+
+
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -575,6 +579,21 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     def num_spreadsheets(self):
         return self.spreadsheet_set.count()
 
+    @property
+    def has_beta_access(self):
+        return self.feature_access_level >= FEATURE_ACCESS_STATII[1][0]
+
+    @property
+    def has_alpha_access(self):
+        return self.feature_access_level >= FEATURE_ACCESS_STATII[2][0]
+    
+    @property
+    def has_bleeding_edge_access(self):
+        return self.feature_access_level >= FEATURE_ACCESS_STATII[3][0]
+    
+    @property
+    def has_access_to_level(self, access_level):
+        return self.feature_access_level >= access_level
 
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)

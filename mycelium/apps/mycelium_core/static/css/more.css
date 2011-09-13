@@ -53,6 +53,10 @@
 	background-image: url("../images/icon-spreadsheet-76.png");
 	background-position: 24px 10px;	
 }
+.website_button {
+	background-image: url("../images/icon-website-76.png");
+	background-position: 24px 10px;	
+}
 .tag_button {
 	background-image: url("../images/icon-tag-100.png");
 	background-position: 14px 23px;	

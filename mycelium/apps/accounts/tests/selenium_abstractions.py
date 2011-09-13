@@ -73,6 +73,7 @@ class AccountTestAbstractions(object):
         self.account = self.create_demo_site(name=name, mostly_empty=mostly_empty, **kwargs)
         self.go_to_the_login_page(site=name)
         self.log_in()
+
         self.assert_login_succeeded()
         return self.account
 
