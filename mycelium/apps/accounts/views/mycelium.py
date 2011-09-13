@@ -235,8 +235,8 @@ def do_account_delete(request):
     a = request.account
     a.delete()
 
-    print "all accounts"
-    print Account.objects.all()
-    print "deleted"
+    # print "all accounts"
+    # print Account.objects.all()
+    # print "deleted"
 
     return HttpResponseRedirect( "http://%s/account-deleted" % (settings.BASE_DOMAIN))
