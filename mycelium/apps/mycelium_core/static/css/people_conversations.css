@@ -168,6 +168,10 @@ tab_contents.people_conversations_tab .conversation_body {
 	margin-left: 80px;
 	min-height: 40px;
 }
+.people_conversations_tab #id_body { 
+	min-height: 60px;
+	font-size: 14px;
+}
 tab_contents.people_conversations_tab .more_conversations_link {
 	clear: left;
 	float: left;

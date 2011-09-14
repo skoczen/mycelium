@@ -300,6 +300,7 @@ BASE_JS = [
 ]
 COMMON_JS = [
     "js/contrib/jquery.autogrow.js",
+    "js/contrib/jquery.autogrow.textarea.js",
     "js/contrib/jquery.ba-bbq.min.js",
 ]
 BASE_CSS = [

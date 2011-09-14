@@ -5,6 +5,7 @@ $(function(){
     $(".read_less_link").live("click",conversationTab.hide_full_conversation_text);
     $(".more_conversations_link").live("click",conversationTab.show_more_conversations);
     $("#new_conversation .conversation_type label").live("click",conversationTab.conversation_type_label_clicked);
+    $("#new_conversation #id_body").autoGrow();
 	bind_conversation_tab_events();
 });
 
