@@ -668,7 +668,7 @@ social_links {
 }
 .tab_content .person {
 	display: block;
-	padding-top: 208px;
+	padding-top: 348px;
 	background-repeat: no-repeat;
 	background-position: 50% 6px;
 	margin: 20px 5% 30px 5%;
@@ -683,10 +683,10 @@ social_links {
 	overflow: auto;
 }
 .person.tom {
-	background-image: url("../images/tom-picture-2.png");	
+	background-image: url("../images/tom-picture-3.png");	
 }
 .person.steven {
-	background-image: url("../images/steven-picture-2.png");	
+	background-image: url("../images/steven-picture-3.png");	
 }
 .person .title {
 	font-style: italic;
