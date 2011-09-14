@@ -775,7 +775,21 @@ social_links {
 }
 .home_page #footer {
 	background: none;
+	background: url("../images/marketing-footer-home.png");
+	color: #006bce;
+	
 	display: none;
+}
+.home_page #footer a {
+	color: #006bce;
+}
+.home_page #footer a:hover {
+	color: #EEE;
+}
+.home_page #footer .footer_table a.top_link {
+	color: #006bce;
+	border: 1px solid #006bce;
+	border-width: 0px 0px 1px 0px;
 }
 #footer {
 	position: absolute;
