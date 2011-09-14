@@ -12,6 +12,7 @@ from accounts.models import Account, UserAccount, AccessLevel
 from volunteers.models import Volunteer, CompletedShift
 from generic_tags.models import TagSet, Tag, TaggedItem
 from spreadsheets.models import Spreadsheet
+from conversations.models import Conversation
 from django.core import mail
 from django.test.client import Client
 from accounts import CANCELLED_SUBSCRIPTION_STATII
@@ -87,5 +88,10 @@ class TestFlightControl(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
 
     def test_all_non_demo_accounts_num_spreadsheets(self):
         self.assertEqual(Account.all_non_demo_accounts_num_total_spreadsheets, Spreadsheet.objects.filter(account__is_demo=False).count())
+
+    def test_all_non_demo_accounts_num_conversations(self):
+        self.assertEqual(Account.all_non_demo_accounts_total_number_of_conversations, Conversation.objects.filter(account__is_demo=False).count())
+
+
 
 

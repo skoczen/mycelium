@@ -52,6 +52,7 @@ def home(request):
     avg_tags_per_person = Account.all_non_demo_accounts_average_taggeditems_per_person
     avg_groups = Account.all_non_demo_accounts_average_groups_per_account
     avg_spreadsheets = Account.all_non_demo_accounts_average_spreadsheets_per_account
+    avg_conversations = Account.all_non_demo_accounts_average_number_of_conversations
 
     account_stats = Account
 

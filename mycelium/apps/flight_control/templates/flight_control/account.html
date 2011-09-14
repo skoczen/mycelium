@@ -127,6 +127,10 @@
 				<number>{{account.avg_vol_hours_per_person|floatformat:1|intcomma}}</number>
 				<description>Volunteer Hours per person</description>
 			</average>
+			<average class="info_block number_row num_hours">
+				<number>{{account.num_conversations|floatformat:0|intcomma}}</number>
+				<description>Conversations</description>
+			</average>
 			
 			<average class="info_block number_row num_tags">
 				<number>{{account.num_tags|floatformat:0|intcomma}}</number>
@@ -141,7 +145,7 @@
 				<description>Groups</description>
 			</average>
 			<average class="info_block number_row num_spreadsheets">
-				<number>{{account.num_spreadsheets|floatformat:1|intcomma}}</number>
+				<number>{{account.num_spreadsheets|floatformat:0|intcomma}}</number>
 				<description>Spreadsheets</description>
 			</average>
 		</column>

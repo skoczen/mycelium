@@ -450,6 +450,12 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
         return Spreadsheet.objects.non_demo.count()
 
 
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_total_number_of_conversations(cls):
+        from conversations.models import Conversation
+        return Conversation.objects.non_demo.count()
+
 
     @classproperty
     @classmethod
@@ -517,6 +523,13 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     def all_non_demo_accounts_average_spreadsheets_per_account(cls):
         return float(cls.all_non_demo_accounts_num_total_spreadsheets) / cls.num_non_demo_accounts_denominator
 
+    @classproperty
+    @classmethod
+    def all_non_demo_accounts_average_number_of_conversations(cls):
+        return float(cls.all_non_demo_accounts_total_number_of_conversations) / cls.num_non_demo_accounts_denominator    
+
+
+
     @property
     def num_people(self):
         return self.person_set.count()
@@ -531,6 +544,12 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     @property
     def num_organizations(self):
         return self.organization_set.count()
+
+
+    @property
+    def num_conversations(self):
+        return self.conversation_set.count()
+
 
     @property
     def num_donations(self):
