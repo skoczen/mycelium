@@ -450,7 +450,7 @@ class Factory(QiFactory):
             print_if_verbose(verbose, "Mostly empty called - skipping people, etc.")
 
         if create_subscription:
-            account.create_subscription()
+            sub = account.create_subscription()
             print_if_verbose(verbose, "Created subscription.")
 
         print_if_verbose(verbose, "Setup complete.")

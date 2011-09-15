@@ -4,12 +4,12 @@ from django.utils.translation import ugettext as _
 from managers import AccountDataModelManager, ExplicitAccountDataModelManager, AccountManager
 from qi_toolkit.models import TimestampModelMixin, SimpleSearchableModel
 from qi_toolkit.helpers import classproperty
-from accounts import ACCOUNT_STATII, CHARGIFY_STATUS_MAPPING, HAS_A_SUBSCRIPTION_STATII, CANCELLED_SUBSCRIPTION_STATII, ACTIVE_SUBSCRIPTION_STATII, BILLING_PROBLEM_STATII, FEATURE_ACCESS_STATII
+from accounts import *
 
+import stripe
 from django.conf import settings
-from pychargify.api import ChargifySubscription, ChargifyCustomer, Chargify
 import hashlib
-import datetime
+import datetime, time
 from dateutil.relativedelta import *
 from django.db.models import Sum, Count, Avg
 
@@ -26,14 +26,17 @@ class Plan(TimestampModelMixin):
     def monthly_plan(cls):
         return cls.objects.get_or_create(name="Monthly")[0]
 
+    @classmethod
+    def yearly_plan(cls):
+        return cls.objects.get_or_create(name="Yearly")[0]
+
 class Account(TimestampModelMixin, SimpleSearchableModel):
     name = models.CharField(max_length=255, verbose_name="Organization Name")
     subdomain = models.CharField(max_length=255, unique=True, db_index=True, verbose_name="GoodCloud address (myorganization.agodocloud.com)")
     is_active = models.BooleanField(default=True)
     agreed_to_terms = models.BooleanField()
     plan = models.ForeignKey(Plan, blank=True)
-
-    was_a_feedback_partner               = models.BooleanField(default=False)
+    
     challenge_has_imported_contacts      = models.BooleanField(default=False)
     challenge_has_set_up_tags            = models.BooleanField(default=False)
     challenge_has_added_board            = models.BooleanField(default=False)
@@ -47,15 +50,14 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
 
     status                              = models.IntegerField(default=ACCOUNT_STATII[0][0], choices=ACCOUNT_STATII)
     signup_date                         = models.DateTimeField(null=True, default=datetime.datetime.now())
-    last_billing_date                   = models.DateTimeField(blank=True, null=True)                # chargify sub: current_period_started_at
-    chargify_subscription_id            = models.IntegerField(blank=True, null=True)
-    chargify_state                      = models.CharField(max_length=255, blank=True, null=True)
-    chargify_cancel_at_end_of_period    = models.BooleanField(default=False)
-    chargify_next_assessment_at         = models.DateTimeField(blank=True, null=True)
-    chargify_last_four                  = models.CharField(blank=True, null=True, max_length=4)
-    chargify_balance                    = models.FloatField(blank=True, null=True, default=0)
+    free_trial_ends_date                = models.DateTimeField(blank=True, null=True) # cached from stripe
+    next_billing_date                   = models.DateTimeField(blank=True, null=True) # cached from stripe
+    last_four                           = models.CharField(max_length=4, blank=True, null=True) # cached from stripe
+    stripe_customer_id                  = models.CharField(max_length=255, blank=True, null=True)
+
 
     is_demo                             = models.BooleanField(default=False)
+    was_a_feedback_partner              = models.BooleanField(default=False)
 
     feature_access_level                = models.IntegerField(default=FEATURE_ACCESS_STATII[0][0], choices=FEATURE_ACCESS_STATII)
 
@@ -67,8 +69,9 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
         super(Account,self).save(*args, **kwargs)
             
     def delete(self, *args, **kwargs):
-        sub = self.chargify_subscription
+        sub = self.stripe_subscription
         if sub:
+            print "not written!"
             sub.unsubscribe("Account deleted")
         super(Account,self).delete(*args, **kwargs)
     
@@ -222,63 +225,73 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
         return None
 
     def create_subscription(self):
-        try:
-            assert self.chargify_subscription != None
-        except:
-            chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-            customer = chargify.Customer()
-            customer.first_name = self.primary_useraccount.full_name[:self.primary_useraccount.full_name.find(" ")]
-            customer.last_name = self.primary_useraccount.full_name[self.primary_useraccount.full_name.find(" ")+1:]
-            customer.organization = self.name
-            customer.reference = "%s" % self.id
-            customer.email = self.primary_useraccount.user.email
-            customer.save()
-
-            customer = chargify.Customer()
-            customer = customer.getByReference(self.pk)
-
-            subscription = chargify.Subscription()
-            subscription.product_handle = settings.CHARGIFY_PRODUCT_HANDLE
-            subscription.customer_reference = "%s" % self.id
-            # subscription.next_billing_at = self.free_trial_ends.isoformat()
-            subscription.save()
-
-            subscription = chargify.Subscription()
-            subscription = subscription.getByCustomerId(customer.id)[0]
-
-            self.chargify_subscription_id = subscription.id
-            self.save()
+        return self.stripe_subscription
 
     @property
-    def chargify_subscription(self):
-        from pychargify.api import ChargifyNotFound
-        try:
-            chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-            subscription = chargify.Subscription()
-            return subscription.getBySubscriptionId(self.chargify_subscription_id)
-        except ChargifyNotFound:
-            return None
+    def feedback_coupon_code(self):
+        if self.was_a_feedback_partner:
+            return "FEEDBACKTEAM"
+        return None
 
+    @property
+    def stripe_customer(self):
+        stripe.api_key = settings.STRIPE_SECRET
+        if not self.stripe_customer_id:
+            if not self.free_trial_ends_date:
+                if datetime.datetime.now() > self.signup_date + datetime.timedelta(days=30):
+                    # They signed up pre-stripe
+                    self.free_trial_ends_date = datetime.datetime.now() + datetime.timedelta(minutes=1)
+                else:
+                    self.free_trial_ends_date = self.signup_date + datetime.timedelta(days=30)
+            
+            # Create a stripe customer
+            c = stripe.Customer.create(
+                description=self.name,
+                email=self.primary_useraccount.email,
+                plan=MONTHLY_PLAN_NAME,
+                trial_end=self.free_trial_ends_date,
+                coupon=self.feedback_coupon_code
+            )
+            self.stripe_customer_id = c.id
+            self.save()
+            return c
+        else:
+            return stripe.Customer.retrieve(self.stripe_customer_id)
+
+    @property
+    def stripe_subscription(self):
+        return self.stripe_customer.subscription
 
     def update_account_status(self):
-        chargify_sub = self.chargify_subscription
-        if chargify_sub:
-            self.last_billing_date = chargify_sub.current_period_started_at
-            self.chargify_state = chargify_sub.state
-            
-            self.chargify_cancel_at_end_of_period = chargify_sub.cancel_at_end_of_period == "true"
-            self.chargify_balance = float(chargify_sub.balance_in_cents) / 100
-
-            self.chargify_next_assessment_at = chargify_sub.current_period_ends_at
-            if chargify_sub.credit_card:
-                self.chargify_last_four = chargify_sub.credit_card.masked_card_number[chargify_sub.credit_card.masked_card_number.rfind("-")+1:]
+        sub = self.stripe_subscription
+        # Possible statuses: canceled, past_due, unpaid, active, trialing
+        if sub.status == "trialing":
+            self.status = STATUS_FREE_TRIAL
+        elif sub.status == "active":
+            self.status = STATUS_ACTIVE
+        elif sub.status == "past_due":
+            self.status = STATUS_ACTIVE_BILLING_ISSUE
+        elif sub.status == "unpaid":
+            self.status = STATUS_DEACTIVATED
+        elif sub.status == "cancelled":
+            # should never happen
+            self.status = STATUS_DEACTIVATED
+        else:
+            raise Exception, "Unknown subscription status"
+        
+        if hasattr(sub,"current_period_end"):
+            # For when Stripe upgrades their API
+            if type(sub.current_period_end) == type(1):
+                self.next_billing_date = datetime.datetime.fromtimestamp(sub.current_period_end)
             else:
-                self.chargify_last_four = None
-
-            self.status = CHARGIFY_STATUS_MAPPING[chargify_sub.state][0]
-            self.save()
-
+                self.next_billing_date = sub.current_period_end
+        
+        self.save()
         return self
+    
+    @property
+    def has_card_on_file(self):
+        return self.last_four != None
     
     @property
     def age_in_months(self):
@@ -320,36 +333,7 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     def cancelled_subscription(self):
         return self.status in CANCELLED_SUBSCRIPTION_STATII
 
-    @property
-    def has_card_on_file(self):
-        return self.chargify_last_four != None
-
-    @property
-    def chargify_manage_url(self):
-        h = hashlib.new('sha1')
-        h.update("update_payment--%s--%s" % (self.chargify_subscription_id, settings.CHARGIFY_SHARED_KEY))
-
-        return "https://%(subdomain)s.chargify.com/update_payment/%(sub_id)s/%(message)s" % {
-            'subdomain': settings.CHARGIFY_SUBDOMAIN,
-            'sub_id': self.chargify_subscription_id,
-            'message': h.hexdigest()[:10]
-        }
-        
-    
-    @property
-    def chargify_signup_url(self):
-        return "%(HOSTED_URL)s?organization=%(org_name)s&reference=%(account_pk)s" % {
-                  'HOSTED_URL' : settings.CHARGIFY_HOSTED_SIGNUP_URL,
-                  'org_name' : self.name,
-                  'account_pk': self.pk,
-                  }
-
-    @property
-    def chargify_subscription_url(self):
-        from django.conf import settings
-        return "https://%s.chargify.com/subscriptions/%s" % (settings.CHARGIFY_SUBDOMAIN, self.chargify_subscription_id)
-
-    
+  
 
     # Aggregates
     @property

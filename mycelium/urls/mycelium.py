@@ -31,7 +31,10 @@ urlpatterns = patterns('',
     
 )
 
-if settings.DEBUG:
+if settings.DEBUG or settings.SELENIUM_TESTING:
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     )
+    urlpatterns += staticfiles_urlpatterns()

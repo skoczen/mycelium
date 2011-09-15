@@ -30,10 +30,9 @@ DATABASE_POOL = {
 MASTER_DATABASE = 'default'
 BASE_DOMAIN = "digitalmycelium.com"
 
-CHARGIFY_API = "H4a_DfhPSl6w5h4DqWZg"
-CHARGIFY_SUBDOMAIN = "goodcloud-staging"
-CHARGIFY_HOSTED_SIGNUP_URL = "https://goodcloud-staging.chargify.com/h/47396/subscriptions/new"
-CHARGIFY_SHARED_KEY = "rqaVvEEQWMuuyK0jmPu1"
+# Stripe
+STRIPE_SECRET = "vCqhGMFQvPOcg6EKKR2E28xX54PK3G3s"
+STRIPE_PUBLISHABLE = "pk_DDh6nrKRl3zIvV0GTMaXr92c5dpKR"
 
 MEDIA_URL = 'http://media.digitalmycelium.com/'
 MANUAL_MEDIA_URL = 'http://digitalmycelium.com/media/'

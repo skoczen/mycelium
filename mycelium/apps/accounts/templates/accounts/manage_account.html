@@ -1,5 +1,5 @@
 {% extends "mycelium_base.html" %}
-{% load i18n i18n generic_fields friendly_data_formatting generic_tag_tags %}
+{% load i18n zebra_tags generic_fields friendly_data_formatting generic_tag_tags %}
 {% block title %}GoodCloud Account Information{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
@@ -9,6 +9,7 @@
 {% block javascript %}{{block.super}}
 
 {% js "/js/mycelium/manage_accounts.js" %}
+{% zebra_head_and_stripe_key %}
 {% endblock %}
 
 {% block breadcrumb_links %}<a href="{% url core:more_menu %}" >Back to Admin</a>{% endblock %}
@@ -58,13 +59,14 @@
 <label>Signup Date:</label> {{request.account.signup_date|date}}
 </form_field>
 
+</form>
 <form_field>
 {% if request.account.is_cancelled %}
-<label>Cancellation status:</label>	Account cancelled, paid and active until {{request.account.chargify_next_assessment_at|date}}.  
+<label>Cancellation status:</label>	Account cancelled, paid and active until {{request.account.next_billing_date|date}}.  
 {# <a href="{% url accounts:reactivate_subscription %}" class="reactivate_subscription_btn mycelium_btn mycelium_small_btn" >Reactivate Subscription</a> #}
 If you'd like to reactivate your subscription, please <a href="#" class="help_btn">contact us</a>!
 {% else %}
-<label>Next billing date:</label> {{request.account.chargify_next_assessment_at|date}}
+<label>Next billing date:</label> {{request.account.next_billing_date|date}}
 {% endif %}
 </form_field>
 
@@ -72,17 +74,32 @@ If you'd like to reactivate your subscription, please <a href="#" class="help_bt
 <form_field>
 <label>Billing Information:</label> 
 {% if request.account.has_card_on_file %}
-XXXX-XXXX-XXXX-{{request.account.chargify_last_four}} 
+XXXX-XXXX-XXXX-{{request.account.last_four}} 
 {% else %}
 No card on file.
 {% endif %}
-<a href="{{request.account.chargify_manage_url}}" class="billing_popup_link mycelium_btn mycelium_small_btn">Update Billing Information</a>
-</form_field>
-{% endif %}
+<a href="" class="billing_popup_link mycelium_btn mycelium_small_btn">Update Billing Information</a>
+<div class="update_billing_form">
+	<form action="" method="POST" id="payment-form">{% csrf_token %}
+	<span class="payment-errors"></span>
+	{% for f in zebra_form.hidden_fields %}{{f}}{% endfor %}
+	<form_field>
+	<label>Card Number:</label> {{zebra_form.card_number}}
+	</form_field>
 
-{% if not request.account.is_cancelled %}
-<form_field>
-<label>Cancel Subscription:</label><a href="{% url accounts:cancel_subscription %}" class="cancel_subscription_btn mycelium_small_btn mycelium_btn mycelium_active_grey">Cancel</a>
+	<form_field>
+	<label>Expiration Date:</label> {{zebra_form.card_expiry_month}} {{zebra_form.card_expiry_year}}
+	</form_field>
+
+	<form_field>
+	<label>Security Code:</label> {{zebra_form.card_cvv}}
+	</form_field>
+	
+    <button type="submit" class="submit-button mycelium_btn" id="subscription_submit" >Update Card Information</button>
+    <inpyt type="reset" class="cancel_update_btn mycelium_btn mycelium_active_grey">Cancel</button>
+</form>
+
+</div>
 </form_field>
 {% endif %}
 

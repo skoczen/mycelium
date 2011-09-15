@@ -11,7 +11,8 @@ from django.views.decorators.cache import never_cache
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.sites.models import get_current_site
-from pychargify.api import ChargifySubscription
+from zebra.forms import StripePaymentForm
+import stripe
 
 @csrf_protect
 @never_cache
@@ -135,10 +136,26 @@ def dashboard(request):
 @render_to("accounts/manage_account.html")
 def manage_account(request):
     section = "admin"
-    
+    STRIPE_PUBLISHABLE = settings.STRIPE_PUBLISHABLE
     request.account.update_account_status()
 
     form = AccountForm(instance=request.account)
+
+    if request.method == 'POST':
+        zebra_form = StripePaymentForm(request.POST)
+        if zebra_form.is_valid():
+            customer = stripe.Customer.retrieve(request.account.stripe_customer_id)
+            customer.card = zebra_form.cleaned_data['stripe_token']
+            customer.save()
+
+            account = request.account
+            account.last_four = zebra_form.cleaned_data['last_4_digits']
+            account.stripe_customer_id = customer.id
+            account.save()
+            request.account = account
+
+    else:
+        zebra_form = StripePaymentForm()
     return locals()
 
 @json_view

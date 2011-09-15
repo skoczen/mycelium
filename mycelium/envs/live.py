@@ -38,11 +38,10 @@ MANUAL_MEDIA_URL = 'http://www.agoodcloud.com/media/'
 STATIC_URL = CDN_MEDIA_URL
 # STATIC_ROOT = MEDIA_ROOT
 
-# chargify
-CHARGIFY_API = "H4a_DfhPSl6w5h4DqWZg"
-CHARGIFY_SUBDOMAIN = "goodcloud"
-CHARGIFY_HOSTED_SIGNUP_URL = "https://goodcloud.chargify.com/h/42689/subscriptions/new"
-CHARGIFY_SHARED_KEY = "uQ2mOxf9ZE3FFyzCj3t_"
+# Stripe
+# Live
+STRIPE_SECRET = "xCtqHMmMyKlEMjbeiFgnoVYO72b6stA8"
+STRIPE_PUBLISHABLE = "pk_oKB20RwO4kJ5jvsnDlSrw2E43YnbR"
 
 # ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 ADMIN_MEDIA_PREFIX = "/admin-media/"

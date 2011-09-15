@@ -1,23 +1,22 @@
+STATUS_FREE_TRIAL = 0
+STATUS_EXPIRED = 10
+STATUS_ACTIVE = 20
+STATUS_ACTIVE_BILLING_ISSUE = 30
+STATUS_DEACTIVATED = 40
+STATUS_CANCELLED = 50
+
 ACCOUNT_STATII = [
-    (0, "Free Trial"),
-    (10, "Expired"), # Free trial expired
-    (20, "Active"),
-    (30, "Active, Billing Issue"), # Was paid, billing failed.
-    (40, "On Hold"),  # no way to get to this currently
-    (50, "Cancelled"),   
+    (STATUS_FREE_TRIAL, "Free Trial"),
+    (STATUS_EXPIRED, "Expired"), # Free trial expired
+    (STATUS_ACTIVE, "Active"),
+    (STATUS_ACTIVE_BILLING_ISSUE, "Active, Billing Issue"), # Was paid, billing failed.
+    (STATUS_DEACTIVATED, "On Hold"),  # no way to get to this currently
+    (STATUS_CANCELLED, "Cancelled"),   
 ]
 
-CHARGIFY_STATUS_MAPPING = {
-    "trialing" : ACCOUNT_STATII[0],
-    "assessing" : ACCOUNT_STATII[0],
-    "active" : ACCOUNT_STATII[2],
-    "soft_failure" : ACCOUNT_STATII[2],
-    "past_due" : ACCOUNT_STATII[3],
-    "suspended" : ACCOUNT_STATII[3],
-    "canceled" : ACCOUNT_STATII[5],
-    "unpaid" : ACCOUNT_STATII[3],
-    "expired" : ACCOUNT_STATII[3],
-}
+MONTHLY_PLAN_NAME = "monthly"
+YEARLY_PLAN_NAME = "yearly"
+
 
 HAS_A_SUBSCRIPTION_STATII = [
     ACCOUNT_STATII[2][0],
@@ -33,6 +32,7 @@ CANCELLED_SUBSCRIPTION_STATII = [
 ]
 ACTIVE_SUBSCRIPTION_STATII = [
     ACCOUNT_STATII[0][0],
+    ACCOUNT_STATII[1][0],
     ACCOUNT_STATII[2][0],
     ACCOUNT_STATII[3][0],
 ]

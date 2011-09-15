@@ -15,7 +15,7 @@ from generic_tags.models import TagSet, Tag, TaggedItem
 from django.core import mail
 from django.conf import settings
 from django.test.client import Client
-from pychargify.api import Chargify
+
 from accounts import CANCELLED_SUBSCRIPTION_STATII
 
 class Dummy(object):

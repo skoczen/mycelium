@@ -21,11 +21,13 @@ urlpatterns = patterns('',
     url(r'^', include('mediasync.urls')),
 )
 
-if settings.DEBUG:
+if settings.DEBUG or settings.SELENIUM_TESTING:
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
     )
+    urlpatterns += staticfiles_urlpatterns()
 
 
 # override for qi urls to allow indexing

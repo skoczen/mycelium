@@ -650,7 +650,7 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         self.go_to_the_account_page()
         self.enter_billing_info_signup()
         assert sel.is_text_present("Status: Free Trial")
-        assert sel.is_text_present("XXXX-XXXX-XXXX-1")
+        assert sel.is_text_present("XXXX-XXXX-XXXX-%s" % (Factory.test_cc_number(True)[-4:]))
         assert sel.is_text_present("Signup Date: %s" % (date(datetime.date.today()),) )
         assert sel.is_text_present("Next billing date: %s" % (date(self.a1.free_trial_ends),) )
         assert sel.is_element_present("link=Update Billing Information")
@@ -663,7 +663,7 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         self.go_to_the_account_page()
         self.enter_billing_info_signup( )
         assert sel.is_text_present("XXXX-XXXX-XXXX-1")
-        self.enter_billing_info_signup(cc_number="2", update=True)
+        self.enter_billing_info_signup(valid_cc=False, update=True)
         assert not sel.is_text_present("XXXX-XXXX-XXXX-1")
         assert sel.is_text_present("XXXX-XXXX-XXXX-2")
 
@@ -682,7 +682,7 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         # assert sel.is_element_present("css=.reactivate_subscription_btn")
         assert sel.is_text_present("reactivate your subscription")
 
-    @unittest.skip("Bug in chargify - feature disabled and low priority.")
+    @unittest.skip("Bug in stripe - feature disabled and low priority.")
     def test_that_users_can_resume_a_cancelled_subscription_and_see_that_its_resumed(self):
         sel = self.selenium
         self.test_that_users_can_cancel_their_subscription_and_see_that_its_cancelled()
@@ -690,7 +690,7 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         sel.wait_for_page_to_load("30000")
         assert sel.is_element_present("link=Update Billing Information")
         
-    @unittest.skip("No way to test that they're getting half off from chargify's side.")
+    @unittest.skip("No way to test that they're getting half off from stripe's side.")
     def test_that_feedback_team_users_can_enter_a_coupon_on_signup_and_get_half_off(self):
         sel = self.selenium
         assert True == "Test written"
@@ -721,7 +721,7 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         assert sel.is_text_present("Plan: Monthly")
 
     
-    @unittest.skip("Since we can't update the chargify API, this test always will fail - the page updates to a current account.")
+    @unittest.skip("Since we can't update the stripe API, this test always will fail - the page updates to a current account.")
     def test_expired_accounts_display_a_human_explanation_on_the_billing_page(self):
         sel = self.selenium
         cache.clear()
@@ -760,7 +760,7 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
 
     def test_that_signing_up_during_a_free_trial_does_not_bill_their_card(self):
         self.test_that_new_signups_can_sign_up_for_an_account()
-        sub = self.a1.chargify_subscription
+        sub = self.a1.stripe_subscription
         assert sub.signup_revenue == "0.00"
         
 
