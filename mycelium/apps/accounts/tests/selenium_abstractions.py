@@ -132,18 +132,20 @@ class AccountTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
         return sel.get_text("css=#container_id_first_name .view_field")
 
-    def enter_billing_info_signup(self, update=False, close_and_refresh=True, valid_cc=True):
+    def enter_billing_info_signup(self, valid_cc=True, cc_number=None):
         """Assumes you're starting on the manage acct page"""
-        cc_number = Factory.test_cc_number(valid_cc)
+        if not cc_number:
+            cc_number = Factory.test_cc_number(valid_cc)
 
         sel = self.selenium
         sel.click("link=Update Billing Information")
-        time.sleep(4)
-
         sel.type("css=#id_card_number",cc_number)
         sel.type("css=#id_card_cvv","123")
         sel.select("css=#id_card_expiry_month","May")
         sel.select("css=#id_card_expiry_year","2020")
 
         sel.click("css=#subscription_submit")
-        sel.wait_for_page_to_load("30000")
+        if valid_cc:
+            sel.wait_for_page_to_load("30000")
+        else:
+            time.sleep(6)

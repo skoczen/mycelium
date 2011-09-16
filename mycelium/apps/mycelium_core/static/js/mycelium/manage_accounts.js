@@ -124,13 +124,13 @@ function confirm_cancel_subscription() {
 }
 
 function show_update_billing_form() {
-	$("a.billing_popup_link").hide();
+	$(".current_billing_info").hide();
 	$(".update_billing_form").show();
 	return false;
 }
 
 function hide_update_billing_form() {
-	$("a.billing_popup_link").show();
+	$(".current_billing_info").show();
 	$(".update_billing_form").hide();
 	return false;	
 }

@@ -137,7 +137,10 @@ def dashboard(request):
 def manage_account(request):
     section = "admin"
     STRIPE_PUBLISHABLE = settings.STRIPE_PUBLISHABLE
+
+    print request.account.free_trial_ends_date
     request.account.update_account_status()
+    print request.account.free_trial_ends_date
 
     form = AccountForm(instance=request.account)
 
@@ -156,6 +159,9 @@ def manage_account(request):
 
     else:
         zebra_form = StripePaymentForm()
+    
+    print request.account.free_trial_ends_date
+    
     return locals()
 
 @json_view

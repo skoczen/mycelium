@@ -12,6 +12,7 @@ import hashlib
 import datetime, time
 from dateutil.relativedelta import *
 from django.db.models import Sum, Count, Avg
+import logging
 
 class Plan(TimestampModelMixin):
     name = models.CharField(max_length=255)
@@ -50,7 +51,7 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
 
     status                              = models.IntegerField(default=ACCOUNT_STATII[0][0], choices=ACCOUNT_STATII)
     signup_date                         = models.DateTimeField(null=True, default=datetime.datetime.now())
-    free_trial_ends_date                = models.DateTimeField(blank=True, null=True) # cached from stripe
+    free_trial_ends_date                = models.DateTimeField(blank=True, null=True) # copied to stripe
     next_billing_date                   = models.DateTimeField(blank=True, null=True) # cached from stripe
     last_four                           = models.CharField(max_length=4, blank=True, null=True) # cached from stripe
     stripe_customer_id                  = models.CharField(max_length=255, blank=True, null=True)
@@ -184,7 +185,21 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
                     self.challenge_has_downloaded_spreadsheet and \
                     self.challenge_has_added_a_donation and self.challenge_has_logged_volunteer_hours:
 
+                    if not self.has_completed_all_challenges and self.free_trial_ends_date.date() >= datetime.date.today():
+
+                        self.free_trial_ends_date = self.signup_date + datetime.timedelta(days=44)
+                        
+                        # TODO: When stripe updates their API, move to this.
+                        # sub = self.stripe_subscription
+                        # sub.trial_end = self.free_trial_ends_date
+                        # sub.save()
+
+                        c = self.stripe_customer
+                        c.update_subscription(plan=MONTHLY_PLAN_NAME, trial_end=self.free_trial_ends_date)
+
                     self.has_completed_all_challenges = True
+                    
+
 
             if not self.has_completed_any_challenges:
                 #  self.challenge_has_submitted_support or\
@@ -196,6 +211,7 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
                     self.has_completed_any_challenges = True
 
             self.save()
+            
     
     def upcoming_birthdays(self):
         from people.models import Person, NORMALIZED_BIRTH_YEAR
@@ -297,13 +313,11 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     def age_in_months(self):
         return (datetime.datetime.today() - self.signup_date).days / 30
 
-    @property
-    def free_trial_ends(self):
-        return self.signup_date + relativedelta(months=+1)
 
     @property
     def in_free_trial(self):
-        return datetime.datetime.now() <= self.free_trial_ends
+        # return datetime.datetime.now() <= self.free_trial_ends_date
+        return self.status in FREE_TRIAL_STATII
 
     @property
     def is_active(self):

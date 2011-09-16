@@ -30,6 +30,7 @@
 	</div>
 {% endif %}
 
+{% if request.account.in_free_trial %}
 <div class="welcome_text ">
 	{% if request.account.has_completed_any_challenges %}
 		{% if not request.account.has_completed_all_challenges %}
@@ -39,13 +40,14 @@
 		You made it! Welcome to your very own GoodCloud for {{request.account}}. We're excited to have you on board. Check out the challenges below for a great way to get started!
 	{% endif %}
 </div>
+{% endif %}
 
 <table class="dashboard_panel_table">
 <tr>
-{% if not request.account.has_completed_all_challenges %}
+{% if not request.account.has_completed_all_challenges and request.account.in_free_trial %}
 	<td class="full_col">
 		<column_header>GoodCloud Challenges</column_header>
-		<div class="challenge_description " >Complete the GoodCloud Challenges and receive an additional two weeks free. What's that you say? Half a month just for setting things up and doing a quick tour? Are we crazy? Well, yes. But we really believe GoodCloud is the best solution out there for small nonprofits, and we're ready to prove it.</div>
+		<div class="challenge_description " >Complete the GoodCloud Challenges during your free trial and receive an additional two weeks free. What's that you say? Half a month just for setting things up and doing a quick tour? Are we crazy? Well, yes. But we really believe GoodCloud is the best solution out there for small nonprofits, and we're ready to prove it.</div>
 
 		<challenge class="import {% if request.account.challenge_has_imported_contacts %}complete{% endif %}">
 			<title_text>Import your contacts.</title_text>
@@ -87,7 +89,7 @@
 
 {% else %}
 	<td class="left_col">
-		{% if request.useraccount.show_challenges_complete_section %}
+		{% if request.useraccount.show_challenges_complete_section and request.account.in_free_trial %}
 		<div class="challenges_complete_section">
 		<column_header>GoodCloud Challenges</column_header>
 		<column_content class="completed_goodcloud_challenges ">

@@ -13,6 +13,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         output = file('/dev/null', 'a+')
         VERBOSE = False
+        
+        verbosity = int(options.get('verbosity', 1))
+        if verbosity > 1:
+            VERBOSE = True
+
         if VERBOSE:
             outputs={}
         else:
