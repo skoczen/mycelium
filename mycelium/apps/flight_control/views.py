@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Count, Avg
 
+from accounts import *
 from accounts.models import Account, UserAccount
 from accounts import BILLING_PROBLEM_STATII
 from people.models import Person
@@ -80,3 +81,11 @@ def search_results(request):
             search_results = Account.search(q,ignorable_chars=["-","(",")"])[:6]
 
     return {"fragments":{"global_search_results":render_to_string("flight_control/_search_results.html", locals())}}
+
+@staff_member_required
+def delete_deactivated_account(request, account_id):
+    account = Account.objects.get(pk=account_id)
+    assert account.status == STATUS_DEACTIVATED
+
+    account.delete()
+    

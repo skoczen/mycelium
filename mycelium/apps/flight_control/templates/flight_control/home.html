@@ -46,7 +46,7 @@
 			<column_header>Expiring Soon</column_header>
 			{% for a in week_4 %}
 			<div class="info_block">
-				<a href="{% url flight_control:account a.pk %}">{{a.name}}</a> expires {{a.free_trial_ends|date}}.
+				<a href="{% url flight_control:account a.pk %}">{{a.name}}</a> expires {{a.free_trial_ends_date|date}}.
 			</div>
 			{% empty %}
 			<div class="info_block empty_message">None in the next week.</div>

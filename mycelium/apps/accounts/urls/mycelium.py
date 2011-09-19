@@ -27,7 +27,6 @@ urlpatterns = parser.patterns('',
    url(r'^accounts/confirm-account-deletion$',           views.confirm_account_delete                                                         , name="confirm_account_delete"   ),
    url(r'^accounts/do-account-delete$',                  views.do_account_delete                                                              , name="do_account_delete"   ),
 
-
    # Redirect to dashboard
     url(r'^$',                                           views.dashboard                                                                      , name="dashboard"                 ),
 )

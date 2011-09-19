@@ -675,7 +675,7 @@ class TestSubscriptionsAgainstNoData(DjangoFunctionalConservativeSeleniumTestCas
         assert sel.is_text_present("Status: Free Trial")
         assert sel.is_text_present("XXXX-XXXX-XXXX-%s" % (Factory.test_cc_number(True)[-4:]))
         assert sel.is_text_present("Signup Date: %s" % (date(datetime.date.today()),) )
-        assert sel.is_text_present("Next billing date: %s" % (date(self.a1.free_trial_ends),) )
+        assert sel.is_text_present("Next billing date: %s" % (date(self.a1.free_trial_ends_date),) )
         assert sel.is_element_present("link=Update Billing Information")
 
 
