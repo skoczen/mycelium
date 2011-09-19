@@ -1,5 +1,5 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
@@ -7,7 +7,7 @@ from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from donors.tests.selenium_abstractions import DonorTestAbstractions
 
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
@@ -87,7 +87,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DonorTestAbstractions, P
         self.assertEqual("March 8, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in()

@@ -1,5 +1,5 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
@@ -10,7 +10,7 @@ from accounts.models import UserAccount
 from dashboard.tests.selenium_abstractions import DashboardTestAbstractions
 from django.core.cache import cache
     
-class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
+class TestAgainstLiterallyNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.setup_for_logged_in_with_no_data()
@@ -28,7 +28,7 @@ class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, DashboardTestAb
         assert not sel.is_text_present("Welcome to your very own GoodCloud")
         assert sel.is_text_present("Looks like you haven't finished")
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
@@ -146,7 +146,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
         assert sel.is_text_present("Text like 123.45")
         assert sel.is_element_present("css=conversation")
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):

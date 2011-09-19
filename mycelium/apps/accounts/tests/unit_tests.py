@@ -2,7 +2,7 @@ import time
 import datetime
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from qi_toolkit.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
 from django.test import TestCase
 from groups.models import Group
 from people.models import Person
@@ -21,7 +21,7 @@ from accounts import CANCELLED_SUBSCRIPTION_STATII
 class Dummy(object):
     pass
 
-class TestAccountFactory(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
+class TestAccountFactory(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase):
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):

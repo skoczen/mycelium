@@ -1,5 +1,5 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time
 import datetime
 from test_factory import Factory
@@ -25,7 +25,7 @@ from django.contrib.auth.models import User
 
 
     
-class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.create_demo_site(with_demo_flag=False)
@@ -251,7 +251,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
 
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.create_demo_site()   

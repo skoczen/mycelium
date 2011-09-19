@@ -131,6 +131,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'qi_toolkit',
+    'functional_tests',
     'analytical',
     'django_extensions',
     'pagination',
@@ -286,6 +287,7 @@ STRIPE_PUBLISHABLE = "pk_ZjmLisYsPM1Xa7MgYPziLide0VISX"
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 
+ZEBRA_CUSTOMER_MODEL = 'accounts.Account'
 
 GIT_CURRENT_SHA = None
 # django-mediasync

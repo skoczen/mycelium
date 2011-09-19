@@ -1,5 +1,5 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time 
 from test_factory import Factory
 
@@ -7,7 +7,7 @@ from people.tests.selenium_abstractions import PeopleTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, GroupTestAbstractions, AccountTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, GroupTestAbstractions, AccountTestAbstractions):
     
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()

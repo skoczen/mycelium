@@ -1,8 +1,8 @@
 import time
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase, QiSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase, DjangoFunctionalSeleniumTestCase
 from email_list.models import EmailSubscription
 
-class TestMarketingSite(QiSeleniumTestCase):
+class TestMarketingSite(DjangoFunctionalSeleniumTestCase):
     # selenium_fixtures = ["marketing_site_localhost.json"]
     # fixtures = ["marketing_site.json",]
 

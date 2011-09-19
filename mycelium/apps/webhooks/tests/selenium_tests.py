@@ -1,11 +1,11 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time
 from test_factory import Factory
 from webhooks.tests.selenium_abstractions import WebhookTestAbstractions
 from django.core.cache import cache
     
-class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, WebhookTestAbstractions):
+class TestAgainstLiterallyNoData(DjangoFunctionalConservativeSeleniumTestCase, WebhookTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.setup_for_logged_in_with_no_data()
@@ -14,7 +14,7 @@ class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, WebhookTestAbst
     
     
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, WebhookTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, WebhookTestAbstractions):
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
@@ -24,7 +24,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, WebhookTestAbstractions)
 
     
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, WebhookTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, WebhookTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):

@@ -1,5 +1,5 @@
 from test_factory import Factory
-from qi_toolkit.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import QiUnitTestMixin
 from django.test import TestCase
 from generic_tags.models import TagSet
 from generic_tags import BLANK_TAGSET_NAME

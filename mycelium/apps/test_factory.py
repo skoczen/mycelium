@@ -1,4 +1,4 @@
-from qi_toolkit.factory import QiFactory
+from functional_tests.factory import DjangoFunctionalFactory
 from people.models import Person
 from organizations.models import Organization, Employee
 from groups.models import Group, GroupRule
@@ -35,7 +35,7 @@ def print_nobreak_if_verbose(verbose, string="."):
 class DummyObj(object):
     pass
 
-class Factory(QiFactory):
+class Factory(DjangoFunctionalFactory):
 
     @classmethod
     def email(cls, name_hint=None):
@@ -450,7 +450,7 @@ class Factory(QiFactory):
             print_if_verbose(verbose, "Mostly empty called - skipping people, etc.")
 
         if create_subscription:
-            sub = account.create_subscription()
+            sub = account.create_stripe_subscription()
             print_if_verbose(verbose, "Created subscription.")
 
         print_if_verbose(verbose, "Setup complete.")

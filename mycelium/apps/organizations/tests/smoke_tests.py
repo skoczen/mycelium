@@ -20,7 +20,7 @@
 # from qi_toolkit.smoke_tests import *
 # from test_factory import Factory
 # from djangosanetesting.cases import DatabaseTestCase
-# from qi_toolkit.selenium_test_case import QiUnitTestMixin
+# from functional_tests.selenium_test_case import QiUnitTestMixin
 # from django.test import TestCase
 
 # class TestPeopleSmoke(TestCase, QiUnitTestMixin, DatabaseTestCase):

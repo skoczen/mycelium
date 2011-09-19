@@ -2,7 +2,7 @@ import time
 import datetime
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from qi_toolkit.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import QiUnitTestMixin
 from django.test import TestCase
 
 class Dummy(object):

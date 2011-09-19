@@ -1,5 +1,5 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import unittest
 import time
 import datetime
@@ -16,7 +16,7 @@ from django.core.cache import cache
 from johnny import cache as jcache
 from django.template.defaultfilters import date
     
-class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
+class TestAgainstLiterallyNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.setup_for_logged_in_with_no_data()
@@ -75,7 +75,7 @@ class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstr
 
 
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
     # selenium_fixtures = []
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
@@ -624,7 +624,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
 
 
-class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
+class TestSubscriptionsAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
     # selenium_fixtures = []
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
@@ -775,7 +775,7 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, DashboardTe
 
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):

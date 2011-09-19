@@ -8,13 +8,15 @@ from accounts import *
 
 import stripe
 from django.conf import settings
+from zebra.models import StripeCustomer, StripePlan
+from zebra.mixins import StripeSubscriptionMixin
 import hashlib
 import datetime, time
 from dateutil.relativedelta import *
 from django.db.models import Sum, Count, Avg
 import logging
 
-class Plan(TimestampModelMixin):
+class Plan(TimestampModelMixin, StripePlan):
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
@@ -31,7 +33,7 @@ class Plan(TimestampModelMixin):
     def yearly_plan(cls):
         return cls.objects.get_or_create(name="Yearly")[0]
 
-class Account(TimestampModelMixin, SimpleSearchableModel):
+class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, SimpleSearchableModel):
     name = models.CharField(max_length=255, verbose_name="Organization Name")
     subdomain = models.CharField(max_length=255, unique=True, db_index=True, verbose_name="GoodCloud address (myorganization.agodocloud.com)")
     is_active = models.BooleanField(default=True)
@@ -54,7 +56,7 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     free_trial_ends_date                = models.DateTimeField(blank=True, null=True) # copied to stripe
     next_billing_date                   = models.DateTimeField(blank=True, null=True) # cached from stripe
     last_four                           = models.CharField(max_length=4, blank=True, null=True) # cached from stripe
-    stripe_customer_id                  = models.CharField(max_length=255, blank=True, null=True)
+    # stripe_customer_id                  = models.CharField(max_length=255, blank=True, null=True)  # provided by zebra.
 
 
     is_demo                             = models.BooleanField(default=False)
@@ -67,6 +69,7 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
     def save(self, *args, **kwargs):
         if not self.id:
             self.signup_date = datetime.datetime.now()
+            # self.create_stripe_subscription()
         super(Account,self).save(*args, **kwargs)
             
     def delete(self, *args, **kwargs):
@@ -240,43 +243,30 @@ class Account(TimestampModelMixin, SimpleSearchableModel):
             return birthday_people.all().order_by("birth_month","birth_day", "first_name", "last_name")[:NUMBER_BIRTHDAYS_OF_TO_SHOW]
         return None
 
-    def create_subscription(self):
-        return self.stripe_subscription
-
     @property
     def feedback_coupon_code(self):
         if self.was_a_feedback_partner:
             return "FEEDBACKTEAM"
         return None
 
-    @property
-    def stripe_customer(self):
-        stripe.api_key = settings.STRIPE_SECRET
-        if not self.stripe_customer_id:
-            if not self.free_trial_ends_date:
-                if datetime.datetime.now() > self.signup_date + datetime.timedelta(days=30):
-                    # They signed up pre-stripe
-                    self.free_trial_ends_date = datetime.datetime.now() + datetime.timedelta(minutes=1)
-                else:
-                    self.free_trial_ends_date = self.signup_date + datetime.timedelta(days=30)
-            
-            # Create a stripe customer
-            c = stripe.Customer.create(
-                description=self.name,
-                email=self.primary_useraccount.email,
-                plan=MONTHLY_PLAN_NAME,
-                trial_end=self.free_trial_ends_date,
-                coupon=self.feedback_coupon_code
-            )
-            self.stripe_customer_id = c.id
-            self.save()
-            return c
-        else:
-            return stripe.Customer.retrieve(self.stripe_customer_id)
+    def create_stripe_subscription(self):
+        c = self.stripe_customer
+        
+        if not self.free_trial_ends_date:
+            if datetime.datetime.now() > self.signup_date + datetime.timedelta(days=30):
+                # They signed up pre-stripe
+                self.free_trial_ends_date = datetime.datetime.now() + datetime.timedelta(minutes=2)
+            else:
+                self.free_trial_ends_date = self.signup_date + datetime.timedelta(days=30)
 
-    @property
-    def stripe_subscription(self):
-        return self.stripe_customer.subscription
+        # Create a stripe customer
+        c.description=self.name
+        c.email=self.primary_useraccount.email
+        c.coupon=self.feedback_coupon_code
+        c.save()
+
+        c.update_subscription(plan=MONTHLY_PLAN_NAME,trial_end=self.free_trial_ends_date)
+
 
     def update_account_status(self):
         sub = self.stripe_subscription
@@ -702,8 +692,49 @@ class AccountBasedModel(models.Model):
     class Meta(object):
         abstract = True
 
+
+def recurring_payment_failed(self, **kwargs):
+    account = kwargs["customer"]
+    json = kwargs["full_json"]
+    account.update_account_status()
+
+def invoice_ready(self, **kwargs):
+    account = kwargs["customer"]
+    json = kwargs["full_json"]
+
+
+def recurring_payment_succeeded(self, **kwargs):
+    account = kwargs["customer"]
+    json = kwargs["full_json"]
+    account.update_account_status()
+
+
+def subscription_trial_ending(self, **kwargs):
+    account = kwargs["customer"]
+    json = kwargs["full_json"]
+
+    # Email Steven & Tom
+    send_mail("Account trial about to expire: %s" % (account,), "%s" % render_to_string("accounts/free_trial_nearly_done.txt", locals()), settings.SERVER_EMAIL, [e[1] for e in settings.MANAGERS] )    
+
+def subscription_final_payment_attempt_failed(self, **kwargs):
+    account = kwargs["customer"]
+    json = kwargs["full_json"]
+    
+    send_mail("Account deactivated for nonpayment: %s" % (account,), "%s" % render_to_string("accounts/deactivated_for_nonpayment.txt", locals()), settings.SERVER_EMAIL, [e[1] for e in settings.MANAGERS] )    
+    account.update_account_status()
+
+
+from zebra.signals import *
+zebra_webhook_recurring_payment_failed.connect(recurring_payment_failed)
+zebra_webhook_invoice_ready.connect(invoice_ready)
+zebra_webhook_recurring_payment_succeeded.connect(recurring_payment_succeeded)
+zebra_webhook_subscription_trial_ending.connect(subscription_trial_ending)
+zebra_webhook_subscription_final_payment_attempt_failed.connect(subscription_final_payment_attempt_failed)
+
 from django.db.models.signals import post_save, pre_delete
 from rules.tasks import populate_rule_components_for_an_account_signal_receiver
 post_save.connect(populate_rule_components_for_an_account_signal_receiver,sender=Account)
 post_save.connect(Account.create_default_tagsets,sender=Account)
 pre_delete.connect(Account.pre_delete_cleanup,sender=Account)
+
+

@@ -45,7 +45,7 @@ STRIPE_PUBLISHABLE = "pk_oKB20RwO4kJ5jvsnDlSrw2E43YnbR"
 
 # ADMIN_MEDIA_PREFIX = "%sadmin/" % (MEDIA_URL)
 ADMIN_MEDIA_PREFIX = "/admin-media/"
-FAVICON_URL = "%simages/favicon.png" % MEDIA_URL
+FAVICON_URL = "%simages/favicon.png" % STATIC_URL
 
 
 BROKER_HOST = "int-Redis.agoodcloud.com"  # Maps to redis host.

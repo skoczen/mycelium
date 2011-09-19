@@ -31,7 +31,7 @@ nose
 ipython
 django-nose
 nose-exclude
-django-nose-selenium
+# django-nose-selenium
 -e git://github.com/Almad/django-sane-testing.git#egg=djangosanetesting
 cherrypy
 south
@@ -69,6 +69,8 @@ vobject
 django-tinymce
 chardet
 -e git://github.com/GoodCloud/django-longer-username.git#egg=longerusername
+pycurl
 stripe
 py-bcrypt
 -e git://github.com/GoodCloud/django-zebra.git#egg=zebra
+-e git://github.com/GoodCloud/django-functional-tests#egg=functional_tests

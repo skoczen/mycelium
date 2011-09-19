@@ -1,10 +1,10 @@
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from spreadsheets.tests.selenium_abstractions import SpreadsheetTestAbstractions
 import time
 from django.core.cache import cache
 
-class TestSpreadsheets(QiConservativeSeleniumTestCase, SpreadsheetTestAbstractions, AccountTestAbstractions):
+class TestSpreadsheets(DjangoFunctionalConservativeSeleniumTestCase, SpreadsheetTestAbstractions, AccountTestAbstractions):
     selenium_fixtures = []
 
     def setUp(self, *args, **kwargs):

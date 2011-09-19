@@ -4,7 +4,7 @@ import unittest
 import os
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from qi_toolkit.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import QiUnitTestMixin
 from django.test import TestCase
 from django.conf import settings
 from groups.models import Group

@@ -5,7 +5,7 @@ from rules.tasks import populate_rule_components_for_an_account
 from groups.models import GroupRule
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
 from django.db.models import Q
-from qi_toolkit.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import QiUnitTestMixin
 from django.test import TestCase
 from generic_tags.models import TagSet
 from people.models import Person

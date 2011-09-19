@@ -4,7 +4,7 @@ from rules.models import LeftSide, Operator, RightSideType, Rule
 from rules.tasks import populate_rule_components_for_an_account
 from groups.models import GroupRule, NO_NAME_STRING_GROUP
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from qi_toolkit.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import QiUnitTestMixin
 from django.db.models import Q
 from django.test import TestCase
 from people.models import Person
