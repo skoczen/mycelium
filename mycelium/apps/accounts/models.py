@@ -36,7 +36,7 @@ class Plan(TimestampModelMixin, StripePlan):
 class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, SimpleSearchableModel):
     name = models.CharField(max_length=255, verbose_name="Organization Name")
     subdomain = models.CharField(max_length=255, unique=True, db_index=True, verbose_name="GoodCloud address (myorganization.agodocloud.com)")
-    is_active = models.BooleanField(default=True)
+    
     agreed_to_terms = models.BooleanField()
     plan = models.ForeignKey(Plan, blank=True)
     
@@ -56,6 +56,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
     free_trial_ends_date                = models.DateTimeField(blank=True, null=True) # copied to stripe
     next_billing_date                   = models.DateTimeField(blank=True, null=True) # cached from stripe
     last_four                           = models.CharField(max_length=4, blank=True, null=True) # cached from stripe
+    last_stripe_update                  = models.DateTimeField(blank=True, null=True)
     # stripe_customer_id                  = models.CharField(max_length=255, blank=True, null=True)  # provided by zebra.
 
 
@@ -294,6 +295,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
             else:
                 self.next_billing_date = sub.current_period_end
         
+        self.last_stripe_update = datetime.datetime.now()
         self.save()
         return self
     
@@ -317,19 +319,19 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
 
     @property
     def is_expired(self):
-        return self.status == ACCOUNT_STATII[1][0]
+        return self.status == STATUS_EXPIRED
 
     @property
     def has_billing_issue(self):
         return self.status in BILLING_PROBLEM_STATII
 
     @property
-    def is_on_hold(self):
-        return self.status == ACCOUNT_STATII[4][0]
+    def is_deactivated(self):
+        return self.status == STATUS_DEACTIVATED
 
     @property
     def is_cancelled(self):
-        return self.status == ACCOUNT_STATII[5][0]
+        return self.status == STATUS_CANCELLED
 
     @property
     def has_subscription(self):
@@ -695,33 +697,22 @@ class AccountBasedModel(models.Model):
         abstract = True
 
 
-def recurring_payment_failed(self, **kwargs):
-    account = kwargs["customer"]
-    json = kwargs["full_json"]
+def recurring_payment_failed(self, account, full_json, **kwargs):
     account.update_account_status()
+    send_mail("Recurring payment failed: %s" % (account,), "%s" % render_to_string("accounts/recurring_payment_failed.txt", locals()), settings.SERVER_EMAIL, [e[1] for e in settings.MANAGERS] )    
 
-def invoice_ready(self, **kwargs):
-    account = kwargs["customer"]
-    json = kwargs["full_json"]
+def invoice_ready(self, account, full_json, **kwargs):
+    pass
 
-
-def recurring_payment_succeeded(self, **kwargs):
-    account = kwargs["customer"]
-    json = kwargs["full_json"]
+def recurring_payment_succeeded(self, account, full_json, **kwargs):
     account.update_account_status()
 
 
-def subscription_trial_ending(self, **kwargs):
-    account = kwargs["customer"]
-    json = kwargs["full_json"]
-
+def subscription_trial_ending(self, account, full_json, **kwargs):
     # Email Steven & Tom
     send_mail("Account trial about to expire: %s" % (account,), "%s" % render_to_string("accounts/free_trial_nearly_done.txt", locals()), settings.SERVER_EMAIL, [e[1] for e in settings.MANAGERS] )    
 
-def subscription_final_payment_attempt_failed(self, **kwargs):
-    account = kwargs["customer"]
-    json = kwargs["full_json"]
-    
+def subscription_final_payment_attempt_failed(self, account, full_json, **kwargs):
     send_mail("Account deactivated for nonpayment: %s" % (account,), "%s" % render_to_string("accounts/deactivated_for_nonpayment.txt", locals()), settings.SERVER_EMAIL, [e[1] for e in settings.MANAGERS] )    
     account.update_account_status()
 

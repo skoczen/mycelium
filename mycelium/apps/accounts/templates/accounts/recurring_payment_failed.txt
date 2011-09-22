@@ -1,0 +1,10 @@
+Hey Guys,
+
+We've got an account that just had a recurring payment fail. Probably an expired credit card, or something like that.  Stripe's gonna retry a few more times, but we should get in touch.  After the next attempts fail, their account will go to deactivated.
+
+Organization: {{account}}
+Website: {{account.subdomain}}.agoodcloud.com.
+
+Good Luck!
+
+-The Happy GoodCloud Robot
