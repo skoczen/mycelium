@@ -13,7 +13,7 @@ from django.core.cache import cache
 from django.template.defaultfilters import date
 
 from accounts.models import Account, UserAccount
-from accounts import BILLING_PROBLEM_STATII
+from accounts import BILLING_PROBLEM_STATII, STATUS_DEACTIVATED
 from people.models import Person
 from organizations.models import Organization
 from donors.models import Donation
@@ -248,6 +248,40 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, FlightCont
         self.get_to_flight_control()
         self.get_to_account_by_searching()
         assert sel.is_element_present("css=.login_entry")
+
+
+
+    def test_the_account_page_does_not_show_a_delete_link_for_active_accounts(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        self.get_to_account_by_searching()
+
+        assert not sel.is_element_present("css=.delete_account_link")
+
+
+    def test_the_account_page_shows_a_delete_link_for_deactived_accounts(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        a = Account.objects.get(subdomain="test")
+        a.status = STATUS_DEACTIVATED
+        a.save()
+        cache.clear()
+        self.get_to_account_by_searching()
+        
+        assert sel.is_element_present("css=.delete_account_link")
+
+    def test_the_that_clicking_the_delete_link_confirms_then_deletes_an_account(self):
+        sel = self.selenium
+        self.assertEqual(Account.objects.filter(subdomain="test").count(), 1)
+        self.test_the_account_page_shows_a_delete_link_for_deactived_accounts()
+        sel.click("css=.delete_account_link")
+        assert sel.is_confirmation_present()
+        sel.wait_for_page_to_load("30000")
+
+        assert sel.is_text_present("Account Averages")
+        time.sleep(50)
+        self.assertEqual(Account.objects.filter(subdomain="test").count(), 0)
+
 
 
 

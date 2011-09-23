@@ -727,7 +727,7 @@ class TestSubscriptionsAgainstNoData(DjangoFunctionalConservativeSeleniumTestCas
         sel = self.selenium
         a = self.a1
         a.signup_date = datetime.datetime.now() - datetime.timedelta(days=35)
-        a.status = 10
+        a.status = STATUS_ACTIVE_BILLING_ISSUE
         a.save()
         self.get_logged_in()
         
@@ -739,11 +739,23 @@ class TestSubscriptionsAgainstNoData(DjangoFunctionalConservativeSeleniumTestCas
     def test_expired_accounts_display_a_human_explanation_on_the_billing_page(self):
         sel = self.selenium
         cache.clear()
-        self.test_expired_accounts_display_an_expired_bar()
         self.go_to_the_account_page()
-        # assert sel.is_text_present("is past its free trial, and has expired")
         assert sel.is_text_present("problem processing your billing method")
     
+
+    def test_deactivated_accounts_display_a_human_explanation_on_the_billing_page(self):
+        sel = self.selenium
+        cache.clear()
+        a = self.a1
+        a.status = STATUS_DEACTIVATED
+        a.save()
+        
+        self.get_logged_in()
+        assert sel.is_element_present("css=#expired_side_bar")
+        
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Your account has been deactivated")
+
     def test_that_after_a_successful_charge_accounts_are_moved_to_active(self):
         # And see it updated.
         sel = self.selenium

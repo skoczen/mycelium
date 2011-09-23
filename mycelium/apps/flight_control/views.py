@@ -4,6 +4,7 @@ from qi_toolkit.helpers import *
 from django.template.loader import render_to_string
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Count, Avg
+from django.http import HttpResponseRedirect
 
 from accounts import *
 from accounts.models import Account, UserAccount
@@ -88,4 +89,4 @@ def delete_deactivated_account(request, account_id):
     assert account.status == STATUS_DEACTIVATED
 
     account.delete()
-    
+    return HttpResponseRedirect(reverse("flight_control:home"))

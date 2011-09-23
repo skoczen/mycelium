@@ -175,6 +175,19 @@ form_field {
 	-moz-border-radius: 4px;	
 }
 
+.deactivated_message_header {
+	color: red;
+	padding: 10px;
+	width: 80%;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.deactivated_message {
+	padding: 10px;
+	width: 80%;
+}
+
 delete_object_block input, delete_object_block a {
 	float: left;
 	margin: 5px;

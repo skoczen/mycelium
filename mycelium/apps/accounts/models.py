@@ -76,10 +76,9 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
         super(Account,self).save(*args, **kwargs)
             
     def delete(self, *args, **kwargs):
-        sub = self.stripe_subscription
-        if sub:
-            print "not written!"
-            sub.unsubscribe("Account deleted")
+        c = self.stripe_customer
+        if c:
+            c.cancel_subscription()
         super(Account,self).delete(*args, **kwargs)
     
     objects = AccountManager()
@@ -282,6 +281,8 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
         # Possible statuses: canceled, past_due, unpaid, active, trialing
         if sub.status == "trialing":
             self.status = STATUS_FREE_TRIAL
+            if not self.free_trial_ends_date and hasattr(sub,"trial_end"):
+                self.free_trial_ends_date = datetime.datetime.fromtimestamp(sub.trial_end)
         elif sub.status == "active":
             self.status = STATUS_ACTIVE
         elif sub.status == "past_due":

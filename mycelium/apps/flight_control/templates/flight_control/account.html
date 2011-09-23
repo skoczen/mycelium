@@ -48,7 +48,7 @@
 			</div>
 			{% if account.is_deactivated %}
 			<div class="info_block">
-				<a href="{% url accounts:delete_deactivated_account account.pk %}" target="_blank" class="warning">Delete Account</a>
+				<a href="{% url flight_control:delete_deactivated_account account.pk %}" class="warning delete_account_link">Delete Deactivated Account</a>
 			</div>
 			{% endif %}
 

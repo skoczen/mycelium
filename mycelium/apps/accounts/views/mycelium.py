@@ -141,14 +141,12 @@ def manage_account(request):
     section = "admin"
     STRIPE_PUBLISHABLE = settings.STRIPE_PUBLISHABLE
 
-    request.account.update_account_status()
-
     form = AccountForm(instance=request.account)
 
     if request.method == 'POST':
         zebra_form = StripePaymentForm(request.POST)
         if zebra_form.is_valid():
-            customer = stripe.Customer.retrieve(request.account.stripe_customer_id)
+            customer = request.account.stripe_customer
             customer.card = zebra_form.cleaned_data['stripe_token']
             customer.save()
 
@@ -157,6 +155,7 @@ def manage_account(request):
             account.stripe_customer_id = customer.id
             account.save()
             request.account = account
+            request.account.update_account_status()
 
     else:
         zebra_form = StripePaymentForm()

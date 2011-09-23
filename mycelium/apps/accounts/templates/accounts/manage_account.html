@@ -22,6 +22,18 @@
 	{% include "people/_save_status_and_button.html" %}
 {% endwith %}
 
+{% if request.account.is_deactivated %}
+<div class="deactivated_message_header">Account Deactivated</div>
+<div class="deactivated_message">
+Your account has been deactivated because either your billing method didn't go through, or we don't have one on file for you.  We'll be in contact to check in with you before we shut it down. If we can't get in touch within a week or so, and don't see any activity from you, your account will be permanently deleted. <br/></br>
+
+To get your account back to active, you can update your billing method below. The changes will take effect right away!<br/><br/>
+
+If you have any questions, you can reach us at 503 308-1460, or <a href="mailto:support@agoodcloud.com">support@agoodcloud.com</a>. Thanks!<br/><br/>
+
+- Tom &amp; Steven (the GoodCloud team)
+</div>
+{% else %}
 {% if request.account.is_expired or request.account.has_billing_issue %}
 	<div class="expired_message">
 	{% if request.account.is_expired %}
@@ -37,6 +49,7 @@
 	{% endif %}{% endif %}
 	
 	</div>
+{% endif %}
 {% endif %}
 
 

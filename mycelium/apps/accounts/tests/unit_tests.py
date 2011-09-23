@@ -21,13 +21,15 @@ from accounts import CANCELLED_SUBSCRIPTION_STATII
 
 from django.test.client import Client
 from zebra.signals import *
+from zebra.mixins import StripeMixin
 from django.utils import simplejson
+
 
 
 class Dummy(object):
     pass
 
-class TestAccountFactory(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase):
+class TestAccountFactory(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase, StripeMixin):
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
@@ -96,15 +98,15 @@ class TestAccountFactory(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDat
 
     def test_deleting_an_account_cancels_its_subscription(self):
         a1 = Factory.create_demo_site("test1", quick=True, create_subscription=True)
-        sub_id = a1.chargify_subscription_id
-
+        stripe_id = a1.stripe_customer_id
+        c = self.stripe.Customer.retrieve(stripe_id)
+        assert hasattr(c, "subscription")
+        
         a1.delete()
 
-        chargify = Chargify(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-        subscription = chargify.Subscription()
-        s = subscription.getBySubscriptionId(sub_id)
-
-        self.assertEqual(s.state,"canceled")
+        c = self.stripe.Customer.retrieve(stripe_id)
+        assert not hasattr(c, "subscription")
+       
 
 
     def test_num_people(self):
@@ -184,6 +186,8 @@ class TestAccountFactory(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDat
         a = Factory.create_demo_site("test", quick=True)
         self.assertEqual(a.num_spreadsheets, Spreadsheet.objects_by_account(a).count())
 
+
+        
 
     # def test_that_signing_up_generates_a_message_to_the_user_and_to_us(self):
     #     from django.test.client import Client

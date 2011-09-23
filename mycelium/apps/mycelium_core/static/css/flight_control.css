@@ -248,3 +248,9 @@ challenge.info_block.complete {
 	background-position: 0px 5px;
 	color: #333;
 }
+.warning {
+	color: #990000;
+}
+.warning:hover {
+	color: red;
+}
