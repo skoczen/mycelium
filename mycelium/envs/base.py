@@ -178,7 +178,6 @@ INSTALLED_APPS = (
     'rules',
     'accounts',
     'dashboard',
-    'webhooks',
     'flight_control',
     'zebra',
 

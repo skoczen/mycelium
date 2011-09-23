@@ -15,8 +15,6 @@ $(function(){
 
 	$(".change_password_btn").click(show_change_password_field);
 	$("#save_new_password_btn").click(save_new_password);
-	$("#cancel_new_password_btn").click(cancel_new_password);
-	$(".cancel_subscription_btn").click(confirm_cancel_subscription);
 
 	$("a.billing_popup_link").click(show_update_billing_form);
 	$(".cancel_update_btn").click(hide_update_billing_form);
@@ -117,10 +115,6 @@ function cancel_new_password() {
 	$("#id_new_password").val("");
 	$(".password_spacer").show();
 	$(".change_password_btn").show();
-}
-
-function confirm_cancel_subscription() {
-	return confirm("Are you sure you want to cancel your GoodCloud subscription?  This will take effect immediately.")
 }
 
 function show_update_billing_form() {

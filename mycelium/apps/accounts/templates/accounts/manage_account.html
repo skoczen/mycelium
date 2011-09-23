@@ -22,7 +22,7 @@
 	{% include "people/_save_status_and_button.html" %}
 {% endwith %}
 
-{% if request.account.is_expired or request.account.has_billing_issue or request.account.is_cancelled %}
+{% if request.account.is_expired or request.account.has_billing_issue %}
 	<div class="expired_message">
 	{% if request.account.is_expired %}
 	Looks like your account is past its free trial, and has expired. To keep using GoodCloud, please enter your billing information below. Thanks!
@@ -34,11 +34,7 @@
 		<br/>
 		- Tom &amp; Steven (the GoodCloud team)
 	{% else %}
-	{% if request.account.is_cancelled %}
-	Your account has been cancelled. To keep using GoodCloud, you'll need to reactivate your subscription below. Thanks!
-	<br/>
-	- Tom &amp; Steven (the GoodCloud team)
-	{% endif %}{% endif %}{% endif %}
+	{% endif %}{% endif %}
 	
 	</div>
 {% endif %}
@@ -67,7 +63,6 @@
 </form_field>
 
 
-{% if not request.account.cancelled_subscription %}
 <form_field>
 <label>Billing Information:</label>
 <div class="current_billing_info">
@@ -102,7 +97,6 @@
 	</form>
 </div>
 </form_field>
-{% endif %}
 
 
 <form_field class="account_deletion">

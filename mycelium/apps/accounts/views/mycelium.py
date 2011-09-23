@@ -216,17 +216,6 @@ def change_my_password(request):
 
     return {"success":success}
 
-def cancel_subscription(request):
-    if not request.useraccount.is_admin:
-        return HttpResponseRedirect(reverse("dashboard:dashboard"))
-    
-    # cancel the subscription.
-    chargify = ChargifySubscription(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-    chargify_sub = chargify.getBySubscriptionId(request.account.chargify_subscription_id)
-    chargify_sub.unsubscribe("Unsubscribe via site")
-    request.account.update_account_status()
-    return HttpResponseRedirect(reverse("accounts:manage_account"))
-
 def reactivate_subscription(request):
     if not request.useraccount.is_admin:
         return HttpResponseRedirect(reverse("dashboard:dashboard"))

@@ -93,19 +93,6 @@ class TestAccountFactory(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDat
         assert a1.primary_useraccount == admin_account
 
 
-    def test_that_webhook_causes_a_subscription_update(self):
-        a1 = Factory.create_demo_site("test1", quick=True, create_subscription=True)
-        sub = a1.chargify_subscription
-        sub.unsubscribe("Unsubscribe via site")
-
-        c = Client()
-        response = c.post('/webhooks/chargify/webhook', {'event': 'subscription_state_changed', 'payload[subscription][id]': sub.id})
-        assert response.status_code == 200
-
-        a1a = Account.objects.get(pk=a1.pk)
-
-        assert a1a.status in CANCELLED_SUBSCRIPTION_STATII
-
     def test_deleting_an_account_cancels_its_subscription(self):
         a1 = Factory.create_demo_site("test1", quick=True, create_subscription=True)
         sub_id = a1.chargify_subscription_id
