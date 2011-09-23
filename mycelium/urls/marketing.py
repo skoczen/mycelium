@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^administration/', include(admin.site.urls)),
     url(r'^sentry/',        include('sentry.web.urls')),
     url(r'^webhooks/',     include('webhooks.urls',            app_name="webhooks",        namespace="webhooks")),
+    url(r'^zebra/',        include('zebra.urls',               app_name="zebra",           namespace="zebra")),
     
     url(r'^', include('django_ses.urls')),
     url(r'^', include('mediasync.urls')),

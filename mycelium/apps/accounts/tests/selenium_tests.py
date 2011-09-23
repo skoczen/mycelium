@@ -1,8 +1,20 @@
 # encoding: utf-8
-from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
-import unittest
+import urllib2
+import urllib
 import time
 import datetime
+
+from django.core.cache import cache
+from django.core import mail
+from django.core.urlresolvers import reverse
+from johnny import cache as jcache
+from django.test.client import Client
+from django.template.defaultfilters import date
+from django.conf import settings
+from django.utils import simplejson
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
+from zebra.signals import *
+
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from organizations.tests.selenium_abstractions import OrganizationsTestAbstractions
@@ -10,11 +22,7 @@ from groups.tests.selenium_abstractions import GroupTestAbstractions
 from dashboard.tests.selenium_abstractions import DashboardTestAbstractions
 from accounts.models import Account
 from accounts import *
-from django.conf import settings
-from accounts.tests.selenium_abstractions import AccountTestAbstractions
-from django.core.cache import cache
-from johnny import cache as jcache
-from django.template.defaultfilters import date
+from accounts.tests.selenium_abstractions import AccountTestAbstractions, _sitespaced_url
     
 class TestAgainstLiterallyNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
 
@@ -704,6 +712,9 @@ class TestSubscriptionsAgainstNoData(DjangoFunctionalConservativeSeleniumTestCas
     def test_that_after_the_free_trial_ends_a_non_cc_user_moves_to_billing_problem(self):
         sel = self.selenium
         self.get_logged_in()
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Status: Free Trial")
+
         c = self.account.stripe_customer
         c.update_subscription(plan=MONTHLY_PLAN_NAME, trial_end=datetime.datetime.now()+datetime.timedelta(seconds=4))
         time.sleep(60)
@@ -723,13 +734,8 @@ class TestSubscriptionsAgainstNoData(DjangoFunctionalConservativeSeleniumTestCas
         # assert sel.is_element_present(".expired_bar")
         assert sel.is_element_present("css=#expired_side_bar")
 
-    def test_expired_accounts_go_to_the_billing_page_for_admin_user_logins(self):
-        sel = self.selenium
-        self.test_expired_accounts_display_an_expired_bar()
-        assert sel.is_text_present("Plan: Monthly")
 
     
-    @unittest.skip("Since we can't update the stripe API, this test always will fail - the page updates to a current account.")
     def test_expired_accounts_display_a_human_explanation_on_the_billing_page(self):
         sel = self.selenium
         cache.clear()
@@ -738,6 +744,23 @@ class TestSubscriptionsAgainstNoData(DjangoFunctionalConservativeSeleniumTestCas
         # assert sel.is_text_present("is past its free trial, and has expired")
         assert sel.is_text_present("problem processing your billing method")
     
+    def test_that_after_a_successful_charge_accounts_are_moved_to_active(self):
+        # And see it updated.
+        sel = self.selenium
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Status: Free Trial")
+        self.enter_billing_info_signup()
+        c = self.account.stripe_customer
+        c.update_subscription(plan=MONTHLY_PLAN_NAME, trial_end=datetime.datetime.now()+datetime.timedelta(seconds=4))
+        time.sleep(60)
+        self.go_to_the_account_page()
+
+        assert not sel.is_text_present("Status: Free Trial")
+        assert sel.is_text_present("Status: Active")
+
+
+
     def test_users_can_completely_delete_their_account(self):
         sel = self.selenium
         a_pk = self.a1.pk
@@ -783,4 +806,3 @@ class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, Peo
         self.verificationErrors = []
     
     
-        

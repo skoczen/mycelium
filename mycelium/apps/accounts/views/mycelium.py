@@ -14,6 +14,14 @@ from django.contrib.sites.models import get_current_site
 from zebra.forms import StripePaymentForm
 import stripe
 
+
+from qi_toolkit.helpers import *
+from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm, UserFormForUserAccount, UserAccountNicknameForm
+from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
+from accounts.models import UserAccount
+
+
 @csrf_protect
 @never_cache
 def login(request, template_name='registration/login.html',
@@ -60,11 +68,6 @@ def login(request, template_name='registration/login.html',
     }, context_instance=RequestContext(request))
 
 
-from qi_toolkit.helpers import *
-from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm, UserFormForUserAccount, UserAccountNicknameForm
-from django.core.urlresolvers import reverse
-from django.shortcuts import get_object_or_404
-from accounts.models import UserAccount
 def _account_forms(request):
     data = None
     if request.method == "POST":

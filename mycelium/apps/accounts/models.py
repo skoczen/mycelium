@@ -8,6 +8,8 @@ from accounts import *
 
 import stripe
 from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from zebra.models import StripeCustomer, StripePlan
 from zebra.mixins import StripeSubscriptionMixin
 import hashlib
@@ -268,11 +270,15 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
 
         c.update_subscription(plan=MONTHLY_PLAN_NAME,trial_end=self.free_trial_ends_date)
 
+        self.last_stripe_update = datetime.datetime.now()
+
+
     def stripe_subscription_url(self):
         return "https://manage.stripe.com/customers/%s" % self.stripe_customer_id
 
     def update_account_status(self):
         sub = self.stripe_subscription
+
         # Possible statuses: canceled, past_due, unpaid, active, trialing
         if sub.status == "trialing":
             self.status = STATUS_FREE_TRIAL
@@ -697,22 +703,31 @@ class AccountBasedModel(models.Model):
         abstract = True
 
 
-def recurring_payment_failed(self, account, full_json, **kwargs):
+def recurring_payment_failed(sender, **kwargs):
+    account = kwargs["customer"]
+    full_json = kwargs["full_json"]
     account.update_account_status()
     send_mail("Recurring payment failed: %s" % (account,), "%s" % render_to_string("accounts/recurring_payment_failed.txt", locals()), settings.SERVER_EMAIL, [e[1] for e in settings.MANAGERS] )    
 
-def invoice_ready(self, account, full_json, **kwargs):
+def invoice_ready(sender, **kwargs):
+    account = kwargs["customer"]
+    full_json = kwargs["full_json"]
     pass
 
-def recurring_payment_succeeded(self, account, full_json, **kwargs):
+def recurring_payment_succeeded(sender, **kwargs):
+    account = kwargs["customer"]
+    full_json = kwargs["full_json"]
     account.update_account_status()
 
-
-def subscription_trial_ending(self, account, full_json, **kwargs):
+def subscription_trial_ending(sender, **kwargs):
+    account = kwargs["customer"]
+    full_json = kwargs["full_json"]
     # Email Steven & Tom
     send_mail("Account trial about to expire: %s" % (account,), "%s" % render_to_string("accounts/free_trial_nearly_done.txt", locals()), settings.SERVER_EMAIL, [e[1] for e in settings.MANAGERS] )    
 
-def subscription_final_payment_attempt_failed(self, account, full_json, **kwargs):
+def subscription_final_payment_attempt_failed(sender, **kwargs):
+    account = kwargs["customer"]
+    full_json = kwargs["full_json"]
     send_mail("Account deactivated for nonpayment: %s" % (account,), "%s" % render_to_string("accounts/deactivated_for_nonpayment.txt", locals()), settings.SERVER_EMAIL, [e[1] for e in settings.MANAGERS] )    
     account.update_account_status()
 
