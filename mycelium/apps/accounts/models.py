@@ -267,7 +267,12 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
         c.coupon=self.feedback_coupon_code
         c.save()
 
-        c.update_subscription(plan=MONTHLY_PLAN_NAME,trial_end=self.free_trial_ends_date)
+        if self.is_demo:
+            plan_name = FREE_PLAN_NAME
+        else:
+            plan_name = MONTHLY_PLAN_NAME
+
+        c.update_subscription(plan=plan_name,trial_end=self.free_trial_ends_date)
 
         self.last_stripe_update = datetime.datetime.now()
 
