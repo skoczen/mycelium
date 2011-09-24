@@ -7,8 +7,9 @@ parser = dselector.Parser()
 url = parser.url
 
 urlpatterns = parser.patterns('',                      
-    url(r'^$',                               views.home,                          name='home'),
-    url(r'account/{account_id:digits}$',     views.account,                       name='account'),
-    url(r'^search-results$',                 views.search_results,                name='search_results'),
+    url(r'^$',                                      views.home,                          name='home'),
+    url(r'account/{account_id:digits}$',            views.account,                       name='account'),
+    url(r'^search-results$',                        views.search_results,                name='search_results'),
+    url(r'^account/{account_id:digits}/delete$',    views.delete_deactivated_account,    name="delete_deactivated_account"   ),
 
 )

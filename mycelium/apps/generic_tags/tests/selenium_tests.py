@@ -1,5 +1,5 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
@@ -8,7 +8,7 @@ from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from generic_tags.tests.selenium_abstractions import TagTestAbstractions
 from django.core.cache import cache
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbstractions, GroupTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
@@ -429,7 +429,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, TagTestAbstractions, Gro
         pass
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in()

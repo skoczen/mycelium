@@ -1,9 +1,9 @@
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time 
 from test_factory import Factory
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in()

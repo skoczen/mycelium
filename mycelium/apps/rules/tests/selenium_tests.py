@@ -1,14 +1,14 @@
 import time 
 from test_factory import Factory
 
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 
 class RulesTestAbstractions(object):
 
     pass
 
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, RulesTestAbstractions):
     
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
@@ -17,7 +17,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
     #     self.account.delete()
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RulesTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, RulesTestAbstractions):
     # selenium_fixtures = ["200_test_people.json"]
     
     def setUp(self, *args, **kwargs):

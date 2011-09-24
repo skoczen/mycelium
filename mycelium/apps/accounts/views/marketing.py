@@ -14,7 +14,7 @@ from accounts.models import AccessLevel, Account
 from accounts.tasks import send_welcome_emails
 from django.contrib.sites.models import Site
 from django.conf import settings
-from pychargify.api import *
+
 
 @render_to("accounts/signup.html")
 def signup(request):
@@ -35,7 +35,7 @@ def signup(request):
                                        email=user_form.cleaned_data['email'], 
                                        access_level=AccessLevel.admin()
                                        )
-            account.create_subscription()
+            account.create_stripe_subscription()
             site = Site.objects.get_current()
 
             # Send off emails to us and them.

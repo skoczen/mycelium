@@ -1,5 +1,5 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time 
 from test_factory import Factory
 
@@ -15,7 +15,7 @@ class RecentActivityTestAbstractions(object):
         sel.click("css=.detail_tab[href=#recent_activity]")
         time.sleep(1)
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
@@ -28,7 +28,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, RecentActivityTestAbstra
     #     self.create_person_and_go_to_recent_activity_tab()
     #     assert sel.is_text_present("Recent Activity's not done quite yet, but it's coming!")
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, RecentActivityTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in()

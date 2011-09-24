@@ -1,5 +1,5 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time
 import datetime
 from test_factory import Factory
@@ -13,7 +13,7 @@ from django.core.cache import cache
 from django.template.defaultfilters import date
 
 from accounts.models import Account, UserAccount
-from accounts import BILLING_PROBLEM_STATII
+from accounts import BILLING_PROBLEM_STATII, STATUS_DEACTIVATED
 from people.models import Person
 from organizations.models import Organization
 from donors.models import Donation
@@ -22,15 +22,15 @@ from generic_tags.models import Tag, TaggedItem
 from groups.models import Group
 from spreadsheets.models import Spreadsheet
 from django.contrib.auth.models import User
-
+from django.contrib.humanize.templatetags.humanize import intcomma
 
     
-class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.create_demo_site(with_demo_flag=False)
-        self.create_demo_site(name="test1")
         cache.clear()
+        self.create_demo_site(name="test1")
         self.create_fake_account_for_flight_control()
         self.verificationErrors = []
 
@@ -50,22 +50,34 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
     def test_that_flight_control_lists_the_right_people_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_people number") , "%s" % (Person.objects.non_demo.count() / Account.objects.active.filter(is_demo=False).count()))
+        try:
+            self.assertEqual(sel.get_text("css=.num_people number") , "%s" % (Person.objects.non_demo.count() / Account.objects.active.filter(is_demo=False).count()))
+        except:
+            self.assertEqual(sel.get_text("css=.num_people number") , "%s" % 0)
 
     def test_that_flight_control_lists_the_right_organizations_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_orgs number") , "%s" % (Organization.objects.non_demo.count() / Account.objects.active.filter(is_demo=False).count()))
+        try:
+            self.assertEqual(sel.get_text("css=.num_orgs number") , "%s" % (Organization.objects.non_demo.count() / Account.objects.active.filter(is_demo=False).count()))
+        except:
+            self.assertEqual(sel.get_text("css=.num_orgs number") , "%s" % 0)
 
     def test_that_flight_control_lists_the_right_users_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_users number") , "%.1f" % (UserAccount.objects.filter(account__is_demo=False).count() / Account.objects.active.filter(is_demo=False).count()))
+        try:
+            self.assertEqual(sel.get_text("css=.num_users number") , "%.1f" % (UserAccount.objects.filter(account__is_demo=False).count() / Account.objects.active.filter(is_demo=False).count()))
+        except:
+            self.assertEqual(sel.get_text("css=.num_users number") , "%.1f" % 0)
 
     def test_that_flight_control_lists_the_right_donations_average(self):
         sel = self.selenium
         self.get_to_flight_control()
-        self.assertEqual(sel.get_text("css=.num_donations number") , "%.1f" % (Donation.objects.non_demo.count() / Account.objects.active.filter(is_demo=False).count()))
+        try:
+            self.assertEqual(sel.get_text("css=.num_donations number") , "%.1f" % (Donation.objects.non_demo.count() / Account.objects.active.filter(is_demo=False).count()))
+        except:
+            self.assertEqual(sel.get_text("css=.num_donations number") , "%.1f" % 0)
 
     def test_that_flight_control_lists_the_right_per_donation_average(self):
         sel = self.selenium
@@ -73,7 +85,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
         total_donations = 0
         for d in Donation.objects.non_demo.all():
             total_donations += d.amount
-        self.assertEqual(sel.get_text("css=.num_donations number") , "%.1f" % (total_donations / Donation.objects.non_demo.count()))
+        try:
+            self.assertEqual(sel.get_text("css=.avg_per_donation number") , "$%.2f" % (total_donations / Donation.objects.non_demo.count()))
+        except:
+            self.assertEqual(sel.get_text("css=.avg_per_donation number") , "$%.2f" % 0)
 
 
     def test_that_flight_control_lists_the_right_vol_hours_average(self):
@@ -82,7 +97,8 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
         total_volunteer_hours = 0
         for cs in CompletedShift.objects.non_demo.all():
             total_volunteer_hours += cs.duration
-        self.assertEqual(sel.get_text("css=.num_vol_hours number") , "%.1f" % (total_volunteer_hours / Person.objects.non_demo.count()))
+
+        self.assertEqual(sel.get_text("css=.num_vol_hours number") , intcomma(int(total_volunteer_hours / Account.objects.active.filter(is_demo=False).count() )))
 
     def test_that_flight_control_lists_the_right_per_Completed_shift_average(self):
         sel = self.selenium
@@ -90,7 +106,10 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
         total_volunteer_hours = 0
         for cs in CompletedShift.objects.non_demo.all():
             total_volunteer_hours += cs.duration
-        self.assertEqual(sel.get_text("css=.avg_vol_hours_per_person number") , "%.1f" % (total_volunteer_hours / Account.objects.active.filter(is_demo=False).count()))
+        try:
+            self.assertEqual(sel.get_text("css=.avg_vol_hours_per_person number") , "%.1f" % (total_volunteer_hours / Person.objects.non_demo.all().count()))
+        except:
+            self.assertEqual(sel.get_text("css=.avg_vol_hours_per_person number") , "%.1f" % 0)
 
 
     def test_that_flight_control_lists_accounts_that_expire_soon(self):
@@ -206,12 +225,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
         sel = self.selenium
         self.get_to_flight_control()
         self.get_to_account_by_searching()
-        # assert not sel.is_element_present("css=.login_entry:nth(3)")
-        # self.get_logged_in()
-        # self.get_to_flight_control()
-        # self.get_to_account_by_searching()
-        assert sel.is_element_present("css=.login_entry:nth(3)")
-
+        assert sel.is_element_present("css=.login_entry:nth(2)")
 
     def test_the_home_page_displays_the_last_logins(self):
         sel = self.selenium
@@ -251,7 +265,47 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, FlightControlTestAbstrac
 
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
+    def test_the_account_page_does_not_show_a_delete_link_for_active_accounts(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        self.get_to_account_by_searching()
+
+        assert not sel.is_element_present("css=.delete_account_link")
+
+
+    def test_the_account_page_shows_a_delete_link_for_deactived_accounts(self):
+        sel = self.selenium
+        self.get_to_flight_control()
+        self.get_to_account_by_searching()
+
+        a = Account.objects.get(subdomain="test")
+        a.status = STATUS_DEACTIVATED
+        a.save()
+        cache.clear()
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
+        
+        assert sel.is_element_present("css=.delete_account_link")
+
+    def test_the_that_clicking_the_delete_link_confirms_then_deletes_an_account(self):
+        sel = self.selenium
+        self.test_the_account_page_shows_a_delete_link_for_deactived_accounts()
+
+        sel.click("css=.delete_account_link")
+        sel.get_confirmation()
+        sel.wait_for_page_to_load("30000")
+
+        assert sel.is_text_present("Account Averages")
+
+        self.go_to_the_login_page("test")
+        assert not sel.is_text_present ("Log In")
+        # self.assertEqual(Account.objects.filter(subdomain="test").count(), 0)
+
+
+
+
+
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, FlightControlTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.create_demo_site()   

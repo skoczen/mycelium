@@ -11,7 +11,16 @@ from django.views.decorators.cache import never_cache
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.sites.models import get_current_site
-from pychargify.api import ChargifySubscription
+from zebra.forms import StripePaymentForm
+import stripe
+
+
+from qi_toolkit.helpers import *
+from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm, UserFormForUserAccount, UserAccountNicknameForm
+from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
+from accounts.models import UserAccount
+
 
 @csrf_protect
 @never_cache
@@ -59,11 +68,6 @@ def login(request, template_name='registration/login.html',
     }, context_instance=RequestContext(request))
 
 
-from qi_toolkit.helpers import *
-from accounts.forms import UserAccountAccessFormset, NewUserAccountForm, AccountForm, UserFormForUserAccount, UserAccountNicknameForm
-from django.core.urlresolvers import reverse
-from django.shortcuts import get_object_or_404
-from accounts.models import UserAccount
 def _account_forms(request):
     data = None
     if request.method == "POST":
@@ -135,10 +139,29 @@ def dashboard(request):
 @render_to("accounts/manage_account.html")
 def manage_account(request):
     section = "admin"
-    
-    request.account.update_account_status()
+    STRIPE_PUBLISHABLE = settings.STRIPE_PUBLISHABLE
 
     form = AccountForm(instance=request.account)
+
+    if request.method == 'POST':
+        zebra_form = StripePaymentForm(request.POST)
+        if zebra_form.is_valid():
+            customer = request.account.stripe_customer
+            customer.card = zebra_form.cleaned_data['stripe_token']
+            customer.save()
+
+            account = request.account
+            account.last_four = zebra_form.cleaned_data['last_4_digits']
+            account.stripe_customer_id = customer.id
+            account.save()
+            request.account = account
+            request.account.update_account_status()
+
+    else:
+        zebra_form = StripePaymentForm()
+    
+    
+    
     return locals()
 
 @json_view
@@ -194,17 +217,6 @@ def change_my_password(request):
         pass
 
     return {"success":success}
-
-def cancel_subscription(request):
-    if not request.useraccount.is_admin:
-        return HttpResponseRedirect(reverse("dashboard:dashboard"))
-    
-    # cancel the subscription.
-    chargify = ChargifySubscription(settings.CHARGIFY_API, settings.CHARGIFY_SUBDOMAIN)
-    chargify_sub = chargify.getBySubscriptionId(request.account.chargify_subscription_id)
-    chargify_sub.unsubscribe("Unsubscribe via site")
-    request.account.update_account_status()
-    return HttpResponseRedirect(reverse("accounts:manage_account"))
 
 def reactivate_subscription(request):
     if not request.useraccount.is_admin:

@@ -109,7 +109,7 @@ tabbed_box box_content {
 .edit_mode_on.account_info_form .generic_field_label {
 	display: none;
 }
-.account_info_form label {
+.manage_account_info_page label {
 	color: #333;
 	width: 200px;
 	display: block;
@@ -119,10 +119,10 @@ tabbed_box box_content {
 .account_info_form {
 	
 }
-.account_info_form form_field {
+form_field {
 	display: block;
 	padding: 5px 10px;
-
+	clear: left;
 }
 .account_info_form form_field .edit_field input {
 	margin-top: -5px;
@@ -166,9 +166,6 @@ tabbed_box box_content {
 #new_account .generic_editable_field .edit_field input {
 	min-width: 100px;
 }
-#cboxContent {
-	/*background-color: #E6E6E6;*/
-}
 .expired_message {
 	color: red;
 	padding: 10px;
@@ -176,6 +173,19 @@ tabbed_box box_content {
 	
 	border-radius: 4px;
 	-moz-border-radius: 4px;	
+}
+
+.deactivated_message_header {
+	color: red;
+	padding: 10px;
+	width: 80%;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.deactivated_message {
+	padding: 10px;
+	width: 80%;
 }
 
 delete_object_block input, delete_object_block a {
@@ -189,4 +199,37 @@ delete_object_block input, delete_object_block a {
 }
 form_field.account_deletion {
 	margin-top: 30px;
+}
+.update_billing_form {
+	display: block;
+	background-color: #F2F2F2;
+	padding: 0px 10px;
+	margin: 0px 0px 30px 0px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;	
+	float: left;
+	width: auto;
+	display: none;
+}
+.update_billing_form .cancel_update_btn {
+	margin-left: 20px;
+}
+.payment-errors {
+	display: block;
+	color: red;
+	margin: 10px;
+}
+#subscription_submit {
+	margin-top: 5px;
+}
+.update_billing_form .form_actions {
+	display: block;
+	padding: 10px;
+}
+.manage_account_info_page .update_billing_form label {
+	width: 100px;
+}
+.manage_account_info_page .update_form_title {
+	font-size: 16px;
+	margin: 10px;
 }

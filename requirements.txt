@@ -7,7 +7,7 @@ python-dateutil <2.0
 
 PIL
 python-memcached
-django >=1.3
+django >=1.3.1
 gunicorn
 #django-cms >= 2.1.3
 #django-tinymce
@@ -31,7 +31,7 @@ nose
 ipython
 django-nose
 nose-exclude
-django-nose-selenium
+# django-nose-selenium
 -e git://github.com/Almad/django-sane-testing.git#egg=djangosanetesting
 cherrypy
 south
@@ -68,5 +68,9 @@ django-newsletter
 vobject
 django-tinymce
 chardet
--e git://github.com/skoczen/pychargify.git#egg=pychargify
 -e git://github.com/GoodCloud/django-longer-username.git#egg=longerusername
+pycurl
+stripe
+py-bcrypt
+-e git://github.com/GoodCloud/django-zebra.git#egg=zebra
+-e git://github.com/GoodCloud/django-functional-tests#egg=functional_tests

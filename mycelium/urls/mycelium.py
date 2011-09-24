@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^rules/',        include('rules.urls',               app_name="rules",           namespace="rules")),
     url(r'^',              include('accounts.urls.mycelium',   app_name="accounts",        namespace="accounts")),
     url(r'^dashboard/',    include('dashboard.urls',           app_name="dashboard",       namespace="dashboard")),
+    url(r'^zebra/',        include('zebra.urls',               app_name="zebra",           namespace="zebra")),
     
     # (r'^administration/doc/', include('django.contrib.admindocs.urls')),
     # (r'^administration/', include(admin.site.urls)),
@@ -31,7 +32,10 @@ urlpatterns = patterns('',
     
 )
 
-if settings.DEBUG:
+if settings.DEBUG or settings.SELENIUM_TESTING:
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     )
+    urlpatterns += staticfiles_urlpatterns()

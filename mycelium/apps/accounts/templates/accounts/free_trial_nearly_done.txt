@@ -1,0 +1,10 @@
+Hey Guys,
+
+We've got an account that's about to end its free trial.  Might be time to follow up.
+
+Organization: {{account}}
+Website: {{account.subdomain}}.agoodcloud.com.
+
+Good Luck!
+
+-The Happy GoodCloud Robot

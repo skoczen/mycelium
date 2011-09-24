@@ -15,16 +15,9 @@ $(function(){
 
 	$(".change_password_btn").click(show_change_password_field);
 	$("#save_new_password_btn").click(save_new_password);
-	$("#cancel_new_password_btn").click(cancel_new_password);
-	$(".cancel_subscription_btn").click(confirm_cancel_subscription);
 
-	$("a.billing_popup_link").colorbox({
-		'iframe':true,
-		'width':"75%",
-		'height':"85%",
-		'onClosed': force_reload_page,
-	});
-	$(".close_overlay_link").click(close_colorbox)
+	$("a.billing_popup_link").click(show_update_billing_form);
+	$(".cancel_update_btn").click(hide_update_billing_form);
 
 });
 
@@ -124,13 +117,14 @@ function cancel_new_password() {
 	$(".change_password_btn").show();
 }
 
-function confirm_cancel_subscription() {
-	return confirm("Are you sure you want to cancel your GoodCloud subscription?  This will take effect immediately.")
+function show_update_billing_form() {
+	$(".current_billing_info").hide();
+	$(".update_billing_form").show();
+	return false;
 }
 
-function force_reload_page() {
-	window.location = $.param.querystring( window.location+"", "?r=r");
-}
-function close_colorbox() {
-	parent.jQuery.colorbox.close();
+function hide_update_billing_form() {
+	$(".current_billing_info").show();
+	$(".update_billing_form").hide();
+	return false;	
 }
