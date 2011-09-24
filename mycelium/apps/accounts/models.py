@@ -691,6 +691,53 @@ class UserAccount(TimestampModelMixin):
         else:
             return self.full_name[:self.full_name.find(" ")]
 
+    @property
+    def uservoice_sso_token(self):
+        from Crypto.Cipher import AES
+        import base64
+        import urllib
+        import operator
+        import array
+        import simplejson as json
+
+        message = {
+          "guid" : self.user.id,
+          "display_name" : self.full_name,
+          "email" : self.email,
+        }
+        block_size = 16
+        mode = AES.MODE_CBC
+
+        # If you're acme.uservoice.com then this value would be 'acme'
+        uservoice_subdomain = 'goodcloud'
+
+        # Get this from your UserVoice General Settings page
+        sso_key = "87071942d51dbe690b0d5d1b9b832715"
+
+        iv = "OpenSSLforPython"
+
+        json = json.dumps(message, separators=(',',':'))
+
+        salted = sso_key+uservoice_subdomain
+        saltedHash = hashlib.sha1(salted).digest()[:16]
+
+        json_bytes = array.array('b', json[0 : len(json)]) 
+        iv_bytes = array.array('b', iv[0 : len(iv)])
+
+        # # xor the iv into the first 16 bytes.
+        for i in range(0, 16):
+            json_bytes[i] = operator.xor(json_bytes[i], iv_bytes[i])
+
+        pad = block_size - len(json_bytes.tostring()) % block_size
+        data = json_bytes.tostring() + pad * chr(pad)
+        aes = AES.new(saltedHash, mode, iv)
+        encrypted_bytes = aes.encrypt(data)
+
+        param_for_uservoice_sso = urllib.quote(base64.b64encode(encrypted_bytes))
+        return param_for_uservoice_sso
+
+
+
     def __unicode__(self):
         return "%s" % (self.nickname_or_full_name,)
 

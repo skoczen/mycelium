@@ -38,7 +38,7 @@ $(function(){
 	    $("fragment").each(function(){
 	        frag = $(this);
             if (fragment_dict[frag.attr("name")] != undefined) {
-               frag.trigger("fragments."+frag.attr("action"), {'new_content':fragment_dict[frag.attr("name")], 'target':frag});
+               $(document).trigger("fragments."+frag.attr("action"), {'new_content':fragment_dict[frag.attr("name")], 'target':frag});
 	        }
 	    });
 	    return true;
@@ -47,11 +47,13 @@ $(function(){
 	fragments.replace_content = function(e, d) {
         $(d.target).html(d.new_content);
 	};
-	fragments.append_content = function(e, new_content, target) {
-	    $(target).append(new_content);
+	fragments.append_content = function(e, d) {
+	    $(d.target).append(d.new_content);
+	    // $(d.target).html("appended")
+	    console.log($(d.target).html())
 	};
-	fragments.clear_content = function(e, new_content, target) {
-        $(target).html("");
+	fragments.clear_content = function(e, d) {
+        $(d.target).html("");
 	};
     // Default fragment actions:
     // replace

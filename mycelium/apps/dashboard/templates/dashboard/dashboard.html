@@ -99,8 +99,13 @@
 		</div>
 		{% endif %}
 		<column_header class="conversations">Recent Conversations</column_header>
+		<column_content class="plain_text conversations">
+		<fragment name="more_conversations" action="append">
 		{% include "dashboard/_recent_conversations.html" %}
-		
+		</fragment>
+		<a href="{% url dashboard:more_conversations %}" class="more_conversations_link">More Conversations</a>
+		</column_content>
+
 		{# <column_header class="news">GoodCloud News</column_header> #}
 		{# {% include "dashboard/_goodcloud_news.html" %} #}
 	</td>

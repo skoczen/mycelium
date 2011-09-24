@@ -41,6 +41,12 @@ def tour(request):
 def screenshots(request):
     return locals()
 
+
+@render_to("marketing_site/webinar.html")
+def webinar(request):
+    return locals()
+
+
 @render_to("marketing_site/newsletter.html")
 def newsletter(request):
     form = EmailForm()

@@ -75,6 +75,9 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 	{% endblock %}
 	<script type="text/javascript">
 	  (function() {
+	  	var uvOptions = {
+	  		 sso: "{{request.user.get_profile.uservoice_sso_token}}"
+	  	}
 	    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
 	    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/AwQUXURGT97r7ts4zvEIaA.js';
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);

@@ -1,15 +1,9 @@
-<column_content class="plain_text conversations">
-
 {% for c in recent_conversations %}
 <conversation>
-<span class="conversation_person"><a href="{% url people:person c.person.pk %}">{{c.person.full_name}}</a></span>
-<span class="conversants">{{c.get_conversation_type_display}} with {{c.staff.nickname}} on </span>
-<span class="date">{{c.date|date}}</span>
-
-<div class="conversation_body">{{c.body_with_see_more_link}}</div>
-</div>
+	<span class="conversation_person"><a href="{% url people:person c.person.pk %}">{{c.person.full_name}}</a></span>
+	<span class="conversants">{{c.get_conversation_type_display}} with {{c.staff.nickname}} on </span>
+	<span class="date">{{c.date|date}}</span>
+	<div class="conversation_body">{{c.body_with_see_more_link}}</div>
 </conversation>
 {% empty %}<div class="conversation_body">No conversations yet!</div>
 {% endfor %}
-
-</column_content>

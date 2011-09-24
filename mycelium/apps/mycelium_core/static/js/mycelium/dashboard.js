@@ -1,3 +1,5 @@
+var dashboard = {};
+dashboard.conversation_offset = 0;
 $(function(){
 	$(".yes_to_nickname").click(yes_to_nickname);	
 	$(".no_to_nickname").click(no_to_nickname);
@@ -6,6 +8,7 @@ $(function(){
 	$("#id_new_nickname").bind('keydown', 'Return' ,save_new_nickname);
 	$(".hide_challenge_complete_link").click(hide_challenge_complete);
 	$(".older_news_link").click(show_older_news);
+	$(".more_conversations_link").live("click",dashboard.show_more_conversations);
 });
 
 var nickname = false;
@@ -58,4 +61,19 @@ function hide_challenge_complete(){
 function show_older_news() {
 	$(".archived_news").removeClass("hidden").show();
 	$(".older_news_link").hide();
+}
+
+dashboard.show_more_conversations = function () {
+	// $("fragment[name=more_conversations]").html("Loading...");
+	dashboard.conversation_offset += 5;
+	$.ajax({
+		url: $(this).attr("href"),
+		type: "POST",
+		dataType: "json",
+		data: {"start_at": dashboard.conversation_offset},
+		success: function(json) {
+			$.Mycelium.fragments.process_fragments_from_json(json);
+		}
+	});	
+	return false;
 }
