@@ -37,17 +37,22 @@ var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 		<a href="{% url people:search %}" class="nav_btn people {% if not section %}current{% endif %}">People</a>
 		<a href="{% url organizations:search %}" class="nav_btn organizations {% if section == "organizations" %}current{% endif %}">Organizations</a>
 		<a href="{% url groups:search %}" class="nav_btn groups {% if section == "groups" %}current{% endif %}">Groups</a>
+		
+		{% include "mycelium_core/_help_popup.html" %}
 		<a href="{% url spreadsheets:search %}" class="nav_btn spreadsheets {% if section == "spreadsheets" %}current{% endif %}">Spreadsheets</a>
 		{# <a href="{% url spreadsheets:search %}" class="nav_btn spreadsheets {% if section == "spreadsheets" %}current{% endif %}">Donations</a> #}
 		{# <a href="{% url spreadsheets:search %}" class="nav_btn spreadsheets {% if section == "spreadsheets" %}current{% endif %}">Volunteers</a> #}
 		{# <a href="#">Events</a> #}
 		{# <a href="#">Communicate</a> #}
 
+
+
 		{% if request.useraccount.is_admin %}
 				<a href="{% url core:more_menu %}" class="admin_btn admin nav_btn {% if section == "admin" %}current{% endif %}" >Admin</a>				
 		{% endif %}
 		
-		<a href="#" class="help_btn help nav_btn">Help</a>
+		<a href="#" class="side_help_btn help nav_btn">Help</a>
+
 
 		<footer>
 		{% block footer %}

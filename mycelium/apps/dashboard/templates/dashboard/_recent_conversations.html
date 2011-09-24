@@ -2,9 +2,11 @@
 
 {% for c in recent_conversations %}
 <conversation>
-<span class="date">{{c.date|date}}</span> - 
-<span class="conversants">{{c.staff.nickname}} talked to <a href="{% url people:person c.person.pk %}">{{c.person.full_name}}</a> via {{c.get_conversation_type_display}}</span>
-<div class="conversation_body">&ldquo;{{c.gist}}&rdquo; {% if c.bigger_than_the_gist %}<a href="{% url people:person c.person.pk %}#current_detail_tab=%23conversations">See more</a>{% endif %}</div>
+<span class="conversation_person"><a href="{% url people:person c.person.pk %}">{{c.person.full_name}}</a></span>
+<span class="conversants">{{c.get_conversation_type_display}} with {{c.staff.nickname}} on </span>
+<span class="date">{{c.date|date}}</span>
+
+<div class="conversation_body">{{c.body_with_see_more_link}}</div>
 </div>
 </conversation>
 {% empty %}<div class="conversation_body">No conversations yet!</div>

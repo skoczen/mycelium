@@ -51,3 +51,14 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTest
         time.sleep(1)
         assert sel.is_element_present("css=.global_results_table")
         self.assertEqual(sel.get_text("css=.global_results_table"),"No results found for search \"naopdfj934adsf\".")
+
+
+    def test_that_help_shows_and_hides(self):
+        sel = self.selenium
+        self.get_logged_in()
+        assert not sel.is_visible("css=#help_popup")
+        sel.click("css=.side_help_btn")
+        assert sel.is_visible("css=#help_popup")
+        sel.click("css=.close_help_popup_btn")
+        assert not sel.is_visible("css=#help_popup")
+        

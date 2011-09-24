@@ -117,7 +117,7 @@ tab_contents.people_conversations_tab textarea {
 	width: 100%;
 	height: 80px;
 }
-tab_contents.people_conversations_tab .full_body, tab_contents.people_conversations_tab .gist {
+tab_contents.people_conversations_tab .full_body, tab_contents.people_conversations_tab .gist_and_remainder {
 	display: block;
 	/*white-space: pre;	*/
 	padding: 0px 10px 10px 0px;

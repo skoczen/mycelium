@@ -6,11 +6,5 @@
 	<span class="conversation_date">{{c.date|date}}</span>
 	<span class="conversation_staff">with {{c.staff.nickname_or_full_name}}</span>
 	</div>
-	<div class="conversation_body">
-	{% if c.bigger_than_the_gist %}
-		<span class="gist">{{c.gist}} <a href="#" class="read_all_link">Read all</a></span>
-		<span class="full_body hidden">{{c.body|linebreaksbr}} <a href="#" class="read_less_link">Show less</a></span>
-	{% else %}
-		<span class="full_body">{{c.body|linebreaksbr}}</span>
-	{% endif %}</div>
+	<div class="conversation_body">{{c.body_with_see_more_link}}</div>
 </div>

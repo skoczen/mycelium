@@ -7,6 +7,7 @@
 {% endblock %}
 {% block javascript %}{{block.super}}
 {% js "/js/mycelium/dashboard.js" %}
+{% js "/js/mycelium/conversation_and_gist.js" %}
 {% endblock %}
 
 {% block breadcrumb %}{% endblock %}
@@ -100,8 +101,8 @@
 		<column_header class="conversations">Recent Conversations</column_header>
 		{% include "dashboard/_recent_conversations.html" %}
 		
-		<column_header class="news">GoodCloud News</column_header>
-		{% include "dashboard/_goodcloud_news.html" %}
+		{# <column_header class="news">GoodCloud News</column_header> #}
+		{# {% include "dashboard/_goodcloud_news.html" %} #}
 	</td>
 	<td class="right_col">
 
