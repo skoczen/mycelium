@@ -20,10 +20,10 @@
 # from qi_toolkit.smoke_tests import *
 # from test_factory import Factory
 # from djangosanetesting.cases import DatabaseTestCase
-# from functional_tests.selenium_test_case import QiUnitTestMixin
+# from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
 # from django.test import TestCase
 
-# class TestPeopleSmoke(TestCase, QiUnitTestMixin, DatabaseTestCase):
+# class TestPeopleSmoke(TestCase, DjangoFunctionalUnitTestMixin, DatabaseTestCase):
 
 #     def setUp(self):
 #         self.account = Factory.create_demo_site("test1", quick=True)

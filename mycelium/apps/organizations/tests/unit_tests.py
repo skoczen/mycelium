@@ -1,6 +1,6 @@
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from functional_tests.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
 from django.test import TestCase
 from people.models import Person
 from volunteers import VOLUNTEER_STATII
@@ -12,7 +12,7 @@ from accounts.tests.selenium_abstractions import AccountTestAbstractions
 class Dummy(object):
     pass
 
-class TestBirthdays(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, AccountTestAbstractions):
+class TestBirthdays(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase, AccountTestAbstractions):
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):

@@ -40,9 +40,11 @@
 			<div class="info_block">
 				Signup Date: {{account.signup_date|date}}
 			</div>
+			{% if not account.in_free_trial %}
 			<div class="info_block">
 				Next Billed: {{account.next_billing_date|date}}
 			</div>
+			{% endif %}
 			<div class="info_block">
 				<a href="{{account.stripe_subscription_url}}" target="_blank">Stripe Subscription</a>
 			</div>

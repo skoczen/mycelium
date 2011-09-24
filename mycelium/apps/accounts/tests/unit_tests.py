@@ -43,7 +43,7 @@ class TestAccountFactory(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDat
 
     def test_creating_and_deleting_an_account_does_so_successfully(self):
         from django.contrib.auth.models import User
-        a1 = Factory.create_demo_site("test1", quick=True)
+        a1 = Factory.create_demo_site("test1", quick=True, create_subscription=True)
         a2 = Factory.create_demo_site("test2", quick=True)
         a1.delete()
         time.sleep(5)

@@ -5,7 +5,7 @@ from rules.tasks import populate_rule_components_for_an_account
 from groups.models import GroupRule
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
 from django.db.models import Q
-from functional_tests.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
 from django.test import TestCase
 from generic_tags.models import TagSet
 from people.models import Person
@@ -17,7 +17,7 @@ from rules.tests import RuleTestAbstractions
 class Dummy(object):
     pass
 
-class TestRuleModelFunctions(QiUnitTestMixin, TestCase):
+class TestRuleModelFunctions(DjangoFunctionalUnitTestMixin, TestCase):
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
@@ -34,7 +34,7 @@ class TestRuleModelFunctions(QiUnitTestMixin, TestCase):
         self.assertEqualQuerySets(self.left_side.right_side_types, self.left_side.allowed_right_side_types.all())
 
 
-class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTestAbstractions, TestCase):
+class TestPopulateRuleComponents(DjangoFunctionalUnitTestMixin, RuleTestAbstractions, GroupTestAbstractions, TestCase):
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
@@ -202,6 +202,8 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTes
             "last volunteer shift",
             # "total volunteer hours in the last 12 months"
             "last conversation",
+            "birthday",
+            "age",
         ]
         self.assertEqual(list_of_names,target_list_of_names)
 
@@ -246,7 +248,7 @@ class TestPopulateRuleComponents(QiUnitTestMixin, RuleTestAbstractions, GroupTes
         # make sure it's gone
         self.assertEqual(LeftSide.objects_by_account(self.account).filter(display_name="have a new test tagset tag that").count(), 0)
 
-class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractions, QiUnitTestMixin, DestructiveDatabaseTestCase):
+class TestQuerySetGeneration(TestCase, RuleTestAbstractions, GroupTestAbstractions, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase):
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):

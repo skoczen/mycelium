@@ -4,7 +4,7 @@ import unittest
 import os
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from functional_tests.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
 from django.test import TestCase
 from django.conf import settings
 from groups.models import Group
@@ -16,7 +16,7 @@ from people.models import Person
 class Dummy(object):
     pass
 
-class TestModels(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, GenerateSpreadsheetsMixin):
+class TestModels(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase, GenerateSpreadsheetsMixin):
 
     def setUp(self):
         self.a1 = Factory.create_demo_site("test1", quick=True)
@@ -33,7 +33,12 @@ class TestModels(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Generat
         self.assertEqual(s2.num_rows, Person.objects_by_account(self.a1).count())
 
     def _mailing_list_row_dict(self, p):
-        return [ p.first_name, p.last_name, p.email, p.phone_number,  p.line_1, p.line_2, p.city, p.state, p.postal_code,'', '', '', '', '', '', '', '', '', "%s" % (p.pk,) ]
+        return [ p.first_name, p.last_name, p.email, p.phone_number,  
+                 p.line_1, p.line_2, p.city, p.state, p.postal_code,
+                 '', '', '', '', '', '', '', '', '', '%s' % p.birth_month, 
+                 '%s' % p.birth_day,  '%s' % p.birth_year, 
+                 "%s-%02d-%02d" % (p.birth_year, p.birth_month, p.birth_day), 
+                 "%s" % (p.pk,) ]
 
 
     def test_get_row(self):
@@ -74,7 +79,7 @@ class TestModels(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, Generat
 
 
 
-class TestDataImport(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, GenerateSpreadsheetsMixin):
+class TestDataImport(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase, GenerateSpreadsheetsMixin):
 
     def setUp(self):
         self.a1 = Factory.create_demo_site("test1", quick=True)

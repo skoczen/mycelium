@@ -18,7 +18,7 @@ class ConversationTestAbstractions(object):
         time.sleep(1)
 
 
-    def add_a_conversation(self, body=None, date=None, hour=5, minute=35, ampm="PM", type="in-person"):
+    def add_a_conversation(self, body=None, date=None, type="in-person"):
         sel = self.selenium
         self.switch_to_conversation_tab()
         if not body:
@@ -30,10 +30,7 @@ class ConversationTestAbstractions(object):
         sel.click("css=tabbed_box[name=add_a_conversation] tab_title")
         sel.type("css=#id_body", body)
         sel.click("css=input[name=conversation_type][value=%s]" % (type,))
-        sel.type("css=#id_date_0", date)
-        sel.type("css=#id_date_1", hour)
-        sel.type("css=#id_date_2", minute)
-        sel.select("css=#id_date_3", ampm)
+        sel.type("css=#id_date", date)
         sel.click("css=tabbed_box[name=add_a_conversation] .add_conversation_btn")
         time.sleep(2)
         return body,date

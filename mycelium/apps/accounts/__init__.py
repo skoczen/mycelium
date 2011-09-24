@@ -10,7 +10,7 @@ ACCOUNT_STATII = [
     (STATUS_EXPIRED, "Expired"), # Free trial expired
     (STATUS_ACTIVE, "Active"),
     (STATUS_ACTIVE_BILLING_ISSUE, "Active, Billing Issue"), # Was paid, billing failed.
-    (STATUS_DEACTIVATED, "On Hold"),
+    (STATUS_DEACTIVATED, "Deactivated"),
     (STATUS_CANCELLED, "Cancelled"),   
 ]
 

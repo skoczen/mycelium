@@ -2,7 +2,7 @@ import time
 import datetime
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from functional_tests.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
 from django.test import TestCase
 from groups.models import Group
 from people.models import Person
@@ -19,7 +19,7 @@ from spreadsheets import SPREADSHEET_TEMPLATE_CHOICES
 class Dummy(object):
     pass
 
-class TestDashboard(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
+class TestDashboard(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase):
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):

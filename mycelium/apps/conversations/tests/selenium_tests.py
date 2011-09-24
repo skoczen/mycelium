@@ -24,13 +24,13 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, Conversati
 
         # make sure recent conversations display cleanly
         self.assertEqual("%s"%a1, sel.get_text("css=.conversation_row:nth(0) .conversation_body"))
-        self.assertEqual("March 8, 2011, 5:35 p.m.", sel.get_text("css=.conversation_row:nth(0) .conversation_date"))
+        self.assertEqual("March 8, 2011", sel.get_text("css=.conversation_row:nth(0) .conversation_date"))
         assert sel.is_element_present("css=.conversation_type.in-person")
         
         assert not sel.is_element_present("css=.conversation_type.email")
-        a2, d2 = self.add_a_conversation(body="Text like 8.15", date="1/4/2011", hour=11, minute=12, ampm="AM", type="email")
+        a2, d2 = self.add_a_conversation(body="Text like 8.15", date="1/4/2011",type="email")
         self.assertEqual("%s"%a2, sel.get_text("css=.conversation_row:nth(1) .conversation_body"))
-        self.assertEqual("Jan. 4, 2011, 11:12 a.m.", sel.get_text("css=.conversation_row:nth(1) .conversation_date"))
+        self.assertEqual("Jan. 4, 2011", sel.get_text("css=.conversation_row:nth(1) .conversation_date"))
         # Test type
         assert sel.is_element_present("css=.conversation_type.email")
         
@@ -50,17 +50,17 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, Conversati
         sel.click("css=.conversation_row:nth(1) .delete_conversation_btn")
         self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove this conversation?\n\nPress OK to remove the conversation.\nPress Cancel to leave things as-is.")
         self.assertEqual("%s"%a1, sel.get_text("css=.conversation_row:nth(0) .conversation_body"))
-        self.assertEqual("March 8, 2011, 5:35 p.m.", sel.get_text("css=.conversation_row:nth(0) .conversation_date"))
+        self.assertEqual("March 8, 2011", sel.get_text("css=.conversation_row:nth(0) .conversation_date"))
 
         self.assertEqual("%s"%a2, sel.get_text("css=.conversation_row:nth(1) .conversation_body"))
-        self.assertEqual("Jan. 4, 2011, 5:35 p.m.", sel.get_text("css=.conversation_row:nth(1) .conversation_date"))
+        self.assertEqual("Jan. 4, 2011", sel.get_text("css=.conversation_row:nth(1) .conversation_date"))
 
         sel.click("css=.conversation_row:nth(1) .delete_conversation_btn")
         self.assertEqual(sel.get_confirmation(),"Are you sure you want to remove this conversation?\n\nPress OK to remove the conversation.\nPress Cancel to leave things as-is.")
 
         time.sleep(5)
         self.assertEqual("%s"%a1, sel.get_text("css=.conversation_row:nth(0) .conversation_body"))
-        self.assertEqual("March 8, 2011, 5:35 p.m.", sel.get_text("css=.conversation_row:nth(0) .conversation_date"))
+        self.assertEqual("March 8, 2011", sel.get_text("css=.conversation_row:nth(0) .conversation_date"))
 
 
     def test_that_read_more_works(self):

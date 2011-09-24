@@ -4,7 +4,7 @@ import unittest
 import os
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from functional_tests.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
 from django.test import TestCase
 from django.conf import settings
 from groups.models import Group
@@ -23,7 +23,7 @@ from volunteers.models import CompletedShift
 class Dummy(object):
     pass
 
-class TestViews(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase, GenerateSpreadsheetsMixin):
+class TestViews(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase, GenerateSpreadsheetsMixin):
 
     def setUp(self):
         self.a1 = Factory.create_demo_site("test1", quick=True)

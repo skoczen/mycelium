@@ -75,12 +75,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
             # self.create_stripe_subscription()
         super(Account,self).save(*args, **kwargs)
             
-    def delete(self, *args, **kwargs):
-        c = self.stripe_customer
-        if c:
-            c.cancel_subscription()
-        super(Account,self).delete(*args, **kwargs)
-    
+   
     objects = AccountManager()
 
     def __unicode__(self):
@@ -120,6 +115,11 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
     
     @classmethod
     def pre_delete_cleanup(cls, instance, created=None, *args, **kwargs):
+        # cancel subscription
+        c = instance.stripe_customer
+        if c and hasattr(c,"subscription"):
+            c.cancel_subscription()
+
         # delete user accounts
         for ua in instance.useraccount_set.all():
             ua.user.delete()
@@ -190,7 +190,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
                     self.challenge_has_downloaded_spreadsheet and \
                     self.challenge_has_added_a_donation and self.challenge_has_logged_volunteer_hours:
 
-                    if not self.has_completed_all_challenges and self.free_trial_ends_date.date() >= datetime.date.today():
+                    if not self.has_completed_all_challenges and self.free_trial_ends_date and self.free_trial_ends_date.date() >= datetime.date.today():
 
                         self.free_trial_ends_date = self.signup_date + datetime.timedelta(days=44)
                         
@@ -275,6 +275,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
         c.update_subscription(plan=plan_name,trial_end=self.free_trial_ends_date)
 
         self.last_stripe_update = datetime.datetime.now()
+        self.save()
 
 
     def stripe_subscription_url(self):
