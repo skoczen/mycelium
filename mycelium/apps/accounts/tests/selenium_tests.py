@@ -1,20 +1,29 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
 import unittest
 import time
 import datetime
+
+from django.core.cache import cache
+from django.core import mail
+from django.core.urlresolvers import reverse
+from johnny import cache as jcache
+from django.test.client import Client
+from django.template.defaultfilters import date
+from django.conf import settings
+from django.utils import simplejson
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
+from zebra.signals import *
+
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from organizations.tests.selenium_abstractions import OrganizationsTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
+from dashboard.tests.selenium_abstractions import DashboardTestAbstractions
 from accounts.models import Account
-from django.conf import settings
-from accounts.tests.selenium_abstractions import AccountTestAbstractions
-from django.core.cache import cache
-from johnny import cache as jcache
-from django.template.defaultfilters import date
+from accounts import *
+from accounts.tests.selenium_abstractions import AccountTestAbstractions, _sitespaced_url
     
-class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
+class TestAgainstLiterallyNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.setup_for_logged_in_with_no_data()
@@ -27,13 +36,13 @@ class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstr
         self.go_to_the_manage_accounts_page()
 
         # get my row
-        for i in range(1,3):
+        for i in range(1,4):
             if sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(0) input:checked" % i):
                 my_user = i
                 break
         
         # make everyone else admins
-        for i in range(1,3):
+        for i in range(1,4):
             if not i == my_user:
                 assert not sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(0) input:checked" % (i,))
                 sel.click("css=.user_row:nth(%s) .access_level input:nth(0)" % (i,))
@@ -41,12 +50,12 @@ class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstr
         time.sleep(4)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        for i in range(1,3):
+        for i in range(1,4):
             if not i == my_user:
                 assert sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(0) input:checked" % (i,))
 
         # make everyone else staff
-        for i in range(1,3):
+        for i in range(1,4):
             if not i == my_user:
                 assert not sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(1) input:checked" % (i,))
                 sel.click("css=.user_row:nth(%s) .access_level input:nth(1)" % (i,))
@@ -54,12 +63,12 @@ class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstr
         time.sleep(4)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        for i in range(1,3):
+        for i in range(1,4):
             if not i == my_user:
                 assert sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(1) input:checked" % (i,))
 
         # make everyone else a volunteer
-        for i in range(1,3):
+        for i in range(1,4):
             if not i == my_user:
                 assert not sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(2) input:checked" % (i,))
                 sel.click("css=.user_row:nth(%s) .access_level input:nth(2)" % (i,))
@@ -67,13 +76,13 @@ class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, PeopleTestAbstr
         time.sleep(4)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        for i in range(1,3):
+        for i in range(1,4):
             if not i == my_user:
                 assert sel.is_element_present("css=.user_row:nth(%s) .access_level label:nth(2) input:checked" % (i,))
 
 
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
     # selenium_fixtures = []
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
@@ -586,12 +595,49 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         assert sel.is_element_present("css=.admin_btn")
 
 
-class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, OrganizationsTestAbstractions, AccountTestAbstractions, GroupTestAbstractions):
+    @unittest.skip("This fails because it doesn't 'somehow' resubmit. Problem with the test, not the functionality.  TODO? ")
+    def test_that_somehow_resubmitting_an_existing_account_subdomain_redirects_to_their_login_page(self):
+        sel = self.selenium
+        self.test_that_the_account_signup_page_loads()
+        sel.type("css=#id_name","My Test Organization")
+        sel.type("css=#id_subdomain","test2")
+        sel.focus("css=#id_subdomain")
+
+        sel.type("css=#id_first_name","Joe Tester")
+        sel.type("css=#id_email", "joe@example.com")
+        sel.type("css=#id_username", "joe")
+        sel.type("css=#id_password", "password")
+        sel.click("css=#id_agreed_to_terms")
+        time.sleep(2)
+
+        sel.click("css=#submit_button")
+        sel.wait_for_page_to_load("30000")
+        self.test_that_the_account_signup_page_loads()
+        sel.type("css=#id_name","My Test Organization")
+        sel.type("css=#id_subdomain","test2")
+        sel.focus("css=#id_subdomain")
+
+        sel.type("css=#id_first_name","Joe Tester")
+        sel.type("css=#id_email", "joe@example.com")
+        sel.type("css=#id_username", "joe")
+        sel.type("css=#id_password", "password")
+        sel.click("css=#id_agreed_to_terms")
+        sel.click("css=#submit_button")
+
+        # sel.wait_for_page_to_load("30000")
+
+        # self.go_to_the_login_page(site="test2")
+        self.log_in(username="joe", password="password")
+
+
+
+class TestSubscriptionsAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
     # selenium_fixtures = []
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site(create_subscription=True)
+        self.a1 = self.create_demo_site()
+        self.account = self.a1
         cache.clear()
         self.verificationErrors = []
 
@@ -608,15 +654,36 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         self.go_to_the_account_page()
         assert sel.is_text_present("Signup Date: %s" % (date(datetime.date.today()),) )
 
+    
+    def test_that_the_free_trial_date_is_adjusted_after_finishing_all_dashboard_tasks(self):
+        sel = self.selenium
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        print "Free Trial until %s" % (date(datetime.date.today()+datetime.timedelta(days=30)),)
+        assert sel.is_text_present("Free Trial until %s" % (date(datetime.date.today()+datetime.timedelta(days=30)),) )
+
+        self.create_another_account()
+        self.import_contacts()
+        self.add_volunteer_shift()
+        self.add_donation()
+        self.create_tag_and_tag_a_board_member()
+        self.create_a_spreadsheet()
+        self.get_to_the_dashboard()
+
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Free Trial until %s" % (date(datetime.date.today()+datetime.timedelta(days=44)),) )
+        self.assertEqual(datetime.date.fromtimestamp(self.account.stripe_subscription.trial_end), datetime.date.today() + datetime.timedelta(days=44))
+
+
     def test_that_new_signups_can_sign_up_for_an_account(self):
         sel = self.selenium
         self.get_logged_in()
         self.go_to_the_account_page()
         self.enter_billing_info_signup()
+
         assert sel.is_text_present("Status: Free Trial")
-        assert sel.is_text_present("XXXX-XXXX-XXXX-1")
+        assert sel.is_text_present("XXXX-XXXX-XXXX-%s" % (Factory.test_cc_number(True)[-4:]))
         assert sel.is_text_present("Signup Date: %s" % (date(datetime.date.today()),) )
-        assert sel.is_text_present("Next billing date: %s" % (date(self.a1.free_trial_ends),) )
         assert sel.is_element_present("link=Update Billing Information")
 
 
@@ -625,91 +692,110 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         sel = self.selenium
         self.get_logged_in()
         self.go_to_the_account_page()
-        self.enter_billing_info_signup( )
-        assert sel.is_text_present("XXXX-XXXX-XXXX-1")
-        self.enter_billing_info_signup(cc_number="2", update=True)
-        assert not sel.is_text_present("XXXX-XXXX-XXXX-1")
-        assert sel.is_text_present("XXXX-XXXX-XXXX-2")
 
-
-    def test_that_users_can_cancel_their_subscription_and_see_that_its_cancelled(self):
-        sel = self.selenium
-        self.test_that_new_signups_can_sign_up_for_an_account()
-        assert not sel.is_text_present("Reactivate subscription")
-        sel.choose_cancel_on_next_confirmation()
-        sel.click("css=.cancel_subscription_btn")
-        self.assertEqual(sel.get_confirmation(),"Are you sure you want to cancel your GoodCloud subscription?  This will take effect immediately.")
-        sel.click("css=.cancel_subscription_btn")
-        sel.get_confirmation()
-        sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present("Your account has been cancelled.")
-        # assert sel.is_element_present("css=.reactivate_subscription_btn")
-        assert sel.is_text_present("reactivate your subscription")
-
-    @unittest.skip("Bug in chargify - feature disabled and low priority.")
-    def test_that_users_can_resume_a_cancelled_subscription_and_see_that_its_resumed(self):
-        sel = self.selenium
-        self.test_that_users_can_cancel_their_subscription_and_see_that_its_cancelled()
-        sel.click("css=.reactivate_subscription_btn")
-        sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("link=Update Billing Information")
+        self.enter_billing_info_signup()
+        assert sel.is_text_present("XXXX-XXXX-XXXX-%s" % (Factory.test_cc_number(True)[-4:]))
         
-    @unittest.skip("No way to test that they're getting half off from chargify's side.")
-    def test_that_feedback_team_users_can_enter_a_coupon_on_signup_and_get_half_off(self):
+        self.enter_billing_info_signup(cc_number="4222222222222")
+        assert not sel.is_text_present("XXXX-XXXX-XXXX-%s" % (Factory.test_cc_number(True)[-4:]))
+        assert sel.is_text_present("XXXX-XXXX-XXXX-2222")
+
+    @unittest.skip("This passes by hand, but appears to have some selenium / js conflicts for FF.")
+    def test_that_users_cannot_enter_invalid_cc_info(self):
         sel = self.selenium
-        assert True == "Test written"
         self.get_logged_in()
         self.go_to_the_account_page()
-        self.enter_billing_info_signup()
-        assert sel.is_text_present("Status: Active")
-        assert sel.is_text_present("Subscriber since: %s" % (date(datetime.date.today()),) )
-        assert sel.is_text_present("Last billing date: %s" % (date(datetime.date.today()),) )
-        assert sel.is_element_present("link=Update Billing Information")
+
+        assert not sel.is_text_present("Your card number is incorrect.")
+        self.enter_billing_info_signup(valid_cc=False)
+        time.sleep(60)
+        assert sel.is_text_present("Your card number is incorrect.")
+
+    @unittest.skip("TODO: When stripe properly supports test data, wire this up with it.")
+    def test_that_after_the_free_trial_ends_a_non_cc_user_moves_to_billing_problem(self):
+        sel = self.selenium
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Status: Free Trial")
+
+        c = self.account.stripe_customer
+        c.update_subscription(plan=MONTHLY_PLAN_NAME, trial_end=datetime.datetime.now()+datetime.timedelta(seconds=4))
+        self.go_to_the_account_page()
+
+        assert not sel.is_text_present("Status: Free Trial")
 
 
     def test_expired_accounts_display_an_expired_bar(self):
         sel = self.selenium
         a = self.a1
         a.signup_date = datetime.datetime.now() - datetime.timedelta(days=35)
-        a.status = 10
+        a.status = STATUS_ACTIVE_BILLING_ISSUE
         a.save()
         self.get_logged_in()
-        
         
         # assert sel.is_element_present(".expired_bar")
         assert sel.is_element_present("css=#expired_side_bar")
 
-    def test_expired_accounts_go_to_the_billing_page_for_admin_user_logins(self):
-        sel = self.selenium
-        self.get_logged_in()
-        assert sel.is_text_present("Plan: Monthly")
 
     
-    @unittest.skip("Since we can't update the chargify API, this test always will fail - the page updates to a current account.")
     def test_expired_accounts_display_a_human_explanation_on_the_billing_page(self):
         sel = self.selenium
-        cache.clear()
         self.test_expired_accounts_display_an_expired_bar()
         self.go_to_the_account_page()
-        # assert sel.is_text_present("is past its free trial, and has expired")
         assert sel.is_text_present("problem processing your billing method")
     
+
+    def test_deactivated_accounts_display_a_human_explanation_on_the_billing_page(self):
+        sel = self.selenium
+        a = self.a1
+        a.status = STATUS_DEACTIVATED
+        a.save()
+        
+        self.get_logged_in()
+
+        self.go_to_the_account_page()
+        assert sel.is_element_present("css=#expired_side_bar")
+        assert sel.is_text_present("Your account has been deactivated")
+
+    def test_that_after_a_successful_charge_accounts_are_moved_to_active(self):
+        # And see it updated.
+        sel = self.selenium
+        self.get_logged_in()
+        self.go_to_the_account_page()
+        assert sel.is_text_present("Status: Free Trial")
+        self.enter_billing_info_signup()
+        c = self.a1.stripe_customer
+        c.update_subscription(plan=MONTHLY_PLAN_NAME, trial_end=datetime.datetime.now()+datetime.timedelta(seconds=4))
+        time.sleep(60)
+        self.a1.update_account_status()
+        cache.clear()
+        self.go_to_the_account_page()
+
+        assert not sel.is_text_present("Status: Free Trial")
+        assert sel.is_text_present("Status: Active")
+
+
+
     def test_users_can_completely_delete_their_account(self):
         sel = self.selenium
         a_pk = self.a1.pk
-        print Account.objects.all()
+        
         self.get_logged_in()
         self.go_to_the_account_page()
+        self.assertEqual(Account.objects.filter(pk=a_pk).count(),1)
+        
         sel.click("css=.account_delete_btn")
         sel.wait_for_page_to_load("30000")
         sel.click("css=.do_account_delete_btn")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("We're sad to see you go, but we understand.")
-        cache.clear()
-        
-        jcache.invalidate(Account)        
-        print Account.objects.all()
-        self.assertEqual(Account.objects.filter(pk=a_pk).count(),0)
+
+       
+        self.go_to_the_login_page("test")
+        assert not sel.is_text_present ("Log In")
+
+        # self.assertEqual(Account.objects.filter(pk=a_pk).count(),0)
+
 
     def test_that_clicking_get_me_outta_here_does_that(self):
         sel = self.selenium
@@ -720,19 +806,10 @@ class TestSubscriptionsAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestA
         sel.click("css=.outta_here")
         sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("My Account")
-        
-
-    def test_that_signing_up_during_a_free_trial_does_not_bill_their_card(self):
-        self.test_that_new_signups_can_sign_up_for_an_account()
-        sub = self.a1.chargify_subscription
-        assert sub.signup_revenue == "0.00"
-        
 
 
 
-
-
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
@@ -740,4 +817,3 @@ class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstrac
         self.verificationErrors = []
     
     
-        

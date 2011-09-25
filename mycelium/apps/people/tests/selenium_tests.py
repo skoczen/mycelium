@@ -1,12 +1,12 @@
 import time 
 from test_factory import Factory
 
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from people.tests.selenium_abstractions import PeopleTestAbstractions
 from django.core.cache import cache
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
         cache.clear()
@@ -315,7 +315,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
 
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, AccountTestAbstractions):
     # selenium_fixtures = ["200_test_people.json"]
     
     def setUp(self, *args, **kwargs):

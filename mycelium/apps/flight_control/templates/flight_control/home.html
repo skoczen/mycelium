@@ -46,7 +46,7 @@
 			<column_header>Expiring Soon</column_header>
 			{% for a in week_4 %}
 			<div class="info_block">
-				<a href="{% url flight_control:account a.pk %}">{{a.name}}</a> expires {{a.free_trial_ends|date}}.
+				<a href="{% url flight_control:account a.pk %}">{{a.name}}</a> expires {{a.free_trial_ends_date|date}}.
 			</div>
 			{% empty %}
 			<div class="info_block empty_message">None in the next week.</div>
@@ -106,6 +106,11 @@
 				<number>{{avg_vol_hours_per_person|floatformat:1|intcomma}}</number>
 				<description>Volunteer Hours per person</description>
 			</average>
+			<average class="info_block number_row avg_vol_hours_per_person">
+				<number>{{avg_conversations|floatformat:1|intcomma}}</number>
+				<description>Conversations</description>
+			</average>
+			
 			<average class="info_block number_row num_tags">
 				<number>{{avg_tags|floatformat:0|intcomma}}</number>
 				<description>Tags</description>
@@ -115,7 +120,7 @@
 				<description>Tags per Person</description>
 			</average>
 			<average class="info_block number_row num_groups">
-				<number>{{avg_groups|floatformat:1|intcomma}}</number>
+				<number>{{avg_groups|floatformat:0|intcomma}}</number>
 				<description>Groups</description>
 			</average>
 			<average class="info_block number_row num_spreadsheets">

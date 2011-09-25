@@ -2,7 +2,7 @@ import time
 import datetime
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from qi_toolkit.selenium_test_case import QiUnitTestMixin
+from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
 from django.test import TestCase
 from groups.models import Group
 from people.models import Person
@@ -12,6 +12,7 @@ from accounts.models import Account, UserAccount, AccessLevel
 from volunteers.models import Volunteer, CompletedShift
 from generic_tags.models import TagSet, Tag, TaggedItem
 from spreadsheets.models import Spreadsheet
+from conversations.models import Conversation
 from django.core import mail
 from django.test.client import Client
 from accounts import CANCELLED_SUBSCRIPTION_STATII
@@ -19,7 +20,7 @@ from accounts import CANCELLED_SUBSCRIPTION_STATII
 class Dummy(object):
     pass
 
-class TestFlightControl(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
+class TestFlightControl(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase):
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
@@ -71,7 +72,12 @@ class TestFlightControl(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
         
     def test_all_non_demo_accounts_average_donation_amount(self):
         avg = Account.all_non_demo_accounts_total_donation_amount / Account.num_non_demo_accounts
-        self.assertEqual(Account.all_non_demo_accounts_average_num_people, avg)
+        self.assertEqual(Account.all_non_demo_accounts_average_donation_amount, avg)
+
+    def test_all_non_demo_accounts_average_volunteer_hours(self):
+        avg = Account.all_non_demo_accounts_total_volunteer_hours / Account.num_non_demo_accounts
+        self.assertEqual(Account.all_non_demo_accounts_average_volunteer_hours_per_account, avg)
+
 
     def test_all_non_demo_accounts_num_total_donations(self):
         self.assertEqual(Account.all_non_demo_accounts_num_total_donations, Donation.objects.filter(account__is_demo=False).count())
@@ -87,5 +93,10 @@ class TestFlightControl(TestCase, QiUnitTestMixin, DestructiveDatabaseTestCase):
 
     def test_all_non_demo_accounts_num_spreadsheets(self):
         self.assertEqual(Account.all_non_demo_accounts_num_total_spreadsheets, Spreadsheet.objects.filter(account__is_demo=False).count())
+
+    def test_all_non_demo_accounts_num_conversations(self):
+        self.assertEqual(Account.all_non_demo_accounts_total_number_of_conversations, Conversation.objects.filter(account__is_demo=False).count())
+
+
 
 

@@ -1,5 +1,5 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time
 from test_factory import Factory
 from people.tests.selenium_abstractions import PeopleTestAbstractions
@@ -10,7 +10,7 @@ from accounts.models import UserAccount
 from dashboard.tests.selenium_abstractions import DashboardTestAbstractions
 from django.core.cache import cache
     
-class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
+class TestAgainstLiterallyNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.setup_for_logged_in_with_no_data()
@@ -28,12 +28,12 @@ class TestAgainstLiterallyNoData(QiConservativeSeleniumTestCase, DashboardTestAb
         assert not sel.is_text_present("Welcome to your very own GoodCloud")
         assert sel.is_text_present("Looks like you haven't finished")
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
         self.setup_for_logged_in_with_no_data()
-        
+        cache.clear()
         self.verificationErrors = []
 
     def test_that_logging_in_goes_to_the_dashboard(self):
@@ -146,7 +146,56 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, DashboardTestAbstraction
         assert sel.is_text_present("Text like 123.45")
         assert sel.is_element_present("css=conversation")
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, DashboardTestAbstractions):
+    def test_that_new_conversations_show_and_hide_properly_on_the_dashboard(self):
+        sel = self.selenium
+        self.test_that_the_dashboard_checks_off_appropriately()
+        self.get_to_the_dashboard()
+        assert not sel.is_element_present("css=conversation")
+        assert sel.is_text_present("No conversations yet!")
+        
+        self.create_person_and_go_to_conversation_tab()
+
+        a1, d1 = self.add_a_conversation(date="3/8/2011")
+        self.get_to_the_dashboard()
+
+        assert sel.is_text_present("By the Numbers")
+        assert sel.is_visible("css=.see_all_link")
+        assert not sel.is_visible("css=.remainder")
+        sel.click("css=.see_all_link")
+        time.sleep(1)
+        assert sel.is_visible("css=.remainder")
+        assert not sel.is_visible("css=.see_all_link")
+
+
+
+    def test_that_more_conversations_link_on_the_dashboard_works(self):
+        sel = self.selenium
+        self.test_that_the_dashboard_checks_off_appropriately()
+        self.get_to_the_dashboard()
+        assert not sel.is_element_present("css=conversation")
+        assert sel.is_text_present("No conversations yet!")
+        
+        self.create_person_and_go_to_conversation_tab()
+
+        a1, d1 = self.add_a_conversation(body="Text like 1", date="3/1/2011")
+        a2, d2 = self.add_a_conversation(body="Text like 2", date="3/2/2011")
+        a3, d3 = self.add_a_conversation(body="Text like 3", date="3/3/2011")
+        a4, d4 = self.add_a_conversation(body="Text like 4", date="3/4/2011")
+        a5, d5 = self.add_a_conversation(body="Text like 5", date="3/5/2011")
+        a6, d6 = self.add_a_conversation(body="Text like 6", date="3/6/2011")
+        self.get_to_the_dashboard()
+
+        assert sel.is_text_present("By the Numbers")
+        assert sel.is_text_present("Text like 6")
+        assert sel.is_text_present("Text like 2")
+        assert not sel.is_text_present("Text like 1")
+        sel.click("css=.more_conversations_link")
+        time.sleep(2)
+        assert sel.is_text_present("Text like 6")
+        assert sel.is_text_present("Text like 2")
+        assert sel.is_text_present("Text like 1")
+
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
     # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):

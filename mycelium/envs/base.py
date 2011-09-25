@@ -8,8 +8,8 @@ from os.path import abspath, dirname, join
 gettext = lambda s: s
 
 PROJECT_ROOT = join(abspath(dirname(__file__)), "../")
-STATIC_ROOT = join(abspath(PROJECT_ROOT),"../media")
-MEDIA_ROOT = abspath(STATIC_ROOT)
+MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
+STATIC_ROOT = join(abspath(PROJECT_ROOT),"../collected_static")
 LIB_DIR = join(PROJECT_ROOT, 'lib')
 APPS_DIR = join(PROJECT_ROOT, 'apps')
 sys.path.insert(0, abspath(PROJECT_ROOT + '/../'))
@@ -43,6 +43,7 @@ USE_I18N = True
 # USE_L10N = True
 
 
+SELENIUM_TESTING = False
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'd^bkm43rw#gmxbs4bvf)8)2)n=l9obc9-*022=hcm_s0w2bikt'
@@ -83,6 +84,7 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 TEMPLATE_CONTEXT_PROCESSORS += (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
+    'django.core.context_processors.static',
     "django.core.context_processors.request",
     'django.contrib.auth.context_processors.auth',
     
@@ -116,7 +118,7 @@ REMOVE_WWW_FROM_SUBDOMAIN = True
 
 
 INSTALLED_APPS = (
-    'django_monkeypatches',     # 100-char username field.
+    'longerusername',     # 100-char username field.
 
     'django.contrib.contenttypes',
     'django.contrib.auth',
@@ -126,8 +128,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.humanize',
+    'django.contrib.staticfiles',
 
     'qi_toolkit',
+    'functional_tests',
     'analytical',
     'django_extensions',
     'pagination',
@@ -158,7 +162,7 @@ INSTALLED_APPS = (
 
     'marketing_site',
     'email_list',
-    'rewrite',
+    # 'rewrite',
     'people',
     'organizations',
     'mycelium_core',
@@ -174,8 +178,8 @@ INSTALLED_APPS = (
     'rules',
     'accounts',
     'dashboard',
-    'webhooks',
     'flight_control',
+    'zebra',
 
     'djangosanetesting',
 )
@@ -275,15 +279,14 @@ AWS_SECRET_ACCESS_KEY = 'WT1wp3UQsFPdeXMxwUyvjF7IM8q/qkcm/EW6EKvy'
 AWS_STORAGE_BUCKET_NAME = "goodcloud1"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 
-# chargify
-CHARGIFY_API = "H4a_DfhPSl6w5h4DqWZg"
-CHARGIFY_SUBDOMAIN = "goodcloud-test"
-CHARGIFY_HOSTED_SIGNUP_URL = "https://goodcloud-test.chargify.com/h/44718/subscriptions/new"
-CHARGIFY_SHARED_KEY = "hjMV9CUiUjSFecCIo9Fi"
-CHARGIFY_PRODUCT_HANDLE = "monthly"
+# Stripe
+# Dev
+STRIPE_SECRET = "1n5fQCrOR4mbrxWXhjiMcCA9b91tzRAV"
+STRIPE_PUBLISHABLE = "pk_ZjmLisYsPM1Xa7MgYPziLide0VISX"
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 
+ZEBRA_CUSTOMER_MODEL = 'accounts.Account'
 
 GIT_CURRENT_SHA = None
 # django-mediasync
@@ -299,6 +302,7 @@ BASE_JS = [
 ]
 COMMON_JS = [
     "js/contrib/jquery.autogrow.js",
+    "js/contrib/jquery.autogrow.textarea.js",
     "js/contrib/jquery.ba-bbq.min.js",
 ]
 BASE_CSS = [

@@ -1,5 +1,5 @@
 # encoding: utf-8
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time 
 from test_factory import Factory
 
@@ -7,7 +7,7 @@ from people.tests.selenium_abstractions import PeopleTestAbstractions
 from groups.tests.selenium_abstractions import GroupTestAbstractions
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, GroupTestAbstractions, AccountTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTestAbstractions, GroupTestAbstractions, AccountTestAbstractions):
     
     def setUp(self, *args, **kwargs):
         self.account = self.setup_for_logged_in_with_no_data()
@@ -51,3 +51,14 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, PeopleTestAbstractions, 
         time.sleep(1)
         assert sel.is_element_present("css=.global_results_table")
         self.assertEqual(sel.get_text("css=.global_results_table"),"No results found for search \"naopdfj934adsf\".")
+
+
+    def test_that_help_shows_and_hides(self):
+        sel = self.selenium
+        self.get_logged_in()
+        assert not sel.is_visible("css=#help_popup")
+        sel.click("css=.side_help_btn")
+        assert sel.is_visible("css=#help_popup")
+        sel.click("css=.close_help_popup_btn")
+        assert not sel.is_visible("css=#help_popup")
+        

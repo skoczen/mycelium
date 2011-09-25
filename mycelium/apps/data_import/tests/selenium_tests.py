@@ -1,4 +1,4 @@
-from qi_toolkit.selenium_test_case import QiConservativeSeleniumTestCase
+from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time 
 import unittest
 from test_factory import Factory
@@ -6,7 +6,7 @@ from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from data_import.tests.selenium_abstractions import DataImportTestAbstractions
 
 
-class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions, DataImportTestAbstractions):
+class TestMockupPages(DjangoFunctionalConservativeSeleniumTestCase, AccountTestAbstractions, DataImportTestAbstractions):
     selenium_fixtures = []
 
     def setUp(self, *args, **kwargs):
@@ -16,7 +16,7 @@ class TestMockupPages(QiConservativeSeleniumTestCase, AccountTestAbstractions, D
     #     self.account.delete()
 
 
-class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions, DataImportTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, AccountTestAbstractions, DataImportTestAbstractions):
     selenium_fixtures = []
 
     def setUp(self, *args, **kwargs):
@@ -184,7 +184,7 @@ class TestAgainstNoData(QiConservativeSeleniumTestCase, AccountTestAbstractions,
 
 
 
-class TestAgainstGeneratedData(QiConservativeSeleniumTestCase, AccountTestAbstractions):
+class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, AccountTestAbstractions):
     selenium_fixtures = []
 
     def setUp(self, *args, **kwargs):

@@ -1,42 +1,63 @@
+STATUS_FREE_TRIAL = 0
+STATUS_EXPIRED = 10
+STATUS_ACTIVE = 20
+STATUS_ACTIVE_BILLING_ISSUE = 30
+STATUS_DEACTIVATED = 40
+STATUS_CANCELLED = 50
+
 ACCOUNT_STATII = [
-    (0, "Free Trial"),
-    (10, "Expired"), # Free trial expired
-    (20, "Active"),
-    (30, "Active, Billing Issue"), # Was paid, billing failed.
-    (40, "On Hold"),  # no way to get to this currently
-    (50, "Cancelled"),   
+    (STATUS_FREE_TRIAL, "Free Trial"),
+    (STATUS_EXPIRED, "Expired"), # Free trial expired
+    (STATUS_ACTIVE, "Active"),
+    (STATUS_ACTIVE_BILLING_ISSUE, "Active, Billing Issue"), # Was paid, billing failed.
+    (STATUS_DEACTIVATED, "Deactivated"),
+    (STATUS_CANCELLED, "Cancelled"),   
 ]
 
-CHARGIFY_STATUS_MAPPING = {
-    "trialing" : ACCOUNT_STATII[0],
-    "assessing" : ACCOUNT_STATII[0],
-    "active" : ACCOUNT_STATII[2],
-    "soft_failure" : ACCOUNT_STATII[2],
-    "past_due" : ACCOUNT_STATII[3],
-    "suspended" : ACCOUNT_STATII[3],
-    "canceled" : ACCOUNT_STATII[5],
-    "unpaid" : ACCOUNT_STATII[3],
-    "expired" : ACCOUNT_STATII[3],
-}
+MONTHLY_PLAN_NAME = "monthly"
+YEARLY_PLAN_NAME = "yearly"
+FREE_PLAN_NAME = "free"
+
+FREE_TRIAL_STATII = [
+    STATUS_FREE_TRIAL,
+]
 
 HAS_A_SUBSCRIPTION_STATII = [
-    ACCOUNT_STATII[2][0],
-    ACCOUNT_STATII[3][0],
+    STATUS_ACTIVE,
+    STATUS_ACTIVE_BILLING_ISSUE,
 ]
 HAD_A_SUBSCRIPTION_STATII = HAS_A_SUBSCRIPTION_STATII + [
-    ACCOUNT_STATII[4][0],
-    ACCOUNT_STATII[5][0],
+    STATUS_DEACTIVATED,
+    STATUS_CANCELLED,
 ]
 
 CANCELLED_SUBSCRIPTION_STATII = [
-    ACCOUNT_STATII[5][0],
+    STATUS_CANCELLED,
 ]
+DEACTIVATED_SUBSCRIPTION_STATII = [
+    STATUS_DEACTIVATED
+]
+
 ACTIVE_SUBSCRIPTION_STATII = [
-    ACCOUNT_STATII[0][0],
-    ACCOUNT_STATII[2][0],
-    ACCOUNT_STATII[3][0],
+    STATUS_FREE_TRIAL,
+    STATUS_EXPIRED,
+    STATUS_ACTIVE,
+    STATUS_ACTIVE_BILLING_ISSUE,
 ]
 BILLING_PROBLEM_STATII = [
-    ACCOUNT_STATII[1][0],
-    ACCOUNT_STATII[3][0],
+    STATUS_EXPIRED,
+    STATUS_ACTIVE_BILLING_ISSUE,
+    STATUS_DEACTIVATED,
+]
+
+ACCESS_LEVEL_STANDARD      = 0
+ACCESS_LEVEL_ALPHA         = 10
+ACCESS_LEVEL_BETA          = 20
+ACCESS_LEVEL_BLEEDING_EDGE = 30
+
+FEATURE_ACCESS_STATII = [
+    (ACCESS_LEVEL_STANDARD,  "Standard"),
+    (ACCESS_LEVEL_ALPHA, "Beta"),
+    (ACCESS_LEVEL_BETA, "Alpha"),
+    (ACCESS_LEVEL_BLEEDING_EDGE, "Bleeding Edge"),
 ]

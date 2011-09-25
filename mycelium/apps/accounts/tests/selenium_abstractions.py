@@ -14,7 +14,7 @@ class AccountTestAbstractions(object):
     MANAGE_USERS_URL = "/accounts/manage-users"
     
     def create_demo_site(self, name="test", mostly_empty=False, **kwargs):
-        return Factory.create_demo_site(name, quick=True, delete_existing=True,  mostly_empty=mostly_empty, **kwargs)
+        return Factory.create_demo_site(name, quick=True, delete_existing=True,  mostly_empty=mostly_empty, create_subscription=True, **kwargs)
 
     def go_to_the_login_page(self, site=None):
         sel = self.selenium
@@ -73,6 +73,7 @@ class AccountTestAbstractions(object):
         self.account = self.create_demo_site(name=name, mostly_empty=mostly_empty, **kwargs)
         self.go_to_the_login_page(site=name)
         self.log_in()
+
         self.assert_login_succeeded()
         return self.account
 
@@ -94,6 +95,7 @@ class AccountTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
         sel.click("css=.account_button")
         sel.wait_for_page_to_load("30000")
+        # time.sleep(60)
         assert sel.is_text_present("Account Information")
 
 
@@ -130,26 +132,20 @@ class AccountTestAbstractions(object):
         sel.wait_for_page_to_load("30000")
         return sel.get_text("css=#container_id_first_name .view_field")
 
-    def enter_billing_info_signup(self, cc_number="1", update=False, close_and_refresh=True):
+    def enter_billing_info_signup(self, valid_cc=True, cc_number=None):
         """Assumes you're starting on the manage acct page"""
+        if not cc_number:
+            cc_number = Factory.test_cc_number(valid_cc)
+
         sel = self.selenium
         sel.click("link=Update Billing Information")
-        time.sleep(4)
-
-        sel.select_frame("css=.cboxIframe")
-        sel.type("css=#subscription_payment_profile_attributes_full_number",cc_number)
-        sel.type("css=#subscription_payment_profile_attributes_cvv","123")
-        sel.select("css=#subscription_payment_profile_attributes_expiration_month","5 - May")
-        sel.select("css=#subscription_payment_profile_attributes_expiration_year","2020")
-        sel.type("css=#subscription_payment_profile_attributes_first_name","Joe")
-        sel.type("css=#subscription_payment_profile_attributes_last_name","Smith")
+        sel.type("css=#id_card_number",cc_number)
+        sel.type("css=#id_card_cvv","123")
+        sel.select("css=#id_card_expiry_month","May")
+        sel.select("css=#id_card_expiry_year","2020")
 
         sel.click("css=#subscription_submit")
-        sel.wait_for_page_to_load("30000")
-        sel.select_frame("relative=top")
-        if close_and_refresh:
-            sel.click("css=#cboxClose")
-        
-            time.sleep(8)
-        
-       
+        if valid_cc:
+            sel.wait_for_page_to_load("30000")
+        else:
+            time.sleep(6)

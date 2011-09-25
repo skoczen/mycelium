@@ -80,3 +80,12 @@ def hide_challenge_complete_notice(request):
         return HttpResponse(simplejson.dumps({'success':success}))
     else:
         return HttpResponseRedirect(reverse("dashboard:dashboard"))
+
+
+def more_conversations(request):
+    start_at = int(request.POST["start_at"])
+    try:
+        recent_conversations = Conversation.objects_by_account(request.account).all()[start_at:start_at+5]
+        return HttpResponse(simplejson.dumps( {"fragments":{"more_conversations":render_to_string("dashboard/_recent_conversations.html", locals())}}))
+    except:
+        return HttpResponse(simplejson.dumps( {"fragments":{"more_conversations":""}}))

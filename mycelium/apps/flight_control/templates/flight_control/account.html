@@ -40,18 +40,20 @@
 			<div class="info_block">
 				Signup Date: {{account.signup_date|date}}
 			</div>
+			{% if not account.in_free_trial %}
 			<div class="info_block">
-				Last Billed: {{account.last_billing_date|date}}
+				Next Billed: {{account.next_billing_date|date}}
 			</div>
+			{% endif %}
 			<div class="info_block">
-				Next Billed: {{account.chargify_next_assessment_at|date}}
+				<a href="{{account.stripe_subscription_url}}" target="_blank">Stripe Subscription</a>
 			</div>
+			{% if account.is_deactivated %}
 			<div class="info_block">
-				Account Balance: ${{account.chargify_balance|floatformat:2|intcomma}}
+				<a href="{% url flight_control:delete_deactivated_account account.pk %}" class="warning delete_account_link">Delete Deactivated Account</a>
 			</div>
-			<div class="info_block">
-				<a href="{{account.chargify_subscription_url}}" target="_blank">Chargify Subscription</a>
-			</div>
+			{% endif %}
+
 			<column_header>Challenges</column_header>
 			<challenge class="info_block import {% if account.challenge_has_imported_contacts %}complete{% endif %}">
 				<title_text>Import your contacts.</title_text>
@@ -127,6 +129,10 @@
 				<number>{{account.avg_vol_hours_per_person|floatformat:1|intcomma}}</number>
 				<description>Volunteer Hours per person</description>
 			</average>
+			<average class="info_block number_row num_hours">
+				<number>{{account.num_conversations|floatformat:0|intcomma}}</number>
+				<description>Conversations</description>
+			</average>
 			
 			<average class="info_block number_row num_tags">
 				<number>{{account.num_tags|floatformat:0|intcomma}}</number>
@@ -141,7 +147,7 @@
 				<description>Groups</description>
 			</average>
 			<average class="info_block number_row num_spreadsheets">
-				<number>{{account.num_spreadsheets|floatformat:1|intcomma}}</number>
+				<number>{{account.num_spreadsheets|floatformat:0|intcomma}}</number>
 				<description>Spreadsheets</description>
 			</average>
 		</column>

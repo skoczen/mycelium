@@ -2,6 +2,8 @@ from django.db import models
 from qi_toolkit.models import TimestampModelMixin
 from accounts.models import AccountBasedModel
 from django.core.cache import cache
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 
 from people.models import Person
 from accounts.models import UserAccount
@@ -30,4 +32,25 @@ class Conversation(AccountBasedModel, TimestampModelMixin):
 
     @property
     def gist(self):
-        return "%s..." % self.body[:GIST_LENGTH]
+        if self.bigger_than_the_gist:
+            return self.body[:GIST_LENGTH]
+        else:
+            return self.body
+    
+    @property
+    def gist_with_elipsis(self):
+        if self.bigger_than_the_gist:
+            return "%s..." % self.gist
+        else:
+            return self.gist
+
+    @property
+    def remainder(self):
+        if self.bigger_than_the_gist:
+            return self.body[GIST_LENGTH:]
+        else:
+            return self.body    
+
+    @property
+    def body_with_see_more_link(self):
+        return mark_safe(render_to_string("conversations/_conversation_with_see_more_link.html", {'conversation':self}))

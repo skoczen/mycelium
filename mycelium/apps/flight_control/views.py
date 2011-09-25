@@ -4,7 +4,9 @@ from qi_toolkit.helpers import *
 from django.template.loader import render_to_string
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Count, Avg
+from django.http import HttpResponseRedirect
 
+from accounts import *
 from accounts.models import Account, UserAccount
 from accounts import BILLING_PROBLEM_STATII
 from people.models import Person
@@ -52,6 +54,7 @@ def home(request):
     avg_tags_per_person = Account.all_non_demo_accounts_average_taggeditems_per_person
     avg_groups = Account.all_non_demo_accounts_average_groups_per_account
     avg_spreadsheets = Account.all_non_demo_accounts_average_spreadsheets_per_account
+    avg_conversations = Account.all_non_demo_accounts_average_number_of_conversations
 
     account_stats = Account
 
@@ -79,3 +82,11 @@ def search_results(request):
             search_results = Account.search(q,ignorable_chars=["-","(",")"])[:6]
 
     return {"fragments":{"global_search_results":render_to_string("flight_control/_search_results.html", locals())}}
+
+@staff_member_required
+def delete_deactivated_account(request, account_id):
+    account = Account.objects.get(pk=account_id)
+    assert account.status == STATUS_DEACTIVATED
+
+    account.delete()
+    return HttpResponseRedirect(reverse("flight_control:home"))

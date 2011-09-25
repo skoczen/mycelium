@@ -1,0 +1,179 @@
+tab_contents.people_conversations_tab {
+	width: 100%;
+	margin: 0px 10px;
+}
+tab_contents.people_conversations_tab .no_records_message {
+	padding: 10px 10px;
+	font-size: 22px;
+	color: #AAA;
+}
+tab_contents.people_conversations_tab tabbed_box[name=add_a_conversation] {
+	margin-bottom: 10px;
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type {
+	width: 100%;
+	padding: 10px 0px;
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type label {
+	color: #656565;
+	height: 20px;
+	padding: 3px 10px 3px 32px;
+	background-repeat: no-repeat;
+	background-position: 8px 50%;
+	margin-right: 4px;
+	border: 1px solid #FAFAFA;
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.selected {
+	color: #333;
+	background-color: #e9eaff;
+	border: 1px solid #DDD;
+	border-radius: 			4px;
+	-moz-border-radius: 	4px;
+	-webkit-border-radius:  4px;
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type input {
+	display: none;
+}
+tab_contents.people_conversations_tab #new_conversation form_actions {
+	padding-left: 0px;
+}
+
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.email {
+	background-image: url("../images/icon-email-grey-20.png");
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.phone {
+	background-image: url("../images/icon-phone-grey-20.png");
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.in-person {
+	background-image: url("../images/icon-in-person-grey-20.png");
+	background-position: 8px 2px;
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.mail {
+	background-image: url("../images/icon-mail-grey-20.png");
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.online {
+	background-image: url("../images/icon-online-grey-20.png");
+}
+
+
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.selected.email {
+	background-image: url("../images/icon-email-blue-20.png");
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.selected.phone {
+	background-image: url("../images/icon-phone-blue-20.png");
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.selected.in-person {
+	background-image: url("../images/icon-in-person-blue-20.png");
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.selected.mail {
+	background-image: url("../images/icon-mail-blue-20.png");
+}
+tab_contents.people_conversations_tab #new_conversation .conversation_type label.selected.online {
+	background-image: url("../images/icon-online-blue-20.png");
+}
+
+tab_contents.people_conversations_tab .delete_conversation {
+	text-align: right;
+}
+
+tab_contents.people_conversations_tab .recent_conversations_header.detail_header {
+	padding-top: 20px;
+}
+tab_contents.people_conversations_tab .datetime_date {
+	display: block;
+	float: left;
+	position: relative;
+	overflow: auto;
+	/*margin-right: 20px;*/
+}
+tab_contents.people_conversations_tab .datetime_time {
+	display: block;
+	float: left;
+	overflow: auto;
+	position: relative;
+}
+tab_contents.people_conversations_tab .datetime_date input {
+	width: 90px;	
+}
+tab_contents.people_conversations_tab .datetime_time input {
+	width: 1.5em;
+	text-align: center;
+}
+tab_contents.people_conversations_tab .date_and_with {
+	margin-top: 6px;
+}
+tab_contents.people_conversations_tab .date_and_with label {
+	padding: 3px 1px 0px 0px;
+	display: block;
+	float: left;
+}
+tab_contents.people_conversations_tab .date_and_with .with  label{
+	margin: 0px 5px 0px 8px;
+}
+tab_contents.people_conversations_tab form_actions input {
+	padding: 5px 11px;
+}
+tab_contents.people_conversations_tab textarea {
+	width: 100%;
+	height: 80px;
+}
+tab_contents.people_conversations_tab .full_body, tab_contents.people_conversations_tab .gist_and_remainder {
+	display: block;
+	/*white-space: pre;	*/
+	padding: 0px 10px 10px 0px;
+}
+tab_contents.people_conversations_tab .full_body.hidden {
+	display: none;
+}
+tab_contents.people_conversations_tab .delete_conversation_btn {
+	float: right;
+	margin-top: 4px;
+}
+tab_contents.people_conversations_tab .conversation_row .conversation_date {
+	
+	
+}
+tab_contents.people_conversations_tab .conversation_row {
+	clear: left;
+}
+tab_contents.people_conversations_tab .conversation_row .conversation_date_and_staff {
+	margin-left: 80px;
+	padding-top: 8px;
+}
+tab_contents.people_conversations_tab .conversation_row .conversation_type {
+	float: left;
+	display: block;
+	width: 70px;
+	height: 60px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+tab_contents.people_conversations_tab .conversation_row .conversation_type.email {
+	background-image: url("../images/icon-email-grey-50.png");
+}
+tab_contents.people_conversations_tab .conversation_row .conversation_type.phone {
+	background-image: url("../images/icon-phone-grey-50.png");
+}
+tab_contents.people_conversations_tab .conversation_row .conversation_type.in-person {
+	background-image: url("../images/icon-in-person-grey-50.png");
+}
+tab_contents.people_conversations_tab .conversation_row .conversation_type.mail {
+	background-image: url("../images/icon-mail-grey-50.png");
+}
+tab_contents.people_conversations_tab .conversation_row .conversation_type.online {
+	background-image: url("../images/icon-online-grey-50.png");
+}
+
+tab_contents.people_conversations_tab .conversation_body {
+	margin-left: 80px;
+	min-height: 40px;
+}
+.people_conversations_tab #id_body { 
+	min-height: 60px;
+	font-size: 14px;
+}
+tab_contents.people_conversations_tab .more_conversations_link {
+	clear: left;
+	float: left;
+}
+

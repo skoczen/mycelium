@@ -30,3 +30,4 @@ media/_admin
 media/.admin
 static/*
 celerybeat-schedule
+collected_static

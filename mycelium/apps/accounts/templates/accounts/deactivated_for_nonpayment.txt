@@ -1,0 +1,10 @@
+Hey Guys,
+
+This account was just deactivated for nonpayment.
+
+Organization: {{account}}
+Website: {{account.subdomain}}.agoodcloud.com.
+
+Sorry to be the bearer of bad news,
+
+-The Generally Happy GoodCloud Robot
