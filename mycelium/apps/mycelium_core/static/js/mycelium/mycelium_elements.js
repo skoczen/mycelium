@@ -49,8 +49,6 @@ $(function(){
 	};
 	fragments.append_content = function(e, d) {
 	    $(d.target).append(d.new_content);
-	    // $(d.target).html("appended")
-	    console.log($(d.target).html())
 	};
 	fragments.clear_content = function(e, d) {
         $(d.target).html("");
