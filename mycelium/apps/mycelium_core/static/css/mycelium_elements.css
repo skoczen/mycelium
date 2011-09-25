@@ -232,9 +232,10 @@ main_content {
 
 }
 footer {
-	position: absolute;
+	position: fixed;
 	bottom: 6px;
-	width: 100%;
+	left: 0px;
+	width: 170px;
 
 }
 footer img {
