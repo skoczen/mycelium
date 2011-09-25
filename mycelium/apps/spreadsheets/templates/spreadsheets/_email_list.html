@@ -1,1 +1,1 @@
-<textarea id="email_list_area">{% for m in spreadsheet.members  %}{% if m.email %}{{m.first_name}} {{m.last_name}} &lt;{{m.email}}&gt;{% if not forloop.last %},{% endif %} {% endif %}{% endfor %}</textarea>
+<textarea id="email_list_area">{% for m in spreadsheet.members  %}{% if m.primary_email %}{{m.first_name}} {{m.last_name}} &lt;{{m.primary_email}}&gt;{% if not forloop.last %},{% endif %} {% endif %}{% endfor %}</textarea>
