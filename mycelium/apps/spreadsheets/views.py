@@ -128,4 +128,4 @@ def group_count(request):
         members = group.members
     else:
         members = Person.objects_by_account(request.account).all()
-    return {"fragments":{"group_count":render_to_string("spreadsheets/_group_count.html", {'member_count':members.count()})}}
+    return {"fragments":{"group_count":render_to_string("spreadsheets/_group_count.html", {'member_count':0+members.count()})}}
