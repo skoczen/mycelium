@@ -33,7 +33,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardT
 
     def setUp(self, *args, **kwargs):
         self.setup_for_logged_in_with_no_data()
-        
+        cache.clear()
         self.verificationErrors = []
 
     def test_that_logging_in_goes_to_the_dashboard(self):
