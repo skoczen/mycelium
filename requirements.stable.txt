@@ -15,7 +15,7 @@ BeautifulSoup==3.2.0
 -e git://github.com/GoodCloud/django-ajax-uploader.git@80a5a9d7bd24528e069ed123369ce8c7e5569ff0#egg=ajaxuploader-dev
 
 django-extensions==0.6
--e git://github.com/skoczen/qi-toolkit.git@420ed97e5d8e069d112023bc1fbc3d3ca42d185a#egg=qi_toolkit-dev
+-e git://github.com/skoczen/qi-toolkit.git@a320f30401043d815f439e8b6722e2bfa2b755ea#egg=qi_toolkit-dev
 python-crontab==0.9.6
 django-analytical==0.8.1
 
@@ -27,8 +27,8 @@ nose==1.0.0
 ipython==0.10.2
 django-nose==0.1.3
 nose-exclude==0.1.5
-django-nose-selenium==0.7
--e git://github.com/Almad/django-sane-testing.git@c1b21943557747afae9c878ad12423f70925453f#egg=djangosanetesting-dev
+
+-e git://github.com/Almad/django-sane-testing.git@1141da51673f2a4ee71793eec695ec38285eb230#egg=djangosanetesting-dev
 celery==2.2.6
 django-celery==2.2.4
 -e git://github.com/kmmbvnr/django-jenkins.git@e5031e9254e172aff1dee1e92b5e2609235612f9#egg=django_jenkins-dev
@@ -57,10 +57,18 @@ xlutils==1.4.1
 # django-grappelli
 # django-filebrowser
 
--e git://github.com/skoczen/pychargify.git@9db4ca11ab95c8658f99f77e4e8724d7e077a662#egg=pychargify-dev
+vobject==0.8.1c
+django-tinymce==1.5.1a2
+chardet==1.0.1
+-e git://github.com/GoodCloud/django-longer-username.git@cdf0375ec5eadd4a4c12d1c4598e689b8b33a496#egg=longerusername-dev
+pycurl==7.19.0
+stripe==1.5.22
+py-bcrypt==0.2
+-e git://github.com/GoodCloud/django-zebra.git@7a5c074127b7a0c5c3d0204e3ad23eecb81d3362#egg=zebra-dev
+-e git://github.com/GoodCloud/django-functional-tests@caaeb93c2b3ebec6333f87f77fbbf44a9f75975e#egg=functional_tests-dev
 ## The following requirements were added by pip --freeze:
 CherryPy==3.2.0
-Django==1.3
+Django==1.3.1
 Fabric==1.0.1
 GitPython
 Mezzanine==0.11.5
@@ -72,7 +80,7 @@ async==0.6.1
 
 django-indexer==0.3.0
 django-paging==0.2.4
--e hg+https://bitbucket.org/david/django-storages@d5bd7f41e7dbf341d5879c6150ae40f16e05615c#egg=django_storages-dev
+-e hg+https://bitbucket.org/david/django-storages@11bef0c2a4106bbed5b6845544efe7058474891b#egg=django_storages-dev
 django-templatetag-sugar==0.1
 -e git://github.com/GoodCloud/django-timezones.git@cff53196b80711a71ca2a1d9bde54205711a3c1d#egg=django_timezones-dev
 errorhandler==1.1.1
@@ -82,10 +90,10 @@ gitdb==0.5.2
 kombu==1.1.3
 logilab-astng==0.21.1
 logilab-common==0.55.2
--e git://github.com/GoodCloud/django-longer-username.git@9a0dbb016079b44ed68bdafdafc19fdd14678692#egg=longerusername-dev
 paramiko==1.7.7.1
 pycrypto==2.3
 pylint==0.23.0
 pytz==2011h
+simplejson==2.1.6
 unittest2==0.5.1
 wsgiref==0.1.2
