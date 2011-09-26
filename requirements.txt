@@ -72,5 +72,5 @@ chardet
 pycurl
 stripe
 py-bcrypt
--e git://github.com/GoodCloud/django-zebra.git#egg=zebra
+django-zebra
 -e git://github.com/GoodCloud/django-functional-tests#egg=functional_tests
