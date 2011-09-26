@@ -34,7 +34,7 @@ $(function(){
 	<span class="group_and_template">
 	<label class="section">Group:</label>
 	{% generic_editable_field form.group %}
-	<fragment name="group_count" id="id_group_count" action="replace" url="{% url spreadsheets:group_count %}" >{% with members.count|add:0 as member_count %}{% include "spreadsheets/_group_count.html" %}{% endwith %}</fragment>
+	<fragment name="group_count" id="id_group_count" action="replace" url="{% url spreadsheets:group_count %}" >{% include "spreadsheets/_group_count.html" %}</fragment>
 	
 
 		<span class="generic_editable_field selects_with_descriptions" id="container_id_spreadsheet_template">

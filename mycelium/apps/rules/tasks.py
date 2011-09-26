@@ -245,7 +245,7 @@ def populate_rule_components_for_an_account(account):
         i = i+1
         ls = left_side_for_tag(account=account,
                             display_name="have a %s tag that" % (ts.name),
-                            query_string_partial="taggeditem__tag__in=Tag.objects_by_account(self.account).using('default').filter(tagset__name='%s',name" % (ts.name), 
+                            query_string_partial="taggeditem__tag__in=Tag.objects_by_account(self.account).filter(tagset__name='%s',name" % (ts.name), 
                             add_closing_paren=True
                             )
         ls.order=20+i
