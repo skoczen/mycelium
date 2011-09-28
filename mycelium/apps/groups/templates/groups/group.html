@@ -43,7 +43,7 @@ $(function(){
 	<rules>
 		{% for r_form in rule_formset.forms %}
 		<rule {% if r_form.instance.pk and r_form.instance.is_blank %}class="empty"{% endif %} >
-			<left_side>{% generic_editable_field r_form.left_side %}</left_side><operator>{% generic_editable_field r_form.operator %}</operator><right_side>{% generic_editable_field r_form.right_side_value %}</right_side>
+			<left_side>{% generic_editable_field r_form.left_side %}</left_side><operator>{% generic_editable_field r_form.operator %}</operator><right_side>{% generic_editable_field r_form.right_side_value %}</right_side> {# todo: check for choices #}
 			<hidden>{% for f in r_form.hidden_fields %}{{f}}{% endfor %} </hidden>
 			<delete>{% if r_form.instance.pk %}<span class="hidden">{{r_form.DELETE}}</span>{% endif %}<a href="#" class="mycelium_btn mycelium_delete_btn mycelium_small_btn mycelium_active_grey remove_rule_btn">Remove</a></delete>
 

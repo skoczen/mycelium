@@ -89,12 +89,13 @@ def field_value(field):
         val = '' 
 
     from django.forms.fields import ChoiceField
-    if isinstance(field.field, ChoiceField): 
+    if isinstance(field.field, ChoiceField) or hasattr(field.field, "choices"): 
         for (v, desc) in field.field.choices: 
             if v == val: 
                 return desc 
     return val
 
+@register.filter
 def display_field_value(field):
     """ 
     Returns the value for this BoundField, as rendered in widgets. 

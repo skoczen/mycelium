@@ -181,6 +181,8 @@ class DonationListTemplate (DonationBasedTemplate):
     fields = OrderedDict([
         ("date",                  ImportField("Date",                 "donors",       "Donation",     "date",         )),
         ("amount",                ImportField("Amount",               "donors",       "Donation",     "amount",       )),
+        ("type",                  ImportField("Type",                 "donors",       "Donation",     "type",       )),
+        ("notes",                 ImportField("Notes",                "donors",       "Donation",     "notes",       )),
         # ("category",              ImportField("Category",             "donors",    "Donation",     "category",     )),
         # ("campaign",              ImportField("Campaign",             "donors",    "Donation",     "campaign",     )),
         ("first_name",            ImportField("First Name",           "people",       "Person",       "first_name",   )),

@@ -27,6 +27,7 @@ def populate_rule_components_for_an_account(account):
 
     from rules.models import LeftSide, Operator, RightSideType
     from volunteers import VOLUNTEER_STATII
+    from donors import DONATION_TYPES
     """This function performs several actions, and is idempotent.
 
     In order, it:
@@ -236,6 +237,10 @@ def populate_rule_components_for_an_account(account):
     ls.order=190
     ls.save()
 
+
+    ls = left_side_for_choices (account=account,      display_name="have a donation that "                           ,query_string_partial="donor__donation__type", choices=DONATION_TYPES                                  )
+    ls.order=210
+    ls.save()
 
     # Left sides - generateds
     from generic_tags.models import TagSet
