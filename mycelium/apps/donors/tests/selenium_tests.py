@@ -87,6 +87,21 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DonorTestA
         self.assertEqual("March 8, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
 
 
+    def test_that_new_donations_can_include_a_type_and_notes(self):
+        sel = self.selenium        
+        self.create_person_and_go_to_donor_tab()
+        notes_str = Factory.rand_str()
+        a1, d1 = self.add_a_donation(amount=85.8, date="3/8/2011", type="Check", notes=notes_str)
+
+        # make sure recent donations display cleanly
+        self.assertEqual("$%.2f"%a1, sel.get_text("css=.donor_donation_table .donation_row:nth(0) .amount"))
+        self.assertEqual("March 8, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
+        self.assertEqual("Check", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .type"))
+        self.assertEqual(notes_str, sel.get_text("css=.donor_donation_table .donation_row:nth(0) .notes"))
+
+
+
+
 class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 
     def setUp(self, *args, **kwargs):

@@ -82,6 +82,7 @@ tab_contents.people_donor_tab #id_notes {
 	width: 80%;
 	margin-top: 5px;
 	border: 1px solid #CCC;
+	font-size: 14px;
 }
 tab_contents.people_donor_tab .notes_label {
 	float: left;
