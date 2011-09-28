@@ -4,9 +4,10 @@ tab_contents.people_donor_tab #new_donation .sentence {
 tab_contents.people_donor_tab #new_donation .sentence input {
 	background: transparent;
 	text-align: center;
+	font-size: 18px;
 }
 tab_contents.people_donor_tab #new_donation .sentence select {
-	margin-left: 0.5em;
+	margin: 0px 0.5em;
 }
 tab_contents.people_donor_tab #new_donation .duration input {
 /*	min-width: 50px;*/
@@ -72,4 +73,18 @@ tab_contents.people_donor_tab tags {
 	width: 100%;
 	overflow: auto;
 	padding: 0px;
+}
+tab_contents.people_donor_tab .notes_sentence {
+	padding-top: 10px;
+}
+tab_contents.people_donor_tab #id_notes {
+	height: 50px;
+	width: 80%;
+	margin-top: 5px;
+	border: 1px solid #CCC;
+}
+tab_contents.people_donor_tab .notes_label {
+	float: left;
+	margin-right: 10px;
+
 }

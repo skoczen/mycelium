@@ -11,13 +11,20 @@
 		<form id="new_donation" action="{% url donors:save_new_donation person.donor.pk %}" method="POST">{% csrf_token %}
 		<span class="edit_mode_on">
 			<div class="sentence">
-			<span class="sentence_fragment">Add donation of $</span>
+			<span class="sentence_fragment">Add a</span>
+			<span class="type">{{donation_form.type}}</span> 
+			<span class="sentence_fragment"> donation of $</span>
 			<span class="duration">{{donation_form.amount}}</span> 
 			<span class="sentence_fragment">on</span>
 			<span class="date">{{donation_form.date}}</span> 
 			<span class="sentence_fragment">. </span>
 			</div>
-			</span>
+			<div class="sentence notes_sentence">
+			<span class="sentence_fragment notes_label">Notes:</span>
+			{{donation_form.notes}}
+			</div>
+		</span>
+
 			
 			<form_actions>
 				<input type="submit" class="mycelium_btn add_donation_btn" value="Add Donation">

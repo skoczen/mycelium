@@ -4,6 +4,7 @@ from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from django.db.models.signals import post_save
 import datetime
 from people.models import Person
+from donors import DONATION_TYPES, CASH_DONATION_TYPE
 
 from taggit.managers import TaggableManager
 from accounts.models import AccountBasedModel
@@ -79,6 +80,8 @@ class Donation(AccountBasedModel, TimestampModelMixin, PotentiallyImportedModel)
     date = models.DateField(default=datetime.date.today)
     currency = models.CharField(default="USD", max_length=255)
     amount = models.DecimalField(blank=True, null=True, max_digits=18, decimal_places=2)
+    type = models.CharField(choices=DONATION_TYPES, default=CASH_DONATION_TYPE, max_length=10, db_index=True)
+    notes = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s on %s by %s" % (self.pretty_amount, self.date, self.donor)

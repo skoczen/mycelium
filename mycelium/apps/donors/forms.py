@@ -6,4 +6,4 @@ class NewDonationForm(AccountBasedModelForm):
   
     class Meta:
         model = Donation
-        fields = ("account", "amount", "date",)
+        fields = ("account", "amount", "date", "type", "notes")

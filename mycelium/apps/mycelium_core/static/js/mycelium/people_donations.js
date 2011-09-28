@@ -3,7 +3,7 @@ $(function(){
     $(".people_donor_tab .year_details_link").live("click",donorTab.toggle_year_details);
     $(".people_donor_tab #new_donation .cancel_add_btn").live("click", donorTab.cancel_add_donation);
     $(".people_donor_tab .delete_donation_btn").live("click",donorTab.delete_donor_from_people_tab);
-
+	$(".people_donor_tab #new_donation #id_notes").autoGrow();
 });
 
 
