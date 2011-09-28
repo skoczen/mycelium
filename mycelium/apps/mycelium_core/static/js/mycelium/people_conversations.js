@@ -5,7 +5,6 @@ $(function(){
     $(".read_less_link").live("click",conversationTab.hide_full_conversation_text);
     $(".more_conversations_link").live("click",conversationTab.show_more_conversations);
     $("#new_conversation .conversation_type label").live("click",conversationTab.conversation_type_label_clicked);
-    $("#new_conversation #id_body").autoGrow();
 	bind_conversation_tab_events();
 });
 
@@ -88,6 +87,7 @@ function bind_conversation_tab_events() {
         "showCurrentAtPos": 1            
     });
     $.Mycelium.update_stripes();
+    $("#new_conversation #id_body").autogrow();
 
     // $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd-yy' });
 }

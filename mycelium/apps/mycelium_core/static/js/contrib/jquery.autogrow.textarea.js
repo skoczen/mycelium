@@ -3,7 +3,7 @@
     /*
      * Auto-growing textareas; technique ripped from Facebook
      */
-    $.fn.autoGrow = function(options) {
+    $.fn.autogrow = function(options) {
         
         this.filter('textarea').each(function() {
             
@@ -23,7 +23,7 @@
             }).appendTo(document.body);
             
             var update = function() {
-    
+    			console.log("update")
                 var times = function(string, number) {
                     for (var i = 0, r = ''; i < number; i ++) r += string;
                     return r;
@@ -52,3 +52,5 @@
     }
     
 })(jQuery);
+
+console.log("update")
