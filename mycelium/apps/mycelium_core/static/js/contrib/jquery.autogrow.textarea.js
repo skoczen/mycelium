@@ -23,7 +23,6 @@
             }).appendTo(document.body);
             
             var update = function() {
-    			console.log("update")
                 var times = function(string, number) {
                     for (var i = 0, r = ''; i < number; i ++) r += string;
                     return r;
@@ -52,5 +51,3 @@
     }
     
 })(jQuery);
-
-console.log("update")

@@ -49,6 +49,64 @@ donorTab.delete_donor_from_people_tab = function() {
 	
     return false;	
 }
+donorTab.toggle_notes = function() {
+	var row = $(this).parents(".donation_row");
+	$(".notes_body",row).toggle();
+}
+
+donorTab.honorarium_checkbox_clicked = function() {
+	var me = $(this);
+	var hon = $("#id_in_honor_of");
+	var mem = $("#id_in_memory_of");
+	var hon_checked = $("#id_in_honor_of:checked");
+	var mem_checked = $("#id_in_memory_of:checked");
+
+	if (me.attr("id") == hon.attr("id")) {
+		if (hon_checked.length) {
+			$(".in_honor_of").addClass("checked");
+			mem.removeAttr("checked");
+			$(".in_memory_of").removeClass("checked");
+		} else {
+			$(".in_honor_of").removeClass("checked");
+		}
+	} else {
+		if (mem_checked.length) {
+			$(".in_memory_of").addClass("checked");
+			hon.removeAttr("checked");
+			$(".in_honor_of").removeClass("checked");
+		} else {
+			$(".in_memory_of").removeClass("checked");
+			$(".in_honor_of").removeClass("checked");
+		}
+	}
+
+	hon_checked = $("#id_in_honor_of:checked");
+	mem_checked = $("#id_in_memory_of:checked");
+	if (hon_checked.length) {
+		if ( $(".people_donor_tab .in_honor_of .honorarium_name").length == 0) {
+			$(".people_donor_tab #new_donation .in_honor_of").append(donorTab.honorarium_html)
+			$(".people_donor_tab #new_donation .in_honor_of .honorarium_name_fragment input").focus();
+		}
+		$(".people_donor_tab #new_donation .in_memory_of .honorarium_name").remove();
+	} else {
+		if (mem_checked.length) {
+			console.log($(".people_donor_tab .in_memory_of .honorarium_name").length);
+			if ($(".people_donor_tab .in_memory_of .honorarium_name").length == 0) {
+				$(".people_donor_tab #new_donation .in_memory_of").append(donorTab.honorarium_html);
+				$(".people_donor_tab #new_donation .in_memory_of .honorarium_name_fragment input").focus();
+			}
+			$(".people_donor_tab #new_donation .in_honor_of .honorarium_name").remove();
+			console.log("removed");
+		} else {
+			$(".people_donor_tab #new_donation .in_memory_of .honorarium_name").remove();
+			$(".people_donor_tab #new_donation .in_honor_of .honorarium_name").remove();
+		}
+	}
+		
+
+}
+
+
 
 function bind_donor_tab_events() {
     $("#new_donation").ajaxForm({
@@ -67,7 +125,11 @@ function bind_donor_tab_events() {
         // "gotoCurrent": true,
         "showCurrentAtPos": 1            
     });
+    $(".people_donor_tab .notes_icon").click(donorTab.toggle_notes);
     $(".people_donor_tab #new_donation #id_notes").autogrow();
+    $(".people_donor_tab #new_donation .honorarium input:checkbox").change(donorTab.honorarium_checkbox_clicked);
+    donorTab.honorarium_html = $(".honorarium_fragment").html();
+	$(".honorarium_fragment").html("").remove();
 }
 
 function process_fragments_and_rebind_donation_form(json) {

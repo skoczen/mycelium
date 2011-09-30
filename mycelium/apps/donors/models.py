@@ -82,6 +82,9 @@ class Donation(AccountBasedModel, TimestampModelMixin, PotentiallyImportedModel)
     amount = models.DecimalField(blank=True, null=True, max_digits=18, decimal_places=2)
     type = models.CharField(choices=DONATION_TYPES, default=CASH_DONATION_TYPE, max_length=10, db_index=True)
     notes = models.TextField(blank=True, null=True)
+    in_honor_of = models.BooleanField(default=False, db_index=True)
+    in_memory_of = models.BooleanField(default=False, db_index=True)
+    honorarium_name = models.CharField(blank=True, null=True, max_length=255)
 
     def __unicode__(self):
         return "%s on %s by %s" % (self.pretty_amount, self.date, self.donor)
@@ -93,6 +96,11 @@ class Donation(AccountBasedModel, TimestampModelMixin, PotentiallyImportedModel)
     def pretty_amount(self):
     	return "$%s" % self.amount
 
+
+    @property
+    def in_honorarium(self):
+        return self.in_honor_of or self.in_memory_of
+    
 
 # class RecurringDonation(AccountBasedModel, TimestampModelMixin):
 #     """A volunteer, scheduled to work a shift"""

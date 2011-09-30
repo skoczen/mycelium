@@ -2,6 +2,15 @@
 	<td class="amount">${{d.amount|intcomma}}</td>
 	<td class="date"> {{d.date|naturalday}}</td>
 	<td class="type"> {{d.get_type_display}}</td>
-	<td class="notes"> {{d.notes|clean_none}}</td>
+	<td class="notes"> 
+		{% if d.in_honor_of or d.in_memory_of or d.notes %}
+		<span class="notes_icon"></span>
+		<div class="notes_body">
+		{% if d.in_honor_of %}<p>In Honor of {{d.honorarium_name}}</p>{% endif %}
+		{% if d.in_memory_of %}<p>In Memory of {{d.honorarium_name}}</p>{% endif %}
+		{% if d.notes %}Notes: {{d.notes|linebreaksbr}}{% endif %}
+		</div>
+		{% endif %}
+	</td>
 	<td class="delete_donation"><a href="{% url donors:delete_donation_from_people_tab d.pk %}" class="delete_donation_btn mycelium_delete_btn mycelium_active_grey mycelium_small_btn mycelium_btn">Delete Donation</a></td>	
 </tr>

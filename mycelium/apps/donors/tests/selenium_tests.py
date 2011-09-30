@@ -101,6 +101,20 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DonorTestA
 
 
 
+    def test_that_in_honorarium_fields_show_and_hide_properly(self):
+        assert True == "Test written"
+
+        # check honor, make sure we have the name
+
+        # uncheck, it goes away
+
+        # check honor, then check memory, check for memory field
+
+        # uncheck, it goes away
+
+    def test_that_new_donations_can_be_in_honor_or_memory_of_a_name(self):
+        assert True == "Test written"
+        
 
 class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 

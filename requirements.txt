@@ -74,3 +74,4 @@ stripe
 py-bcrypt
 django-zebra
 -e git://github.com/GoodCloud/django-functional-tests#egg=functional_tests
+pytz
