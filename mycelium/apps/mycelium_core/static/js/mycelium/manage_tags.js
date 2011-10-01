@@ -10,10 +10,26 @@ manageTags.actions = {};
 manageTags.handlers = {};
 manageTags.ui = {};
 
-manageTags.objects.tag = function() {};
-manageTags.objects.tagSet = function() {};
+manageTags.objects.tagSet = function(pk, name, order ) {
+	o = {};
+	o.pk = pk;
+	o.name = name;
+	o.order = order;
+	o.is_deleted = false;
+	o.tags = [];
+	return o;
+};
 
-manageTags.state.tags = [];
+manageTags.objects.tag = function(pk, name, order, num_members ) {
+	o = {};
+	o.pk = pk;
+	o.name = name;
+	o.order = order;
+	o.num_members = num_members;
+	o.is_deleted = false;
+	return o;
+};
+
 manageTags.state.tag_sets = [];
 
 manageTags.handlers.add_tag_clicked = function() {};

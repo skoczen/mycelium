@@ -15,6 +15,7 @@ from accounts.models import AccountBasedModel
 
 class TagSet(AccountBasedModel, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
+    order = models.IntegerField(default=0)
     slug = models.SlugField(max_length=255)
 
     def __unicode__(self):
@@ -50,6 +51,7 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
                     return -1
 
 
+
     @property
     def all_tags(self):
         """Returns all tags possible in this set"""
@@ -70,7 +72,7 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
             for t in self.all_tags:
                 self.cached_all_tags_and_counts.append({
                     'tag':t,
-                    'num_people': TaggedItem.objects_by_account(self.account).filter(tag=t.id).count(),
+                    'num_people': self.num_members,
                 })
         return self.cached_all_tags_and_counts
 
@@ -105,6 +107,7 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
 class Tag(AccountBasedModel, models.Model):
     name = models.CharField(verbose_name=_('Name'), max_length=250)
     slug = models.SlugField(verbose_name=_('Slug'), max_length=255)
+    order = models.IntegerField(default=0)
     tagset = models.ForeignKey(TagSet, blank=True, null=True)
 
     def __unicode__(self):
@@ -127,6 +130,9 @@ class Tag(AccountBasedModel, models.Model):
         create_tag_group.delay(self)
         return super(Tag, self).save(*args, **kwargs)
 
+    @property
+    def num_members(self):
+        return self.taggeditem_set.count()
 
     def add_tag_to_person(self, person=None):
         if not person:
