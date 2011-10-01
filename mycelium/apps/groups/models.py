@@ -53,6 +53,13 @@ class Group(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, RuleG
         return self.members.count()
 
     @property
+    def members(self):
+        if self.is_tag_group:
+            return self.taggroup.members
+        else:
+            return super(Group, self).members
+
+    @property
     def full_name(self):
         if self.name and self.name != "":
             return "%s" % (self.name,)
