@@ -2,6 +2,39 @@ $(function() {
     $("form.category_name").genericFieldForm();
     bind_tags_events();
 });
+
+var manageTags = {};
+manageTags.state = {};
+manageTags.objects = {};
+manageTags.actions = {};
+manageTags.handlers = {};
+manageTags.ui = {};
+
+manageTags.objects.tag = function() {};
+manageTags.objects.tagSet = function() {};
+
+manageTags.state.tags = [];
+manageTags.state.tag_sets = [];
+
+manageTags.handlers.add_tag_clicked = function() {};
+manageTags.handlers.tag_name_changed = function() {};
+manageTags.handlers.delete_tag_clicked = function() {};
+manageTags.handlers.add_tagset_clicked = function() {};
+manageTags.handlers.tagset_name_changed = function() {};
+manageTags.handlers.delete_tagset_clicked = function() {};
+
+manageTags.actions.add_tag = function() {};
+manageTags.actions.update_tag = function() {};
+manageTags.actions.delete_tag = function() {};
+manageTags.actions.add_tagset = function() {};
+manageTags.actions.update_tagset = function() {};
+manageTags.actions.delete_tagset = function() {};
+
+manageTags.ui.render_tag_row = function() {};
+manageTags.ui.render_tagset = function() {};
+manageTags.ui.render_full_ui = function() {};
+
+
 function bind_tags_events() {
 	$(".delete_tagset_btn").die("click").live("click",delete_category);
 	$(".delete_tag_btn").die("click").live("click",delete_tag);
