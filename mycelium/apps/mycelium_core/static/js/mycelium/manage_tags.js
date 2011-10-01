@@ -19,9 +19,11 @@ manageTags.state.tag_sets = [];
 manageTags.handlers.add_tag_clicked = function() {};
 manageTags.handlers.tag_name_changed = function() {};
 manageTags.handlers.delete_tag_clicked = function() {};
+manageTags.handlers.tag_order_changed = function() {};
 manageTags.handlers.add_tagset_clicked = function() {};
 manageTags.handlers.tagset_name_changed = function() {};
 manageTags.handlers.delete_tagset_clicked = function() {};
+manageTags.handlers.tagset_order_changed = function() {};
 
 manageTags.actions.add_tag = function() {};
 manageTags.actions.update_tag = function() {};
@@ -29,6 +31,7 @@ manageTags.actions.delete_tag = function() {};
 manageTags.actions.add_tagset = function() {};
 manageTags.actions.update_tagset = function() {};
 manageTags.actions.delete_tagset = function() {};
+manageTags.actions.save_state = function() {};
 
 manageTags.ui.render_tag_row = function() {};
 manageTags.ui.render_tagset = function() {};
