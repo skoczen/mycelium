@@ -274,7 +274,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         time.sleep(2)
         sel.type("css=.tag_name .generic_editable_field .edit_field input","really cool tag")
         sel.click("css=.tag_name .generic_editable_field .edit_field input")
-        time.sleep(4)
+        time.sleep(6)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
 
@@ -424,10 +424,27 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         assert sel.is_element_present("css=rule:nth(0) left_side option:nth(7)")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(0)"), "---------")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(7)"), "volunteer status")
+    
+    def test_adding_a_tag_via_the_manage_page_creates_a_tag_group(self):
+        self.test_adding_a_tag_via_the_manage_page()
+        self.ensure_that_a_tag_group_exists_for_a_tag(tag_name="really cool tag")
 
-    def test_changing_a_name_then_adding_a_tag_saves_the_changes(self):
-        pass
+    def test_adding_a_tag_via_the_person_tag_tab_page_creates_a_tag_group(self):
+        self.create_person_and_go_to_tag_tab()
+        self.add_a_new_tag()
+        self.ensure_that_a_tag_group_exists_for_a_tag()
 
+    def test_removing_a_tag_via_the_manage_page_deletes_the_tag_group(self):
+        sel = self.selenium
+        self.test_adding_a_tag_via_the_manage_page()
+        sel.click("css=.start_edit_btn")
+        time.sleep(0.5)
+        sel.click("css=.delete_tag_btn:nth(0)")
+        self.assertEqual(sel.get_confirmation(),"You sure?\n\nPress OK to delete this tag.\nPress Cancel to leave it in place.")
+
+        self.create_person_and_go_to_tag_tab()
+        self.ensure_that_a_tag_group_exists_for_a_tag(tag_name="really cool tag", exists=False)
+        
 
 class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 

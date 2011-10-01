@@ -1,8 +1,8 @@
 from celery.task import task
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.conf import settings
+from johnny import cache as jcache
 
 @task
 def create_tag_group(tag):
     tag.create_tag_group_if_needed()
+    jcache.invalidate("groups.GroupSearchProxy")
+    jcache.invalidate("groups.TagGroup")

@@ -41,6 +41,10 @@ class Group(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, RuleG
     @property
     def rules(self):
         return self.grouprule_set.all()
+    
+    @property
+    def is_tag_group(self):
+        return hasattr(self,"taggroup")
 
     def make_blank_rule(self):
         return self.grouprule_set.create(account=self.account)

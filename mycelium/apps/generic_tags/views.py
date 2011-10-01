@@ -128,6 +128,8 @@ class TagViews(object):
             ts = get_or_404_by_account(TagSet, request.account, tag_set_id)
             person = get_or_404_by_account(Person, request.account, target_id)
             t = Tag.create_new_tag(tagset=ts,name=new_tag)
+            # Needed to trigger group creation.
+            t.save()
             t.add_tag_to_person(person)
             success = True
 
