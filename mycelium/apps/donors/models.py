@@ -101,6 +101,19 @@ class Donation(AccountBasedModel, TimestampModelMixin, PotentiallyImportedModel)
     def in_honorarium(self):
         return self.in_honor_of or self.in_memory_of
     
+    @property
+    def memoree_name(self):
+        if self.in_memory_of:
+            return self.honorarium_name
+        
+        return u""
+    
+    @property
+    def honoree_name(self):
+        if self.in_honor_of:
+            return self.honorarium_name
+        
+        return u""
 
 # class RecurringDonation(AccountBasedModel, TimestampModelMixin):
 #     """A volunteer, scheduled to work a shift"""

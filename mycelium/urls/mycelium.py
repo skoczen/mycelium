@@ -27,7 +27,6 @@ urlpatterns = patterns('',
     # (r'^administration/', include(admin.site.urls)),
     url(r'^', include('qi_toolkit.urls')),    
     url(r'^', include('django_ses.urls')),
-    # url(r'^tinymce/', include('tinymce.urls')),
     url(r'^', include('mediasync.urls')),
     
 )

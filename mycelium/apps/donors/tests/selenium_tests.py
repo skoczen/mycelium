@@ -97,24 +97,55 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DonorTestA
         self.assertEqual("$%.2f"%a1, sel.get_text("css=.donor_donation_table .donation_row:nth(0) .amount"))
         self.assertEqual("March 8, 2011", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .date"))
         self.assertEqual("Check", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .type"))
-        self.assertEqual(notes_str, sel.get_text("css=.donor_donation_table .donation_row:nth(0) .notes"))
+        self.assertEqual("Notes: %s" % notes_str, sel.get_text("css=.donor_donation_table .donation_row:nth(0) .notes_body"))
 
 
 
     def test_that_in_honorarium_fields_show_and_hide_properly(self):
-        assert True == "Test written"
+        sel = self.selenium        
+        self.create_person_and_go_to_donor_tab()
+        self.switch_to_donor_tab()
+        sel.click("css=tabbed_box[name=add_a_donation] tab_title")
+        time.sleep(2)
 
         # check honor, make sure we have the name
+        assert not sel.is_element_present("css=.honorarium_name")
+        assert not sel.is_element_present("css=.in_honor_of .honorarium_name")
+        sel.click("css=#id_in_honor_of")
+        assert sel.is_element_present("css=.in_honor_of .honorarium_name")
 
         # uncheck, it goes away
+        sel.click("css=#id_in_honor_of")
+        assert not sel.is_element_present("css=.honorarium_name")
+        assert not sel.is_element_present("css=.in_honor_of .honorarium_name")
 
         # check honor, then check memory, check for memory field
+        sel.check("css=#id_in_honor_of")
+        time.sleep(0.5)
+        sel.click("css=#id_in_memory_of")
+        time.sleep(0.5)
+        assert sel.is_element_present("css=.honorarium_name")
+        assert not sel.is_element_present("css=.in_honor_of .honorarium_name")
+        assert sel.is_element_present("css=.in_memory_of .honorarium_name")
 
         # uncheck, it goes away
+        sel.click("css=#id_in_memory_of")
+        assert not sel.is_element_present("css=.honorarium_name")
+
 
     def test_that_new_donations_can_be_in_honor_or_memory_of_a_name(self):
-        assert True == "Test written"
-        
+        sel = self.selenium
+        self.create_person_and_go_to_donor_tab()
+        a1, d1 = self.add_a_donation(amount=85.8, date="3/8/2011", in_honor=True, honorarium_name="William Stafford")
+
+        assert sel.is_element_present("css=.donor_donation_table .donation_row:nth(0) .notes_icon")
+        self.assertEqual("In Honor of William Stafford", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .notes_body"))
+
+
+        a2, d2 = self.add_a_donation(amount=24.75, date="4/8/2011", in_memory=True, honorarium_name="T.S. Eliot")
+
+        assert sel.is_element_present("css=.donor_donation_table .donation_row:nth(0) .notes_icon")
+        self.assertEqual("In Memory of T.S. Eliot", sel.get_text("css=.donor_donation_table .donation_row:nth(0) .notes_body"))
 
 class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, DonorTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 

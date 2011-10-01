@@ -6,17 +6,15 @@ from qi_toolkit.models import TimestampModelMixin, SimpleSearchableModel
 from qi_toolkit.helpers import classproperty
 from accounts import *
 
-import stripe
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from zebra.models import StripeCustomer, StripePlan
 from zebra.mixins import StripeSubscriptionMixin
 import hashlib
-import datetime, time
+import datetime
 from dateutil.relativedelta import *
-from django.db.models import Sum, Count, Avg
-import logging
+from django.db.models import Sum
 
 class Plan(TimestampModelMixin, StripePlan):
     name = models.CharField(max_length=255)

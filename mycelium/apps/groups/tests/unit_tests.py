@@ -1,16 +1,14 @@
 from test_factory import Factory
-from nose.tools import istest
-from rules.models import LeftSide, Operator, RightSideType, Rule
+from rules.models import LeftSide, Operator
 from rules.tasks import populate_rule_components_for_an_account
 from groups.models import GroupRule, NO_NAME_STRING_GROUP
-from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
+from djangosanetesting.cases import DestructiveDatabaseTestCase
 from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
 from django.db.models import Q
 from django.test import TestCase
 from people.models import Person
 from volunteers import VOLUNTEER_STATII
 import datetime
-from generic_tags.models import TagSet, Tag
 from groups.tests import GroupTestAbstractions
 from rules.tests import RuleTestAbstractions
 from accounts.tests.selenium_abstractions import AccountTestAbstractions

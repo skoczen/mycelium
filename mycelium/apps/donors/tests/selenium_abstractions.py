@@ -18,7 +18,7 @@ class DonorTestAbstractions(object):
         time.sleep(1)
 
 
-    def add_a_donation(self, amount=None, date=None, type=None, notes=None):
+    def add_a_donation(self, amount=None, date=None, type=None, notes=None, in_honor=False, in_memory=False, honorarium_name=None):
         sel = self.selenium
         self.switch_to_donor_tab()
         if not amount:
@@ -33,6 +33,15 @@ class DonorTestAbstractions(object):
             sel.select("css=#id_type",type)
         if notes:
             sel.type("css=#id_notes", notes)
+
+        if in_honor:
+            sel.click("css=#id_in_honor_of")
+        
+        if in_memory:
+            sel.click("css=#id_in_memory_of")
+        
+        if honorarium_name:
+            sel.type("css=#id_honorarium_name", honorarium_name)
 
         sel.click("css=tabbed_box[name=add_a_donation] .add_donation_btn")
         time.sleep(2)
