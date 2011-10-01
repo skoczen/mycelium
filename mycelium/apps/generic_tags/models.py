@@ -4,10 +4,12 @@ from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from django.db.models.signals import post_save, pre_delete
 from django.template.defaultfilters import slugify
 
+
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
 from generic_tags import BLANK_TAGSET_NAME
+from generic_tags.tasks import create_tag_group
 
 from accounts.models import AccountBasedModel
 
@@ -122,6 +124,7 @@ class Tag(AccountBasedModel, models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name.lower())
+        create_tag_group.delay(self)
         return super(Tag, self).save(*args, **kwargs)
 
 
@@ -140,6 +143,12 @@ class Tag(AccountBasedModel, models.Model):
         if not tagset or not name:
             raise Exception, "Missing tagset and/or name"
         return cls.raw_objects.get_or_create(account=tagset.account, tagset=tagset, name=name)[0]
+    
+    def create_tag_group_if_needed(self):
+        from groups.models import TagGroup
+        if self.name:
+            TagGroup.raw_objects.get_or_create(account=self.account, tag=self)
+
 
 class TaggedItem(AccountBasedModel, models.Model):
     tag = models.ForeignKey(Tag)
