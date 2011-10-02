@@ -11,12 +11,13 @@
 {% js "/js/mycelium/manage_tags.js" %}
 <script>
 $(function(){
-	
-{% for ts in all_tagsets %}
-manageTags.state.tag_sets.append(manageTags.objects.tagSet({{ts.pk}}, "{{ts.name}}", {{ts.order}});
-{% for t in ts.tag_set.all %}manageTags.state.tag_sets.tags.append(manageTags.objects.tag({{t.pk}}, "{{t.name}}", {{t.order}}, {{t.num_members}});
-{% endfor %}{% endfor %}
 
+{% for ts in all_tagsets %}{% with forloop.counter as ts_counter %}
+manageTags.state.tag_sets.push(manageTags.objects.tagSet("{{ts.name}}", {{ts.order}}));
+{% for t in ts.tag_set.all %}{% with forloop.counter as tag_counter %}manageTags.state.tag_sets[{{ts_counter|add:-1}}].tags.push(manageTags.objects.tag(manageTags.state.tag_sets[{{ts_counter|add:-1}}], "{{t.name}}", {{t.order}}, {{t.num_members}}));
+{% endwith %}{% endfor %}{% endwith %}{% endfor %}
+
+manageTags.init();
 });
 </script>
 {% endblock %}
@@ -24,49 +25,20 @@ manageTags.state.tag_sets.append(manageTags.objects.tagSet({{ts.pk}}, "{{ts.name
 {% block breadcrumb %}{% endblock %}
 {% block page_content %}
 <page_title>Manage Tags</page_title>
-<form action="{% url generic_tags:save_tags_and_tagsets %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
+<instructions>Changes will auto-save.  Drag and drop to reorder.</instructions>
+<form action="{% url generic_tags:save_tags_and_tagsets %}" class="edit_mode_on" id="basic_info_form" method="POST">{% csrf_token %}
 	<save_status_and_button>
-	<a href="#" class="mycelium_btn start_edit_btn" >{% if not edit_label %}Edit Tags{% else %}{{edit_label}}{% endif %}</a>
-	<a href="#" class="mycelium_btn edit_done_btn " >Done</a>
 	<a href="#" class="mycelium_btn save_and_status_btn mycelium_grey" >Saved</a>
 	<span class="save_info">
 		<span class="last_save_time"></span>
 	</span>
 	</save_status_and_button>
 
-<div id="tagset_form">
-
-
-	<tagset>
-		<div class="detail_header">
-			<div class="header_actions">
-				<a href="{% url generic_tags:delete_tagset ts.pk %}" class="delete_tagset_btn mycelium_btn mycelium_delete_btn mycelium_active_grey mycelium_small_btn">Delete Tag Category</a>
-			</div>
-			{% generic_editable_field ts.form.name %}
-		</div>
-		<table class="tag_list striped">
-		{% for t in ts.all_tags_and_counts_with_form %}
-			{% with t.tag.form as t_form %}
-			<tr class="striped_row tag_row">
-				<td class="tag_name">{% generic_editable_field t_form.name %}</td>
-				<td class="num_people"><span class="count">{{t.num_people|intcomma}}</span> 
-					{# {% if t.num_people == 1 %}person{% else %}people{% endif %} #}
-					people
-				</td>
-				<td class="tag_actions">
-					<a href="{% url generic_tags:delete_tag t.tag.pk %}" class="delete_tag_btn mycelium_btn mycelium_delete_btn mycelium_active_grey mycelium_small_btn">Delete Tag</a>
-				</td>
-			</tr>
-			{% endwith %}
-		{% endfor %}
-		</table>
-		<form_actions>
-		<a href="{% url generic_tags:new_tag ts.pk %}" class="mycelium_btn mycelium_small_btn add_a_tag_btn auto_disable" disabled_text="Adding...">Add a Tag</a>
-		</form_actions>
-	</tagset>
+	<tagsets>
+	</tagsets>
 
 	<form_actions>
-		<a href="{% url generic_tags:new_tagset %}" class="mycelium_btn add_a_category_btn auto_disable" disabled_text="Adding...">Add a Category</a>
+		<a href="#" class="mycelium_btn add_a_category_btn">Add a Category</a>
 	</form_actions>
 
 </fragment>

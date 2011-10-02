@@ -29,7 +29,7 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
         super(TagSet,self).save(*args, **kwargs)
 
     class Meta(object):
-        ordering = ("id",)
+        ordering = ("order",)
 
 
     @classmethod
@@ -72,7 +72,7 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
             for t in self.all_tags:
                 self.cached_all_tags_and_counts.append({
                     'tag':t,
-                    'num_people': self.num_members,
+                    'num_people': t.num_members,
                 })
         return self.cached_all_tags_and_counts
 
@@ -114,7 +114,7 @@ class Tag(AccountBasedModel, models.Model):
         return self.name
 
     class Meta(object):
-        ordering = ("tagset","name",)
+        ordering = ("order",)
 
 
     def form(self, *args, **kwargs):
@@ -163,8 +163,6 @@ class TaggedItem(AccountBasedModel, models.Model):
     def __unicode__(self):
         return "%s tag for %s" % (self.tag, self.person)
 
-    class Meta(object):
-        ordering = ("tag","person",)
 
 
 
