@@ -238,7 +238,7 @@ def populate_rule_components_for_an_account(account):
     ls.save()
 
 
-    ls = left_side_for_choices (account=account,      display_name="have a donation that "                           ,query_string_partial="donor__donation__type", choices=DONATION_TYPES                                  )
+    ls = left_side_for_choices (account=account,      display_name="have a donation that"                           ,query_string_partial="donor__donation__type", choices=DONATION_TYPES                                  )
     ls.order=210
     ls.save()
 

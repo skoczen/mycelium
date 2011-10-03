@@ -253,7 +253,6 @@ manageTags.handlers.tagset_order_changed = function() {
 
 manageTags.handlers.init = function(){
 	manageTags.handlers.setup_sortable_handlers();
-	// .disableSelection();
 
 	$(".add_a_tag_btn").live("click",manageTags.handlers.add_tag_clicked);
 	$(".tag input").live("change",manageTags.handlers.tag_name_changed);
@@ -275,6 +274,7 @@ manageTags.handlers.setup_sortable_handlers = function() {
 		update: manageTags.handlers.tag_order_changed,
 		// handle: '.tag_drag_icon',
 	});
+		// .disableSelection();
 }
 
 // Actions
