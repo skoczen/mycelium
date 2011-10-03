@@ -324,7 +324,8 @@ MEDIASYNC = {
     # ),
     'PROCESSORS': (
         'mediasync.processors.yuicompressor.css_minifier',
-        'mediasync.processors.yuicompressor.js_minifier',
+        # 'mediasync.processors.yuicompressor.js_minifier',
+        'mediasync.processors.slim.js_minifier',
     ),
     # 'PROCESSORS': ('mediasync.processors.closurecompiler.compile',),
 

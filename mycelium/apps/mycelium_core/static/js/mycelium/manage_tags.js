@@ -9,7 +9,7 @@ manageTags.ui = {};
 manageTags.init = function() {
 	manageTags.ui.init();
 	manageTags.handlers.init();
-}
+};
 
 manageTags.encyclopedia.urls = {};
 
@@ -27,13 +27,13 @@ manageTags.objects.tagSet = function(name, order, db_pk ) {
 
 	o.ui_element = function() {
 		return $("tagset[pk=" + this.pk + "]");
-	}
+	};
 	o.ui_container = function() {
 		return $("tagsets");
-	}
+	};
 	o.delete = function() {
 		this.is_deleted = true;
-	}
+	};
 	o.sorted_tags = function() {
 		var a = [];
 		for (var j in this.tags) {
