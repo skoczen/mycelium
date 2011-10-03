@@ -1,15 +1,3 @@
-$(function() {
- //    $("form.category_name").genericFieldForm();
-	// $("form.category_name").toggle_edit();
-
-    // bind_tags_events();
-    // manageTags.init();
-
-});
-
-
-
-
 var manageTags = {};
 manageTags.state = {};
 manageTags.objects = {};
