@@ -41,6 +41,10 @@ class Group(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, RuleG
     @property
     def rules(self):
         return self.grouprule_set.all()
+    
+    @property
+    def is_tag_group(self):
+        return hasattr(self,"taggroup")
 
     def make_blank_rule(self):
         return self.grouprule_set.create(account=self.account)
@@ -49,11 +53,30 @@ class Group(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, RuleG
         return self.members.count()
 
     @property
+    def members(self):
+        if self.is_tag_group:
+            return self.taggroup.members
+        else:
+            return super(Group, self).members
+
+    @property
     def full_name(self):
         if self.name and self.name != "":
             return "%s" % (self.name,)
         else:
             return NO_NAME_STRING_GROUP
+
+class TagGroup(Group):
+    tag = models.ForeignKey("generic_tags.tag", db_index=True)
+
+    @property
+    def members(self):
+        return Person.objects_by_account(self.account).filter(taggeditem__tag=self.tag)
+        
+    def save(self, *args, **kwargs):
+        self.name = "Tagged with %s" % self.tag.name
+        super(TagGroup, self).save(*args, **kwargs)
+
 
 class GroupRule(AccountBasedModel, Rule):
     group = models.ForeignKey(Group)
@@ -163,6 +186,7 @@ class GroupSearchProxy(SearchableItemProxy):
 
 
 post_save.connect(GroupSearchProxy.group_record_changed,sender=Group)
+post_save.connect(GroupSearchProxy.group_record_changed,sender=TagGroup)
 
 # from generic_tags.models import TaggedItem
 # post_save.connect(GroupSearchProxy.group_results_may_have_changed,sender=TaggedItem)

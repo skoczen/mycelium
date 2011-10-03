@@ -15,7 +15,4 @@ urlpatterns = parser.patterns('',
     url(r'{tagset_id:digits}/new-tag$',                                     views.new_tag,                                       name='new_tag'),
     url(r'manage/$',                                                        views.manage,                                        name='manage'),
     url(r'save-tags-and-tagset/$',                                          views.save_tags_and_tagsets,                         name='save_tags_and_tagsets'),
-    url(r'{tagset_id:digits}/delete-tagset$',                               views.delete_tagset,                                 name='delete_tagset'),
-    url(r'{tag_id:digits}/delete-tag$',                                     views.delete_tag,                                    name='delete_tag'),
-    
 )

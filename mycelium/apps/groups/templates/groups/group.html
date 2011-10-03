@@ -25,16 +25,20 @@ $(function(){
 
 {% block breadcrumb_links %}<a href="{% url groups:search %}" >Back to Groups</a>{% endblock %}
 {% block page_content %}
+
+{% if not group.is_tag_group %}
 <form action="{% url groups:save_basic_info group.pk %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
 {% with "Edit Group" as edit_label %}
 	{% include "people/_save_status_and_button.html" %}
 {% endwith %}
+{% endif %}
 
 <div class="basic_info">
 	{% generic_editable_field form.name %}
 </div>
 
 <div class="group_rules group_detail_column">
+{% if not group.is_tag_group %}
 	<div class="detail_header">Rules</div>
 	<div class="group_rules_boolean_sentence">
 	Find people who match {% generic_editable_field_anyall_bool form.rules_boolean %} of the following rules:
@@ -55,6 +59,7 @@ $(function(){
 	<div class="new_criterium">
 		<a href="#" class="mycelium_btn  mycelium_small_btn add_new_rule_btn">Add new rule</a>
 	</div>
+{% endif %}
 </div>
 <div class="group_members group_detail_column" members_update_url="{% url groups:group_members_partial group.pk %}">
 	{% with group.members as group_members  %}

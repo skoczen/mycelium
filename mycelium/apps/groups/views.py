@@ -97,7 +97,7 @@ def delete_group(request):
 @json_view
 def group_members_partial(request, group_id):
     group = get_or_404_by_account(Group, request.account, group_id)
-    members = group.members.using('default')
+    group_members = group.members.using('default')
     return {
     "fragments":{
         "group_member_count":render_to_string("groups/_group_member_count.html", locals()),

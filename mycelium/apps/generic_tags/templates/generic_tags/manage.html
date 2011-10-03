@@ -9,23 +9,39 @@
 {% generic_tags_js %}
 {% js "/js/mycelium/people_common.js" %}
 {% js "/js/mycelium/manage_tags.js" %}
+<script>
+$(function(){
+
+{% for ts in all_tagsets %}{% with forloop.counter as ts_counter %}
+manageTags.state.tag_sets.push(manageTags.objects.tagSet("{{ts.name}}", {{ts.order}}, {{ts.pk}}));
+{% for t in ts.tag_set.all %}{% with forloop.counter as tag_counter %}manageTags.state.tag_sets[{{ts_counter|add:-1}}].tags.push(manageTags.objects.tag(manageTags.state.tag_sets[{{ts_counter|add:-1}}], "{{t.name}}", {{t.order}}, {{t.num_members}}, {{t.pk}}));
+{% endwith %}{% endfor %}{% endwith %}{% endfor %}
+manageTags.encyclopedia.urls.save_tags_and_tagsets = "{% url generic_tags:save_tags_and_tagsets %}";
+
+manageTags.init();
+});
+</script>
 {% endblock %}
 
 {% block breadcrumb %}{% endblock %}
 {% block page_content %}
 <page_title>Manage Tags</page_title>
-<form action="{% url generic_tags:save_tags_and_tagsets %}" class="edit_mode_off" id="basic_info_form" method="POST">{% csrf_token %}
+<instructions>Changes will auto-save.  Drag and drop to reorder.</instructions>
+<form action="{% url generic_tags:save_tags_and_tagsets %}" class="edit_mode_on" method="POST">{% csrf_token %}
 	<save_status_and_button>
-	<a href="#" class="mycelium_btn start_edit_btn" >{% if not edit_label %}Edit Tags{% else %}{{edit_label}}{% endif %}</a>
-	<a href="#" class="mycelium_btn edit_done_btn " >Done</a>
 	<a href="#" class="mycelium_btn save_and_status_btn mycelium_grey" >Saved</a>
 	<span class="save_info">
 		<span class="last_save_time"></span>
 	</span>
 	</save_status_and_button>
 
-<fragment name="tagset_details" action="replace">
-	{% include "generic_tags/_manage_tags_tagset_details.html" %}
+	<tagsets>
+	</tagsets>
+
+	<form_actions>
+		<a href="#" class="mycelium_btn add_a_category_btn">Add a Category</a>
+	</form_actions>
+
 </fragment>
 </form>
 {% endblock %}

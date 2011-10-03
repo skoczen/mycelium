@@ -4,15 +4,18 @@ from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from django.db.models.signals import post_save, pre_delete
 from django.template.defaultfilters import slugify
 
+
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
 from generic_tags import BLANK_TAGSET_NAME
+from generic_tags.tasks import create_tag_group
 
 from accounts.models import AccountBasedModel
 
 class TagSet(AccountBasedModel, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
+    order = models.IntegerField(default=0)
     slug = models.SlugField(max_length=255)
 
     def __unicode__(self):
@@ -26,7 +29,7 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
         super(TagSet,self).save(*args, **kwargs)
 
     class Meta(object):
-        ordering = ("id",)
+        ordering = ("order",)
 
 
     @classmethod
@@ -46,6 +49,7 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
                     return 1
                 else:
                     return -1
+
 
 
     @property
@@ -68,7 +72,7 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
             for t in self.all_tags:
                 self.cached_all_tags_and_counts.append({
                     'tag':t,
-                    'num_people': TaggedItem.objects_by_account(self.account).filter(tag=t.id).count(),
+                    'num_people': t.num_members,
                 })
         return self.cached_all_tags_and_counts
 
@@ -103,13 +107,14 @@ class TagSet(AccountBasedModel, TimestampModelMixin):
 class Tag(AccountBasedModel, models.Model):
     name = models.CharField(verbose_name=_('Name'), max_length=250)
     slug = models.SlugField(verbose_name=_('Slug'), max_length=255)
+    order = models.IntegerField(default=0)
     tagset = models.ForeignKey(TagSet, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
 
     class Meta(object):
-        ordering = ("tagset","name",)
+        ordering = ("order",)
 
 
     def form(self, *args, **kwargs):
@@ -122,8 +127,12 @@ class Tag(AccountBasedModel, models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name.lower())
+        create_tag_group.delay(self)
         return super(Tag, self).save(*args, **kwargs)
 
+    @property
+    def num_members(self):
+        return self.taggeditem_set.count()
 
     def add_tag_to_person(self, person=None):
         if not person:
@@ -140,6 +149,12 @@ class Tag(AccountBasedModel, models.Model):
         if not tagset or not name:
             raise Exception, "Missing tagset and/or name"
         return cls.raw_objects.get_or_create(account=tagset.account, tagset=tagset, name=name)[0]
+    
+    def create_tag_group_if_needed(self):
+        from groups.models import TagGroup
+        if self.name:
+            TagGroup.raw_objects.get_or_create(account=self.account, tag=self)
+
 
 class TaggedItem(AccountBasedModel, models.Model):
     tag = models.ForeignKey(Tag)
@@ -148,8 +163,6 @@ class TaggedItem(AccountBasedModel, models.Model):
     def __unicode__(self):
         return "%s tag for %s" % (self.tag, self.person)
 
-    class Meta(object):
-        ordering = ("tag","person",)
 
 
 

@@ -1,3 +1,5 @@
+import json
+
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
@@ -128,6 +130,8 @@ class TagViews(object):
             ts = get_or_404_by_account(TagSet, request.account, tag_set_id)
             person = get_or_404_by_account(Person, request.account, target_id)
             t = Tag.create_new_tag(tagset=ts,name=new_tag)
+            # Needed to trigger group creation.
+            t.save()
             t.add_tag_to_person(person)
             success = True
 
@@ -183,26 +187,65 @@ def _tab_or_manage_tags_redirect(context):
 @json_view
 def save_tags_and_tagsets(request):
     success = False
-    if request.method == "POST":
-        data = request.POST
 
-        tagset_forms = [ts.form(data, account=request.account) for ts in TagSet.objects_by_account(request.account).all()]
-        tag_forms = [t.form(data, prefix="TAG-%s" % t.pk, instance=t, account=request.account) for t in Tag.objects_by_account(request.account).all()]
-
-        # process tagset forms
-        for f in tagset_forms:
-            if f.is_valid():
-                f.save()
-
-        # process tag forms
-        for f in tag_forms:
-            if f.is_valid():
-                f.save()
-        
-        success = True
+    data = json.loads(request.POST["data"])
+    created_tagsets = []
+    created_tags = []
+    deleted_tagsets = []
+    deleted_tags = []
     
-    return {'success': success}
-    return _tab_or_manage_tags_redirect(locals())
+    
+    for ts in data["tag_sets"]:
+        tagset = None
+        if ts["db_pk"]:
+            try:
+                tagset = TagSet.objects.get(pk=ts["db_pk"])
+                tagset.name = ts["name"]
+            except TagSet.DoesNotExist: 
+                pass
+        else:
+            tagset, created = TagSet.objects.get_or_create(account=request.account, name=ts["name"])
+            created_tagsets.append(tagset)
+        if tagset:
+            tagset.page_pk = ts["page_pk"]
+            if ts["is_deleted"]:
+                tagset.delete()
+                deleted_tagsets.append(tagset)
+            else:
+                tagset.order = ts["order"]
+                tagset.save()
+                for t in ts["tags"]:
+                    tag = None
+
+                    if t["db_pk"]:
+                        try:
+                            tag = Tag.objects.get(pk=t["db_pk"])
+                            tag.name = t["name"]
+                            tag.tagset = tagset
+                        except Tag.DoesNotExist:
+                            pass
+                    else:
+                        tag, created = Tag.objects.get_or_create(account=request.account, name=t["name"], tagset=tagset)
+                        created_tags.append(tag)
+                    
+                    if tag:
+                        tag.page_pk = t["page_pk"]
+                        if t["is_deleted"]:
+                            tag.delete()
+                            deleted_tags.append(tag)
+                        else:
+                            tag.order = t["order"]
+                            tag.save()
+                
+    ret_dict = {}
+    ret_dict["created_tagsets"] = [{"name":ts.name, "order":ts.order, "db_pk":ts.pk, "page_pk": ts.page_pk} for ts in created_tagsets]
+    ret_dict["created_tags"] = [{"name":t.name, "order":t.order, "db_pk":t.pk, "page_pk": t.page_pk} for t in created_tags]
+    ret_dict["deleted_tagsets"] = [{"name":ts.name, "order":ts.order, "db_pk":ts.pk, "page_pk": ts.page_pk} for ts in deleted_tagsets]
+    ret_dict["deleted_tags"] = [{"name":t.name, "order":t.order, "db_pk":t.pk, "page_pk": t.page_pk} for t in deleted_tags]
+    ret_dict["success"] = True
+
+    return ret_dict
+    
 
 
 def new_tagset(request):

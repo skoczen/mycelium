@@ -46,7 +46,6 @@ class TestSpreadsheets(DjangoFunctionalConservativeSeleniumTestCase, Spreadsheet
         time.sleep(0.5)
 
         assert sel.is_element_present("css=select#id_group option:nth(5)")
-        assert not sel.is_element_present("css=select#id_group option:nth(6)")
 
         o0 = sel.get_text("css=#id_group option:nth(0)")
         o1 = sel.get_text("css=#id_group option:nth(1)")
@@ -122,9 +121,6 @@ class TestSpreadsheets(DjangoFunctionalConservativeSeleniumTestCase, Spreadsheet
         self.test_creating_a_new_spreadsheet_saves()
         sel.click("css=.start_edit_btn")
         time.sleep(0.5)
-
-        assert sel.is_element_present("css=select#id_group option:nth(5)")
-        assert not sel.is_element_present("css=select#id_group option:nth(6)")
 
         sel.select("css=#id_group ", "index=1")
         time.sleep(5)

@@ -222,37 +222,29 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
     def test_that_new_categories_can_be_added(self):
         sel = self.selenium
         self.create_person_and_go_to_manage_tags_page()
-        sel.click("css=.start_edit_btn")
-        time.sleep(0.5)
         sel.click("css=.add_a_category_btn")
         time.sleep(2)
         sel.type("css=.detail_header:last input", "Test Category 1")
         sel.click("css=.save_and_status_btn")
-        time.sleep(5)
+        time.sleep(10)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("css=.detail_header:last .view_field")
-        self.assertEqual(sel.get_text("css=.detail_header:last .view_field"),"Test Category 1")
+        self.assertEqual(sel.get_value("css=.detail_header:last .edit_field input"),"Test Category 1")
 
-        sel.click("css=.start_edit_btn")
-        time.sleep(0.5)
         sel.click("css=.add_a_category_btn")
         time.sleep(2)
         sel.type("css=.detail_header:last input", "testcategory2")
         sel.click("css=.save_and_status_btn")
-        time.sleep(5)
+        time.sleep(10)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("css=.detail_header:last .view_field")
-        self.assertEqual(sel.get_text("css=.detail_header:last .view_field"),"testcategory2")
+        self.assertEqual(sel.get_value("css=.detail_header:last .edit_field input"),"testcategory2")
 
 
     def test_deleting_a_category_works(self):
         sel = self.selenium
         self.test_that_new_categories_can_be_added()
         
-        sel.click("css=.start_edit_btn")
-        time.sleep(0.5)
         sel.choose_cancel_on_next_confirmation()
         sel.click("css=.delete_tagset_btn:last")
         self.assertEqual(sel.get_confirmation(),"Hold on there.\n\nThis will delete the entire tag category, including all tags in it!\n\nThis action can not be undone.\n\nPress OK to delete this tag category.\nPress Cancel to leave it intact.")
@@ -261,24 +253,21 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         time.sleep(2)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        assert sel.is_element_present("css=.detail_header:last .view_field")
-        self.assertEqual(sel.get_text("css=.detail_header:last .view_field"),"Test Category 1")
+        self.assertEqual(sel.get_value("css=.detail_header:last .edit_field input"),"Test Category 1")
                 
 
     def test_adding_a_tag_via_the_manage_page(self):
         sel = self.selenium
         self.create_person_and_go_to_manage_tags_page()
-        sel.click("css=.start_edit_btn")
-        time.sleep(0.5)
         sel.click("css=.add_a_tag_btn:first")
         time.sleep(2)
         sel.type("css=.tag_name .generic_editable_field .edit_field input","really cool tag")
-        sel.click("css=.tag_name .generic_editable_field .edit_field input")
-        time.sleep(4)
+        sel.click("css=body")
+        time.sleep(10)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
 
-        self.assertEqual(sel.get_text("css=.tag_name .view_field"),"really cool tag")
+        self.assertEqual(sel.get_value("css=.tag_name .edit_field input"),"really cool tag")
 
     
     def test_adding_a_tag_via_the_manage_page_shows_up_on_a_person(self):
@@ -291,38 +280,33 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         sel = self.selenium
         self.test_adding_a_new_tag()
         self.create_person_and_go_to_manage_tags_page()
-        self.assertEqual(sel.get_text("css=.tag_name .view_field"),"Test Tag 1")
+        self.assertEqual(sel.get_value("css=.tag_name .edit_field input"),"Test Tag 1")
 
     def test_adding_several_tags_via_the_manage_page(self):
         sel = self.selenium
         self.test_adding_a_tag_via_the_manage_page()
-        sel.click("css=.start_edit_btn")
-        time.sleep(0.5)
 
         sel.click("css=.add_a_tag_btn:first")
         time.sleep(4)
         sel.type("css=.tag_name:nth(1) .generic_editable_field .edit_field input","numero dos tag")
-        sel.click("css=.tag_name:nth(1) .generic_editable_field .edit_field input")
+        sel.click("css=body")
         # time.sleep(4)
         sel.click("css=.add_a_tag_btn:first")
         time.sleep(4)
         sel.type("css=.tag_name:nth(2) .generic_editable_field .edit_field input","tag three")
-        sel.click("css=.tag_name:nth(2) .generic_editable_field .edit_field input")
-        time.sleep(4)
+        sel.click("css=body")
+        time.sleep(10)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-
         
-        self.assertEqual(sel.get_text("css=.tag_name:nth(0) .view_field"),"numero dos tag")
-        self.assertEqual(sel.get_text("css=.tag_name:nth(1) .view_field"),"really cool tag")
-        self.assertEqual(sel.get_text("css=.tag_name:nth(2) .view_field"),"tag three")
+        self.assertEqual(sel.get_value("css=.tag_name:nth(0) .edit_field input"),"really cool tag")
+        self.assertEqual(sel.get_value("css=.tag_name:nth(1) .edit_field input"),"numero dos tag")
+        self.assertEqual(sel.get_value("css=.tag_name:nth(2) .edit_field input"),"tag three")
         
             
     def test_deleting_a_tag_via_the_manage_page(self):
         sel = self.selenium
         self.test_adding_several_tags_via_the_manage_page()
-        sel.click("css=.start_edit_btn")
-        time.sleep(0.5)
         sel.choose_cancel_on_next_confirmation()
         sel.click("css=.delete_tag_btn:nth(1)")
         self.assertEqual(sel.get_confirmation(),"You sure?\n\nPress OK to delete this tag.\nPress Cancel to leave it in place.")
@@ -331,8 +315,8 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         time.sleep(0.1)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        self.assertEqual(sel.get_text("css=.tag_name:nth(0) .view_field"),"numero dos tag")
-        self.assertEqual(sel.get_text("css=.tag_name:nth(1) .view_field"),"tag three")
+        self.assertEqual(sel.get_value("css=.tag_name:nth(0) .edit_field input"),"numero dos tag")
+        self.assertEqual(sel.get_value("css=.tag_name:nth(1) .edit_field input"),"tag three")
 
     def test_the_count_of_tags_on_the_manage_page_is_correct(self):
         sel = self.selenium
@@ -412,8 +396,6 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(7)"), "have a testcategory2 tag that")
 
         sel.select_window("")
-        sel.click("css=.start_edit_btn")
-        time.sleep(0.5)
         sel.click("css=.delete_tagset_btn:last")
         sel.get_confirmation()
         time.sleep(2)
@@ -424,10 +406,25 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         assert sel.is_element_present("css=rule:nth(0) left_side option:nth(7)")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(0)"), "---------")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(7)"), "volunteer status")
+    
+    def test_adding_a_tag_via_the_manage_page_creates_a_tag_group(self):
+        self.test_adding_a_tag_via_the_manage_page()
+        self.ensure_that_a_tag_group_exists_for_a_tag(tag_name="really cool tag")
 
-    def test_changing_a_name_then_adding_a_tag_saves_the_changes(self):
-        pass
+    def test_adding_a_tag_via_the_person_tag_tab_page_creates_a_tag_group(self):
+        self.create_person_and_go_to_tag_tab()
+        self.add_a_new_tag()
+        self.ensure_that_a_tag_group_exists_for_a_tag()
 
+    def test_removing_a_tag_via_the_manage_page_deletes_the_tag_group(self):
+        sel = self.selenium
+        self.test_adding_a_tag_via_the_manage_page()
+        sel.click("css=.delete_tag_btn:nth(0)")
+        self.assertEqual(sel.get_confirmation(),"You sure?\n\nPress OK to delete this tag.\nPress Cancel to leave it in place.")
+
+        self.create_person_and_go_to_tag_tab()
+        self.ensure_that_a_tag_group_exists_for_a_tag(tag_name="really cool tag", exists=False)
+        
 
 class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbstractions, PeopleTestAbstractions, AccountTestAbstractions):
 

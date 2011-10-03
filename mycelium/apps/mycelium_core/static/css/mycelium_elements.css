@@ -300,7 +300,7 @@ footer footer_icon span {
 	background-color:#FFF;
 }
 #global_search_results {
-	position: absolute;
+	position: fixed;
 	top: 59px;
 	left: 30%;
 	display: block;
@@ -977,6 +977,9 @@ save_status_and_button .save_and_status_btn {
 	display: none;
 	width: 70px;
 	text-align: center;
+}
+.manage_tags save_status_and_button .save_and_status_btn {
+	display: block;
 }
 save_status_and_button .edit_done_btn {
 	display: none;	
