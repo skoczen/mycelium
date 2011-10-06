@@ -500,6 +500,8 @@ social_links {
 .features .feature.keychain				.description { 	background-image: url("../images/icons/Keychain.png");  		}
 .features .feature.shield				.description { 	background-image: url("../images/icons/Shield.png");  			}
 .features .feature.glasses				.description { 	background-image: url("../images/icons/Glasses.png");  			}
+.features .feature.export				.description { 	background-image: url("../images/icons/CrateDownload.png");  			}
+.features .feature.map					.description { 	background-image: url("../images/icons/Map.png");  			}
 
 
 .page_action, a.page_action {
@@ -587,6 +589,7 @@ social_links {
 .contact_us .contact_button.phone  .type { background-image: url("../images/contact-phone-48.png");}
 .contact_us .contact_button.online .type { background-image: url("../images/contact-online-48.png");}
 .contact_us .contact_button.email  .type { background-image: url("../images/contact-email-48.png");}
+
 #section {
 	padding: 0px;
 }
@@ -696,6 +699,11 @@ social_links {
 .person .person_name {
 	font-size: 30px;
 	padding-top: 20px;
+}
+.person .location {
+	margin-top: 6px;
+	color: #888;
+	font-size: 14px;
 }
 .person_description p {
 	display: block;
