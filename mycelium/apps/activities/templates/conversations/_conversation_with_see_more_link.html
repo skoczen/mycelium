@@ -1,0 +1,10 @@
+{% if conversation.bigger_than_the_gist %}
+<span class="gist_and_remainder">
+<span class="gist">{{conversation.gist|linebreaksbr}}</span><a class="see_all_link" href="{% url people:person conversation.person.pk %}#current_detail_tab=%23conversations">... Show all</a><span class="remainder">{{conversation.remainder|linebreaksbr}}</span>
+<a class="hide_remainder_link" href="#">Show less</a>
+</span>
+{% else %}
+<span class="gist_and_remainder">
+{{conversation.gist|linebreaksbr}}
+</span>
+{% endif %}

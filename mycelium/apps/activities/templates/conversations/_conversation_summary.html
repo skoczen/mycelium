@@ -1,0 +1,10 @@
+{% load i18n generic_fields friendly_data_formatting humanize %}
+<div class="conversation_row striped_row">
+	<a href="{% url conversations:delete_conversation_from_people_tab c.pk %}" class="delete_conversation_btn mycelium_delete_btn mycelium_active_grey mycelium_small_btn mycelium_btn">Delete Conversation</a>
+	<div class="conversation_type {{c.conversation_type}}" title="{{c.get_conversation_type_display}}"></div>
+	<div class="conversation_date_and_staff">
+	<span class="conversation_date">{{c.date|date}}</span>
+	<span class="conversation_staff">with {{c.staff.nickname_or_full_name}}</span>
+	</div>
+	<div class="conversation_body">{{c.body_with_see_more_link}}</div>
+</div>
