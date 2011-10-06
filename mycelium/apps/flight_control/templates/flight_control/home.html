@@ -3,7 +3,7 @@
 {% block title %}GoodCloud Flight Control{% endblock %}
 
 {% block page_content %}
-
+<div class="flight_control_home">
 <div class="container">
 	<div class="row">
 		<span class="active threecol">
@@ -63,7 +63,9 @@
 			<column_header>Recent Activity</column_header>
 			<div class="recent_activities info_block">
 				{% for a in all_recent_activity %}
-					{% include "flight_control/_recent_action.html" %}
+					<div class="info_block">
+						{{a.staff_full_name}} with <a href="{% url flight_control:account a.account.pk %}">{{a.account}}</a> {{a.activity}} <div class="when">{{a.date|timesince}} ago.</div>
+					</div>
 				{% endfor %}
 			</div>
 		</column>
@@ -121,6 +123,6 @@
 		</column>
 	</div>
 </div>
-
+</div>
 
 {% endblock %}

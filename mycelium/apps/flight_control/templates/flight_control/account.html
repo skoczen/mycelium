@@ -88,6 +88,10 @@
 			<div class="recent_activity info_block">
 				{% for a in account.recent_activities %}
 					{% include "flight_control/_recent_action.html" %}
+				{% empty %}
+				<div class="info_block">
+					Nothing yet!
+				</div>
 				{% endfor %}
 			</div>
 		</column>

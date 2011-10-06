@@ -195,7 +195,10 @@ average {
 	/*margin-left: 10px;*/
 	color: #999;
 }
-
+.flight_control_home .info_block .when {
+	display: block;
+	margin-left: 10px;
+}
 .info_block {
 	display: block;
 	padding: 3px 5px;
