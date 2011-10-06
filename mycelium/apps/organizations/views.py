@@ -12,6 +12,7 @@ from django.views.decorators.cache import cache_page
 from people.models import Person
 from organizations.forms import OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
 from organizations.models import OrganizationsSearchProxy, Organization, Employee
+from actions.tasks import save_action
 
 @render_to("organizations/search.html")
 def search(request):
@@ -52,6 +53,7 @@ def _org_forms(org, request):
 
 def new_organization(request):
     org = Organization.raw_objects.create(account=request.account)
+    save_action.delay(request.account, request.useraccount, "Created an Organization", person=person, organization=org)
     return HttpResponseRedirect("%s?edit=ON" %reverse("organizations:organization",args=(org.pk,)))
 
 def delete_organization(request):
@@ -83,6 +85,7 @@ def save_organization_basic_info(request,  org_id):
     success = False
     if form.is_valid():
         form.save()
+        save_action.delay(request.account, request.useraccount, "Updated an Organization", person=person, organization=org)
         success = True
 
     return {"success":success}

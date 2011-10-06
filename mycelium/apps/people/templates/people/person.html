@@ -118,10 +118,12 @@ $(function(){
 		{% include "conversations/_people_conversations_tab.html" %}
 	</fragment>
 </detail_tab_contents>
+{% if request.useraccount.is_admin %}
 <delete_object_block>
 	<form action="{% url people:delete_person %}" method="POST" id="delete_person_form">{% csrf_token %}
 	<input type="hidden" name="person_pk" value="{{form.instance.pk}}">
 	<a href="#" class="mycelium_btn mycelium_active_grey mycelium_delete_btn person_delete_btn" >Delete this Person</a>
 	</form>
 </delete_object_block>
+{% endif %}
 {% endblock %}

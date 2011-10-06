@@ -14,7 +14,7 @@ class PotentiallyImportedModel(models.Model):
         abstract = True
     
 class DataImport(AccountBasedModel, TimestampModelMixin):
-    importer        = models.ForeignKey(UserAccount, on_delete=models.SET_NULL)
+    importer        = models.ForeignKey(UserAccount, blank=True, null=True, on_delete=models.SET_NULL)
     importer_name   = models.CharField(max_length=255, blank=True, null=True)
     start_time      = models.DateTimeField(blank=True)
     finish_time     = models.DateTimeField(blank=True, null=True)

@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
-
+from actions.tasks import save_action
 
 from donors.forms import NewDonationForm
 from donors.models import Donor, Donation
@@ -36,6 +36,7 @@ def save_new_donation(request, donor_id):
             new_donation = form.save(commit=False)
             new_donation.donor = donor
             new_donation.save()
+            save_action.delay(request.account, request.useraccount, "New Donation", person=person, donation=new_donation)
         else:
             print form
     return _return_fragments_or_redirect(request,locals())

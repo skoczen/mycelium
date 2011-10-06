@@ -1,7 +1,6 @@
 from django.db import models
 from qi_toolkit.models import TimestampModelMixin
 from accounts.models import AccountBasedModel
-from django.core.cache import cache
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
@@ -15,7 +14,7 @@ import datetime
 class Conversation(AccountBasedModel, TimestampModelMixin):
     conversation_type        = models.CharField(max_length=50, choices=CONVERSATION_TYPES, default=CONVERSATION_TYPES[0][0] )
     person                   = models.ForeignKey(Person)
-    staff                    = models.ForeignKey(UserAccount, on_delete=models.SET_NULL)
+    staff                    = models.ForeignKey(UserAccount, blank=True, null=True, on_delete=models.SET_NULL)
     staff_name               = models.CharField(max_length=255, blank=True, null=True)
     body                     = models.TextField(blank=True, null=True)
     date                     = models.DateTimeField(default=datetime.datetime.now())

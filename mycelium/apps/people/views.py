@@ -19,7 +19,7 @@ from conversations.views import _render_people_conversations_tab, _people_conver
 from donors.views import _render_people_donor_tab
 from recent_activity.views import _render_people_recent_activity_tab 
 from generic_tags.views import _render_people_tag_tab
-
+from actions.tasks import save_action
 
 @render_to("people/search.html")
 def search(request):
@@ -68,12 +68,14 @@ def save_person_basic_info(request, person_id):
         person = form.save()
         employee_formset.save()
         success = True
+        save_action.delay(request.account, request.useraccount, "Updated a Person", person=person,)
 
     return {"success":success}
 
 
 def new_person(request):
     person = Person.raw_objects.create(account=request.account)
+    save_action.delay(request.account, request.useraccount, "Created a Person", person=person,)
     return HttpResponseRedirect("%s?edit=ON" %reverse("people:person",args=(person.pk,)))
 
 def delete_person(request):

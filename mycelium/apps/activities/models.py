@@ -18,7 +18,7 @@ class Activity(TimestampModelMixin):
 
 class Action(AccountBasedModel, TimestampModelMixin):
     activity            = models.ForeignKey(Activity)
-    staff               = models.ForeignKey(UserAccount, on_delete=models.SET_NULL)
+    staff               = models.ForeignKey(UserAccount, blank=True, null=True, on_delete=models.SET_NULL)
     staff_name          = models.CharField(max_length=255, blank=True, null=True)
     date                = models.DateTimeField(default=datetime.datetime.now())
     person              = models.ForeignKey("people.Person", blank=True, null=True)
