@@ -691,7 +691,10 @@ class UserAccount(TimestampModelMixin):
         if self.nickname:
             return self.nickname
         else:
-            return self.full_name[:self.full_name.find(" ")]
+            if " " in self.full_name:
+                return self.full_name[:self.full_name.find(" ")]
+            else:
+                return self.full_name
 
     @property
     def uservoice_sso_token(self):
