@@ -4,7 +4,7 @@
 	<div class="conversation_type {{c.conversation_type}}" title="{{c.get_conversation_type_display}}"></div>
 	<div class="conversation_date_and_staff">
 	<span class="conversation_date">{{c.date|date}}</span>
-	<span class="conversation_staff">with {{c.staff.nickname_or_full_name}}</span>
+	<span class="conversation_staff">with {{c.staff_nickname_or_full_name}}</span>
 	</div>
 	<div class="conversation_body">{{c.body_with_see_more_link}}</div>
 </div>
