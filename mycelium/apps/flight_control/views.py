@@ -16,6 +16,7 @@ from volunteers.models import CompletedShift
 from generic_tags.models import Tag, TaggedItem
 from groups.models import Group
 from spreadsheets.models import Spreadsheet
+from activities.models import Action
 from django.contrib.auth.models import User
 
 
@@ -57,6 +58,7 @@ def home(request):
     avg_conversations = Account.all_non_demo_accounts_average_number_of_conversations
 
     account_stats = Account
+    all_recent_activity = Action.objects.all()[:10]
 
     return locals()
 

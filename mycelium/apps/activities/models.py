@@ -40,4 +40,10 @@ class Action(AccountBasedModel, TimestampModelMixin):
     class Meta:
         ordering = ("-date","-created_at")
 
+    @property
+    def staff_full_name(self):
+        if not self.staff:
+            return self.staff_name
+        else:
+            return self.staff.full_name
 

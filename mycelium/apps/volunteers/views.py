@@ -14,7 +14,7 @@ from django.views.decorators.cache import cache_page
 from people.models import Person
 from volunteers.models import Volunteer, CompletedShift
 from volunteers.forms import NewShiftForm, VolunteerStatusForm
-from actions.tasks import save_action
+from activities.tasks import save_action
 
 VOLUNTEER_STATUS_PREFIX = "VOLUNTEER_STATUS"
 
@@ -44,7 +44,7 @@ def save_completed_volunteer_shift(request, volunteer_id):
             completed_shift = form.save(commit=False)
             completed_shift.volunteer = volunteer
             completed_shift.save()
-            save_action.delay(request.account, request.useraccount, "Volunteer Shift", person=person, shift=completed_shift)
+            save_action.delay(request.account, request.useraccount, "added a volunteer shift", person=person, shift=completed_shift)
     obj = volunteer
     return _return_fragments_or_redirect(request,locals())
     

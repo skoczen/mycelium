@@ -44,7 +44,7 @@ def save_new_conversation(request, person_id):
             new_conversation = form.save(commit=False)
             new_conversation.person = person
             new_conversation.save()
-            save_action.delay(request.account, request.useraccount, "New Conversation", person=person, conversation=new_conversation)
+            save_action.delay(request.account, request.useraccount, "added a conversation", person=person, conversation=new_conversation)
         else:
             print form
     

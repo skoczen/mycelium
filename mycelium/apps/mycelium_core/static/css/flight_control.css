@@ -191,10 +191,11 @@ average {
 	margin: 0px auto;
 }
 .info_block .when {
-	display: block;
-	margin-left: 10px;
+	/*display: block;*/
+	/*margin-left: 10px;*/
 	color: #999;
 }
+
 .info_block {
 	display: block;
 	padding: 3px 5px;
