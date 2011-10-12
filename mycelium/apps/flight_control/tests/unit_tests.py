@@ -16,6 +16,7 @@ from conversations.models import Conversation
 from django.core import mail
 from django.test.client import Client
 from accounts import CANCELLED_SUBSCRIPTION_STATII
+from decimal import *
 
 class Dummy(object):
     pass
@@ -63,19 +64,19 @@ class TestFlightControl(TestCase, DjangoFunctionalUnitTestMixin, DestructiveData
         self.assertEqual(Account.all_non_demo_accounts_average_num_users, 0)
         
     def test_all_non_demo_accounts_average_num_people(self):
-        avg = Person.objects.all().filter(account__is_demo=False).count() / Account.num_non_demo_accounts
+        avg = Person.objects.all().filter(account__is_demo=False).count() / Account.num_non_demo_accounts_denominator
         self.assertEqual(Account.all_non_demo_accounts_average_num_people, avg)
     
     def test_all_non_demo_accounts_average_num_organizations(self):
-        avg = Organization.objects.all().filter(account__is_demo=False).count() / Account.num_non_demo_accounts
+        avg = Organization.objects.all().filter(account__is_demo=False).count() / Account.num_non_demo_accounts_denominator
         self.assertEqual(Account.all_non_demo_accounts_average_num_organizations, avg)
         
     def test_all_non_demo_accounts_average_donation_amount(self):
-        avg = Account.all_non_demo_accounts_total_donation_amount / Account.num_non_demo_accounts
+        avg = float(Account.all_non_demo_accounts_total_donation_amount) / Account.num_non_demo_accounts_num_total_donations_denominator
         self.assertEqual(Account.all_non_demo_accounts_average_donation_amount, avg)
 
     def test_all_non_demo_accounts_average_volunteer_hours(self):
-        avg = Account.all_non_demo_accounts_total_volunteer_hours / Account.num_non_demo_accounts
+        avg = Account.all_non_demo_accounts_total_volunteer_hours / Account.num_non_demo_accounts_denominator
         self.assertEqual(Account.all_non_demo_accounts_average_volunteer_hours_per_account, avg)
 
 

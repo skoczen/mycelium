@@ -74,6 +74,9 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, Conversati
         
         assert sel.is_text_present("This person really likes the number 15.")
         assert sel.is_text_present("This person really likes the number 14.")
+        # Hack for ff
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
         assert not sel.is_text_present("This person really likes the number 12.")
 
         sel.click("css=.more_conversations_link")

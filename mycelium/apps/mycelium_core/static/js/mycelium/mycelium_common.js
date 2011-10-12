@@ -16,8 +16,11 @@ function toggle_help_popup() {
 	$(".side_help_btn").toggleClass("current")
 }
 function center_help_popup() {
-	var top_val = $(".side_help_btn").offset().top - $("#help_popup").outerHeight()/2;
-	$("#help_popup").css("top",top_val)
+	try {
+		var top_val = $(".side_help_btn").offset().top - $("#help_popup").outerHeight()/2;
+		$("#help_popup").css("top",top_val);
+	} catch (e) {}
+	
 }
 function close_help_popup() {
    $("#help_popup").hide();

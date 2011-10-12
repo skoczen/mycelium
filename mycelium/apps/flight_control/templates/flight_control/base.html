@@ -7,7 +7,7 @@
 {% block base_js %}{% js "js/mycelium_base.js" %}{% endblock %}
 {% block javascript %}{{block.super}}
 	{% js "js/mycelium_core.js" %}
-	{% js "/js/mycelium/flight_control.js" %}
+	{% js "js/mycelium/flight_control.js" %}
 <script>
 var GLOBAL_SEARCH_URL = "{% url flight_control:search_results %}";
 </script>

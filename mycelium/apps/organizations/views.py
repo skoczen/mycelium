@@ -53,7 +53,7 @@ def _org_forms(org, request):
 
 def new_organization(request):
     org = Organization.raw_objects.create(account=request.account)
-    save_action.delay(request.account, request.useraccount, "created an organization", person=person, organization=org)
+    save_action.delay(request.account, request.useraccount, "created an organization", organization=org)
     return HttpResponseRedirect("%s?edit=ON" %reverse("organizations:organization",args=(org.pk,)))
 
 def delete_organization(request):

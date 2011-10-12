@@ -20,7 +20,7 @@ class TagTestAbstractions(object):
         sel = self.selenium
         sel.type("css=form.new_tag_form:nth(0) .new_tag_name_input",name)
         sel.click("css=form.new_tag_form:nth(0) .tag_add_btn")
-        time.sleep(1)
+        time.sleep(6)
         assert sel.is_text_present(name)
         assert sel.is_element_present("css=fragment[name$=_tags]:nth(0) .checkbox.checked:nth(0) input:checked")
         self.assertEqual(name,sel.get_text("css=fragment[name$=_tags]:nth(0) .checkbox.checked:nth(0) label name"))
