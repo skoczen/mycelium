@@ -14,6 +14,7 @@ from conversations.models import Conversation
 from conversations.forms import NewConversationForm
 from people.models import Person
 from conversations import CONVERSATION_TYPES, MORE_CONVERSATIONS_SIZE
+from activities.tasks import save_action
 
 def _people_conversations_tab_context(context):
     conversation_form = NewConversationForm(account=context["request"].account)
@@ -43,8 +44,10 @@ def save_new_conversation(request, person_id):
             new_conversation = form.save(commit=False)
             new_conversation.person = person
             new_conversation.save()
+            save_action.delay(request.account, request.useraccount, "added a conversation", person=person, conversation=new_conversation)
         else:
             print form
+    
     return _return_fragments_or_redirect(request,locals())
 
 def delete_conversation_from_people_tab(request, conversation_id):

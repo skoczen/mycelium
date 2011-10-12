@@ -250,7 +250,8 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         self.assertEqual(sel.get_confirmation(),"Hold on there.\n\nThis will delete the entire tag category, including all tags in it!\n\nThis action can not be undone.\n\nPress OK to delete this tag category.\nPress Cancel to leave it intact.")
         sel.click("css=.delete_tagset_btn:last")
         self.assertEqual(sel.get_confirmation(),"Hold on there.\n\nThis will delete the entire tag category, including all tags in it!\n\nThis action can not be undone.\n\nPress OK to delete this tag category.\nPress Cancel to leave it intact.")
-        time.sleep(2)
+        self.assertEqual(sel.get_value("css=.detail_header:last .edit_field input"),"Test Category 1")
+        time.sleep(10)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
         self.assertEqual(sel.get_value("css=.detail_header:last .edit_field input"),"Test Category 1")
@@ -309,13 +310,15 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         self.test_adding_several_tags_via_the_manage_page()
         sel.choose_cancel_on_next_confirmation()
         sel.click("css=.delete_tag_btn:nth(1)")
-        self.assertEqual(sel.get_confirmation(),"You sure?\n\nPress OK to delete this tag.\nPress Cancel to leave it in place.")
+        self.assertEqual(sel.get_confirmation(),"You sure?  \n\nThis will de-tag anyone with this tag, and delete the tag. It can't be undone.\n\nPress OK to delete this tag.\nPress Cancel to leave it in place.")
         sel.click("css=.delete_tag_btn:nth(1)")
-        self.assertEqual(sel.get_confirmation(),"You sure?\n\nPress OK to delete this tag.\nPress Cancel to leave it in place.")
-        time.sleep(0.1)
+        self.assertEqual(sel.get_confirmation(),"You sure?  \n\nThis will de-tag anyone with this tag, and delete the tag. It can't be undone.\n\nPress OK to delete this tag.\nPress Cancel to leave it in place.")
+        self.assertEqual(sel.get_value("css=.tag_name:nth(0) .edit_field input"),"really cool tag")
+        self.assertEqual(sel.get_value("css=.tag_name:nth(1) .edit_field input"),"tag three")
+        time.sleep(10)
         sel.refresh()
         sel.wait_for_page_to_load("30000")
-        self.assertEqual(sel.get_value("css=.tag_name:nth(0) .edit_field input"),"numero dos tag")
+        self.assertEqual(sel.get_value("css=.tag_name:nth(0) .edit_field input"),"really cool tag")
         self.assertEqual(sel.get_value("css=.tag_name:nth(1) .edit_field input"),"tag three")
 
     def test_the_count_of_tags_on_the_manage_page_is_correct(self):
@@ -398,7 +401,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         sel.select_window("")
         sel.click("css=.delete_tagset_btn:last")
         sel.get_confirmation()
-        time.sleep(2)
+        time.sleep(10)
 
         sel.select_window("two")
         sel.refresh()
@@ -420,8 +423,8 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         sel = self.selenium
         self.test_adding_a_tag_via_the_manage_page()
         sel.click("css=.delete_tag_btn:nth(0)")
-        self.assertEqual(sel.get_confirmation(),"You sure?\n\nPress OK to delete this tag.\nPress Cancel to leave it in place.")
-
+        self.assertEqual(sel.get_confirmation(),"You sure?  \n\nThis will de-tag anyone with this tag, and delete the tag. It can't be undone.\n\nPress OK to delete this tag.\nPress Cancel to leave it in place.")
+        time.sleep(10)
         self.create_person_and_go_to_tag_tab()
         self.ensure_that_a_tag_group_exists_for_a_tag(tag_name="really cool tag", exists=False)
         

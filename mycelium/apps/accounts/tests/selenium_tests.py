@@ -162,6 +162,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTest
 
     def test_that_a_new_person_in_account_1_does_not_show_in_account_2_org_people_search(self):
         sel = self.selenium
+        cache.clear()
         self.go_to_the_login_page()
         self.log_in()
         self.assert_login_succeeded()
@@ -179,6 +180,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTest
         ua = Factory.useraccount(account=a2)
         self.set_site("test2")
         self.go_to_the_login_page("test2")
+        cache.clear()
         self.log_in(ua=ua)
         self.assert_login_succeeded()        
         

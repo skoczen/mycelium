@@ -85,20 +85,15 @@
 			</div>
 		 	{% endfor %}
 			<column_header>Recent Activity</column_header>
-			<div class="empty_message info_block">
-				Still working on the activity tracker.
+			<div class="recent_activity info_block">
+				{% for a in account.recent_activities %}
+					{% include "flight_control/_recent_action.html" %}
+				{% empty %}
+				<div class="info_block">
+					Nothing yet!
+				</div>
+				{% endfor %}
 			</div>
-			<!--
-			<div class="info_block">
-				Steven Skoczen with <a href="#">Account Name</a> edited a person. <span class="when">15 minutes ago</span>
-			</div>
-			<div class="info_block">
-				Steven Skoczen with <a href="#">Account Name</a> created a group. <span class="when">22 minutes ago</span>
-			</div>
-			<div class="info_block">
-				Tom Noble with <a href="#">Account Name</a> imported a spreadsheet. <span class="when">47 minutes ago</span>
-			</div>
-			-->
 		</column>
 		<column class="fourcol averages">
 			

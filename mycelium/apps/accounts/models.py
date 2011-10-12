@@ -617,6 +617,10 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
     def has_access_to_level(self, access_level):
         return self.feature_access_level >= access_level
 
+    def recent_activities(self):
+        return self.action_set.all()
+
+
 class AccessLevel(TimestampModelMixin):
     name = models.CharField(max_length=255)
 
@@ -687,7 +691,10 @@ class UserAccount(TimestampModelMixin):
         if self.nickname:
             return self.nickname
         else:
-            return self.full_name[:self.full_name.find(" ")]
+            if " " in self.full_name:
+                return self.full_name[:self.full_name.find(" ")]
+            else:
+                return self.full_name
 
     @property
     def uservoice_sso_token(self):
@@ -734,6 +741,8 @@ class UserAccount(TimestampModelMixin):
         param_for_uservoice_sso = urllib.quote(base64.b64encode(encrypted_bytes))
         return param_for_uservoice_sso
 
+    def recent_activities(self):
+        return self.action_set.all()
 
 
     def __unicode__(self):

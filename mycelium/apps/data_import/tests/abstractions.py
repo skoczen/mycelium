@@ -1,7 +1,7 @@
 from test_factory import Factory
 from spreadsheets.spreadsheet import SpreadsheetAbstraction, EXCEL_TYPE, CSV_TYPE
 from spreadsheets import SPREADSHEET_TEMPLATE_CHOICES
-TEST_SPREADSHEET_PATH = "apps/data_import/tests/test_spreadsheets"
+TEST_SPREADSHEET_PATH = "templates/test_file_uploads"
 
 class GenerateSpreadsheetsMixin:
     def _person_dict(self, person):

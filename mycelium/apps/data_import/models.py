@@ -14,7 +14,8 @@ class PotentiallyImportedModel(models.Model):
         abstract = True
     
 class DataImport(AccountBasedModel, TimestampModelMixin):
-    importer        = models.ForeignKey(UserAccount)
+    importer        = models.ForeignKey(UserAccount, blank=True, null=True, on_delete=models.SET_NULL)
+    importer_name   = models.CharField(max_length=255, blank=True, null=True)
     start_time      = models.DateTimeField(blank=True)
     finish_time     = models.DateTimeField(blank=True, null=True)
     import_type     = models.CharField(choices=IMPORT_ROW_TYPE_TUPLES, max_length=50)
@@ -25,10 +26,13 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
     fields          = PickledObjectField(blank=True, null=True)
     has_header      = models.BooleanField(default=False)
     
-
+    def save(self, *args, **kwargs):
+        if not self.importer_name:
+            self.importer_name = self.importer.full_name
+        super(DataImport, self).save(*args,**kwargs)
 
     def __unicode__(self):
-        return "%s on %s" % (self.import_type, self. start_time)
+        return "%s on %s" % (self.import_type, self.start_time)
 
     class Meta:
         ordering = ("-start_time",)
@@ -122,6 +126,13 @@ class DataImport(AccountBasedModel, TimestampModelMixin):
     @property
     def num_errors(self):
         return self.error_rows.count()        
+
+    @property
+    def importer_full_name(self):
+        if not self.importer:
+            return self.importer_name
+        else:
+            return self.importer.full_name
 
 class ResultsRow(AccountBasedModel, TimestampModelMixin):
     data_import           = models.ForeignKey(DataImport)

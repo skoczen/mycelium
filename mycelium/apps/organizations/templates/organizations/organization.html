@@ -164,11 +164,12 @@ $(function(){
 	</employees>
 	</fragment>
 </detail_tab_contents>
+{% if request.useraccount.is_admin %}
 <delete_object_block>
 	<form action="{% url organizations:delete_organization %}" method="POST" id="delete_org_form">{% csrf_token %}
 	<input type="hidden" name="org_pk" value="{{form.instance.pk}}">
 	<a href="#" class="mycelium_btn mycelium_active_grey mycelium_delete_btn org_delete_btn" >Delete this Organization</a>
 	</form>
 </delete_object_block>
-
+{% endif %}
 {% endblock %}
