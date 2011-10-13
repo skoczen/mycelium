@@ -114,9 +114,10 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
     @classmethod
     def pre_delete_cleanup(cls, instance, created=None, *args, **kwargs):
         # cancel subscription
-        c = instance.stripe_customer
-        if c and hasattr(c,"subscription"):
-            c.cancel_subscription()
+        if instance.stripe_customer_id:
+            c = instance.stripe_customer
+            if c and hasattr(c,"subscription"):
+                c.cancel_subscription()
 
         # delete user accounts
         for ua in instance.useraccount_set.all():

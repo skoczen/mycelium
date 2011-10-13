@@ -2,7 +2,7 @@ import time
 import datetime
 from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
-from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
+from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin, DjangoFunctionalConservativeUnitTestMixin
 from django.test import TestCase
 from groups.models import Group
 from people.models import Person
@@ -26,10 +26,11 @@ from django.utils import simplejson
 
 
 
+
 class Dummy(object):
     pass
 
-class TestAccountFactory(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTestCase, StripeMixin):
+class TestAccountFactory(TestCase, DjangoFunctionalConservativeUnitTestMixin, DestructiveDatabaseTestCase, StripeMixin):
     # fixtures = ["generic_tags.selenium_fixtures.json"]
 
     def setUp(self):
@@ -134,9 +135,9 @@ class TestAccountFactory(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDat
     def test_num_donations_denominator(self):
         a = Factory.create_demo_site("test", quick=True)
         if Donation.objects_by_account(a).count() > 0:
-            self.assertEqual(a.num_donations, Donation.objects_by_account(a).count())
+            self.assertEqual(a.num_donations_denominator, Donation.objects_by_account(a).count())
         else:
-            self.assertEqual(a.num_donations,1)
+            self.assertEqual(a.num_donations_denominator,1)
 
     def test_total_donations(self):
         a = Factory.create_demo_site("test", quick=True)
