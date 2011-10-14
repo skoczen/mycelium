@@ -1,4 +1,4 @@
-from live import *
+from dev import *
 
 DATABASES = {
     'default': {
@@ -10,8 +10,6 @@ DATABASES = {
         'PORT': '3306',
     },
 }
-DATABASE_ROUTERS = []
-DATABASE_POOL = {}
 
 
 CACHE_BACKEND = 'locmem://'
