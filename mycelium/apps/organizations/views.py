@@ -85,7 +85,7 @@ def save_organization_basic_info(request,  org_id):
     success = False
     if form.is_valid():
         form.save()
-        save_action.delay(request.account, request.useraccount, "updated an organization", person=person, organization=org)
+        save_action.delay(request.account, request.useraccount, "updated an organization", organization=org)
         success = True
 
     return {"success":success}
