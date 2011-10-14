@@ -61,9 +61,7 @@ redis==2.2.4
 xlwt
 xlrd
 xlutils
-# mezzanine
-# django-grappelli
-# django-filebrowser
+
 django-newsletter
 vobject
 django-tinymce

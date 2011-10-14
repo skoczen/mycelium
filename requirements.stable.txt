@@ -53,6 +53,7 @@ redis==2.2.4
 xlwt==0.7.2
 xlrd==0.7.1
 xlutils==1.4.1
+
 vobject==0.8.1c
 django-tinymce==1.5.1a2
 chardet==1.0.1
@@ -61,7 +62,7 @@ pycurl==7.19.0
 stripe==1.5.22
 py-bcrypt==0.2
 django-zebra==0.4.2
--e git://github.com/GoodCloud/django-functional-tests@a4a95c0fb4dca36c85df3689e39e666162cffb94#egg=functional_tests-dev
+-e git://github.com/GoodCloud/django-functional-tests@03d326260b780bfc913140ede3463905983ad704#egg=functional_tests-dev
 pytz==2011h
 ## The following requirements were added by pip --freeze:
 CherryPy==3.2.0
