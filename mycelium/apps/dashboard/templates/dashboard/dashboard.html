@@ -103,7 +103,9 @@
 		<fragment name="more_conversations" action="append">
 		{% include "dashboard/_recent_conversations.html" %}
 		</fragment>
+		{% if recent_conversations %}
 		<a href="{% url dashboard:more_conversations %}" class="more_conversations_link">More Conversations</a>
+		{% endif %}
 		</column_content>
 
 		{# <column_header class="news">GoodCloud News</column_header> #}
