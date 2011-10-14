@@ -23,7 +23,7 @@ FAVICON_URL = "%simages/favicon.png" % STATIC_URL
 
 SEND_BROKEN_LINK_EMAILS = False
 INTERNAL_IPS = ('127.0.0.1')
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 GOOGLE_KEY = 'ABQIAAAAHhU2Kv9Iz8Fh-GRXaplHqxRi_j0U6kJrkFvY4-OX2XYmEAa76BQkakI7eN4BbYehPxnhnOMnaAhOPw'
 
 SELENIUM_BROWSER_COMMAND = "*firefox"

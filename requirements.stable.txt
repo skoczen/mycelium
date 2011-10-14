@@ -62,7 +62,7 @@ pycurl==7.19.0
 stripe==1.5.22
 py-bcrypt==0.2
 django-zebra==0.4.2
--e git://github.com/GoodCloud/django-functional-tests@f4799dda966d609fa8224794f8c18a5395d90856#egg=functional_tests-dev
+-e git://github.com/GoodCloud/django-functional-tests@0a13cb63b01891e01330b2d9d9dcbf66674c69c9#egg=functional_tests-dev
 pytz==2011h
 ## The following requirements were added by pip --freeze:
 CherryPy==3.2.0
