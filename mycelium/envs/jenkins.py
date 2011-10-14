@@ -10,6 +10,8 @@ DATABASES = {
         'PORT': '3306',
     },
 }
+DATABASE_ROUTERS = []
+DATABASE_POOL = {}
 
 
 CACHE_BACKEND = 'locmem://'
