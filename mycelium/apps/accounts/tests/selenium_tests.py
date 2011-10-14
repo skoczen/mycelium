@@ -661,7 +661,6 @@ class TestSubscriptionsAgainstNoData(DjangoFunctionalConservativeSeleniumTestCas
         sel = self.selenium
         self.get_logged_in()
         self.go_to_the_account_page()
-        print "Free Trial until %s" % (date(datetime.date.today()+datetime.timedelta(days=30)),)
         assert sel.is_text_present("Free Trial until %s" % (date(datetime.date.today()+datetime.timedelta(days=30)),) )
 
         self.create_another_account()
