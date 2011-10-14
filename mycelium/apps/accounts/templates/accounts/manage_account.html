@@ -5,11 +5,20 @@
 {% generic_field_css %}
 
 {% css "/css/manage_accounts.css" %}
+{% css "zebra/card-form.css" %}
 {% endblock %}
 {% block javascript %}{{block.super}}
 
 {% js "/js/mycelium/manage_accounts.js" %}
-{% zebra_head_and_stripe_key %}
+{# {% zebra_head_and_stripe_key %} #}
+<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+{% js "zebra/card-form.js" %}
+<script type="text/javascript">
+$(function(){
+	Stripe.setPublishableKey('{{STRIPE_PUBLISHABLE}}');	
+});
+</script>
+
 {% endblock %}
 
 {% block breadcrumb_links %}<a href="{% url core:more_menu %}" >Back to Admin</a>{% endblock %}
