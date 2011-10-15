@@ -127,8 +127,9 @@ class Tag(AccountBasedModel, models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name.lower())
+        ret =  super(Tag, self).save(*args, **kwargs)
         create_tag_group.delay(self)
-        return super(Tag, self).save(*args, **kwargs)
+        return ret
 
     @property
     def num_members(self):

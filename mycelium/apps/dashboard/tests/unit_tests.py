@@ -4,7 +4,7 @@ from test_factory import Factory
 from djangosanetesting.cases import DatabaseTestCase, DestructiveDatabaseTestCase
 from functional_tests.selenium_test_case import DjangoFunctionalUnitTestMixin
 from django.test import TestCase
-from groups.models import Group
+from groups.models import Group, TagGroup
 from people.models import Person
 from organizations.models import Organization, Employee
 from donors.models import Donor, Donation
@@ -179,6 +179,10 @@ class TestDashboard(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabase
             if d.account == a1:
                 total_groups += 1
 
+        for d in TagGroup.objects.all():
+            if d.account == a1:
+                total_groups += 1
+        
         self.assertEqual(nums["total_groups"], total_groups)
 
         # total_tags 

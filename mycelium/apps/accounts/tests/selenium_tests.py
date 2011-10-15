@@ -377,7 +377,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTest
         self.create_a_new_user_via_manage_accounts()
         assert sel.is_element_present("css=.user_row:nth(4)")
         
-        for i in range(1,4):
+        for i in range(1,5):
             if "Joe Smith" == sel.get_text("css=.user_row:nth(%s) .full_name" % i):
                 john_smith_row = i
                 break
@@ -417,7 +417,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTest
         self.create_a_new_user_via_manage_accounts()
         assert sel.is_element_present("css=.user_row:nth(4)")
         
-        for i in range(1,4):
+        for i in range(1,5):
             if "Joe Smith" == sel.get_text("css=.user_row:nth(%s) .full_name" % i):
                 john_smith_row = i
                 break

@@ -178,6 +178,7 @@ class GroupSearchProxy(SearchableItemProxy):
 
     class Meta(SearchableItemProxy.Meta):
         verbose_name_plural = "GroupSearchProxies"
+        ordering = ("group",)
 
     @classmethod
     def group_results_may_have_changed(cls, sender, instance, created=None, *args, **kwargs):

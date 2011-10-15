@@ -72,7 +72,10 @@ class TestAccountFactory(TestCase, DjangoFunctionalConservativeUnitTestMixin, De
         self.assertEqual([g for g in model.objects_by_account(request).all()], [g1])
         
         self.assertEqual([g for g in model.objects_by_account(a2).all()], [g2])
-        assert [g for g in model.raw_objects.all()] ==  [g1, g2] or [g for g in model.raw_objects.all()] ==  [g2, g1]
+        try:
+            self.assertEqual([g for g in model.raw_objects.all()],[g1, g2])
+        except:
+            self.assertEqual([g for g in model.raw_objects.all()],[g2, g1])
 
 
     def test_for_each_account_model_that_creating_some_of_them_makes_them_inaccessible_to_other_accounts(self):

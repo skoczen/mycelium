@@ -58,6 +58,7 @@ class TestSpreadsheets(DjangoFunctionalConservativeSeleniumTestCase, Spreadsheet
         sel.click("link=Groups")
         sel.wait_for_page_to_load("30000")
 
+        time.sleep(30)
         # get groups
         self.assertEqual(o0,"All Contacts")
         self.assertEqual(o1,sel.get_text("css=.group_row:nth(0) .name"))
