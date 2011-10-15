@@ -199,9 +199,9 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTest
         
         sel.choose_cancel_on_next_confirmation()
         sel.click("css=.person_delete_btn")
-        self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Person from the database? \n\nDeleting will remove this person, and all their data (contact info, job info, etc).  It cannot be undone.\n\nPress OK to delete Unnamed Person.\nPress Cancel to leave things unchanged.")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Person from the database? \n\nDeleting will remove this person, all their data (contact info, job info, etc), AND all of their donations, all of the volunteer shifts, everything.\n\n  It cannot be undone.\n\nPress OK to delete Unnamed Person.\nPress Cancel to leave things unchanged.")
         sel.click("css=.person_delete_btn")
-        self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Person from the database? \n\nDeleting will remove this person, and all their data (contact info, job info, etc).  It cannot be undone.\n\nPress OK to delete Unnamed Person.\nPress Cancel to leave things unchanged.")
+        self.assertEqual(sel.get_confirmation(),"Are you sure you want to completely delete Unnamed Person from the database? \n\nDeleting will remove this person, all their data (contact info, job info, etc), AND all of their donations, all of the volunteer shifts, everything.\n\n  It cannot be undone.\n\nPress OK to delete Unnamed Person.\nPress Cancel to leave things unchanged.")
         sel.wait_for_page_to_load("30000")
         
         assert not sel.is_text_present("Unnamed Person")

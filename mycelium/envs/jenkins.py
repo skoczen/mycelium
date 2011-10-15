@@ -12,7 +12,7 @@ DATABASES = {
 }
 
 
-CACHE_BACKEND = 'locmem://'
+# CACHE_BACKEND = 'locmem://'
 
 
 # MEDIA_URL = '/media/'
