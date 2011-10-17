@@ -405,7 +405,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
 
         sel.select_window("two")
         sel.refresh()
-        sel.wait_for_page_to_load("3000")
+        sel.wait_for_page_to_load("30000")
         assert sel.is_element_present("css=rule:nth(0) left_side option:nth(7)")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(0)"), "---------")
         self.assertEqual(sel.get_text("css=rule:nth(0) left_side option:nth(7)"), "volunteer status")
