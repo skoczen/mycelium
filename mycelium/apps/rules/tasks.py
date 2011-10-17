@@ -53,21 +53,45 @@ def populate_rule_components_for_an_account(account):
         # Operators
         all_operators = []
         operator_contains =             Operator.raw_objects.using('default').get_or_create(account=account, display_name="contains"          , query_string_partial="__icontains="  , use_filter=True)[0]
+        operator_contains.order         = 10
+        operator_contains.save()
         operator_does_not_contain =     Operator.raw_objects.using('default').get_or_create(account=account, display_name="does not contain"  , query_string_partial="__icontains="  , use_filter=False)[0]
+        operator_does_not_contain.order = 20
+        operator_does_not_contain.save()
         operator_is =                   Operator.raw_objects.using('default').get_or_create(account=account, display_name="is"                , query_string_partial="="             , use_filter=True)[0]
+        operator_is.order               = 30
+        operator_is.save()
         operator_is_not =               Operator.raw_objects.using('default').get_or_create(account=account, display_name="is not"            , query_string_partial="="             , use_filter=False)[0]
+        operator_is_not.order           = 40
+        operator_is_not.save()
         operator_is_exactly =           Operator.raw_objects.using('default').get_or_create(account=account, display_name="is exactly"        , query_string_partial="__iexact="     , use_filter=True)[0]
+        operator_is_exactly.order       = 50
+        operator_is_exactly.save()
         operator_is_not_exactly =       Operator.raw_objects.using('default').get_or_create(account=account, display_name="is not exactly"    , query_string_partial="__iexact="     , use_filter=False)[0]
+        operator_is_not_exactly.order   = 60
+        operator_is_not_exactly.save()
         operator_is_on =                Operator.raw_objects.using('default').get_or_create(account=account, display_name="is on"             , query_string_partial="="             , use_filter=True)[0]
+        operator_is_on.order            = 70
+        operator_is_on.save()
         operator_is_before =            Operator.raw_objects.using('default').get_or_create(account=account, display_name="is before"         , query_string_partial="__lt="         , use_filter=True)[0]
+        operator_is_before.order        = 80
+        operator_is_before.save()
         operator_is_after =             Operator.raw_objects.using('default').get_or_create(account=account, display_name="is after"          , query_string_partial="__gt="         , use_filter=True)[0]
+        operator_is_after.order         = 90
+        operator_is_after.save()
         operator_is_equal =             Operator.raw_objects.using('default').get_or_create(account=account, display_name="is equal to"       , query_string_partial="="             , use_filter=True)[0]
+        operator_is_equal.order         = 100
+        operator_is_equal.save()
         operator_is_less_than =         Operator.raw_objects.using('default').get_or_create(account=account, display_name="is less than"      , query_string_partial="__lt="         , use_filter=True)[0]
+        operator_is_less_than.order     = 110
+        operator_is_less_than.save()
         operator_is_more_than =         Operator.raw_objects.using('default').get_or_create(account=account, display_name="is more than"      , query_string_partial="__gt="         , use_filter=True)[0]
+        operator_is_more_than.order     = 120
+        operator_is_more_than.save()
         all_operators = [   operator_is_exactly, operator_is_not_exactly, operator_contains, operator_does_not_contain, 
+                            operator_is, operator_is_not,
                             operator_is_on, operator_is_before, operator_is_after,
                             operator_is_equal, operator_is_less_than, operator_is_more_than,
-                            operator_is, operator_is_not
                         ]
 
         # Helper methods

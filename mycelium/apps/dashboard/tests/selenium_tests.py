@@ -10,12 +10,14 @@ from accounts.models import UserAccount
 from dashboard.tests.selenium_abstractions import DashboardTestAbstractions
 from django.core.cache import cache
     
-class TestAgainstLiterallyNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
+class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
+    # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
         self.a1 = self.setup_for_logged_in_with_no_data()
         cache.clear()
         self.verificationErrors = []
+
     
     def test_the_nothing_done_on_the_checklist_welcome_text_and_something_done_text(self):
         sel = self.selenium
@@ -27,14 +29,6 @@ class TestAgainstLiterallyNoData(DjangoFunctionalConservativeSeleniumTestCase, D
         self.get_to_the_dashboard()
         assert not sel.is_text_present("Welcome to your very own GoodCloud")
         assert sel.is_text_present("Looks like you haven't finished")
-
-class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
-    # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
-
-    def setUp(self, *args, **kwargs):
-        self.setup_for_logged_in_with_no_data()
-        cache.clear()
-        self.verificationErrors = []
 
     def test_that_logging_in_goes_to_the_dashboard(self):
         sel = self.selenium
@@ -194,11 +188,3 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardT
         assert sel.is_text_present("Text like 6")
         assert sel.is_text_present("Text like 2")
         assert sel.is_text_present("Text like 1")
-
-class TestAgainstGeneratedData(DjangoFunctionalConservativeSeleniumTestCase, DashboardTestAbstractions):
-    # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
-
-    def setUp(self, *args, **kwargs):
-        self.a1 = self.create_demo_site()   
-        self.verificationErrors = []
-    
