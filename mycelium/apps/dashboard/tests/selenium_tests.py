@@ -1,11 +1,6 @@
 # encoding: utf-8
 from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
 import time
-from test_factory import Factory
-from people.tests.selenium_abstractions import PeopleTestAbstractions
-from groups.tests.selenium_abstractions import GroupTestAbstractions
-from django.conf import settings
-from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from accounts.models import UserAccount
 from dashboard.tests.selenium_abstractions import DashboardTestAbstractions
 from django.core.cache import cache
