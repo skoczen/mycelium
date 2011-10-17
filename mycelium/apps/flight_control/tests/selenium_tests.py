@@ -1,27 +1,17 @@
 # encoding: utf-8
 from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
-import time
 import datetime
-from test_factory import Factory
-from people.tests.selenium_abstractions import PeopleTestAbstractions
-from organizations.tests.selenium_abstractions import OrganizationsTestAbstractions
-from groups.tests.selenium_abstractions import GroupTestAbstractions
 from flight_control.tests.selenium_abstractions import FlightControlTestAbstractions
 from django.conf import settings
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from django.core.cache import cache
-from django.template.defaultfilters import date
 
 from accounts.models import Account, UserAccount
-from accounts import BILLING_PROBLEM_STATII, STATUS_DEACTIVATED
+from accounts import STATUS_DEACTIVATED
 from people.models import Person
 from organizations.models import Organization
 from donors.models import Donation
 from volunteers.models import CompletedShift
-from generic_tags.models import Tag, TaggedItem
-from groups.models import Group
-from spreadsheets.models import Spreadsheet
-from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import intcomma
 
     
