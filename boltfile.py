@@ -34,7 +34,11 @@ def services_action(action, services=None):
             services = config["services"]
 
         for s in services:
-            env(c).run("service %s %s" % (s, action))
+            try:
+                env(c).run("service %s %s" % (s, action))
+            except Exception, e:
+                print "Error running: 'service %s %s'" % (s, action)
+                print e
 
 def services_stop(*args, **kwargs):
     services_action("stop", *args, **kwargs)
@@ -160,8 +164,9 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
         env("app-servers").multirun(services_start)
         env("celery-servers").multirun(services_start)
     else:
-        env("app-servers").multirun(services_restart)
         env("celery-servers").multirun(services_restart)
+        env("app-servers").multirun(services_restart)
+        
 
     print "Deploy successful."
 
