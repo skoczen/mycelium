@@ -1,4 +1,5 @@
 pip > 1.0
+Fabric
 mercurial
 #psycopg2
 mysql-python

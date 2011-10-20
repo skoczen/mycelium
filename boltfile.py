@@ -1,4 +1,5 @@
 from bolt.api import *
+from fabric.contrib.console import confirm
 
 env.config_file = True
 env.colors = True
@@ -8,6 +9,7 @@ env.stages = ["staging", "live"]
 @hook('config.loaded')
 def bootstrap_env():
     env.workon_command = "workon %(project_name)s;" % env.config.default
+    env.release_tag = "%s_release" % env.stage
     pass
 
 def locally_checkout_live():
@@ -20,10 +22,10 @@ def locally_push_all():
     local("git push --all")
 
 def tag_commit_for_release():
-    local("git tag -d {stage}; git tag {stage}; git push --tags")
+    local("git tag -d {release_tag}; git tag {release_tag}; git push --tags")
 
 def syncmedia():
-    local("./manage.py syncmedia --settings=envs.{stage}", dir=env.config.default["project_name"])
+    local("git checkout {release_tag}; ./manage.py syncmedia --settings=envs.{stage}; git checkout live", dir=env.config.default["project_name"])
 
 
 def services_action(action, services=None):
@@ -33,7 +35,11 @@ def services_action(action, services=None):
             services = config["services"]
 
         for s in services:
-            env(c).run("service %s %s" % (s, action))
+            try:
+                env(c).run("service %s %s" % (s, action), pty=True)
+            except:
+                print "Error running: 'service %s %s'" % (s, action)
+                # print e
 
 def services_stop(*args, **kwargs):
     services_action("stop", *args, **kwargs)
@@ -94,7 +100,7 @@ def backup():
 
 @task
 def pull():
-    run("{workon_command} git checkout {stage}; git fetch --tags; git pull; git checkout {stage}")
+    run("{workon_command} git checkout live; git fetch --tags; git pull; git checkout {release_tag}")
 
 def kill_pyc():
     run("{workon_command} find . -iname '*.pyc' -delete")
@@ -130,39 +136,44 @@ def sync_media():
 
 @task
 def deploy(with_downtime=False, skip_media=False, skip_backup=False):
-    locally_checkout_live()
-    locally_collect_static()
-    tag_commit_for_release()
-    locally_push_all()
-    
-    if not skip_media:
-        sync_media()
-    
-    if not skip_backup:
-        backup()
-
-    if with_downtime:
-        env("app-servers").multirun(stop_gunicorn)
-        env("celery-servers").multirun(services_stop)
-
-    env("app-servers").multirun(pull)
-    env("app-servers").multirun(kill_pyc)
-    env("app-servers").multirun(install_requirements)
-
-    syncdb()
-    migrate()
-    
-    env("celery-servers").multirun(pull)    
-    
-    if not skip_downtime:
-        env("app-servers").multirun(restart_nginx)
-        env("app-servers").multirun(services_start)
-        env("celery-servers").multirun(services_start)
+    if env.stage == "live" and not confirm("You do mean live, right?"):
+        abort("Bailing out!")
     else:
-        env("app-servers").multirun(services_restart)
-        env("celery-servers").multirun(services_restart)
+        locally_checkout_live()
+        locally_collect_static()
+        tag_commit_for_release()
+        locally_push_all()
+        
+        if not skip_media:
+            sync_media()
+        
+        print "skip_backup", not skip_backup
+        if not skip_backup:
+            backup()
 
-    print "Deploy successful."
+        if with_downtime:
+            env("app-servers").multirun(stop_gunicorn)
+            env("celery-servers").multirun(services_stop)
+
+        env("app-servers").multirun(pull)
+        env("app-servers").multirun(kill_pyc)
+        env("app-servers").multirun(install_requirements)
+
+        syncdb()
+        migrate()
+        
+        env("celery-servers").multirun(pull)    
+        
+        if with_downtime:
+            env("app-servers").multirun(restart_nginx)
+            env("app-servers").multirun(services_start)
+            env("celery-servers").multirun(services_start)
+        else:
+            env("celery-servers").multirun(services_restart)
+            env("app-servers").multirun(services_restart)
+            
+
+        print "Deploy successful."
 
 # def dump_marketing_fixture():
 #     magic_run("{workon_command} cd {project_name}; {python} manage.py dumpdata --natural --indent 4 --exclude=contenttypes marketing_site cms mptt menus text  > {git_path}/{project_name}/apps/marketing_site/fixtures/marketing_site.json")
