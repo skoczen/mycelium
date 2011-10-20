@@ -1,4 +1,5 @@
 from bolt.api import *
+from fabric.contrib.console import confirm
 
 env.config_file = True
 env.colors = True
