@@ -1,8 +1,8 @@
-project_name: mycelium
-
 default:
     shell: /bin/bash -l -c
     user: root
+    project_name: mycelium
+
 
 app-server-1:
     directory: /var/www
@@ -28,26 +28,26 @@ db-servers:
 
 db-server-master:
     hosts:
-        - ext-mysql.digitalmycelium.com
+        - ext-mysql-master.digitalmycelium.com
     services:
         - percona
 
 db-server-slave-1:
     hosts:
-        - ext-mysql.digitalmycelium.com
+        - ext-mysql-slave.digitalmycelium.com
     services:
         - percona
 
 celery-servers:
     directory: /var/www
     hosts:
-        - ext-staging-celery.digitalmycelium.com
+        - ext-mycelium-celery-staging.digitalmycelium.com
     services:
-        - celery-mycelium
+        - celeryd-mycelium
 
 memcached-servers:
     hosts:
-        - ext-Memcached1010-20110606-01-celery.digitalmycelium.com
+        - ext-Memcached1010.digitalmycelium.com
     services:
         - memcached
 
