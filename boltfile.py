@@ -94,9 +94,9 @@ def stop_gunicorn():
 def restart_nginx():
     return services_restart("nginx")
 
-@task("db-server-master")
+@task
 def backup():
-    env().run("backup perform --trigger {project_name}")
+    env("db-server-master").run("backup perform --trigger {project_name}")
 
 @task
 def pull():
@@ -147,7 +147,6 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
         if not skip_media:
             sync_media()
         
-        print "skip_backup", not skip_backup
         if not skip_backup:
             backup()
 
