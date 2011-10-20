@@ -35,10 +35,10 @@ def services_action(action, services=None):
 
         for s in services:
             try:
-                env(c).run("service %s %s" % (s, action))
-            except Exception, e:
+                env(c).run("service %s %s" % (s, action), pty=True)
+            except:
                 print "Error running: 'service %s %s'" % (s, action)
-                print e
+                # print e
 
 def services_stop(*args, **kwargs):
     services_action("stop", *args, **kwargs)
