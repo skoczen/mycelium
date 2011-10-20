@@ -28,8 +28,9 @@
 	<tr class="user_row header" >
 		<th class="full_name">Name</th>
 		<th class="username">Username</th>
-		<th class="email">Email</th>
+		<th class="email"></th>
 		<th class="access_level">Account Level</th>
+		<th class="last_login">Last Login</th>
 		<th class="reset_pass"></th>
 		<th class="delete"></th>
 	</tr>
@@ -37,8 +38,9 @@
 	<tr class="user_row striped_row" user_pk="{{ua.pk}}">
 		<td class="full_name">{{ua.full_name}}</td>
 		<td class="username">{{ua.denamespaced_username}}</td>
-		<td class="email">{{ua.email}}</td>
+		<td class="email"><a href="mailto:{{ua.email}}">Email</a></td>
 		<td class="access_level"><div class="fields">{{form.access_level}}{{form.id}}</div></td>
+		<td class="last_login">{{ua.user.last_login|date}}</td>
 		<td class="reset_pass"><a href="{% url accounts:reset_account_password ua.pk %}" class="mycelium_btn reset_password_btn mycelium_small_btn">Reset Password</a></td>
 		<td class="delete"><a href="{% url accounts:delete_account ua.pk %}" class="mycelium_btn mycelium_delete_btn mycelium_active_grey delete_user_btn mycelium_small_btn">Delete User</a></td>
 	</tr>
