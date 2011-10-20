@@ -155,7 +155,7 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
     
     env("celery-servers").multirun(pull)    
     
-    if not skip_downtime:
+    if with_downtime:
         env("app-servers").multirun(restart_nginx)
         env("app-servers").multirun(services_start)
         env("celery-servers").multirun(services_start)
