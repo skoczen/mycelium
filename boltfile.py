@@ -8,6 +8,7 @@ env.stages = ["staging", "live"]
 @hook('config.loaded')
 def bootstrap_env():
     env.workon_command = "workon %(project_name)s;" % env.config.default
+    env.release_tag = "%s_release" % env.stage
     pass
 
 def locally_checkout_live():
@@ -20,10 +21,10 @@ def locally_push_all():
     local("git push --all")
 
 def tag_commit_for_release():
-    local("git tag -d {stage}; git tag {stage}; git push --tags")
+    local("git tag -d {release_tag}; git tag {release_tag}; git push --tags")
 
 def syncmedia():
-    local("./manage.py syncmedia --settings=envs.{stage}", dir=env.config.default["project_name"])
+    local("git checkout {release_tag}; ./manage.py syncmedia --settings=envs.{stage}; git checkout live", dir=env.config.default["project_name"])
 
 
 def services_action(action, services=None):
@@ -94,7 +95,7 @@ def backup():
 
 @task
 def pull():
-    run("{workon_command} git checkout {stage}; git fetch --tags; git pull; git checkout {stage}")
+    run("{workon_command} git checkout live; git fetch --tags; git pull; git checkout {release_tag}")
 
 def kill_pyc():
     run("{workon_command} find . -iname '*.pyc' -delete")
