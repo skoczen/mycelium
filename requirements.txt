@@ -1,5 +1,4 @@
 pip > 1.0
-fabric
 mercurial
 #psycopg2
 mysql-python
@@ -73,3 +72,5 @@ py-bcrypt
 django-zebra
 -e git://github.com/GoodCloud/django-functional-tests#egg=functional_tests
 pytz
+-e git://github.com/GoodCloud/tavutil.git#egg=tavutil
+-e git://github.com/GoodCloud/bolt.git#egg=bolt
