@@ -135,40 +135,44 @@ def sync_media():
 
 @task
 def deploy(with_downtime=False, skip_media=False, skip_backup=False):
-    locally_checkout_live()
-    locally_collect_static()
-    tag_commit_for_release()
-    locally_push_all()
-    
-    if not skip_media:
-        sync_media()
-    
-    if not skip_backup:
-        backup()
-
-    if with_downtime:
-        env("app-servers").multirun(stop_gunicorn)
-        env("celery-servers").multirun(services_stop)
-
-    env("app-servers").multirun(pull)
-    env("app-servers").multirun(kill_pyc)
-    env("app-servers").multirun(install_requirements)
-
-    syncdb()
-    migrate()
-    
-    env("celery-servers").multirun(pull)    
-    
-    if with_downtime:
-        env("app-servers").multirun(restart_nginx)
-        env("app-servers").multirun(services_start)
-        env("celery-servers").multirun(services_start)
+    if env.stage == "live" and not confirm("You do mean live, right?"):
+        abort("Bailing out!")
     else:
-        env("celery-servers").multirun(services_restart)
-        env("app-servers").multirun(services_restart)
+        locally_checkout_live()
+        locally_collect_static()
+        tag_commit_for_release()
+        locally_push_all()
         
+        if not skip_media:
+            sync_media()
+        
+        print "skip_backup", not skip_backup
+        if not skip_backup:
+            backup()
 
-    print "Deploy successful."
+        if with_downtime:
+            env("app-servers").multirun(stop_gunicorn)
+            env("celery-servers").multirun(services_stop)
+
+        env("app-servers").multirun(pull)
+        env("app-servers").multirun(kill_pyc)
+        env("app-servers").multirun(install_requirements)
+
+        syncdb()
+        migrate()
+        
+        env("celery-servers").multirun(pull)    
+        
+        if with_downtime:
+            env("app-servers").multirun(restart_nginx)
+            env("app-servers").multirun(services_start)
+            env("celery-servers").multirun(services_start)
+        else:
+            env("celery-servers").multirun(services_restart)
+            env("app-servers").multirun(services_restart)
+            
+
+        print "Deploy successful."
 
 # def dump_marketing_fixture():
 #     magic_run("{workon_command} cd {project_name}; {python} manage.py dumpdata --natural --indent 4 --exclude=contenttypes marketing_site cms mptt menus text  > {git_path}/{project_name}/apps/marketing_site/fixtures/marketing_site.json")
