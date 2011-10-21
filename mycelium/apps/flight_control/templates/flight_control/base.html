@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
-	{% css "css/mycelium_base.css" %}
-	{% css "/css/contrib/1140/1140.css" %}
-	{% css "/css/flight_control.css" %}
+	<link rel="stylesheet" href="{{STATIC_URL}}css/mycelium_base.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}/css/contrib/1140/1140.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}/css/flight_control.css" type="text/css" media="screen, projection"/>
 {% endblock %}
-{% block base_js %}{% js "js/mycelium_base.js" %}{% endblock %}
+{% block base_js %}<script src="{{STATIC_URL}}js/mycelium_base.js"></script>{% endblock %}
 {% block javascript %}{{block.super}}
-	{% js "js/mycelium_core.js" %}
-	{% js "js/mycelium/flight_control.js" %}
+	<script src="{{STATIC_URL}}js/mycelium_core.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/flight_control.js"></script>
 <script>
 var GLOBAL_SEARCH_URL = "{% url flight_control:search_results %}";
 </script>

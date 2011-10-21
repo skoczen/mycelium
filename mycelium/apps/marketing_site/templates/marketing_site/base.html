@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
-{% css "css/marketing_base.css" %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/marketing_base.css" type="text/css" media="screen, projection"/>
 {# 1140 #}
-<!--[if lte IE 9]>{% css "/css/contrib/1140/ie.css" %}<![endif]-->
+<!--[if lte IE 9]><link rel="stylesheet" href="{{STATIC_URL}}/css/contrib/1140/ie.css" type="text/css" media="screen, projection"/><![endif]-->
 {% endblock %}
-{% block base_js %}{% js "js/marketing_base.js" %}{% endblock %}
+{% block base_js %}<script src="{{STATIC_URL}}js/marketing_base.js"></script>{% endblock %}
 {% block javascript %}{{block.super}}
-{% js "js/lib/preloadCssImages.jQuery.mycelium.js" %}
-{% js "js/marketing_core.js" %}
+<script src="{{STATIC_URL}}js/lib/preloadCssImages.jQuery.mycelium.js"></script>
+<script src="{{STATIC_URL}}js/marketing_core.js"></script>
 {% endblock %}
 {% block content %}
 	{% include "marketing_site/_top_nav.html" %}

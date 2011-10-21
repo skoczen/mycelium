@@ -2,12 +2,12 @@
 {% load i18n %}
 {% block title %}Dashboard{% endblock %}
 {% block css %}{{block.super}}
-{% css "/css/generic_fields.css" %}
-{% css "/css/dashboard.css" %}
+<link rel="stylesheet" href="{{STATIC_URL}}/css/generic_fields.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="{{STATIC_URL}}/css/dashboard.css" type="text/css" media="screen, projection"/>
 {% endblock %}
 {% block javascript %}{{block.super}}
-{% js "/js/mycelium/dashboard.js" %}
-{% js "/js/mycelium/conversation_and_gist.js" %}
+<script src="{{STATIC_URL}}/js/mycelium/dashboard.js"></script>
+<script src="{{STATIC_URL}}/js/mycelium/conversation_and_gist.js"></script>
 {% endblock %}
 
 {% block breadcrumb %}{% endblock %}

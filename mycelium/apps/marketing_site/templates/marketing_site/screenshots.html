@@ -4,11 +4,11 @@
 {% block description %}Watch a video interview with GoodCloud's CEO, and see how it helps nonprofits organize and run more easily!{% endblock %}
 
 {% block css %}{{block.super}}
-{% css "css/contrib/tn3/tn3.css" %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/tn3/tn3.css" type="text/css" media="screen, projection"/>
 {% endblock %}
 {% block javascript %}{{block.super}}
 
-{% js "js/lib/jquery.tn3lite.min.js" %}
+<script src="{{STATIC_URL}}js/lib/jquery.tn3lite.min.js"></script>
 <script>
 $(function(){
 	// setTimeout(function(){

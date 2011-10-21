@@ -3,19 +3,19 @@
 {% block title %}People - {{person.full_name}}{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
-{% css "/css/people_volunteer.css" %}
-{% css "/css/people_donor.css" %}
-{% css "/css/people_conversations.css" %}
-{% css "/css/people_tags.css" %}
+<link rel="stylesheet" href="{{STATIC_URL}}/css/people_volunteer.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="{{STATIC_URL}}/css/people_donor.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="{{STATIC_URL}}/css/people_conversations.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="{{STATIC_URL}}/css/people_tags.css" type="text/css" media="screen, projection"/>
 {% endblock %}
 {% block javascript %}{{block.super}}
-{% js "/js/mycelium/people_volunteer.js" %}
-{% js "/js/mycelium/people_donations.js" %}
-{% js "/js/mycelium/people_conversations.js" %}
-{% js "/js/mycelium/people_tags.js" %}
-{% js "/js/mycelium/people_common.js" %}
-{% js "/js/mycelium/people_person.js" %}
-{% js "/js/mycelium/conversation_and_gist.js" %}
+<script src="{{STATIC_URL}}/js/mycelium/people_volunteer.js"></script>
+<script src="{{STATIC_URL}}/js/mycelium/people_donations.js"></script>
+<script src="{{STATIC_URL}}/js/mycelium/people_conversations.js"></script>
+<script src="{{STATIC_URL}}/js/mycelium/people_tags.js"></script>
+<script src="{{STATIC_URL}}/js/mycelium/people_common.js"></script>
+<script src="{{STATIC_URL}}/js/mycelium/people_person.js"></script>
+<script src="{{STATIC_URL}}/js/mycelium/conversation_and_gist.js"></script>
 {% generic_tags_js %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "Unnamed Person"  %}
 <script type="text/javascript" charset="utf-8">

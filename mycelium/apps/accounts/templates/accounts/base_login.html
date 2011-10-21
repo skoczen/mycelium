@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Log in to GoodCloud{% endblock %}
 {% block css %}{{block.super}}
-{% css "css/mycelium_base.css" %}
-{% css "css/login.css" %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/mycelium_base.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="{{STATIC_URL}}css/login.css" type="text/css" media="screen, projection"/>
 {% endblock %}
 
 {% block nav %}{% endblock %}

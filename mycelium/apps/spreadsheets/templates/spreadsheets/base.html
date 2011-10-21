@@ -1,5 +1,5 @@
 {% extends "mycelium_base.html" %}
 {% block css %}{{block.super}}
-	{% css "css/people.css" %}
-	{% css "css/spreadsheets.css" %}
+	<link rel="stylesheet" href="{{STATIC_URL}}css/people.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/spreadsheets.css" type="text/css" media="screen, projection"/>
 {% endblock %}

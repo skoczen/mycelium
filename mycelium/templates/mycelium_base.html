@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
-	{% css "css/mycelium_base.css" %}
+	<link rel="stylesheet" href="{{STATIC_URL}}css/mycelium_base.css" type="text/css" media="screen, projection"/>
 {% endblock %}
-{% block base_js %}{% js "js/mycelium_base.js" %}{% endblock %}
+{% block base_js %}<script src="{{STATIC_URL}}js/mycelium_base.js"></script>{% endblock %}
 {% block javascript %}{{block.super}}
-	{% js "js/mycelium_core.js" %}
+	<script src="{{STATIC_URL}}js/mycelium_core.js"></script>
 <script>
 var GLOBAL_SEARCH_URL = "{% url core:search_results %}";
 </script>
