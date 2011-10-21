@@ -80,7 +80,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 AWS_STORAGE_BUCKET_NAME = "goodcloud-dev"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
-
+# COMPRESS_ENABLED = False
+COMPRESS_URL = STATIC_URL
 
 # django-mediasync
 MEDIASYNC['SERVE_REMOTE'] = False

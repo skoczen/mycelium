@@ -54,6 +54,13 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
+
 MIDDLEWARE_CLASSES = (
     'johnny.middleware.LocalStoreClearMiddleware',
     'johnny.middleware.QueryCacheMiddleware',
@@ -147,6 +154,7 @@ INSTALLED_APPS = (
     'mediasync',
     'sentry',
     'sentry.client',
+    'compressor',
     
     #'cms',
     #'mptt',
@@ -285,6 +293,10 @@ STRIPE_SECRET = "1n5fQCrOR4mbrxWXhjiMcCA9b91tzRAV"
 STRIPE_PUBLISHABLE = "pk_ZjmLisYsPM1Xa7MgYPziLide0VISX"
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
+COMPRESS_STORAGE = 'mycelium_core.storage.CachedS3BotoStorage'
+STATICFILES_STORAGE = 'mycelium_core.storage.CachedS3BotoStorage'
+COMPRESS_ROOT = STATIC_ROOT
+
 
 ZEBRA_CUSTOMER_MODEL = 'accounts.Account'
 
