@@ -80,23 +80,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 AWS_STORAGE_BUCKET_NAME = "goodcloud-dev"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
-# COMPRESS_ENABLED = False
+# COMPRESS_ENABLED = True
 COMPRESS_URL = STATIC_URL
 
-# django-mediasync
-MEDIASYNC['SERVE_REMOTE'] = False
-MEDIASYNC['EMULATE_COMBO'] = False
-MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
-
-# turn on to test pre-deploy
-# MEDIASYNC['EMULATE_COMBO'] = True
-
-# turn on to test postsync with live media
-# MEDIASYNC['SERVE_REMOTE'] = True
-# MEDIA_URL = CDN_MEDIA_URL
-# from git import Repo
-# try:
-#     GIT_CURRENT_SHA = Repo(PROJECT_ROOT).commit("%s_release" % ROLE.lower()).hexsha
-# except:
-#     GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
-# MEDIASYNC["AWS_PREFIX"] = GIT_CURRENT_SHA

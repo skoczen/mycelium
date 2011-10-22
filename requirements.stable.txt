@@ -40,7 +40,6 @@ django-taggit-templatetags==0.4.6dev
 boto==2.0rc1
 django-ses==0.2
 #django-storages
-django-mediasync==2.1.0
 slimmer==0.1.30
 
 django-debug-toolbar==0.8.5

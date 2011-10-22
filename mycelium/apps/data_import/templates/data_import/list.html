@@ -48,7 +48,7 @@ $(function(){
 <table class="striped data_import_history_table record_table">
 	{% for i in all_imports %}
 	<tr class="{% if not i.is_finished %}in_progress{% endif %} {% if i.failed %} failed {% endif %} %} striped_row" import_id="{{i.pk}}">
-		<td class="action">{% if i.failed %}Failed{% else %}{% if i.is_finished %}<a href="{% url data_import:review i.pk %}" class="view_results_btn">View Results</a>{% else %}<img src="{% media_url "images/spinner-grey-16.gif" %}" > <span class="percent_imported">{{i.percent_imported|floatformat:0}}</span>% {% endif %}{% endif %}</td>
+		<td class="action">{% if i.failed %}Failed{% else %}{% if i.is_finished %}<a href="{% url data_import:review i.pk %}" class="view_results_btn">View Results</a>{% else %}<img src="{% static  "images/spinner-grey-16.gif" %}" > <span class="percent_imported">{{i.percent_imported|floatformat:0}}</span>% {% endif %}{% endif %}</td>
 		<td class="import_date">{% if i.is_finished %}{{i.start_time|date}} at {{i.start_time|time}}{% else %}<span class="right_now">Right now</span>{% endif %}</td>
 		<td class="people_count">{% if i.is_finished %}imported{% else %}importing{% endif %} {% if i.num_source_rows %}{{i.num_source_rows|intcomma}}{% endif %} {{i.import_type}}</td>
 		<td class="other_fields">with {{i.num_columns}}  columns.</td>

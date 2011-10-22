@@ -31,7 +31,7 @@ DATABASE_POOL = {
     'slave': 1,
 }
 MASTER_DATABASE = 'default'
-
+AWS_STORAGE_BUCKET_NAME = "goodcloud1"
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 MANUAL_MEDIA_URL = 'http://www.agoodcloud.com/media/'
 # MEDIA_URL = CDN_MEDIA_URL
@@ -72,13 +72,3 @@ SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 SESSION_COOKIE_SECURE = True
 BASE_DOMAIN = "agoodcloud.com"
 
-
-# django-mediasync
-MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
-MEDIASYNC['USE_SSL'] = True
-from git import Repo
-try:
-    GIT_CURRENT_SHA = Repo(PROJECT_ROOT).commit("%s_release" % ROLE.lower()).hexsha
-except:
-    GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
-MEDIASYNC["AWS_PREFIX"] = GIT_CURRENT_SHA

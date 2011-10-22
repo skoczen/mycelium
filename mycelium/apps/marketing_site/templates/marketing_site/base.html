@@ -1,13 +1,26 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
-<link rel="stylesheet" href="{{STATIC_URL}}css/marketing_base.css" type="text/css" media="screen, projection"/>
-{# 1140 #}
-<!--[if lte IE 9]><link rel="stylesheet" href="{{STATIC_URL}}/css/contrib/1140/ie.css" type="text/css" media="screen, projection"/><![endif]-->
+	<link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/main.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/jquery-ui-1.8.10.custom.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/mycelium_elements.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/marketing_site.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/1140/1140.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/login.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/signup.css" type="text/css" media="screen, projection"/>
+	{# 1140 #}
+	<!--[if lte IE 9]><link rel="stylesheet" href="{{STATIC_URL}}/css/contrib/1140/ie.css" type="text/css" media="screen, projection"/><![endif]-->
 {% endblock %}
-{% block base_js %}<script src="{{STATIC_URL}}js/marketing_base.js"></script>{% endblock %}
+{% block base_js %}
+	<script src="{{STATIC_URL}}js/lib/preloadCssImages.jQuery.mycelium.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.autogrow.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.autogrow.textarea.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.ba-bbq.min.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/marketing_site.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/signup.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/marketing_tabs.js"></script>
+{% endblock %}
 {% block javascript %}{{block.super}}
-<script src="{{STATIC_URL}}js/lib/preloadCssImages.jQuery.mycelium.js"></script>
-<script src="{{STATIC_URL}}js/marketing_core.js"></script>
 {% endblock %}
 {% block content %}
 	{% include "marketing_site/_top_nav.html" %}

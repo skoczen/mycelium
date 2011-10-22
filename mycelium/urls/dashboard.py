@@ -3,8 +3,6 @@ from django.contrib import admin
 from django.conf import settings
 admin.autodiscover()
 
-from django.template import add_to_builtins
-add_to_builtins('mediasync.templatetags.media')
 
 urlpatterns = patterns('',
 

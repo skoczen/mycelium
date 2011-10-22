@@ -151,7 +151,6 @@ INSTALLED_APPS = (
     'taggit_templatetags',
     'django_jenkins',
     'django_ses',
-    'mediasync',
     'sentry',
     'sentry.client',
     'compressor',
@@ -237,6 +236,7 @@ OFFSITE_BACKUP_DIR = "aglzen@quantumimagery.com:/home/aglzen/mycelium/data/"
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--where=apps', '-s']
+# NOSE_PLUGINS = ["functional_tests.noseplugins.DjangoMultiProcess",]
 
 FORCE_SELENIUM_TESTS = False
 # SELENIUM_BROWSER_COMMAND = "safari"
@@ -284,105 +284,24 @@ THUMBNAIL_PREFIX = "_cache/"
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_ACCESS_KEY_ID = 'AKIAJTNZWCZDOIDWFR4A'
 AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = "goodcloud1"
+AWS_STORAGE_BUCKET_NAME = "goodcloud-dev"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 
 # Stripe
 # Dev
 STRIPE_SECRET = "1n5fQCrOR4mbrxWXhjiMcCA9b91tzRAV"
 STRIPE_PUBLISHABLE = "pk_ZjmLisYsPM1Xa7MgYPziLide0VISX"
+ZEBRA_CUSTOMER_MODEL = 'accounts.Account'
+
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 COMPRESS_STORAGE = 'mycelium_core.storage.CachedS3BotoStorage'
-STATICFILES_STORAGE = 'mycelium_core.storage.CachedS3BotoStorage'
+STATICFILES_STORAGE = COMPRESS_STORAGE
 COMPRESS_ROOT = STATIC_ROOT
 
 
-ZEBRA_CUSTOMER_MODEL = 'accounts.Account'
+from cachebuster.detectors import git
+CACHEBUSTER_UNIQUE_STRING = git.unique_string(__file__)
 
-GIT_CURRENT_SHA = None
-# django-mediasync
-
-BASE_JS = [
-    "js/lib/modernizr-1.6.min.js",
-    "js/contrib/jquery-1.4.3.min.js",
-    "js/contrib/jquery-ui.js",
-    "js/contrib/jquery.django.csrf.js",
-    "js/plugins.js",
-    "js/script.js",
-    "js/contrib/date.js",
-]
-COMMON_JS = [
-    "js/contrib/jquery.autogrow.js",
-    "js/contrib/jquery.autogrow.textarea.js",
-    "js/contrib/jquery.ba-bbq.min.js",
-]
-BASE_CSS = [
-    "css/style.css",
-    "css/main.css",
-    "css/contrib/jquery-ui-1.8.10.custom.css",
-    "css/mycelium_elements.css",
-]
-
-MEDIASYNC = {
-    'BACKEND': 'mediasync.backends.s3',
-    'AWS_KEY': AWS_ACCESS_KEY_ID,
-    'AWS_SECRET': AWS_SECRET_ACCESS_KEY,
-    'AWS_BUCKET': AWS_STORAGE_BUCKET_NAME,
-    # 'CACHE_BUSTER': GIT_CURRENT_SHA,
-    # 'AWS_PREFIX': GIT_CURRENT_SHA, 
-    # 'PROCESSORS': (
-    #     'mediasync.processors.slim.css_minifier',
-    #     'mediasync.processors.slim.js_minifier',
-    # ),
-    'PROCESSORS': (
-        'mediasync.processors.yuicompressor.css_minifier',
-        # 'mediasync.processors.yuicompressor.js_minifier',
-        # 'mediasync.processors.slim.js_minifier',
-    ),
-    # 'PROCESSORS': ('mediasync.processors.closurecompiler.compile',),
-
-    'YUI_COMPRESSOR_PATH': join(abspath(LIB_DIR), 'yuicompressor.jar'),
-    'JOINED': {
-        'js/base.js': BASE_JS,
-
-        'js/mycelium_base.js': BASE_JS + COMMON_JS + [   
-                "js/contrib/jquery.scrollTo-min.js",
-                "js/contrib/jquery.toggleval.js",
-                "js/contrib/jquery.hotkeys-0.7.9.min.js",
-                "js/contrib/jquery.ajax.queue.js",
-                "js/contrib/jquery.form.js",
-                "js/contrib/jquery.formset.min.js",
-                "js/mycelium/generic_fields.js",
-                "js/mycelium/mycelium_search.js",
-                "js/lib/fileuploader.mycelium.js",
-                "js/contrib/jquery.colorbox-min.js",
-        ],
-        'js/mycelium_core.js': [
-                "js/mycelium/mycelium_elements.js",
-                "js/mycelium/mycelium_top_search.js",
-                "js/mycelium/mycelium_common.js",
-        ],
-        'css/mycelium_base.css': BASE_CSS + [
-                "css/contrib/fileuploader.css",
-                "css/contrib/colorbox.css",
-        ],
-
-        'js/marketing_base.js': BASE_JS + COMMON_JS + [
-
-        ],
-        'js/marketing_core.js': [
-                "js/mycelium/marketing_site.js",
-                "js/mycelium/signup.js",
-                "js/mycelium/marketing_tabs.js",
-        ],
-        'css/marketing_base.css': BASE_CSS + [
-                "css/marketing_site.css",
-                "css/contrib/1140/1140.css",
-                "css/login.css",
-                "css/signup.css",
-        ]
-    }
-
-}
-MEDIASYNC['SERVE_REMOTE'] = True
+from django.template.loader import add_to_builtins
+add_to_builtins('cachebuster.templatetags.cachebuster')
