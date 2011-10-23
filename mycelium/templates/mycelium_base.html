@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/fileuploader.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/colorbox.css" type="text/css" media="screen, projection"/>
 {% endblock %}
-{% block base_js %}
+{% block base_js %}{{block.super}}
 	<script src="{{STATIC_URL}}js/contrib/jquery.autogrow.js"></script>
 	<script src="{{STATIC_URL}}js/contrib/jquery.autogrow.textarea.js"></script>
 	<script src="{{STATIC_URL}}js/contrib/jquery.ba-bbq.min.js"></script>

@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/colorbox.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/flight_control.css" type="text/css" media="screen, projection"/>
 {% endblock %}
-{% block base_js %}
+{% block base_js %}{{block.super}}
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_elements.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_top_search.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_common.js"></script>

@@ -18,8 +18,10 @@
   {# <!--	Uncomment if you are specifically targeting less enabled mobile browsers   --> #}  {# <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2"> #}
 
   {% compress css %}{% block css %}{% endblock %}{% endcompress %}
+  {% compress js %}
   <script src="{{STATIC_URL}}js/lib/modernizr-1.6.min.js" ></script>
   <script src="{{STATIC_URL}}js/contrib/jquery-1.4.3.min.js" ></script>
+  {% endcompress %}
 
   {% compress js %}{% block base_js %}
 		<script src="{{STATIC_URL}}js/contrib/jquery-ui.js" ></script>
