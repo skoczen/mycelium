@@ -75,4 +75,3 @@ pytz
 -e git://github.com/GoodCloud/bolt.git#egg=bolt
 -e git://github.com/GoodCloud/django_compressor.git#egg=django_compressor
 html5lib
-django-cachebuster

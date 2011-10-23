@@ -3,6 +3,10 @@ from django.contrib import admin
 from django.conf import settings
 admin.autodiscover()
 
+if settings.COMPRESS_VERSIONED_STATIC_TAG_BUILTIN:
+    from django.template.loader import add_to_builtins
+    add_to_builtins('compressor.templatetags.versioned_static')
+
 
 urlpatterns = patterns('',
     url(r'^',              include('mycelium_core.urls',       app_name="core",            namespace="core")),    

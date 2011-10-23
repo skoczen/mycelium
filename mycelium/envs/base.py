@@ -254,13 +254,7 @@ THUMBNAIL_COLORSPACE = None
 JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_mycelium'
 MAN_IN_BLACKLIST = ["data_import_dataimport",]
 
-# celery / rabbitmq
-# BROKER_HOST = "localhost"
-# BROKER_PORT = 5672
-# BROKER_USER = "mycelium"
-# BROKER_PASSWORD = "68WXmV6K49r8veczVaUK"
-# BROKER_VHOST = "digitalmycelium"
-# CELERY_RESULT_BACKEND = "amqp"
+# celery
 BROKER_BACKEND = "redis"
 BROKER_HOST = "localhost"  # Maps to redis host.
 BROKER_PORT = 6379         # Maps to redis port.
@@ -299,9 +293,6 @@ COMPRESS_STORAGE = 'mycelium_core.storage.CachedS3BotoStorage'
 STATICFILES_STORAGE = COMPRESS_STORAGE
 COMPRESS_ROOT = STATIC_ROOT
 
-
-from cachebuster.detectors import git
-CACHEBUSTER_UNIQUE_STRING = git.unique_string(__file__)
-
-from django.template.loader import add_to_builtins
-add_to_builtins('cachebuster.templatetags.cachebuster')
+COMPRESS_VERSIONED_STATIC_TAG_BUILTIN = True
+COMPRESS_VERSION_CSS_MEDIA = True
+COMPRESS_CSS_HASHING_METHOD = "hash"
