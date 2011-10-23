@@ -4,12 +4,12 @@
 {% block css %}{{block.super}}
 {% generic_field_css %}
 
-<link rel="stylesheet" href="{{STATIC_URL}}/css/manage_accounts.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="{{STATIC_URL}}css/manage_accounts.css" type="text/css" media="screen, projection"/>
 <link rel="stylesheet" href="{{STATIC_URL}}zebra/card-form.css" type="text/css" media="screen, projection"/>
 {% endblock %}
 {% block javascript %}{{block.super}}
 
-<script src="{{STATIC_URL}}/js/mycelium/manage_accounts.js"></script>
+<script src="{{STATIC_URL}}js/mycelium/manage_accounts.js"></script>
 {# {% zebra_head_and_stripe_key %} #}
 <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
 <script src="{{STATIC_URL}}zebra/card-form.js"></script>
