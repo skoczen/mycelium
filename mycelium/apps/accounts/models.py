@@ -776,7 +776,7 @@ def recurring_payment_failed(sender, **kwargs):
 def invoice_ready(sender, **kwargs):
     account = kwargs["customer"]
     full_json = kwargs["full_json"]
-    pass
+    account.update_account_status()
 
 def recurring_payment_succeeded(sender, **kwargs):
     account = kwargs["customer"]
