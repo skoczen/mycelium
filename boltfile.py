@@ -157,11 +157,11 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
         env("app-servers").multirun(pull)
         env("app-servers").multirun(kill_pyc)
         env("app-servers").multirun(install_requirements)
+        env("celery-servers").multirun(pull)
+        env("celery-servers").multirun(kill_pyc)
 
         syncdb()
         migrate()
-        
-        env("celery-servers").multirun(pull)    
         
         if with_downtime:
             env("app-servers").multirun(restart_nginx)

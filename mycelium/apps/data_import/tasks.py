@@ -5,13 +5,15 @@ from accounts.models import Account
 from django.core.files.storage import default_storage
 import datetime
 
-from johnny import cache as jcache
+# from johnny import cache as jcache
+from johnny.utils import johnny_task_wrapper
 from django.core.cache import cache
 
 @task
+@johnny_task_wrapper
 def queue_data_import(acct_id, import_record):
-    account = Account.objects.get(pk=acct_id)
-    r = DataImport.raw_objects.get(pk=import_record.pk)
+    account = Account.objects.using("default").get(pk=acct_id)
+    r = DataImport.raw_objects.using("default").get(pk=import_record.pk)
 
     # print "Starting data import for %s" % import_record
 
@@ -36,7 +38,7 @@ def queue_data_import(acct_id, import_record):
         # Save the results
         for row in results:
             model_key = [v.model_key for k,v in s.import_row_class.fields.items()][0]
-            ResultsRow.objects.create(
+            ResultsRow.objects.using("default").create(
                 account=account,
                 data_import=r,
                 successfully_imported=row["success"],
@@ -50,8 +52,8 @@ def queue_data_import(acct_id, import_record):
         r.save()
 
 
-        for m in r.import_row_class_instance.get_target_models():
-            jcache.invalidate(m)
+        # for m in r.import_row_class_instance.get_target_models():
+        #     jcache.invalidate(m)
         # print "Results saved."
     except:
         r.failed = True
