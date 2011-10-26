@@ -1,5 +1,4 @@
 from celery.task import task
-from johnny import cache as jcache
 from johnny.utils import johnny_task_wrapper
 
 @task
@@ -9,8 +8,6 @@ def create_tag_group(tag):
     try:
         t = Tag.objects.using("default").get(pk=tag.pk)
         t.create_tag_group_if_needed()
-        jcache.invalidate("groups.GroupSearchProxy")
-        jcache.invalidate("groups.TagGroup")
     except:
         from django.core.mail import mail_admins
         from qi_toolkit.helpers import exception_string

@@ -5,7 +5,7 @@ from accounts.models import Account
 from django.core.files.storage import default_storage
 import datetime
 
-from johnny import cache as jcache
+# from johnny import cache as jcache
 from johnny.utils import johnny_task_wrapper
 from django.core.cache import cache
 
@@ -52,8 +52,8 @@ def queue_data_import(acct_id, import_record):
         r.save()
 
 
-        for m in r.import_row_class_instance.get_target_models():
-            jcache.invalidate(m)
+        # for m in r.import_row_class_instance.get_target_models():
+        #     jcache.invalidate(m)
         # print "Results saved."
     except:
         r.failed = True

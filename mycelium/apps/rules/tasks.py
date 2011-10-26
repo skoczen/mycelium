@@ -19,10 +19,10 @@ def populate_rule_components_for_an_obj_with_an_account_signal_receiver(sender, 
 def populate_rule_components_for_an_obj_with_an_account(obj):
     populate_rule_components_for_an_account(obj.account)
 
+@johnny_task_wrapper
 def delete_rule_components_for_a_tagset(sender, instance, created=None, *args, **kwargs):
     from rules.models import LeftSide
     LeftSide.objects_by_account(instance.account).using('default').filter(display_name="have a %s tag that" % (instance.name)).delete()
-    johnny_cache.invalidate(LeftSide)
 
 @johnny_task_wrapper
 def populate_rule_components_for_an_account(account):
@@ -296,9 +296,6 @@ def populate_rule_components_for_an_account(account):
             if ls not in all_left_sides:
                 ls.delete()
 
-        johnny_cache.invalidate(RightSideType)
-        johnny_cache.invalidate(Operator)
-        johnny_cache.invalidate(LeftSide)
     except:
         from django.core.mail import mail_admins
         from qi_toolkit.helpers import exception_string
