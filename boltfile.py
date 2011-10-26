@@ -36,6 +36,8 @@ def services_action(action, services=None):
 
         for s in services:
             try:
+                print c
+                print "service %s %s" % (s, action)
                 env(c).run("service %s %s" % (s, action), pty=True)
             except:
                 print "Error running: 'service %s %s'" % (s, action)
