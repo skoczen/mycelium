@@ -3,8 +3,10 @@ from johnny import cache as jcache
 
 @task
 def create_tag_group(tag):
+    from generic_tags.models import Tag
     try:
-        tag.create_tag_group_if_needed()
+        t = Tag.objects.using("default").get(pk=tag.pk)
+        t.create_tag_group_if_needed()
         jcache.invalidate("groups.GroupSearchProxy")
         jcache.invalidate("groups.TagGroup")
     except:

@@ -16,7 +16,7 @@ def test():
 
 @task
 def update_proxy_results_db_cache(cls, proxy_obj, new_result_string):
-    px = cls.objects.get(pk=proxy_obj.pk)
+    px = cls.objects.using("default").get(pk=proxy_obj.pk)
     px.cached_search_result = new_result_string
     px.save()
     johnny_cache.invalidate(px)
