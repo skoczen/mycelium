@@ -2,12 +2,16 @@
 {% load i18n %}
 {% block title %}Dashboard{% endblock %}
 {% block css %}{{block.super}}
+{% compress css %}
 <link rel="stylesheet" href="{{STATIC_URL}}css/generic_fields.css" type="text/css" media="screen, projection"/>
 <link rel="stylesheet" href="{{STATIC_URL}}css/dashboard.css" type="text/css" media="screen, projection"/>
+{% endcompress %}
 {% endblock %}
 {% block javascript %}{{block.super}}
+{% compress js %}
 <script src="{{STATIC_URL}}js/mycelium/dashboard.js"></script>
 <script src="{{STATIC_URL}}js/mycelium/conversation_and_gist.js"></script>
+{% endcompress %}
 {% endblock %}
 
 {% block breadcrumb %}{% endblock %}

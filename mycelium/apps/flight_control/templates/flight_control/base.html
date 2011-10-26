@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
+{% compress css %}
 	<link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/main.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/jquery-ui-1.8.10.custom.css" type="text/css" media="screen, projection"/>
@@ -7,14 +8,19 @@
 	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/fileuploader.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/colorbox.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/flight_control.css" type="text/css" media="screen, projection"/>
+{% endcompress %}
 {% endblock %}
 {% block base_js %}{{block.super}}
+{% compress js %}
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_elements.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_top_search.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_common.js"></script>
+{% endcompress %}
 {% endblock %}
 {% block javascript %}{{block.super}}
+{% compress js %}
 	<script src="{{STATIC_URL}}js/mycelium/flight_control.js"></script>
+{% endcompress %}
 <script>
 var GLOBAL_SEARCH_URL = "{% url flight_control:search_results %}";
 </script>

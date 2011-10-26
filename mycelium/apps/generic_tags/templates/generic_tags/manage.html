@@ -7,8 +7,10 @@
 {% endblock %}
 {% block javascript %}{{block.super}}
 {% generic_tags_js %}
+{% compress js %}
 <script src="{{STATIC_URL}}js/mycelium/people_common.js"></script>
 <script src="{{STATIC_URL}}js/mycelium/manage_tags.js"></script>
+{% endcompress %}
 <script>
 $(function(){
 

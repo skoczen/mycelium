@@ -38,7 +38,7 @@ MEDIA_URL = 'http://media.digitalmycelium.com/'
 MANUAL_MEDIA_URL = 'http://digitalmycelium.com/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "/admin-media/"
-FAVICON_URL = "%simages/favicon.png" % STATIC_URL
+
 
 
 BROKER_HOST = "int-Redis.digitalmycelium.com"  # Maps to redis host.
@@ -70,3 +70,4 @@ COMPRESS_ENABLED = True
 STATIC_URL = CDN_MEDIA_URL
 # STATIC_ROOT = MEDIA_ROOT
 
+FAVICON_URL = "%simages/favicon.png" % STATIC_URL

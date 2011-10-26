@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
+{% compress css %}
 	<link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/main.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/jquery-ui-1.8.10.custom.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/mycelium_elements.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/fileuploader.css" type="text/css" media="screen, projection"/>
 	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/colorbox.css" type="text/css" media="screen, projection"/>
+{% endcompress %}
 {% endblock %}
 {% block base_js %}{{block.super}}
+{% compress js %}
 	<script src="{{STATIC_URL}}js/contrib/jquery.autogrow.js"></script>
 	<script src="{{STATIC_URL}}js/contrib/jquery.autogrow.textarea.js"></script>
 	<script src="{{STATIC_URL}}js/contrib/jquery.ba-bbq.min.js"></script>
@@ -21,6 +24,7 @@
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_search.js"></script>
 	<script src="{{STATIC_URL}}js/lib/fileuploader.mycelium.js"></script>
 	<script src="{{STATIC_URL}}js/contrib/jquery.colorbox-min.js"></script>   
+{% endcompress %}
 {% endblock %}
 {% block javascript %}{{block.super}}
 	<script>

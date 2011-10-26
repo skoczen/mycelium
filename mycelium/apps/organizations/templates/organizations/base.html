@@ -1,4 +1,6 @@
 {% extends "mycelium_base.html" %}
 {% block css %}{{block.super}}
+{% compress css %}
 <link rel="stylesheet" href="{{STATIC_URL}}css/people.css" type="text/css" media="screen, projection"/>
+{% endcompress %}
 {% endblock %}

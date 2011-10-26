@@ -55,7 +55,7 @@ MEDIA_URL = '/media/'
 MANUAL_MEDIA_URL = MEDIA_URL
 STATIC_URL =  '/static/'
 ADMIN_MEDIA_PREFIX = "%s/_admin/" % (MEDIA_URL)
-FAVICON_URL = "%simages/favicon.png" % STATIC_URL
+
 
 # selenium settings
 # SELENIUM_BROWSER_COMMAND = "*safari"
@@ -84,5 +84,7 @@ COMPRESS_URL = STATIC_URL
 
 COMPRESS_ENABLED = True
 # COMPRESS_URL = CDN_MEDIA_URL
+
+FAVICON_URL = "%simages/favicon.png" % COMPRESS_URL
 
 

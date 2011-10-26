@@ -5,7 +5,9 @@
 <script type="text/javascript" charset="utf-8">
 	var SEARCH_URL = "{% url people:search_results %}";
 </script>
+{% compress js %}
 <script src="{{STATIC_URL}}js/mycelium/people_search.js"></script>
+{% endcompress %}
 {% endblock %}
 {% block page_content %}
 <div class="main_search_box">

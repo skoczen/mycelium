@@ -3,7 +3,9 @@
 {% block description %}Our monthly newsletter keeps you up-to-date on the latest news in the nonprofit sector - and throws in a great recipe to boot!{% endblock %}
 {% block page_header %}Real people, real voices.{% endblock %}
 {% block css %}{{block.super}}
+{% compress css %}
 <link rel="stylesheet" href="{{STATIC_URL}}css/newsletter.css" type="text/css" media="screen, projection"/>
+{% endcompress %}
 {% endblock %}
 
 {% block page_content %}

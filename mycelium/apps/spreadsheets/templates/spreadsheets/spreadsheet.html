@@ -6,9 +6,10 @@
 {% endblock %}
 {% block javascript %}{{block.super}}
 {% generic_tags_js %}
+{% compress js %}
 <script src="{{STATIC_URL}}js/mycelium/people_common.js"></script>
 <script src="{{STATIC_URL}}js/mycelium/spreadsheets.js"></script>
-
+{% endcompress %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "Unnamed Spreadsheet"  %}
 <script type="text/javascript" charset="utf-8">
 $(function(){
@@ -16,7 +17,6 @@ $(function(){
 	$("#id_name").focus();
 });
 </script>
-
 {% endif %}
 
 {% endblock %}
