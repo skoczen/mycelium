@@ -41,7 +41,7 @@ db-server-slave-1:
 celery-servers:
     directory: /var/www
     hosts:
-        - ext-mycelium-celery-live.agoodcloud.com
+        - ext-mycelium-celery.agoodcloud.com
     services:
         - celeryd-mycelium
 
