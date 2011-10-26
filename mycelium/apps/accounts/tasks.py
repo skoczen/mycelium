@@ -2,8 +2,10 @@ from celery.task import task
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from johnny.utils import johnny_task_wrapper
 
 @task
+@johnny_task_wrapper
 def send_welcome_emails(account, useraccount):
 
     # Send them a welcome email

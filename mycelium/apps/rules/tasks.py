@@ -1,9 +1,10 @@
 from johnny import cache as johnny_cache
+from johnny.utils import johnny_task_wrapper
 
 class Dummy(object):
     pass
 
-
+@johnny_task_wrapper
 def populate_all_rule_components(*args, **kwargs):
     from accounts.models import Account
     for account in Account.objects.using('default').all():
@@ -23,6 +24,7 @@ def delete_rule_components_for_a_tagset(sender, instance, created=None, *args, *
     LeftSide.objects_by_account(instance.account).using('default').filter(display_name="have a %s tag that" % (instance.name)).delete()
     johnny_cache.invalidate(LeftSide)
 
+@johnny_task_wrapper
 def populate_rule_components_for_an_account(account):
     try:
         from rules.models import LeftSide, Operator, RightSideType

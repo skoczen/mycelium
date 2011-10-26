@@ -6,9 +6,11 @@ from django.core.files.storage import default_storage
 import datetime
 
 from johnny import cache as jcache
+from johnny.utils import johnny_task_wrapper
 from django.core.cache import cache
 
 @task
+@johnny_task_wrapper
 def queue_data_import(acct_id, import_record):
     account = Account.objects.using("default").get(pk=acct_id)
     r = DataImport.raw_objects.using("default").get(pk=import_record.pk)

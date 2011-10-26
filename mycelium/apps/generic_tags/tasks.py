@@ -1,7 +1,9 @@
 from celery.task import task
 from johnny import cache as jcache
+from johnny.utils import johnny_task_wrapper
 
 @task
+@johnny_task_wrapper
 def create_tag_group(tag):
     from generic_tags.models import Tag
     try:
