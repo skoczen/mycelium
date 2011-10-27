@@ -55,17 +55,16 @@ BROKER_VHOST = "0"                       # Maps to database number.
 REDIS_HOST = BROKER_HOST
 REDIS_DB = BROKER_VHOST
 
-# CACHES = {
-#     'default': {
-#         'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
-#         'LOCATION': '127.0.0.1:11211',
-#         'PREFIX':ENV,
-#         'JOHNNY_CACHE':True,
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
+        'LOCATION': 'int-Memcached1010.agoodcloud.com:11211',
+        'PREFIX':ENV,
+        'JOHNNY_CACHE':True,
+    }
+}
 
 # CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-CACHE_BACKEND = 'johnny.backends.memcached://int-Memcached1010.agoodcloud.com:11211'
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
 SESSION_COOKIE_DOMAIN = "agoodcloud.com"

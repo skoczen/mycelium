@@ -23,19 +23,18 @@
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_search.js"></script>
 	<script src="{{STATIC_URL}}js/lib/fileuploader.mycelium.js"></script>
 {% endcompress %}
+{% endblock %}
+{% block javascript %}{{block.super}}
+	<script>
+	var GLOBAL_SEARCH_URL = "{% url flight_control:search_results %}";
+	</script>
 {% compress js %}
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_elements.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_top_search.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_common.js"></script>
-{% endcompress %}
-{% endblock %}
-{% block javascript %}{{block.super}}
-{% compress js %}
 	<script src="{{STATIC_URL}}js/mycelium/flight_control.js"></script>
 {% endcompress %}
-<script>
-var GLOBAL_SEARCH_URL = "{% url flight_control:search_results %}";
-</script>
+
 {% endblock %}
 {% block content %}
 	{% block nav %}
