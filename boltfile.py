@@ -12,6 +12,10 @@ def bootstrap_env():
     env.release_tag = "%s_release" % env.stage
     pass
 
+@task
+def freeze_current_versions():
+    local("pip freeze -r requirements.txt > requirements.stable.txt")
+
 def locally_checkout_live():
     local("git checkout live")
 
