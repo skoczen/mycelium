@@ -6,11 +6,14 @@
 {% endblock %}
 {% block javascript %}{{block.super}}
 {% generic_tags_js %}
-{% js "/js/mycelium/people_common.js" %}
-{% js "/js/mycelium/groups.js" %}
-
+{% compress js %}
+<script src="{{STATIC_URL}}js/mycelium/people_common.js"></script>
+<script src="{{STATIC_URL}}js/mycelium/groups.js"></script>
+{% endcompress %}
 <script src="{% url rules:rules_logic_js %}"></script>
-{% js "/js/mycelium/rules.js" %}
+{% compress js %}
+<script src="{{STATIC_URL}}js/mycelium/rules.js"></script>
+{% endcompress %}
 {% if request.GET.edit == "ON" or form.instance.full_name == "Unnamed Group"  %}
 <script type="text/javascript" charset="utf-8">
 $(function(){

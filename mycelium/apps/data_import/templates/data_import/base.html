@@ -1,7 +1,11 @@
 {% extends "mycelium_base.html" %}
 {% block css %}{{block.super}}
-	{% css "css/import.css" %}
+{% compress css %}
+	<link rel="stylesheet" href="{{STATIC_URL}}css/import.css" type="text/css" media="screen, projection"/>
+{% endcompress %}
 {% endblock %}
 {% block javascript %}{{block.super}}
-	{% js "/js/mycelium/data_import.js"%}
+{% compress js %}
+	<script src="{{STATIC_URL}}js/mycelium/data_import.js"></script>
+{% endcompress %}
 {% endblock %}

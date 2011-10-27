@@ -38,7 +38,7 @@ MEDIA_URL = 'http://media.digitalmycelium.com/'
 MANUAL_MEDIA_URL = 'http://digitalmycelium.com/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "/admin-media/"
-FAVICON_URL = "%simages/favicon.png" % STATIC_URL
+
 
 
 BROKER_HOST = "int-Redis.digitalmycelium.com"  # Maps to redis host.
@@ -47,35 +47,26 @@ REDIS_HOST = BROKER_HOST
 REDIS_DB = BROKER_VHOST
 
 
-# CACHES = {
-#     'default': {
-#         'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
-#         'LOCATION': '127.0.0.1:11211',
-#         'PREFIX':ENV,
-#         'JOHNNY_CACHE':True,
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND' : 'johnny.backends.memcached.MemcachedClass',
+        'LOCATION': 'int-Memcached1010.digitalmycelium.com:11211',
+        'PREFIX':ENV,
+        'JOHNNY_CACHE':True,
+    }
+}
 
 # CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 # CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
-CACHE_BACKEND = 'johnny.backends.memcached://int-Memcached1010.digitalmycelium.com:11211'
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
 AWS_STORAGE_BUCKET_NAME = "goodcloud-staging"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
+COMPRESS_URL = CDN_MEDIA_URL
+COMPRESS_ENABLED = True
 
-# django-mediasync
-MEDIASYNC['AWS_BUCKET'] = AWS_STORAGE_BUCKET_NAME
-# MEDIA_URL = CDN_MEDIA_URL
 STATIC_URL = CDN_MEDIA_URL
 # STATIC_ROOT = MEDIA_ROOT
 
-
- 
-from git import Repo
-try:
-    GIT_CURRENT_SHA = Repo(PROJECT_ROOT).commit("%s_release" % ROLE.lower()).hexsha
-except:
-    GIT_CURRENT_SHA = Repo(PROJECT_ROOT).head.reference.commit.hexsha
-MEDIASYNC["AWS_PREFIX"] = GIT_CURRENT_SHA
+FAVICON_URL = "%simages/favicon.png" % STATIC_URL

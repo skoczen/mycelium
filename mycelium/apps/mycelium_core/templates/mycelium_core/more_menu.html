@@ -2,7 +2,9 @@
 {% load i18n generic_fields friendly_data_formatting %}
 {% block title %}More Tools - Data Import, Account Settings, and more{% endblock %}
 {% block css %}{{block.super}}
-	{% css "css/more.css" %}
+{% compress css %}
+	<link rel="stylesheet" href="{{STATIC_URL}}css/more.css" type="text/css" media="screen, projection"/>
+{% endcompress %}
 {% endblock %}
 {% block breadcrumb %}{% endblock %}
 {% block page_content %}

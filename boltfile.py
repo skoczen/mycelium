@@ -24,10 +24,6 @@ def locally_push_all():
 def tag_commit_for_release():
     local("git tag -d {release_tag}; git tag {release_tag}; git push --tags")
 
-def syncmedia():
-    local("git checkout {release_tag}; ./manage.py syncmedia --settings=envs.{stage}; git checkout live", dir=env.config.default["project_name"])
-
-
 def services_action(action, services=None):
     for c in env.ctx:
         config = env.get_settings((c,))[0]
@@ -130,6 +126,12 @@ def syncdb():
 def ls():
     env("app-servers").run("ls")
 
+def syncmedia():
+    local("git checkout {release_tag}; ./manage.py compress --settings=envs.{stage}; git checkout live", dir=env.config.default["project_name"])
+
+def setup_media_cache():
+    env("app-server-1").run("{workon_command} cd {project_name}; ./manage.py collectstatic --noinput ./manage.py compress")
+
 @task
 def sync_media():
     syncmedia()
@@ -162,7 +164,9 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
 
         syncdb()
         migrate()
-        
+        if not skip_media:
+            setup_media_cache()
+
         if with_downtime:
             env("app-servers").multirun(restart_nginx)
             env("app-servers").multirun(services_start)

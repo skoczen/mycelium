@@ -289,7 +289,6 @@ input {
 	white-space:nowrap;
 
 	
-/*	background: url("../images/submitback.gif");*/
 	background-color: #004486;
 	background-repeat: repeat-x;
 	
@@ -302,7 +301,6 @@ input {
 #id_submit.hovered {
 	background-color: #0040C2;
 	color: #FFF;
-/*	background: url("../images/submitback-hover.gif");*/
 }
 .thanks_message {
 	color: #004486;	

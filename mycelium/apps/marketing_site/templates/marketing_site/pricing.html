@@ -3,12 +3,12 @@
 {% block title %}Pricing: one simple, affordable plan. Priced for small nonprofits.{% endblock %}
 {% block description %}GoodCloud includes everything - no per-user fees, no contracts, no hidden costs. All priced based on real nonprofit budgets.{% endblock %}
 {% block head %}
-{% css "/css/mycelium_elements.css" %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/mycelium_elements.css" type="text/css" media="screen, projection"/>
 {{block.super}}
 
-{% js "/js/mycelium/signup.js" %}
-{% css "/css/login.css" %}
-{% css "/css/signup.css" %}
+<script src="{{STATIC_URL}}js/mycelium/signup.js"></script>
+<link rel="stylesheet" href="{{STATIC_URL}}css/login.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="{{STATIC_URL}}css/signup.css" type="text/css" media="screen, projection"/>
 {% endblock %}
 
 {% block page_header %}Priced for small nonprofits.{% endblock %}

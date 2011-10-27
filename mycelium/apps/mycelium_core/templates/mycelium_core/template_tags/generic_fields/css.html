@@ -1,1 +1,1 @@
-{% css "/css/generic_fields.css" %}
+{% load compress %}{% compress css %}<link rel="stylesheet" href="{{STATIC_URL}}css/generic_fields.css" type="text/css" media="screen, projection"/>{% endcompress %}

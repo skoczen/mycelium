@@ -3,12 +3,14 @@
 {% block title %}More Tools - Data Import, Account Settings, and more{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
-
-{% css "/css/manage_accounts.css" %}
+{% compress css %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/manage_accounts.css" type="text/css" media="screen, projection"/>
+{% endcompress %}
 {% endblock %}
 {% block javascript %}{{block.super}}
-
-{% js "/js/mycelium/manage_accounts.js" %}
+{% compress js %}
+<script src="{{STATIC_URL}}js/mycelium/manage_accounts.js"></script>
+{% endcompress %}
 {% endblock %}
 
 {% block breadcrumb_links %}<a href="{% url core:more_menu %}" >Back to Admin</a>{% endblock %}

@@ -13,6 +13,7 @@ def _render_tags_context(obj, tag_set_id):
     d = tv.tag_render_context
     d.update({
         'MEDIA_URL':settings.MEDIA_URL,
+        'STATIC_URL':settings.STATIC_URL,
     })
 
     return d
@@ -24,6 +25,7 @@ def _render_tags_context(obj, tag_set_id):
 @register.inclusion_tag('generic_tags/_js.html')
 def generic_tags_js():
     MEDIA_URL = settings.MEDIA_URL
+    STATIC_URL = settings.STATIC_URL
     return locals()
 
 @register.inclusion_tag('generic_tags/_tags_as_checklist.html')

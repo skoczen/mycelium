@@ -4,6 +4,7 @@
 <table class="results_table striped">
 	<tr class="person_row header">
 		<th class="name">Name</th>
+		<th class="email"></th>
 		<th class="phone_number">Phone Number</th>
 	</tr>
 {% for p in search_proxies %}{{p.search_result_row|safe}}{% endfor %}

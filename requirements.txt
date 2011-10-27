@@ -47,10 +47,8 @@ boto
 django-ses
 #django-storages
 -e hg+https://bitbucket.org/david/django-storages#egg=storages
-django-mediasync
 slimmer
 
-gitpython
 django-debug-toolbar
 -e git://github.com/gintas/django-picklefield.git#egg=django-picklefield
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains
@@ -75,3 +73,5 @@ django-zebra
 pytz
 -e git://github.com/GoodCloud/tavutil.git#egg=tavutil
 -e git://github.com/GoodCloud/bolt.git#egg=bolt
+-e git://github.com/GoodCloud/django_compressor.git#egg=django_compressor
+html5lib

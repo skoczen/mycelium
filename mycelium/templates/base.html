@@ -1,4 +1,4 @@
-{% load i18n cache analytical %}<!doctype html> 
+{% load i18n cache analytical compress %}<!doctype html> 
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
@@ -18,7 +18,20 @@
   {# <!--	Uncomment if you are specifically targeting less enabled mobile browsers   --> #}  {# <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2"> #}
 
   {% block css %}{% endblock %}
-  {% block base_js %}{% js "js/base.js" %}{% endblock %}
+  {% compress js %}
+  <script src="{{STATIC_URL}}js/lib/modernizr-1.6.min.js" ></script>
+  <script src="{{STATIC_URL}}js/contrib/jquery-1.4.3.min.js" ></script>
+  {% endcompress %}
+
+  {% block base_js %}
+  {% compress js %}
+		<script src="{{STATIC_URL}}js/contrib/jquery-ui.js" ></script>
+		<script src="{{STATIC_URL}}js/contrib/jquery.django.csrf.js" ></script>
+		<script src="{{STATIC_URL}}js/plugins.js" ></script>
+		<script src="{{STATIC_URL}}js/script.js" ></script>
+		<script src="{{STATIC_URL}}js/contrib/date.js" ></script>
+  {% endcompress %}
+  {% endblock %}
   {% analytical_head_bottom %}
 	<link href='https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold&v1' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Droid+Serif:regular,italic,bold,bolditalic&v1' rel='stylesheet' type='text/css'>
@@ -31,12 +44,12 @@
 
 {% endblock %}
 {% analytical_body_bottom %}
-{% block javascript %}
+{% block javascript %}{% compress js %}
 <!--[if lt IE 7 ]>
-  {% js "js/lib/dd_belatedpng.js" %}
+  <script src="{{STATIC_URL}}js/lib/dd_belatedpng.js"></script>
   <script>DD_belatedPNG.fix('img, .png_bg');</script>
 <![endif]-->
-{% endblock %}
+{% endcompress %}{% endblock %}
 </body>
 {% endblock %}
 </html>

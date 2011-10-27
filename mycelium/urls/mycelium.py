@@ -3,8 +3,9 @@ from django.contrib import admin
 from django.conf import settings
 admin.autodiscover()
 
-from django.template import add_to_builtins
-add_to_builtins('mediasync.templatetags.media')
+if settings.COMPRESS_VERSIONED_STATIC_TAG_BUILTIN:
+    from django.template.loader import add_to_builtins
+    add_to_builtins('compressor.templatetags.versioned_static')
 
 urlpatterns = patterns('',
     url(r'^',              include('mycelium_core.urls',       app_name="core",            namespace="core")),    
@@ -27,7 +28,6 @@ urlpatterns = patterns('',
     # (r'^administration/', include(admin.site.urls)),
     url(r'^', include('qi_toolkit.urls')),    
     url(r'^', include('django_ses.urls')),
-    url(r'^', include('mediasync.urls')),
     
 )
 

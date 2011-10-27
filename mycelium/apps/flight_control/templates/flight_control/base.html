@@ -1,16 +1,41 @@
 {% extends "base.html" %}
 {% block css %}{{block.super}}
-	{% css "css/mycelium_base.css" %}
-	{% css "/css/contrib/1140/1140.css" %}
-	{% css "/css/flight_control.css" %}
+{% compress css %}
+	<link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/main.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/jquery-ui-1.8.10.custom.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/mycelium_elements.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/fileuploader.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/colorbox.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/contrib/1140/1140.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/flight_control.css" type="text/css" media="screen, projection"/>
+{% endcompress %}
 {% endblock %}
-{% block base_js %}{% js "js/mycelium_base.js" %}{% endblock %}
+{% block base_js %}{{block.super}}
+{% compress js %}
+	<script src="{{STATIC_URL}}js/contrib/jquery.autogrow.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.autogrow.textarea.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.ba-bbq.min.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.scrollTo-min.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.toggleval.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.hotkeys-0.7.9.min.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.ajax.queue.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.form.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/mycelium_search.js"></script>
+	<script src="{{STATIC_URL}}js/lib/fileuploader.mycelium.js"></script>
+{% endcompress %}
+{% endblock %}
 {% block javascript %}{{block.super}}
-	{% js "js/mycelium_core.js" %}
-	{% js "js/mycelium/flight_control.js" %}
-<script>
-var GLOBAL_SEARCH_URL = "{% url flight_control:search_results %}";
-</script>
+	<script>
+	var GLOBAL_SEARCH_URL = "{% url flight_control:search_results %}";
+	</script>
+{% compress js %}
+	<script src="{{STATIC_URL}}js/mycelium/mycelium_elements.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/mycelium_top_search.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/mycelium_common.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/flight_control.js"></script>
+{% endcompress %}
+
 {% endblock %}
 {% block content %}
 	{% block nav %}

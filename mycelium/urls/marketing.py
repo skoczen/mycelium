@@ -3,8 +3,11 @@ from django.contrib import admin
 from django.conf import settings
 admin.autodiscover()
 
-from django.template import add_to_builtins
-add_to_builtins('mediasync.templatetags.media')
+
+if settings.COMPRESS_VERSIONED_STATIC_TAG_BUILTIN:
+    from django.template.loader import add_to_builtins
+    add_to_builtins('compressor.templatetags.versioned_static')
+
 
 urlpatterns = patterns('',
 
@@ -19,7 +22,6 @@ urlpatterns = patterns('',
     url(r'^zebra/',        include('zebra.urls',               app_name="zebra",           namespace="zebra")),
     
     url(r'^', include('django_ses.urls')),
-    url(r'^', include('mediasync.urls')),
 )
 
 if settings.DEBUG or settings.SELENIUM_TESTING:
@@ -44,3 +46,4 @@ try:
         )
 except:
     pass
+

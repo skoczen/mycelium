@@ -8,65 +8,75 @@ from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/css.html')
-def generic_field_css(include_context=True):
+def generic_field_css():
     MEDIA_URL = settings.MEDIA_URL
+    STATIC_URL = settings.STATIC_URL
     return locals()
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/javascript.html')
-def generic_field_javascript(include_context=True):
+def generic_field_javascript():
     MEDIA_URL = settings.MEDIA_URL
+    STATIC_URL = settings.STATIC_URL
     return locals()
 
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/plain_editable_field.html')
-def plain_editable_field(field, label_override=None, field_type="input",include_context=True):
+def plain_editable_field(field, label_override=None, field_type="input",):
     MEDIA_URL = settings.MEDIA_URL
+    STATIC_URL = settings.STATIC_URL
     return locals()
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field_table.html')
-def generic_editable_field_table(field, label_override=None, field_type="input",include_context=True):
+def generic_editable_field_table(field, label_override=None, field_type="input",):
     MEDIA_URL = settings.MEDIA_URL
+    STATIC_URL = settings.STATIC_URL
     return locals()
 
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
-def generic_editable_field(field, field_type="input",include_context=True):
+def generic_editable_field(field, field_type="input",):
     MEDIA_URL = settings.MEDIA_URL
+    STATIC_URL = settings.STATIC_URL
     return locals()
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
-def generic_editable_field_email(field, field_type="input",include_context=True):
+def generic_editable_field_email(field, field_type="input",):
     MEDIA_URL = settings.MEDIA_URL
+    STATIC_URL = settings.STATIC_URL
     generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_email_view.html",locals())
     return locals()
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
-def generic_editable_field_anyall_bool(field, field_type="input",include_context=True):
+def generic_editable_field_anyall_bool(field, field_type="input",):
     MEDIA_URL = settings.MEDIA_URL
+    STATIC_URL = settings.STATIC_URL
     generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_anyall_bool_view.html",locals())
     return locals()
 
 
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
-def generic_editable_field_twitter(field, field_type="input",include_context=True):
+def generic_editable_field_twitter(field, field_type="input",):
     MEDIA_URL = settings.MEDIA_URL
+    STATIC_URL = settings.STATIC_URL
     generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_twitter_view.html",locals())
     generic_editable_edit_override = render_to_string("mycelium_core/template_tags/generic_fields/_twitter_edit.html",locals())
     return locals()
 
 
 @register.inclusion_tag('mycelium_core/template_tags/generic_fields/editable_field.html')
-def generic_editable_field_url(field, field_type="input",include_context=True):
+def generic_editable_field_url(field, field_type="input",):
     MEDIA_URL = settings.MEDIA_URL
+    STATIC_URL = settings.STATIC_URL
     generic_editable_view_override = render_to_string("mycelium_core/template_tags/generic_fields/_url_view.html",locals())
     generic_editable_edit_override = render_to_string("mycelium_core/template_tags/generic_fields/_url_edit.html",locals())    
     return locals()
 
 
 # @register.inclusion_tag('mycelium_core/template_tags/generic_fields/edit.html')
-# def generic_field_edit(include_context=True):
+# def generic_field_edit():
 #     MEDIA_URL = settings.MEDIA_URL
+STATIC_URL = settings.STATIC_URL
 #     return locals()
 
 

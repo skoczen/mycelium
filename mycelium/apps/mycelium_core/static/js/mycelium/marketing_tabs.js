@@ -1,5 +1,5 @@
 $(function(){
-  var tabs = $('.tabs'),
+  var tabs = $('.tabs');
   tab_a_selector = 'ul.ui-tabs-nav a';
   tabs.tabs({ event: 'change' });
   

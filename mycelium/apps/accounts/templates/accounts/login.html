@@ -1,6 +1,7 @@
 {% extends "accounts/base_login.html" %}
 
 {% block javascript %}{{block.super}}
+{% compress js %}
 	<script type="text/javascript">
 		$(function(){
 			var version = parseInt($.browser.version, 10);
@@ -9,8 +10,10 @@
 			}
 		});
 	</script>
+{% endcompress %}
 {% endblock %}
 {% block css %}{{block.super}}
+{% compress css %}
 <!--[if lt IE 9 ]>
 	<style type="text/css">
 		.unsupported_browser {
@@ -24,7 +27,7 @@
 		}
 	</style>
 <![endif]-->
-
+{% endcompress %}
 {% endblock %}
 
 {% block dialog_content %}

@@ -3,16 +3,20 @@
 {% block title %}GoodCloud Account Information{% endblock %}
 {% block css %}{{block.super}}
 {% generic_field_css %}
-
-{% css "/css/manage_accounts.css" %}
-{% css "zebra/card-form.css" %}
+{% compress css %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/manage_accounts.css" type="text/css" media="screen, projection"/>
+<link rel="stylesheet" href="{{STATIC_URL}}zebra/card-form.css" type="text/css" media="screen, projection"/>
+{% endcompress %}
 {% endblock %}
 {% block javascript %}{{block.super}}
-
-{% js "/js/mycelium/manage_accounts.js" %}
+{% compress js %}
+<script src="{{STATIC_URL}}js/mycelium/manage_accounts.js"></script>
+{% endcompress %}
 {# {% zebra_head_and_stripe_key %} #}
 <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
-{% js "zebra/card-form.js" %}
+{% compress js %}
+<script src="{{STATIC_URL}}zebra/card-form.js"></script>
+{% endcompress %}
 <script type="text/javascript">
 $(function(){
 	Stripe.setPublishableKey('{{STRIPE_PUBLISHABLE}}');	
