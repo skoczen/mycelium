@@ -22,10 +22,12 @@
 {% endcompress %}
 {% endblock %}
 {% block javascript %}{{block.super}}
+{% compress js %}
 	<script src="{{STATIC_URL}}js/lib/preloadCssImages.jQuery.mycelium.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/marketing_site.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/signup.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/marketing_tabs.js"></script>
+{% endcompress %}
 {% endblock %}
 {% block content %}
 	{% include "marketing_site/_top_nav.html" %}

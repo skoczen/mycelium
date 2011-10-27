@@ -20,10 +20,14 @@
 	<script src="{{STATIC_URL}}js/contrib/jquery.ajax.queue.js"></script>
 	<script src="{{STATIC_URL}}js/contrib/jquery.form.js"></script>
 	<script src="{{STATIC_URL}}js/contrib/jquery.formset.min.js"></script>
-	<script src="{{STATIC_URL}}js/mycelium/generic_fields.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_search.js"></script>
 	<script src="{{STATIC_URL}}js/lib/fileuploader.mycelium.js"></script>
-	<script src="{{STATIC_URL}}js/contrib/jquery.colorbox-min.js"></script>   
+{% endcompress %}
+{% compress js %}
+	<script src="{{STATIC_URL}}js/mycelium/mycelium_elements.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/mycelium_top_search.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/mycelium_common.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/generic_fields.js"></script>
 {% endcompress %}
 {% endblock %}
 {% block javascript %}{{block.super}}

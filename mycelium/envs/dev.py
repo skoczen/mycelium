@@ -82,8 +82,10 @@ AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
 COMPRESS_URL = STATIC_URL
 
-COMPRESS_ENABLED = True
+# Comment this section to enable/disable testing.
+# COMPRESS_ENABLED = True
 # COMPRESS_URL = CDN_MEDIA_URL
+# STATIC_URL = CDN_MEDIA_URL
 
 FAVICON_URL = "%simages/favicon.png" % COMPRESS_URL
 

@@ -12,6 +12,19 @@
 {% endblock %}
 {% block base_js %}{{block.super}}
 {% compress js %}
+	<script src="{{STATIC_URL}}js/contrib/jquery.autogrow.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.autogrow.textarea.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.ba-bbq.min.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.scrollTo-min.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.toggleval.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.hotkeys-0.7.9.min.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.ajax.queue.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.form.js"></script>
+	<script src="{{STATIC_URL}}js/contrib/jquery.formset.min.js"></script>
+	<script src="{{STATIC_URL}}js/mycelium/mycelium_search.js"></script>
+	<script src="{{STATIC_URL}}js/lib/fileuploader.mycelium.js"></script>
+{% endcompress %}
+{% compress js %}
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_elements.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_top_search.js"></script>
 	<script src="{{STATIC_URL}}js/mycelium/mycelium_common.js"></script>
