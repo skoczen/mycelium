@@ -253,7 +253,7 @@ THUMBNAIL_COLORSPACE = None
 # jonny cache
 JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_mycelium'
 MAN_IN_BLACKLIST = ["data_import_dataimport",]
-JOHNNY_DATABASE_MAPPING = {"slave":"default"}
+JOHNNY_DATABASE_MAPPING = { "slave":"default", }
 
 # celery
 BROKER_BACKEND = "redis"
