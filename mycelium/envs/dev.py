@@ -13,7 +13,22 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mycelium',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
+    },
 }
+DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
+DATABASE_POOL = {
+    'default': 2,
+    'slave': 1,
+}
+MASTER_DATABASE = 'default'
+
 # use in-memory for tests
 if 'test' in sys.argv:
     DATABASES = {

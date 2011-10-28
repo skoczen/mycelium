@@ -24,9 +24,11 @@ def delete_rule_components_for_a_tagset(sender, instance, created=None, *args, *
 
 def populate_rule_components_for_an_account(account):
     try:
+        from accounts.models import Account
         from rules.models import LeftSide, Operator, RightSideType
         from volunteers import VOLUNTEER_STATII
         from donors import DONATION_TYPES
+        account = Account.objects.using("default").get(pk=account.pk)
         """This function performs several actions, and is idempotent.
 
         In order, it:
