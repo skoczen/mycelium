@@ -28,6 +28,7 @@ def login(request, template_name='registration/login.html',
           redirect_field_name=REDIRECT_FIELD_NAME,
           authentication_form=AuthenticationForm):
     """Displays the login form and handles the login action."""
+    
 
     redirect_to = request.REQUEST.get(redirect_field_name, '')
 
@@ -50,10 +51,12 @@ def login(request, template_name='registration/login.html',
 
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
-
+            
+            request.session.modified = True
             return HttpResponseRedirect(redirect_to)
 
     else:
+        request.session.clear()
         form = authentication_form(request)
 
     request.session.set_test_cookie()

@@ -180,10 +180,9 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, PeopleTest
         ua = Factory.useraccount(account=a2)
         self.set_site("test2")
         self.go_to_the_login_page("test2")
-        cache.clear()
         self.log_in(ua=ua)
         self.assert_login_succeeded()        
-        
+
         self.create_new_organization()
         sel.click("css=tabbed_box tab_title")
         time.sleep(0.5)

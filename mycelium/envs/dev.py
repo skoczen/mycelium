@@ -13,34 +13,34 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     },
-    'slave': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mycelium',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
-    },
+    # 'slave': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'mycelium',
+    #     'USER': 'root',
+    #     'PASSWORD': '',
+    #     'HOST': 'localhost',
+    #     'PORT': '',
+    # },
 }
-DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
-DATABASE_POOL = {
-    'default': 2,
-    'slave': 1,
-}
-MASTER_DATABASE = 'default'
+#  DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
+#  DATABASE_POOL = {
+#    'default': 2,
+#    'slave': 1,
+#  }
+#  MASTER_DATABASE = 'default'
 
 # use in-memory for tests
-if 'test' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'mycelium',
-            'USER': 'root',
-            'PASSWORD': '',
-            'HOST': 'localhost',
-            'PORT': '',
-        },
-    }
+# if 'test' in sys.argv:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': 'mycelium',
+#             'USER': 'root',
+#             'PASSWORD': '',
+#             'HOST': 'localhost',
+#             'PORT': '',
+#         },
+#     }
 
 CELERY_ALWAYS_EAGER = False
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
@@ -48,6 +48,7 @@ CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 CACHES = {
     'default': {
         'BACKEND' : 'johnny.backends.memcached.MemcachedCache',
+        # 'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
         'PREFIX':ENV,
         'JOHNNY_CACHE':True,

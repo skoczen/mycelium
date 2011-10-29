@@ -252,7 +252,7 @@ THUMBNAIL_COLORSPACE = None
 
 # jonny cache
 JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_mycelium'
-MAN_IN_BLACKLIST = ["data_import_dataimport",]
+MAN_IN_BLACKLIST = ["data_import_dataimport", "django_session",]
 JOHNNY_DATABASE_MAPPING = { "slave":"default", }
 
 # celery

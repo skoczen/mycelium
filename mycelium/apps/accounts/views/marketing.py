@@ -41,7 +41,10 @@ def signup(request):
             # Send off emails to us and them.
             send_welcome_emails.delay(account, useraccount)
 
-            return HttpResponseRedirect("%s%s.%s/" % (request.protocol, account.subdomain, site.domain))
+            if settings.SELENIUM_TESTING:
+                return HttpResponseRedirect("%s%s.%s:%s/" % (request.protocol, account.subdomain, site.domain, settings.LIVE_SERVER_PORT))
+            else:
+                return HttpResponseRedirect("%s%s.%s/" % (request.protocol, account.subdomain, site.domain))
         else:
             # print account_form
             # print user_form
