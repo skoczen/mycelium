@@ -5,11 +5,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mycelium',
         'USER': 'root',
-        'PASSWORD': '',        
+        'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '',
     },
 }
+DATABASE_ROUTERS = []
 
 
 # CACHE_BACKEND = 'locmem://'
@@ -31,3 +32,8 @@ VIRTUALENV_PATH = "/var/lib/jenkins/jobs/mycelium/workspace/ve"
 SELENIUM_TEST_SERVER_SETTINGS="selserver_jenkins"
 SOUTH_TESTS_MIGRATE = False
 SELENIUM_TESTING = True
+
+
+COMPRESS_ENABLED = True
+COMPRESS_URL = CDN_MEDIA_URL
+STATIC_URL = CDN_MEDIA_URL
