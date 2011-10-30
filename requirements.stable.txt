@@ -61,7 +61,7 @@ pycurl==7.19.0
 stripe==1.5.27
 py-bcrypt==0.2
 django-zebra==0.4.2
--e git://github.com/GoodCloud/django-functional-tests@0a13cb63b01891e01330b2d9d9dcbf66674c69c9#egg=functional_tests-dev
+-e git://github.com/GoodCloud/django-functional-tests@d7ddf59ace06b64bdf738c7ae952ce0e6b51725f#egg=functional_tests-dev
 pytz==2011k
 -e git://github.com/GoodCloud/tavutil.git@8055d68d21c24cc79c072e7ded97be3654b738a9#egg=tavutil-dev
 -e git://github.com/GoodCloud/bolt.git@b0063ee2651a25932900cebccae87ae435c297d4#egg=bolt-dev
