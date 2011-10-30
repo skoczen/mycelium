@@ -115,7 +115,6 @@ class AccountTestAbstractions(object):
         assert sel.is_text_present(full_name)
         assert sel.is_text_present(username)
         assert sel.is_text_present(password)
-        assert sel.is_text_present("test_%s@example.com" % username)
 
 
     def go_to_my_account_page(self):
