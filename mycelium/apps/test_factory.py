@@ -15,7 +15,7 @@ from volunteers import VOLUNTEER_STATII
 from spreadsheets import SPREADSHEET_TEMPLATE_CHOICES
 from spreadsheets.models import Spreadsheet
 from spreadsheets.spreadsheet import SpreadsheetAbstraction, SPREADSHEET_SOURCE_TYPES
-
+from conversations.models import Conversation
 
 
 import datetime
@@ -144,7 +144,6 @@ class Factory(DjangoFunctionalFactory):
     def volunteer_history(cls, account, person=None):
         if not person:
             person = cls.person(account)
-            
 
         cur_date = datetime.datetime.now()
         for i in range(0,cls.rand_int(end=300)):
@@ -157,6 +156,30 @@ class Factory(DjangoFunctionalFactory):
             )
         return person.volunteer
     
+    @classmethod
+    def conversation_history(cls, account, person=None, staff=None):
+        if not person:
+            person = cls.person(account)
+        
+        if not staff:
+            if UserAccount.objects.filter(account=account).count() > 0:
+                staff = UserAccount.objects.filter(account=account).order_by("?")[0]
+            else:
+                staff = cls.useraccount(account=account)
+
+        cur_date = datetime.datetime.now()
+        for i in range(0,cls.rand_int(end=5)):
+            cur_date = cur_date - datetime.timedelta(days=cls.rand_int(0,30))
+            Conversation.raw_objects.create(
+                                    account=account,
+                                    person=person,
+                                    staff=staff,
+                                    body=cls.random_conversation(cls.rand_int(end=5)),
+                                    date=cur_date
+            )
+        return person
+
+
     @classmethod
     def completed_volunteer_shift(cls, person, date=None, duration=None, **kwargs):
         if not date:
@@ -401,6 +424,14 @@ class Factory(DjangoFunctionalFactory):
                 
                 print_nobreak_if_verbose(verbose)
             print_if_verbose(verbose, "done.")
+
+            print_if_verbose(verbose, "Adding conversations",)
+            for p in people_created:
+                if cls.rand_bool():
+                    cls.conversation_history(account, p)
+                
+                print_nobreak_if_verbose(verbose)
+            print_if_verbose(verbose, "done.")            
 
             print_if_verbose(verbose, "Adding tags",)
             # give some of the people tags
