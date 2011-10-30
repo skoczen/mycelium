@@ -9,8 +9,23 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'test_mycelium',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
+        'TEST_MIRROR': 'default'
+    },
 }
-DATABASE_ROUTERS = []
+DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
+DATABASE_POOL = {
+  'default': 2,
+  'slave': 1,
+}
+MASTER_DATABASE = 'default'
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
