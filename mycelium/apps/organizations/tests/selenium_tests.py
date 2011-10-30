@@ -1,4 +1,5 @@
 import time 
+import unittest
 from test_factory import Factory
 
 from functional_tests.selenium_test_case import DjangoFunctionalConservativeSeleniumTestCase
@@ -366,7 +367,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, Organizati
         self.assertEqual("503-247.8451", sel.get_text("css=search_results .result_row:nth(0) .phone_number"))
         self.assertEqual("joesmith@myneworg.org", sel.get_text("css=search_results .result_row:nth(0) .email"))                
 
-
+    @unittest.skip("Sel bug.")
     def test_that_closing_an_organization_page_makes_sure_the_changes_are_saved(self):
         sel = self.selenium
 
@@ -411,7 +412,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, Organizati
         sel.type("id_state", "IN")
         sel.type("id_postal_code", "45321")
         time.sleep(0.2)
-        sel.close()
+        self.close()
 
         sel.select_window("one")
         sel.refresh()

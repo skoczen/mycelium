@@ -1,44 +1,44 @@
-Fabric==1.2.2
-mercurial==1.8.4
+Fabric==1.3.1
+mercurial==1.9.3
 #psycopg2
 python-dateutil==1.5
 
 PIL==1.1.7
 python-memcached==1.47
-gunicorn==0.12.2
+gunicorn==0.13.4
 #django-cms >= 2.1.3
 #django-tinymce
-pyparsing==1.5.5
+pyparsing==1.5.6
 django-xmlrpc==0.1.3
 akismet==0.2.0
 BeautifulSoup==3.2.0
 # -e git://github.com/skoczen/django-form-designer.git#egg=form_designer
 -e git://github.com/GoodCloud/django-ajax-uploader.git@a4dd7ce7353eca930a02c794590139cae48b5e9e#egg=ajaxuploader-dev
 
-django-extensions==0.6
+django-extensions==0.7.1
 -e git://github.com/skoczen/qi-toolkit.git@f6bbe98b7af1fa7a7ec41c30ffa192d9009c4460#egg=qi_toolkit-dev
 python-crontab==0.9.6
-django-analytical==0.8.1
+django-analytical==0.10.0
 
 django-pagination==1.0.7
-sorl-thumbnail==11.05.2
+sorl-thumbnail==11.09
 tagging==0.2.1
 lorem-ipsum-generator==0.3
 nose==1.1.2
-ipython==0.10.2
+ipython==0.11
 django-nose==0.1.3
-nose-exclude==0.1.5
+nose-exclude==0.1.7
 # django-nose-selenium
--e git://github.com/Almad/django-sane-testing.git@cd836896c967ed4887fa21fde5d8b2a8c742998d#egg=djangosanetesting-dev
+-e git://github.com/Almad/django-sane-testing.git@7f3884a2a340ff2d40ff09214257cf2d8f6f2b9f#egg=djangosanetesting-dev
 celery==2.2.6
 django-celery==2.2.4
 -e git://github.com/kmmbvnr/django-jenkins.git@e5031e9254e172aff1dee1e92b5e2609235612f9#egg=django_jenkins-dev
-coverage==3.5b1
+coverage==3.5.1
 -e git://github.com/skoczen/nose-xcover.git@cccc0e83ce2ed117903768587177a937c144e152#egg=nosexcover-dev
 
 django-taggit==0.9.3
 django-taggit-templatetags==0.4.6dev
-boto==2.0rc1
+boto==2.1.0
 django-ses==0.2
 #django-storages
 slimmer==0.1.30
@@ -46,9 +46,8 @@ slimmer==0.1.30
 django-debug-toolbar==0.8.5
 django-picklefield==0.1.9
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
--e hg+https://bitbucket.org/skoczen/johnny-cache#egg=johnny
 django-balancer==0.3
-django-sentry==1.8.5
+django-sentry==1.13.2
 redis==2.2.4
 xlwt==0.7.2
 xlrd==0.7.1
@@ -59,23 +58,24 @@ django-tinymce==1.5.1a2
 chardet==1.0.1
 -e git://github.com/GoodCloud/django-longer-username.git@cdf0375ec5eadd4a4c12d1c4598e689b8b33a496#egg=longerusername-dev
 pycurl==7.19.0
-stripe==1.5.22
+stripe==1.5.27
 py-bcrypt==0.2
 django-zebra==0.4.2
 -e git://github.com/GoodCloud/django-functional-tests@0a13cb63b01891e01330b2d9d9dcbf66674c69c9#egg=functional_tests-dev
-pytz==2011h
+pytz==2011k
 -e git://github.com/GoodCloud/tavutil.git@8055d68d21c24cc79c072e7ded97be3654b738a9#egg=tavutil-dev
--e git://github.com/GoodCloud/bolt.git@2a940676d81ba7c8a40da6e8b7ca44dc6c3ba390#egg=bolt-dev
+-e git://github.com/GoodCloud/bolt.git@b0063ee2651a25932900cebccae87ae435c297d4#egg=bolt-dev
+-e git://github.com/GoodCloud/django_compressor.git@4e86fcec6b6cca07b43afd12356571cdeb92deba#egg=django_compressor-dev
 html5lib==0.90
 ## The following requirements were added by pip --freeze:
-CherryPy==3.2.0
+CherryPy==3.2.2
 Django==1.3.1
 GitPython==0.3.2.RC1
 Mezzanine==0.11.5
 MySQL-python==1.2.3
 PyYAML==3.10
 South==0.7.3
-amqplib==0.6.1
+amqplib==1.0.2
 anyjson==0.3.1
 async==0.6.1
 django-appconf==0.4.1
@@ -86,17 +86,23 @@ django-paging==0.2.4
 django-templatetag-sugar==0.1
 -e git://github.com/GoodCloud/django-timezones.git@cff53196b80711a71ca2a1d9bde54205711a3c1d#egg=django_timezones-dev
 errorhandler==1.1.1
+eventlet==0.9.16
 gitdb==0.5.2
+greenlet==0.3.1
 ipaddr==2.1.9
-kombu==1.1.3
-logilab-astng==0.21.1
-logilab-common==0.55.2
+-e hg+https://bitbucket.org/skoczen/johnny-cache@c75cf83b71ed126e44d3dbbacf8a32b8c53042e8#egg=johnny_cache-dev
+kombu==1.4.3
+lockfile==0.9.1
+logilab-astng==0.23.0
+logilab-common==0.57.1
 optcomplete==1.2-devel
 paramiko==1.7.7.1
-pycrypto==2.3
-pylint==0.23.0
-simplejson==2.1.6
+pycrypto==2.4
+pylint==0.25.0
+python-daemon==1.6
+raven==0.6.1
+simplejson==2.2.1
+ssh==1.7.8
 tornado==2.1.1
 unittest2==0.5.1
 wsgiref==0.1.2
--e git://github.com/GoodCloud/django_compressor.git@versioned_static#egg=django_compressor

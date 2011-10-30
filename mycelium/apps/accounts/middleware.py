@@ -12,7 +12,12 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
     def redirect_to_public_home(self,request):
         from django.contrib.sites.models import Site
         site = Site.objects.get(pk=settings.SITE_ID)
-        return HttpResponseRedirect("%s%s" % (request.protocol, site.domain))
+        # Yes, having this if in the middleware is ridiculous. But, it's fast, and should only fail on edges.
+        if settings.SELENIUM_TESTING:
+            return HttpResponseRedirect("%s%s:settings.LIVE_SERVER_PORT" % (request.protocol, site.domain, settings.LIVE_SERVER_PORT))
+        else:
+            return HttpResponseRedirect("%s%s" % (request.protocol, site.domain))
+        
             
 
     def process_request(self, request, *args, **kwargs):

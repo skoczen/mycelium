@@ -32,5 +32,5 @@ class ConversationTestAbstractions(object):
         sel.click("css=input[name=conversation_type][value=%s]" % (type,))
         sel.type("css=#id_date", date)
         sel.click("css=tabbed_box[name=add_a_conversation] .add_conversation_btn")
-        time.sleep(2)
+        time.sleep(1)
         return body,date

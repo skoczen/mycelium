@@ -72,6 +72,9 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, Conversati
             a1, d1 = self.add_a_conversation(body="This person really likes the number %s." % i, date="3/8/2011")
             body_and_dates.append({'a':a1, 'd':d1})
         
+        # should be unnecessary, but I think it's a sel bug.
+        sel.refresh()
+        sel.wait_for_page_to_load("30000")
         assert sel.is_text_present("This person really likes the number 15.")
         assert sel.is_text_present("This person really likes the number 14.")
         assert not sel.is_text_present("This person really likes the number 12.")
