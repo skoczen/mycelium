@@ -45,7 +45,7 @@ slimmer==0.1.30
 
 django-debug-toolbar==0.8.5
 django-picklefield==0.1.9
-django-subdomains==1.1.1
+-e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
 django-balancer==0.3
 django-sentry==1.13.2
 redis==2.2.4
@@ -93,7 +93,7 @@ grappelli-safe==0.1.8
 greenlet==0.3.1
 ipaddr==2.1.9
 -e hg+https://bitbucket.org/skoczen/johnny-cache@c75cf83b71ed126e44d3dbbacf8a32b8c53042e8#egg=johnny_cache-dev
-kombu==1.4.3
+1==1.4.3
 lockfile==0.9.1
 logilab-astng==0.23.0
 logilab-common==0.57.1
