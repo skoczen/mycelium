@@ -142,6 +142,19 @@ def sync_media():
 
 @task
 def deploy(with_downtime=False, skip_media=False, skip_backup=False):
+    if with_downtime != False and with_downtime.lower() == "True":
+        with_downtime = True
+    else:
+        with_downtime = False
+    if skip_media != False and skip_media.lower() == "True":
+        skip_media = True
+    else:
+        skip_media = False
+    if skip_backup != False and skip_backup.lower() == "True":
+        skip_backup = True
+    else:
+        skip_backup = False
+
     if env.stage == "live" and not confirm("You do mean live, right?"):
         abort("Bailing out!")
     else:
