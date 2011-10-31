@@ -131,10 +131,10 @@ def ls():
     env("app-servers").run("ls")
 
 def syncmedia():
-    local("git checkout {release_tag}; ./manage.py compress --settings=envs.{stage}; git checkout live", dir=env.config.default["project_name"])
+    local("git checkout {release_tag}; ./manage.py compress --settings=envs.{stage} --force; git checkout live", dir=env.config.default["project_name"])
 
 def setup_media_cache():
-    env("app-server-1").run("{workon_command} cd {project_name}; ./manage.py collectstatic --noinput; ./manage.py compress")
+    env("app-server-1").run("{workon_command} cd {project_name}; ./manage.py collectstatic --noinput; ./manage.py compress --force")
 
 @task
 def sync_media():
@@ -154,6 +154,9 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
         skip_backup = True
     else:
         skip_backup = False
+
+    print with_downtime
+    print skip_media
 
     if env.stage == "live" and not confirm("You do mean live, right?"):
         abort("Bailing out!")
