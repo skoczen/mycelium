@@ -35,17 +35,14 @@ def services_action(action, services=None):
             services = config["services"]
         
         if type(services) == type(""):
+            services = [services,]
+
+        for s in services:
             try:
-                env(c).run("service %s %s" % (services, action), pty=True)
+                env(c).run("service %s %s" % (s, action), pty=True)
             except:
                 print "Error running: 'service %s %s'" % (s, action)
-        else:
-            for s in services:
-                try:
-                    env(c).run("service %s %s" % (s, action), pty=True)
-                except:
-                    print "Error running: 'service %s %s'" % (s, action)
-                    # print e
+                # print e
             
 
 def services_stop(*args, **kwargs):
