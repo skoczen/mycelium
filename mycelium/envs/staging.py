@@ -49,7 +49,7 @@ REDIS_DB = BROKER_VHOST
 
 CACHES = {
     'default': {
-        'BACKEND' : 'johnny.backends.memcached.MemcachedCache'
+        'BACKEND' : 'johnny.backends.memcached.MemcachedCache',
         'LOCATION': 'int-Memcached1010.digitalmycelium.com:11211',
         'PREFIX':ENV,
         'JOHNNY_CACHE':True,
