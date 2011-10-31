@@ -142,15 +142,15 @@ def sync_media():
 
 @task
 def deploy(with_downtime=False, skip_media=False, skip_backup=False):
-    if with_downtime != False and with_downtime.lower() == "True":
+    if with_downtime != False and with_downtime.lower() == "true":
         with_downtime = True
     else:
         with_downtime = False
-    if skip_media != False and skip_media.lower() == "True":
+    if skip_media != False and skip_media.lower() == "true":
         skip_media = True
     else:
         skip_media = False
-    if skip_backup != False and skip_backup.lower() == "True":
+    if skip_backup != False and skip_backup.lower() == "true":
         skip_backup = True
     else:
         skip_backup = False
