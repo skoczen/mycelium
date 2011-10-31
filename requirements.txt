@@ -51,7 +51,7 @@ slimmer
 django-debug-toolbar
 -e git://github.com/gintas/django-picklefield.git#egg=django-picklefield
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains
--e hg+https://bitbucket.org/skoczen/johnny-cache#egg=johnny
+-e git://github.com/GoodCloud/johnny-cache.git#egg=johnny
 django-balancer
 django-sentry
 redis==2.2.4
