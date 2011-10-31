@@ -40,12 +40,12 @@ django-taggit==0.9.3
 django-taggit-templatetags==0.4.6dev
 boto==2.1.0
 django-ses==0.2
-#django-storages
+django-storages==1.1.3
 slimmer==0.1.30
 
 django-debug-toolbar==0.8.5
 django-picklefield==0.1.9
--e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
+-e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains
 django-balancer==0.3
 django-sentry==1.13.2
 redis==2.2.4
@@ -82,7 +82,6 @@ django-appconf==0.4.1
 django-cachebuster==0.2.1
 django-indexer==0.3.0
 django-paging==0.2.4
--e hg+https://bitbucket.org/david/django-storages@11bef0c2a4106bbed5b6845544efe7058474891b#egg=django_storages-dev
 django-templatetag-sugar==0.1
 -e git://github.com/GoodCloud/django-timezones.git@cff53196b80711a71ca2a1d9bde54205711a3c1d#egg=django_timezones-dev
 errorhandler==1.1.1

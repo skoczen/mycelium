@@ -45,8 +45,7 @@ django-taggit
 django-taggit-templatetags
 boto
 django-ses
-#django-storages
--e hg+https://bitbucket.org/david/django-storages#egg=storages
+django-storages
 slimmer
 
 django-debug-toolbar
