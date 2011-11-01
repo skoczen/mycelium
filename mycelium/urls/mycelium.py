@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 from django.contrib import admin
 from django.conf import settings
+import sys
 admin.autodiscover()
 
 if settings.COMPRESS_VERSIONED_STATIC_TAG_BUILTIN:
@@ -38,3 +39,8 @@ if settings.DEBUG or settings.SELENIUM_TESTING:
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     )
     urlpatterns += staticfiles_urlpatterns()
+
+if "compress" in sys.argv:
+    urlpatterns += patterns('',
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+    )

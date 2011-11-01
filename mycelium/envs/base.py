@@ -12,7 +12,7 @@ MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
 STATIC_ROOT = join(abspath(PROJECT_ROOT),"../collected_static")
 LIB_DIR = join(PROJECT_ROOT, 'lib')
 APPS_DIR = join(PROJECT_ROOT, 'apps')
-sys.path.insert(0, abspath(PROJECT_ROOT + '/../'))
+sys.path.insert(0, abspath(join(PROJECT_ROOT + '/../')))
 sys.path.insert(0, LIB_DIR)
 sys.path.insert(0, APPS_DIR)
 

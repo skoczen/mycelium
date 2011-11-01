@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 from django.conf import settings
 admin.autodiscover()
+import sys
 
 if settings.COMPRESS_VERSIONED_STATIC_TAG_BUILTIN:
     from django.template.loader import add_to_builtins
@@ -23,6 +24,10 @@ if settings.DEBUG or settings.SELENIUM_TESTING:
     )
     urlpatterns += staticfiles_urlpatterns()
 
+if "compress" in sys.argv:
+    urlpatterns += patterns('',
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+    )
 
 # override for qi urls to allow indexing
 from qi_toolkit import robots
