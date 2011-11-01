@@ -65,7 +65,7 @@ django-zebra==0.4.2
 pytz==2011k
 -e git://github.com/GoodCloud/tavutil.git@8055d68d21c24cc79c072e7ded97be3654b738a9#egg=tavutil-dev
 -e git://github.com/GoodCloud/bolt.git@b0063ee2651a25932900cebccae87ae435c297d4#egg=bolt-dev
--e git://github.com/GoodCloud/django_compressor.git@d3a156a1a51f55c7deedb5d30d8c4a04a51fbaf4#egg=django_compressor-versioned_static
+-e git://github.com/GoodCloud/django_compressor.git@5f054f0140105e29fd664152bc89742dce088c9e#egg=django_compressor-versioned_static
 html5lib==0.90
 ## The following requirements were added by pip --freeze:
 CherryPy==3.2.2
