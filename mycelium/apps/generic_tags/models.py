@@ -127,9 +127,7 @@ class Tag(AccountBasedModel, models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name.lower())
-        ret =  super(Tag, self).save(*args, **kwargs)
-        create_tag_group.delay(self)
-        return ret
+        return super(Tag, self).save(*args, **kwargs)
 
     @property
     def num_members(self):
@@ -156,6 +154,11 @@ class Tag(AccountBasedModel, models.Model):
         if self.name:
             TagGroup.raw_objects.get_or_create(account=self.account, tag=self)
 
+    @classmethod
+    def create_tag_group_if_needed_for_tag(cls, sender, instance, created=None, *args, **kwargs):
+        print instance
+        print instance.pk
+        create_tag_group.delay(instance.pk)
 
 class TaggedItem(AccountBasedModel, models.Model):
     tag = models.ForeignKey(Tag)
@@ -169,5 +172,6 @@ class TaggedItem(AccountBasedModel, models.Model):
 
 from rules.tasks import populate_rule_components_for_an_obj_with_an_account_signal_receiver, delete_rule_components_for_a_tagset
 post_save.connect(populate_rule_components_for_an_obj_with_an_account_signal_receiver,sender=TagSet)
+post_save.connect(Tag.create_tag_group_if_needed_for_tag,sender=Tag)
 pre_delete.connect(delete_rule_components_for_a_tagset,sender=TagSet)
 

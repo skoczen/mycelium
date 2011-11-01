@@ -3,10 +3,12 @@ from johnny.utils import johnny_task_wrapper
 
 @task
 @johnny_task_wrapper
-def create_tag_group(tag):
+def create_tag_group(tag_id):
     from generic_tags.models import Tag
     try:
-        t = Tag.objects.using("default").get(pk=tag.pk)
+        print tag_id
+        print Tag.objects.all()
+        t = Tag.objects.using("default").get(pk=tag_id)
         t.create_tag_group_if_needed()
     except:
         from django.core.mail import mail_admins

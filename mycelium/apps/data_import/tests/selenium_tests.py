@@ -150,7 +150,6 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, AccountTes
 
         sel.click("css=.submit_and_start_import_btn")
         sel.wait_for_page_to_load("30000")
-        assert sel.is_text_present("Right now")
 
         sel.click("link=View Results")
         sel.wait_for_page_to_load("30000")
