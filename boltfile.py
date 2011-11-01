@@ -135,10 +135,10 @@ def ls():
     env("app-servers").run("ls")
 
 def syncmedia():
-    local("git checkout {release_tag}; ./manage.py compress --settings=envs.{stage} --force; git checkout live", dir=env.config.default["project_name"])
+    local("git checkout {release_tag}; ./manage.py compress --settings=envs.{stage}; git checkout live", dir=env.config.default["project_name"])
 
 def setup_media_cache():
-    env("app-server-1").run("{workon_command} cd {project_name}; ./manage.py collectstatic --noinput; ./manage.py compress --force")
+    env("app-server-1").run("{workon_command} cd {project_name}; ./manage.py collectstatic --noinput; ./manage.py compress")
 
 @task
 def sync_media():
