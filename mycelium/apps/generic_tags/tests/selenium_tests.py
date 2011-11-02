@@ -414,6 +414,13 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, TagTestAbs
         self.test_adding_a_tag_via_the_manage_page()
         self.ensure_that_a_tag_group_exists_for_a_tag(tag_name="really cool tag")
 
+    def test_adding_a_tag_via_the_manage_page_only_creates_one_tag_group(self):
+        sel = self.selenium
+        self.test_adding_a_tag_via_the_manage_page()
+        self.ensure_that_a_tag_group_exists_for_a_tag(tag_name="really cool tag")
+        time.sleep(1)
+        assert not sel.is_element_present("css=.result_row:nth(1)")
+
     def test_adding_a_tag_via_the_person_tag_tab_page_creates_a_tag_group(self):
         self.create_person_and_go_to_tag_tab()
         self.add_a_new_tag()

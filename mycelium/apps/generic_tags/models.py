@@ -9,7 +9,6 @@ from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
 from generic_tags import BLANK_TAGSET_NAME
-from generic_tags.tasks import create_tag_group
 
 from accounts.models import AccountBasedModel
 
@@ -152,20 +151,11 @@ class Tag(AccountBasedModel, models.Model):
     def create_tag_group_if_needed(self):
         from groups.models import TagGroup
         if self.name:
-            try:
-                transaction.commit()
-            except:
-                pass
-            tg, created = TagGroup.raw_objects.using("default").get_or_create(account=self.account, tag=self)
-            print created, tg
+            TagGroup.raw_objects.using("default").get_or_create(account=self.account, tag=self)
 
     @classmethod
     def create_tag_group_if_needed_for_tag(cls, sender, instance, created=None, *args, **kwargs):
-        try:
-            transaction.commit()
-        except:
-            pass
-        create_tag_group.delay(instance.pk)
+        instance.create_tag_group_if_needed()
 
 class TaggedItem(AccountBasedModel, models.Model):
     tag = models.ForeignKey(Tag)
