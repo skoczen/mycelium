@@ -13,7 +13,6 @@ urlpatterns = patterns('',
     url(r'^',              include('flight_control.urls',      app_name="flight_control",  namespace="flight_control"),),
 
     url(r'^administration/', include(admin.site.urls)),
-    url(r'^sentry/', include('sentry.web.urls')),
 )
 
 if settings.DEBUG or settings.SELENIUM_TESTING:

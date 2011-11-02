@@ -28,7 +28,6 @@ ADMINS = [
      ('Steven Skoczen', 'steven@quantumimagery.com'),
 ]
 MANAGERS = ADMINS + [('Tom Noble', 'tom@agoodcloud.com')]
-SENTRY_ADMINS = ADMINS
 
 TIME_ZONE = "UTC"
 LANGUAGE_CODE = 'en'
@@ -151,8 +150,6 @@ INSTALLED_APPS = (
     'taggit_templatetags',
     'django_jenkins',
     'django_ses',
-    'sentry',
-    'sentry.client',
     'compressor',
     
     #'cms',

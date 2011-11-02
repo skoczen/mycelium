@@ -18,7 +18,6 @@ urlpatterns = patterns('',
 
     url(r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodcloud.posterous.com"}, 'blog'),
     url(r'^administration/', include(admin.site.urls)),
-    url(r'^sentry/',        include('sentry.web.urls')),
     url(r'^webhooks/',     include('webhooks.urls',            app_name="webhooks",        namespace="webhooks")),
     url(r'^zebra/',        include('zebra.urls',               app_name="zebra",           namespace="zebra")),
     
