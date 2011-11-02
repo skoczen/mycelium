@@ -239,11 +239,11 @@ def save_tags_and_tagsets(request):
                             deleted_tags.append(tag)
                         else:
                             tag.order = t["order"]
-                            tag.save()
                             try:
                                 transaction.commit()
                             except:
                                 pass
+                            tag.save()
                 
     ret_dict = {}
     ret_dict["created_tagsets"] = [{"name":ts.name, "order":ts.order, "db_pk":ts.pk, "page_pk": ts.page_pk} for ts in created_tagsets]
