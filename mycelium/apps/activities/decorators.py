@@ -8,9 +8,9 @@ def action(account, action_type, **action_kwargs):
         def wrapper(request, *args, **kwargs):
             ret = function(request, *args, **kwargs)
             try:
-            transaction.commit()
-        except:
-            pass
+                transaction.commit()
+            except:
+                pass
             save_action.delay(account, action_type, **action_kwargs)
             return ret
         return wrapper
