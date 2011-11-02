@@ -93,7 +93,7 @@ def shell():
 
 
 def stop_gunicorn():
-    return services_stop("gunicorn")
+    return services_stop("mycelium")
 
 def restart_nginx():
     return services_restart("nginx")
