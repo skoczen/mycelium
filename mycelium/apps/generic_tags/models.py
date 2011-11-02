@@ -156,7 +156,7 @@ class Tag(AccountBasedModel, models.Model):
                 transaction.commit()
             except:
                 pass
-            tg, created = TagGroup.raw_objects.get_or_create(account=self.account, tag=self)
+            tg, created = TagGroup.raw_objects.using("default").get_or_create(account=self.account, tag=self)
             print created, tg
 
     @classmethod
