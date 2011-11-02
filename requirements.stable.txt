@@ -47,7 +47,6 @@ django-debug-toolbar==0.8.5
 django-picklefield==0.1.9
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains==1.1.1
 django-balancer==0.3
-django-sentry==1.13.2
 redis==2.2.4
 xlwt==0.7.2
 xlrd==0.7.1

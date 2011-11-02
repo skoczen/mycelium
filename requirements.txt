@@ -53,7 +53,6 @@ django-debug-toolbar
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains
 -e git://github.com/GoodCloud/johnny-cache.git#egg=johnny
 django-balancer
-django-sentry
 redis==2.2.4
 xlwt
 xlrd
