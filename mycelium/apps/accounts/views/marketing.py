@@ -41,9 +41,9 @@ def signup(request):
 
             # Send off emails to us and them.
             try:
-            transaction.commit()
-        except:
-            pass
+                transaction.commit()
+            except:
+                pass
             send_welcome_emails.delay(account, useraccount)
 
             if settings.SELENIUM_TESTING:
