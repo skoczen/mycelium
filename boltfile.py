@@ -31,11 +31,14 @@ def tag_commit_for_release():
 def services_action(action, services=None):
     for c in env.ctx:
         config = env.get_settings((c,))[0]
+        print c
         if not services:
             services = config["services"]
         
         if type(services) == type(""):
             services = [services,]
+        
+        print services
 
         for s in services:
             try:
