@@ -155,8 +155,8 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
         tag_commit_for_release()
         locally_push_all()
         
-        if not skip_media:
-            sync_media()
+        # if not skip_media:
+            # sync_media()
         
         if not skip_backup:
             backup()
