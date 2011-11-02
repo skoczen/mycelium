@@ -1,5 +1,5 @@
 import json
-
+from django.db import transaction
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
@@ -226,6 +226,10 @@ def save_tags_and_tagsets(request):
                             pass
                     else:
                         tag, created = Tag.objects.using('default').get_or_create(account=request.account, name=t["name"], tagset=tagset)
+                        try:
+                            transaction.commit()
+                        except:
+                            pass
                         created_tags.append(tag)
                     
                     if tag:
@@ -236,6 +240,10 @@ def save_tags_and_tagsets(request):
                         else:
                             tag.order = t["order"]
                             tag.save()
+                            try:
+                                transaction.commit()
+                            except:
+                                pass
                 
     ret_dict = {}
     ret_dict["created_tagsets"] = [{"name":ts.name, "order":ts.order, "db_pk":ts.pk, "page_pk": ts.page_pk} for ts in created_tagsets]

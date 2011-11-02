@@ -1,4 +1,5 @@
 from celery.task import task
+from django.db import transaction
 
 @task
 def create_tag_group(tag_id):
