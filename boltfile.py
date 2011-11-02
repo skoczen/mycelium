@@ -151,7 +151,7 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
         abort("Bailing out!")
     else:
         locally_checkout_live()
-        locally_collect_static()
+        # locally_collect_static()
         tag_commit_for_release()
         locally_push_all()
         
