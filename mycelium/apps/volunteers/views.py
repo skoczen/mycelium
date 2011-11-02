@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
+from django.db import transaction
 
 
 from people.models import Person
@@ -44,6 +45,7 @@ def save_completed_volunteer_shift(request, volunteer_id):
             completed_shift = form.save(commit=False)
             completed_shift.volunteer = volunteer
             completed_shift.save()
+            transaction.commit()
             save_action.delay(request.account, request.useraccount, "added a volunteer shift", person=person, shift=completed_shift)
     obj = volunteer
     return _return_fragments_or_redirect(request,locals())

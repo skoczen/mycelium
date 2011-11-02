@@ -4,6 +4,7 @@ from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from taggit.managers import TaggableManager
 from accounts.models import AccountBasedModel
 from django.db.models import Sum
+from django.db import transaction
 
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
@@ -303,11 +304,13 @@ class PeopleSearchProxy(SearchableItemProxy):
         if cache.get(self.cache_name):
             return cache.get(self.cache_name)
         elif self.cached_search_result:
+            transaction.commit()
             put_in_cache_forever.delay(self.cache_name,self.cached_search_result)
             return self.cached_search_result
         else:
             ss = self.render_result_row()
             # popping over to celery
+            transaction.commit()
             put_in_cache_forever.delay(self.cache_name,ss)
             update_proxy_results_db_cache.delay(self,ss)
             return ss

@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
+from django.db import transaction
+
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from mycelium_core.models import SearchableItemProxy
 from accounts.models import AccountBasedModel
@@ -126,6 +128,7 @@ class GroupSearchProxy(SearchableItemProxy):
         # if cache.get(self.cache_name):
         #     return cache.get(self.cache_name)
         # elif self.cached_search_result:
+        #     transaction.commit()
         #     put_in_cache_forever.delay(self.cache_name,self.cached_search_result)
         #     return self.cached_search_result
         # else:
@@ -134,6 +137,7 @@ class GroupSearchProxy(SearchableItemProxy):
     def regenerate_and_cache_search_results(self):
         ss = self.render_result_row()
         # popping over to celery
+        transaction.commit()
         put_in_cache_forever.delay(self.cache_name,ss)
         update_proxy_results_db_cache.delay(GroupSearchProxy, self,ss)
         cache.set(self.cached_count_key, self.members.count())
@@ -183,6 +187,7 @@ class GroupSearchProxy(SearchableItemProxy):
     @classmethod
     def group_results_may_have_changed(cls, sender, instance, created=None, *args, **kwargs):
         from groups.tasks import regnerate_all_rulegroup_search_results_for_account
+        transaction.commit()
         regnerate_all_rulegroup_search_results_for_account.delay(cls, instance.account)
 
 

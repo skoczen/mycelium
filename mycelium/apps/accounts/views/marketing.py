@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
+from django.db import transaction
 
 from accounts.forms import NewAccountForm, NewUserForm
 from accounts.models import AccessLevel, Account
@@ -39,6 +40,7 @@ def signup(request):
             site = Site.objects.get_current()
 
             # Send off emails to us and them.
+            transaction.commit()
             send_welcome_emails.delay(account, useraccount)
 
             if settings.SELENIUM_TESTING:

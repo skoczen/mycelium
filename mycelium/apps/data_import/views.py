@@ -1,6 +1,8 @@
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.conf import settings
+from django.db import transaction
+
 from accounts.managers import get_or_404_by_account
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
@@ -54,6 +56,7 @@ def begin_import(request):
             has_header=has_header,
         )
         import_record.save()
+        transaction.commit()
         queue_data_import.delay(request.account.pk, import_record=import_record)
         return HttpResponseRedirect(reverse("data_import:list",))
     else:

@@ -1,6 +1,8 @@
 from django.template import RequestContext
 from django.conf import settings
 from django.shortcuts import render_to_response
+from django.db import transaction
+
 from accounts.managers import get_or_404_by_account
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
@@ -44,6 +46,7 @@ def save_new_conversation(request, person_id):
             new_conversation = form.save(commit=False)
             new_conversation.person = person
             new_conversation.save()
+            transaction.commit()
             save_action.delay(request.account, request.useraccount, "added a conversation", person=person, conversation=new_conversation)
         else:
             print form

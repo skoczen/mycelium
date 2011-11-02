@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
+from django.db import transaction
 
 from people.models import Person
 from organizations.forms import OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
@@ -53,6 +54,7 @@ def _org_forms(org, request):
 
 def new_organization(request):
     org = Organization.raw_objects.create(account=request.account)
+    transaction.commit()
     save_action.delay(request.account, request.useraccount, "created an organization", organization=org)
     return HttpResponseRedirect("%s?edit=ON" %reverse("organizations:organization",args=(org.pk,)))
 
@@ -85,6 +87,7 @@ def save_organization_basic_info(request,  org_id):
     success = False
     if form.is_valid():
         form.save()
+        transaction.commit()
         save_action.delay(request.account, request.useraccount, "updated an organization", organization=org)
         success = True
 

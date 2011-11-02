@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
+from django.db import transaction
 
 from people.models import Person, PeopleSearchProxy
 from people.forms import PersonForm
@@ -68,6 +69,7 @@ def save_person_basic_info(request, person_id):
         person = form.save()
         employee_formset.save()
         success = True
+        transaction.commit()
         save_action.delay(request.account, request.useraccount, "updated a person", person=person,)
 
     return {"success":success}
@@ -75,6 +77,7 @@ def save_person_basic_info(request, person_id):
 
 def new_person(request):
     person = Person.raw_objects.create(account=request.account)
+    transaction.commit()
     save_action.delay(request.account, request.useraccount, "created a person", person=person,)
     return HttpResponseRedirect("%s?edit=ON" %reverse("people:person",args=(person.pk,)))
 

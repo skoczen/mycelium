@@ -1,4 +1,6 @@
 from django.db import models
+from django.db import transaction
+
 from qi_toolkit.models import SimpleSearchableModel
 from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
 from accounts.models import AccountBasedModel
@@ -79,4 +81,5 @@ class SearchableItemProxy(SimpleSearchableModel, AccountBasedModel):
         ss = self.render_result_row()
         self.cached_search_result = ss
         super(SearchableItemProxy,self).save(*args,**kwargs)
+        transaction.commit()
         put_in_cache_forever.delay(self.cache_name, ss)

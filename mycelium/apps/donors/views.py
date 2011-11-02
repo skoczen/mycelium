@@ -1,6 +1,8 @@
 from django.template import RequestContext
 from django.conf import settings
 from django.shortcuts import render_to_response
+from django.db import transaction
+
 from accounts.managers import get_or_404_by_account
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
@@ -36,6 +38,7 @@ def save_new_donation(request, donor_id):
             new_donation = form.save(commit=False)
             new_donation.donor = donor
             new_donation.save()
+            transaction.commit()
             save_action.delay(request.account, request.useraccount, "added a donation", person=person, donation=new_donation)
         else:
             print form
