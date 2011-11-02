@@ -17,7 +17,6 @@ def task_prerun_handler(*args, **kwargs):
     monkey patch. This will make sure that any table writes invalidate table
     caches, and reads pull from any existing caches.
     """
-    print "task_prerun_handler"
     get_backend().patch()
 task_prerun.connect(task_prerun_handler)
 
@@ -26,7 +25,6 @@ def task_postrun_handler(*args, **kwargs):
     After each task is ran, the LocalStore cache (similar to threadlocals) is
     cleared, as is the case with views (instead of celery tasks).
     """
-    print "task_postrun_handler"
     local.clear()
 
 task_postrun.connect(task_postrun_handler)

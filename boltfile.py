@@ -165,27 +165,21 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
             env("app-servers").multirun(stop_gunicorn)
             env("celery-servers").multirun(services_stop)
 
-        env("app-servers").multirun(pull)
-        env("app-servers").multirun(kill_pyc)
-        env("app-servers").multirun(install_requirements)
+        env("app-servers", "celery-servers").multirun(pull)
+        env("app-servers", "celery-servers").multirun(kill_pyc)
+        env("app-servers", "celery-servers").multirun(install_requirements)
         if not skip_media:
             setup_media_cache()
-
-        env("celery-servers").multirun(pull)
-        env("celery-servers").multirun(kill_pyc)
-        env("celery-servers").multirun(install_requirements)
 
         syncdb()
         migrate()
 
         if with_downtime:
             env("app-servers").multirun(restart_nginx)
-            env("app-servers").multirun(services_start)
-            env("celery-servers").multirun(services_start)
+            env("app-servers", "celery-servers").multirun(services_start)
         else:
-            env("celery-servers").multirun(services_restart)
-            env("app-servers").multirun(services_restart)
-            
+            env("app-servers", "celery-servers").multirun(services_restart)
+                        
 
         print "Deploy successful."
 

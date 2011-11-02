@@ -152,7 +152,12 @@ class Tag(AccountBasedModel, models.Model):
     def create_tag_group_if_needed(self):
         from groups.models import TagGroup
         if self.name:
-            TagGroup.raw_objects.get_or_create(account=self.account, tag=self)
+            try:
+                transaction.commit()
+            except:
+                pass
+            tg, created = TagGroup.raw_objects.get_or_create(account=self.account, tag=self)
+            print created, tg
 
     @classmethod
     def create_tag_group_if_needed_for_tag(cls, sender, instance, created=None, *args, **kwargs):
