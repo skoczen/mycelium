@@ -39,7 +39,7 @@ def services_action(action, services=None):
 
         for s in services:
             try:
-                env(c).run("service %s %s" % (s, action), pty=True)
+                env(c).run("service %s %s" % (s, action), pty=False)
             except:
                 print "Error running: 'service %s %s'" % (s, action)
                 # print e
