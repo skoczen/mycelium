@@ -304,13 +304,19 @@ class PeopleSearchProxy(SearchableItemProxy):
         if cache.get(self.cache_name):
             return cache.get(self.cache_name)
         elif self.cached_search_result:
-            transaction.commit()
+            try:
+                transaction.commit()
+            except:
+                pass
             put_in_cache_forever.delay(self.cache_name,self.cached_search_result)
             return self.cached_search_result
         else:
             ss = self.render_result_row()
             # popping over to celery
-            transaction.commit()
+            try:
+                transaction.commit()
+            except:
+                pass
             put_in_cache_forever.delay(self.cache_name,ss)
             update_proxy_results_db_cache.delay(self,ss)
             return ss

@@ -54,7 +54,10 @@ def _org_forms(org, request):
 
 def new_organization(request):
     org = Organization.raw_objects.create(account=request.account)
-    transaction.commit()
+    try:
+        transaction.commit()
+    except:
+        pass
     save_action.delay(request.account, request.useraccount, "created an organization", organization=org)
     return HttpResponseRedirect("%s?edit=ON" %reverse("organizations:organization",args=(org.pk,)))
 
@@ -87,7 +90,10 @@ def save_organization_basic_info(request,  org_id):
     success = False
     if form.is_valid():
         form.save()
-        transaction.commit()
+        try:
+            transaction.commit()
+        except:
+            pass
         save_action.delay(request.account, request.useraccount, "updated an organization", organization=org)
         success = True
 

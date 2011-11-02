@@ -45,7 +45,10 @@ def save_completed_volunteer_shift(request, volunteer_id):
             completed_shift = form.save(commit=False)
             completed_shift.volunteer = volunteer
             completed_shift.save()
-            transaction.commit()
+            try:
+                transaction.commit()
+            except:
+                pass
             save_action.delay(request.account, request.useraccount, "added a volunteer shift", person=person, shift=completed_shift)
     obj = volunteer
     return _return_fragments_or_redirect(request,locals())

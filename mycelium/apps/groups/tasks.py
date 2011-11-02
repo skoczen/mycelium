@@ -1,10 +1,8 @@
 from celery.decorators import task
 from django.core.cache import cache
 from accounts.models import Account
-from johnny.utils import johnny_task_wrapper
 
 @task
-@johnny_task_wrapper
 def regnerate_all_rulegroup_search_results_for_account(cls, account):
     # TODO:
     # set a cache key before calling this task.

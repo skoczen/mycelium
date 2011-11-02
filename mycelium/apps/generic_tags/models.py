@@ -3,6 +3,7 @@ from django.utils.translation import ugettext as _
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from django.db.models.signals import post_save, pre_delete
 from django.template.defaultfilters import slugify
+from django.db import transaction
 
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
@@ -155,8 +156,10 @@ class Tag(AccountBasedModel, models.Model):
 
     @classmethod
     def create_tag_group_if_needed_for_tag(cls, sender, instance, created=None, *args, **kwargs):
-        from django.db import transaction
-        transaction.commit()
+        try:
+            transaction.commit()
+        except:
+            pass
         create_tag_group.delay(instance.pk)
 
 class TaggedItem(AccountBasedModel, models.Model):

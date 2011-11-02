@@ -56,7 +56,10 @@ def begin_import(request):
             has_header=has_header,
         )
         import_record.save()
-        transaction.commit()
+        try:
+            transaction.commit()
+        except:
+            pass
         queue_data_import.delay(request.account.pk, import_record=import_record)
         return HttpResponseRedirect(reverse("data_import:list",))
     else:

@@ -38,7 +38,10 @@ def save_new_donation(request, donor_id):
             new_donation = form.save(commit=False)
             new_donation.donor = donor
             new_donation.save()
-            transaction.commit()
+            try:
+                transaction.commit()
+            except:
+                pass
             save_action.delay(request.account, request.useraccount, "added a donation", person=person, donation=new_donation)
         else:
             print form

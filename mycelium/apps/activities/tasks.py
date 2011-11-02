@@ -2,10 +2,8 @@ import datetime
 from celery.task import task
 from activities.models import Action, Activity
 from accounts.models import Account, UserAccount
-from johnny.utils import johnny_task_wrapper
 
 @task
-@johnny_task_wrapper
 def save_action(account, staff, action_type, **kwargs):
                                  # person=None, organization=None, donation=None, shift=None, conversation=None
     account = Account.objects.using("default").get(pk=account.pk)

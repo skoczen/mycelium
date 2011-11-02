@@ -40,7 +40,10 @@ def signup(request):
             site = Site.objects.get_current()
 
             # Send off emails to us and them.
+            try:
             transaction.commit()
+        except:
+            pass
             send_welcome_emails.delay(account, useraccount)
 
             if settings.SELENIUM_TESTING:

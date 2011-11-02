@@ -132,7 +132,10 @@ class SpreadsheetSearchProxy(SearchableItemProxy):
     def regenerate_and_cache_search_results(self):
         ss = self.render_result_row()
         # popping over to celery
-        transaction.commit()
+        try:
+            transaction.commit()
+        except:
+            pass
         put_in_cache_forever.delay(self.cache_name,ss)
         update_proxy_results_db_cache.delay(SpreadsheetSearchProxy, self,ss)
         cache.set(self.cached_count_key, self.members.count())
@@ -181,7 +184,10 @@ class SpreadsheetSearchProxy(SearchableItemProxy):
     @classmethod
     def spreadsheet_results_may_have_changed(cls, sender, instance, created=None, *args, **kwargs):
         from spreadsheets.tasks import regnerate_all_rulespreadsheet_search_results_for_account
-        transaction.commit()
+        try:
+            transaction.commit()
+        except:
+            pass
         regnerate_all_rulespreadsheet_search_results_for_account.delay(cls, instance.account)
 
 
