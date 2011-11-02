@@ -173,6 +173,7 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
 
         env("celery-servers").multirun(pull)
         env("celery-servers").multirun(kill_pyc)
+        env("celery-servers").multirun(install_requirements)
 
         syncdb()
         migrate()
