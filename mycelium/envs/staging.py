@@ -41,7 +41,7 @@ ADMIN_MEDIA_PREFIX = "/admin-media/"
 
 
 
-BROKER_HOST = "int-Redis.digitalmycelium.com"  # Maps to redis host.
+BROKER_HOST = "int-Redis-staging.digitalmycelium.com"  # Maps to redis host.
 BROKER_VHOST = "1"                       # Maps to database number.
 REDIS_HOST = BROKER_HOST
 REDIS_DB = BROKER_VHOST

@@ -53,6 +53,11 @@ memcached-servers:
 
 redis-servers:
     hosts:
-        - ext-Redis.digitalmycelium.com
+        - ext-Redis-staging.digitalmycelium.com
+    services:
+        - redis
+redis-server-1:
+    hosts:
+        - ext-Redis-staging.digitalmycelium.com
     services:
         - redis

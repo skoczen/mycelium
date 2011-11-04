@@ -56,3 +56,8 @@ redis-servers:
         - ext-Redis.agoodcloud.com
     services:
         - redis
+redis-server-1:
+    hosts:
+        - ext-Redis.agoodcloud.com
+    services:
+        - redis

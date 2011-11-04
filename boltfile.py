@@ -98,7 +98,7 @@ def restart_nginx():
 
 @task
 def backup():
-    env("db-server-master").run("backup perform --trigger {project_name}")
+    env("db-server-master", "redis-server-1").multirun("backup perform --trigger {project_name}")
 
 @task
 def pull():
