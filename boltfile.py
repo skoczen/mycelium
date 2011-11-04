@@ -29,23 +29,19 @@ def tag_commit_for_release():
     local("git tag -d {release_tag}; git tag {release_tag}; git push --tags")
 
 def services_action(action, services=None):
-    for c in env.ctx:
-        config = env.get_settings((c,))[0]
-        print c
-        if not services:
-            services = config["services"]
-        
-        if type(services) == type(""):
-            services = [services,]
-        
-        print services
+    config = env()._settings[0]
 
-        for s in services:
-            try:
-                env(c).run("service %s %s" % (s, action), pty=False)
-            except:
-                print "Error running: 'service %s %s'" % (s, action)
-                # print e
+    if not services:
+        services = config["services"]
+    
+    if type(services) == type(""):
+        services = [services,]
+
+    for s in services:
+        try:
+            run("service %s %s" % (s, action), pty=False)
+        except:
+            print "Error running: 'service %s %s'" % (s, action)
             
 
 def services_stop(*args, **kwargs):
@@ -93,7 +89,6 @@ def status(service):
 def shell():
     """start a shell within the current context"""
     env().shell(format=True)
-
 
 def stop_gunicorn():
     return services_stop("mycelium")
@@ -179,9 +174,11 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
 
         if with_downtime:
             env("app-servers").multirun(restart_nginx)
-            env("app-servers", "celery-servers").multirun(services_start)
+            env("app-servers").multirun(services_start)
+            env("celery-servers").multirun(services_start)
         else:
-            env("app-servers", "celery-servers").multirun(services_restart)
+            env("app-servers").multirun(services_restart)
+            env("celery-servers").multirun(services_restart)
                         
 
         print "Deploy successful."

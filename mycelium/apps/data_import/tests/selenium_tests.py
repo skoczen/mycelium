@@ -4,7 +4,7 @@ import unittest
 from test_factory import Factory
 from accounts.tests.selenium_abstractions import AccountTestAbstractions
 from data_import.tests.selenium_abstractions import DataImportTestAbstractions
-
+from django.core.cache import cache
 
 class TestMockupPages(DjangoFunctionalConservativeSeleniumTestCase, AccountTestAbstractions, DataImportTestAbstractions):
     selenium_fixtures = []
@@ -20,6 +20,7 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, AccountTes
     selenium_fixtures = []
 
     def setUp(self, *args, **kwargs):
+        cache.clear()
         self.account = self.setup_for_logged_in()
 
 

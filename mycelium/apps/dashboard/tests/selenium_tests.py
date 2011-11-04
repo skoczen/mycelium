@@ -9,8 +9,8 @@ class TestAgainstNoData(DjangoFunctionalConservativeSeleniumTestCase, DashboardT
     # # selenium_fixtures = ["generic_tags.selenium_fixtures.json",]
 
     def setUp(self, *args, **kwargs):
-        self.a1 = self.setup_for_logged_in_with_no_data()
         cache.clear()
+        self.a1 = self.setup_for_logged_in_with_no_data()
         self.verificationErrors = []
 
     
