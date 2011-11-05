@@ -38,7 +38,7 @@ def services_action(action, services=None):
         services = [services,]
 
     for s in services:
-        run("service %s %s" % (s, action), pty=False)
+        run(str("service %s %s" % (s, action)), pty=False)
             
 
 def services_stop(*args, **kwargs):
