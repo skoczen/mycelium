@@ -30,8 +30,8 @@ def locally_push_all():
 def tag_commit_for_release():
     local("git tag -d {release_tag}; git tag {release_tag}; git push --tags")
 
-def services_action(action, services=None):
-    config = env()._settings[0]
+def services_action(ctx, action, services=None):
+    config = env(ctx)._settings[0]
 
     if not services:
         services = config["services"]
@@ -40,48 +40,53 @@ def services_action(action, services=None):
         services = [services,]
 
     for s in services:
-        run("service %s %s" % (s, action), pty=False)
+        run("service %s %s" % (s, action), pty=True)
             
 
 def services_stop(*args, **kwargs):
-    services_action("stop", *args, **kwargs)
+    services_action(env.ctx, "stop", *args, **kwargs)
 
 def services_start(*args, **kwargs):
-    services_action("start", *args, **kwargs)
+    services_action(env.ctx, "start", *args, **kwargs)
 
 def services_restart(*args, **kwargs):
-    services_action("restart", *args, **kwargs)
+    services_action(env.ctx, "restart", *args, **kwargs)
 
 def services_status(*args, **kwargs):
-    services_action("status", *args, **kwargs)
+    services_action(env.ctx, "status", *args, **kwargs)
+
+@task
+def restart_servers():
+    env("app-servers").multirun(services_restart)
+    env("celery-servers").multirun(services_restart)
 
 @task('app-servers')
 def start(service):
     if env.get_settings(env.ctx) == []:
         print "No servers specified."
     else:
-        services_action("start", services=[service,])
+        services_action(env.ctx, "start", services=[service,])
 
 @task('app-servers')
 def stop(service):
     if env.get_settings(env.ctx) == []:
         print "No servers specified."
     else:
-        services_action("stop", services=[service,])
+        services_action(env.ctx, "stop", services=[service,])
 
 @task('app-servers')
 def restart(service):
     if env.get_settings(env.ctx) == []:
         print "No servers specified."
     else:
-        services_action("restart", services=[service,])
+        services_action(env.ctx, "restart", services=[service,])
 
 @task('app-servers')
 def status(service):
     if env.get_settings(env.ctx) == []:
         print "No servers specified."
     else:
-        services_action("status", services=[service,])
+        services_action(env.ctx, "status", services=[service,])
 
 
 @task('app-servers')
@@ -141,6 +146,7 @@ def setup_media_cache():
 def sync_media():
     syncmedia()
 
+
 @task
 def deploy(with_downtime=False, skip_media=False, skip_backup=False):
 
@@ -176,8 +182,9 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
             env("app-servers").multirun(services_start)
             env("celery-servers").multirun(services_start)
         else:
-            env("app-servers").multirun(services_restart)
-            env("celery-servers").multirun(services_restart)
+            restart_servers()
+            # env("app-servers").multirun(services_restart)
+            # env("celery-servers").multirun(services_restart)
                         
 
         print "Deploy successful."
