@@ -43,7 +43,7 @@ coverage >= 3.4
 
 django-taggit
 django-taggit-templatetags
-boto
+boto==2.0rc1
 django-ses
 django-storages
 slimmer

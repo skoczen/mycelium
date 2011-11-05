@@ -39,7 +39,7 @@ def services_action(action, services=None):
 
     for s in services:
         try:
-            run("service %s %s" % (s, action), pty=False)
+            run("service %s %s" % (s, action), pty=True)
         except:
             print "Error running: 'service %s %s'" % (s, action)
             
