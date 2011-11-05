@@ -1,5 +1,7 @@
 from bolt.api import *
 from fabric.contrib.console import confirm
+import logging
+logger = logging.getLogger("paramiko.transport")
 
 env.config_file = True
 env.colors = True
@@ -38,7 +40,7 @@ def services_action(action, services=None):
         services = [services,]
 
     for s in services:
-        run(str("service %s %s" % (s, action)), pty=False)
+        run("service %s %s" % (s, action), pty=False)
             
 
 def services_stop(*args, **kwargs):
