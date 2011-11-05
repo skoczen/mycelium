@@ -13,7 +13,7 @@ django-xmlrpc==0.1.3
 akismet==0.2.0
 BeautifulSoup==3.2.0
 # -e git://github.com/skoczen/django-form-designer.git#egg=form_designer
--e git://github.com/GoodCloud/django-ajax-uploader.git@a4dd7ce7353eca930a02c794590139cae48b5e9e#egg=ajaxuploader-dev
+-e git://github.com/GoodCloud/django-ajax-uploader.git@c9134bc454adad9d8ff83e76c6b7bc928f055b3b#egg=ajaxuploader-dev
 
 django-extensions==0.7.1
 -e git://github.com/skoczen/qi-toolkit.git@f6bbe98b7af1fa7a7ec41c30ffa192d9009c4460#egg=qi_toolkit-dev
