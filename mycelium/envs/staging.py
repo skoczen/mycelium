@@ -1,4 +1,6 @@
 from base import *
+
+
 ENV = "STAGING"
 ROLE = ENV
 SITE_ID = 3
@@ -21,6 +23,7 @@ DATABASES = {
         'PORT': '3306',
     },
 }
+
 DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
 
 DATABASE_POOL = {
