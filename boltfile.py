@@ -38,10 +38,7 @@ def services_action(action, services=None):
         services = [services,]
 
     for s in services:
-        try:
-            run("service %s %s" % (s, action), pty=True)
-        except:
-            print "Error running: 'service %s %s'" % (s, action)
+        run("service %s %s" % (s, action), pty=False)
             
 
 def services_stop(*args, **kwargs):
