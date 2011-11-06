@@ -51,7 +51,7 @@ from django.template.loader import render_to_string
 from django.db.models.signals import post_save
 from django.core.cache import cache
 from mycelium_core.models import SearchableItemProxy
-from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
+from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever, update_proxy
 from data_import.models import PotentiallyImportedModel
 
 
@@ -338,8 +338,7 @@ class PeopleSearchProxy(SearchableItemProxy):
     def people_record_changed(cls, sender, instance, created=None, *args, **kwargs):
         proxy, nil = cls.raw_objects.get_or_create(account=instance.account, person=instance, search_group_name=cls.SEARCH_GROUP_NAME)
         cache.delete(proxy.cache_name)
-        proxy.save()
-
+        update_proxy.delay(cls, proxy)
 
     @classmethod
     def related_people_record_changed(cls, sender, instance, created=None, *args, **kwargs):

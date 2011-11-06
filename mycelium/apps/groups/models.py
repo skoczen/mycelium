@@ -11,7 +11,7 @@ from people.models import Person
 from django.db.models.signals import post_save, post_delete
 from django.core.cache import cache
 from django.template.loader import render_to_string
-from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
+from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever, update_proxy
 
 NO_NAME_STRING_GROUP = _("Unnamed Group")
 
@@ -170,7 +170,7 @@ class GroupSearchProxy(SearchableItemProxy):
     def group_record_changed(cls, sender, instance, created=None, *args, **kwargs):
         proxy, nil = cls.raw_objects.get_or_create(account=instance.account, group=instance, search_group_name=cls.SEARCH_GROUP_NAME)
         cache.delete(proxy.cache_name)
-        proxy.save()
+        update_proxy.delay(cls, proxy)
 
     @classmethod
     def related_group_record_changed(cls, sender, instance, created=None, *args, **kwargs):

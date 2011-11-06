@@ -20,6 +20,11 @@ def update_proxy_results_db_cache(cls, proxy_obj, new_result_string):
     px.cached_search_result = new_result_string
     px.save()
 
+@task
+def update_proxy(cls, proxy_obj):
+    px = cls.objects.using("default").get(pk=proxy_obj.pk)
+    px.save()
+
 
 @task
 def put_in_cache_forever(key, val):
