@@ -2,7 +2,7 @@ from django.db import models
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from mycelium_core.models import SearchableItemProxy
 from accounts.models import AccountBasedModel
-from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
+from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever, update_proxy
 from django.core.cache import cache
 from django.template.loader import render_to_string
 from django.db.models.signals import post_save
@@ -132,10 +132,6 @@ class SpreadsheetSearchProxy(SearchableItemProxy):
     def regenerate_and_cache_search_results(self):
         ss = self.render_result_row()
         # popping over to celery
-        try:
-            transaction.commit()
-        except:
-            pass
         put_in_cache_forever.delay(self.cache_name,ss)
         update_proxy_results_db_cache.delay(SpreadsheetSearchProxy, self,ss)
         cache.set(self.cached_count_key, self.members.count())
@@ -162,7 +158,7 @@ class SpreadsheetSearchProxy(SearchableItemProxy):
     def spreadsheet_record_changed(cls, sender, instance, created=None, *args, **kwargs):
         proxy, nil = cls.raw_objects.get_or_create(account=instance.account, spreadsheet=instance, search_group_name=cls.SEARCH_GROUP_NAME)
         cache.delete(proxy.cache_name)
-        proxy.save()
+        update_proxy.delay(cls, proxy)
 
     @classmethod
     def related_spreadsheet_record_changed(cls, sender, instance, created=None, *args, **kwargs):
@@ -181,14 +177,7 @@ class SpreadsheetSearchProxy(SearchableItemProxy):
     class Meta(SearchableItemProxy.Meta):
         verbose_name_plural = "SpreadsheetSearchProxies"
 
-    @classmethod
-    def spreadsheet_results_may_have_changed(cls, sender, instance, created=None, *args, **kwargs):
-        from spreadsheets.tasks import regnerate_all_rulespreadsheet_search_results_for_account
-        try:
-            transaction.commit()
-        except:
-            pass
-        regnerate_all_rulespreadsheet_search_results_for_account.delay(cls, instance.account)
+
 
 
 post_save.connect(SpreadsheetSearchProxy.spreadsheet_record_changed,sender=Spreadsheet)
