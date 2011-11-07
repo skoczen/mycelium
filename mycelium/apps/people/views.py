@@ -69,10 +69,6 @@ def save_person_basic_info(request, person_id):
         person = form.save()
         employee_formset.save()
         success = True
-        try:
-            transaction.commit()
-        except:
-            pass
         save_action.delay(request.account, request.useraccount, "updated a person", person=person,)
 
     return {"success":success}

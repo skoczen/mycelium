@@ -170,7 +170,7 @@ class GroupSearchProxy(SearchableItemProxy):
     def group_record_changed(cls, sender, instance, created=None, *args, **kwargs):
         proxy, nil = cls.raw_objects.get_or_create(account=instance.account, group=instance, search_group_name=cls.SEARCH_GROUP_NAME)
         cache.delete(proxy.cache_name)
-        update_proxy.delay(cls, proxy)
+        proxy.save()
 
     @classmethod
     def related_group_record_changed(cls, sender, instance, created=None, *args, **kwargs):
