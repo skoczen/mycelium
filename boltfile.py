@@ -40,7 +40,7 @@ def services_action(ctx, action, services=None):
         services = [services,]
 
     for s in services:
-        run("service %s %s" % (s, action), pty=True)
+        run("service %s %s > /dev/null" % (s, action), pty=True)
             
 
 def services_stop(*args, **kwargs):
