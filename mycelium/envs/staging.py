@@ -1,6 +1,6 @@
 from base import *
 
-
+SESSION_COOKIE_DOMAIN = "digitalmycelium.com"
 ENV = "STAGING"
 ROLE = ENV
 SITE_ID = 3
