@@ -76,10 +76,6 @@ def save_person_basic_info(request, person_id):
 
 def new_person(request):
     person = Person.raw_objects.create(account=request.account)
-    try:
-        transaction.commit()
-    except:
-        pass
     save_action.delay(request.account, request.useraccount, "created a person", person=person,)
     return HttpResponseRedirect("%s?edit=ON" %reverse("people:person",args=(person.pk,)))
 
