@@ -1,18 +1,19 @@
+import re
+import datetime
+
 from django.db import models
 from django.utils.translation import ugettext as _
+from django.db.models import Sum
+from django.db import transaction
+
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
 from taggit.managers import TaggableManager
 from accounts.models import AccountBasedModel
-from django.db.models import Sum
-from django.db import transaction
+from people import CONTACT_TYPE_CHOICES, PHONE_CONTACT_TYPE_CHOICES
 
 from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
 
-
-
-import re
-import datetime
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING_PERSON = _("Unnamed Person")
 NORMALIZED_BIRTH_YEAR = 2000  # should be a leap year for normalization's sake.
@@ -159,7 +160,7 @@ class BirthdayBase(models.Model):
         abstract = True
 
 
-class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, AddressBase, PhoneNumberBase, EmailAddressBase, BirthdayBase, PotentiallyImportedModel):
+class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, AddressBase, BirthdayBase, PotentiallyImportedModel):
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     
@@ -208,8 +209,8 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
 
     @property
     def primary_phone_number(self):
-        if self.phone_number:
-            return self.phone_number
+        if self.phone_numbers:
+            return self.phone_numbers.order_by("primary",)[0]
         else:
             for e in self.jobs.all():
                 if e.phone_number:
@@ -217,14 +218,22 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
         return None
 
     @property
+    def phone_numbers(self):
+        return self.peoplephonenumber_set.all()
+
+    @property
     def primary_email(self):
-        if self.email:
-            return self.email
+        if self.emails:
+            return self.emails.order_by("primary",)[0]
         else:
             for e in self.jobs.all():
                 if e.email:
                     return e.email
         return None
+
+    @property
+    def emails(self):
+        return self.peopleemailaddresses_set.all()
 
     @property
     def tagsets(self):
@@ -269,6 +278,36 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     def conversations(self):
         return self.conversation_set.all()
 
+
+class ContactMethod(models.Model):
+    METHOD_CHOICES = CONTACT_TYPE_CHOICES
+    contact_type = models.CharField(max_length=20, choices=METHOD_CHOICES, default=METHOD_CHOICES[0][0])
+    primary = models.BooleanField(default=False)
+
+    class Meta(object):
+        abstract = True
+
+
+class PersonContactMethod(AccountBasedModel):
+    person = models.ForeignKey(Person)
+    
+    class Meta(object):
+        abstract = True
+
+
+
+class EmailAddress(EmailAddressBase, ContactMethod):
+    pass
+
+class PhoneNumber(PhoneNumberBase, ContactMethod):
+    METHOD_CHOICES = PHONE_CONTACT_TYPE_CHOICES
+    pass
+
+class PersonEmailAddress(EmailAddress, PersonContactMethod):
+    pass
+
+class PersonPhoneNumber(PhoneNumber, PersonContactMethod):
+    pass
 
 class PeopleSearchProxy(SearchableItemProxy):
     SEARCH_GROUP_NAME = "people"
