@@ -24,6 +24,7 @@ def _get_account_from_kwargs(kwargs):
         if "instance" in kwargs and kwargs["instance"] and hasattr(kwargs["instance"],"account"):
             account = kwargs["instance"].account
             # print "pulled from instance: %s" % kwargs["instance"]
+
     assert account, "Account required"
     # print "found account: %s" % account
             

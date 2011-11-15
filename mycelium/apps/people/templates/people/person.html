@@ -39,42 +39,60 @@ $(function(){
 
 
 
-<div class="basic_info">
+<div itemscope itemtype="http://schema.org/Person" class="basic_info">
 	<div class="name_phone_email">
-		<div class="name">
+		<div class="name" itemprop="name">
 			{% generic_editable_field form.first_name %}
 			{% generic_editable_field form.last_name %}
 		</div>
 	</div>
-		<tabbed_box class="open" name="home">
+		<tabbed_box class="open contact_info" name="home">
 			<tab_title_container>
 			<tab_title>
 				<icon class="home"></icon>
-				<text>Home</text>
+				<text>Contacts</text>
 			</tab_title>
 			</tab_title_container>
 			<box_content>
 				<div id="no_home_contact_info_message"></div>
 				<div class="phone_email">
-				{% generic_editable_field form.phone_number %}
-				{% generic_editable_field_email form.email %}
+				{% for p_form in phone_formset.forms %}
+					<span class="contact_type">{% generic_editable_field p_form.contact_type %}</span>
+					<span itemprop="telephone">{% generic_editable_field p_form.phone_number %}</span>
+					<span class="primary">{% generic_editable_field p_form.primary %}</span>
+					{% for f in p_form.hidden_fields %}{{f}}{% endfor %}
+				
+				{% endfor %}
+				{{phone_formset.management_form}}
+				
+
+				{% for e_form in email_formset.forms %}
+					<span class="contact_type">{% generic_editable_field e_form.contact_type %}</span>
+					<span itemprop="email">{% generic_editable_field e_form.email %}</span>
+					<span class="primary">{% generic_editable_field e_form.primary %}</span>
+					{% for f in e_form.hidden_fields %}{{f}}{% endfor %}
+				{% endfor %}
+				{{email_formset.management_form}}
+
 				</div>
 			<div class="address">
+				<span itemprop="streetAddress">
 				{% generic_editable_field form.line_1 %}
 				{% generic_editable_field form.line_2 %}
+				</span>
 
 				<div class="city_state_zip">
-					{% generic_editable_field form.city %}<span class="city_state_comma">,</span>
-					{% generic_editable_field form.state %}
-					{% generic_editable_field form.postal_code %}
+					<span itemprop="addressLocality">{% generic_editable_field form.city %}</span><span class="city_state_comma">,</span>
+					<span itemprop="addressRegion">{% generic_editable_field form.state %}</span>
+					<span itemprop="postalCode">{% generic_editable_field form.postal_code %}</span>
 				</div>
 
 			</div>
 			<div class="birthday" {% if not person.normalized_birthday %}style="display:none;"{% endif %}>
 				<label ><span class="text">Birthday</span></label>
-				{% generic_editable_field form.birth_month %}
+				<span itemprop="birthDate">{% generic_editable_field form.birth_month %}
 				{% generic_editable_field form.birth_day %}<span class="date_year_comma">,</span> 
-				{% generic_editable_field form.birth_year %}
+				{% generic_editable_field form.birth_year %}</span>
 				<div class="invalid_date">Hm. <span class="selected_month"></span> <span class="selected_day"></span> isn't a real date, and can't be saved.</div>
 			</div>
 		</box_content>

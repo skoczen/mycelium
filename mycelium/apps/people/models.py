@@ -1,19 +1,24 @@
 import re
 import datetime
 
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import ugettext as _
 from django.db.models import Sum
-from django.db import transaction
+from django.template.loader import render_to_string
+from django.db.models.signals import post_save
+from django.core.cache import cache
+from south.modelsinspector import add_ignored_fields
 
 from qi_toolkit.models import SimpleSearchableModel, TimestampModelMixin
-from taggit.managers import TaggableManager
 from accounts.models import AccountBasedModel
-from people import CONTACT_TYPE_CHOICES, PHONE_CONTACT_TYPE_CHOICES
+from contacts.models import AddressBase, EmailAddressBase, PhoneNumberBase, ContactMethod
+from people import PHONE_CONTACT_TYPE_CHOICES
+from generic_tags.models import TagSet
+from mycelium_core.models import SearchableItemProxy
+from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
+from data_import.models import PotentiallyImportedModel
 
-from south.modelsinspector import add_ignored_fields
 add_ignored_fields(["^generic_tags\.manager.TaggableManager"])
-
 DIGIT_REGEX = re.compile(r'[^\d]+')
 NO_NAME_STRING_PERSON = _("Unnamed Person")
 NORMALIZED_BIRTH_YEAR = 2000  # should be a leap year for normalization's sake.
@@ -47,47 +52,6 @@ ABBREV_MONTHS = [
     (12, _("Dec.")),
 ]
 
-from generic_tags.models import TagSet, Tag
-from django.template.loader import render_to_string
-from django.db.models.signals import post_save
-from django.core.cache import cache
-from mycelium_core.models import SearchableItemProxy
-from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever, update_proxy
-from data_import.models import PotentiallyImportedModel
-
-
-class AddressBase(models.Model):
-    line_1 = models.CharField(max_length=255, blank=True, null=True, verbose_name="Address Line 1")
-    line_2 = models.CharField(max_length=255, blank=True, null=True, verbose_name="Address Line 2")
-    city = models.CharField(max_length=255, blank=True, null=True)
-    state = models.CharField(max_length=255, blank=True, null=True)
-    postal_code = models.CharField(max_length=255, blank=True, null=True)
-
-    def __unicode__(self):
-        return "%(line_1)s, %(line_2)s, %(city)s, %(state)s %(postal_code)s" % (self.__dict__)
-
-    class Meta(object):
-        abstract = True
-        verbose_name_plural = "Addresses"
-
-class EmailAddressBase(models.Model):
-    email = models.CharField(max_length=255, blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s" % self.email
-
-    class Meta(object):
-        abstract = True
-        verbose_name_plural = "Email Addresses"
-
-class PhoneNumberBase(models.Model):
-    phone_number = models.CharField(max_length=255, blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s" % self.phone_number
-
-    class Meta(object):
-        abstract = True
 
 class BirthdayBase(models.Model):
     birth_day           = models.IntegerField(blank=True, null=True, verbose_name="day")
@@ -219,7 +183,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
 
     @property
     def phone_numbers(self):
-        return self.peoplephonenumber_set.all()
+        return self.personphonenumber_set.all()
 
     @property
     def primary_email(self):
@@ -233,7 +197,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
 
     @property
     def emails(self):
-        return self.peopleemailaddresses_set.all()
+        return self.personemailaddress_set.all()
 
     @property
     def tagsets(self):
@@ -277,15 +241,6 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     @property
     def conversations(self):
         return self.conversation_set.all()
-
-
-class ContactMethod(models.Model):
-    METHOD_CHOICES = CONTACT_TYPE_CHOICES
-    contact_type = models.CharField(max_length=20, choices=METHOD_CHOICES, default=METHOD_CHOICES[0][0])
-    primary = models.BooleanField(default=False)
-
-    class Meta(object):
-        abstract = True
 
 
 class PersonContactMethod(AccountBasedModel):

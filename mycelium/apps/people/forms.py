@@ -1,12 +1,14 @@
-from people.models import Person
-from accounts.forms import AccountBasedModelForm
 import datetime
 
+from django.forms.models import inlineformset_factory
+
+from accounts.forms import AccountBasedModelForm, AccountBasedModelFormSet
+from people.models import Person, PersonPhoneNumber, PersonEmailAddress
 
 class PersonForm(AccountBasedModelForm):
     class Meta:
         model = Person
-        fields = ("account", "first_name", "last_name", "email", "phone_number", "line_1", "line_2", "city", "state", "postal_code", "birth_day", "birth_month", "birth_year")
+        fields = ("account", "first_name", "last_name", "line_1", "line_2", "city", "state", "postal_code", "birth_day", "birth_month", "birth_year")
 
     def __init__(self, *args, **kwargs):
         super(PersonForm,self).__init__(*args,**kwargs)
@@ -27,3 +29,36 @@ class PersonForm(AccountBasedModelForm):
                 self.cleaned_data["birth_day"] = None
 
         return self.cleaned_data
+
+class PhoneNumberForm(AccountBasedModelForm):
+    class Meta:
+        model = PersonPhoneNumber
+        fields = ("account", "person", "phone_number", "contact_type", "primary")
+
+
+class EmailAddressForm(AccountBasedModelForm):
+    class Meta:
+        model = PersonEmailAddress
+        fields = ("account", "person", "email", "contact_type", "primary")
+
+
+PhoneNumberFormset = inlineformset_factory(Person,
+                             PersonPhoneNumber, 
+                             fields=("account", "person", "phone_number", "contact_type", "primary"), 
+                             can_delete=True, 
+                             extra=0, 
+                             form=PhoneNumberForm, 
+                             formset=AccountBasedModelFormSet
+                    )
+
+
+
+EmailAddressFormset = inlineformset_factory(Person,
+                             PersonEmailAddress, 
+                             fields=("account", "person", "email", "contact_type", "primary"), 
+                             can_delete=True, 
+                             extra=0, 
+                             form=EmailAddressForm, 
+                             formset=AccountBasedModelFormSet
+                    )
+

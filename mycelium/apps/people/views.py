@@ -11,7 +11,7 @@ from django.views.decorators.cache import cache_page
 from django.db import transaction
 
 from people.models import Person, PeopleSearchProxy
-from people.forms import PersonForm
+from people.forms import PersonForm, PhoneNumberFormset, EmailAddressFormset
 from organizations.models import Employee
 from organizations.forms import OrganizationForm, PersonViaOrganizationForm, EmployeeForm, EmployeeFormset, EmployeeFormsetFromOrg
 
@@ -49,27 +49,34 @@ def _basic_forms(person, request):
 
     form             = PersonForm(data, instance=person, account=request.account)
     employee_formset = EmployeeFormset(data, instance=person, prefix="ROLE", account=request.account)
+    phone_formset    = PhoneNumberFormset(data, instance=person, prefix="PHONE", account=request.account)
+    email_formset    = EmailAddressFormset(data, instance=person, prefix="EMAIL", account=request.account)
 
 
-    return (form, employee_formset)
+    return (form, employee_formset, phone_formset, email_formset)
 
 @render_to("people/person.html")
 def person(request, person_id):
     person = get_or_404_by_account(Person, request.account, person_id)
-    (form, employee_formset) = _basic_forms(person, request)
+    (form, employee_formset, phone_formset, email_formset) = _basic_forms(person, request)
     c = locals()
     return _people_conversations_tab_context(c)
 
 @json_view
 def save_person_basic_info(request, person_id):
     person = get_or_404_by_account(Person, request.account, person_id)
-    (form, employee_formset) = _basic_forms(person, request)
+    (form, employee_formset, phone_formset, email_formset) = _basic_forms(person, request)
     success = False
-    if form.is_valid() and employee_formset.is_valid():
-        person = form.save()
+    if form.is_valid() and employee_formset.is_valid() and phone_formset.is_valid() and email_formset.is_valid():
+        person = form.save(commit=False)
         employee_formset.save()
+        phone_formset.save()
+        email_formset.save()
+        person.save()
         success = True
         save_action.delay(request.account, request.useraccount, "updated a person", person=person,)
+    else:
+        print form, employee_formset, phone_formset, email_formset
 
     return {"success":success}
 

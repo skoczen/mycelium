@@ -1,10 +1,12 @@
+import re
+
 from django.db import models
 from django.db import transaction
 
+from johnny import cache as jcache
 from qi_toolkit.models import SimpleSearchableModel
-from mycelium_core.tasks import update_proxy_results_db_cache, put_in_cache_forever
+from mycelium_core.tasks import put_in_cache_forever
 from accounts.models import AccountBasedModel
-import re
 
 class SearchableItemProxy(SimpleSearchableModel, AccountBasedModel):
     # models = []
@@ -75,7 +77,7 @@ class SearchableItemProxy(SimpleSearchableModel, AccountBasedModel):
         return results
 
 
-    def save(self,*args,**kwargs):
+    def save(self, *args, **kwargs):
         self.search_string = self.generate_search_string()
         self.sorting_name = self.get_sorting_name()
         ss = self.render_result_row()

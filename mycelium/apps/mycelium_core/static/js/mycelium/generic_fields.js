@@ -129,8 +129,6 @@
                 var $this = $(this),
                     data = $this.data('genericFieldForm');
                    
-                
-
                 // if any fields have changed
                 var ser = $("input, select, textarea",data.form).serialize();
 
