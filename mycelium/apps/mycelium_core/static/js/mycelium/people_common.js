@@ -1,7 +1,7 @@
 $(function(){
     $("#basic_info_form").bind("genericFieldForm.toggle_off", do_some_intelligent_data_formatting);
     $("#basic_info_form").bind("genericFieldForm.toggle_on", function(e){$(".city_state_comma",e.target).show();$(".birthday").show();});
-    $("#basic_info_form").genericFieldForm();
+    // $("#basic_info_form").genericFieldForm();
     intelligently_show_hide_comma();
     intelligently_show_no_home_contact_info();
     $(".birthday input").change(check_for_valid_birthday);

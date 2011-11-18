@@ -12,6 +12,10 @@
 {% endblock %}
 {% block javascript %}{{block.super}}
 {% compress js %}
+{# TODO #}
+<script src="{{STATIC_URL}}js/mycelium/generic_ajax_form.js"></script>
+<script src="{{STATIC_URL}}js/contrib/jquery.formset.min.js"></script>
+
 <script src="{{STATIC_URL}}js/mycelium/people_volunteer.js"></script>
 <script src="{{STATIC_URL}}js/mycelium/people_donations.js"></script>
 <script src="{{STATIC_URL}}js/mycelium/people_conversations.js"></script>
@@ -28,8 +32,35 @@ $(function(){
 	$("#id_first_name").focus();
 });
 </script>
-
 {% endif %}
+<script>
+var url_options = {
+		"form_objects": {
+			"person": {
+				save_object_url: "{% url people:person_save %}",
+				new_object_url: "{% url people:person_new %}",
+				delete_object_url: "{% url people:person_delete %}"
+			},
+			"phone_number": {
+				save_object_url: "{% url people:phone_number_save %}",
+				new_object_url: "{% url people:phone_number_new %}",
+				delete_object_url: "{% url people:phone_number_delete %}"			
+			},
+			"email": {
+				save_object_url: "{% url people:email_save %}",
+				new_object_url: "{% url people:email_new %}",
+				delete_object_url: "{% url people:email_delete %}"
+			},
+			"employee": {
+				save_object_url: "{% url people:employee_save %}",
+				new_object_url: "{% url people:employee_new %}",
+				delete_object_url: "{% url people:employee_delete %}"
+			}
+		}
+	}
+	person_form_options = $.extend(true, person_form_options, url_options);
+	$("#basic_info_form").genericAjaxForm(person_form_options);
+</script>
 
 {% endblock %}
 {% block breadcrumb_links %}<a href="{% url people:search %}" >Back to All People</a>{% endblock %}
