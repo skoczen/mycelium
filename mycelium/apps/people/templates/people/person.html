@@ -70,7 +70,7 @@ var url_options = {
 
 
 
-<div itemscope itemtype="http://schema.org/Person" class="basic_info">
+<div itemscope itemtype="http://schema.org/Person" class="basic_info person canonical" pk="{{person.pk}}">
 	<div class="name_phone_email">
 		<div class="name" itemprop="name">
 			{% generic_editable_field form.first_name %}
@@ -88,20 +88,23 @@ var url_options = {
 				<div id="no_home_contact_info_message"></div>
 				<div class="phone_email">
 				{% for p_form in phone_formset.forms %}
+				<span class="phone_number canonical" pk="{{p_form.instance.pk}}">
 					<span class="contact_type">{% generic_editable_field p_form.contact_type %}</span>
 					<span itemprop="telephone">{% generic_editable_field p_form.phone_number %}</span>
 					<span class="primary">{% generic_editable_field p_form.primary %}</span>
 					{% for f in p_form.hidden_fields %}{{f}}{% endfor %}
-				
+				</span>
 				{% endfor %}
 				{{phone_formset.management_form}}
 				
 
 				{% for e_form in email_formset.forms %}
+				<span class="email canonical" pk="{{e_form.instance.pk}}">
 					<span class="contact_type">{% generic_editable_field e_form.contact_type %}</span>
 					<span itemprop="email">{% generic_editable_field e_form.email %}</span>
 					<span class="primary">{% generic_editable_field e_form.primary %}</span>
 					{% for f in e_form.hidden_fields %}{{f}}{% endfor %}
+				</span>
 				{% endfor %}
 				{{email_formset.management_form}}
 
@@ -129,6 +132,7 @@ var url_options = {
 		</box_content>
 		</tabbed_box>
 		{% for e_form in employee_formset.forms %}
+		<span class="employee canonical" pk="{{e_form.instance.pk}}">
 		<tabbed_box class="open" name="job">
 			<tab_title_container>
 			<a href="{% url organizations:organization e_form.instance.organization.pk %}">
@@ -145,6 +149,7 @@ var url_options = {
 				{% for f in e_form.hidden_fields %}{{f}}{% endfor %}
 			</box_content>
 		</tabbed_box>
+		</span>
 		{% endfor %}
 		{{employee_formset.management_form}}
 

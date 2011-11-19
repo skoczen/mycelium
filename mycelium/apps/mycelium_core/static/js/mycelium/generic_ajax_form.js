@@ -83,8 +83,8 @@
 		var form_options = {
 			form_objects: {
 				"person": {
-					get_pks: function(){ 
-										// Initially gets the set of pks from the page body.
+					get_objects: function(){ 
+										// Initially gets the set of objects from the page body.
 										},
 					get_data: function(){ 
 										// Gets data prior to ajax POST. 
@@ -94,8 +94,8 @@
 					delete_object_url: "/person/delete"
 				},
 				"phone_number": {
-					get_pks: function(){ 
-										// Initially gets the set of pks from the page body.
+					get_objects: function(){ 
+										// Initially gets the set of objects from the page body.
 										},
 					get_data: function(){ 
 										// Gets data prior to ajax POST. 
@@ -105,8 +105,8 @@
 					delete_object_url: "/phone_number/delete"			
 				},
 				"email": {
-					get_pks: function(){ 
-										// Initially gets the set of pks from the page body.
+					get_objects: function(){ 
+										// Initially gets the set of objects from the page body.
 										},
 					get_data: function(){ 
 										// Gets data prior to ajax POST. 
@@ -161,13 +161,15 @@
                     	data.form_objects = data.options.form_objects;
                     	data.page_objects = {};
                     	data.save_queue = {};
+                    	data.page_pk = 1;
                     	data.pending_save_queue = {};
                     		// - key is object_name+"_"+page_pk
 							// - value is the SaveQueueItem
                     	for (var key in data.form_objects) {
                     		var fo = data.form_objects[key]
-                    		console.log(fo);
+                    		data.page_objects[key] = fo.get_objects()
                     	}
+                    	console.log(data.page_objects)
                     } else {
                     	data.custom_save_mode = false;
                     	if (options.hasOwnProperty("form")) {
@@ -351,29 +353,9 @@
                 }, 200);
             });
         },
-		FormObject: function(object_name, get_pks, get_data, save_object_url, new_object_url, delete_object_url) {
-			var o = {};
-			o.object_name = object_name;
-			o.get_pks = get_pks;
-			o.get_data = get_data;
-			o.save_object_url = save_object_url;
-			o.new_object_url = new_object_url;
-			o.delete_object_url = delete_object_url;
-			return o;
-		},
-		PageObject: function(form_object, page_pk, db_pk, get_data) {
-			var o = {};
-			o.form_object = form_object;
-			o.page_pk = page_pk;
-			o.db_pk = db_pk;
-			o.waiting_on_db_pk = false;
-			o.wating_to_delete = false;
-			o.deleted = false;
-			o.get_data = get_data;
-			return o;
-		},
-		SaveQueueItem: function(form_object) {
-			this.form_object = form_object;
+		get_form_object: function(object_name) {
+			var $this = $(this), data = $this.data('genericAjaxForm');
+			return data.form_objects[object_name];
 		},
 		get_page_object: function(object_name, page_pk) {
 			var $this = $(this), data = $this.data('genericAjaxForm');
@@ -416,8 +398,6 @@
     };
 
 
-
-
     $.fn.genericAjaxForm = function( method ) {
        if ( methods[method] ) {
          return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
@@ -426,6 +406,43 @@
        } else {
          $.error( 'Method ' +  method + ' does not exist on jQuery.genericAjaxForm' );
        }    
-     };
-     
+    };
+
+	$.fn.genericAjaxFormClasses = function( method ) {
+		return {
+			PageObject: function(form_object, db_pk) {
+				var $this = $(this), data = $this.data('genericAjaxForm');
+				var o = {};
+				o.form_object = form_object;
+				o.page_pk = $.fn.genericAjaxGetNextPagePk();
+				o.db_pk = db_pk;
+				o.waiting_on_db_pk = false;
+				o.wating_to_delete = false;
+				o.deleted = false;
+				o.get_data = form_object.get_data;
+				return o;
+			},
+			SaveQueueItem: function(form_object) {
+				this.form_object = form_object;
+			},
+			createPageObjectFromCanonical: function(form_object, selector) {
+					var objs = []
+					$(selector).each(function(){
+						var obj_pk = $(selector).attr("pk");
+						var ph = $.fn.genericAjaxFormClasses().PageObject(form_object, obj_pk)
+						objs.push(ph)
+					});
+					return objs
+			}
+		}
+	};
+    $.fn.genericAjaxGetNextPagePk = function() {
+		if ($.genericAjaxPagePk == undefined) {
+			$.genericAjaxPagePk = 0;
+		}
+		$.genericAjaxPagePk++;
+		return $.genericAjaxPagePk
+    };
+
+
 })(jQuery);
