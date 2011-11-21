@@ -361,3 +361,5 @@ class PeopleSearchProxy(SearchableItemProxy):
 
         
 post_save.connect(PeopleSearchProxy.people_record_changed,sender=Person)
+post_save.connect(PeopleSearchProxy.related_people_record_changed,sender=PersonEmailAddress)
+post_save.connect(PeopleSearchProxy.related_people_record_changed,sender=PersonPhoneNumber)
