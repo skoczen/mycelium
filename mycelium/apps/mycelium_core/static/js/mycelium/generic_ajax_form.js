@@ -122,11 +122,66 @@
 
 	*/
 
+	var PageObject = function(form_object, db_pk, target) {
+// Here, trying to figure out what's passed.
+		var o = {};
+		o.form_object = form_object;
+		o.target = target;
+		o.page_pk = $.fn.genericAjaxGetNextPagePk();
+		target.attr("page_pk", o.page_pk);
+		o.db_pk = db_pk;
+		o.waiting_on_db_pk = false;
+		o.wating_to_delete = false;
+		o.deleted = false;
+		o.get_data = function(){return this.form_object.get_data(this)};
 
+		o.save = function() {
+			
+		}
+		o.serialized_string = function(){return $("input, select, textarea",this.target).serialize();}
+		o.prev_serialized_string = o.serialized_string();
+		o.has_changed = function() {
+			return this.previous_serialized_str != this.serialized_string()
+		}
+		o.update_serialized_string = function() {
+			this.previous_serialized_str = this.serialized_string();
+		}
+		return o;
+	};
+	var SaveQueueItem = function(form_object) {
+		this.form_object = form_object;
+	};
+	var createPageObjectFromCanonical = function(form_object, form_object_name, selector) {
+			var objs = {}
+			$(selector).each(function(){
+				var obj_pk = $(selector).attr("pk");
+				var po = PageObject(form_object, obj_pk, $(selector))
+				objs[form_object_name+"_"+po.page_pk] = po;
+			});
+			return objs
+	};
+	var getFormFieldData = function(target) {
+		console.log("getFormFieldData")
+		console.log(target)
+		console.log($(target).formToArray(true))
+		return $(target).formToArray(true)
+	};
+
+	var get_page_object = function(data, object_name, page_pk) {
+		return (data.page_objects.hasOwnProperty(object_name+"_"+page_pk)) ? data.page_objects[(object_name+"_"+page_pk)] : false;
+	};
+
+    $.fn.genericAjaxGetNextPagePk = function() {
+		if ($.genericAjaxPagePk == undefined) {
+			$.genericAjaxPagePk = 0;
+		}
+		$.genericAjaxPagePk++;
+		return $.genericAjaxPagePk
+    };
 
 
     var methods = {
-       init : function( options ) {
+       init : function( opt ) {
            var defaults = {
                "min_save_message_display_time": 1600,
                "start_edit_btn_class": "save_status_and_button .start_edit_btn",
@@ -143,7 +198,7 @@
                "saved_recently_text": "Saved a few seconds ago.",
            };
 
-           var options =  $.extend(defaults, options);
+           var options =  $.extend(defaults, opt);
 
            return this.each(function() {
                 var $this = $(this),
@@ -154,7 +209,9 @@
                     data = {};
                     data.options = options;
                     data.target = $this;
-                    if (data.options.hasOwnProperty("form_objects")) {
+                    data.custom_save_mode = false;
+
+                    if (opt.hasOwnProperty("form_objects")) {
 						data.custom_save_mode = true;
 						$this.data('genericAjaxForm',data);
 						data = $this.data('genericAjaxForm');
@@ -167,29 +224,61 @@
 							// - value is the SaveQueueItem
                     	for (var key in data.form_objects) {
                     		var fo = data.form_objects[key]
-                    		data.page_objects[key] = fo.get_objects()
+                    		var selector = "."+key+".canonical";
+                    		var target = $(selector);
+                    		if (!fo.hasOwnProperty('get_objects')) {
+                    			fo.get_objects = function(){ return createPageObjectFromCanonical(this, key, selector)};
+                    		}
+                    		if (!fo.hasOwnProperty('get_data')) {
+                    			fo.get_data = function(page_object){ 
+	                    			var o = {};
+                    				var d = getFormFieldData(page_object.target);
+                    				for (var j=0; j<d.length; j++) {
+                    					var k = d[j]["name"];
+                    					if (page_object.form_object.hasOwnProperty('django_formset_prefix')) {
+                    						if (k.indexOf(page_object.form_object.django_formset_prefix+"-") != -1) {
+												// Slice off the formset name prefixes
+												var first_dash = k.indexOf(page_object.form_object.django_formset_prefix+"-")+page_object.form_object.django_formset_prefix.length+1
+                    							k = k.slice(0,first_dash) + k.slice(k.indexOf("-", first_dash+1)+1)
+                    						}
+                    					}
+                    					o[k] = d[j]["value"];
+                    				}
+                    				o["page_pk"]= page_object.page_pk;
+                    				o["db_pk"]= page_object.db_pk;
+                    				// Get all parent canonicals, put their pks in.
+                    				page_object.target.parents(".canonical").each(function() {
+                    					var par = $(this);
+                    					o[par.attr("form_object_type")+"_pk"] = par.attr("pk")
+                    				})
+									console.log("formob,get_data")
+                    				console.log(o)
+                    				return o
+                    			};
+                    		}
+                    		data.page_objects = $.extend(data.page_objects,fo.get_objects())
                     	}
-                    	console.log(data.page_objects)
+                	
+                	}
+                	
+                	if (options.hasOwnProperty("form")) {
+                        data.form = $(options.form);
                     } else {
-                    	data.custom_save_mode = false;
-                    	if (options.hasOwnProperty("form")) {
-	                        data.form = $(options.form);
-	                    } else {
-	                        if (data.target.is("form")) {
-	                            data.form = data.target;
-	                        } else {
-	                            if ($("form",data.target).length > 0) {
-	                                data.form = $("form:nth(0)",data.target);
-	                            } else {
-	                                data.form = data.target.parents("form");
-	                            }
-	                        }
-	                    }
-	                    data.save_url = (options.hasOwnProperty("save_url"))? options.save_url: data.form.attr("action");
-	                    data.save_method = (options.hasOwnProperty("save_method"))? options.save_method: data.form.attr("method");
-	                    data.async = true;
-	                    data.save_queued = false;
+                        if (data.target.is("form")) {
+                            data.form = data.target;
+                        } else {
+                            if ($("form",data.target).length > 0) {
+                                data.form = $("form:nth(0)",data.target);
+                            } else {
+                                data.form = data.target.parents("form");
+                            }
+                        }
                     }
+                    data.save_url = (options.hasOwnProperty("save_url"))? options.save_url: data.form.attr("action");
+                    data.save_method = (options.hasOwnProperty("save_method"))? options.save_method: data.form.attr("method");
+                    data.async = true;
+                    data.save_queued = false;
+                
                     
                     $this.data('genericAjaxForm',data);
                     data = $this.data('genericAjaxForm');
@@ -210,11 +299,11 @@
                 $("input").bind('keydown', 'ctrl+s', function(){data.target.genericAjaxForm('save_and_status_btn_clicked');});
 
                 $(data.options.last_save_time_class,data.target).hide();
-                $("input:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save');});
-                $("input:not(.excluded_field)", data.target).live("keyup",  function(){data.target.genericAjaxForm('queue_form_save');});
-                $("textarea:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save');});
-                $("textarea:not(.excluded_field)", data.target).live("keyup",  function(){data.target.genericAjaxForm('queue_form_save');});
-                $("select:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save');});
+                $("input:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save', this, data.target);});
+                $("input:not(.excluded_field)", data.target).live("keyup",  function(){data.target.genericAjaxForm('queue_form_save', this, data.target);});
+                $("textarea:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save', this, data.target);});
+                $("textarea:not(.excluded_field)", data.target).live("keyup",  function(){data.target.genericAjaxForm('queue_form_save', this, data.target);});
+                $("select:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save', this, data.target);});
                 $("input", data.target).autoGrowInput({comfortZone: 30, resizeNow:true});
 
                 $(data.options.save_and_status_btn_class, data.target).live("click", function(){data.target.genericAjaxForm('save_and_status_btn_clicked');});
@@ -261,19 +350,26 @@
         },
         save_and_status_btn_clicked: function(){
             return $(this).each(function(){
-                var $this = $(this),
-                    data = $this.data('genericAjaxForm');
-
-                clearTimeout(data.form_save_timeout);
-                data.target.genericAjaxForm('save_form');
+                var $this = $(this), data = $this.data('genericAjaxForm');
+            	clearTimeout(data.form_save_timeout);
+            	data.target.genericAjaxForm('save_form');	
                 return false;
             });
         },
-        queue_form_save: function(){
-            return $(this).each(function(){
-                var $this = $(this),
+        queue_form_save: function(target, data_target){
+            return $(target).each(function(){
+                var $this = $(data_target),
                     data = $this.data('genericAjaxForm');
-                   
+
+                if (data.custom_save_mode) {
+                	page_obj = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
+                	console.log("has_changed: " + page_obj.has_changed())
+                	if (page_obj.has_changed()) {
+                		data.target.genericAjaxForm('save_object', $this, page_obj, data.target);
+                	}
+                	
+                }
+                
                 // if any fields have changed
                 var ser = $("input, select, textarea",data.form).serialize();
 
@@ -286,7 +382,7 @@
                     $(data.options.save_and_status_btn_class).html(data.options.save_now_text).addClass(data.options.save_now_class);
                     clearTimeout(data.form_save_timeout);
                     data.form_save_timeout = setTimeout(function(){data.target.genericAjaxForm('save_form');}, 1500);
-                    data.target.trigger("genericAjaxForm.queue_form_save");
+                    data.target.trigger("genericAjaxForm.queue_form_save", $(target), data);
                 }
                 
             });
@@ -295,50 +391,54 @@
             return $(this).each(function(){
                 var $this = $(this),
                     data = $this.data('genericAjaxForm');
+                if (data.custom_save_mode) {
+                	console.log("custom save")
+                } else {
+	                $(data.options.last_save_time_class).hide();
+	                $(data.options.last_save_time_class).html(data.options.last_saved_saving_text).fadeIn(50);
+	                $(data.options.save_and_status_btn_class).html(data.options.saving_text).removeClass(data.options.save_now_class);
+	                var save_start_time = new Date();
+	                data.target.removeClass("dirty");
+	                $(data.form).ajaxSubmit({
+	                  url: data.save_url,
+	                  type: data.save_method,
+	                  dataType: "json",
+	                  async: data.async,
+	                  // data: $.param( $("input",data.form) ),
+	                	  success: function(json) {
+	                	  	data.save_queued = false;
+	                		$(".generic_editable_field",data.target).each(function(){
+	                			var field = $(this);
+	                			if ($(".edit_field select",field).length > 0) {
+	                				$(".view_field",field).html($(".edit_field select option:selected",field).text());	
+	                			} else {
+	                				if ($(".edit_field input[type=radio]:checked",field).length > 0 ) {
+	                					$(".view_field",field).html($(".edit_field label[for="+$(".edit_field input[type=radio]:checked").attr("id")+"]").html());
+	                				} else {
+	                					$(".view_field",field).html($(".edit_field input, .edit_field textarea",field).val());		
+	                				}
+	                				
+	                			}
+	                			
+	                		});
+	                		var savetime = new Date();
+	                		total_saving_time = savetime - save_start_time;
+	                		if (total_saving_time < data.options.min_save_message_display_time) {
+	                		    setTimeout(function(){data.target.genericAjaxForm('show_saved_message');},data.options.min_save_message_display_time-total_saving_time);
+	                		} else {
+	                		    data.target.genericAjaxForm('show_saved_message');
+	                		}
+	                		data.target.trigger("genericAjaxForm.save_form_success");
+	                	 },
 
-                $(data.options.last_save_time_class).hide();
-                $(data.options.last_save_time_class).html(data.options.last_saved_saving_text).fadeIn(50);
-                $(data.options.save_and_status_btn_class).html(data.options.saving_text).removeClass(data.options.save_now_class);
-                var save_start_time = new Date();
-                data.target.removeClass("dirty");
-                $(data.form).ajaxSubmit({
-                  url: data.save_url,
-                  type: data.save_method,
-                  dataType: "json",
-                  async: data.async,
-                  // data: $.param( $("input",data.form) ),
-                	  success: function(json) {
-                	  	data.save_queued = false;
-                		$(".generic_editable_field",data.target).each(function(){
-                			var field = $(this);
-                			if ($(".edit_field select",field).length > 0) {
-                				$(".view_field",field).html($(".edit_field select option:selected",field).text());	
-                			} else {
-                				if ($(".edit_field input[type=radio]:checked",field).length > 0 ) {
-                					$(".view_field",field).html($(".edit_field label[for="+$(".edit_field input[type=radio]:checked").attr("id")+"]").html());
-                				} else {
-                					$(".view_field",field).html($(".edit_field input, .edit_field textarea",field).val());		
-                				}
-                				
-                			}
-                			
-                		});
-                		var savetime = new Date();
-                		total_saving_time = savetime - save_start_time;
-                		if (total_saving_time < data.options.min_save_message_display_time) {
-                		    setTimeout(function(){data.target.genericAjaxForm('show_saved_message');},data.options.min_save_message_display_time-total_saving_time);
-                		} else {
-                		    data.target.genericAjaxForm('show_saved_message');
-                		}
-                		data.target.trigger("genericAjaxForm.save_form_success");
-                	 },
-
-                	  error: function() {
-                	  	data.save_queued = false;
-                	    console.log("error");
-                        // alert("Error Saving.");
-                	  }
-                });
+	                	  error: function() {
+	                	  	data.save_queued = false;
+	                	    console.log("error");
+	                        // alert("Error Saving.");
+	                	  }
+	                });	
+                }
+               
             });
         },
         show_saved_message: function(){
@@ -357,18 +457,29 @@
 			var $this = $(this), data = $this.data('genericAjaxForm');
 			return data.form_objects[object_name];
 		},
-		get_page_object: function(object_name, page_pk) {
-			var $this = $(this), data = $this.data('genericAjaxForm');
-			return (data.page_objects.hasOwnProperty(object_name+"_"+page_pk)) ? data.form_objects[(object_name+"_"+page_pk)] : false;
+		save_object: function(context, page_object) {
+			var $this = $(context), data = $this.data('genericAjaxForm');
+			console.log("save_object")
+			console.log(page_object.get_data())
+			page_object.update_serialized_string()
+			$.ajax({
+              url: page_object.form_object.save_object_url,
+              type: data.save_method,
+              dataType: "json",
+              async: data.async,
+              data: page_object.get_data(),
+              success: data.target.genericAjaxForm('save_object_response')
+              // success: function() {alert("bar")}
+            });	
+			console.log(data)
+			console.log(page_object)
 		},
-		save_object: function(object_name, page_pk) {
-			var $this = $(this), data = $this.data('genericAjaxForm');
-			var fo = data.target.genericAjaxForm('get_page_object')(object_name, page_pk);
-			console.log(fo)
+		save_object_response: function(context, json) {
+			console.log("save_object_response")
+			console.log(context)
+			console.log(json)
 
-		},
-		save_object_response: function(json) {
-			var $this = $(this), data = $this.data('genericAjaxForm');
+			var $this = $(context), data = $this.data('genericAjaxForm');
 			// - Check waiting_on_db_pk.  If true, set the db_pk.
 			// - Check waiting_to_delete.  If set, call delete.
 			// - Check the PendingSaveQueue, drop the key and trigger a new save if it contains a key for this FormObject.
@@ -406,42 +517,6 @@
        } else {
          $.error( 'Method ' +  method + ' does not exist on jQuery.genericAjaxForm' );
        }    
-    };
-
-	$.fn.genericAjaxFormClasses = function( method ) {
-		return {
-			PageObject: function(form_object, db_pk) {
-				var $this = $(this), data = $this.data('genericAjaxForm');
-				var o = {};
-				o.form_object = form_object;
-				o.page_pk = $.fn.genericAjaxGetNextPagePk();
-				o.db_pk = db_pk;
-				o.waiting_on_db_pk = false;
-				o.wating_to_delete = false;
-				o.deleted = false;
-				o.get_data = form_object.get_data;
-				return o;
-			},
-			SaveQueueItem: function(form_object) {
-				this.form_object = form_object;
-			},
-			createPageObjectFromCanonical: function(form_object, selector) {
-					var objs = []
-					$(selector).each(function(){
-						var obj_pk = $(selector).attr("pk");
-						var ph = $.fn.genericAjaxFormClasses().PageObject(form_object, obj_pk)
-						objs.push(ph)
-					});
-					return objs
-			}
-		}
-	};
-    $.fn.genericAjaxGetNextPagePk = function() {
-		if ($.genericAjaxPagePk == undefined) {
-			$.genericAjaxPagePk = 0;
-		}
-		$.genericAjaxPagePk++;
-		return $.genericAjaxPagePk
     };
 
 

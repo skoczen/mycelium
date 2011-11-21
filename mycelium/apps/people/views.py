@@ -139,11 +139,12 @@ def tab_contents(request, person_id, tab_name=None):
 #  Generic Form Handling
 
 def _get_generic_ajax_data(post_data):
-    page_pk = getattr(post_data, "page_pk", None)
-    db_pk = getattr(post_data, "db_pk", None)
-    data = getattr(post_data, "data", None)
+
+    page_pk = post_data.get("page_pk", None)
+    db_pk = post_data.get("db_pk", None)
+    data = post_data
     if not page_pk or not data:
-        raise "Missing post data"
+        raise Exception, "Missing post data"
 
     return page_pk, db_pk, data
 
@@ -161,7 +162,7 @@ def person_save(request):
     page_pk, db_pk, data = _get_generic_ajax_data(request.POST)
     person = get_or_404_by_account(Person, request.account, db_pk)
 
-    form = _person_form(person, data, request)
+    form = _person_form(person, request, data)
     if form.is_valid():
         form.save()
         success = True
@@ -196,11 +197,13 @@ def _person_related_model_save(cls, request, form_builder):
     page_pk, db_pk, data = _get_generic_ajax_data(request.POST)
     person = get_or_404_by_account(Person, request.account, request.POST["person_pk"])
     obj = get_or_404_by_account(cls, request.account, db_pk)
-    form = form_builder(obj, data, request)
+    form = form_builder(obj, request, data)
     if form.is_valid():
         form.save()
         success = True
-        save_action.delay(request.account, request.useraccount, "updated a person", person=person,)    
+        save_action.delay(request.account, request.useraccount, "updated a person", person=person,) 
+    else:
+        error_string = form.errors
     return _generic_ajax_response(locals())
 
 def _person_related_model_new(cls, request, form_builder):
@@ -214,6 +217,8 @@ def _person_related_model_new(cls, request, form_builder):
         success = True
         save_action.delay(request.account, request.useraccount, "updated a person", person=person,)    
         db_pk = phone_number.pk
+    else:
+        error_string = form.errors
 
     return _generic_ajax_response(locals())
 

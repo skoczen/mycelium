@@ -9,45 +9,47 @@ $(function(){
 });
 var tag_fadeout_timeout = false;
 var prev_tab_name = "#recent_activity";
-var person_form_options = {
-		form_objects: {
-			"person": {
-				get_objects: function(){ 
-					return $.fn.genericAjaxFormClasses().createPageObjectFromCanonical(this, ".person.canonical");
-				},
-				get_data: function(){ 
-					// Gets data prior to ajax POST. 
-					// page_pk
-					// db_pk
-					// person form
-				},
-			},
-			"phone_number": {
-				get_objects: function(){
-					return $.fn.genericAjaxFormClasses().createPageObjectFromCanonical(this, ".phone_number.canonical");
-				},
-				get_data: function(){ 
-									// Gets data prior to ajax POST. 
-									},
-			},
-			"email": {
-				get_objects: function(){
-					return $.fn.genericAjaxFormClasses().createPageObjectFromCanonical(this, ".email.canonical");
-				},
-				get_data: function(){ 
-									// Gets data prior to ajax POST. 
-									},
-			},
-			"employee": {
-				get_objects: function(){
-					return $.fn.genericAjaxFormClasses().createPageObjectFromCanonical(this, ".employee.canonical");
-				},
-				get_data: function(){ 
-									// Gets data prior to ajax POST. 
-									},
-			}
-		}
-	}
+// Handled by convention
+// var person_form_options = {
+// 		form_objects: {
+// 			"person": {
+// 				get_objects: function(){ 
+// 					return $.fn.genericAjaxFormClasses().createPageObjectFromCanonical(this, ".person.canonical");
+// 				},
+// 				get_data: function(page_object){ 
+// 					// Gets form input, select, etc data prior to ajax POST. 
+// 					return $.fn.genericAjaxFormClasses.getFormFieldData(page_object.target)
+// 				},
+// 			},
+// 			"phone_number": {
+// 				get_objects: function(){
+// 					return $.fn.genericAjaxFormClasses().createPageObjectFromCanonical(this, ".phone_number.canonical");
+// 				},
+// 				get_data: function(page_object){ 
+// 					// Gets form input, select, etc data prior to ajax POST. 
+// 					return $.fn.genericAjaxFormClasses.getFormFieldData(page_object.target)
+// 				},
+// 			},
+// 			"email": {
+// 				get_objects: function(){
+// 					return $.fn.genericAjaxFormClasses().createPageObjectFromCanonical(this, ".email.canonical");
+// 				},
+// 				get_data: function(page_object){ 
+// 					// Gets form input, select, etc data prior to ajax POST. 
+// 					return $.fn.genericAjaxFormClasses.getFormFieldData(page_object.target)
+// 				},
+// 			},
+// 			"employee": {
+// 				get_objects: function(){
+// 					return $.fn.genericAjaxFormClasses().createPageObjectFromCanonical(this, ".employee.canonical");
+// 				},
+// 				get_data: function(page_object){ 
+// 					// Gets form input, select, etc data prior to ajax POST. 
+// 					return $.fn.genericAjaxFormClasses.getFormFieldData(page_object.target)
+// 				},
+// 			}
+// 		}
+// 	}
 
 function detail_tab_clicked(e) {
     var tab_link = $(e.target);

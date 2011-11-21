@@ -538,6 +538,7 @@ $.fn.formToArray = function(semantic) {
 	if (!els) {
 		return a;
 	}
+
 	
 	var i,j,n,v,el,max,jmax;
 	for(i=0, max=els.length; i < max; i++) {
