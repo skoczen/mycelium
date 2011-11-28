@@ -142,14 +142,16 @@ def _get_generic_ajax_data(post_data):
 
     page_pk = post_data.get("page_pk", None)
     db_pk = post_data.get("db_pk", None)
+    form_object_type = post_data.get("form_object_type", None)
     data = post_data
-    if not page_pk or not data:
+    if not page_pk or not data or not form_object_type:
         raise Exception, "Missing post data"
 
-    return page_pk, db_pk, data
+    return page_pk, db_pk, data, form_object_type
 
 def _generic_ajax_response(d):
     return {
+        "form_object_type": d["form_object_type"],
         "page_pk":d["page_pk"],
         "db_pk":d["db_pk"],
         "event_success":d["success"],
@@ -159,7 +161,7 @@ def _generic_ajax_response(d):
 @json_view
 def person_save(request):
     success = False
-    page_pk, db_pk, data = _get_generic_ajax_data(request.POST)
+    page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
     person = get_or_404_by_account(Person, request.account, db_pk)
 
     form = _person_form(person, request, data)
@@ -174,7 +176,7 @@ def person_save(request):
 @json_view
 def person_new(request):
     success = False
-    page_pk, db_pk, data = _get_generic_ajax_data(request.POST)
+    page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
     raise Exception, "Not Implemented"
 
     success = True
@@ -183,7 +185,7 @@ def person_new(request):
 @json_view
 def person_delete(request):
     success = False
-    page_pk, db_pk, data = _get_generic_ajax_data(request.POST)
+    page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
     person = get_or_404_by_account(Person, request.account, db_pk)
     person.delete()
     db_pk = None
@@ -194,7 +196,7 @@ def person_delete(request):
 
 def _person_related_model_save(cls, request, form_builder):
     success = False
-    page_pk, db_pk, data = _get_generic_ajax_data(request.POST)
+    page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
     person = get_or_404_by_account(Person, request.account, request.POST["person_pk"])
     obj = get_or_404_by_account(cls, request.account, db_pk)
     form = form_builder(obj, request, data)
@@ -208,7 +210,7 @@ def _person_related_model_save(cls, request, form_builder):
 
 def _person_related_model_new(cls, request, form_builder):
     success = False
-    page_pk, db_pk, data = _get_generic_ajax_data(request.POST)
+    page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
     person = get_or_404_by_account(Person, request.account, request.POST["person_pk"])
     obj = cls.raw_objects.create(account=request.account)
     form = form_builder(obj, data, request)
@@ -224,7 +226,7 @@ def _person_related_model_new(cls, request, form_builder):
 
 def _person_related_model_delete(cls, request):
     success = False
-    page_pk, db_pk, data = _get_generic_ajax_data(request.POST)
+    page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
     obj = get_or_404_by_account(cls, request.account, db_pk)
     obj.delete()
     db_pk = None

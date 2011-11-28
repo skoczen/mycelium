@@ -1,3 +1,12 @@
+if (! Object.hasOwnProperty("size")) {
+	Object.size = function(obj) {
+	    var size = 0, key;
+	    for (key in obj) {
+	        if (obj.hasOwnProperty(key)) size++;
+	    }
+	    return size;
+	};
+}
 // Generic Ajax Form
 (function($){
 	/*
@@ -126,28 +135,53 @@
 
 
 	var PageObject = function(form_object, db_pk, target) {
-// Here, trying to figure out what's passed.
 		var o = {};
 		o.form_object = form_object;
 		o.target = target;
+		o.form_object_type = target.attr("form_object_type");
 		o.page_pk = $.fn.genericAjaxGetNextPagePk();
 		target.attr("page_pk", o.page_pk);
 		o.db_pk = db_pk;
+		o.new_in_progress = false;
 		o.waiting_on_db_pk = false;
-		o.wating_to_delete = false;
+		o.save_queued = false;
+		o.save_in_progress = false;
 		o.deleted = false;
+		o.delete_queued = false;
+		o.delete_in_progress = false;
 		o.get_data = function(){return this.form_object.get_data(this)};
 
 		o.save = function() {
 			
 		}
 		o.serialized_string = function(){return $("input, select, textarea",this.target).serialize();}
-		o.prev_serialized_string = o.serialized_string();
+		o.previous_serialized_str = o.serialized_string();
 		o.has_changed = function() {
 			return this.previous_serialized_str != this.serialized_string()
 		}
 		o.update_serialized_string = function() {
 			this.previous_serialized_str = this.serialized_string();
+		}
+		o.start_save = function() {
+			this.save_in_progress = true;
+		}
+		o.finish_save = function() {
+			this.save_in_progress = false;
+		}
+		o.queue_save = function() {
+			this.save_queued = true;
+		}
+		o.dequeue_save = function() {
+			this.save_queued = false;
+		}
+		o.start_delete = function() {
+			this.delete_in_progress = true;
+		}
+		o.finish_delete = function() {
+			this.delete_in_progress = false;
+		}
+		o.queue_delete = function() {
+			this.delete_queued = true;
 		}
 		return o;
 	};
@@ -249,6 +283,7 @@
                     				}
                     				o["page_pk"]= page_object.page_pk;
                     				o["db_pk"]= page_object.db_pk;
+                    				o["form_object_type"] = page_object.form_object_type;
                     				// Get all parent canonicals, put their pks in.
                     				page_object.target.parents(".canonical").each(function() {
                     					var par = $(this);
@@ -366,27 +401,30 @@
 
                 if (data.custom_save_mode) {
                 	page_obj = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
-                	console.log("has_changed: " + page_obj.has_changed())
                 	if (page_obj.has_changed()) {
-                		data.target.genericAjaxForm('save_object', $this, page_obj, data.target);
+                		if (page_obj.save_in_progress) {
+                			page_obj.queue_save()
+                		} else {
+                			data.target.genericAjaxForm('save_object', $this, page_obj, data.target);	
+                		}
                 	}
-                	
-                }
-                
-                // if any fields have changed
-                var ser = $("input, select, textarea",data.form).serialize();
+                } else {
+	                // if any fields have changed
+	                var ser = $("input, select, textarea",data.form).serialize();
 
-                if (data.previous_serialized_str != ser) {
-                	// mark it as dirty
-	                data.target.addClass("dirty");
+	                if (data.previous_serialized_str != ser) {
+	                	// mark it as dirty
+		                data.target.addClass("dirty");
 
-                	data.save_queued = true;
-                    data.previous_serialized_str = ser;
-                    $(data.options.save_and_status_btn_class).html(data.options.save_now_text).addClass(data.options.save_now_class);
-                    clearTimeout(data.form_save_timeout);
-                    data.form_save_timeout = setTimeout(function(){data.target.genericAjaxForm('save_form');}, 1500);
-                    data.target.trigger("genericAjaxForm.queue_form_save", $(target), data);
+	                	data.save_queued = true;
+	                    data.previous_serialized_str = ser;
+	                    $(data.options.save_and_status_btn_class).html(data.options.save_now_text).addClass(data.options.save_now_class);
+	                    clearTimeout(data.form_save_timeout);
+	                    data.form_save_timeout = setTimeout(function(){data.target.genericAjaxForm('save_form');}, 1500);
+	                    data.target.trigger("genericAjaxForm.queue_form_save", $(target), data);
+	                }                	
                 }
+
                 
             });
         },
@@ -394,14 +432,17 @@
             return $(this).each(function(){
                 var $this = $(this),
                     data = $this.data('genericAjaxForm');
+
+                $(data.options.last_save_time_class).hide();
+                $(data.options.last_save_time_class).html(data.options.last_saved_saving_text).fadeIn(50);
+                $(data.options.save_and_status_btn_class).html(data.options.saving_text).removeClass(data.options.save_now_class);
+                var save_start_time = new Date();
+                data.target.removeClass("dirty");
+
                 if (data.custom_save_mode) {
                 	console.log("custom save")
                 } else {
-	                $(data.options.last_save_time_class).hide();
-	                $(data.options.last_save_time_class).html(data.options.last_saved_saving_text).fadeIn(50);
-	                $(data.options.save_and_status_btn_class).html(data.options.saving_text).removeClass(data.options.save_now_class);
-	                var save_start_time = new Date();
-	                data.target.removeClass("dirty");
+	                
 	                $(data.form).ajaxSubmit({
 	                  url: data.save_url,
 	                  type: data.save_method,
@@ -420,9 +461,7 @@
 	                				} else {
 	                					$(".view_field",field).html($(".edit_field input, .edit_field textarea",field).val());		
 	                				}
-	                				
 	                			}
-	                			
 	                		});
 	                		var savetime = new Date();
 	                		total_saving_time = savetime - save_start_time;
@@ -445,6 +484,7 @@
             });
         },
         show_saved_message: function(){
+        	console.log("show_saved_message");
             return $(this).each(function(){
                 var $this = $(this),
                     data = $this.data('genericAjaxForm');
@@ -462,16 +502,18 @@
 		},
 		save_object: function(context, page_object) {
 			var $this = $(context), data = $this.data('genericAjaxForm');
+			data.save_queue[page_obj.form_object_type] = true;
 			console.log("save_object")
 			console.log(page_object.get_data())
 			page_object.update_serialized_string()
+			page_obj.start_save();
 			$.ajax({
               url: page_object.form_object.save_object_url,
               type: data.save_method,
               dataType: "json",
               async: data.async,
               data: page_object.get_data(),
-              success: data.target.genericAjaxForm('save_object_response')
+              success: function(json){return data.target.genericAjaxForm('save_object_response', context, json) }
               // success: function() {alert("bar")}
             });	
 			console.log(data)
@@ -483,6 +525,12 @@
 			console.log(json)
 
 			var $this = $(context), data = $this.data('genericAjaxForm');
+			
+			page_obj = get_page_object(data, json.form_object_type, json.page_pk);
+			page_obj.finish_save();
+			
+			data.target.genericAjaxForm('handle_queued_actions', $this, page_obj);
+
 			// - Check waiting_on_db_pk.  If true, set the db_pk.
 			// - Check waiting_to_delete.  If set, call delete.
 			// - Check the PendingSaveQueue, drop the key and trigger a new save if it contains a key for this FormObject.
@@ -491,23 +539,67 @@
 
 		new_object: function(object_name, page_pk) {
 			var $this = $(this), data = $this.data('genericAjaxForm');
+			var page_object
+			page_object.new_in_progress = true;
 			
 		},
 		new_object_response: function(json) {
 			var $this = $(this), data = $this.data('genericAjaxForm');
+			page_object.new_in_progress = false;
 			// - Same as save_object
 			// - GenericAjaxForm.trigger("new_object", object_type, page_pk)			
 		},
+		delete_object_clicked: function() {
+			var $this = $(this), data = $this.data('genericAjaxForm');
+			console.log("or, however we should get the PO.")
+			page_obj = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
 
+			if (page_obj.save_in_progress) {
+				page_obj.queue_delete();
+			} else {
+				page_obj.start_delete();	
+			}
+		},
 		delete_object: function(object_name, page_pk) {
 			var $this = $(this), data = $this.data('genericAjaxForm');
-			
+			page_obj = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
 		},
 		delete_object_response: function(json) {
 			var $this = $(this), data = $this.data('genericAjaxForm');
+			page_obj = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
+			page_obj.finish_delete();
+			page_obj.delete_in_progress = false;
 			// - deleted was set on submit
 			// - delete the FormObject
 			// - GenericAjaxForm.trigger("deleted_object", object_type, page_pk)			
+		},
+		handle_queued_actions: function(context, page_obj) {
+			console.log("handle_queued_actions")
+			var savetime = new Date();
+
+			var $this = $(context), data = $this.data('genericAjaxForm');
+			if (page_obj.waiting_on_db_pk) {
+				page_obj.db_pk = json.db_pk;
+			}
+			if (page_obj.delete_queued) { 
+				data.target.genericAjaxForm('delete_object', $this, page_obj, data.target);
+			} else {
+				if (page_obj.save_queued) {
+					page_obj.dequeue_save()
+					data.target.genericAjaxForm('save_object', $this, page_obj, data.target);
+				}	
+			}
+			delete data.save_queue[page_obj.form_object_type]
+			console.log(data.save_queue)
+			console.log(Object.size(data.save_queue))
+			console.log(data.save_queue == {})
+			if (Object.size(data.save_queue) == 0) {
+				data.target.genericAjaxForm('show_saved_message');
+	    		data.target.trigger("genericAjaxForm.save_form_success");
+			}
+			
+			
+					
 		},
     };
 
