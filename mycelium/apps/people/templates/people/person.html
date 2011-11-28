@@ -34,7 +34,7 @@ $(function(){
 </script>
 {% endif %}
 <script>
-var person_form_options = {
+	var person_form_options = {
 		"form_objects": {
 			"person": {
 				save_object_url: "{% url people:person_save %}",
@@ -63,6 +63,68 @@ var person_form_options = {
 	}
 	// person_form_options = $.extend(true, person_form_options, url_options);
 	$("#basic_info_form").genericAjaxForm(person_form_options);
+
+	var person_data = {};
+	person_data["person"] = {
+		"initial_data" : {
+			"first_name": "{{person.first_name}}",
+			"last_name": "{{person.last_name}}",
+			"birth_month": "{{person.birth_month}}",
+			"birth_day": "{{person.birth_day}}",
+			"birth_year": "{{person.birth_year}}",
+			"line_1": "{{person.line_1}}",
+			"line_2": "{{person.line_2}}",
+			"city": "{{person.city}}",
+			"state": "{{person.state}}",
+			"postal_code": "{{person.postal_code}}",
+		},
+		"form_fields": {
+			"first_name": "{{form.first_name|addslashes|strip_newlines}}",
+			"last_name": "{{form.last_name|addslashes|strip_newlines}}",
+			"birth_month": "{{form.birth_month|addslashes|strip_newlines}}",
+			"birth_day": "{{form.birth_day|addslashes|strip_newlines}}",
+			"birth_year": "{{form.birth_year|addslashes|strip_newlines}}",
+			"line_1": "{{form.line_1|addslashes|strip_newlines}}",
+			"line_2": "{{form.line_2|addslashes|strip_newlines}}",
+			"city": "{{form.city|addslashes|strip_newlines}}",
+			"state": "{{form.state|addslashes|strip_newlines}}",
+			"postal_code": "{{form.postal_code|addslashes|strip_newlines}}",
+		}
+	}
+	person_data["phone"] = [];
+	{% for p_form in phone_formset.forms %} 
+		person_data["phone"].append(
+		{
+			"initial_data": {
+				"contact_type": "{{p_form.instance.contact_type}}",
+				"phone_number": "{{p_form.instance.phone_number}}",
+				"primary": {{p_form.instance.primary|lower}},
+			},
+			"form_fields": {
+				"contact_type": "{{p_form.contact_type|addslashes|strip_newlines}}",
+				"phone_number": "{{p_form.phone_number|addslashes|strip_newlines}}",
+				"primary": "{{p_form.primary|lower|addslashes|strip_newlines}}",	
+			}
+			
+		});
+	{% endfor %}
+	person_data["email"] = [];
+	{% for e_form in email_formset.forms %} 
+		person_data["email"].append(
+		{
+			"initial_data": {
+				"contact_type": "{{e_form.instance.contact_type}}",
+				"email": "{{e_form.instance.email}}",
+				"primary": {{e_form.instance.primary|lower}},
+			},
+			"form_fields": {
+				"contact_type": "{{e_form.contact_type|addslashes|strip_newlines}}",
+				"email": "{{e_form.email|addslashes|strip_newlines}}",
+				"primary": "{{e_form.primary|lower|addslashes|strip_newlines}}",	
+			}
+		});
+	{% endfor %}
+
 </script>
 
 {% endblock %}
