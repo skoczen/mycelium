@@ -62,7 +62,7 @@ $(function(){
 		}
 	}
 	// person_form_options = $.extend(true, person_form_options, url_options);
-	$("#basic_info_form").genericAjaxForm(person_form_options);
+	
 
 	var person_data = {};
 	person_data["person"] = {
@@ -93,37 +93,45 @@ $(function(){
 	}
 	person_data["phone"] = [];
 	{% for p_form in phone_formset.forms %} 
-		person_data["phone"].append(
+		person_data["phone"].push(
 		{
 			"initial_data": {
 				"contact_type": "{{p_form.instance.contact_type}}",
 				"phone_number": "{{p_form.instance.phone_number}}",
 				"primary": {{p_form.instance.primary|lower}},
+				"pk": {{p_form.instance.pk}},
 			},
 			"form_fields": {
 				"contact_type": "{{p_form.contact_type|addslashes|strip_newlines}}",
 				"phone_number": "{{p_form.phone_number|addslashes|strip_newlines}}",
 				"primary": "{{p_form.primary|lower|addslashes|strip_newlines}}",	
+				"pk": {{p_form.instance.pk}},
 			}
 			
 		});
 	{% endfor %}
 	person_data["email"] = [];
 	{% for e_form in email_formset.forms %} 
-		person_data["email"].append(
+		person_data["email"].push(
 		{
 			"initial_data": {
 				"contact_type": "{{e_form.instance.contact_type}}",
 				"email": "{{e_form.instance.email}}",
 				"primary": {{e_form.instance.primary|lower}},
+				"pk": {{e_form.instance.pk}},
 			},
 			"form_fields": {
 				"contact_type": "{{e_form.contact_type|addslashes|strip_newlines}}",
 				"email": "{{e_form.email|addslashes|strip_newlines}}",
 				"primary": "{{e_form.primary|lower|addslashes|strip_newlines}}",	
+				"pk": {{e_form.instance.pk}},
 			}
 		});
 	{% endfor %}
+	// personPage.state.data = person_data;
+	// personPage.init();
+	$("#basic_info_form").genericAjaxForm(person_form_options);
+
 
 </script>
 
@@ -152,23 +160,30 @@ $(function(){
 			<box_content>
 				<div id="no_home_contact_info_message"></div>
 				<div class="phone_email">
+				<span id="phone_number_form_container">
 				{% for p_form in phone_formset.forms %}
+				<span class="phone_number_canonical_container">
 				<span class="phone_number canonical" form_object_type="phone_number" pk="{{p_form.instance.pk}}">
 					<span class="contact_type">{% generic_editable_field p_form.contact_type %}</span>
-					<span itemprop="telephone">{% generic_editable_field p_form.phone_number %}</span>
+					<span class="number" itemprop="telephone">{% generic_editable_field p_form.phone_number %}</span>
 					<span class="primary">{% generic_editable_field p_form.primary %}</span>
+					<!-- {{p_form.DELETE}} -->
 					{% for f in p_form.hidden_fields %}{{f}}{% endfor %}
 				</span>
+				</span>
 				{% endfor %}
+				</span>
 				{{phone_formset.management_form}}
 				
-
+				<span id="email_form_container"></span>
 				{% for e_form in email_formset.forms %}
+				<span class="email_canonical_container">
 				<span class="email canonical" form_object_type="email" pk="{{e_form.instance.pk}}">
 					<span class="contact_type">{% generic_editable_field e_form.contact_type %}</span>
 					<span itemprop="email">{% generic_editable_field e_form.email %}</span>
 					<span class="primary">{% generic_editable_field e_form.primary %}</span>
 					{% for f in e_form.hidden_fields %}{{f}}{% endfor %}
+				</span>
 				</span>
 				{% endfor %}
 				{{email_formset.management_form}}
@@ -218,10 +233,7 @@ $(function(){
 		{% endfor %}
 		{{employee_formset.management_form}}
 
-<div class="additional_information">
-	{# Extra emails, phone #s, Addresses #}
 
-</div>
 </div>
 
 </form>

@@ -1,3 +1,4 @@
+import time 
 from accounts.managers import get_or_404_by_account
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect
@@ -147,6 +148,7 @@ def _get_generic_ajax_data(post_data):
     if not page_pk or not data or not form_object_type:
         raise Exception, "Missing post data"
 
+    time.sleep(2)
     return page_pk, db_pk, data, form_object_type
 
 def _generic_ajax_response(d):
@@ -164,6 +166,7 @@ def person_save(request):
     page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
     person = get_or_404_by_account(Person, request.account, db_pk)
 
+    time.sleep(1)
     form = _person_form(person, request, data)
     if form.is_valid():
         form.save()

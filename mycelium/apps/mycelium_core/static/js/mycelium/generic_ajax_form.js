@@ -402,6 +402,12 @@ if (! Object.hasOwnProperty("size")) {
                 if (data.custom_save_mode) {
                 	page_obj = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
                 	if (page_obj.has_changed()) {
+						if ($(data.options.last_save_time_class).html() != data.options.last_saved_saving_text) {
+							$(data.options.last_save_time_class).hide();
+				            $(data.options.last_save_time_class).html(data.options.last_saved_saving_text).fadeIn(50);
+	            		    $(data.options.save_and_status_btn_class).html(data.options.saving_text).removeClass(data.options.save_now_class);
+						}
+						
                 		if (page_obj.save_in_progress) {
                 			page_obj.queue_save()
                 		} else {
@@ -574,7 +580,6 @@ if (! Object.hasOwnProperty("size")) {
 			// - GenericAjaxForm.trigger("deleted_object", object_type, page_pk)			
 		},
 		handle_queued_actions: function(context, page_obj) {
-			console.log("handle_queued_actions")
 			var savetime = new Date();
 
 			var $this = $(context), data = $this.data('genericAjaxForm');
@@ -590,17 +595,16 @@ if (! Object.hasOwnProperty("size")) {
 				}	
 			}
 			delete data.save_queue[page_obj.form_object_type]
-			console.log(data.save_queue)
-			console.log(Object.size(data.save_queue))
-			console.log(data.save_queue == {})
+
 			if (Object.size(data.save_queue) == 0) {
 				data.target.genericAjaxForm('show_saved_message');
 	    		data.target.trigger("genericAjaxForm.save_form_success");
 			}
-			
-			
-					
 		},
+		form_objects: function(){
+			var $this = $(this), data = $this.data('genericAjaxForm');
+			return data.form_objects;
+		}
     };
 
 

@@ -1,8 +1,10 @@
-from django.db.models import get_model
+import logging
 import csv
 import xlwt
 import xlrd
 from collections import OrderedDict
+
+from django.db.models import get_model
 from django.core.cache import cache
 
 CSV_TYPE = "CSV"
@@ -14,6 +16,8 @@ SPREADSHEET_SOURCE_TYPES = [
 CSV_EXTENSIONS = ["csv",]
 EXCEL_EXTENSIONS = ["xls","xlsx"]
 IGNORE_FIELD_STRING = "ignore"
+
+log = logging.getLogger(__file__)
 
 class SpreadsheetRow(object):
     name = None
@@ -136,7 +140,6 @@ class PeopleImportRow(SpreadsheetRow):
         from people.models import Person
         if self.has_sufficient_fields_for_identity:
             # find the matching row
-            # print self.data
             if "first_name" in self.data and "last_name" in self.data and ( self.data["first_name"] != "" or self.data["last_name"] != ""):
                 q = Person.objects_by_account(self.account).all()
                 if "first_name" in self.data:
@@ -147,8 +150,7 @@ class PeopleImportRow(SpreadsheetRow):
                 if q.count() == 1:
                     return q[0], False
 
-            # print "first and last name were not enough"
-
+            # First and last name were not enough
             q = Person.objects_by_account(self.account).all()
             if "email" in self.data and self.data["email"] != "":
                 q = q.filter(email=self.data["email"])
@@ -168,7 +170,7 @@ class PeopleImportRow(SpreadsheetRow):
                         if q.count() == 1:
                             return q[0], False
 
-            # print "email based search wasn't enough"
+            # Email-based search wasn't enough
 
             q = Person.objects_by_account(self.account).all()
             if "phone_number" in self.data and self.data["phone_number"] != "":
@@ -183,7 +185,7 @@ class PeopleImportRow(SpreadsheetRow):
                     if q.count() == 1:
                         return q[0], False
             
-            # print "phone based search wasn't enough."
+            # Phone-based search wasn't enough.
         return Person.raw_objects.create(account=self.account), True
 
 
@@ -312,15 +314,11 @@ class SpreadsheetAbstraction:
                             row.append(target_objects[f.model_key].__dict__[f.field])
                         else:
                             row.append(eval("target_objects[f.model_key].%s" % f.field))
-                        # except:
-                        #     row.append("")    
                     else:
                         row.append("")
                 rows.append(row)
             except Exception, e:
-                print "Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, e)
-                from qi_toolkit.helpers import print_exception
-                print_exception()
+                log.warn("Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, e))
                 pass
 
         return rows
@@ -415,7 +413,7 @@ class SpreadsheetAbstraction:
                 try:
                     d[f] = row[i].encode('utf-8','replace')
                 except Exception, e:
-                    print e
+                    log.warn(e)
                     d[f] = None
             i += 1
         return d
