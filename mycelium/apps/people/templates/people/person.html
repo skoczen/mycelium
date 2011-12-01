@@ -167,7 +167,7 @@ $(function(){
 					<span class="contact_type">{% generic_editable_field p_form.contact_type %}</span>
 					<span class="number" itemprop="telephone">{% generic_editable_field p_form.phone_number %}</span>
 					<span class="primary">{% generic_editable_field p_form.primary %}</span>
-					{# {{p_form.DELETE}} #}
+					<span class="delete"><span class="edit_field"><a href="#" class="delete_phone_number_btn mycelium_btn mycelium_small_btn mycelium_grey mycelium_delete_btn">Delete</a></span></span>
 				</span>
 				</span>
 				{% endfor %}
@@ -180,6 +180,7 @@ $(function(){
 					<span class="contact_type">{% generic_editable_field e_form.contact_type %}</span>
 					<span class="number" itemprop="email">{% generic_editable_field e_form.email %}</span>
 					<span class="primary">{% generic_editable_field e_form.primary %}</span>
+					<span class="delete"><span class="edit_field"><a href="#" class="delete_email_btn mycelium_btn mycelium_small_btn mycelium_grey mycelium_delete_btn">Delete</a></span></span>
 				</span>
 				</span>
 				{% endfor %}

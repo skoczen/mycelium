@@ -9,7 +9,8 @@ personPage.prev_tab_name = "#recent_activity";
 personPage.init = function() {
 	personPage.create_blank_element("phone_number", "New phone");
 	personPage.create_blank_element("email", "New email");
-	
+	$(".delete_email_btn").live("click", personPage.delete_email);
+	$(".delete_phone_number_btn").live("click", personPage.delete_phone_number);
 	// input.val("").attr("placeholder", "Add an email");
 	// personPage.convert_zero_elements_to_blank(input);
 	// $(".phone_number.blank .number .view_field").html("");
@@ -26,16 +27,12 @@ personPage.init = function() {
 };
 
 personPage.create_blank_element = function(element_name, placeholder) {
-	console.log("create_blank_element")
-	console.log(element_name)
-	console.log(placeholder)
 	$("#"+element_name+"_form_container").append("<span class='"+element_name+"_canonical_container blank'></span>");
 	var blank = $("#"+element_name+"_form_container ."+element_name+"_canonical_container:first").clone();
 	
 	$("input, select", blank).addClass("excluded_field");
 	$("."+element_name+".canonical", blank).attr("pk", "").attr("page_pk", "");
-	$(".contact_type", blank).html("");
-	$(".primary", blank).html("");
+	$(".contact_type, .primary, .delete", blank).html("");
 	$(".number input", blank).val("").attr("placeholder", placeholder);
 	$(".number .view_field", blank).html("");
 	personPage.convert_zero_elements_to_blank($(".number input", blank));
@@ -84,6 +81,8 @@ personPage.blank_element_changed = function(target, element_name, placeholder) {
 		var num_elements = $("#"+element_name+"_form_container ."+element_name+".canonical").length;
 		$("."+element_name+"_canonical_container.blank .contact_type").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .contact_type:first")));
 		$("."+element_name+"_canonical_container.blank .primary").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .primary:first")));
+		$("."+element_name+"_canonical_container.blank .delete").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .delete:first")));
+		
 
 		personPage.convert_blank_elements_to_new( $("select, input, label", $("."+element_name+"_canonical_container.blank")), num_elements);
 
@@ -97,6 +96,23 @@ personPage.blank_element_changed = function(target, element_name, placeholder) {
 		personPage.create_blank_element(element_name, placeholder);
 	}
 	return false;
+}
+personPage.delete_element = function(target, element_name) {
+	var ele = $(target);
+	ele.parents("."+element_name+"_canonical_container").addClass("pre_delete");
+	if ($(".number input", ele).val() == "" || confirm("Are you sure you want to remove this?")) {
+		$("#basic_info_form").genericAjaxForm('delete_object', "#basic_info_form", ele);
+	} else {
+		ele.parents("."+element_name+"_canonical_container").removeClass("pre_delete");
+	}
+
+}
+
+personPage.delete_email = function(){
+	return personPage.delete_element($(this), "email");
+}
+personPage.delete_phone_number = function(){
+	return personPage.delete_element($(this), "phone_number");	
 }
 
 personPage.detail_tab_clicked = function(e) {

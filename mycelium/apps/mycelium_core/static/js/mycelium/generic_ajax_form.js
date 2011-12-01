@@ -179,6 +179,7 @@ if (! Object.hasOwnProperty("size")) {
 		}
 		o.start_delete = function() {
 			this.delete_in_progress = true;
+			console.log("start_delete")
 		}
 		o.finish_delete = function() {
 			this.delete_in_progress = false;
@@ -594,9 +595,8 @@ if (! Object.hasOwnProperty("size")) {
 			data.target.genericAjaxForm('handle_queued_actions', $this, page_object);
 		
 		},
-		delete_object_clicked: function() {
-			var $this = $(this), data = $this.data('genericAjaxForm');
-			console.log("or, however we should get the PO.")
+		delete_object_clicked: function(context, target) {
+			var $this = $(context), data = $this.data('genericAjaxForm');
 			page_object = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
 
 			if (page_object.save_in_progress) {
@@ -605,9 +605,10 @@ if (! Object.hasOwnProperty("size")) {
 				page_object.start_delete();	
 			}
 		},
-		delete_object: function(object_name, page_pk) {
-			var $this = $(this), data = $this.data('genericAjaxForm');
+		delete_object: function(context, target) {
+			var $this = $(context), data = $this.data('genericAjaxForm');
 			page_object = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
+
 		},
 		delete_object_response: function(json) {
 			var $this = $(this), data = $this.data('genericAjaxForm');
