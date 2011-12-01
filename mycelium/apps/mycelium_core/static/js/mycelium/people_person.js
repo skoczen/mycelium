@@ -7,7 +7,8 @@ personPage.tag_fadeout_timeout = false;
 personPage.prev_tab_name = "#recent_activity";
 
 personPage.init = function() {
-	personPage.create_blank_phone_number();
+	personPage.create_blank_element("phone_number", "New phone");
+	personPage.create_blank_element("email", "New email");
 	
 	// input.val("").attr("placeholder", "Add an email");
 	// personPage.convert_zero_elements_to_blank(input);
@@ -24,21 +25,24 @@ personPage.init = function() {
     }
 };
 
-personPage.create_blank_phone_number = function() {
-	$("#phone_number_form_container").append("<span class='phone_number_canonical_container blank'></span>");
-	var blank = $("#phone_number_form_container .phone_number_canonical_container:first").clone();
+personPage.create_blank_element = function(element_name, placeholder) {
+	console.log("create_blank_element")
+	console.log(element_name)
+	console.log(placeholder)
+	$("#"+element_name+"_form_container").append("<span class='"+element_name+"_canonical_container blank'></span>");
+	var blank = $("#"+element_name+"_form_container ."+element_name+"_canonical_container:first").clone();
 	
 	$("input, select", blank).addClass("excluded_field");
-	$(".phone_number.canonical", blank).attr("pk", "").attr("page_pk", "");
+	$("."+element_name+".canonical", blank).attr("pk", "").attr("page_pk", "");
 	$(".contact_type", blank).html("");
 	$(".primary", blank).html("");
-	$(".number input", blank).val("").attr("placeholder", "New phone");
+	$(".number input", blank).val("").attr("placeholder", placeholder);
 	$(".number .view_field", blank).html("");
 	personPage.convert_zero_elements_to_blank($(".number input", blank));
 
-	$(".phone_number_canonical_container.blank").append(blank);
-	$(".phone_number_canonical_container.blank .number input").unbind("keyup.new_field");
-	$(".phone_number_canonical_container.blank .number input").bind("keyup.new_field",personPage.blank_phone_number_changed);	
+	$("."+element_name+"_canonical_container.blank").append(blank);
+	$("."+element_name+"_canonical_container.blank .number input").unbind("keyup.new_field");
+	$("."+element_name+"_canonical_container.blank .number input").bind("keyup.new_field",function(){return personPage.blank_element_changed($(this), element_name, placeholder)});	
 }
 personPage.convert_zero_elements_to_blank = function(ele) {
 	$(ele).each(function(){
@@ -73,26 +77,24 @@ personPage.cloned_and_cleared = function(ele) {
 	return e.html();
 }
 
-personPage.blank_phone_number_changed = function() {
-	var ele = $(this);
+personPage.blank_element_changed = function(target, element_name, placeholder) {
+	var ele = $(target);
 	if (ele.val() != "") {
 		// Make a new one, initialize the fields.
-		var num_phone_numbers = $("#phone_number_form_container .phone_number.canonical").length;
-		$(".phone_number_canonical_container.blank .contact_type").html(personPage.cloned_and_cleared($("#phone_number_form_container .contact_type:first")));
-		$(".phone_number_canonical_container.blank .primary").html(personPage.cloned_and_cleared($("#phone_number_form_container .primary:first")));
+		var num_elements = $("#"+element_name+"_form_container ."+element_name+".canonical").length;
+		$("."+element_name+"_canonical_container.blank .contact_type").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .contact_type:first")));
+		$("."+element_name+"_canonical_container.blank .primary").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .primary:first")));
 
-		personPage.convert_blank_elements_to_new( $("select, input, label", $(".phone_number_canonical_container.blank")), num_phone_numbers);
+		personPage.convert_blank_elements_to_new( $("select, input, label", $("."+element_name+"_canonical_container.blank")), num_elements);
 
 		// Add to form_objects.
-		$("#basic_info_form").genericAjaxForm('new_object', "#basic_info_form", "phone_number", $(".phone_number_canonical_container.blank .canonical"));
+		$("#basic_info_form").genericAjaxForm('new_object', "#basic_info_form", element_name, $("."+element_name+"_canonical_container.blank .canonical"));
 
-		$(".phone_number_canonical_container.blank input, .phone_number_canonical_container.blank select").removeClass("excluded_field");
-		$(".phone_number_canonical_container.blank .number input").unbind("keyup.new_field");
-		$(".phone_number_canonical_container.blank").removeClass("blank");
-		
+		$("."+element_name+"_canonical_container.blank input, ."+element_name+"_canonical_container.blank select").removeClass("excluded_field");
+		$("."+element_name+"_canonical_container.blank .number input").unbind("keyup.new_field");
+		$("."+element_name+"_canonical_container.blank").removeClass("blank");
 
-
-		personPage.create_blank_phone_number();
+		personPage.create_blank_element(element_name, placeholder);
 	}
 	return false;
 }

@@ -167,24 +167,23 @@ $(function(){
 					<span class="contact_type">{% generic_editable_field p_form.contact_type %}</span>
 					<span class="number" itemprop="telephone">{% generic_editable_field p_form.phone_number %}</span>
 					<span class="primary">{% generic_editable_field p_form.primary %}</span>
-					<!-- {{p_form.DELETE}} -->
+					{# {{p_form.DELETE}} #}
 				</span>
 				</span>
 				{% endfor %}
 				</span>
-				{{phone_formset.management_form}}
 				
-				<span id="email_form_container"></span>
+				<span id="email_form_container">
 				{% for e_form in email_formset.forms %}
 				<span class="email_canonical_container">
 				<span class="email canonical" form_object_type="email" pk="{{e_form.instance.pk}}">
 					<span class="contact_type">{% generic_editable_field e_form.contact_type %}</span>
-					<span itemprop="email">{% generic_editable_field e_form.email %}</span>
+					<span class="number" itemprop="email">{% generic_editable_field e_form.email %}</span>
 					<span class="primary">{% generic_editable_field e_form.primary %}</span>
 				</span>
 				</span>
 				{% endfor %}
-				{{email_formset.management_form}}
+				</span>
 
 				</div>
 			<div class="address">

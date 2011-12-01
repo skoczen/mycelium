@@ -200,9 +200,6 @@ def person_delete(request):
 def _person_related_model_save(cls, request, form_builder):
     success = False
     page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
-    print page_pk
-    print db_pk
-    print data
     person = get_or_404_by_account(Person, request.account, request.POST["person_pk"])
     obj = get_or_404_by_account(cls, request.account, db_pk)
     form = form_builder(obj, request, data)
