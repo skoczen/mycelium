@@ -200,6 +200,9 @@ def person_delete(request):
 def _person_related_model_save(cls, request, form_builder):
     success = False
     page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
+    print page_pk
+    print db_pk
+    print data
     person = get_or_404_by_account(Person, request.account, request.POST["person_pk"])
     obj = get_or_404_by_account(cls, request.account, db_pk)
     form = form_builder(obj, request, data)
@@ -208,6 +211,7 @@ def _person_related_model_save(cls, request, form_builder):
         success = True
         save_action.delay(request.account, request.useraccount, "updated a person", person=person,) 
     else:
+        print form.errors
         error_string = form.errors
     return _generic_ajax_response(locals())
 
@@ -215,13 +219,13 @@ def _person_related_model_new(cls, request, form_builder):
     success = False
     page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
     person = get_or_404_by_account(Person, request.account, request.POST["person_pk"])
-    obj = cls.raw_objects.create(account=request.account)
-    form = form_builder(obj, data, request)
+    obj = cls.raw_objects.create(account=request.account, person=person)
+    form = form_builder(obj, request, data)
     if form.is_valid():
         form.save()
-        success = True
         save_action.delay(request.account, request.useraccount, "updated a person", person=person,)    
-        db_pk = phone_number.pk
+        db_pk = obj.pk
+        success = True
     else:
         error_string = form.errors
 

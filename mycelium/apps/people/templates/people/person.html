@@ -168,7 +168,6 @@ $(function(){
 					<span class="number" itemprop="telephone">{% generic_editable_field p_form.phone_number %}</span>
 					<span class="primary">{% generic_editable_field p_form.primary %}</span>
 					<!-- {{p_form.DELETE}} -->
-					{% for f in p_form.hidden_fields %}{{f}}{% endfor %}
 				</span>
 				</span>
 				{% endfor %}
@@ -182,7 +181,6 @@ $(function(){
 					<span class="contact_type">{% generic_editable_field e_form.contact_type %}</span>
 					<span itemprop="email">{% generic_editable_field e_form.email %}</span>
 					<span class="primary">{% generic_editable_field e_form.primary %}</span>
-					{% for f in e_form.hidden_fields %}{{f}}{% endfor %}
 				</span>
 				</span>
 				{% endfor %}

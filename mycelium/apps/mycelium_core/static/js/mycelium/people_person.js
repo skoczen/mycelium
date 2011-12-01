@@ -26,24 +26,28 @@ personPage.init = function() {
 
 personPage.create_blank_phone_number = function() {
 	$("#phone_number_form_container").append("<span class='phone_number_canonical_container blank'></span>");
+	var blank = $("#phone_number_form_container .phone_number_canonical_container:first").clone();
+	
+	$("input, select", blank).addClass("excluded_field");
+	$(".phone_number.canonical", blank).attr("pk", "").attr("page_pk", "");
+	$(".contact_type", blank).html("");
+	$(".primary", blank).html("");
+	$(".number input", blank).val("").attr("placeholder", "New phone");
+	$(".number .view_field", blank).html("");
+	personPage.convert_zero_elements_to_blank($(".number input", blank));
 
-	$(".phone_number_canonical_container.blank").html($("#phone_number_form_container .phone_number_canonical_container:first").html());
-	$(".phone_number_canonical_container.blank .phone_number.canonical").attr("pk", "").attr("page_pk", "");
-	$(".phone_number_canonical_container.blank .contact_type").html("");
-	$(".phone_number_canonical_container.blank .primary").html("");
-	$(".phone_number_canonical_container.blank .number input").val("").attr("placeholder", "Add a phone number");
-	$(".phone_number_canonical_container.blank .number .view_field").html("");
-	$(".phone_number_canonical_container.blank input, .phone_number_canonical_container.blank select").addClass("excluded_field");
-	personPage.convert_zero_elements_to_blank($(".phone_number_canonical_container.blank .number input"));
-
-	$(".phone_number_canonical_container.blank .number input").unbind("keyup");
-	$(".phone_number_canonical_container.blank .number input").keyup(personPage.blank_phone_number_changed);	
+	$(".phone_number_canonical_container.blank").append(blank);
+	$(".phone_number_canonical_container.blank .number input").unbind("keyup.new_field");
+	$(".phone_number_canonical_container.blank .number input").bind("keyup.new_field",personPage.blank_phone_number_changed);	
 }
 personPage.convert_zero_elements_to_blank = function(ele) {
 	$(ele).each(function(){
 		var e = $(this);
 		e.attr("name", e.attr("name").replace("-0-","-BLANK-"));
 		e.attr("id", e.attr("id").replace("-0-","-BLANK-"));
+		if (e.attr("for") != undefined) {
+			e.attr("for", e.attr("for").replace("-0-","-BLANK-"));
+		}
 		try {
 			e.val("");
 		} catch(e) {}
@@ -54,14 +58,18 @@ personPage.convert_blank_elements_to_new = function(ele, counter) {
 		var e = $(this);
 		e.attr("name", e.attr("name").replace("-BLANK-", "-"+counter+"-"));
 		e.attr("id", e.attr("id").replace("-BLANK-", "-"+counter+"-"));
+		if (e.attr("for") != undefined) {
+			e.attr("for", e.attr("for").replace("-BLANK-", "-"+counter+"-"));	
+		}
+		
 	});
 }
 personPage.cloned_and_cleared = function(ele) {
 	var e = ele.clone()
 	try {
-		$("select, input",e).val("");
+		$("select, input",e).val("").addClass("excluded_field");
 	} catch(e) {}
-	personPage.convert_zero_elements_to_blank($("select, input",e));
+	personPage.convert_zero_elements_to_blank($("select, input, label",e));
 	return e.html();
 }
 
@@ -73,10 +81,16 @@ personPage.blank_phone_number_changed = function() {
 		$(".phone_number_canonical_container.blank .contact_type").html(personPage.cloned_and_cleared($("#phone_number_form_container .contact_type:first")));
 		$(".phone_number_canonical_container.blank .primary").html(personPage.cloned_and_cleared($("#phone_number_form_container .primary:first")));
 
-		personPage.convert_blank_elements_to_new($(".phone_number_canonical_container.blank select, .phone_number_canonical_container.blank input"), num_phone_numbers);
+		personPage.convert_blank_elements_to_new( $("select, input, label", $(".phone_number_canonical_container.blank")), num_phone_numbers);
+
+		// Add to form_objects.
+		$("#basic_info_form").genericAjaxForm('new_object', "#basic_info_form", "phone_number", $(".phone_number_canonical_container.blank .canonical"));
+
 		$(".phone_number_canonical_container.blank input, .phone_number_canonical_container.blank select").removeClass("excluded_field");
+		$(".phone_number_canonical_container.blank .number input").unbind("keyup.new_field");
 		$(".phone_number_canonical_container.blank").removeClass("blank");
-		$(".phone_number_canonical_container.blank .number input").unbind("keyup");
+		
+
 
 		personPage.create_blank_phone_number();
 	}

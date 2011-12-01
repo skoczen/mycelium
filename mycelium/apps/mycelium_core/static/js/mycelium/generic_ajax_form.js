@@ -149,6 +149,9 @@ if (! Object.hasOwnProperty("size")) {
 		o.deleted = false;
 		o.delete_queued = false;
 		o.delete_in_progress = false;
+		o.save_key = function() {
+			return this.form_object_type + "-" + this.page_pk;
+		}
 		o.get_data = function(){return this.form_object.get_data(this)};
 
 		o.save = function() {
@@ -183,6 +186,22 @@ if (! Object.hasOwnProperty("size")) {
 		o.queue_delete = function() {
 			this.delete_queued = true;
 		}
+		o.start_new = function() {
+			this.new_in_progress = true;
+			this.save_in_progress = true;
+			this.waiting_on_db_pk = true;
+		}
+		o.finish_new = function(json) {
+			console.log("finish_new")
+			console.log(this.target[0]);
+			console.log(json)
+			console.log(json.db_pk)
+			this.db_pk = json.db_pk;
+			this.target.attr("db_pk", this.db_pk).attr("pk", this.db_pk)
+			this.waiting_on_db_pk = false;
+			this.save_in_progress = false;
+			this.new_in_progress = false;
+		}
 		return o;
 	};
 	var SaveQueueItem = function(form_object) {
@@ -191,16 +210,18 @@ if (! Object.hasOwnProperty("size")) {
 	var createPageObjectFromCanonical = function(form_object, form_object_name, selector) {
 			var objs = {}
 			$(selector).each(function(){
-				var obj_pk = $(selector).attr("pk");
-				var po = PageObject(form_object, obj_pk, $(selector))
+				console.log($(this)[0])
+				var obj_pk = $(this).attr("pk");
+				console.log("obj_pk")
+				console.log(obj_pk)
+				obj_pk = (obj_pk == "") ? false : obj_pk;
+				console.log(obj_pk)
+				var po = PageObject(form_object, obj_pk, $(this))
 				objs[form_object_name+"_"+po.page_pk] = po;
 			});
 			return objs
 	};
 	var getFormFieldData = function(target) {
-		console.log("getFormFieldData")
-		console.log(target)
-		console.log($(target).formToArray(true))
 		return $(target).formToArray(true)
 	};
 
@@ -213,7 +234,7 @@ if (! Object.hasOwnProperty("size")) {
 			$.genericAjaxPagePk = 0;
 		}
 		$.genericAjaxPagePk++;
-		return $.genericAjaxPagePk
+		return $.genericAjaxPagePk;
     };
 
 
@@ -256,7 +277,12 @@ if (! Object.hasOwnProperty("size")) {
                     	data.page_objects = {};
                     	data.save_queue = {};
                     	data.page_pk = 1;
-                    	data.pending_save_queue = {};
+						data.add_to_save_queue = function (key) {
+							this.save_queue[key] = true;
+						}
+                    	data.remove_from_save_queue = function(key) {
+            				delete this.save_queue[key];
+            			}
                     		// - key is object_name+"_"+page_pk
 							// - value is the SaveQueueItem
                     	for (var key in data.form_objects) {
@@ -289,8 +315,6 @@ if (! Object.hasOwnProperty("size")) {
                     					var par = $(this);
                     					o[par.attr("form_object_type")+"_pk"] = par.attr("pk")
                     				})
-									console.log("formob,get_data")
-                    				console.log(o)
                     				return o
                     			};
                     		}
@@ -337,11 +361,11 @@ if (! Object.hasOwnProperty("size")) {
                 $("input").bind('keydown', 'ctrl+s', function(){data.target.genericAjaxForm('save_and_status_btn_clicked');});
 
                 $(data.options.last_save_time_class,data.target).hide();
-                $("input:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save', this, data.target);});
-                $("input:not(.excluded_field)", data.target).live("keyup",  function(){data.target.genericAjaxForm('queue_form_save', this, data.target);});
-                $("textarea:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save', this, data.target);});
-                $("textarea:not(.excluded_field)", data.target).live("keyup",  function(){data.target.genericAjaxForm('queue_form_save', this, data.target);});
-                $("select:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save', this, data.target);});
+                $("input:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save', $(this), data.target);});
+                $("input:not(.excluded_field)", data.target).live("keyup",  function(){data.target.genericAjaxForm('queue_form_save', $(this), data.target);});
+                $("textarea:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save', $(this), data.target);});
+                $("textarea:not(.excluded_field)", data.target).live("keyup",  function(){data.target.genericAjaxForm('queue_form_save', $(this), data.target);});
+                $("select:not(.excluded_field)", data.target).live("change", function(){data.target.genericAjaxForm('queue_form_save', $(this), data.target);});
                 $("input", data.target).autoGrowInput({comfortZone: 30, resizeNow:true});
 
                 $(data.options.save_and_status_btn_class, data.target).live("click", function(){data.target.genericAjaxForm('save_and_status_btn_clicked');});
@@ -400,18 +424,18 @@ if (! Object.hasOwnProperty("size")) {
                     data = $this.data('genericAjaxForm');
 
                 if (data.custom_save_mode) {
-                	page_obj = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
-                	if (page_obj.has_changed()) {
+                	page_object = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
+                	if (page_object.has_changed()) {
 						if ($(data.options.last_save_time_class).html() != data.options.last_saved_saving_text) {
 							$(data.options.last_save_time_class).hide();
 				            $(data.options.last_save_time_class).html(data.options.last_saved_saving_text).fadeIn(50);
 	            		    $(data.options.save_and_status_btn_class).html(data.options.saving_text).removeClass(data.options.save_now_class);
 						}
 						
-                		if (page_obj.save_in_progress) {
-                			page_obj.queue_save()
+                		if (page_object.save_in_progress) {
+                			page_object.queue_save()
                 		} else {
-                			data.target.genericAjaxForm('save_object', $this, page_obj, data.target);	
+                			data.target.genericAjaxForm('save_object', $this, page_object, data.target);	
                 		}
                 	}
                 } else {
@@ -490,7 +514,6 @@ if (! Object.hasOwnProperty("size")) {
             });
         },
         show_saved_message: function(){
-        	console.log("show_saved_message");
             return $(this).each(function(){
                 var $this = $(this),
                     data = $this.data('genericAjaxForm');
@@ -507,35 +530,29 @@ if (! Object.hasOwnProperty("size")) {
 			return data.form_objects[object_name];
 		},
 		save_object: function(context, page_object) {
-			var $this = $(context), data = $this.data('genericAjaxForm');
-			data.save_queue[page_obj.form_object_type] = true;
-			console.log("save_object")
-			console.log(page_object.get_data())
-			page_object.update_serialized_string()
-			page_obj.start_save();
-			$.ajax({
-              url: page_object.form_object.save_object_url,
-              type: data.save_method,
-              dataType: "json",
-              async: data.async,
-              data: page_object.get_data(),
-              success: function(json){return data.target.genericAjaxForm('save_object_response', context, json) }
-              // success: function() {alert("bar")}
-            });	
-			console.log(data)
-			console.log(page_object)
+			if (page_object.db_pk != false) {
+				var $this = $(context), data = $this.data('genericAjaxForm');
+				data.add_to_save_queue(page_object.save_key());
+				page_object.update_serialized_string()
+				page_object.start_save();
+				$.ajax({
+	              url: page_object.form_object.save_object_url,
+	              type: data.save_method,
+	              dataType: "json",
+	              async: data.async,
+	              data: page_object.get_data(),
+	              success: function(json){return data.target.genericAjaxForm('save_object_response', context, json) }
+	              // success: function() {alert("bar")}
+	            });		
+			}
 		},
 		save_object_response: function(context, json) {
-			console.log("save_object_response")
-			console.log(context)
-			console.log(json)
-
 			var $this = $(context), data = $this.data('genericAjaxForm');
 			
-			page_obj = get_page_object(data, json.form_object_type, json.page_pk);
-			page_obj.finish_save();
+			page_object = get_page_object(data, json.form_object_type, json.page_pk);
+			page_object.finish_save();
 			
-			data.target.genericAjaxForm('handle_queued_actions', $this, page_obj);
+			data.target.genericAjaxForm('handle_queued_actions', $this, page_object);
 
 			// - Check waiting_on_db_pk.  If true, set the db_pk.
 			// - Check waiting_to_delete.  If set, call delete.
@@ -543,58 +560,77 @@ if (! Object.hasOwnProperty("size")) {
 			// - GenericAjaxForm.trigger("saved_object", object_type, page_pk)			
 		},
 
-		new_object: function(object_name, page_pk) {
-			var $this = $(this), data = $this.data('genericAjaxForm');
-			var page_object
-			page_object.new_in_progress = true;
+		new_object: function(context, object_name, target) {
+			var $this = $(context).genericAjaxForm('self'), data = $this.data('genericAjaxForm');
+			var page_objects = createPageObjectFromCanonical(data.form_objects[object_name], object_name, target)
+			data.page_objects = $.extend(data.page_objects,page_objects)
+
+			$(data.options.last_save_time_class).hide();
+			$(data.options.last_save_time_class).html(data.options.last_saved_saving_text).fadeIn(50);
+			$(data.options.save_and_status_btn_class).html(data.options.saving_text).removeClass(data.options.save_now_class);
+			
+			for (key in page_objects) {
+	     	   page_object = page_objects[key];
+	    	}
+			page_object.start_new();
+
+			$.ajax({
+              url: page_object.form_object.new_object_url,
+              type: data.save_method,
+              dataType: "json",
+              async: data.async,
+              data: page_object.get_data(),
+              success: function(json){return data.target.genericAjaxForm('new_object_response', context, json) }
+              // success: function() {alert("bar")}
+            });	
+			data.target.genericAjaxForm('save_object', $this, page_object);
 			
 		},
-		new_object_response: function(json) {
-			var $this = $(this), data = $this.data('genericAjaxForm');
-			page_object.new_in_progress = false;
-			// - Same as save_object
-			// - GenericAjaxForm.trigger("new_object", object_type, page_pk)			
+		new_object_response: function(context, json) {
+			var $this = $(context), data = $this.data('genericAjaxForm');
+			
+			page_object = get_page_object(data, json.form_object_type, json.page_pk);
+			page_object.finish_new(json);
+			data.target.genericAjaxForm('handle_queued_actions', $this, page_object);
+		
 		},
 		delete_object_clicked: function() {
 			var $this = $(this), data = $this.data('genericAjaxForm');
 			console.log("or, however we should get the PO.")
-			page_obj = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
+			page_object = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
 
-			if (page_obj.save_in_progress) {
-				page_obj.queue_delete();
+			if (page_object.save_in_progress) {
+				page_object.queue_delete();
 			} else {
-				page_obj.start_delete();	
+				page_object.start_delete();	
 			}
 		},
 		delete_object: function(object_name, page_pk) {
 			var $this = $(this), data = $this.data('genericAjaxForm');
-			page_obj = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
+			page_object = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
 		},
 		delete_object_response: function(json) {
 			var $this = $(this), data = $this.data('genericAjaxForm');
-			page_obj = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
-			page_obj.finish_delete();
-			page_obj.delete_in_progress = false;
+			page_object = get_page_object(data, $(target).parents(".canonical").attr("form_object_type"), $(target).parents(".canonical").attr("page_pk"));
+			page_object.finish_delete();
+			page_object.delete_in_progress = false;
 			// - deleted was set on submit
 			// - delete the FormObject
 			// - GenericAjaxForm.trigger("deleted_object", object_type, page_pk)			
 		},
-		handle_queued_actions: function(context, page_obj) {
+		handle_queued_actions: function(context, page_object) {
 			var savetime = new Date();
 
 			var $this = $(context), data = $this.data('genericAjaxForm');
-			if (page_obj.waiting_on_db_pk) {
-				page_obj.db_pk = json.db_pk;
-			}
-			if (page_obj.delete_queued) { 
-				data.target.genericAjaxForm('delete_object', $this, page_obj, data.target);
+			data.remove_from_save_queue(page_object.save_key());
+			if (page_object.delete_queued) { 
+				data.target.genericAjaxForm('delete_object', $this, page_object, data.target);
 			} else {
-				if (page_obj.save_queued) {
-					page_obj.dequeue_save()
-					data.target.genericAjaxForm('save_object', $this, page_obj, data.target);
+				if (page_object.save_queued) {
+					page_object.dequeue_save()
+					data.target.genericAjaxForm('save_object', $this, page_object, data.target);
 				}	
 			}
-			delete data.save_queue[page_obj.form_object_type]
 
 			if (Object.size(data.save_queue) == 0) {
 				data.target.genericAjaxForm('show_saved_message');
@@ -604,6 +640,9 @@ if (! Object.hasOwnProperty("size")) {
 		form_objects: function(){
 			var $this = $(this), data = $this.data('genericAjaxForm');
 			return data.form_objects;
+		},
+		self: function(){
+			return $(this);
 		}
     };
 

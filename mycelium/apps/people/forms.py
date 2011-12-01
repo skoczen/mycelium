@@ -33,18 +33,18 @@ class PersonForm(AccountBasedModelForm):
 class PhoneNumberForm(AccountBasedModelForm):
     class Meta:
         model = PersonPhoneNumber
-        fields = ("account", "person", "phone_number", "contact_type", "primary")
+        fields = ("account", "phone_number", "contact_type", "primary")
 
 
 class EmailAddressForm(AccountBasedModelForm):
     class Meta:
         model = PersonEmailAddress
-        fields = ("account", "person", "email", "contact_type", "primary")
+        fields = ("account", "email", "contact_type", "primary")
 
 
 PhoneNumberFormset = inlineformset_factory(Person,
                              PersonPhoneNumber, 
-                             fields=("account", "person", "phone_number", "contact_type", "primary"), 
+                             fields=("account", "phone_number", "contact_type", "primary"), 
                              can_delete=True, 
                              extra=0, 
                              form=PhoneNumberForm, 
@@ -55,7 +55,7 @@ PhoneNumberFormset = inlineformset_factory(Person,
 
 EmailAddressFormset = inlineformset_factory(Person,
                              PersonEmailAddress, 
-                             fields=("account", "person", "email", "contact_type", "primary"), 
+                             fields=("account", "email", "contact_type", "primary"), 
                              can_delete=True, 
                              extra=0, 
                              form=EmailAddressForm, 
