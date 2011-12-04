@@ -5,32 +5,32 @@ SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 ENV = "LIVE"
 ROLE = ENV
 
+import os, sys, urlparse
+urlparse.uses_netloc.append('postgres')
+urlparse.uses_netloc.append('mysql')
+try:
+    if os.environ.has_key('DATABASE_URL'):
+        url = urlparse.urlparse(os.environ['DATABASE_URL'])
+        DATABASES['default'] = {
+            'NAME':     url.path[1:],
+            'USER':     url.username,
+            'PASSWORD': url.password,
+            'HOST':     url.hostname,
+            'PORT':     url.port,
+        }
+        if url.scheme == 'postgres':
+            DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
+        if url.scheme == 'mysql':
+            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+except:
+    print "Unexpected error:", sys.exc_info()
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mycelium',
-        'USER': 'myceliumdb',
-        'PASSWORD': 'Q3lg8Af81tj6vr5PdcIs',        
-        'HOST': 'int-mysql-master.agoodcloud.com',
-        'PORT': '3306',
-    },
-    'slave': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mycelium',
-        'USER': 'myceliumdb',
-        'PASSWORD': 'Q3lg8Af81tj6vr5PdcIs',        
-        'HOST': 'int-mysql-slave.agoodcloud.com',
-        'PORT': '3306',
-    },
-}
+# DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
 
-DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
-
-DATABASE_POOL = {
-    'default': 1,
-    'slave': 1,
-}
+# DATABASE_POOL = {
+#     'default': 1,
+#     'slave': 1,
+# }
 MASTER_DATABASE = 'default'
 BASE_DOMAIN = "agoodcloud.com"
 
