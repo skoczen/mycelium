@@ -33,13 +33,13 @@ class PersonForm(AccountBasedModelForm):
 class PhoneNumberForm(AccountBasedModelForm):
     class Meta:
         model = PersonPhoneNumber
-        fields = ("account", "phone_number", "contact_type", "primary")
+        fields = ("phone_number", "contact_type", "primary")
 
 
 class EmailAddressForm(AccountBasedModelForm):
     class Meta:
         model = PersonEmailAddress
-        fields = ("account", "email", "contact_type", "primary")
+        fields = ("email", "contact_type", "primary")
 
 
 PhoneNumberFormset = inlineformset_factory(Person,

@@ -7,11 +7,17 @@ personPage.tag_fadeout_timeout = false;
 personPage.prev_tab_name = "#recent_activity";
 
 personPage.init = function() {
+	// $("#phone_number_form_container .phone_number_canonical_container:last").hide();
+	// $("#email_form_container .email_canonical_container:last").hide();
+
 	personPage.create_blank_element("phone_number", "New phone");
 	personPage.create_blank_element("email", "New email");
 	$(".delete_email_btn").live("click", personPage.delete_email);
 	$(".delete_phone_number_btn").live("click", personPage.delete_phone_number);
 	$(".primary_radio").live("click",personPage.primary_clicked);
+	
+
+
 	// input.val("").attr("placeholder", "Add an email");
 	// personPage.convert_zero_elements_to_blank(input);
 	// $(".phone_number.blank .number .view_field").html("");
@@ -28,20 +34,35 @@ personPage.init = function() {
 };
 
 personPage.create_blank_element = function(element_name, placeholder) {
-	$("#"+element_name+"_form_container").append("<span class='"+element_name+"_canonical_container blank'></span>");
-	var blank = $("#"+element_name+"_form_container ."+element_name+"_canonical_container:first").clone();
+	// var first = $("#"+element_name+"_form_container ."+element_name+"_canonical_container");
+	var input = $("."+element_name+"_canonical_container .number input");
+	if ($("#"+element_name+"_form_container ."+element_name+"_canonical_container").length <= 1 && input.val() == "") {
+		input.bind("keyup.new_field",function(){return personPage.blank_element_changed($(this), element_name, placeholder)});			
+		input.attr("placeholder", placeholder).css("min-width", "120px");
+	} else {
+		if ($("#"+element_name+"_form_container ."+element_name+"_canonical_container").length == 1) {
+			$("."+element_name+"_canonical_container:first .number input").attr("placeholder", "");
+		}
+		var blank = $("#"+element_name+"_form_container ."+element_name+"_canonical_container:first").clone();
+		$("#"+element_name+"_form_container").append("<span class='"+element_name+"_canonical_container blank'></span>");
+		
+		$("input, select", blank).addClass("excluded_field");
+		$("."+element_name+".canonical", blank).attr("pk", "").attr("page_pk", "");
+		$(".contact_type, .primary, .delete", blank).html("");
+		$(".number input", blank).val("").attr("placeholder", placeholder);
+		$(".number .view_field", blank).html("");
+
+		personPage.convert_zero_elements_to_blank($(".number input", blank));
+
+		$("."+element_name+"_canonical_container.blank").append(blank.children());
+		
+		$("."+element_name+"_canonical_container .number input").unbind("keyup.new_field");
+		$("."+element_name+"_canonical_container.blank .number input").bind("keyup.new_field",function(){return personPage.blank_element_changed($(this), element_name, placeholder)});			
+	}
 	
-	$("input, select", blank).addClass("excluded_field");
-	$("."+element_name+".canonical", blank).attr("pk", "").attr("page_pk", "");
-	$(".contact_type, .primary, .delete", blank).html("");
-	$(".number input", blank).val("").attr("placeholder", placeholder);
-	$(".number .view_field", blank).html("");
-
-	personPage.convert_zero_elements_to_blank($(".number input", blank));
-
-	$("."+element_name+"_canonical_container.blank").append(blank);
-	$("."+element_name+"_canonical_container.blank .number input").unbind("keyup.new_field");
-	$("."+element_name+"_canonical_container.blank .number input").bind("keyup.new_field",function(){return personPage.blank_element_changed($(this), element_name, placeholder)});	
+	personPage.ensure_last_element_cant_be_deleted(element_name);
+	
+	
 }
 personPage.convert_zero_elements_to_blank = function(ele) {
 	$(ele).each(function(){
@@ -88,7 +109,7 @@ personPage.blank_element_changed = function(target, element_name, placeholder) {
 		var num_elements = $("#"+element_name+"_form_container ."+element_name+".canonical").length;
 		$("."+element_name+"_canonical_container.blank .contact_type").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .contact_type:first")));
 		$("."+element_name+"_canonical_container.blank .primary").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .primary:first")));
-		$("."+element_name+"_canonical_container.blank .delete").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .delete:first")));
+		$("."+element_name+"_canonical_container.blank .delete").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .delete:first"))).show();
 		$("."+element_name+"_canonical_container.blank .canonical").removeClass("is_primary");
 		$("."+element_name+"_canonical_container.blank .primary .faux_radio").removeClass("checked");
 
@@ -111,12 +132,26 @@ personPage.delete_element = function(target, element_name) {
 	setTimeout(function(){
 		if ($(".number input", ele).val() == "" || confirm("Are you sure you want to remove this "+element_name.replace("_"," ")+"?")) {
 			$("#basic_info_form").genericAjaxForm('delete_object', "#basic_info_form", ele);
+			personPage.ensure_last_element_cant_be_deleted(element_name);
 		} else {
 			ele.parents("."+element_name+"_canonical_container").removeClass("pre_delete");
 		}
 	}, 50);
-	
 
+}
+
+personPage.ensure_last_element_cant_be_deleted = function(element_name) {
+	var first = $("#"+element_name+"_form_container ."+element_name+"_canonical_container:not(.blank):not(.pre_delete)");
+	$(".delete", first).hide();
+
+	console.log("#"+element_name+"_form_container ."+element_name+"_canonical_container:not(.blank):not(.pre_delete)")
+	console.log("first.length")
+	console.log(first.length)
+	if (first.length <= 1) {
+		$(".delete", first).hide();
+	} else {
+		$(".delete", first).show();
+	}
 }
 
 personPage.delete_email = function(){

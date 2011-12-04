@@ -138,6 +138,15 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     def __unicode__(self):
         return u"%s" % (self.full_name)
 
+    def save(self, *args, **kwargs):
+        first_save = False
+        if not self.id:
+            first_save = True
+        super(Person, self).save(*args, **kwargs)
+        if first_save:
+            PersonEmailAddress.raw_objects.create(account=self.account, person=self)
+            PersonPhoneNumber.raw_objects.create(account=self.account, person=self)
+
 
     @models.permalink
     def get_absolute_url(self):

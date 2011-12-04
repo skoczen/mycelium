@@ -154,11 +154,13 @@ search_results {
 }
 .address {
 	display: block;
-	width: 100%;
-/*	margin-left: 5%;*/
+	margin-left: 100px;
 	clear: none;
 	float: left;
-	margin-top: 10px;
+	margin-top: 0px;
+}
+.edit_mode_on .address {
+	margin-top: 30px;
 }
 
 .basic_info {
@@ -229,7 +231,11 @@ search_results {
 	clear: both;
 	margin: 10px 0px 0px 0px;
 }
+.edit_mode_off .birthday.blank {
+	display: none;
+}
 .edit_mode_on .birthday {
+	display: block;
 	margin-bottom: 20px;
 	padding-bottom: 20px;
 }
@@ -513,9 +519,8 @@ detail_tab_contents input, detail_tab_contents textarea {
 	cursor: pointer;
 }
 .contact_info .is_primary .faux_radio {
-	/*background-image: url("../images/icon-star-20-dkgrey.png");*/
-	background-image: url("../images/icon-star-20-blue.png");
-	
+	background-image: url("../images/icon-star-20-grey.png");
+	/*background-image: url("../images/icon-star-20-blue.png");*/
 }
  
 .contact_info .phone_email .generic_field_label {
@@ -523,6 +528,9 @@ detail_tab_contents input, detail_tab_contents textarea {
 }
 .contact_info .primary_field {
 	display: none;
+}
+.contact_info .is_primary .contact_type {
+
 }
 
 #phone_number_form_container {
@@ -534,7 +542,7 @@ detail_tab_contents input, detail_tab_contents textarea {
 .edit_mode_on .name_phone_email {
 	margin-bottom: 0px;
 }
-.contact_info .phone_number.canonical {
+.contact_info .phone_number.canonical, .contact_info .email.canonical {
 	margin-bottom: 8px;
 }
 .edit_mode_off .phone_number_canonical_container.blank {

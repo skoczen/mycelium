@@ -208,10 +208,6 @@ if (! Object.hasOwnProperty("size")) {
 			this.waiting_on_db_pk = true;
 		}
 		o.finish_new = function(json) {
-			console.log("finish_new")
-			console.log(this.target[0]);
-			console.log(json)
-			console.log(json.db_pk)
 			this.db_pk = json.db_pk;
 			this.target.attr("db_pk", this.db_pk).attr("pk", this.db_pk)
 			this.waiting_on_db_pk = false;
@@ -226,12 +222,8 @@ if (! Object.hasOwnProperty("size")) {
 	var createPageObjectFromCanonical = function(form_object, form_object_name, selector) {
 			var objs = {}
 			$(selector).each(function(){
-				console.log($(this)[0])
 				var obj_pk = $(this).attr("pk");
-				console.log("obj_pk")
-				console.log(obj_pk)
 				obj_pk = (obj_pk == "") ? false : obj_pk;
-				console.log(obj_pk)
 				var po = PageObject(form_object, obj_pk, $(this))
 				objs[form_object_name+"_"+po.page_pk] = po;
 			});
@@ -482,7 +474,7 @@ if (! Object.hasOwnProperty("size")) {
                 data.target.removeClass("dirty");
 
                 if (data.custom_save_mode) {
-                	console.log("custom save")
+                	// console.log("custom save")
                 } else {
 	                
 	                $(data.form).ajaxSubmit({
@@ -538,7 +530,6 @@ if (! Object.hasOwnProperty("size")) {
             });
         },
         show_saving_message: function(){
-        	console.log("show_saved_message");
             return $(this).each(function(){
                 var $this = $(this),
                     data = $this.data('genericAjaxForm');
@@ -637,6 +628,20 @@ if (! Object.hasOwnProperty("size")) {
 
 			var $this = $(context), data = $this.data('genericAjaxForm');
 			data.remove_from_save_queue(page_object.save_key());
+
+			$(".generic_editable_field",data.target).each(function(){
+    			var field = $(this);
+    			if ($(".edit_field select",field).length > 0) {
+    				$(".view_field",field).html($(".edit_field select option:selected",field).text());	
+    			} else {
+    				if ($(".edit_field input[type=radio]:checked",field).length > 0 ) {
+    					$(".view_field",field).html($(".edit_field label[for="+$(".edit_field input[type=radio]:checked").attr("id")+"]").html());
+    				} else {
+    					$(".view_field",field).html($(".edit_field input, .edit_field textarea",field).val());		
+    				}
+    			}
+    		});
+
 			if (page_object.delete_queued) { 
 				data.target.genericAjaxForm('delete_object', $this, context, data.target);
 			} else {
@@ -645,10 +650,8 @@ if (! Object.hasOwnProperty("size")) {
 					data.target.genericAjaxForm('save_object', $this, page_object, data.target);
 				}	
 			}
-			console.log(data.save_queue);
 
 			if (Object.size(data.save_queue) == 0) {
-				console.log("zero")
 				data.target.genericAjaxForm('show_saved_message');
 	    		data.target.trigger("genericAjaxForm.save_form_success");
 			}

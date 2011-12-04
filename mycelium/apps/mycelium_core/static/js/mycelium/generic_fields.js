@@ -173,9 +173,7 @@
 							} else {
 								$(".view_field",field).html($(".edit_field input, .edit_field textarea",field).val());		
 							}
-							
 						}
-						
 					});
 					var savetime = new Date();
 					total_saving_time = savetime - save_start_time;
