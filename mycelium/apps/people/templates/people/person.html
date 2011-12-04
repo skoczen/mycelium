@@ -160,26 +160,36 @@ $(function(){
 			<box_content>
 				<div id="no_home_contact_info_message"></div>
 				<div class="phone_email">
-				<span id="phone_number_form_container">
+				<span id="phone_number_form_container" class="canonical_set_container">
 				{% for p_form in phone_formset.forms %}
 				<span class="phone_number_canonical_container">
-				<span class="phone_number canonical" form_object_type="phone_number" pk="{{p_form.instance.pk}}">
+				<span class="phone_number canonical {% if p_form.instance.primary %}is_primary{% endif %}" form_object_type="phone_number" pk="{{p_form.instance.pk}}"><tr>
+					<span class="primary"><span class="faux_radio excluded_field primary_radio {% if p_form.instance.primary %}checked{% endif %}"></span>
+										<span class="edit_field">
+										<span class="primary_field">{% generic_editable_field p_form.primary %}</span>
+										</span>
+					</span>
 					<span class="contact_type">{% generic_editable_field p_form.contact_type %}</span>
 					<span class="number" itemprop="telephone">{% generic_editable_field p_form.phone_number %}</span>
-					<span class="primary">{% generic_editable_field p_form.primary %}</span>
+					
 					<span class="delete"><span class="edit_field"><a href="#" class="delete_phone_number_btn mycelium_btn mycelium_small_btn mycelium_grey mycelium_delete_btn">Delete</a></span></span>
 				</span>
 				</span>
 				{% endfor %}
 				</span>
 				
-				<span id="email_form_container">
+				<span id="email_form_container" class="canonical_set_container">
 				{% for e_form in email_formset.forms %}
 				<span class="email_canonical_container">
-				<span class="email canonical" form_object_type="email" pk="{{e_form.instance.pk}}">
+				<span class="email canonical {% if e_form.instance.primary %}is_primary{% endif %}" form_object_type="email" pk="{{e_form.instance.pk}}"><tr>
+					<span class="primary"><span class="faux_radio excluded_field primary_radio {% if e_form.instance.primary %}checked{% endif %}"></span>
+										<span class="edit_field">
+										<span class="primary_field">{% generic_editable_field e_form.primary %}</span>
+										</span>
+					</span>
 					<span class="contact_type">{% generic_editable_field e_form.contact_type %}</span>
 					<span class="number" itemprop="email">{% generic_editable_field e_form.email %}</span>
-					<span class="primary">{% generic_editable_field e_form.primary %}</span>
+					
 					<span class="delete"><span class="edit_field"><a href="#" class="delete_email_btn mycelium_btn mycelium_small_btn mycelium_grey mycelium_delete_btn">Delete</a></span></span>
 				</span>
 				</span>

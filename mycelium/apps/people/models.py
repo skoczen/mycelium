@@ -259,10 +259,12 @@ class PhoneNumber(PhoneNumberBase, ContactMethod):
     pass
 
 class PersonEmailAddress(EmailAddress, PersonContactMethod):
-    pass
+    class Meta:
+        ordering = ("-primary",)
 
 class PersonPhoneNumber(PhoneNumber, PersonContactMethod):
-    pass
+    class Meta:
+        ordering = ("-primary",)
 
 class PeopleSearchProxy(SearchableItemProxy):
     SEARCH_GROUP_NAME = "people"

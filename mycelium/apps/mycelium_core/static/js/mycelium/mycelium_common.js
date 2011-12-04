@@ -26,4 +26,3 @@ function close_help_popup() {
    $("#help_popup").hide();
    $(".side_help_btn").removeClass("current")	
 }
-

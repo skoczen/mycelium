@@ -231,6 +231,7 @@ def _person_related_model_new(cls, request, form_builder):
 def _person_related_model_delete(cls, request):
     success = False
     page_pk, db_pk, data, form_object_type = _get_generic_ajax_data(request.POST)
+    person = get_or_404_by_account(Person, request.account, request.POST["person_pk"])
     obj = get_or_404_by_account(cls, request.account, db_pk)
     obj.delete()
     db_pk = None

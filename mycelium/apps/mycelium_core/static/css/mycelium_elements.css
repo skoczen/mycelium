@@ -810,7 +810,7 @@ tags search_results .new_tag_list .similar_tags a {
 	font-size: 15px;
 	padding: 2px 0px;
 }
-.pre_delete {
+.pre_delete, .pre_delete input, .pre_delete select {
 	opacity: 0.6;
 	text-decoration: line-through;
 }

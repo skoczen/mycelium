@@ -462,10 +462,84 @@ detail_tab_contents input, detail_tab_contents textarea {
 .basic_info tabbed_box.contact_info {
 	width: 50%;
 }
+.contact_info .canonical {
+	display: block;
+	width: 100%;
+	position: relative;
+	clear: both;
+}
+.contact_info .canonical .generic_editable_field {
+	display: inline;
+}
 .contact_info .contact_type {
-	float: left;
 	margin-right: 10px;
 }
+.contact_info .number {
+	position: absolute;
+	left: 100px;
+}
+.contact_info .delete {
+	float: right;
+}
+.contact_info .primary {
+	margin-right: 8px;
+}
+.contact_info .view_field {
+
+}
+.contact_info .is_primary .view_field {
+	/*font-weight: bold;*/
+	/*color: #000;*/
+}
+.contact_info .contact_type .view_field {
+	color: #999;
+}
+.contact_info .is_primary .contact_type .view_field {
+	/*color: #555;*/
+}
+
+.contact_info .faux_radio {
+	display: block;
+	float: left;
+	background-repeat: no-repeat;
+	width: 26px;
+	height: 22px;
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+.edit_mode_on .contact_info .faux_radio {
+	background-image: url("../images/icon-star-empty-20-grey.png");
+	background-position: 0px 2px;
+	cursor: pointer;
+}
+.contact_info .is_primary .faux_radio {
+	/*background-image: url("../images/icon-star-20-dkgrey.png");*/
+	background-image: url("../images/icon-star-20-blue.png");
+	
+}
+ 
 .contact_info .phone_email .generic_field_label {
 	display: none;
+}
+.contact_info .primary_field {
+	display: none;
+}
+
+#phone_number_form_container {
+	display: block;
+}
+.name_phone_email {
+	margin-bottom: 22px;
+}
+.edit_mode_on .name_phone_email {
+	margin-bottom: 0px;
+}
+.contact_info .phone_number.canonical {
+	margin-bottom: 8px;
+}
+.edit_mode_off .phone_number_canonical_container.blank {
+	display: none;
+}
+.edit_mode_on #phone_number_form_container {
+	margin-bottom: 30px;
 }
