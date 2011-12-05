@@ -382,12 +382,31 @@ if (! Object.hasOwnProperty("size")) {
                 $this.data('genericAjaxForm',data);
                 
                 // bind to window close, save if there's anything in the ajax queue
-                $(window).bind("unload.genericAjaxForm",function(){
-                	if (data.save_queued) {
-                		clearTimeout(data.form_save_timeout);
-                    	data.async = false;
-                    	data.target.genericAjaxForm('save_form');                		
+                $(window).bind("beforeunload.genericAjaxForm", function() {
+                	if (data.custom_save_mode) {
+                		if (Object.size(data.save_queue) != 0) {
+                			return "Changes are still being saved. Are you sure you want to leave the page, and lose your changes?"
+                		}
+                	} else {
+	                	if (data.save_queued) {
+							return "Changes are still being saved. Are you sure you want to leave the page, and lose your changes?";
+	                	}	
                 	}
+                	return 
+	            });
+                $(window).bind("unload.genericAjaxForm",function(){
+                	if (data.custom_save_mode) {
+                		if (Object.size(data.save_queue) != 0) {
+                			return false;
+                		}
+                	} else {
+	                	if (data.save_queued) {
+	                		clearTimeout(data.form_save_timeout);
+	                    	data.async = false;
+	                    	data.target.genericAjaxForm('save_form');                		
+	                	}	
+                	}
+                	
                 });
             });
         },

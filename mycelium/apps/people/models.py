@@ -183,7 +183,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     @property
     def primary_phone_number(self):
         if self.phone_numbers:
-            return self.phone_numbers.order_by("primary",)[0]
+            return self.phone_numbers.order_by("-primary",)[0]
         else:
             for e in self.jobs.all():
                 if e.phone_number:
@@ -197,7 +197,7 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     @property
     def primary_email(self):
         if self.emails:
-            return self.emails.order_by("primary",)[0]
+            return self.emails.order_by("-primary",)[0]
         else:
             for e in self.jobs.all():
                 if e.email:

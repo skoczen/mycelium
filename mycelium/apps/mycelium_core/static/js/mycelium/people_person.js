@@ -47,9 +47,9 @@ personPage.create_blank_element = function(element_name, placeholder) {
 		$("#"+element_name+"_form_container").append("<span class='"+element_name+"_canonical_container blank'></span>");
 		
 		$("input, select", blank).addClass("excluded_field");
-		$("."+element_name+".canonical", blank).attr("pk", "").attr("page_pk", "");
+		$("."+element_name+".canonical", blank).attr("pk", "").attr("page_pk", "").attr("db_pk", "");
 		$(".contact_type, .primary, .delete", blank).html("");
-		$(".number input", blank).val("").attr("placeholder", placeholder);
+		$(".number input", blank).val("").attr("placeholder", placeholder).css("min-width", "120px").autoGrowInput({comfortZone: 30, resizeNow:true});
 		$(".number .view_field", blank).html("");
 
 		personPage.convert_zero_elements_to_blank($(".number input", blank));
@@ -60,7 +60,7 @@ personPage.create_blank_element = function(element_name, placeholder) {
 		$("."+element_name+"_canonical_container.blank .number input").bind("keyup.new_field",function(){return personPage.blank_element_changed($(this), element_name, placeholder)});			
 	}
 	
-	personPage.ensure_last_element_cant_be_deleted(element_name);
+	personPage.ensure_delete_and_primaries(element_name);
 	
 	
 }
@@ -74,7 +74,7 @@ personPage.convert_zero_elements_to_blank = function(ele) {
 		}
 		try {
 			if (e.attr("type") == "checkbox"){
-				e.removeAttr("checked");	
+				e.removeAttr("checked");
 			} else {
 				e.val("");
 			}
@@ -96,7 +96,15 @@ personPage.convert_blank_elements_to_new = function(ele, counter) {
 personPage.cloned_and_cleared = function(ele) {
 	var e = ele.clone()
 	try {
-		$("select, input",e).val("").addClass("excluded_field");
+		$("select, input",e).each(function() {
+			$this = $(this);
+			if ($this.attr("type") == "checkbox"){
+				$this.removeAttr("checked");
+			} else {
+				$this.val("");
+			}
+			$this.addClass("excluded_field");
+		});
 	} catch(e) {}
 	personPage.convert_zero_elements_to_blank($("select, input, label",e));
 	return e.html();
@@ -109,14 +117,17 @@ personPage.blank_element_changed = function(target, element_name, placeholder) {
 		var num_elements = $("#"+element_name+"_form_container ."+element_name+".canonical").length;
 		$("."+element_name+"_canonical_container.blank .contact_type").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .contact_type:first")));
 		$("."+element_name+"_canonical_container.blank .primary").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .primary:first")));
-		$("."+element_name+"_canonical_container.blank .delete").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .delete:first"))).show();
+		$("."+element_name+"_canonical_container.blank .delete").html(personPage.cloned_and_cleared($("#"+element_name+"_form_container .delete:first")));
 		$("."+element_name+"_canonical_container.blank .canonical").removeClass("is_primary");
 		$("."+element_name+"_canonical_container.blank .primary .faux_radio").removeClass("checked");
 
 		personPage.convert_blank_elements_to_new( $("select, input, label", $("."+element_name+"_canonical_container.blank")), num_elements);
 
 		// Add to form_objects.
-		$("#basic_info_form").genericAjaxForm('new_object', "#basic_info_form", element_name, $("."+element_name+"_canonical_container.blank .canonical"));
+		if ($("."+element_name+"_canonical_container").length > 1)  {
+			$("#basic_info_form").genericAjaxForm('new_object', "#basic_info_form", element_name, ele.parents(".canonical."+element_name));	
+		}
+		
 
 		$("."+element_name+"_canonical_container.blank input, ."+element_name+"_canonical_container.blank select").removeClass("excluded_field");
 		$("."+element_name+"_canonical_container.blank .number input").unbind("keyup.new_field");
@@ -132,7 +143,7 @@ personPage.delete_element = function(target, element_name) {
 	setTimeout(function(){
 		if ($(".number input", ele).val() == "" || confirm("Are you sure you want to remove this "+element_name.replace("_"," ")+"?")) {
 			$("#basic_info_form").genericAjaxForm('delete_object', "#basic_info_form", ele);
-			personPage.ensure_last_element_cant_be_deleted(element_name);
+			personPage.ensure_delete_and_primaries(element_name);
 		} else {
 			ele.parents("."+element_name+"_canonical_container").removeClass("pre_delete");
 		}
@@ -140,18 +151,19 @@ personPage.delete_element = function(target, element_name) {
 
 }
 
-personPage.ensure_last_element_cant_be_deleted = function(element_name) {
+personPage.ensure_delete_and_primaries = function(element_name, placeholder) {
+	// deletes
 	var first = $("#"+element_name+"_form_container ."+element_name+"_canonical_container:not(.blank):not(.pre_delete)");
-	$(".delete", first).hide();
 
-	console.log("#"+element_name+"_form_container ."+element_name+"_canonical_container:not(.blank):not(.pre_delete)")
-	console.log("first.length")
-	console.log(first.length)
 	if (first.length <= 1) {
-		$(".delete", first).hide();
+		$("#"+element_name+"_form_container").addClass("only_one")
+		$("#"+element_name+"_form_container ."+element_name+"_canonical_container:first .canonical").addClass("is_primary");
+		$("#"+element_name+"_form_container ."+element_name+"_canonical_container:first .primary_field input").attr("checked", "checked").trigger("change");
 	} else {
-		$(".delete", first).show();
+		$("#"+element_name+"_form_container").removeClass("only_one")
+		$("#"+element_name+"_form_container ."+element_name+"_canonical_container:not(.blank) .number input").attr("placeholder", "");
 	}
+	$("#"+element_name+"_form_container ."+element_name+"_canonical_container:last .number input").attr("placeholder", "New "+element_name.replace("_"," ").replace(" number",""));
 }
 
 personPage.delete_email = function(){
@@ -170,13 +182,11 @@ personPage.detail_tab_clicked = function(e) {
 
 personPage.primary_clicked = function() {
 	var ele = $(this);
-	var can_containter = ele.parents(".canonical_set_container");
-	$(".canonical", can_containter).removeClass("is_primary");
+	var can_container = ele.parents(".canonical_set_container");
+	$(".canonical", can_container).removeClass("is_primary");
 	ele.parents(".canonical").addClass("is_primary");
-	$(".primary_field input:checked", can_containter).removeAttr("checked").trigger("change");
-	$(".primary_field input", ele.parents(".primary")).attr("checked", "checked")
-	$(".primary_field input", ele.parents(".primary")).trigger("change");
-
+	$(".primary_field input:checked", can_container).removeAttr("checked").trigger("change");
+	$(".canonical.is_primary .primary_field input", can_container).attr("checked", "checked").trigger("change");
 }
 
 personPage.load_detail_tab = function(tab_name) {
