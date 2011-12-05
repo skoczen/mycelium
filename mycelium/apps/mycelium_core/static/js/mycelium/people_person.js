@@ -16,14 +16,6 @@ personPage.init = function() {
 	$(".delete_phone_number_btn").live("click", personPage.delete_phone_number);
 	$(".primary_radio").live("click",personPage.primary_clicked);
 	
-
-
-	// input.val("").attr("placeholder", "Add an email");
-	// personPage.convert_zero_elements_to_blank(input);
-	// $(".phone_number.blank .number .view_field").html("");
-	// $("#phone_number_blank_container .number input").live("change", personPage.blank_phone_number_changed);
-
-
     $(".person_delete_btn").click(personPage.delete_person);
     $("detail_tabs a.detail_tab").live("click",personPage.detail_tab_clicked);
     $(".general_person_tags").genericTags();

@@ -1,6 +1,10 @@
 $(function(){
     $("#basic_info_form").bind("genericAjaxForm.toggle_off", do_some_intelligent_data_formatting);
-    $("#basic_info_form").bind("genericAjaxForm.toggle_on", function(e){$(".city_state_comma",e.target).show();$(".birthday").show();});
+    $("#basic_info_form").bind("genericAjaxForm.toggle_on", function(e){
+	    $(".city_state_comma",e.target).show();
+	    $(".birthday").show();
+	    $(".phone_number_canonical_container, .email_canonical_container").show();
+	});
     intelligently_show_hide_comma();
     intelligently_show_no_home_contact_info();
     $(".birthday input").change(check_for_valid_birthday);
@@ -36,11 +40,22 @@ function intelligently_show_hide_comma() {
 
 function intelligently_show_no_home_contact_info() {
     var some_contact_info = false;
-    $("#basic_info_form tabbed_box[name=home] input").each(function(){
+    $("#basic_info_form .address input").each(function(){
+    	console.log($(this).val())
         if ($(this).val() != "") {
             some_contact_info = true;
         }
     });
+    $(".phone_number_canonical_container, .email_canonical_container").each(function(){
+    	var ele = $(this);
+    	if ($(".number input", ele).val() != "") {
+    		console.log($(".number input", ele).val())
+    		some_contact_info = true;
+    		ele.show();
+    	} else {
+    		ele.hide();
+    	}
+    })
     if (!some_contact_info) {
         $("#no_home_contact_info_message").html("No home contact information.");
     } else {
