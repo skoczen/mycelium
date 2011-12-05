@@ -41,7 +41,6 @@ function intelligently_show_hide_comma() {
 function intelligently_show_no_home_contact_info() {
     var some_contact_info = false;
     $("#basic_info_form .address input").each(function(){
-    	console.log($(this).val())
         if ($(this).val() != "") {
             some_contact_info = true;
         }
@@ -49,7 +48,6 @@ function intelligently_show_no_home_contact_info() {
     $(".phone_number_canonical_container, .email_canonical_container").each(function(){
     	var ele = $(this);
     	if ($(".number input", ele).val() != "") {
-    		console.log($(".number input", ele).val())
     		some_contact_info = true;
     		ele.show();
     	} else {
