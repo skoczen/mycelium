@@ -151,6 +151,8 @@ INSTALLED_APPS = (
     'django_jenkins',
     'django_ses',
     'compressor',
+    'tastypie',
+    'backbone_tastypie',
     
     #'cms',
     #'mptt',

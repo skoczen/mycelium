@@ -1,10 +1,15 @@
+import dselector
+
 from django.conf.urls.defaults import *
 
-import dselector
+from generic_tags.api import TagResource, TagSetResource
+from generic_tags import views
+ 
 parser = dselector.Parser()
 url = parser.url
 
-import views
+tagset_resource = TagSetResource()
+tag_resource = TagResource()
 
 urlpatterns = parser.patterns('',                      
     url(r'{tag_set_id:digits}/{target_id:digits}/create$',                  views.tag_views.create_tag,                          name='create_tag'),
@@ -15,4 +20,6 @@ urlpatterns = parser.patterns('',
     url(r'{tagset_id:digits}/new-tag$',                                     views.new_tag,                                       name='new_tag'),
     url(r'manage/$',                                                        views.manage,                                        name='manage'),
     url(r'save-tags-and-tagset/$',                                          views.save_tags_and_tagsets,                         name='save_tags_and_tagsets'),
+    (r'api/', include(tagset_resource.urls)),
+    (r'api/', include(tag_resource.urls)),
 )

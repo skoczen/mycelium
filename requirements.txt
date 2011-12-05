@@ -73,3 +73,8 @@ pytz
 -e git://github.com/GoodCloud/bolt.git#egg=bolt
 -e git://github.com/GoodCloud/django_compressor.git@versioned_static#egg=django_compressor
 html5lib
+mimeparse>=0.1.3
+lxml
+PyYAML
+django-tastypie
+-e git://github.com/PaulUithol/backbone-tastypie.git#egg=tastypie
