@@ -1,12 +1,16 @@
-from spreadsheets.spreadsheet import ImportField, SpreadsheetRow
+import datetime
+from collections import OrderedDict
+
 from accounts.managers import get_or_404_by_account
+from spreadsheets.spreadsheet import ImportField, SpreadsheetRow
 from people.models import Person
+from organizations.models import Organization
 from volunteers.models import CompletedShift
 from donors.models import Donation
 from conversations.models import Conversation
-from collections import OrderedDict
 
-import datetime
+
+
 
 
 class TargetObjectBasedTemplate(object):
@@ -75,7 +79,6 @@ class CompletedShiftBasedTemplate(TargetObjectBasedTemplate):
             return None, False
 
 
-
 class ConversationBasedTemplate(TargetObjectBasedTemplate):
     model = Conversation
     person_field = "person"
@@ -90,6 +93,17 @@ class ConversationBasedTemplate(TargetObjectBasedTemplate):
 
     def get_target_object_accounts_UserAccount(self):
         return self.get_target_object_conversations_Conversation()[0].staff, False
+
+
+class OrganizationBasedTemplate(TargetObjectBasedTemplate):
+    model = Organization
+    row_descriptor = "organizations"
+
+    def get_target_object_organizations_Organization(self):
+        return self.get_primary_target(), False
+
+
+
 
 class FullContactListTemplate(PersonBasedTemplate):
     template_type = "full_contact_list"
@@ -297,6 +311,28 @@ class VolunteerHoursSummaryTemplateInstance(VolunteerHoursSummaryTemplate,Spread
             for y in range(oldest.year, this_year+1):
                 self.fields["hours_%s" % y] = ImportField("%s Total Hours" % y,           "people",       "Person",       "volunteer_hours_for_year(%s)" % y)
 
+
+class OrganizationsTemplate(OrganizationBasedTemplate):
+    template_type = "organizations"
+    name = "Organizations"
+    description = "All organizations in your GoodCloud, with full contact information."
+    fields = OrderedDict([
+        ("name",                ImportField("Name",                          "organizations",       "Organization",       "name",                  )),
+        ("phone_number",        ImportField("Home Phone",                    "organizations",       "Organization",       "primary_phone_number",  )),
+        ("line_1",              ImportField("Home Address 1",                "organizations",       "Organization",       "line_1",                )),
+        ("line_2",              ImportField("Home Address 2",                "organizations",       "Organization",       "line_2",                )),
+        ("city",                ImportField("City",                          "organizations",       "Organization",       "city",                  )),
+        ("state",               ImportField("State",                         "organizations",       "Organization",       "state",                 )),
+        ("postal_code",         ImportField("Zip Code",                      "organizations",       "Organization",       "postal_code",           )),
+        ("website",             ImportField("Website",                       "organizations",       "Organization",       "website",               )),
+        ("twitter_username",    ImportField("Twitter",                       "organizations",       "Organization",       "twitter_username",      )),
+        ("goodcloud_id",        ImportField("GoodCloud ID",                  "organizations",       "Organization",       "id",                    )),
+    ])
+
+class OrganizationsTemplateInstance(OrganizationsTemplate,SpreadsheetRow):
+    pass
+           
+
 class CustomTemplate (object):
     template_type = "custom_template"
     name = "Custom Template"
@@ -319,6 +355,7 @@ SPREADSHEET_TEMPLATES = [
     DonationSummaryListTemplate(),
     VolunteerHoursTemplate(),
     VolunteerHoursSummaryTemplate(),
+    OrganizationsTemplate(),
 
     # CustomTemplate(),
 ]
@@ -331,6 +368,7 @@ SPREADSHEET_TEMPLATE_INSTANCES = {
     "donation_summary"       : DonationSummaryListTemplateInstance,   # see post_init_setup
     "volunteer_hours"        : VolunteerHoursTemplateInstance,
     "volunteer_hour_summary" : VolunteerHoursSummaryTemplateInstance,
+    "organizations"          : OrganizationsTemplateInstance,
     
     # "custom_template"        : CustomTemplateInstance,
 }

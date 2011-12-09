@@ -307,15 +307,17 @@ class SpreadsheetAbstraction:
 
                 for k,f in template.fields.iteritems():
                     if target_objects[f.model_key]:
+                        col_val = None
                         # try:
                         if f.field in target_objects[f.model_key].__dict__:
-                            row.append(target_objects[f.model_key].__dict__[f.field])
+                            col_val = target_objects[f.model_key].__dict__[f.field]
                         else:
-                            row.append(eval("target_objects[f.model_key].%s" % f.field))
+                            col_val = eval("target_objects[f.model_key].%s" % f.field)
                         # except:
                         #     row.append("")    
-                    else:
-                        row.append("")
+                        if not col_val:
+                            col_val = ""
+                    row.append(col_val)
                 rows.append(row)
             except Exception, e:
                 print "Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, e)
