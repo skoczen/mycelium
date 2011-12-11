@@ -88,7 +88,8 @@ def search_results(request):
 @staff_member_required
 def delete_deactivated_account(request, account_id):
     account = Account.objects.get(pk=account_id)
-    assert account.status == STATUS_DEACTIVATED
+    # TODO: Fix the BILLING_PROBLEM_STATII inclusion once stripe fixes their API for changes.
+    assert account.status in BILLING_PROBLEM_STATII or account.status == STATUS_DEACTIVATED
 
     account.delete()
     return HttpResponseRedirect(reverse("flight_control:home"))

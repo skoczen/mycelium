@@ -260,6 +260,11 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
                 self.free_trial_ends_date = datetime.datetime.now() + datetime.timedelta(minutes=2)
             else:
                 self.free_trial_ends_date = self.signup_date + datetime.timedelta(days=30)
+        else: 
+            # reset the free trial date
+            if self.free_trial_ends_date < datetime.datetime.now():
+                self.free_trial_ends_date = datetime.datetime.now() + datetime.timedelta(minutes=2)
+            
 
         # Create a stripe customer
         c.description=self.name
