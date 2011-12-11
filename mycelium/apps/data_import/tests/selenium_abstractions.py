@@ -56,7 +56,7 @@ class DataImportTestAbstractions(object):
 
     def choose_person_as_import_type(self):
         sel = self.selenium
-        assert not sel.is_element_present("css=.qq-upload-button")
+        # assert not sel.is_element_present("css=.qq-upload-button")
         sel.click("css=.import_type_people input")
         sel.wait_for_element_present("css=.qq-upload-button")
     

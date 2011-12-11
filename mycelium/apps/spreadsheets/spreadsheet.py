@@ -306,8 +306,8 @@ class SpreadsheetAbstraction:
                 target_objects,created = template_instance.get_target_objects()
 
                 for k,f in template.fields.iteritems():
+                    col_val = None
                     if target_objects[f.model_key]:
-                        col_val = None
                         # try:
                         if f.field in target_objects[f.model_key].__dict__:
                             col_val = target_objects[f.model_key].__dict__[f.field]
@@ -315,8 +315,8 @@ class SpreadsheetAbstraction:
                             col_val = eval("target_objects[f.model_key].%s" % f.field)
                         # except:
                         #     row.append("")    
-                        if not col_val:
-                            col_val = ""
+                    if not col_val:
+                        col_val = ""
                     row.append(col_val)
                 rows.append(row)
             except Exception, e:
