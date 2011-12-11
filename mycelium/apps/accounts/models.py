@@ -341,7 +341,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
 
     @property
     def is_deactivated(self):
-        return self.status == STATUS_DEACTIVATED
+        return self.status in BILLING_PROBLEM_STATII or self.status == STATUS_DEACTIVATED
 
     @property
     def is_cancelled(self):
