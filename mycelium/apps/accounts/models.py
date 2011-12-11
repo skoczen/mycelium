@@ -279,7 +279,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
 
 
     def stripe_subscription_url(self):
-        return "https://manage.stripe.com/customers/%s" % self.stripe_customer_id
+        return "https://manage.stripe.com/#customers/%s" % self.stripe_customer_id
 
     def update_account_status(self):
         sub = self.stripe_subscription
