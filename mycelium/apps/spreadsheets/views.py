@@ -91,7 +91,10 @@ def download(request):
     extension = SpreadsheetAbstraction.extension_from_file_type(file_type)
 
     response = HttpResponse(f_write.getvalue(), mime_type)
-    response['Content-Disposition'] = 'attachment; filename=%s.%s' % (spreadsheet.name, extension)
+    spreadsheet_name = spreadsheet.name
+    if spreadsheet_name == "":
+        spreadsheet_name = "Unnnamed Spreadsheet"
+    response['Content-Disposition'] = 'attachment; filename=%s.%s' % (spreadsheet_name, extension)
 
     return response
 
