@@ -1,15 +1,15 @@
-git+git://github.com/GoodCloud/django-ajax-uploader.git@c9134bc454adad9d8ff83e76c6b7bc928f055b3b#egg=ajaxuploader-dev
-git+git://github.com/skoczen/qi-toolkit.git@e5b5889e9edd7346c5cccf096e389505b21eed37#egg=qi_toolkit-dev
+git+https://github.com/GoodCloud/django-ajax-uploader.git@c9134bc454adad9d8ff83e76c6b7bc928f055b3b#egg=ajaxuploader-dev
+git+https://github.com/skoczen/qi-toolkit.git@e5b5889e9edd7346c5cccf096e389505b21eed37#egg=qi_toolkit-dev
 djangosanetesting==0.5.11
-git+git://github.com/kmmbvnr/django-jenkins.git@e5031e9254e172aff1dee1e92b5e2609235612f9#egg=django_jenkins-dev
-git+git://github.com/skoczen/nose-xcover.git@cccc0e83ce2ed117903768587177a937c144e152#egg=nosexcover-dev
+git+https://github.com/kmmbvnr/django-jenkins.git@e5031e9254e172aff1dee1e92b5e2609235612f9#egg=django_jenkins-dev
+git+https://github.com/skoczen/nose-xcover.git@cccc0e83ce2ed117903768587177a937c144e152#egg=nosexcover-dev
 django-picklefield==0.1.9
 django-subdomains==1.1.2
-git+git://github.com/GoodCloud/django-longer-username.git@cdf0375ec5eadd4a4c12d1c4598e689b8b33a496#egg=longerusername-dev
-git+git://github.com/GoodCloud/django-functional-tests@d7ddf59ace06b64bdf738c7ae952ce0e6b51725f#egg=functional_tests-dev
-git+git://github.com/GoodCloud/tavutil.git@8055d68d21c24cc79c072e7ded97be3654b738a9#egg=tavutil-dev
-git+git://github.com/GoodCloud/bolt.git@b0063ee2651a25932900cebccae87ae435c297d4#egg=bolt-dev
-git+git://github.com/GoodCloud/django_compressor.git@5f054f0140105e29fd664152bc89742dce088c9e#egg=django_compressor-versioned_static
+git+https://github.com/GoodCloud/django-longer-username.git@cdf0375ec5eadd4a4c12d1c4598e689b8b33a496#egg=longerusername-dev
+git+https://github.com/GoodCloud/django-functional-tests@d7ddf59ace06b64bdf738c7ae952ce0e6b51725f#egg=functional_tests-dev
+git+https://github.com/GoodCloud/tavutil.git@8055d68d21c24cc79c072e7ded97be3654b738a9#egg=tavutil-dev
+git+https://github.com/GoodCloud/bolt.git@b0063ee2651a25932900cebccae87ae435c297d4#egg=bolt-dev
+git+https://github.com/GoodCloud/django_compressor.git@5f054f0140105e29fd664152bc89742dce088c9e#egg=django_compressor-versioned_static
 Fabric==1.3.1
 mercurial==1.9.3
 python-dateutil==1.5
@@ -57,7 +57,7 @@ django-zebra==0.4.2
 pytz==2011k
 html5lib==0.90
 ## The following requirements were added by pip --freeze:
-git+git://github.com/PaulUithol/backbone-tastypie.git@dea127c99af91a203037a9a5e5bfaa43f8e558ff#egg=Backbone_tastypie-dev
+git+https://github.com/PaulUithol/backbone-tastypie.git@dea127c99af91a203037a9a5e5bfaa43f8e558ff#egg=Backbone_tastypie-dev
 CherryPy==3.2.2
 Django==1.3.1
 GitPython==0.3.2.RC1
@@ -74,7 +74,7 @@ django-indexer==0.3.0
 django-paging==0.2.4
 django-tastypie==0.9.10
 django-templatetag-sugar==0.1
-git+git://github.com/GoodCloud/django-timezones.git@cff53196b80711a71ca2a1d9bde54205711a3c1d#egg=django_timezones-dev
+git+https://github.com/GoodCloud/django-timezones.git@cff53196b80711a71ca2a1d9bde54205711a3c1d#egg=django_timezones-dev
 errorhandler==1.1.1
 eventlet==0.9.16
 filebrowser-safe==0.1.2
@@ -82,7 +82,7 @@ gitdb==0.5.2
 grappelli-safe==0.1.8
 greenlet==0.3.1
 ipaddr==2.1.9
-git+git://github.com/GoodCloud/johnny-cache.git@5d8bf5d3e5369b7be904812503a69f315504be33#egg=johnny_cache-dev
+git+https://github.com/GoodCloud/johnny-cache.git@5d8bf5d3e5369b7be904812503a69f315504be33#egg=johnny_cache-dev
 kombu==1.1.3
 lockfile==0.9.1
 logilab-astng==0.23.0
