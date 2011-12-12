@@ -38,9 +38,11 @@ def services_action(ctx, action, services=None):
     
     if type(services) == type(""):
         services = [services,]
-
+    
+    service_str = ""
     for s in services:
-        run("service %s %s > /dev/null" % (s, action), pty=True)
+        service_str += "service %s %s > /dev/null;" % (s, action)
+    run(service_str, pty=True)
             
 
 def services_stop(*args, **kwargs):
