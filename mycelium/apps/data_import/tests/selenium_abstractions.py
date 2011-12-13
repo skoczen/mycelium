@@ -32,7 +32,7 @@ class DataImportTestAbstractions(object):
         sel = self.selenium
         print "http://127.0.0.1:8199/%s" % (filename, )
         from subprocess import call
-        print call(["curl", "http://127.0.0.1:8199/%s" % (filename, )])
+        print call(["curl", "-silent", "http://127.0.0.1:8199/%s" % (filename, )])
         sel.attach_file("css=.qq-uploader input[name=file]", "http://127.0.0.1:8199/%s" % (filename, ))
 
     def create_and_save_200_person_spreadsheet(self, fields=["first_name","last_name","email","phone_number"], spreadsheet_filename=None):
