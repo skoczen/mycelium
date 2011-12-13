@@ -41,7 +41,7 @@ def services_action(ctx, action, services=None):
     
     service_str = ""
     for s in services:
-        service_str += "service %s %s > /dev/null;" % (s, action)
+        service_str += "service %s %s >/dev/null 2>&1;" % (s, action)
     run(service_str, pty=True)
             
 
