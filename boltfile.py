@@ -41,8 +41,11 @@ def services_action(ctx, action, services=None):
     
     service_str = ""
     for s in services:
-        service_str += "service %s %s >/dev/null 2>&1;" % (s, action)
-    run(service_str, pty=True)
+        service_str += "service %s %s 2>&1;" % (s, action)
+    try:
+        run(service_str, pty=True)
+    except:
+        pass
             
 
 def services_stop(*args, **kwargs):
