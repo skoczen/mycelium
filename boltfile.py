@@ -38,9 +38,13 @@ def services_action(ctx, action, services=None):
     
     if type(services) == type(""):
         services = [services,]
-
+    
+    service_str = ""
     for s in services:
-        run("service %s %s > /dev/null" % (s, action), pty=True)
+        service_str = "service %s %s > /dev/null 2>&1; echo '%s %s successful';" % (s, action, s, action)
+    
+        run(service_str, pty=False)
+
             
 
 def services_stop(*args, **kwargs):

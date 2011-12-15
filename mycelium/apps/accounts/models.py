@@ -260,6 +260,11 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
                 self.free_trial_ends_date = datetime.datetime.now() + datetime.timedelta(minutes=2)
             else:
                 self.free_trial_ends_date = self.signup_date + datetime.timedelta(days=30)
+        else: 
+            # reset the free trial date
+            if self.free_trial_ends_date < datetime.datetime.now():
+                self.free_trial_ends_date = datetime.datetime.now() + datetime.timedelta(minutes=2)
+            
 
         # Create a stripe customer
         c.description=self.name
@@ -279,7 +284,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
 
 
     def stripe_subscription_url(self):
-        return "https://manage.stripe.com/customers/%s" % self.stripe_customer_id
+        return "https://manage.stripe.com/#customers/%s" % self.stripe_customer_id
 
     def update_account_status(self):
         sub = self.stripe_subscription
@@ -341,7 +346,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
 
     @property
     def is_deactivated(self):
-        return self.status == STATUS_DEACTIVATED
+        return self.status in BILLING_PROBLEM_STATII or self.status == STATUS_DEACTIVATED
 
     @property
     def is_cancelled(self):

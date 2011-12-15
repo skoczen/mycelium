@@ -8,11 +8,13 @@
 	var import_type = false;
 	var uploader;
 	$(function(){
-		$("step[number=3] step_content").hide();
+		$("step[number='3'] step_content").hide();
 		$(".next_step_btn").live("click",next_step);
 		$("select.import_column_type").live("change",column_header_changed)
-		$("step[number=1] input[name=import_type]").live("change",import_type_selected)
+		$("step[number='1'] input[name=import_type]").live("change",import_type_selected)
+		$("step[number='1'] input[name=import_type]").live("click",import_type_selected)
 		go_to_step(1);
+		$("step[number='1'] input[name=import_type]").attr("checked", "checked").trigger("click");
 	});
 	function import_type_selected(){
 		$(".choose_import_type .import_option").removeClass("active").addClass("inactive");
@@ -73,16 +75,16 @@
 			$("step .mycelium_btn").addClass("mycelium_grey");
 			
 			for (j=step_number; j>0; j--) {
-				$("step[number="+j+"]").addClass("active")	
-				$("step[number="+j+"] step_content").show();
-				$("step[number="+j+"] pre_step_content").hide();
+				$("step[number='"+j+"']").addClass("active")	
+				$("step[number='"+j+"'] step_content").show();
+				$("step[number='"+j+"'] pre_step_content").hide();
 				
 			}
-			$("step[number="+step_number+"] .mycelium_btn").removeClass("mycelium_grey").removeClass("mycelium_gray");	
-			$("step[number="+step_number+"]").addClass("current");
+			$("step[number='"+step_number+"'] .mycelium_btn").removeClass("mycelium_grey").removeClass("mycelium_gray");	
+			$("step[number='"+step_number+"']").addClass("current");
 			if (step_number == 4) {
 				$(".submit_and_start_import_btn").removeClass("disabled").removeAttr("disabled");
-				$("body").scrollTo("step[number="+step_number+"] step_content", 0, {'over':0.5,});	
+				$("body").scrollTo("step[number='"+step_number+"'] step_content", 0, {'over':0.5,});	
 			} else {
 				$(".submit_and_start_import_btn").attr("disabled","disabled").addClass("disabled");
 			}

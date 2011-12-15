@@ -90,13 +90,11 @@ donorTab.honorarium_checkbox_clicked = function() {
 		$(".people_donor_tab #new_donation .in_memory_of .honorarium_name").remove();
 	} else {
 		if (mem_checked.length) {
-			console.log($(".people_donor_tab .in_memory_of .honorarium_name").length);
 			if ($(".people_donor_tab .in_memory_of .honorarium_name").length == 0) {
 				$(".people_donor_tab #new_donation .in_memory_of").append(donorTab.honorarium_html);
 				$(".people_donor_tab #new_donation .in_memory_of .honorarium_name_fragment input").focus();
 			}
 			$(".people_donor_tab #new_donation .in_honor_of .honorarium_name").remove();
-			console.log("removed");
 		} else {
 			$(".people_donor_tab #new_donation .in_memory_of .honorarium_name").remove();
 			$(".people_donor_tab #new_donation .in_honor_of .honorarium_name").remove();
