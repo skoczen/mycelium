@@ -1,5 +1,5 @@
 from functional_tests.factory import DjangoFunctionalFactory
-from people.models import Person
+from people.models import Person, PersonEmailAddress, PersonPhoneNumber
 from organizations.models import Organization, Employee
 from groups.models import Group, GroupRule
 from django.conf import settings
@@ -38,7 +38,7 @@ class DummyObj(object):
 class Factory(DjangoFunctionalFactory):
 
     @classmethod
-    def email(cls, name_hint=None):
+    def email_string(cls, name_hint=None):
         if not name_hint:
             name_hint = cls.rand_str()
         username = "%s%s" % (name_hint.lower(), cls.rand_int(0,100) )
@@ -46,7 +46,7 @@ class Factory(DjangoFunctionalFactory):
 
 
     @classmethod
-    def phone(cls):
+    def phone_string(cls):
         phone = "%s-%s-%s" % (cls.rand_int(100,999), cls.rand_int(100,999),cls.rand_int(1000,9999))
         return phone
 
@@ -77,15 +77,34 @@ class Factory(DjangoFunctionalFactory):
         person = Person.raw_objects.create(account=account,
                                        first_name=first_name, 
                                        last_name=cls.rand_name(),
-                                       email=cls.email(name_hint=first_name),
-                                       phone_number=cls.phone(),
                                        birth_day=birthday.day,
                                        birth_month=birthday.month,
                                        birth_year=birthday.year,
                 )
         person.__dict__.update(cls.address())
         person.save()
+        cls.phone(account=account, person=person)
+        cls.email(account=account, person=person)
         return person
+
+    @classmethod
+    def phone(cls, account, person=None):
+        if not person:
+            person = cls.person(account)
+        
+        PersonPhoneNumber.raw_objects.create(account=account, 
+                                              person=person, 
+                                              phone_number=cls.phone_string(),
+                                              )
+    @classmethod
+    def email(cls, account, person=None):
+        if not person:
+            person = cls.person(account)
+        
+        PersonEmailAddress.raw_objects.create(account=account, 
+                                              person=person, 
+                                              email=cls.email_string(name_hint=person.first_name),
+                                              )
 
     @classmethod
     def tagset(cls, account, name=None):
@@ -117,7 +136,7 @@ class Factory(DjangoFunctionalFactory):
                                        name="%ss-%s Corp." % (cls.rand_name(), cls.rand_plant_name()), 
                                        twitter_username=cls.rand_str(),
                                        website=cls.rand_str(),                                       
-                                       primary_phone_number=cls.phone(),
+                                       primary_phone_number=cls.phone_string(),
                 )
         organization.__dict__.update(cls.address())
         return organization
@@ -135,8 +154,8 @@ class Factory(DjangoFunctionalFactory):
                                        person=person, 
                                        organization=organization,
                                        role=cls.rand_str(),
-                                       email=cls.email(),
-                                       phone_number=cls.phone(),
+                                       email=cls.email_string(),
+                                       phone_number=cls.phone_string(),
                 )
         return employee
 
@@ -291,7 +310,7 @@ class Factory(DjangoFunctionalFactory):
             first_name = cls.rand_name()
             full_name = "%s %s" % (first_name, cls.rand_name())
         
-        return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email(name_hint=first_name))
+        return account.create_useraccount(username=username, password=password, full_name=full_name, access_level=access_level, email=cls.email_string(name_hint=first_name))
 
     @classmethod
     def create_demo_site(cls, organization_name, subdomain=None, delete_existing=False, quick=False, verbose=None, mostly_empty=False, single_user=False, create_subscription=False, with_demo_flag=True):
