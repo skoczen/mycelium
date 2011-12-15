@@ -26,6 +26,7 @@ class Action(AccountBasedModel, TimestampModelMixin):
     donation            = models.ForeignKey("donors.Donation", blank=True, null=True)
     shift               = models.ForeignKey("volunteers.CompletedShift", blank=True, null=True)
     conversation        = models.ForeignKey("conversations.Conversation", blank=True, null=True)
+    spreadsheet         = models.ForeignKey("spreadsheets.Spreadsheet", blank=True, null=True)
 
 
     def save(self, *args, **kwargs):

@@ -14,6 +14,7 @@ from spreadsheets.spreadsheet import SpreadsheetAbstraction
 from spreadsheets.export_templates import SPREADSHEET_TEMPLATES
 from groups.models import Group
 from people.models import Person
+from activities.tasks import save_action
 
 from johnny import cache as jcache
 import cStringIO
@@ -74,6 +75,7 @@ def save_basic_info(request, spreadsheet_id):
     if form.is_valid():
         spreadsheet = form.save()
         success = True
+        save_action.delay(request.account, request.useraccount, "updated a spreadsheet", spreadsheet=spreadsheet,)
 
     # form = _basic_forms(spreadsheet, request, no_data=True)
 
@@ -95,13 +97,15 @@ def download(request):
     if spreadsheet_name == "":
         spreadsheet_name = "Unnnamed Spreadsheet"
     response['Content-Disposition'] = 'attachment; filename=%s.%s' % (spreadsheet_name, extension)
-
+    save_action.delay(request.account, request.useraccount, "downloaded a spreadsheet", spreadsheet=spreadsheet,)
+    
     return response
 
     
 @render_to("spreadsheets/new.html")
 def new(request):
     spreadsheet = Spreadsheet.raw_objects.using('default').create(account=request.account)
+    save_action.delay(request.account, request.useraccount, "created a spreadsheet", spreadsheet=spreadsheet,)
     return HttpResponseRedirect("%s?edit=ON" %reverse("spreadsheets:spreadsheet",args=(spreadsheet.pk,)))
 
     
