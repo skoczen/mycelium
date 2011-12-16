@@ -54,11 +54,11 @@ class SpreadsheetRow(object):
         targets = {}
         created = False
         for k,field in self.fields.iteritems():
-            if field.is_fk and not field.model_key in targets:
+            if not field.is_fk and not field.model_key in targets:
                 targets[field.model_key], created = getattr(self,"get_target_object_%s" % field.model_key)()
         
         for k,field in self.fields.iteritems():
-            if not field.is_fk and not field.model_key in targets:
+            if field.is_fk and not field.model_key in targets:
                 targets[field.model_key], created = getattr(self,"get_target_object_%s" % field.model_key)(existing_targets=targets)
         return targets, created
 
@@ -91,9 +91,10 @@ class SpreadsheetRow(object):
                 if created:
                     # we know there are no phones/emails.
                     pass
-
                 # get the ImportField obj
                 f = self.fields[k]
+                print f
+
                 # set the field on the target model to the value.
                 targets[f.model_key].__dict__[k] = v
 
@@ -106,7 +107,7 @@ class SpreadsheetRow(object):
 
 
 class ImportField:
-    def __init__(self, name, app, model, field, identity_set=[]):
+    def __init__(self, name, app, model, field_getter, field_setter, identity_set=[],):
         self.name = name
         self.app = app
         self.model = model
@@ -126,15 +127,15 @@ class PeopleImportRow(SpreadsheetRow):
 
 
     fields =  OrderedDict([
-            ('first_name',   ImportField("First Name",       "people", "Person",             "first_name",   identity_set=[NAME_IDENTITY,],)             ),
-            ('last_name',    ImportField("Last Name",        "people", "Person",             "last_name",    identity_set=[NAME_IDENTITY,],)             ),
-            ('email',        ImportField("Email",            "people", "PersonEmailAddress", "email",        identity_set=[EMAIL_IDENTITY,], is_fk=True )),
-            ('phone_number', ImportField("Phone",            "people", "PersonPhoneNumber",  "phone_number", identity_set=[PHONE_IDENTITY,], is_fk=True )),
-            ('line_1',       ImportField("Address Line 1",   "people", "Person",             "line_1",       identity_set=[],)                           ),
-            ('line_2',       ImportField("Address Line 2",   "people", "Person",             "line_2",       identity_set=[],)                           ),
-            ('city',         ImportField("City",             "people", "Person",             "city",         identity_set=[],)                           ),
-            ('state',        ImportField("State/Province",   "people", "Person",             "state",        identity_set=[],)                           ),
-            ('postal_code',  ImportField("Zip Code",         "people", "Person",             "postal_code",  identity_set=[],)                           ),
+            ('first_name',   ImportField("First Name",       "people", "Person",             "first_name",       "first_name",       identity_set=[NAME_IDENTITY,],) ),
+            ('last_name',    ImportField("Last Name",        "people", "Person",             "last_name",        "last_name",        identity_set=[NAME_IDENTITY,],) ),
+            ('email',        ImportField("Email",            "people", "PersonEmailAddress", "get_email",        "set_email",        identity_set=[EMAIL_IDENTITY,], ),
+            ('phone_number', ImportField("Phone",            "people", "PersonPhoneNumber",  "get_phone_number", "set_phone_number", identity_set=[PHONE_IDENTITY,], ),
+            ('line_1',       ImportField("Address Line 1",   "people", "Person",             "line_1",           "line_1",           identity_set=[],)               ),
+            ('line_2',       ImportField("Address Line 2",   "people", "Person",             "line_2",           "line_2",           identity_set=[],)               ),
+            ('city',         ImportField("City",             "people", "Person",             "city",             "city",             identity_set=[],)               ),
+            ('state',        ImportField("State/Province",   "people", "Person",             "state",            "state",            identity_set=[],)               ),
+            ('postal_code',  ImportField("Zip Code",         "people", "Person",             "postal_code",      "postal_code",      identity_set=[],)               ),
     ])
 
     def get_primary_target_model(self):
@@ -199,8 +200,10 @@ class PeopleImportRow(SpreadsheetRow):
 
     def get_target_object_people_PersonPhoneNumber(self, existing_targets=None):
         from people.models import PersonPhoneNumber
-        if self.has_sufficient_fields_for_identity:
-            if "email" in self.data and self.data["email"] != "":
+        assert "people_Person" in existing_targets
+        print "good."
+
+        if "email" in self.data and self.data["email"] != "":
                 q = q.filter(email=self.data["email"])
 
     def get_target_object_people_PersonEmailAddress(self, existing_targets=None):

@@ -8,8 +8,8 @@ class GenerateSpreadsheetsMixin:
         return {
             'first_name': person.first_name,
             'last_name': person.last_name,
-            'email': person.email,
-            'phone_number': person.phone_number,
+            'email': person.primary_email,
+            'phone_number': person.primary_phone_number,
         }
 
     def _donation_dict(self, donation):
