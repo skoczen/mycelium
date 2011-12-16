@@ -33,7 +33,7 @@ class TestModels(TestCase, DjangoFunctionalUnitTestMixin, DestructiveDatabaseTes
         self.assertEqual(s2.num_rows, Person.objects_by_account(self.a1).count())
 
     def _mailing_list_row_dict(self, p):
-        return [ p.first_name, p.last_name, p.email, p.phone_number,  
+        return [ p.first_name, p.last_name, p.primary_email, p.primary_phone_number,  
                  p.line_1, p.line_2, p.city, p.state, p.postal_code,
                  '', '', '', '', '', '', '', '', '', '%s' % p.birth_month, 
                  '%s' % p.birth_day,  '%s' % p.birth_year, 

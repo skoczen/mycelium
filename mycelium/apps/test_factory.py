@@ -83,6 +83,8 @@ class Factory(DjangoFunctionalFactory):
                 )
         person.__dict__.update(cls.address())
         person.save()
+        person.personphonenumber_set.all().delete()
+        person.personemailaddress_set.all().delete()
         cls.phone(account=account, person=person)
         cls.email(account=account, person=person)
         return person

@@ -194,6 +194,12 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     def phone_numbers(self):
         return self.personphonenumber_set.all()
 
+    def set_phone_number(self, number):
+        print "set_phone_number", number
+        print self.primary_phone_number
+        PersonPhoneNumber.raw_objects.get_or_create(account=self.account, person=self, phone_number=number)
+        print self.primary_phone_number
+
     @property
     def primary_email(self):
         if self.emails:
@@ -207,6 +213,11 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     @property
     def emails(self):
         return self.personemailaddress_set.all()
+
+    def set_email(self, email):
+        print "set_email"
+        return PersonEmailAddress.raw_objects.get_or_create(account=self.account, person=self, email=email)
+
 
     @property
     def tagsets(self):

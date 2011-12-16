@@ -3,6 +3,7 @@ import csv
 import xlwt
 import xlrd
 from collections import OrderedDict
+from qi_toolkit.helpers import exception_string
 
 from django.db.models import get_model
 from django.core.cache import cache
@@ -37,7 +38,8 @@ class SpreadsheetRow(object):
     def has_sufficient_fields_for_identity(self):
         has_fields = False
         for k,i_set in self.identity_sets.iteritems():
-            if all(f.field in self.data for f in i_set):
+            # TODO: this may need split out.
+            if all(f.field_getter in self.data for f in i_set):
                 has_fields = True
                 break
         return has_fields
@@ -54,12 +56,9 @@ class SpreadsheetRow(object):
         targets = {}
         created = False
         for k,field in self.fields.iteritems():
-            if not field.is_fk and not field.model_key in targets:
+            if not field.model_key in targets:
                 targets[field.model_key], created = getattr(self,"get_target_object_%s" % field.model_key)()
-        
-        for k,field in self.fields.iteritems():
-            if field.is_fk and not field.model_key in targets:
-                targets[field.model_key], created = getattr(self,"get_target_object_%s" % field.model_key)(existing_targets=targets)
+
         return targets, created
 
     @property
@@ -87,16 +86,14 @@ class SpreadsheetRow(object):
         if self.has_sufficient_fields_for_identity():
             targets, created = self.get_target_objects()
             for k,v in self.data.iteritems():
-
-                if created:
-                    # we know there are no phones/emails.
-                    pass
                 # get the ImportField obj
                 f = self.fields[k]
-                print f
 
                 # set the field on the target model to the value.
-                targets[f.model_key].__dict__[k] = v
+                if hasattr(getattr(targets[f.model_key],f.field_setter), "__call__"):
+                    getattr(targets[f.model_key],f.field_setter)(v)
+                else:
+                    targets[f.model_key].__dict__[f.field_setter] = v
 
             for k,target in targets.iteritems():
                 target.save()
@@ -107,11 +104,12 @@ class SpreadsheetRow(object):
 
 
 class ImportField:
-    def __init__(self, name, app, model, field_getter, field_setter, identity_set=[],):
+    def __init__(self, name, app, model, field_getter, field_setter=None, identity_set=[]):
         self.name = name
         self.app = app
         self.model = model
-        self.field = field
+        self.field_getter = field_getter
+        self.field_setter = field_setter
         self.identity_set = identity_set
     
     @property
@@ -127,15 +125,15 @@ class PeopleImportRow(SpreadsheetRow):
 
 
     fields =  OrderedDict([
-            ('first_name',   ImportField("First Name",       "people", "Person",             "first_name",       "first_name",       identity_set=[NAME_IDENTITY,],) ),
-            ('last_name',    ImportField("Last Name",        "people", "Person",             "last_name",        "last_name",        identity_set=[NAME_IDENTITY,],) ),
-            ('email',        ImportField("Email",            "people", "PersonEmailAddress", "get_email",        "set_email",        identity_set=[EMAIL_IDENTITY,], ),
-            ('phone_number', ImportField("Phone",            "people", "PersonPhoneNumber",  "get_phone_number", "set_phone_number", identity_set=[PHONE_IDENTITY,], ),
-            ('line_1',       ImportField("Address Line 1",   "people", "Person",             "line_1",           "line_1",           identity_set=[],)               ),
-            ('line_2',       ImportField("Address Line 2",   "people", "Person",             "line_2",           "line_2",           identity_set=[],)               ),
-            ('city',         ImportField("City",             "people", "Person",             "city",             "city",             identity_set=[],)               ),
-            ('state',        ImportField("State/Province",   "people", "Person",             "state",            "state",            identity_set=[],)               ),
-            ('postal_code',  ImportField("Zip Code",         "people", "Person",             "postal_code",      "postal_code",      identity_set=[],)               ),
+            ('first_name',   ImportField("First Name",       "people", "Person",    "first_name",       "first_name",       identity_set=[NAME_IDENTITY,]) ),
+            ('last_name',    ImportField("Last Name",        "people", "Person",    "last_name",        "last_name",        identity_set=[NAME_IDENTITY,]) ),
+            ('email',        ImportField("Email",            "people", "Person",    "get_email",        "set_email",        identity_set=[EMAIL_IDENTITY,]) ),
+            ('phone_number', ImportField("Phone",            "people", "Person",    "get_phone_number", "set_phone_number", identity_set=[PHONE_IDENTITY,]) ),
+            ('line_1',       ImportField("Address Line 1",   "people", "Person",    "line_1",           "line_1",           identity_set=[],)               ),
+            ('line_2',       ImportField("Address Line 2",   "people", "Person",    "line_2",           "line_2",           identity_set=[],)               ),
+            ('city',         ImportField("City",             "people", "Person",    "city",             "city",             identity_set=[],)               ),
+            ('state',        ImportField("State/Province",   "people", "Person",    "state",            "state",            identity_set=[],)               ),
+            ('postal_code',  ImportField("Zip Code",         "people", "Person",    "postal_code",      "postal_code",      identity_set=[],)               ),
     ])
 
     def get_primary_target_model(self):
@@ -160,57 +158,44 @@ class PeopleImportRow(SpreadsheetRow):
                 if q.count() == 1:
                     return q[0], False
 
-            # First and last name were not enough
-            q = Person.objects_by_account(self.account).all()
-            if "email" in self.data and self.data["email"] != "":
-                q = q.filter(email=self.data["email"])
+            # TODO: This is not ok to be commmented out. Need to figure it out.
+            # # First and last name were not enough
+            # q = Person.objects_by_account(self.account).all()
+            # if "email" in self.data and self.data["email"] != "":
+            #     q = q.filter(email=self.data["email"])
                 
-                if q.count() == 1:
-                    return q[0], False
-                elif q.count() > 1:
-                    if "first_name" in self.data:
-                        q = q.filter(first_name=self.data["first_name"])
-                    if "last_name" in self.data:
-                        q = q.filter(last_name=self.data["last_name"])
-                    if q.count() == 1:
-                        return q[0], False
-                    elif q.count() > 1:
-                        if "phone_number" in self.data:
-                            q = q.filter(phone_number=self.data["phone_number"])
-                        if q.count() == 1:
-                            return q[0], False
+            #     if q.count() == 1:
+            #         return q[0], False
+            #     elif q.count() > 1:
+            #         if "first_name" in self.data:
+            #             q = q.filter(first_name=self.data["first_name"])
+            #         if "last_name" in self.data:
+            #             q = q.filter(last_name=self.data["last_name"])
+            #         if q.count() == 1:
+            #             return q[0], False
+            #         elif q.count() > 1:
+            #             if "phone_number" in self.data:
+            #                 q = q.filter(phone_number=self.data["phone_number"])
+            #             if q.count() == 1:
+            #                 return q[0], False
 
-            # Email-based search wasn't enough
+            # # Email-based search wasn't enough
 
-            q = Person.objects_by_account(self.account).all()
-            if "phone_number" in self.data and self.data["phone_number"] != "":
-                q = q.filter(phone_number=self.data["phone_number"])
-                if q.count() == 1:
-                    return q[0], False
-                elif q.count() > 1:
-                    if "first_name" in self.data:
-                        q = q.filter(first_name=self.data["first_name"])
-                    if "last_name" in self.data:
-                        q = q.filter(last_name=self.data["last_name"])
-                    if q.count() == 1:
-                        return q[0], False
+            # q = Person.objects_by_account(self.account).all()
+            # if "phone_number" in self.data and self.data["phone_number"] != "":
+            #     q = q.filter(phone_number=self.data["phone_number"])
+            #     if q.count() == 1:
+            #         return q[0], False
+            #     elif q.count() > 1:
+            #         if "first_name" in self.data:
+            #             q = q.filter(first_name=self.data["first_name"])
+            #         if "last_name" in self.data:
+            #             q = q.filter(last_name=self.data["last_name"])
+            #         if q.count() == 1:
+            #             return q[0], False
             
             # Phone-based search wasn't enough.
         return Person.raw_objects.create(account=self.account), True
-
-    def get_target_object_people_PersonPhoneNumber(self, existing_targets=None):
-        from people.models import PersonPhoneNumber
-        assert "people_Person" in existing_targets
-        print "good."
-
-        if "email" in self.data and self.data["email"] != "":
-                q = q.filter(email=self.data["email"])
-
-    def get_target_object_people_PersonEmailAddress(self, existing_targets=None):
-        from people.models import PersonEmailAddress
-        if self.has_sufficient_fields_for_identity:
-            if "email" in self.data and self.data["email"] != "":
-                q = q.filter(email=self.data["email"])
 
 
 IMPORT_ROW_TYPES = {
@@ -335,10 +320,10 @@ class SpreadsheetAbstraction:
                     col_val = None
                     if target_objects[f.model_key]:
                         # try:
-                        if f.field in target_objects[f.model_key].__dict__:
-                            col_val = target_objects[f.model_key].__dict__[f.field]
+                        if f.field_getter in target_objects[f.model_key].__dict__:
+                            col_val = target_objects[f.model_key].__dict__[f.field_getter]
                         else:
-                            col_val = eval("target_objects[f.model_key].%s" % f.field)
+                            col_val = eval("target_objects[f.model_key].%s" % f.field_getter)
                         # except:
                         #     row.append("")    
                     if not col_val:
@@ -346,8 +331,8 @@ class SpreadsheetAbstraction:
                     row.append(col_val)
 
                 rows.append(row)
-            except Exception, e:
-                log.warn("Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, e))
+            except:
+                log.warn("Error exporting row %s %s %s\n %s" % (r, r.pk, template_instance, exception_string()))
                 pass
 
         return rows
