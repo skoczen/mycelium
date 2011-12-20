@@ -6,7 +6,7 @@ git+git://github.com/skoczen/nose-xcover.git
 django-picklefield==0.1.9
 django-subdomains==1.1.2
 git+git://github.com/GoodCloud/django-longer-username.git
-git+git://github.com/GoodCloud/django-functional-tests@d7ddf59ace06b64bdf738c7ae952ce0e6b51725f#egg=functional_tests-dev
+git+git://github.com/GoodCloud/django-functional-tests
 git+git://github.com/GoodCloud/tavutil.git
 git+git://github.com/GoodCloud/bolt.git
 git+git://github.com/GoodCloud/django_compressor.git
