@@ -197,8 +197,12 @@ class Person(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin, Addr
     def set_phone_number(self, number):
         print "set_phone_number", number
         print self.primary_phone_number
-        PersonPhoneNumber.raw_objects.get_or_create(account=self.account, person=self, phone_number=number)
+        print PersonPhoneNumber.raw_objects.get_or_create(account=self.account, person=self, phone_number=number)
+        from johnny import cache as jcache
+        jcache.invalidate(PersonPhoneNumber)
+        jcache.invalidate(Person)
         print self.primary_phone_number
+        print self.personphonenumber_set.all()
 
     @property
     def primary_email(self):
