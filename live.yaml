@@ -8,7 +8,6 @@ app-server-1:
         - 50.16.217.71
     services:
         - mycelium
-        - nginx
 
 app-servers:
     directory: /var/www
@@ -17,7 +16,6 @@ app-servers:
         - 50.16.206.163
     services:
         - mycelium
-        - nginx
 
 db-servers:
     hosts:
