@@ -41,7 +41,10 @@ def services_action(ctx, action, services=None):
     
     service_str = ""
     for s in services:
-        service_str = "service %s %s > /dev/null 2>&1; echo '%s %s successful';" % (s, action, s, action)
+        if action == "restart":
+            service_str = "service %s stop; service %s start;" % (s, s)
+        else:
+            service_str = "service %s %s;" % (s, action)
     
         run(service_str, pty=False)
 
