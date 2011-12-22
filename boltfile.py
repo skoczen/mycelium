@@ -194,7 +194,7 @@ def deploy(with_downtime=False, skip_media=False, skip_backup=False):
             # env("celery-servers").multirun(services_restart)
                         
 
-        print "Deploy successful."
+        # print "Deploy successful."
 
 # def dump_marketing_fixture():
 #     magic_run("{workon_command} cd {project_name}; {python} manage.py dumpdata --natural --indent 4 --exclude=contenttypes marketing_site cms mptt menus text  > {git_path}/{project_name}/apps/marketing_site/fixtures/marketing_site.json")
