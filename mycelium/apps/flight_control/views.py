@@ -93,3 +93,8 @@ def delete_deactivated_account(request, account_id):
 
     account.delete()
     return HttpResponseRedirect(reverse("flight_control:home"))
+
+@render_to("flight_control/create_demo_account.html")
+def create_demo_account(request):
+    return locals()
+

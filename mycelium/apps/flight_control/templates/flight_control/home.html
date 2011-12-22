@@ -51,6 +51,11 @@
 			{% empty %}
 			<div class="info_block empty_message">None in the next week.</div>
 			{% endfor %}
+			<column_header>Administration</column_header>
+			<div class="info_block">
+				<a href="{% url flight_control:create_demo_account %}">Create a demo account</a>
+			</div>
+			
 		</column>
 		<column class="fourcol recent_activity">
 			<column_header>Recent Logins</column_header>
