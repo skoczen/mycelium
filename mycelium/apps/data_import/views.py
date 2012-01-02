@@ -41,8 +41,6 @@ def begin_import(request):
         has_header = False
 
         for k,v in sorted(request.POST.iteritems()):
-            print k
-            print v
             if "import_col_" in k:
                 fields.append(v)
         

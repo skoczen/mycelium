@@ -218,6 +218,7 @@ class SpreadsheetAbstraction:
         try:
             self.file.seek(0)
             s = self.file.read(2048)
+            s = s[0:s.rfind("\n")]
             dialect = csv.Sniffer().sniff(s, delimiters=',')
             self.has_header = csv.Sniffer().has_header(s)
             self.file.seek(0)
@@ -281,7 +282,6 @@ class SpreadsheetAbstraction:
                 file_type = CSV_TYPE
             elif self._is_valid_excel:
                 file_type = EXCEL_TYPE
-        
         return file_type
     
     @property
