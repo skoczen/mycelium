@@ -195,3 +195,7 @@ table.import_fields_confirmation .and_more_row td {
 .more_rows_info {
 	padding: 5px;
 }
+.percent_imported {
+	background: url("../images/spinner-grey-16.gif") no-repeat 0px 0px;
+	padding-left: 20px;
+}
