@@ -9,11 +9,12 @@ class Migration(DataMigration):
     def forwards(self, orm):
         # from people.models import PeopleAndOrganizationsSearchProxy
         # PeopleAndOrganizationsSearchProxy.resave_all_people_and_organizations()
-
+        pass
 
     def backwards(self, orm):
         # from people.models import PeopleAndOrganizationsSearchProxy
         # PeopleAndOrganizationsSearchProxy.resave_all_people_and_organizations()
+        pass
 
     models = {
         'people.employee': {
