@@ -45,21 +45,6 @@
 {% endblock %}
 {% analytical_body_bottom %}
 {% block javascript %}{% compress js %}
-{% if ENV == "LIVE" %}
-<script type="text/javascript">
-  var _gauges = _gauges || [];
-  (function() {
-    var t   = document.createElement('script');
-    t.type  = 'text/javascript';
-    t.async = true;
-    t.id    = 'gauges-tracker';
-    t.setAttribute('data-site-id', '4f4abdf4cb25bc35f500004f');
-    t.src = '//secure.gaug.es/track.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(t, s);
-  })();
-</script>
-{% endif %}
 <!--[if lt IE 7 ]>
   <script src="{{STATIC_URL}}js/lib/dd_belatedpng.js"></script>
   <script>DD_belatedPNG.fix('img, .png_bg');</script>

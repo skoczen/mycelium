@@ -21,7 +21,7 @@ BeautifulSoup
 django-extensions
 -e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit
 python-crontab
-django-analytical
+django-analytical>=0.11.3
 
 django-pagination
 sorl-thumbnail
