@@ -29,7 +29,7 @@ ADMINS = [
 ]
 MANAGERS = ADMINS + [('Tom Noble', 'tom@agoodcloud.com')]
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'America/Vancouver'
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
         # ('fr', gettext('French')),
