@@ -352,10 +352,10 @@ SPREADSHEET_TEMPLATES = [
     EmailListTemplate(),
     ConversationsTemplate(),
     DonationListTemplate(),
-    # DonationSummaryListTemplate(),
+    DonationSummaryListTemplate(),
     VolunteerHoursTemplate(),
-    # VolunteerHoursSummaryTemplate(),
-    # OrganizationsTemplate(),
+    VolunteerHoursSummaryTemplate(),
+    OrganizationsTemplate(),
 
     # CustomTemplate(),
 ]

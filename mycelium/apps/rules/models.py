@@ -137,7 +137,7 @@ class Rule(TimestampModelMixin):
     #     if not self.target_model:
     #         raise IncompleteRuleException, "No target model defined!"
     #     else:
-    #         return eval("self.target_model.objects.%s" % self.queryset_filter_string)
+    #         return eval("self.target_model.objects_by_account(%s).%s" % (self.account,self.queryset_filter_string))
 
     # def queryset_callable(self):
     #     return self.queryset
