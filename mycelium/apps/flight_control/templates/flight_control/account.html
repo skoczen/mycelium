@@ -25,9 +25,11 @@
 			{% autopaginate users 15 %}
 			{% for u in users %}
 			<tr class="account_info_block">
-				<td>{{u.full_name}}</td>
+				<td class="full_name">{{u.full_name}}</td>
 				<td>{{u.denamespaced_username}}</td>
 				<td><a href="mailto:{{u.user.email}}">Email</a></td>
+				<td><a href="{% url flight_control:reset_account_password u.pk %}" class="reset_password">Reset Password</a></td>
+				
 			</div>
 			{% endfor %}
 			</table>
