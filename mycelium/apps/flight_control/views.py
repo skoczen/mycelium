@@ -93,3 +93,14 @@ def delete_deactivated_account(request, account_id):
 
     account.delete()
     return HttpResponseRedirect(reverse("flight_control:home"))
+
+@json_view
+def reset_account_password(request, ua_id):
+    success = False
+
+    ua = UserAccount.objects.get(pk=ua_id)
+    user = ua.user
+    user.set_password("changeme!")
+    user.save()
+
+    return {"success":success}
