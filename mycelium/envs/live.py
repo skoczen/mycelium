@@ -4,10 +4,8 @@ SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 ENV = "LIVE"
 ROLE = ENV
-
-
-
-
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
