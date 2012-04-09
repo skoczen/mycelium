@@ -13,13 +13,6 @@ MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
 STATIC_ROOT = join(PROJECT_ROOT, "collected_static")
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = ()
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
-)
-
 LIB_DIR = join(PROJECT_ROOT, 'lib')
 APPS_DIR = join(PROJECT_ROOT, 'apps')
 sys.path.insert(0, abspath(join(PROJECT_ROOT + '/../')))
@@ -307,3 +300,9 @@ COMPRESS_VERSION_CSS_MEDIA = True
 COMPRESS_CSS_HASHING_METHOD = "hash"
 # COMPRESS_OFFLINE = True
 
+STATICFILES_DIRS = ()
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
