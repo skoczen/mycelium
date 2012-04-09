@@ -9,7 +9,17 @@ gettext = lambda s: s
 
 PROJECT_ROOT = join(abspath(dirname(__file__)), "../")
 MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
-STATIC_ROOT = join(abspath(PROJECT_ROOT),"../collected_static")
+
+STATIC_ROOT = join(PROJECT_ROOT, "collected_static")
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = ()
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
 LIB_DIR = join(PROJECT_ROOT, 'lib')
 APPS_DIR = join(PROJECT_ROOT, 'apps')
 sys.path.insert(0, abspath(join(PROJECT_ROOT + '/../')))
@@ -151,7 +161,8 @@ INSTALLED_APPS = (
     'django_jenkins',
     'django_ses',
     'compressor',
-    
+    'artechetype',
+
     #'cms',
     #'mptt',
     #'menus',

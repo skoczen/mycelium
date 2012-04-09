@@ -13,12 +13,12 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'app1932005',
-        'USER': 'app1932005',
-        'PASSWORD': 'yVooPfvz',
-        'HOST': 'int.instance6310.db.xeround.com.:4674',
+        'NAME': 'mycelium',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
         'PORT': '',
-    }
+    },
 }
 
 # DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
@@ -60,15 +60,18 @@ CACHES = {
 # CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_STORAGE_BUCKET_NAME = "goodcloud1"
+AWS_STORAGE_BUCKET_NAME = "goodcloud2"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
-CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
-COMPRESS_URL = CDN_MEDIA_URL
-COMPRESS_ENABLED = True
-# COMPRESS_OFFLINE = True
 
-STATIC_URL = CDN_MEDIA_URL
-# STATIC_ROOT = MEDIA_ROOT
+STATIC_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+COMPRESS_URL = STATIC_URL
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATICFILES_STORAGE = "lib.backends.CachedS3BotoStorage"
+COMPRESS_STORAGE = STATICFILES_STORAGE
+
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
 
 FAVICON_URL = "%simages/favicon.png" % STATIC_URL
 
