@@ -1,4 +1,4 @@
-from johnny import cache as johnny_cache
+# from johnny import cache as johnny_cache
 
 class Dummy(object):
     pass
@@ -20,7 +20,7 @@ def populate_rule_components_for_an_obj_with_an_account(obj):
 def delete_rule_components_for_a_tagset(sender, instance, created=None, *args, **kwargs):
     from rules.models import LeftSide
     LeftSide.objects_by_account(instance.account).using('default').filter(display_name="have a %s tag that" % (instance.name)).delete()
-    johnny_cache.invalidate(LeftSide)
+    # johnny_cache.invalidate(LeftSide)
 
 def populate_rule_components_for_an_account(account):
     try:
@@ -295,9 +295,9 @@ def populate_rule_components_for_an_account(account):
             if ls not in all_left_sides:
                 ls.delete()
 
-        johnny_cache.invalidate(RightSideType)
-        johnny_cache.invalidate(Operator)
-        johnny_cache.invalidate(LeftSide)
+        # johnny_cache.invalidate(RightSideType)
+        # johnny_cache.invalidate(Operator)
+        # johnny_cache.invalidate(LeftSide)
     except:
         from django.core.mail import mail_admins
         from qi_toolkit.helpers import exception_string

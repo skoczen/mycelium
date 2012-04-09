@@ -63,17 +63,10 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # other finders..
-    'compressor.finders.CompressorFinder',
-)
-
 MIDDLEWARE_CLASSES = (
-    'johnny.middleware.LocalStoreClearMiddleware',
-    'johnny.middleware.QueryCacheMiddleware',
-    'johnny.middleware.CommittingTransactionMiddleware',
+    # 'johnny.middleware.LocalStoreClearMiddleware',
+    # 'johnny.middleware.QueryCacheMiddleware',
+    # 'johnny.middleware.CommittingTransactionMiddleware',
 
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -259,9 +252,9 @@ THUMBNAIL_FORMAT = "PNG"
 THUMBNAIL_COLORSPACE = None
 
 # jonny cache
-JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_mycelium'
-MAN_IN_BLACKLIST = ["data_import_dataimport", "django_session",]
-JOHNNY_DATABASE_MAPPING = { "slave":"default", }
+# JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_mycelium'
+# MAN_IN_BLACKLIST = ["data_import_dataimport", "django_session",]
+# JOHNNY_DATABASE_MAPPING = { "slave":"default", }
 
 # celery
 BROKER_BACKEND = "redis"

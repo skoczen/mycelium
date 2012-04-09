@@ -49,7 +49,8 @@ REDIS_DB = BROKER_VHOST
 
 CACHES = {
     'default': {
-        'BACKEND' : 'johnny.backends.memcached.MemcachedCache',
+        # 'BACKEND' : 'johnny.backends.memcached.MemcachedCache',
+        'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': 'int-Memcached1010.agoodcloud.com:11211',
         'PREFIX':ENV,
         'JOHNNY_CACHE':True,

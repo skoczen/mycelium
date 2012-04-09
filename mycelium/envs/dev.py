@@ -33,11 +33,11 @@ CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 # if not 'test' in sys.argv and not 'selenium_tests' in sys.argv:
 CACHES = {
     'default': {
-        'BACKEND' : 'johnny.backends.memcached.MemcachedCache',
-        # 'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
+        # 'BACKEND' : 'johnny.backends.memcached.MemcachedCache',
+        'BACKEND' : 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
         'PREFIX':ENV,
-        'JOHNNY_CACHE':True,
+        # 'JOHNNY_CACHE':True,
     }
 }
 

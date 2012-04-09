@@ -6,10 +6,10 @@ pip > 1.0
 -e git://github.com/skoczen/nose-xcover.git#egg=nosexcover
 -e git://github.com/gintas/django-picklefield.git#egg=django-picklefield
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains
--e git://github.com/GoodCloud/johnny-cache.git#egg=johnny
+# -e git://github.com/GoodCloud/johnny-cache.git#egg=johnny
 -e git://github.com/GoodCloud/django-longer-username.git#egg=longerusername
 -e git://github.com/GoodCloud/django-functional-tests#egg=functional_tests
--e git://github.com/GoodCloud/django_compressor.git@versioned_static#egg=django_compressor
+django_compressor
 fabric
 mercurial
 mysql-python

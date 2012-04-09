@@ -4,11 +4,8 @@ from django.contrib import admin
 from django.conf import settings
 admin.autodiscover()
 
-
-if settings.COMPRESS_VERSIONED_STATIC_TAG_BUILTIN:
-    from django.template.loader import add_to_builtins
-    add_to_builtins('compressor.templatetags.versioned_static')
-
+# from django.template.loader import add_to_builtins
+# add_to_builtins('django.templatetags.staticfiles')
 
 urlpatterns = patterns('',
 
@@ -18,7 +15,7 @@ urlpatterns = patterns('',
 
     url(r'^blog/$', 'django.views.generic.simple.redirect_to', {'url': "http://goodcloud.posterous.com"}, 'blog'),
     url(r'^administration/', include(admin.site.urls)),
-    url(r'^webhooks/',     include('webhooks.urls',            app_name="webhooks",        namespace="webhooks")),
+    # url(r'^webhooks/',     include('webhooks.urls',            app_name="webhooks",        namespace="webhooks")),
     url(r'^zebra/',        include('zebra.urls',               app_name="zebra",           namespace="zebra")),
     
     url(r'^', include('django_ses.urls')),

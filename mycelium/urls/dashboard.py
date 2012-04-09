@@ -4,9 +4,8 @@ from django.conf import settings
 admin.autodiscover()
 import sys
 
-if settings.COMPRESS_VERSIONED_STATIC_TAG_BUILTIN:
-    from django.template.loader import add_to_builtins
-    add_to_builtins('compressor.templatetags.versioned_static')
+# from django.template.loader import add_to_builtins
+# add_to_builtins('django.templatetags.staticfiles')
 
 urlpatterns = patterns('',
 

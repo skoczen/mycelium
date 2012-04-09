@@ -15,7 +15,6 @@ from spreadsheets.export_templates import SPREADSHEET_TEMPLATES
 from groups.models import Group
 from people.models import Person
 
-from johnny import cache as jcache
 import cStringIO
 
 def _basic_forms(spreadsheet, request, no_data=False):

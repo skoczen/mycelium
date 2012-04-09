@@ -6,7 +6,7 @@ import datetime
 from django.core.cache import cache
 from django.core import mail
 from django.core.urlresolvers import reverse
-from johnny import cache as jcache
+# from johnny import cache as jcache
 from django.test.client import Client
 from django.template.defaultfilters import date
 from django.conf import settings

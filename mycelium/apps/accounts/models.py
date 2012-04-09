@@ -9,7 +9,7 @@ from accounts import *
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from johnny import cache as jcache
+# from johnny import cache as jcache
 from zebra.models import StripeCustomer, StripePlan
 from zebra.mixins import StripeSubscriptionMixin
 import hashlib
@@ -310,7 +310,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
         
         self.last_stripe_update = datetime.datetime.now()
         self.save()
-        jcache.invalidate(Account)
+        # jcache.invalidate(Account)
         return self
     
     @property
