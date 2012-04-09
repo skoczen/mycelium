@@ -10,7 +10,7 @@ gettext = lambda s: s
 PROJECT_ROOT = join(abspath(dirname(__file__)), "../")
 MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
 
-STATIC_ROOT = join(PROJECT_ROOT, "collected_static")
+STATIC_ROOT = join(PROJECT_ROOT, "../collected_static")
 STATIC_URL = '/static/'
 
 LIB_DIR = join(PROJECT_ROOT, 'lib')
@@ -54,13 +54,6 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
-)
-
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # other finders..
-    'compressor.finders.CompressorFinder',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -137,7 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.humanize',
-    'django.contrib.staticfiles',
+    'staticfiles',
 
     'qi_toolkit',
     'functional_tests',
@@ -302,7 +295,7 @@ COMPRESS_CSS_HASHING_METHOD = "hash"
 
 STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'staticfiles.finders.FileSystemFinder',
+    'staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )

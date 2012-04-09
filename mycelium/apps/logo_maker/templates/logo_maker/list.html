@@ -1,5 +1,5 @@
 {% extends "logo_maker/base.html" %}
-{% load humanize thumbnail versioned_static %}
+{% load humanize thumbnail %}
 {% block title %}Logo Maker - All Logos{% endblock %}
 {% block javascript %}{{block.super}}
 {% compress js %}
@@ -40,7 +40,7 @@ function cancel_another_logo_btn_clicked() {
 </form>
 
 <section_title>{{l.name}}</section_title>
-<img src="{% versioned_static  t %}" class="logo_thumb"/>
+<img src="{{STATIC_URL}}{{t}}" class="logo_thumb"/>
 {% endthumbnail %}
 </logo_info>
 
