@@ -4,7 +4,7 @@ djangosanetesting==0.5.11
 git+git://github.com/kmmbvnr/django-jenkins.git
 git+git://github.com/skoczen/nose-xcover.git
 django-picklefield==0.1.9
-django-subdomains==1.1.2
+-e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains
 django-staticfiles==1.2.1
 git+git://github.com/GoodCloud/django-longer-username.git
 git+git://github.com/GoodCloud/django-functional-tests
