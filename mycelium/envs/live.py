@@ -49,6 +49,7 @@ ADMIN_MEDIA_PREFIX = "/admin-media/"
 
 BROKER_URL = "redis://redistogo:b8b35d6f28e598ab6f56dca217c015d5@drum.redistogo.com:9017/0"  # Maps to redis host.
 BROKER_HOST = BROKER_URL
+CELERY_RESULT_BACKEND = None
 
 BROKER_VHOST = "0"                       # Maps to database number.
 REDIS_HOST = BROKER_HOST
