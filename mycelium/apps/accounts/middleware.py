@@ -28,10 +28,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
         else:
             request.protocol = "http://"
         
-        print request.get_host()
         subdomain = getattr(request, 'subdomain', False)
-        print subdomain
-    
 
         if subdomain is not False:
 
@@ -46,8 +43,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                     return self.redirect_to_public_home(request)
 
             user = request.user
-            print user
-            print request.subdomain
+
 
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
                 try:
