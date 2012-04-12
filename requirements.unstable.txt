@@ -37,7 +37,6 @@ django-nose
 nose-exclude
 cherrypy
 south
-celery
 django-celery
 coverage >= 3.4
 django-taggit
@@ -48,7 +47,7 @@ django-storages
 slimmer
 django-debug-toolbar
 django-balancer
-redis==2.2.4
+celery-with-redis
 xlwt
 xlrd
 xlutils

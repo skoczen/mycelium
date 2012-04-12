@@ -39,9 +39,17 @@ MANUAL_MEDIA_URL = 'http://www.agoodcloud.com/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "/admin-media/"
 
+# BROKER_BACKEND = "redis"
+# BROKER_HOST = "drum.redistogo.com"  # Maps to redis host.
+# BROKER_PORT = 9017         # Maps to redis port.
+# REDIS_PORT = 9017
+# BROKER_VHOST = "0"         # Maps to database number.
+# CELERY_RESULT_BACKEND = "redis"
+# REDIS_HOST = "drum.redistogo.com"
 
-BROKER_HOST = "redistogo:b8b35d6f28e598ab6f56dca217c015d5@drum.redistogo.com"  # Maps to redis host.
-REDIS_PORT = 9017
+BROKER_URL = "redis://redistogo:b8b35d6f28e598ab6f56dca217c015d5@drum.redistogo.com:9017/0"  # Maps to redis host.
+BROKER_HOST = BROKER_URL
+
 BROKER_VHOST = "0"                       # Maps to database number.
 REDIS_HOST = BROKER_HOST
 REDIS_DB = BROKER_VHOST
