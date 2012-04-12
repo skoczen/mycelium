@@ -1,7 +1,7 @@
 from base import *
 SSL_FORCE = True
 SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_DOMAIN = "agoodcloud.com"
+SESSION_COOKIE_DOMAIN = "agoodcloud.org"
 ENV = "LIVE"
 ROLE = ENV
 
@@ -28,7 +28,7 @@ DATABASES = {
 #     'slave': 1,
 # }
 MASTER_DATABASE = 'default'
-BASE_DOMAIN = "agoodcloud.com"
+BASE_DOMAIN = "agoodcloud.org"
 
 # Stripe
 STRIPE_SECRET = "xCtqHMmMyKlEMjbeiFgnoVYO72b6stA8"
