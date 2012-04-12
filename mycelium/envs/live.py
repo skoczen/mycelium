@@ -40,8 +40,8 @@ STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "/admin-media/"
 
 
-
-BROKER_HOST = "int-Redis.agoodcloud.com"  # Maps to redis host.
+BROKER_HOST = "redistogo:b8b35d6f28e598ab6f56dca217c015d5@drum.redistogo.com"  # Maps to redis host.
+REDIS_PORT = 9017
 BROKER_VHOST = "0"                       # Maps to database number.
 REDIS_HOST = BROKER_HOST
 REDIS_DB = BROKER_VHOST
@@ -50,7 +50,10 @@ REDIS_DB = BROKER_VHOST
 CACHES = {
     'default': {
         'BACKEND' : 'johnny.backends.memcached.MemcachedCache',
-        'LOCATION': 'int-Memcached1010.agoodcloud.com:11211',
+        # 'LOCATION': 'int-Memcached1010.agoodcloud.com:11211',
+        'LOCATION': 'mc10.ec2.northscale.net:11211',
+        'USERNAME': "app1932005\%40heroku.com",
+        'PASSWORD': "GWbcmVAj+AAm3sAB",
         'PREFIX':ENV,
         'JOHNNY_CACHE':True,
     }
