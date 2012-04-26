@@ -58,6 +58,8 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                     # print_exception()
 
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
+                    print reverse("accounts:login")
+                    print request.path
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                         # redirect to login page
                         if request.path != reverse("accounts:login") and request.path != "/":
