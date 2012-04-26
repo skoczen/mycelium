@@ -1,7 +1,7 @@
 from base import *
 SSL_FORCE = True
 SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_DOMAIN = "agoodcloud.com"
+SESSION_COOKIE_DOMAIN = "agoodcloud.org"
 ENV = "LIVE"
 ROLE = ENV
 
