@@ -9,7 +9,7 @@ env.HEROKU_ACCOUNT = "goodcloud"
 
 def run_ve(cmd):
     env.cmd = cmd
-    local("source ~/.virtualenvs/%(VIRTUALENV_NAME)s/bin/activate;%(cmd)s" % env)
+    local("source ~/.virtualenvs/%(VIRTUALENV_NAME)s/bin/activate;cd mycelium;%(cmd)s" % env)
 
 def deploy():
     run_ve("./manage.py collectstatic --noinput --settings=envs.live")
@@ -19,6 +19,6 @@ def deploy():
 
 def deploy_code():
     run_ve("git push heroku feature/heroku:master")
-    run_ve("heroku run project/manage.py syncdb")
-    run_ve("heroku run project/manage.py migrate")
+    run_ve("heroku run mycelium/manage.py syncdb")
+    run_ve("heroku run mycelium/manage.py migrate")
     run_ve("heroku restart")
