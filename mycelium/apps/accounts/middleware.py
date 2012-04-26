@@ -48,6 +48,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
 
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
                 try:
+                    print user
                     print request.account
                     # try get the useraccount
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
@@ -67,11 +68,12 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                             return HttpResponseRedirect("%s?next=%s" % (reverse("accounts:login"),request.path))
                         else:
                             return HttpResponseRedirect(reverse("accounts:login"))
+                    print "skipped"
         else:
             
             # if there's no subdomain, but tis wasn't handled by the SubdomainURLRoutingMiddleware, something weird is happening. Bail.
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
                 self.redirect_to_public_home(request)
 
-        # print "exiting safely"
+        print "exiting safely"
         return None
