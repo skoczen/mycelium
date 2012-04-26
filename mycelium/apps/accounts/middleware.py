@@ -48,18 +48,19 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
 
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
                 try:
-                
+                    print request.account
                     # try get the useraccount
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
                     # print request.useraccount
 
                 except:
-                    # from qi_toolkit.helpers import print_exception
-                    # print_exception()
+                    from qi_toolkit.helpers import print_exception
+                    print_exception()
 
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
                     print reverse("accounts:login")
                     print request.path
+                    print reverse("accounts:login") != request.path 
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                         # redirect to login page
                         if request.path != reverse("accounts:login") and request.path != "/":
