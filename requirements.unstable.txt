@@ -1,63 +1,63 @@
-pip > 1.0
--e git://github.com/GoodCloud/django-ajax-uploader.git#egg=ajaxuploader
--e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit
+# -e git://github.com/GoodCloud/django_compressor.git@versioned_static#egg=django_compressor
 -e git://github.com/Almad/django-sane-testing.git#egg=djangosanetesting
+-e git://github.com/gintas/django-picklefield.git#egg=django-picklefield
+-e git://github.com/GoodCloud/django-ajax-uploader.git#egg=ajaxuploader
+-e git://github.com/GoodCloud/django-functional-tests#egg=functional_tests
+-e git://github.com/GoodCloud/django-longer-username.git#egg=longerusername
+-e git://github.com/GoodCloud/johnny-cache.git#egg=johnny
 -e git://github.com/kmmbvnr/django-jenkins.git#egg=django-jenkins
 -e git://github.com/skoczen/nose-xcover.git#egg=nosexcover
--e git://github.com/gintas/django-picklefield.git#egg=django-picklefield
+-e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains
--e git://github.com/GoodCloud/johnny-cache.git#egg=johnny
--e git://github.com/GoodCloud/django-longer-username.git#egg=longerusername
--e git://github.com/GoodCloud/django-functional-tests#egg=functional_tests
-# -e git://github.com/GoodCloud/django_compressor.git@versioned_static#egg=django_compressor
-fabric
-mercurial
-mysql-python
-python-dateutil <2.0
-PIL
-psycopg2
-python-memcached
-django >=1.3.1
-django-staticfiles
-gunicorn
-pyparsing
-django-xmlrpc
 akismet
 BeautifulSoup
-django-extensions
-python-crontab
-django-analytical
-django-pagination
-sorl-thumbnail
-tagging
-lorem-ipsum-generator
-nose
-ipython
-django-nose
-nose-exclude
+boto==2.0rc1
+celery-with-redis
+chardet
 cherrypy
-south
-django-celery
 coverage >= 3.4
+django >=1.3.1
+django-analytical
+django-balancer
+django-celery
+django-debug-toolbar
+django-extensions
+django-newsletter
+django-nose
+django-pagination
+django-ses
+django-staticfiles
+django-storages
 django-taggit
 django-taggit-templatetags
-boto==2.0rc1
-django-ses
-django-storages
+django-tinymce
+django-xmlrpc
+django-zebra
+fabric
+gunicorn
+html5lib
+ipython
+lorem-ipsum-generator
+mercurial
+mysql-python
+nose
+nose-exclude
+PIL
+pip > 1.0
+psycopg2
+py-bcrypt
+pycurl
+pyparsing
+python-crontab
+python-dateutil <2.0
+python-memcached
+pytz
 slimmer
-django-debug-toolbar
-django-balancer
-celery-with-redis
-xlwt
+sorl-thumbnail
+south
+stripe
+tagging
+vobject
 xlrd
 xlutils
-django-newsletter
-vobject
-django-tinymce
-chardet
-pycurl
-stripe
-py-bcrypt
-django-zebra
-pytz
-html5lib
+xlwt
