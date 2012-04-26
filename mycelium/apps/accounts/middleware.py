@@ -29,11 +29,12 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
             request.protocol = "http://"
         
         subdomain = getattr(request, 'subdomain', False)
-
+        print subdomain
         if subdomain is not False:
 
             # get the account
             poss_account = Account.objects.filter(subdomain=request.subdomain)
+            print poss_account
 
             if poss_account.count() == 1:
                 request.account = poss_account[0]
@@ -53,12 +54,10 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                     # print request.useraccount
 
                 except:
-                    from qi_toolkit.helpers import print_exception
-                    print_exception()
+                    # from qi_toolkit.helpers import print_exception
+                    # print_exception()
 
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
-                    print reverse("accounts:login")
-                    print request.path
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                         # redirect to login page
                         if request.path != reverse("accounts:login") and request.path != "/":
