@@ -31,7 +31,7 @@ def login(request, template_name='registration/login.html',
     
     print "logging in"
     redirect_to = request.REQUEST.get(redirect_field_name, '')
-
+    print request.method
     if request.method == "POST":
         form = authentication_form(data=request.POST, auth_request=request)
         print form
