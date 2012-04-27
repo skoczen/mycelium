@@ -29,7 +29,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
             request.protocol = "http://"
         
         subdomain = getattr(request, 'subdomain', False)
-        print subdomain
+        print "subdomain", subdomain
         if subdomain is not False:
 
             # get the account
