@@ -52,7 +52,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                     # print request.account
                     # try get the useraccount
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
-                    print request.useraccount
+                    # print request.useraccount
 
                 except:
                     # from qi_toolkit.helpers import print_exception
