@@ -29,13 +29,10 @@ def login(request, template_name='registration/login.html',
           authentication_form=AuthenticationForm):
     """Displays the login form and handles the login action."""
     
-    print "logging in"
     redirect_to = request.REQUEST.get(redirect_field_name, '')
-    print request.method
     if request.method == "POST":
         form = authentication_form(data=request.POST, auth_request=request)
-        print form
-        print form.is_valid()
+
         if form.is_valid():
             # Light security check -- make sure redirect_to isn't garbage.
             if not redirect_to or ' ' in redirect_to:
@@ -48,7 +45,6 @@ def login(request, template_name='registration/login.html',
             elif '//' in redirect_to and re.match(r'[^\?]*//', redirect_to):
                     redirect_to = settings.LOGIN_REDIRECT_URL
 
-            print "doing the login"
             # Okay, security checks complete. Log the user in.
             auth_login(request, form.get_user())
 
