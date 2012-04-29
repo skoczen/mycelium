@@ -2,7 +2,7 @@ from base import *
 SSL_FORCE = True
 
 SESSION_COOKIE_SECURE = False
-SESSION_COOKIE_DOMAIN = "agoodcloud.org"
+SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 ENV = "LIVE"
 ROLE = ENV
 
@@ -73,7 +73,7 @@ CACHES = {
 # CACHE_BACKEND = 'johnny.backends.memcached://127.0.0.1:11211'
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_STORAGE_BUCKET_NAME = "goodcloud2"
+AWS_STORAGE_BUCKET_NAME = "goodcloud1"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 
 STATIC_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
