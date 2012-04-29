@@ -535,7 +535,12 @@ social_links {
 }
 .page_header .the_cloud {
 	vertical-align: middle;
-	padding: 0px 0px 10px 4px;
+	padding: 0px 0px 0px 4px;
+	background-image: url("../images/goodcloud-logo-60-with-shadow.png");
+	width: 91px;
+	height: 56px;
+	background-repeat: no-repeat;
+	display: inline-block;
 }
 
 
@@ -1168,4 +1173,10 @@ social_links {
 .not_me_link {
 	margin-left: 10px;
 	font-size: 15px;
+}
+.headache_vs_simple {
+	display: block;
+	background: url("../images/marketing-headache_vs_simple.png");
+	width: 500px;
+	height: 238px;
 }
