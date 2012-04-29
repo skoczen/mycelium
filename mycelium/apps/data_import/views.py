@@ -41,6 +41,11 @@ def begin_import(request):
         has_header = False
 
         for k,v in sorted(request.POST.iteritems()):
+<<<<<<< HEAD
+=======
+            # print k
+            # print v
+>>>>>>> feature/heroku
             if "import_col_" in k:
                 fields.append(v)
         

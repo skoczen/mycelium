@@ -40,7 +40,7 @@ function cancel_another_logo_btn_clicked() {
 </form>
 
 <section_title>{{l.name}}</section_title>
-<img src="{% versioned_static  t %}" class="logo_thumb"/>
+<img src="{{STATIC_URL}}{{t}}" class="logo_thumb"/>
 {% endthumbnail %}
 </logo_info>
 

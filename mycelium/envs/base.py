@@ -9,7 +9,10 @@ gettext = lambda s: s
 
 PROJECT_ROOT = join(abspath(dirname(__file__)), "../")
 MEDIA_ROOT = join(abspath(PROJECT_ROOT),"../media")
-STATIC_ROOT = join(abspath(PROJECT_ROOT),"../collected_static")
+
+STATIC_ROOT = join(PROJECT_ROOT, "../collected_static")
+STATIC_URL = '/static/'
+
 LIB_DIR = join(PROJECT_ROOT, 'lib')
 APPS_DIR = join(PROJECT_ROOT, 'apps')
 sys.path.insert(0, abspath(join(PROJECT_ROOT + '/../')))
@@ -51,13 +54,6 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
-)
-
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # other finders..
-    'compressor.finders.CompressorFinder',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -134,7 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.humanize',
-    'django.contrib.staticfiles',
+    'staticfiles',
 
     'qi_toolkit',
     'functional_tests',
@@ -151,7 +147,8 @@ INSTALLED_APPS = (
     'django_jenkins',
     'django_ses',
     'compressor',
-    
+    'artechetype',
+
     #'cms',
     #'mptt',
     #'menus',
@@ -299,3 +296,9 @@ COMPRESS_VERSION_CSS_MEDIA = True
 COMPRESS_CSS_HASHING_METHOD = "hash"
 # COMPRESS_OFFLINE = True
 
+STATICFILES_DIRS = ()
+STATICFILES_FINDERS = (
+    'staticfiles.finders.FileSystemFinder',
+    'staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)

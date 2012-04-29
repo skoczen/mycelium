@@ -29,12 +29,12 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
             request.protocol = "http://"
         
         subdomain = getattr(request, 'subdomain', False)
-    
-
+        # print subdomain
         if subdomain is not False:
 
             # get the account
             poss_account = Account.objects.filter(subdomain=request.subdomain)
+            # print poss_account
 
             if poss_account.count() == 1:
                 request.account = poss_account[0]
@@ -44,12 +44,12 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                     return self.redirect_to_public_home(request)
 
             user = request.user
-            # print user
-            # print request.subdomain
+
 
             if not request.subdomain in settings.PUBLIC_SUBDOMAINS:
                 try:
-                
+                    # print user
+                    # print request.account
                     # try get the useraccount
                     request.useraccount = UserAccount.objects.get(user=user, account=request.account)
                     # print request.useraccount
@@ -59,12 +59,16 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
                     # print_exception()
 
                     # if we're not logging in right now (or in dev mode, serving media), bail. 
+                    # print reverse("accounts:login")
+                    # print request.path
+                    # print reverse("accounts:login") != request.path 
                     if reverse("accounts:login") != request.path and not (settings.ENV == "DEV" and request.path[:len(settings.MEDIA_URL)] == settings.MEDIA_URL):
                         # redirect to login page
                         if request.path != reverse("accounts:login") and request.path != "/":
                             return HttpResponseRedirect("%s?next=%s" % (reverse("accounts:login"),request.path))
                         else:
                             return HttpResponseRedirect(reverse("accounts:login"))
+                    # print "skipped"
         else:
             
             # if there's no subdomain, but tis wasn't handled by the SubdomainURLRoutingMiddleware, something weird is happening. Bail.
