@@ -18,7 +18,7 @@ def deploy():
     deploy_code()
 
 def deploy_code():
-    run_ve("git push heroku feature/heroku:master")
+    run_ve("git push heroku live:master")
     run_ve("heroku run mycelium/manage.py syncdb")
     run_ve("heroku run mycelium/manage.py migrate")
     run_ve("heroku restart")
