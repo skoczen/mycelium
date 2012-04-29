@@ -1,15 +1,13 @@
 from base import *
 SSL_FORCE = True
 
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 ENV = "LIVE"
 ROLE = ENV
 
-# Start temp
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-# End temp
 
 DATABASES = {
     'default': {
