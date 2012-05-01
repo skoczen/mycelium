@@ -30,9 +30,13 @@ def login(request, template_name='registration/login.html',
     """Displays the login form and handles the login action."""
     
     redirect_to = request.REQUEST.get(redirect_field_name, '')
+    print get_current_site(request)
+    
+    print request.user
     if request.method == "POST":
         form = authentication_form(data=request.POST, auth_request=request)
-
+        print form.is_valid()
+        print form
         if form.is_valid():
             # Light security check -- make sure redirect_to isn't garbage.
             if not redirect_to or ' ' in redirect_to:
@@ -61,6 +65,7 @@ def login(request, template_name='registration/login.html',
     request.session.set_test_cookie()
 
     current_site = get_current_site(request)
+
 
     return render_to_response(template_name, {
         'form': form,
