@@ -30,12 +30,9 @@ def login(request, template_name='registration/login.html',
     """Displays the login form and handles the login action."""
     
     redirect_to = request.REQUEST.get(redirect_field_name, '')
-    print get_current_site(request)
-    print request.user
+
     if request.method == "POST":
         form = authentication_form(data=request.POST, auth_request=request)
-        print form.is_valid()
-        print form
         if form.is_valid():
             # Light security check -- make sure redirect_to isn't garbage.
             if not redirect_to or ' ' in redirect_to:
@@ -48,17 +45,19 @@ def login(request, template_name='registration/login.html',
             elif '//' in redirect_to and re.match(r'[^\?]*//', redirect_to):
                     redirect_to = settings.LOGIN_REDIRECT_URL
 
-            print "security done"
-            print "logging in %s" % (form.get_user(), )
+            # print "security done"
+            # print "logging in %s" % (form.get_user(), )
 
             # Okay, security checks complete. Log the user in.
-            print "auth_login: %s" % auth_login(request, form.get_user())
+            auth_login(request, form.get_user())
 
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
             
             request.session.modified = True
-            print "about to redirect to: %s" % (redirect_to)
+            # print request.session.modified
+            request.session.save()
+            # print "about to redirect to: %s" % (redirect_to)
             return HttpResponseRedirect(redirect_to)
 
     else:
