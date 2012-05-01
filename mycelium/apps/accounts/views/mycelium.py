@@ -48,8 +48,10 @@ def login(request, template_name='registration/login.html',
             elif '//' in redirect_to and re.match(r'[^\?]*//', redirect_to):
                     redirect_to = settings.LOGIN_REDIRECT_URL
 
+            print "security done"
+            print "logging in %s" % (form.get_user(), )
             # Okay, security checks complete. Log the user in.
-            auth_login(request, form.get_user())
+            print auth_login(request, form.get_user())
 
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
