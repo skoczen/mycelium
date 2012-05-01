@@ -101,4 +101,4 @@ ssh==1.7.8
 tornado==2.1.1
 unittest2==0.5.1
 wsgiref==0.1.2
-django-sslify=0.2
+django-sslify==0.2
