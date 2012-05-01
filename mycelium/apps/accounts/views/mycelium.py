@@ -31,11 +31,11 @@ def login(request, template_name='registration/login.html',
     
     redirect_to = request.REQUEST.get(redirect_field_name, '')
     print get_current_site(request)
-    print form.is_valid()
     print request.user
     if request.method == "POST":
         form = authentication_form(data=request.POST, auth_request=request)
-
+        print form.is_valid()
+        print form
         if form.is_valid():
             # Light security check -- make sure redirect_to isn't garbage.
             if not redirect_to or ' ' in redirect_to:
