@@ -26,6 +26,7 @@ django-newsletter
 django-nose
 django-pagination
 django-ses
+django-sslify
 django-staticfiles
 django-storages
 django-taggit
