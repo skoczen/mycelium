@@ -59,12 +59,18 @@ REDIS_DB = BROKER_VHOST
 
 
 CACHES = {
+    # 'default': {
+    #     'BACKEND' : 'johnny.backends.memcached.MemcachedCache',
+    #     # 'LOCATION': 'int-Memcached1010.agoodcloud.com:11211',
+    #     'LOCATION': 'mc10.ec2.northscale.net:11211',
+    #     'USERNAME': "app1932005\%40heroku.com",
+    #     'PASSWORD': "GWbcmVAj+AAm3sAB",
+    #     'PREFIX':ENV,
+    #     'JOHNNY_CACHE':True,
+    # }
     'default': {
-        'BACKEND' : 'johnny.backends.memcached.MemcachedCache',
-        # 'LOCATION': 'int-Memcached1010.agoodcloud.com:11211',
-        'LOCATION': 'mc10.ec2.northscale.net:11211',
-        'USERNAME': "app1932005\%40heroku.com",
-        'PASSWORD': "GWbcmVAj+AAm3sAB",
+        # 'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+        'BACKEND': 'johnny.backends.memcached.PyLibMCCache',
         'PREFIX':ENV,
         'JOHNNY_CACHE':True,
     }
