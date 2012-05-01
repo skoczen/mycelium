@@ -20,6 +20,10 @@ DATABASES = {
     },
 }
 
+MIDDLEWARE_CLASSES += (
+    'sslify.middleware.SSLifyMiddleware',
+)
+
 # DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
 
 # DATABASE_POOL = {

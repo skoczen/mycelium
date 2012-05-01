@@ -14,9 +14,9 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
         site = Site.objects.get(pk=settings.SITE_ID)
         # Yes, having this if in the middleware is ridiculous. But, it's fast, and should only fail on edges.
         if settings.SELENIUM_TESTING:
-            return HttpResponseRedirect("%s%s:settings.LIVE_SERVER_PORT" % (request.protocol, site.domain, settings.LIVE_SERVER_PORT))
+            return HttpResponseRedirect("%swww.%s:settings.LIVE_SERVER_PORT" % (request.protocol, site.domain, settings.LIVE_SERVER_PORT))
         else:
-            return HttpResponseRedirect("%s%s" % (request.protocol, site.domain))
+            return HttpResponseRedirect("%swww.%s" % (request.protocol, site.domain))
         
             
 
@@ -28,7 +28,7 @@ class AccountAuthMiddleware(SubdomainURLRoutingMiddleware):
         else:
             request.protocol = "http://"
         
-        request.protocol = "https://"
+        # request.protocol = "https://"
 
         subdomain = getattr(request, 'subdomain', False)
         # print subdomain
