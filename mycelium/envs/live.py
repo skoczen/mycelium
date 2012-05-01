@@ -1,7 +1,7 @@
 from base import *
 SSL_FORCE = True
 SESSION_COOKIE_SECURE = False
-SESSION_COOKIE_DOMAIN = ".agoodcloud.com"
+SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 ENV = "LIVE"
 ROLE = ENV
 
@@ -20,7 +20,7 @@ DATABASES = {
 }
 
 MIDDLEWARE_CLASSES += (
-    'sslify.middleware.SSLifyMiddleware',
+    # 'sslify.middleware.SSLifyMiddleware',
 )
 
 # DATABASE_ROUTERS = ['balancer.routers.PinningWMSRouter']
