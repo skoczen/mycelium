@@ -33,8 +33,8 @@ BASE_DOMAIN = "agoodcloud.com"
 STRIPE_SECRET = "xCtqHMmMyKlEMjbeiFgnoVYO72b6stA8"
 STRIPE_PUBLISHABLE = "pk_oKB20RwO4kJ5jvsnDlSrw2E43YnbR"
 
-MEDIA_URL = 'http://media.agoodcloud.com/'
-MANUAL_MEDIA_URL = 'http://www.agoodcloud.com/media/'
+MEDIA_URL = 'https://media.agoodcloud.com/'
+MANUAL_MEDIA_URL = 'https://www.agoodcloud.com/media/'
 STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "/admin-media/"
 
@@ -74,7 +74,7 @@ EMAIL_BACKEND = 'django_ses.SESBackend'
 AWS_STORAGE_BUCKET_NAME = "goodcloud1"
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 
-STATIC_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 COMPRESS_URL = STATIC_URL
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
