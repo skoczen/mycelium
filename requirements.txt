@@ -102,3 +102,5 @@ tornado==2.1.1
 unittest2==0.5.1
 wsgiref==0.1.2
 django-sslify==0.2
+pylibmc==1.2.2
+django-pylibmc-sasl==0.2.4
