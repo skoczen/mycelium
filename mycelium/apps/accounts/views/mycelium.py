@@ -50,13 +50,15 @@ def login(request, template_name='registration/login.html',
 
             print "security done"
             print "logging in %s" % (form.get_user(), )
+
             # Okay, security checks complete. Log the user in.
-            print auth_login(request, form.get_user())
+            print "auth_login: %s" % auth_login(request, form.get_user())
 
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
             
             request.session.modified = True
+            print "about to redirect to: %s" % (redirect_to)
             return HttpResponseRedirect(redirect_to)
 
     else:
