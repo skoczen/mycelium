@@ -69,10 +69,10 @@ CACHES = {
     #     'JOHNNY_CACHE':True,
     # }
     'default': {
-          'BACKEND': 'django_pylibmc.memcached.PyLibMCCache'
+          'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
     #     'BACKEND': 'johnny.backends.memcached.PyLibMCCache',
-        'PREFIX':ENV,
-        'JOHNNY_CACHE':True,
+        'PREFIX': ENV,
+        'JOHNNY_CACHE': True,
     }
 }
 
