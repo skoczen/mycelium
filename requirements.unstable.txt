@@ -51,7 +51,7 @@ pycurl
 pyparsing
 python-crontab
 python-dateutil <2.0
-python-memcached
+# python-memcached
 pytz
 slimmer
 sorl-thumbnail
