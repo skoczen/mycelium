@@ -57,6 +57,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'lib.middlewares.ProfilerMiddleware',
     'johnny.middleware.LocalStoreClearMiddleware',
     'johnny.middleware.QueryCacheMiddleware',
     'johnny.middleware.CommittingTransactionMiddleware',
@@ -130,7 +131,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.humanize',
-    'staticfiles',
+    'django.contrib.staticfiles',
+    # 'debug_toolbar',
 
     'qi_toolkit',
     'functional_tests',
@@ -148,6 +150,7 @@ INSTALLED_APPS = (
     'django_ses',
     'compressor',
     'artechetype',
+    'speedtracer',
 
     #'cms',
     #'mptt',
@@ -287,18 +290,18 @@ ZEBRA_CUSTOMER_MODEL = 'accounts.Account'
 
 
 CDN_MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
-COMPRESS_STORAGE = 'mycelium_core.storage.CachedS3BotoStorage'
+COMPRESS_STORAGE = "lib.backends.CachedS3BotoStorage"
 STATICFILES_STORAGE = COMPRESS_STORAGE
 COMPRESS_ROOT = STATIC_ROOT
 
-COMPRESS_VERSIONED_STATIC_TAG_BUILTIN = True
-COMPRESS_VERSION_CSS_MEDIA = True
-COMPRESS_CSS_HASHING_METHOD = "hash"
+# COMPRESS_VERSIONED_STATIC_TAG_BUILTIN = True
+# COMPRESS_VERSION_CSS_MEDIA = True
+# COMPRESS_CSS_HASHING_METHOD = "hash"
 # COMPRESS_OFFLINE = True
 
 STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
-    'staticfiles.finders.FileSystemFinder',
-    'staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )

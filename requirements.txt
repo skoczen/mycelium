@@ -104,3 +104,4 @@ wsgiref==0.1.2
 django-sslify==0.2
 pylibmc==1.2.2
 django-pylibmc-sasl==0.2.4
+-e git+git://github.com/acdha/django-speedtracer.git#egg=speedtracer
