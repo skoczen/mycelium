@@ -72,7 +72,7 @@ CACHES = {
           'BACKEND': 'custom_cache_backend.PyLibMCCache',
         # 'BACKEND': 'johnny.backends.memcached.PyLibMCCache',
         'PREFIX': ENV,
-        # 'JOHNNY_CACHE': True,
+        'JOHNNY_CACHE': True,
     }
 }
 
