@@ -150,7 +150,6 @@ INSTALLED_APPS = (
     'django_ses',
     'compressor',
     'artechetype',
-    'speedtracer',
 
     #'cms',
     #'mptt',
