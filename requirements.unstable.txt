@@ -9,7 +9,6 @@
 -e git://github.com/skoczen/nose-xcover.git#egg=nosexcover
 -e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains
--e git+git://github.com/acdha/django-speedtracer.git#egg=speedtracer
 django-compressor==1.1.2
 akismet
 BeautifulSoup

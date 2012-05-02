@@ -19,10 +19,6 @@ DATABASES = {
     },
 }
 
-MIDDLEWARE_CLASSES += (
-    # 'sslify.middleware.SSLifyMiddleware',
-)
-
 
 BASE_DOMAIN = "agoodcloud.com"
 
@@ -66,7 +62,6 @@ COMPRESS_STORAGE = STATICFILES_STORAGE
 
 COMPRESS_OFFLINE = True
 COMPRESS_ENABLED = True
-
 
 FAVICON_URL = "%simages/favicon.png" % STATIC_URL
 
