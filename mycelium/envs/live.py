@@ -20,7 +20,7 @@ DATABASES = {
 }
 
 MIDDLEWARE_CLASSES += (
-    'sslify.middleware.SSLifyMiddleware',
+    # 'sslify.middleware.SSLifyMiddleware',
 )
 
 
