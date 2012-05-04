@@ -60,7 +60,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 STATICFILES_STORAGE = "lib.backends.CachedS3BotoStorage"
 COMPRESS_STORAGE = STATICFILES_STORAGE
 
-COMPRESS_OFFLINE = True
+COMPRESS_OFFLINE = False
 COMPRESS_ENABLED = False
 
 FAVICON_URL = "%simages/favicon.png" % STATIC_URL
