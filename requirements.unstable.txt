@@ -1,4 +1,4 @@
-# -e git://github.com/GoodCloud/django_compressor.git@versioned_static#egg=django_compressor
+-e git://github.com/GoodCloud/django_compressor.git@develop#egg=django_compressor
 -e git://github.com/Almad/django-sane-testing.git#egg=djangosanetesting
 -e git://github.com/gintas/django-picklefield.git#egg=django-picklefield
 -e git://github.com/GoodCloud/django-ajax-uploader.git#egg=ajaxuploader
@@ -9,7 +9,7 @@
 -e git://github.com/skoczen/nose-xcover.git#egg=nosexcover
 -e git://github.com/skoczen/qi-toolkit.git#egg=qi-toolkit
 -e git://github.com/tkaemming/django-subdomains.git#egg=django-subdomains
-django-compressor==1.1.2
+# django-compressor==1.1.2
 akismet
 BeautifulSoup
 boto==2.0rc1
