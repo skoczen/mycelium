@@ -1,4 +1,4 @@
-git+git://github.com/GoodCloud/django_compressor.git@cached_offline#egg=django_compressor
+-e git://github.com/GoodCloud/django_compressor.git@cached_offline#egg=django_compressor
 -e git://github.com/Almad/django-sane-testing.git#egg=djangosanetesting
 -e git://github.com/gintas/django-picklefield.git#egg=django-picklefield
 -e git://github.com/GoodCloud/django-ajax-uploader.git#egg=ajaxuploader
