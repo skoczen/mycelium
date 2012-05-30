@@ -3,6 +3,7 @@ from django.db import transaction
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from accounts.managers import get_or_404_by_account
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
@@ -183,7 +184,7 @@ def _tab_or_manage_tags_redirect(context):
         return HttpResponseRedirect(reverse("generic_tags:manage"))
 
 
-
+@csrf_exempt
 @json_view
 def save_tags_and_tagsets(request):
     success = False
@@ -199,12 +200,12 @@ def save_tags_and_tagsets(request):
         tagset = None
         if ts["db_pk"]:
             try:
-                tagset = TagSet.objects.using('default').get(pk=ts["db_pk"])
+                tagset = TagSet.objects_by_account(request.account).using('default').get(pk=ts["db_pk"])
                 tagset.name = ts["name"]
             except TagSet.DoesNotExist: 
                 pass
         else:
-            tagset, created = TagSet.objects.using('default').get_or_create(account=request.account, name=ts["name"])
+            tagset, created = TagSet.objects_by_account(request.account).using('default').get_or_create(account=request.account, name=ts["name"])
             created_tagsets.append(tagset)
         if tagset:
             tagset.page_pk = ts["page_pk"]
@@ -219,13 +220,13 @@ def save_tags_and_tagsets(request):
 
                     if t["db_pk"]:
                         try:
-                            tag = Tag.objects.using('default').get(pk=t["db_pk"])
+                            tag = Tag.objects_by_account(request.account).using('default').get(pk=t["db_pk"])
                             tag.name = t["name"]
                             tag.tagset = tagset
                         except Tag.DoesNotExist:
                             pass
                     else:
-                        tag, created = Tag.objects.using('default').get_or_create(account=request.account, name=t["name"], tagset=tagset)
+                        tag, created = Tag.objects_by_account(request.account).using('default').get_or_create(account=request.account, name=t["name"], tagset=tagset)
                         try:
                             transaction.commit()
                         except:
