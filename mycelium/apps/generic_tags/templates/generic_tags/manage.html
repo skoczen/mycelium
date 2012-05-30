@@ -18,6 +18,7 @@ $(function(){
 manageTags.state.tag_sets.push(manageTags.objects.tagSet("{{ts.name}}", {{ts.order}}, {{ts.pk}}));
 {% for t in ts.tag_set.all %}{% with forloop.counter as tag_counter %}manageTags.state.tag_sets[{{ts_counter|add:-1}}].tags.push(manageTags.objects.tag(manageTags.state.tag_sets[{{ts_counter|add:-1}}], "{{t.name}}", {{t.order}}, {{t.num_members}}, {{t.pk}}));
 {% endwith %}{% endfor %}{% endwith %}{% endfor %}
+// {{request.is_secure}}
 manageTags.encyclopedia.urls.save_tags_and_tagsets = "{% if request.is_secure %}https://{% else %}http://{% endif %}{{request.get_host}}{% url generic_tags:save_tags_and_tagsets %}";
 
 manageTags.init();
