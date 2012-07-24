@@ -81,10 +81,6 @@ class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin)
 
             if hasattr(t,"person_field"):
                 filter_kwargs = {"%s__in" % t.person_field.replace(".","__") : qs}
-                print filter_kwargs
-                print t.model
-                print t.model.objects_by_account(self.account)
-                print t.model.objects_by_account(self.account).filter(**filter_kwargs)
                 return t.model.objects_by_account(self.account).filter(**filter_kwargs)
             else:
                 return qs

@@ -5,7 +5,7 @@ from django.core.files.base import ContentFile
 
 @task
 def generate_spreadsheet(account_id, useraccount_id, spreadsheet_id, downloaded_spreadsheet_id, file_type):
-    print "starting.."
+    # print "starting.."
     from spreadsheets.models import Spreadsheet, DownloadedSpreadsheet
     from spreadsheets.spreadsheet import SpreadsheetAbstraction
     from accounts.models import Account
@@ -19,8 +19,8 @@ def generate_spreadsheet(account_id, useraccount_id, spreadsheet_id, downloaded_
     extension = SpreadsheetAbstraction.extension_from_file_type(file_type)
     downloaded_spreadsheet = DownloadedSpreadsheet.objects.get(pk=downloaded_spreadsheet_id)
 
-    downloaded_spreadsheet.downloaded_file.save("%s.%s" % (spreadsheet.full_name, extension), ContentFile(f_write.getvalue()), save=False)
+    downloaded_spreadsheet.downloaded_file.save("%s.%s.%s" % (spreadsheet.full_name, downloaded_spreadsheet.pk, extension), ContentFile(f_write.getvalue()), save=False)
     downloaded_spreadsheet.generation_finished = True
     downloaded_spreadsheet.save()
     
-    print "done"
+    # print "done"
