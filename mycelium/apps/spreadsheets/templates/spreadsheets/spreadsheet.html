@@ -92,12 +92,19 @@ $(function(){
 
 <div class="past_spreadsheets" >
 	<div class="detail_header">Past Spreadsheets</div>
-	<table class="spreadsheet_list striped">
+	<table class="spreadsheet_list striped results_table">
 		{% for s in spreadsheet.past_downloads %}
 			<tr>
-				<td>{{s.date|date}} {{s.date|time}}</td>
-				<td><a href="{{s.permalink}}">{{s.name}}</a></td>
+				<td>{% if not s.generation_finished %}<div class="spinner"></div>{% endif %}</td>
+				<td>{{s.date|date}} <!--  {{s.date|time}} --> </td>
+				<td>{% if not s.generation_finished %}Generating. Please refresh this page in a few seconds.{% else %}<a href="{{s.permalink}}">{{s.name}}</a>{% endif %}</td>
 				<td>{{s.num_records}} rows</td>
+			</tr>
+		{% empty %}
+			<tr>
+				<td></td>
+				<td>No spreadsheets generated yet.</td>
+				<td></td>
 			</tr>
 		{% endfor %}
 	</table>

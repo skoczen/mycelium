@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
-from spreadsheets.models import Spreadsheet, SpreadsheetSearchProxy
+from spreadsheets.models import Spreadsheet, SpreadsheetSearchProxy, DownloadedSpreadsheet
 from spreadsheets.forms import SpreadsheetForm
 from spreadsheets.spreadsheet import SpreadsheetAbstraction
 from spreadsheets.export_templates import SPREADSHEET_TEMPLATES
@@ -89,8 +89,16 @@ def queue_generation(request):
     spreadsheet_id = request.GET['spreadsheet_id']
     spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
 
-    generate_spreadsheet.delay(request.account.id, request.useraccount.id, spreadsheet.id, file_type)
-    
+    downloaded_spreadsheet = DownloadedSpreadsheet.objects.create(
+                                account=request.account, 
+                                name=spreadsheet.full_name, 
+                                num_records = spreadsheet.num_rows,
+                                file_type = spreadsheet.default_filetype,
+                                spreadsheet=spreadsheet,
+                                )
+
+    generate_spreadsheet.delay(request.account.id, request.useraccount.id, spreadsheet.id, downloaded_spreadsheet.id, file_type)
+    save_action.delay(request.account, request.useraccount, "generated a spreadsheet", spreadsheet=spreadsheet,)
     return {"success": success}
 
     

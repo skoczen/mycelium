@@ -7,7 +7,7 @@ $(function(){
 	$("#container_id_spreadsheet_template input").change(template_type_changed);
 	$("#basic_info_form").bind("genericFieldForm.save_form_success",form_saved);
 	$(".download_spreadsheet_btn").click(download_button_clicked);
-	update_spreadsheet_download_link();
+	// update_spreadsheet_download_link();
 	group_id = get_group_id();
 	template_type = get_template_type();
 });
@@ -20,7 +20,7 @@ function delete_spreadsheet(e) {
     if (name == "") {
         name = "Unnamed Spreadsheet";
     }
-    if (confirm("Are you sure you want to completely delete " + name + " from the database? \n\nDeleting will remove this spreadsheet. It will affect any of the people in the spreadsheet.\n\nIt cannot be undone.\n\nPress OK to delete "+ name +".\nPress Cancel to leave things unchanged.")) {
+    if (confirm("Are you sure you want to completely delete " + name + " from the database? \n\nDeleting will remove this spreadsheet, and all past versions. It will affect any of the people in the spreadsheet.\n\nIt cannot be undone.\n\nPress OK to delete "+ name +".\nPress Cancel to leave things unchanged.")) {
         $(window).unbind("unload.genericFieldForm");
         $("#delete_spreadsheet_form").submit();
     }
@@ -44,7 +44,7 @@ function form_changed() {
 	var new_group_id = get_group_id();
 	var new_template_type = get_template_type();
 	
-	update_spreadsheet_download_link();
+	// update_spreadsheet_download_link();
 
 	if (group_id != new_group_id) {
 		update_group_count();
@@ -75,9 +75,26 @@ function enable_download_button() {
 }
 
 function download_button_clicked() {
+	var btn = $(this);
 	if ($(".download_spreadsheet_btn").hasClass("disabled")) {
 		return false
+	} else {
+		$.ajax({
+          url: btn.attr("href"),
+          type: "GET",
+          dataType: "json",
+          data: {	
+          			"type":get_file_type(), 
+          			"spreadsheet_id": get_spreadsheet_id()
+          		},
+          success: function(json) {
+          	if (!json.is_finished) {
+	          	window.location.reload();
+	          }
+          }
+     	});
 	}
+	return false;
 }
 function file_type_option_clicked() {
 	var selected = $(this);

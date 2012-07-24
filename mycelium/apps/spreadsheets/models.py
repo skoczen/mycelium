@@ -201,8 +201,10 @@ class DownloadedSpreadsheet(AccountBasedModel, TimestampModelMixin):
 
     @property
     def permalink(self):
-        print self.downloaded_file.__dict__
-        return self.downloaded_file
+        try:
+            return self.downloaded_file.url
+        except:
+            return None
 
 
 post_save.connect(SpreadsheetSearchProxy.spreadsheet_record_changed,sender=Spreadsheet)
