@@ -215,3 +215,12 @@ fragment[name=email_quick_copy] {
 .file_type.selects_with_descriptions .file_type_option {
 	margin: 4px 1% 4px 1%;
 }
+.past_spreadsheets {
+	margin: 0px 0px 20px 0px;
+}
+.spinner {
+	display: inline-block;
+	background: url("../images/spinner-grey-16.gif");
+	width: 16px;
+	height: 16px;
+}

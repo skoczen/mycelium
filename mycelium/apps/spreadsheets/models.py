@@ -81,10 +81,6 @@ class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin)
 
             if hasattr(t,"person_field"):
                 filter_kwargs = {"%s__in" % t.person_field.replace(".","__") : qs}
-                print filter_kwargs
-                print t.model
-                print t.model.objects_by_account(self.account)
-                print t.model.objects_by_account(self.account).filter(**filter_kwargs)
                 return t.model.objects_by_account(self.account).filter(**filter_kwargs)
             else:
                 return qs
@@ -106,6 +102,9 @@ class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin)
     def spreadsheet_template_instance_class(self, template_type):
         return SPREADSHEET_TEMPLATE_INSTANCES[template_type]
 
+    @property
+    def past_downloads(self):
+        return self.downloadedspreadsheet_set.all().order_by("-created_at")
 
 class SpreadsheetSearchProxy(SearchableItemProxy):
     SEARCH_GROUP_NAME = "spreadsheets"
@@ -189,6 +188,24 @@ class SpreadsheetSearchProxy(SearchableItemProxy):
         verbose_name_plural = "SpreadsheetSearchProxies"
 
 
+class DownloadedSpreadsheet(AccountBasedModel, TimestampModelMixin):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    spreadsheet = models.ForeignKey(Spreadsheet)
+    num_records = models.IntegerField()
+    file_type = models.CharField(max_length=20, choices=SPREADSHEET_SOURCE_TYPES, default=SPREADSHEET_SOURCE_TYPES[0][0])
+    downloaded_file = models.FileField(blank=True, null=True, upload_to="spreadsheets")
+    generation_finished = models.BooleanField(default=False)
+
+    @property
+    def date(self):
+        return self.created_at
+
+    @property
+    def permalink(self):
+        try:
+            return self.downloaded_file.url
+        except:
+            return None
 
 
 post_save.connect(SpreadsheetSearchProxy.spreadsheet_record_changed,sender=Spreadsheet)

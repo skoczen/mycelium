@@ -8,13 +8,14 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from qi_toolkit.helpers import *
 from django.views.decorators.cache import cache_page
-from spreadsheets.models import Spreadsheet, SpreadsheetSearchProxy
+from spreadsheets.models import Spreadsheet, SpreadsheetSearchProxy, DownloadedSpreadsheet
 from spreadsheets.forms import SpreadsheetForm
 from spreadsheets.spreadsheet import SpreadsheetAbstraction
 from spreadsheets.export_templates import SPREADSHEET_TEMPLATES
 from groups.models import Group
 from people.models import Person
 from activities.tasks import save_action
+from spreadsheets.tasks import generate_spreadsheet
 
 from johnny import cache as jcache
 import cStringIO
@@ -81,25 +82,24 @@ def save_basic_info(request, spreadsheet_id):
 
     return {"success":success}
 
-
-def download(request):
+@json_view
+def queue_generation(request):
+    success = True
     file_type = request.GET['type']
     spreadsheet_id = request.GET['spreadsheet_id']
     spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
 
-    f_write = cStringIO.StringIO()
-    SpreadsheetAbstraction.create_spreadsheet(spreadsheet.members, spreadsheet.template_obj, file_type, file_handler=f_write)
-    mime_type = SpreadsheetAbstraction.mime_type_from_file_type(file_type)
-    extension = SpreadsheetAbstraction.extension_from_file_type(file_type)
+    downloaded_spreadsheet = DownloadedSpreadsheet.objects.create(
+                                account=request.account, 
+                                name=spreadsheet.full_name, 
+                                num_records = spreadsheet.num_rows,
+                                file_type = spreadsheet.default_filetype,
+                                spreadsheet=spreadsheet,
+                                )
 
-    response = HttpResponse(f_write.getvalue(), mime_type)
-    spreadsheet_name = spreadsheet.name
-    if spreadsheet_name == "":
-        spreadsheet_name = "Unnnamed Spreadsheet"
-    response['Content-Disposition'] = 'attachment; filename=%s.%s' % (spreadsheet_name, extension)
-    save_action.delay(request.account, request.useraccount, "downloaded a spreadsheet", spreadsheet=spreadsheet,)
-    
-    return response
+    generate_spreadsheet.delay(request.account.id, request.useraccount.id, spreadsheet.id, downloaded_spreadsheet.id, file_type)
+    save_action.delay(request.account, request.useraccount, "generated a spreadsheet", spreadsheet=spreadsheet,)
+    return {"success": success}
 
     
 @render_to("spreadsheets/new.html")

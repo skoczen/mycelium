@@ -86,8 +86,31 @@ $(function(){
 </form>
 
 <div class="download_spreadsheet_button_block">
-	<a href="{% url spreadsheets:download %}" base_url="{% url spreadsheets:download %}" class="mycelium_btn download_spreadsheet_btn auto_disable" disabled_text="Downloading...">Download Spreadsheet</a>
+	<a href="{% url spreadsheets:queue_generation %}" base_url="{% url spreadsheets:queue_generation %}" class="mycelium_btn download_spreadsheet_btn auto_disable" disabled_text="Downloading...">Generate Spreadsheet</a>
 </div>
+
+
+<div class="past_spreadsheets" >
+	<div class="detail_header">Past Spreadsheets</div>
+	<table class="spreadsheet_list striped results_table">
+		{% for s in spreadsheet.past_downloads %}
+			<tr>
+				<td>{% if not s.generation_finished %}<div class="spinner"></div>{% endif %}</td>
+				<td>{{s.date|date}} <!--  {{s.date|time}} --> </td>
+				<td>{% if not s.generation_finished %}Generating. Please refresh this page in a few seconds.{% else %}<a href="{{s.permalink}}">{{s.name}}</a>{% endif %}</td>
+				<td>{{s.num_records}} rows</td>
+			</tr>
+		{% empty %}
+			<tr>
+				<td></td>
+				<td>No spreadsheets generated yet.</td>
+				<td></td>
+			</tr>
+		{% endfor %}
+	</table>
+
+</div>
+
 
 
 <div class="clearfix"></div>
