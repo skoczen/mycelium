@@ -17,6 +17,7 @@ def generate_spreadsheet(account_id, useraccount_id, spreadsheet_id, file_type):
     f_write = cStringIO.StringIO()
     SpreadsheetAbstraction.create_spreadsheet(spreadsheet.members, spreadsheet.template_obj, file_type, file_handler=f_write)
 
+    extension = SpreadsheetAbstraction.extension_from_file_type(file_type)
 
     downloaded_spreadsheet = DownloadedSpreadsheet.objects.create(
                                 account=spreadsheet.account, 
@@ -25,7 +26,7 @@ def generate_spreadsheet(account_id, useraccount_id, spreadsheet_id, file_type):
                                 file_type = spreadsheet.default_filetype,
                                 spreadsheet=spreadsheet,
                                 )
-    downloaded_spreadsheet.downloaded_file.save("%s.%s" % (spreadsheet.full_name, ), ContentFile(f_write.getvalue()))
+    downloaded_spreadsheet.downloaded_file.save("%s.%s" % (spreadsheet.full_name, extension), ContentFile(f_write.getvalue()), save=False)
     downloaded_spreadsheet.finished = True
     downloaded_spreadsheet.save()
     

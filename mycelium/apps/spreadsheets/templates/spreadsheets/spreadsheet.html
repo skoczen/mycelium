@@ -85,6 +85,11 @@ $(function(){
 </div>
 </form>
 
+<div class="download_spreadsheet_button_block">
+	<a href="{% url spreadsheets:queue_generation %}" base_url="{% url spreadsheets:queue_generation %}" class="mycelium_btn download_spreadsheet_btn auto_disable" disabled_text="Downloading...">Generate Spreadsheet</a>
+</div>
+
+
 <div class="past_spreadsheets" >
 	<div class="detail_header">Past Spreadsheets</div>
 	<table class="spreadsheet_list striped">
@@ -99,9 +104,6 @@ $(function(){
 
 </div>
 
-<div class="download_spreadsheet_button_block">
-	<a href="{% url spreadsheets:queue_generation %}" base_url="{% url spreadsheets:queue_generation %}" class="mycelium_btn download_spreadsheet_btn auto_disable" disabled_text="Downloading...">Generate Spreadsheet</a>
-</div>
 
 
 <div class="clearfix"></div>
