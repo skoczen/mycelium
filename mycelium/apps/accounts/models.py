@@ -629,7 +629,7 @@ class Account(TimestampModelMixin, StripeCustomer, StripeSubscriptionMixin, Simp
         return self.feature_access_level >= access_level
 
     def recent_activities(self):
-        return self.action_set.all()
+        return self.action_set.all()[:100]
 
 
 class AccessLevel(TimestampModelMixin):
@@ -753,7 +753,7 @@ class UserAccount(TimestampModelMixin):
         return param_for_uservoice_sso
 
     def recent_activities(self):
-        return self.action_set.all()
+        return self.action_set.all()[:100]
 
 
     def __unicode__(self):
