@@ -20,7 +20,7 @@ function delete_spreadsheet(e) {
     if (name == "") {
         name = "Unnamed Spreadsheet";
     }
-    if (confirm("Are you sure you want to completely delete " + name + " from the database? \n\nDeleting will remove this spreadsheet, and all past versions. It will affect any of the people in the spreadsheet.\n\nIt cannot be undone.\n\nPress OK to delete "+ name +".\nPress Cancel to leave things unchanged.")) {
+    if (confirm("Are you sure you want to completely delete the " + name + " spreadsheet from the database? \n\nDeleting will remove this spreadsheet, and all past versions. It will not affect any of the people in the spreadsheet.\n\nIt cannot be undone.\n\nPress OK to delete "+ name +".\nPress Cancel to leave things unchanged.")) {
         $(window).unbind("unload.genericFieldForm");
         $("#delete_spreadsheet_form").submit();
     }
