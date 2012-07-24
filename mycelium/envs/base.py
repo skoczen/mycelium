@@ -276,6 +276,7 @@ THUMBNAIL_PREFIX = "_cache/"
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_QUERYSTRING_AUTH = False
 AWS_ACCESS_KEY_ID = 'AKIAJTNZWCZDOIDWFR4A'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = "goodcloud-dev"

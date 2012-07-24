@@ -15,6 +15,7 @@ from spreadsheets.export_templates import SPREADSHEET_TEMPLATES
 from groups.models import Group
 from people.models import Person
 from activities.tasks import save_action
+from spreadsheets.tasks import generate_spreadsheet
 
 from johnny import cache as jcache
 import cStringIO
@@ -81,25 +82,16 @@ def save_basic_info(request, spreadsheet_id):
 
     return {"success":success}
 
-
-def download(request):
+@json_view
+def queue_generation(request):
+    success = True
     file_type = request.GET['type']
     spreadsheet_id = request.GET['spreadsheet_id']
     spreadsheet = get_or_404_by_account(Spreadsheet, request.account, spreadsheet_id)
 
-    f_write = cStringIO.StringIO()
-    SpreadsheetAbstraction.create_spreadsheet(spreadsheet.members, spreadsheet.template_obj, file_type, file_handler=f_write)
-    mime_type = SpreadsheetAbstraction.mime_type_from_file_type(file_type)
-    extension = SpreadsheetAbstraction.extension_from_file_type(file_type)
-
-    response = HttpResponse(f_write.getvalue(), mime_type)
-    spreadsheet_name = spreadsheet.name
-    if spreadsheet_name == "":
-        spreadsheet_name = "Unnnamed Spreadsheet"
-    response['Content-Disposition'] = 'attachment; filename=%s.%s' % (spreadsheet_name, extension)
-    save_action.delay(request.account, request.useraccount, "downloaded a spreadsheet", spreadsheet=spreadsheet,)
+    generate_spreadsheet.delay(request.account.id, request.useraccount.id, spreadsheet.id, file_type)
     
-    return response
+    return {"success": success}
 
     
 @render_to("spreadsheets/new.html")

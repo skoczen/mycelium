@@ -68,10 +68,10 @@ function form_saved() {
 }
 
 function disable_download_button() {
-	$(".download_spreadsheet_btn").addClass("disabled").html("Preparing Spreadsheet...");
+	$(".download_spreadsheet_btn").addClass("disabled").html("Updating...");
 }
 function enable_download_button() {
-	$(".download_spreadsheet_btn").removeClass("disabled").html("Download Spreadsheet");
+	$(".download_spreadsheet_btn").removeClass("disabled").html("Generate Spreadsheet");
 }
 
 function download_button_clicked() {

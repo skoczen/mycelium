@@ -103,7 +103,7 @@ class Spreadsheet(AccountBasedModel, SimpleSearchableModel, TimestampModelMixin)
 
     @property
     def past_downloads(self):
-        return self.downloadedspreadsheet_set.all()
+        return self.downloadedspreadsheet_set.all().order_by("-created_at")
 
 class SpreadsheetSearchProxy(SearchableItemProxy):
     SEARCH_GROUP_NAME = "spreadsheets"
@@ -191,9 +191,18 @@ class DownloadedSpreadsheet(AccountBasedModel, TimestampModelMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
     spreadsheet = models.ForeignKey(Spreadsheet)
     num_records = models.IntegerField()
+    file_type = models.CharField(max_length=20, choices=SPREADSHEET_SOURCE_TYPES, default=SPREADSHEET_SOURCE_TYPES[0][0])
+    downloaded_file = models.FileField(blank=True, null=True, upload_to="spreadsheets")
+    generation_finished = models.BooleanField(default=False)
 
     @property
     def date(self):
         return self.created_at
+
+    @property
+    def permalink(self):
+        print self.downloaded_file.__dict__
+        return self.downloaded_file
+
 
 post_save.connect(SpreadsheetSearchProxy.spreadsheet_record_changed,sender=Spreadsheet)
