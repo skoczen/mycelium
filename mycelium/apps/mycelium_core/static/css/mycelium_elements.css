@@ -1049,6 +1049,7 @@ coming_soon {
 }
 #help_popup_content {
 	display: block;
+	overflow: auto;
 	margin-left: 40px;
 	border: 4px solid #DDD;
 	background-color: #F2F2F2;
