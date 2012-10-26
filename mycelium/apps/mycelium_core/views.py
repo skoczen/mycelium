@@ -21,6 +21,9 @@ def always_500(request):
 def always_502(request):
     return {}
 
+@render_to("crossdomain.xml")
+def crossdomain_xml(request):
+    return {}
 
 @json_view
 def search_results(request):

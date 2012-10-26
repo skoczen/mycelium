@@ -12,4 +12,5 @@ urlpatterns = parser.patterns('',
     
     url(r'always_500$',                     views.always_500,                    name='always_500'),
     url(r'always_502$',                     views.always_502,                    name='always_502'),    
+    url(r'.*?crossdomain.xml',              views.crossdomain_xml,               name='crossdomain_xml'),    
 )
