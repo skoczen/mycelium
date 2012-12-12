@@ -32,7 +32,8 @@ STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "/admin-media/"
 
 
-BROKER_URL = "redis://redistogo:b8b35d6f28e598ab6f56dca217c015d5@drum.redistogo.com:9017/0"  # Maps to redis host.
+# BROKER_URL = "redis://redistogo:b8b35d6f28e598ab6f56dca217c015d5@drum.redistogo.com:9017/0"  # Maps to redis host.
+BROKER_URL = "redis://redis:wQfzuUiCCVy55V1G@redis-17644.us-east-1-4.2.ec2.garantiadata.com:17644/0"
 BROKER_HOST = BROKER_URL
 CELERY_RESULT_BACKEND = None
 
@@ -40,6 +41,10 @@ BROKER_VHOST = "0"                       # Maps to database number.
 REDIS_HOST = BROKER_HOST
 REDIS_DB = BROKER_VHOST
 
+
+# MEMCACHIER_PASSWORD:   9e66846ebef2a8545a5c
+# MEMCACHIER_SERVERS:    dev1.ec2.memcachier.com:11211
+# MEMCACHIER_USERNAME:   816cf9
 
 CACHES = {
     'default': {
