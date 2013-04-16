@@ -33,7 +33,7 @@ ADMIN_MEDIA_PREFIX = "/admin-media/"
 
 
 # BROKER_URL = "redis://redistogo:b8b35d6f28e598ab6f56dca217c015d5@drum.redistogo.com:9017/0"  # Maps to redis host.
-BROKER_URL = os.environ.get('REDISCLOUD_URL')
+BROKER_URL = os.environ.get('REDIS_BROKER_URL')
 BROKER_HOST = BROKER_URL
 CELERY_RESULT_BACKEND = None
 
