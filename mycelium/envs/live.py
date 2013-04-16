@@ -1,5 +1,5 @@
 from base import *
-SSL_FORCE = True
+SSL_FORCE = False
 # SESSION_COOKIE_SECURE = False
 # SESSION_COOKIE_DOMAIN = "agoodcloud.com"
 ENV = "LIVE"

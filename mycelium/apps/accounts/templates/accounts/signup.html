@@ -3,44 +3,60 @@
 {% block title %}Sign up for a free account at GoodCloud{% endblock %}
 {% block description %}See for yourself the best way to run a small nonprofit. Sign up for a free account right here!{% endblock %}
 
-{% block page_header %}One-step easy.{% endblock %}
+{% block page_header %}All good things..{% endblock %}
 
 {% block page_content %}
-<div class="page_top_hook full">See what we can can do for your organization. Free.</div>
-<div class="single_dialog signup_page">
+{#  <div class="page_top_hook full">See what we can can do for your organization. Free.</div> #}
+
+<div class="page_top_hook full"></div>
+<div class="single_dialog signup_page all_good_things">
+
+	<p>Hey there.  You're here to sign up for GoodCloud, and we're really sorry. </p>
+
+	<p>After three years of trying to make the world's best software for small nonprofits, we've come to the unfortunate conclusion that GoodCloud isn't sustainable as full-time company.</p>
+	<p>We also believe that nonprofits need more than a side-project, so we've made the very hard decision to close our doors, and begin to shut down GoodCloud.</p>
+
+	<p>As a result, we're no longer accepting new signups. Existing clients were notified of the changes a few months back, and can still access their accounts fully as they migrate to other systems.</p>
+
+	<p>It's one of the hardest decisions either Tom or I have made, but after lots of considerations and one-more-tries, we're both sad but sure it's the right one.</p>
+
+	<p>Thank you for your interest, your support, and the best of luck in all your ventures.</p>
+
+	<p>- Steven, Tom, and GoodCloud</p>
+
 {# 	<div class="welcome_message">Sign up for a free account:</div> #}
-
-	<form action="{% url accounts:signup %}" method="POST" id="signup_form" class="edit_mode_on" >{% csrf_token %}
-
-	<div class="form_section nonprofit">
-		<div class="section_title">About your nonprofit</div>
-		{% plain_editable_field account_form.name %}
-		<div class="editable_field" id="container_id_{{account_form.subdomain.html_name}}">
-				<label class="generic_field_label">Pick your custom<br/>Goodcloud address:</label>
-				<span class="edit_field"><span class="address_boilerplate">http://</span>{{account_form.subdomain}}<span class="address_boilerplate">.agoodcloud.com</span></span>
-		</div>
-		<div id="subdomain_verification" class="editable_field not_verified" verification_url="{% url accounts:verify_subdomain %}">
-				<div class="subdomain_response png_bg"></div>
-		</div>
-	</div>
-
-	<div class="form_section you">
-		<div class="section_title">About you</div>
-		{% plain_editable_field user_form.first_name "Full name:" %}
-		{% plain_editable_field user_form.email %}
-		{% plain_editable_field user_form.username %}
-		{% plain_editable_field user_form.password %}
-	</div>
-
-	<div class="form_section terms">
-		<div class="checkbox_and_label">
-		<span class="agree_checkbox">{{account_form.agreed_to_terms}}</span> <label for="id_agreed_to_terms">I agree to the <a href="{% url marketing_site:legal %}" target="_blank">User Agreement</a></label>
-		</div>
-	</div>
-
-	<input type="submit" id="submit_button" class="mycelium_btn auto_disable" value="Create your Account" disabled_text="Creating your Account..." />
-
-	</form>
+{# #}
+{#	<form action="{% url accounts:signup %}" method="POST" id="signup_form" class="edit_mode_on" >{% csrf_token %} #}
+{# #}
+{#	<div class="form_section nonprofit"> #}
+{#		<div class="section_title">About your nonprofit</div> #}
+{#		{% plain_editable_field account_form.name %} #}
+{#		<div class="editable_field" id="container_id_{{account_form.subdomain.html_name}}"> #}
+{#				<label class="generic_field_label">Pick your custom<br/>Goodcloud address:</label> #}
+{#				<span class="edit_field"><span class="address_boilerplate">http://</span>{{account_form.subdomain}}<span class="address_boilerplate">.agoodcloud.com</span></span> #}
+{#		</div> #}
+{#		<div id="subdomain_verification" class="editable_field not_verified" verification_url="{% url  #}{#accounts:verify_subdomain %}"> #}
+{#				<div class="subdomain_response png_bg"></div> #}
+{#		</div> #}
+{#	</div> #}
+{# #}
+{#	<div class="form_section you"> #}
+{#		<div class="section_title">About you</div> #}
+{#		{% plain_editable_field user_form.first_name "Full name:" %} #}
+{#		{% plain_editable_field user_form.email %} #}
+{#		{% plain_editable_field user_form.username %} #}
+{#		{% plain_editable_field user_form.password %} #}
+{#	</div> #}
+{# #}
+{#	<div class="form_section terms"> #}
+{#		<div class="checkbox_and_label"> #}
+{#		<span class="agree_checkbox">{{account_form.agreed_to_terms}}</span> <label for="id_agreed_to_terms">I  #}{#agree to the <a href="{% url marketing_site:legal %}" target="_blank">User Agreement</a></label> #}
+{#		</div> #}
+{#	</div> #}
+{# #}
+{#	<input type="submit" id="submit_button" class="mycelium_btn auto_disable" value="Create your Account"  disabled_text="Creating your Account..." /> #}
+{# #}
+{#	</form> #}
 </div>
 
 {% endblock %}
