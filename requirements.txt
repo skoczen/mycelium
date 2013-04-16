@@ -77,9 +77,6 @@ errorhandler==1.1.1
 eventlet==0.9.16
 filebrowser-safe==0.1.2
 gitdb==0.5.2
-grappelli-safe==0.1.8
-greenlet==0.3.1
-ipaddr==2.1.9
 git+git://github.com/GoodCloud/johnny-cache.git
 lockfile==0.9.1
 logilab-astng==0.23.0
