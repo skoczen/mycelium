@@ -19,10 +19,6 @@ sys.path.insert(0, abspath(join(PROJECT_ROOT + '/../')))
 sys.path.insert(0, LIB_DIR)
 sys.path.insert(0, APPS_DIR)
 
-EMAIL_HOST='mail.quantumimagery.com'
-EMAIL_PORT=25
-EMAIL_HOST_USER='robot@quantumimagery.com'
-EMAIL_HOST_PASSWORD='E3Kfgozz7iMyb38N7ohb'
 DEFAULT_FROM_EMAIL = 'GoodCloud'
 SERVER_EMAIL = 'support@agoodcloud.com'
 SEND_BROKEN_LINK_EMAILS = True

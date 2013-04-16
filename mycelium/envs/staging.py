@@ -9,16 +9,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mycelium',
-        'USER': 'myceliumdb',
-        'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
+        'USER': '',
+        'PASSWORD': '',        
         'HOST': 'int-mysql-master.digitalmycelium.com',
         'PORT': '3306',
     },
     'slave': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mycelium',
-        'USER': 'myceliumdb',
-        'PASSWORD': 'pK9Xvt5Kv2dSH586cRrgJ',        
+        'USER': '',
+        'PASSWORD': '',        
         'HOST': 'int-mysql-slave.digitalmycelium.com',
         'PORT': '3306',
     },
@@ -32,10 +32,6 @@ DATABASE_POOL = {
 }
 MASTER_DATABASE = 'default'
 BASE_DOMAIN = "digitalmycelium.com"
-
-# Stripe
-STRIPE_SECRET = "vCqhGMFQvPOcg6EKKR2E28xX54PK3G3s"
-STRIPE_PUBLISHABLE = "pk_DDh6nrKRl3zIvV0GTMaXr92c5dpKR"
 
 MEDIA_URL = 'http://media.digitalmycelium.com/'
 MANUAL_MEDIA_URL = 'http://digitalmycelium.com/media/'
