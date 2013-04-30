@@ -21,6 +21,7 @@ django < 1.5
 django-analytical
 django-celery
 django-debug-toolbar
+dj-database-url
 django-extensions
 django-newsletter
 django-nose

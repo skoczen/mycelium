@@ -18,6 +18,8 @@ DATABASES = {
         'PORT': '',
     },
 }
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()
 
 
 BASE_DOMAIN = "agoodcloud.com"
