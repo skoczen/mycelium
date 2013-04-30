@@ -1,4 +1,7 @@
 from base import *
+import os
+import dj_database_url
+
 SSL_FORCE = False
 # SESSION_COOKIE_SECURE = False
 # SESSION_COOKIE_DOMAIN = "agoodcloud.com"
@@ -18,8 +21,9 @@ DATABASES = {
         'PORT': '',
     },
 }
-import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+
+if "DATABASE_URL" in os.environ:
+    DATABASES['default'] = dj_database_url.config()
 
 
 BASE_DOMAIN = "agoodcloud.com"
