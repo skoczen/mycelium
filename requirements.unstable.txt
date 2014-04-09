@@ -13,7 +13,7 @@
 akismet
 BeautifulSoup
 boto==2.0b4
-celery-with-redis
+django-celery-with-redis
 chardet
 cherrypy
 coverage >= 3.4
@@ -23,6 +23,7 @@ django-celery
 django-debug-toolbar
 dj-database-url
 django-extensions
+django-heroku-postgresify
 django-newsletter
 django-nose
 django-pagination

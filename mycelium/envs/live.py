@@ -1,6 +1,6 @@
 from base import *
 import os
-import dj_database_url
+from postgresify import postgresify
 
 SSL_FORCE = False
 # SESSION_COOKIE_SECURE = False
@@ -11,20 +11,7 @@ ROLE = ENV
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mycelium',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
-    },
-}
-
-if "DATABASE_URL" in os.environ:
-    DATABASES['default'] = dj_database_url.config()
-
+DATABASES = postgresify()
 
 BASE_DOMAIN = "agoodcloud.com"
 
@@ -38,7 +25,6 @@ STATIC_URL = MEDIA_URL
 ADMIN_MEDIA_PREFIX = "/admin-media/"
 
 
-# BROKER_URL = "redis://redistogo:b8b35d6f28e598ab6f56dca217c015d5@drum.redistogo.com:9017/0"  # Maps to redis host.
 BROKER_URL = os.environ.get('REDIS_BROKER_URL')
 BROKER_HOST = BROKER_URL
 CELERY_RESULT_BACKEND = None
@@ -70,4 +56,3 @@ COMPRESS_OFFLINE = True
 COMPRESS_ENABLED = True
 
 FAVICON_URL = "%simages/favicon.png" % STATIC_URL
-

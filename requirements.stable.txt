@@ -19,6 +19,7 @@ django-extensions==0.7.1
 -e git://github.com/skoczen/qi-toolkit.git@f6bbe98b7af1fa7a7ec41c30ffa192d9009c4460#egg=qi_toolkit-dev
 python-crontab==0.9.6
 django-analytical==0.12.1
+django-heroku-postgresify==0.3
 
 django-pagination==1.0.7
 sorl-thumbnail==11.09

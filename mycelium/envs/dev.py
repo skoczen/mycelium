@@ -72,8 +72,6 @@ SOUTH_TESTS_MIGRATE = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND = 'django_ses.SESBackend'
-# AWS_ACCESS_KEY_ID = 'AKIAJTNZWCZDOIDWFR4A'
-# AWS_SECRET_ACCESS_KEY = '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'
 
 # local file storage
 # DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
@@ -91,5 +89,3 @@ COMPRESS_URL = STATIC_URL
 # COMPRESS_OFFLINE = True
 
 FAVICON_URL = "%simages/favicon.png" % COMPRESS_URL
-
-
