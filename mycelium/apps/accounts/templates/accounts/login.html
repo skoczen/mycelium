@@ -8,6 +8,7 @@
 			if ( ($.browser.msie && version < 9) || ($.browser.mozila && version < 3) || ($.browser.webkit && version < 200) ) {
 				$(".unsupported_browser").show();
 			}
+            $(".unsupported_browser.shutdown").show();
 		});
 	</script>
 {% endcompress %}
@@ -40,6 +41,10 @@
 	<div class="field">
 	<label>Password:</label><input type="password" name="password" placeholder="Password">
 	</div>
+    <div class="unsupported_browser shutdown">
+        <div class="warning_title">Warning - things may be broken.</div>
+        <div class="warning_body">Hey there, we officially shut GoodCloud down in 2012, and have kept it mostly up since a few organizations still log in.  However, two years later, the costs have become too high.  As a result, we've turned off most of the infrastructure of GoodCloud, so things may not work how you expect.  Sorry for the inconvience, but we really are trying to do the right thing!</div>
+    </div>
 	<div class="unsupported_browser">
 		<div class="warning_title">Hang on there!</div>
 		<div class="warning_body">You're using an unsupported browser.  GoodCloud was built on next-generation tech to make it faster and more secure. To use GoodCloud, you'll need one of these:</div>
