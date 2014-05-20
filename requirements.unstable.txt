@@ -40,12 +40,11 @@ gunicorn
 html5lib
 ipython
 lorem-ipsum-generator
-mercurial
 mysql-python
 newrelic
 nose
 nose-exclude
-PIL
+pillow
 pip > 1.0
 psycopg2
 py-bcrypt
